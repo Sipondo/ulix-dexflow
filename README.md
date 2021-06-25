@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-CC_BY_NC_SA_4.0-blue.svg)](https://github.com/Sipondo/ulix-dexflow/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-CC_BY_NC_SA_4.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0)
 [![Python Version](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![LDTK](https://img.shields.io/badge/awesomified_by-ldtk-orange.svg)](https://ldtk.io/)
 [![Moderngl](https://img.shields.io/badge/powered_by-moderngl-red.svg)](https://github.com/moderngl/moderngl)
