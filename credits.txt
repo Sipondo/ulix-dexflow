@@ -1,0 +1,56 @@
+[[CORE]]
+
+[Ulix]
+Sipondo
+Boltzy
+
+[Dexflow]
+Sipondo
+Boltzy
+Mischtogan
+
+[[Essentials Resources]]
+[Essentials (general artwork)]
+Flameguru
+Poccil (Peter O.)
+Maruno
+
+With contributions from:
+AvatarMonkeyKirby
+Marin
+Boushy
+MiDas Mike
+Brother1440
+Near Fantastica
+FL.
+PinkMan
+Genzai Kawakami
+Popper
+Help-14
+Rataime
+IceGod64
+SoundSpawn
+Jacob O. Wobbrock
+the__end
+KitsuneKouta
+Venom12
+Lisa Anthony
+Wachunga
+Luka S.J. and everyone else who helped out
+
+[EBDX (Battle Sprites)]
+
+GameFreak | Original sprites from B/W/2 games​
+Pokecheck.org | Ripping the sprites from B2/W2 roms
+​
+PinkCatDragon | GIF to PNG conversion​
+
+
+Pokémon is owned by:
+The Pokémon Company
+Nintendo
+Affiliated with Game Freak
+
+This is a non-profit fan-made framework.
+No copyright infringements intended.
+Please support the official games!
