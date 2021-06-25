@@ -1,0 +1,35 @@
+// ?value: dict
+//     | list
+//     | string
+//     | SIGNED_NUMBER      -> number
+//     | "true"             -> true
+//     | "false"            -> false
+//     | "null"             -> null
+
+// list : "[" [value ("," value)*] "]"
+
+// dict : "{" [pair ("," pair)*] "}"
+// pair : string ":" value
+
+// string : ESCAPED_STRING
+
+// %import common.ESCAPED_STRING
+// %import common.SIGNED_NUMBER
+// %import common.WS
+// %ignore WS
+
+?value: [object ("\n" object)*]
+object: say
+say : source ":" command
+source : /[a-zA-Z0-9_]+/
+command: function
+    |   string
+function: "move" "(" fargs ")"
+fargs: [string|number ("," (string|number))*]
+string: ESCAPED_STRING
+number: SIGNED_NUMBER
+
+%import common.ESCAPED_STRING
+%import common.SIGNED_NUMBER
+%import common.WS
+%ignore WS

@@ -1,0 +1,112 @@
+import pandas as pd
+
+
+class PbsManager:
+    def __init__(self, game):
+        self.game = game
+        self.dfs = {}
+
+        self.items = pd.read_csv(
+            self.game.m_res.get_pbs_loc("items.csv"),
+            header=None,
+            names=[
+                "id",
+                "identifier",
+                "single",
+                "plural",
+                "pocket",
+                "price",
+                "description",
+                "use_outside",
+                "use_battle",
+                "special",
+                "move",
+            ],
+            index_col=0,
+            comment="#",
+        )
+
+        self.moves = pd.read_csv(
+            self.game.m_res.get_pbs_loc("moves.csv"),
+            header=None,
+            names=[
+                "id",
+                "identifier",
+                "name",
+                "function",
+                "power",
+                "type",
+                "damagecat",
+                "accuracy",
+                "pp",
+                "chance",
+                "target",
+                "priority",
+                "flags",
+                "description",
+            ],
+            index_col=0,
+            comment="#",
+        )
+        move_functions = pd.read_csv(
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0
+        )["function"]
+        self.moves["function"] = self.moves["function"].map(
+            lambda x: move_functions[x] if x in move_functions else "noeffect"
+        )
+        self.moves["power"] = self.moves["power"].map(lambda x: int(x))
+
+        self.weather_changes = pd.read_csv(
+            self.game.m_res.get_pbs_loc("weather_acc_moves.csv"), index_col=0
+        )
+
+        self.fighters = self.read_fighters()
+        self.fighters["current_hp"] = 1.0
+
+    def get_random_item(self):
+        return self.items.sample().iloc[0]
+
+    def get_item(self, id):
+        s = self.items.loc[id].copy()
+        return s
+
+    def read_text(self, filename):
+        frame = []
+
+        with open(filename, "r", encoding="utf-8-sig") as file:
+            serie = pd.Series()
+            for line in file.readlines():
+                if not len(line) or line.strip()[0] == "#":
+                    continue
+                if line.strip()[0] == "[":
+                    frame.append(serie)
+                    serie = pd.Series()
+                    continue
+                split = line.split("=")
+                serie[split[0].strip().lower()] = "=".join(split[1:]).strip()
+            frame.append(serie)
+
+        return pd.DataFrame(frame)
+
+    def read_fighters(self):
+        # TODO: fix
+        pth = self.game.m_res.get_pbs_loc("pokemon.csv", compressed=True)
+        if not pth.is_file():
+            self.read_text(self.game.m_res.get_pbs_loc("pokemon.txt")).to_csv(pth)
+
+        return pd.read_csv(pth, index_col=0)
+
+    def get_random_fighter(self):
+        return self.fighters.iloc[1:600].sample().iloc[0]
+
+    def get_fighter(self, id):
+        return self.fighters.loc[id]
+
+    def get_move(self, id):
+        return self.moves.loc[id]
+
+    def get_random_move(self):
+        return self.moves.sample().iloc[0]
+
+    def get_weather_acc_change(self, weather, move_name):
+        return self.weather_changes.loc[move_name, weather]

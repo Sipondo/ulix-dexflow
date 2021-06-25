@@ -1,0 +1,23 @@
+from game.combat.effects.partialeffect.basepartialeffect import BasePartialEffect
+from game.combat.effects.statmodeffect import StatModEffect
+
+
+class StatChange(BasePartialEffect):
+    type = "Stat"
+
+    def __init__(self, scene, target, stat_name, mod, abs_mod=None):
+        super().__init__(scene)
+        self.target = target
+        self.name = stat_name
+        self.modifier = mod
+        self.absolute_modifier = abs_mod
+
+    def apply(self):
+        target_effects = self.scene.get_effects_on_target(self.target)
+        if effects := [x for x in target_effects if x.name == "Statmod"]:
+            for effect in effects:
+                effect.update(self.name, self.modifier, self.absolute_modifier)
+        else:
+            effect = StatModEffect(self.scene, self.target)
+            self.scene.add_effect(effect)
+            effect.update(self.name, self.modifier, self.absolute_modifier)

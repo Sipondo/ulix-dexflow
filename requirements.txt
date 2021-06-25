@@ -1,0 +1,17 @@
+Babel
+glcontext
+moderngl
+numpy
+pandas
+Pillow
+psutil
+python-dateutil
+pytz
+pywin32
+six
+tkfilebrowser
+pywavefront
+moderngl-window
+nodeeditor
+cx-freeze
+pyqt5
