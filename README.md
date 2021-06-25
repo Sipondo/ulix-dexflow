@@ -22,14 +22,14 @@ Dexflow is currently in unlabelled alpha and is undergoing heavy changes. When c
 - Create cinematics with dialogue and events.
 - Make your own 3D animations for your battler's attacks.
 
-In general, you should definitely join our [Discord](https://discord.gg/4EkvwQf2UT) for any questions and, perhaps more importantly, suggestions! The framework is incredibly fresh and your feedback will have definite impact on the final product!
+In general, you should definitely join our [Discord](https://discord.gg/4EkvwQf2UT) for any questions and, perhaps more importantly, suggestions! The framework is incredibly fresh and your feedback will have a definite impact on the final product!
 
 We offer very little documentation as of now. If you want an introduction, need help, or have any questions, you should hit us up on Discord! We regularly introduce new people to the framework, so please do not hesitate to ask. :-)
 
 If you have any suggestion or issue, please post on Discord and/or make an issue on [Github](https://github.com/Sipondo/ulix-dexflow/issues).
 
 # Basic Usage
-You can either clone the repo directly, or patch the repo on an existing Ulix folder.
+You can either clone the repo directly or patch the repo on an existing Ulix folder.
 Python version 3.8 is heavily recommended as it ensures compatibility with the [Ulix Particle Forge](https://github.com/Sipondo/ulix-particle-forge).
 
 Please install any dependencies by running `setup.bat`.
