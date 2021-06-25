@@ -2,6 +2,7 @@ import moderngl
 import pyglet
 
 import numpy as np
+import json
 
 from io import BytesIO
 from moderngl import Texture
@@ -29,6 +30,7 @@ class ResourceManager:
         self.p_fonts = Path("font")
         self.p_sprites = self.p_graphics / "characters_temp"
         self.p_audio = Path("audio")
+        self.p_particle = Path("particle")
 
         self.p_pbs = Path("pbs")
         self.p_pbs_c = self.p_pbs / "compressed"
@@ -142,21 +144,27 @@ class ResourceManager:
         self, vertex_name, geo_name=None, geoblocks=None, uniforms=None, varyings=[]
     ):
         # print(vertex_name, geoblocks)
-        with open(self.p_shaders / f"{vertex_name}.glsl") as file_ver:
+        with open(
+            self.resolve_resource_path(self.p_shaders / f"{vertex_name}.glsl")
+        ) as file_ver:
             if not geo_name:
                 # print(f"LOADING SHADER VARYINGS: {vertex_name}.glsl\n\n")
                 return self.ctx.program(
                     vertex_shader=file_ver.read(), varyings=varyings,
                 )
             if geoblocks is None:
-                with open(self.p_shaders / f"{geo_name}.glsl") as file_geo:
+                with open(
+                    self.resolve_resource_path(self.p_shaders / f"{geo_name}.glsl")
+                ) as file_geo:
                     # print(f"LOADING SHADER VARYINGS: {geo_name}.glsl\n\n")
                     return self.ctx.program(
                         vertex_shader=file_ver.read(),
                         geometry_shader=file_geo.read(),
                         varyings=varyings,
                     )
-            with open(self.p_shaders / f"{geo_name}.glsl") as file_geo:
+            with open(
+                self.resolve_resource_path(self.p_shaders / f"{geo_name}.glsl")
+            ) as file_geo:
                 # print(f"LOADING SHADER VARYINGS: {geo_name}.glsl\n\n")
                 geo = (
                     file_geo.read()
@@ -171,18 +179,28 @@ class ResourceManager:
                 )
 
     def get_geoblock(self, geoblock_name):
-        with open(self.p_shaders / "p4geoblocks" / f"{geoblock_name}.glsl") as geoblock:
+        with open(
+            self.resolve_resource_path(
+                self.p_shaders / "p4geoblocks" / f"{geoblock_name}.glsl"
+            )
+        ) as geoblock:
             return geoblock.read()
 
     def get_texture(self, category, name):
-        pth = self.p_graphics / category / Path(name).stem.with_suffix(".png")
+        pth = self.p_graphics / category / (Path(name).stem + ".png")
         pth = self.resolve_resource_path(pth)
         return self.game.load_texture_2d(pth)
 
     def get_environment(self, name):
         pth = self.p_graphics / "environments"
-        pth = self.resolve_resource_path(pth)
-        environment = [self.game.load_texture_2d(x) for x in pth.glob(f"{name}_*.png")]
+        environment = []
+        for dir in self.resource_dirs:
+            environment.extend(
+                [
+                    self.game.load_texture_2d(x)
+                    for x in (dir / pth).glob(f"{name}_*.png")
+                ]
+            )
         for env in environment:
             env.filter = (moderngl.NEAREST, moderngl.NEAREST)
         environment.reverse()
@@ -213,10 +231,10 @@ class ResourceManager:
         return texture, height_share
 
     def prepare_battle_animset(self, id):
-        root = "resources/graphics/Pokemon_anim/"
+        root = self.p_graphics / "Pokemon_anim"
         spriteset = []
-        spriteset.append(self.prepare_battle_sprite(f"{root}Back/{id}.png"))
-        spriteset.append(self.prepare_battle_sprite(f"{root}Front/{id}.png"))
+        spriteset.append(self.prepare_battle_sprite(root / f"Back/{id}.png"))
+        spriteset.append(self.prepare_battle_sprite(root / f"Front/{id}.png"))
         return spriteset
 
     def open_image(self, pth, size=1):
@@ -258,3 +276,12 @@ class ResourceManager:
         else:
             pth = self.p_pbs / name
         return self.resolve_resource_path(pth)
+
+    def get_particle(self, pth):
+        pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
+        if pth:
+            with open(pth) as f:
+                return json.load(f)
+        pth = self.resolve_resource_path(self.p_particle / ("tackle.json"))
+        with open(pth) as f:
+            return json.load(f)

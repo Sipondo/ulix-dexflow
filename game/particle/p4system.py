@@ -1,5 +1,4 @@
 import moderngl
-import json
 from .p4dyna.equation import Equation
 from numpy.random import random
 
@@ -112,13 +111,7 @@ class ParticleSystem:
         self.vbo2 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
 
     def spawn_elements(self):
-        try:
-            with open("resources/particle/" + self.fname + ".json") as f:
-                js = json.load(f)
-        except Exception as e:
-            with open("resources/particle/tackle.json") as f:
-                js = json.load(f)
-
+        js = self.game.m_res.get_particle(self.fname)
         self.transformer = Transformer(self.game, self)
 
         stage_dict = {}
