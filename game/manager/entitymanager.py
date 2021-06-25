@@ -130,3 +130,7 @@ class EntityManager:
 
     def find_texture_id(self, entity, mt):
         return self.texture_names.index(entity.sprites[mt])
+
+    @property
+    def all_entities(self):
+        return [self.player] + self.entities

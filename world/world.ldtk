@@ -3935,6 +3935,66 @@
 								{ "__identifier": "entity_uid", "__value": null, "__type": "String", "defUid": 382, "realEditorValues": [] },
 								{ "__identifier": "config", "__value": null, "__type": "String", "defUid": 383, "realEditorValues": [] }
 							]
+						},
+						{
+							"__identifier": "Opponent",
+							"__grid": [17,17],
+							"__pivot": [0.5,0.5],
+							"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+							"width": 16,
+							"height": 16,
+							"defUid": 4,
+							"px": [280,280],
+							"fieldInstances": [
+								{
+									"__identifier": "sprite",
+									"__value": "../resources/essentials/graphics/characters_temp/trchar063.png",
+									"__type": "FilePath",
+									"defUid": 66,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
+									}]
+								},
+								{ "__identifier": "dialogue_aggro", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+								{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+								{
+									"__identifier": "direction",
+									"__value": "W",
+									"__type": "LocalEnum.Direction",
+									"defUid": 378,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["W"]
+									}]
+								},
+								{
+									"__identifier": "battlers",
+									"__value": [ "Meganium", "Ratata" ],
+									"__type": "Array<LocalEnum.Battlers>",
+									"defUid": 379,
+									"realEditorValues": [ {
+										"id": "V_String",
+										"params": ["Meganium"]
+									}, {
+										"id": "V_String",
+										"params": ["Ratata"]
+									} ]
+								},
+								{
+									"__identifier": "name",
+									"__value": "Master Joey",
+									"__type": "String",
+									"defUid": 380,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["Master Joey"]
+									}]
+								},
+								{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
+								{ "__identifier": "entity_uid", "__value": null, "__type": "String", "defUid": 382, "realEditorValues": [] },
+								{ "__identifier": "config", "__value": null, "__type": "String", "defUid": 383, "realEditorValues": [] }
+							]
 						}
 					]
 				},

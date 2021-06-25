@@ -51,9 +51,9 @@ class BaseEntity(abc.ABC):
         self.game_position = (ox + dx, oy + dy)
 
     def check_collision(self, direction):
-        return self.game.m_col.check_collision(
-            self.game_position, direction, self.height
-        )
+        x = self.game.m_col.check_collision(self.game_position, direction, self.height)
+        print(x)
+        return x
 
     def get_draw(self):
         return self.current_sprite

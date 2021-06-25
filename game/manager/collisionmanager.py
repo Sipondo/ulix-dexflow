@@ -24,7 +24,7 @@ class CollisionManager:
         new_pos = ox + dx, oy + dy
         if self.game.maphack:
             return True
-        for entity in self.game.m_ent.entities:
+        for entity in self.game.m_ent.all_entities:
             x1, y1 = entity.get_pos()
             x2, y2 = new_pos
             if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
