@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class CollisionManager:
     def __init__(self, game):
         self.game = game
@@ -17,13 +20,14 @@ class CollisionManager:
         else:
             self.colmap[height] = self.colmap[height] | colmap
 
-    def check_collision(self, pos, direction, height=0):
-        pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
+    def check_collision(self, pos, direction, height=0, off=True):
+        if off:
+            pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
         dx, dy = direction
         ox, oy = pos
         new_pos = ox + dx, oy + dy
-        print(new_pos)
-        print(self.colmap[height].shape)
+        # print(new_pos)
+        # print(self.colmap[height].shape)
         if self.game.maphack:
             return True
         for entity in self.game.m_ent.all_entities:
@@ -45,6 +49,39 @@ class CollisionManager:
         return dict(
             zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
         )
+
+    def a_star(self, fr, to, height=0):
+        fr = (fr[0] + self.offset[0], fr[1] + self.offset[1])
+        to = (to[0] + self.offset[0], to[1] + self.offset[1])
+        map = np.ones(self.colmap[0].shape[:2]) * 9999
+
+        map[fr[0], fr[1]] = 0
+
+        nodes = [(fr, [])]
+        iter = 0
+        while nodes:
+            iter = iter + 1
+            fr, pth = nodes.pop(0)
+            # print(fr, to)
+
+            if fr[0] == to[0] and fr[1] == to[1]:
+                return pth
+
+            for i, (x, y) in enumerate(((1, 0), (0, 1), (-1, 0), (0, -1))):
+                dir = (x, y)
+                x += fr[0]
+                y += fr[1]
+
+                if (
+                    0 < x < self.colmap[0].shape[1]
+                    and 0 < y < self.colmap[0].shape[0]
+                    and map[x, y] >= 9999
+                    and self.check_collision(fr, dir, height, off=False)
+                ):
+                    map[x, y] = len(pth)
+                    nodes.append(((x, y), pth + [dir]))
+
+        return None
 
     def get_direction_num(self, direction):
         if direction == (1, 0):
