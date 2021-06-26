@@ -6,6 +6,9 @@ bool%SIZE_ABS%=false;
 float%ROT%=0;
 float%ROT_SWAY%=0;
 bool%ROT_ABS%=false;
+float%ROT_VEL%=0;
+float%ROT_VEL_SWAY%=0;
+bool%ROT_VEL_ABS%=false;
 float%LIFE%=0;
 float%LIFE_SWAY%=0;
 bool%LIFE_ABS%=false;
@@ -52,6 +55,9 @@ color.z+=%COL_SWAY%.z*rnd(vec2(gl_PrimitiveIDIn+947,time*9.7));
 
 rot=rot+%ROT%;
 rot=(%ROT_ABS%?0:rot)+%ROT_SWAY%*rnd(vec2(gl_PrimitiveIDIn+1087,time*10.3));
+
+rot_vel=rot_vel+%ROT_VEL%;
+rot_vel=(%ROT_VEL_ABS%?0:rot_vel)+%ROT_VEL_SWAY%*rnd(vec2(gl_PrimitiveIDIn+1967,time*15.1));
 
 lifespan=lifespan+%LIFE%;
 lifespan=(%LIFE_ABS%?0:lifespan)+%LIFE_SWAY%*rnd(vec2(gl_PrimitiveIDIn+1229,time*11.3));

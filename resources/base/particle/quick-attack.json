@@ -73,7 +73,7 @@
         {
             "id": 2336750646176,
             "title": "Geo Friction",
-            "pos_x": 425.5937500000001,
+            "pos_x": 427.5468750000001,
             "pos_y": -359.1562499999999,
             "inputs": [
                 {
@@ -310,8 +310,8 @@
         {
             "id": 2336754732528,
             "title": "Geo Set",
-            "pos_x": 524.5937500000002,
-            "pos_y": -171.15625000000006,
+            "pos_x": 464.04687500000045,
+            "pos_y": -157.48437500000009,
             "inputs": [
                 {
                     "id": 2336754732336,
@@ -358,7 +358,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },

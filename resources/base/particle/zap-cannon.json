@@ -270,8 +270,8 @@
         {
             "id": 2289912257888,
             "title": "Geo Set",
-            "pos_x": -202.5,
-            "pos_y": -301.3125,
+            "pos_x": -198.5,
+            "pos_y": -298.3125,
             "inputs": [
                 {
                     "id": 2289937057104,
@@ -318,7 +318,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },
@@ -858,8 +861,8 @@
         {
             "id": 2077370787824,
             "title": "Geo Set",
-            "pos_x": 1255.0625,
-            "pos_y": -844.7499999999995,
+            "pos_x": 1232.5625000000002,
+            "pos_y": -833.4999999999997,
             "inputs": [
                 {
                     "id": 2077370787680,
@@ -906,7 +909,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },
@@ -1205,8 +1211,8 @@
         {
             "id": 2077370787008,
             "title": "Geo Set",
-            "pos_x": -389.75,
-            "pos_y": 272.0,
+            "pos_x": -399.75,
+            "pos_y": 275.75,
             "inputs": [
                 {
                     "id": 2077375091376,
@@ -1253,7 +1259,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },
@@ -1295,8 +1304,8 @@
         {
             "id": 2077371575984,
             "title": "Geo Set",
-            "pos_x": -379.68749999999966,
-            "pos_y": -787.4999999999995,
+            "pos_x": -407.1874999999996,
+            "pos_y": -772.4999999999997,
             "inputs": [
                 {
                     "id": 2077371572624,
@@ -1343,7 +1352,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },
@@ -1552,8 +1564,8 @@
         {
             "id": 2447281465712,
             "title": "Geo Set",
-            "pos_x": -431.75000000000006,
-            "pos_y": -79.99999999999999,
+            "pos_x": -442.75,
+            "pos_y": -65.99999999999999,
             "inputs": [
                 {
                     "id": 2447281466096,
@@ -1600,7 +1612,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },
@@ -1803,8 +1818,8 @@
         {
             "id": 2447287303712,
             "title": "Geo Set",
-            "pos_x": -153.74999999999994,
-            "pos_y": 64.99999999999996,
+            "pos_x": -157.74999999999994,
+            "pos_y": 66.99999999999994,
             "inputs": [
                 {
                     "id": 2447287303616,
@@ -1851,7 +1866,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },

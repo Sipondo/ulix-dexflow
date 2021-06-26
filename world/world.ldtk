@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 385,
+	"nextUid": 386,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2124,7 +2124,7 @@
 					"uid": 382,
 					"type": "F_String",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2215,8 +2215,11 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLanguageMode": "LangPython"
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["{  \"pokemon1\":{       name: \"aapmans\",             } }"]
+					},
+					"textLanguageMode": "LangJson"
 				},
 				{
 					"identifier": "battlers",
@@ -2375,14 +2378,14 @@
 				},
 				{
 					"identifier": "direction",
-					"__type": "Int",
-					"uid": 78,
-					"type": "F_Int",
+					"__type": "LocalEnum.Direction",
+					"uid": 385,
+					"type": { "id": "F_Enum", "params": [376] },
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
+					"editorDisplayMode": "EntityTile",
 					"editorDisplayPos": "Above",
 					"editorAlwaysShow": false,
 					"editorCutLongValues": true,
@@ -3888,15 +3891,24 @@
 							"fieldInstances": [
 								{
 									"__identifier": "sprite",
-									"__value": "../resources/essentials/graphics/characters_temp/trchar004.png",
+									"__value": "../resources/essentials/graphics/characters_temp/trchar042.png",
 									"__type": "FilePath",
 									"defUid": 66,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["../resources/essentials/graphics/characters_temp/trchar004.png"]
+										"params": ["../resources/essentials/graphics/characters_temp/trchar042.png"]
 									}]
 								},
-								{ "__identifier": "dialogue_aggro", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+								{
+									"__identifier": "dialogue_aggro",
+									"__value": "!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: ",
+									"__type": "String",
+									"defUid": 90,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: "]
+									}]
+								},
 								{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
 								{
 									"__identifier": "direction",
@@ -3923,17 +3935,26 @@
 								},
 								{
 									"__identifier": "name",
-									"__value": "Master Joey",
+									"__value": "Trainer Kim",
 									"__type": "String",
 									"defUid": 380,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Master Joey"]
+										"params": ["Trainer Kim"]
 									}]
 								},
 								{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
-								{ "__identifier": "entity_uid", "__value": null, "__type": "String", "defUid": 382, "realEditorValues": [] },
-								{ "__identifier": "config", "__value": null, "__type": "String", "defUid": 383, "realEditorValues": [] }
+								{
+									"__identifier": "entity_uid",
+									"__value": "2_kim",
+									"__type": "String",
+									"defUid": 382,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["2_kim"]
+									}]
+								},
+								{ "__identifier": "config", "__value": "{\n \"pokemon1\":{\n      name: \"aapmans\",\n       \n    }\n}", "__type": "String", "defUid": 383, "realEditorValues": [] }
 							]
 						},
 						{
@@ -3992,8 +4013,17 @@
 									}]
 								},
 								{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
-								{ "__identifier": "entity_uid", "__value": null, "__type": "String", "defUid": 382, "realEditorValues": [] },
-								{ "__identifier": "config", "__value": null, "__type": "String", "defUid": 383, "realEditorValues": [] }
+								{
+									"__identifier": "entity_uid",
+									"__value": "1_joey",
+									"__type": "String",
+									"defUid": 382,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["1_joey"]
+									}]
+								},
+								{ "__identifier": "config", "__value": "{\n \"pokemon1\":{\n      name: \"aapmans\",\n       \n    }\n}", "__type": "String", "defUid": 383, "realEditorValues": [] }
 							]
 						}
 					]
@@ -7371,14 +7401,48 @@
 					"layerDefUid": 22,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": false,
+					"visible": true,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
 					"seed": 6915612,
 					"overrideTilesetUid": null,
 					"gridTiles": [],
-					"entityInstances": []
+					"entityInstances": [
+						{
+							"__identifier": "Civilian",
+							"__grid": [3,3],
+							"__pivot": [0.5,0.5],
+							"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
+							"width": 16,
+							"height": 16,
+							"defUid": 72,
+							"px": [56,56],
+							"fieldInstances": [
+								{
+									"__identifier": "sprite",
+									"__value": "../resources/essentials/graphics/characters_temp/trchar006.png",
+									"__type": "FilePath",
+									"defUid": 76,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["../resources/essentials/graphics/characters_temp/trchar006.png"]
+									}]
+								},
+								{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 89, "realEditorValues": [] },
+								{
+									"__identifier": "direction",
+									"__value": "E",
+									"__type": "LocalEnum.Direction",
+									"defUid": 385,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["E"]
+									}]
+								}
+							]
+						}
+					]
 				},
 				{
 					"__identifier": "Structures_C",

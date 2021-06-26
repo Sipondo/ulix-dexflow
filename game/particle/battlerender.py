@@ -304,8 +304,6 @@ class BattleRender:
             self.poke1_set[0 if face % 3 else 1][0].use(location=0)
             self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
-        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
-
         # TODO: remove duplicate
         if self.poke2_set and not enemy_first:
             # TODO: support >2 chars
@@ -340,3 +338,5 @@ class BattleRender:
 
             self.poke2_set[0 if face % 3 else 1][0].use(location=0)
             self.vao_pkm.render(moderngl.POINTS, vertices=1)
+
+        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)

@@ -22,10 +22,14 @@ class CollisionManager:
         dx, dy = direction
         ox, oy = pos
         new_pos = ox + dx, oy + dy
+        print(new_pos)
+        print(self.colmap[height].shape)
         if self.game.maphack:
             return True
         for entity in self.game.m_ent.all_entities:
             x1, y1 = entity.get_pos()
+            x1 += self.offset[0]
+            y1 += self.offset[1]
             x2, y2 = new_pos
             if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
                 return False

@@ -346,8 +346,8 @@
         {
             "id": 2336754732528,
             "title": "Geo Set",
-            "pos_x": 524.5937500000002,
-            "pos_y": -171.15625000000006,
+            "pos_x": 524.5937500000001,
+            "pos_y": -172.40625000000003,
             "inputs": [
                 {
                     "id": 2336754732336,
@@ -394,7 +394,10 @@
                 "field_COL_SWAY_Z": "0",
                 "field_COL_ABS_X": false,
                 "field_COL_ABS_Y": false,
-                "field_COL_ABS_Z": false
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
         },

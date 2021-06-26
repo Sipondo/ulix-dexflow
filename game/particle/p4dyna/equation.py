@@ -1,4 +1,5 @@
 from math import *
+from numpy.random import rand
 
 
 class Equation:
