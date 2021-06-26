@@ -157,49 +157,49 @@ class ParticleSystem:
 
         for node in js["nodes"]:
             if node["title"] == "Equation":
-                print(node["title"])
+                # print(node["title"])
                 self.add_equation(node)
 
         for node in js["nodes"]:
             # print(node)
             if node["title"] == "Emit":
-                print(node["title"])
+                # print(node["title"])
                 stage = int(edge_dict[node["inputs"][0]["id"]])
                 self.emitters.append(Emitter(self.game, self, node, stage))
             elif node["title"] == "Trigger":
-                print(node["title"])
+                # print(node["title"])
                 self.miscs.append(Trigger(self.game, self, node))
             elif node["title"] == "Actor":
-                print(node["title"])
+                # print(node["title"])
                 self.miscs.append(Actor(self.game, self, node))
             elif node["title"] == "Camera":
-                print(node["title"])
+                # print(node["title"])
                 self.miscs.append(Camera(self.game, self, node))
             elif node["title"] == "Equation":
                 pass
             elif node["title"] == "Render":
-                print(node["title"])
+                # print(node["title"])
                 stage = int(edge_dict[node["inputs"][0]["id"]])
                 self.renderers.append(Renderer(self.game, self, node, stage))
 
         for node in js["nodes"]:
             if node["title"].lower()[:3] == "geo":
-                print("geo")
-                print(node["title"])
+                # print("geo")
+                # print(node["title"])
                 id = node["inputs"][0]["id"]
                 if id in edge_dict:
-                    print("stagebound")
+                    # print("stagebound")
                     stage = int(edge_dict[id])
                     self.transformer.add_geoblock(node, None, stage)
                 else:
-                    print("filterbound")
+                    # print("filterbound")
                     filter = int(filter_edge_dict[id])
                     self.transformer.add_geoblock(node, filter, None)
 
         for node in js["nodes"]:
             if node["title"][:6].lower() == "filter":
-                print(node["title"])
-                print(node["inputs"])
+                # print(node["title"])
+                # print(node["inputs"])
                 stage_in = int(
                     edge_dict[
                         [x for x in node["inputs"] if x["socket_type"] == 3][0]["id"]
@@ -499,19 +499,19 @@ class Transformer:
                 )
             else:
                 geo_code = geo_code.replace(r"%GEOBLOCKS%", "")
-            print(geo_code)
+            # print(geo_code)
 
         if target_filter is not None:
-            print("I HAVE A FILTER")
+            # print("I HAVE A FILTER")
             self.geo_target[target_filter] = geo_code
         else:
-            print("I HAVE NO FILTER")
+            # print("I HAVE NO FILTER")
             self.geo_code += geo_code
 
     def r(self, query, t="f"):
         # print("\n", query)
         unparsed = self.system.r(self, query, parse=False)
-        print(query, unparsed)
+        # print(query, unparsed)
         if not isinstance(unparsed, bool) and "!" in unparsed:
             for key in self.system.equations.keys():
                 if f"!{key}!" in unparsed:
@@ -764,7 +764,6 @@ class Camera:
             if emit_count > 0:  # and not int(time * 6) % 10:
                 self.emit_want -= emit_count
             self.game.m_cam.go_to(self.target, self.speed)
-            print("GO TO: ", self.target)
 
 
 class Camrail:

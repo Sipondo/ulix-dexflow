@@ -171,7 +171,6 @@ class ResourceManager:
                     .replace(r"%GEOBLOCKS%", geoblocks)
                     .replace(r"%UNIFORMS%", uniforms)
                 )
-                print(geo)
                 return self.ctx.program(
                     vertex_shader=file_ver.read(),
                     geometry_shader=geo,
