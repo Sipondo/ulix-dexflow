@@ -17,6 +17,14 @@ with open(root / "world.ldtk", "r") as infile:
     ldtk = json.load(infile)
 
 
+# load external levels if present
+if ldtk["externalLevels"]:
+    for i, level in enumerate(ldtk["levels"]):
+        if level["externalRelPath"]:
+            with open(root / level["externalRelPath"], "r") as infile:
+                ldtk["levels"][i] = json.load(infile)
+
+
 def coldef_to_bool(coldef):
     return [
         coldef in ("E", "X"),
