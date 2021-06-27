@@ -16,9 +16,10 @@ class ParticleManager:
 
         self.fast_forward = False
 
-    def on_tick(self, time, frame_time, render_target):
+    def on_tick(self, time, frame_time, alpha_target, anti_target):
         frame_time = min(2, max(0.0001, frame_time))
-        self.render_target = render_target
+        self.alpha_target = alpha_target
+        self.anti_target = anti_target
         busy = False
 
         marked = []
@@ -45,12 +46,13 @@ class ParticleManager:
             self.ctx.enable(moderngl.BLEND | moderngl.DEPTH_TEST | moderngl.CULL_FACE)
             self.ctx.blend_func = moderngl.ADDITIVE_BLENDING
             self.ctx.blend_equation = moderngl.FUNC_ADD
-            self.render_target.depth_mask = False
+            self.alpha_target.depth_mask = False
             return
         if t == 3:
             self.game.offscreen.use()
             self.game.offscreen.depth_mask = True
-            self.render_target.depth_mask = True
+            self.alpha_target.depth_mask = True
+            self.anti_target.depth_mask = True
             self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
             self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
             self.ctx.blend_equation = moderngl.FUNC_ADD
@@ -60,7 +62,7 @@ class ParticleManager:
             self.ctx.enable(moderngl.BLEND | moderngl.DEPTH_TEST | moderngl.CULL_FACE)
             self.ctx.blend_func = moderngl.ADDITIVE_BLENDING
             self.ctx.blend_equation = moderngl.FUNC_ADD
-            self.render_target.depth_mask = False
+            self.anti_target.depth_mask = False
             return
 
     def spawn_system(self, brender, fname, target, miss):
