@@ -10,8 +10,8 @@ class OpponentEvent(BaseEvent):
         ox, oy = self.entity.get_pos()
         dx, dy = self.entity.get_dir()
         self.location = (ox + dx, oy + dy)
-        if self.game.m_ent.player.get_pos() == self.location:
-            return True
+        # if self.game.m_ent.player.get_pos() == self.location:
+        #     return True
 
     def on_trigger(self, time):
         self.triggered = True

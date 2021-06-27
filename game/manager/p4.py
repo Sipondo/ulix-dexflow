@@ -55,6 +55,13 @@ class ParticleManager:
             self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
             self.ctx.blend_equation = moderngl.FUNC_ADD
             return
+        if t == 4:
+            self.battle.anti_offscreen.use()
+            self.ctx.enable(moderngl.BLEND | moderngl.DEPTH_TEST | moderngl.CULL_FACE)
+            self.ctx.blend_func = moderngl.ADDITIVE_BLENDING
+            self.ctx.blend_equation = moderngl.FUNC_ADD
+            self.render_target.depth_mask = False
+            return
 
     def spawn_system(self, brender, fname, target, miss):
         if target:

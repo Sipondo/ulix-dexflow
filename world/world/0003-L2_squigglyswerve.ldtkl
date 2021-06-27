@@ -1538,7 +1538,48 @@
 			"seed": 6932080,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": []
+			"entityInstances": [
+				{
+					"__identifier": "Opponent",
+					"__grid": [29,51],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 4,
+					"px": [472,824],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar011.png",
+							"__type": "FilePath",
+							"defUid": 66,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar011.png"]
+							}]
+						},
+						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "direction",
+							"__value": "E",
+							"__type": "LocalEnum.Direction",
+							"defUid": 378,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["E"]
+							}]
+						},
+						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 380, "realEditorValues": [] },
+						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
+						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 382, "realEditorValues": [] },
+						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+					]
+				}
+			]
 		},
 		{
 			"__identifier": "Structures_C",

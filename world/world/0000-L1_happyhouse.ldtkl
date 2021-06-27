@@ -819,7 +819,7 @@
 							}]
 						},
 						{
-							"__identifier": "dialogue_aggro",
+							"__identifier": "aggro_action",
 							"__value": "!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: ",
 							"__type": "String",
 							"defUid": 90,
@@ -873,14 +873,15 @@
 								"params": ["2_kim"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] }
+						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Opponent",
 					"__grid": [17,17],
 					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
 					"width": 16,
 					"height": 16,
 					"defUid": 4,
@@ -896,16 +897,16 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "dialogue_aggro", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
 						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
-							"__value": "W",
+							"__value": "E",
 							"__type": "LocalEnum.Direction",
 							"defUid": 378,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["W"]
+								"params": ["E"]
 							}]
 						},
 						{
@@ -942,7 +943,8 @@
 								"params": ["1_joey"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] }
+						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
 					]
 				}
 			]

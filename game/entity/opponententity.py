@@ -28,16 +28,21 @@ class OpponentEntity(BaseEntity):
                 # anim = BaseMoveAnimation(
                 #     self.game, time, direction, self, distance=distance, lock=lock
                 # )
+                print(self.game_position)
+                print((19 - self.game.m_col.offset[0], 21 - self.game.m_col.offset[1]))
                 path = self.game.m_col.a_star(
                     self.game_position,
-                    (self.game_position[0] - 5, self.game_position[1]),
+                    (27 - self.game.m_col.offset[0], 12 - self.game.m_col.offset[1]),
+                    # (self.game_position[0] - 5, self.game_position[1] - 8),
+                    next_to=True,
                 )
+                print("PATH:", path)
                 anim = PathMoveAnimation(
                     self.game,
                     time,
-                    path[0],
+                    path.pop(0),
                     self,
-                    distance=len(path),
+                    distance=len(path) + 1,
                     lock=lock,
                     path=path,
                 )

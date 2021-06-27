@@ -16,3 +16,17 @@ class ActionManager:
             if self.queue.popleft().on_tick(time, frame_time):
                 locked = True
         return locked
+
+    def create_region(
+        self, regiontype, pos, size, target_direction, target_level, target_location
+    ):
+        print(
+            "REGION CREATE:",
+            regiontype,
+            pos,
+            size,
+            target_direction,
+            target_level,
+            target_location,
+        )
+

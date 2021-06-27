@@ -19,17 +19,15 @@ out vec4 out_color;
 in vec2 uv;
 
 uniform sampler2D texture0;
+uniform sampler2D texture1;
 uniform float Contrast=1.;
 
 void main(){
-  vec4 col=texture(texture0,uv);
+  vec4 c_b=texture(texture0,uv);
+  vec4 c_n=texture(texture1,uv);
   if(Contrast!=1.){
-    col.rgb=((col.rgb-.5f)*max(Contrast,0))+.5f;
+    c_n.rgb=((c_n.rgb-.5f)*max(Contrast,0))+.5f;
   }
-  if(col.a>0.){
-    out_color=col;
-  }else{
-    discard;
-  }
+  out_color=vec4(c_b.x-c_n.x*c_n.a,c_b.y-c_n.y*c_n.a,c_b.z-c_n.z*c_n.a,c_b.a);
 }
 #endif

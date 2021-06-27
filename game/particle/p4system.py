@@ -79,6 +79,11 @@ class ParticleSystem:
         for renderer in (x for x in self.renderers if x.equation == 2):
             renderer.render(time, frame_time)
 
+        # Anti
+        self.game.m_par.set_render(4)
+        for renderer in (x for x in self.renderers if x.equation == 3):
+            renderer.render(time, frame_time)
+
         self.game.m_par.set_render(3)
 
     def r(self, owner, name, parse=True, throw=True):
@@ -364,9 +369,10 @@ class Renderer:
         self.params = params["content"]
         self.stage = stage
         self.title = "Renderer"
-        self.equation = (
-            1 if self.system.r(self, "equation").strip().lower() == "solid" else 2
-        )
+
+        eqname = self.system.r(self, "equation").strip().lower()
+
+        self.equation = 1 if eqname == "solid" else 3 if eqname == "anti" else 2
 
         # TODO: temp
         self.texture = self.game.m_res.get_texture(

@@ -89,6 +89,7 @@ class PokeGame(mglw.WindowConfig):
         # Top level managers
         self.m_ani = AnimationManager(self)
         self.m_ari = AiManager(self)
+        self.m_act = ActionManager(self)
         self.m_cam = CameraManager(self)
         self.m_col = CollisionManager(self)
         self.m_dat = DbManager(self)
