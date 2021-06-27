@@ -118,7 +118,7 @@ class BattleRender:
     def set_movement(self, team, position, speed, recover):
         self.bmove.set_movement(team, position, speed, recover)
 
-    def do_particle(self, name, target, miss=False):
+    def do_particle(self, name, user, target, miss=False):
         if name:
             name = name.replace(" ", "-")
             if miss:

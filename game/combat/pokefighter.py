@@ -20,7 +20,7 @@ class PokeFighter(CombatFighter):
         # Init actions starting from id:
         # start_id = 580
         self.actions = [
-            self.game.m_pbs.get_move(x) for x in [580, 462, 392, 397]
+            self.game.m_pbs.get_move(x) for x in [580, 462, 392, 462]
         ]
 
         self.level = 100

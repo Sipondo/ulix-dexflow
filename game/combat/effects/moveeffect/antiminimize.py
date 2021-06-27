@@ -12,6 +12,5 @@ class Antiminimize(BaseMoveEffect):
             return True
 
     def after_move(self):
-        if self.scene.board.random_roll() < self.move.chance:
-            ApplyStatus(self.scene, self.move.target, self.move.user, statuseffect.FLINCH).apply()
+        ApplyStatus(self.scene, self.move.target, self.move.user, statuseffect.FLINCH).apply()
 

@@ -1,8 +1,8 @@
-from .baseeffect import BaseEffect
+from game.combat.effects.baseeffect import BaseEffect
 
 
-class MinimizeEffect(BaseEffect):
-    name = "Minimize"
+class CurlEffect(BaseEffect):
+    name = "Curl"
 
     def __init__(self, scene, target):
         super().__init__(scene)
