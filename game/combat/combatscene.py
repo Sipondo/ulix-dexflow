@@ -82,7 +82,7 @@ class CombatScene:
             while effects := [
                 x
                 for x in sorted(self.effects, key=lambda x: -x.spd_on_action)
-                if not x.done
+                if not x.done and not x.skip
             ]:
                 skip = self.run_effect(effects[0], effects[0].on_action)
                 if skip:
@@ -112,6 +112,7 @@ class CombatScene:
             self.run_effect(effect, effect.before_end)
 
         self.reset_effects_done()
+        self.reset_effects_skip()
         self.board_graveyard.extend(self.board_history)
         board_history = self.board_history
 
@@ -122,6 +123,10 @@ class CombatScene:
     def reset_effects_done(self):
         for effect in self.effects:
             effect.done = False
+
+    def reset_effects_skip(self):
+        for effect in self.effects:
+            effect.skip = True
 
     def run_effect(self, effect, f):
         effect.done = True
@@ -162,6 +167,9 @@ class CombatScene:
             if not x.done
         ]:
             self.run_effect(effects[0], effects[0].on_send_out)
+
+    def get_effects(self):
+        return self.effects
 
     def get_global_effects(self):
         return [x for x in self.effects if x.target == "Global"]

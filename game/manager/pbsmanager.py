@@ -64,6 +64,12 @@ class PbsManager:
             self.game.m_res.get_pbs_loc("weather_acc_moves.csv"), index_col=0
         )
 
+        self.terrain_mods = pd.read_csv(
+            self.game.m_res.get_pbs_loc("terrain_mod_moves.csv"), index_col=0
+        )
+        for terrain in ("Grassy", "Misty", "Electric", "Psychic"):
+            self.terrain_mods[terrain].apply(lambda x: float(x))
+
         self.fighters = self.read_fighters()
         self.fighters["current_hp"] = 1.0
 
@@ -112,5 +118,8 @@ class PbsManager:
     def get_random_move(self):
         return self.moves.sample().iloc[0]
 
-    def get_weather_acc_change(self, weather, move_name):
-        return self.weather_changes.loc[move_name, weather]
+    def get_terrain_mods(self, terrain):
+        return self.terrain_mods.loc[terrain]
+
+    def get_weather_acc_change(self, weather):
+        return self.weather_changes.loc[weather]

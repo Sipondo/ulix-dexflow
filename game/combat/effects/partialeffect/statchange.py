@@ -13,6 +13,9 @@ class StatChange(BasePartialEffect):
         self.absolute_modifier = abs_mod
 
     def apply(self):
+        for effect in self.scene.get_effects_on_target(self.target):
+            if effect.on_stat_change(self.target):
+                return
         target_effects = self.scene.get_effects_on_target(self.target)
         if effects := [x for x in target_effects if x.name == "Statmod"]:
             for effect in effects:

@@ -11,10 +11,12 @@ class Safeguard(BaseEffect):
         super().__init__(scene)
         self.apply_narration = "got protected from harm"
         self.target = target
-        self.counter = 1
+        self.counter = 6
 
     def before_end(self):
         if self.counter == 0:
+            self.scene.add_effect(
+                GenericEffect(self.scene, f"{self.scene.board.get_actor(self.target).name}'s safeguard wore off"))
             return True, False, False
         self.counter -= 1
         return False, False, False
@@ -27,5 +29,5 @@ class Safeguard(BaseEffect):
                     f"{self.scene.board.get_actor(self.target).name} is protected from harm!",
                 )
             )
-            return False
-        return True
+            return True
+        return False

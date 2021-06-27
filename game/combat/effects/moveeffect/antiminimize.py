@@ -1,6 +1,4 @@
 from .basemoveeffect import BaseMoveEffect
-from game.combat.effects import statuseffect
-from game.combat.effects.partialeffect.applystatuseffect import ApplyStatus
 
 
 class Antiminimize(BaseMoveEffect):
@@ -10,7 +8,4 @@ class Antiminimize(BaseMoveEffect):
             self.move.perfect_accuracy = True
             self.move.power *= 2
             return True
-
-    def after_move(self):
-        ApplyStatus(self.scene, self.move.target, self.move.user, statuseffect.FLINCH).apply()
 

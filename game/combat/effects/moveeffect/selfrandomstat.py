@@ -11,4 +11,4 @@ class Selfrandomstat(BaseMoveEffect):
 
     def after_move(self):
         stat = random.choice(["Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasion"])
-        StatChange(self.scene, self.move.user, stat, 2).apply()
+        StatChange(self.scene, self.move.user, stat, self.mod).apply()

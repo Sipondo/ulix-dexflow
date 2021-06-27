@@ -1,7 +1,7 @@
 from game.combat.effects.baseeffect import BaseEffect
 
 
-class CritModEffect(BaseEffect):
+class CritChanceEffect(BaseEffect):
     name = "Critmod"
 
     def __init__(self, scene, target, level):

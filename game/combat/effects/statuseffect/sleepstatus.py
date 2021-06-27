@@ -12,7 +12,6 @@ class Sleep(BaseEffect):
         self.spd_on_action = 10
         self.target = target
         self.counter = self.scene.board.random_int(1, 5)
-        self.snore = False
 
     def on_action(self):
         if self.scene.board.user == self.target:
@@ -29,5 +28,5 @@ class Sleep(BaseEffect):
                         particle=self.name,
                     )
                     self.counter -= 1
-                    return False, (not self.snore), False
+                    return False, True, False
         return False, False, False

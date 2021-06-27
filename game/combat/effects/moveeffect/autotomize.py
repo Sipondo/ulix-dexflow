@@ -1,5 +1,4 @@
 from .basemoveeffect import BaseMoveEffect
-from game.combat.effects.partialeffect.statchange import StatChange
 from game.combat.effects.statuseffect.autotomizeeffect import AutotomizeEffect
 
 

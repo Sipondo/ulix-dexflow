@@ -47,15 +47,14 @@ class CombatBoard:
 
     def get_actor(self, target):
         # Get actor from (action) tuple
-        print(target)
         return self.teams[target[0]][target[1]][0]
+
+    def get_hp(self, target):
+        return self.teams[target[0]][target[1]][1]
 
     def get_action_priority(self, action):
         # TODO: not just priority
         return action.priority
-
-    def from_flat_damage(self, flat_dmg, target):
-        return flat_dmg / self.get_actor(target).hp
 
     def random_int(self, a, b):
         return random.randint(a, b)
@@ -69,6 +68,9 @@ class CombatBoard:
         self.particle = particle
         self.battle_end = battle_end
         self.particle_miss = particle_miss
+
+    def set_hp(self, target, hp):
+        self.teams[target[0]][target[1]][1] = hp
 
     def set_active(self, new_active):
         self.actives[new_active[0]] = new_active[1]

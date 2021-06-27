@@ -9,6 +9,8 @@ from .freezestatus import Freeze
 from .confusionstatus import Confusion
 from .infatuationstatus import Infatuation
 from .safeguardstatus import Safeguard
+from .miststatus import Mist
+from .tailwindstatus import Tailwind
 
 
 SLEEP = Sleep
@@ -22,3 +24,5 @@ FREEZE = Freeze
 CONFUSION = Confusion
 INFATUATION = Infatuation
 SAFEGUARD = Safeguard
+MIST = Mist
+TAILWIND = Tailwind

@@ -2,6 +2,7 @@ from .combatfighter import CombatFighter
 
 import numpy as np
 import numbers
+import random
 
 
 class PokeFighter(CombatFighter):
@@ -24,6 +25,7 @@ class PokeFighter(CombatFighter):
         ]
 
         self.level = 100
+        self.gender = random.choice(["Male", "Female", "Genderless"])
 
         self.set_stats(fighter)
 

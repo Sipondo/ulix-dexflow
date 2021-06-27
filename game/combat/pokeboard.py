@@ -22,10 +22,12 @@ class PokeBoard(CombatBoard):
         x, hp = self.teams[target[0]][target[1]]
         hp -= damage
         self.teams[target[0]][target[1]] = (x, hp)
+        for effect in self.scene.get_effects_on_target(target):
+            effect.on_damage(damage)
 
     def inflict_status(self, status, user, target):
         for effect in self.scene.get_effects_on_target(target):
-            if not effect.on_status(target):
+            if effect.on_status(target):
                 return
         status_effect = status(self.scene, user, target)
         self.scene.add_effect(status_effect)
@@ -48,9 +50,6 @@ class PokeBoard(CombatBoard):
 
     def get_active_round(self, team):
         return self.actives[team][1]
-
-    def get_weather_acc_change(self, weather, move_name):
-        return self.scene.game.m_pbs.get_weather_acc_change(weather, move_name)
 
     @property
     def actor_1(self):

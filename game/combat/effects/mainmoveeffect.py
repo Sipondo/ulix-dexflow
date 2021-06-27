@@ -19,6 +19,7 @@ class MainMove(BaseEffect):
         self.move_cat = move.damagecat
         self.power = move.power
         self.accuracy = move.accuracy
+        self.abs_acc = False
         self.perfect_accuracy = True if move.accuracy == 0 else False
 
         # added effects
@@ -50,21 +51,21 @@ class MainMove(BaseEffect):
                 if x.name == "Statmod"
             ]:
                 acc /= eva_mod
+            acc = 1 if self.abs_acc else acc
             if self.scene.board.random_roll() > ((self.accuracy / 100) * acc):
                 self.scene.board.particle_miss = True
                 self.scene.add_effect(GenericEffect(self.scene, "But it missed!"))
                 return False
-        if self.power > 0:
-            print("I have power!")
+        if self.power > 1:
             # CRITS
             crit_chance = 0.04167
             crit_total = 0
             if crit_level := [
                 x.level
-                for x in self.scene.get_effects_by_name("Critmod")
-                if x.target == self.target
+                for x in self.scene.get_effects_on_target(self.user)
+                if x.name == "Critmod"
             ]:
-                crit_total += crit_level
+                crit_total += crit_level[0]
             if crit_total == 1:
                 crit_chance = 0.125
             if crit_total == 2:
@@ -72,20 +73,25 @@ class MainMove(BaseEffect):
             if crit_total > 2:
                 crit_chance = 1
             crit = self.scene.board.random_roll() < crit_chance
-
             # Calculate move dmg/effectiveness etc.
             return self.move_damage(crit=crit)
         return True
 
     def move_damage(self, crit=False):
+        # mon stats
         user_mon = self.scene.board.get_actor(self.user)
         target_mon = self.scene.board.get_actor(self.target)
+
+        # move type mods
         stab = 1
         if self.type in (user_mon.type_1, user_mon.type_2):
             stab = 1.5
         move_effectiveness = self.get_move_effectiveness(
             self.type, target_mon.type_1, target_mon.type_2
         )
+        for effect in self.scene.get_effects_on_target(self.target):
+            if effect.on_hit(self):
+                return False
         if move_effectiveness == 0:
             return False
 
@@ -106,6 +112,12 @@ class MainMove(BaseEffect):
             for effect in [x for x in target_effects if x.name == "Statmod"]:
                 def_mod *= effect.stat_mod[3]
 
+        if crit:
+            if atk_mod < 1:
+                atk_mod = 0
+            if def_mod > 1:
+                def_mod = 0
+
         # damage
         damage = (0.4 * user_mon.level + 2) * self.power
         damage *= (
@@ -116,6 +128,7 @@ class MainMove(BaseEffect):
         damage = damage / 50 + 2
         damage *= move_effectiveness * stab
         if crit:
+            # TODO add crit damage mods
             self.scene.add_effect(GenericEffect(self.scene, "Critical hit!"))
             damage *= 1.5
         damage *= 1 - (self.scene.board.random_roll() * 0.15)

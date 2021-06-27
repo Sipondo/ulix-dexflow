@@ -8,6 +8,7 @@ class BaseEffect(abc.ABC):
     def __init__(self, scene):
         self.scene = scene
         self.done = False
+        self.skip = False
         self.target = "Global"
         self.spd_after_select = 0
         self.spd_before_action = 0
@@ -39,11 +40,20 @@ class BaseEffect(abc.ABC):
     def before_end(self):
         return False, False, False
 
-    def on_hit(self):
-        return False, False, False
+    def on_hit(self, move):
+        return False
+
+    def on_damage(self, damage):
+        pass
 
     def on_status(self, target):
-        return True
+        return False
+
+    def on_stat_change(self, target):
+        return False
+
+    def on_stat_request(self, target, stat):
+        return None
 
     def on_delete(self):
         pass
