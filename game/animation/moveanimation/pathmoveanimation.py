@@ -9,6 +9,9 @@ class PathMoveAnimation(BaseMoveAnimation):
     def continue_move(self, time, frame_time):
         self.start = time
         self.stop = self.start + self.duration
-        self.direction = self.path.pop()
-        self.direction = (self.direction[0], -self.direction[1])
+        # print(self.path)
+        self.direction = self.path.pop(0)
         self.on_enter()
+
+    def conditions(self):
+        return self.entity.check_collision(self.path[0])

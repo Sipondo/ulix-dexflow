@@ -16,12 +16,13 @@ emap = {
 }
 
 SOUND_EFFECT_CHANNELS = 8
+VOLUME = 0.5
 
 
 class AudioRenderer:
     def __init__(self, gui):
         self.game = gui
-        self.silent = True
+        self.silent = False
 
         self.bgm_player = pyglet.media.Player()
         self.current_music = ""
@@ -47,7 +48,7 @@ class AudioRenderer:
         try:
             # name = "ME/Battle victory.ogg"
             self.se_player.loop = False
-            self.se_player.volume = 0.4
+            self.se_player.volume = 0.4 * VOLUME
             # sound = pyglet.media.load(str(self.p_audio / name), streaming=True)
             if name not in self.cache_se:
                 self.cache_se[name] = self.game.m_res.get_sound(name)
@@ -75,20 +76,22 @@ class AudioRenderer:
     def play_music(self, name):
         if self.silent:
             return
-        try:
-            if self.current_music != (self.p_audio / name).stem:
-                # name = "ME/Battle victory.ogg"
-                self.bgm_player.loop = True
-                self.bgm_player.volume = 0.4
-                # music = pyglet.media.load(str(self.p_audio / name), streaming=True)
-                music = self.game.m_res.get_sound(name)
+        if self.current_music != name:
+            # name = "ME/Battle victory.ogg"
+            # self.bgm_player.loop = True
+            # self.bgm_player.eos_action = "loop"
+            self.bgm_player.volume = 0.4 * VOLUME
+            # music = pyglet.media.load(str(self.p_audio / name), streaming=True)
+            music = self.game.m_res.get_sound(name)
+            if music is not None:
+                self.bgm_player.queue(music)
                 self.bgm_player.queue(music)
                 if self.bgm_player.playing:
                     self.bgm_player.next_source()
                 self.bgm_player.play()
-            self.current_music = (self.p_audio / name).stem
-        except Exception as e:
-            print("Music exception:", e)
+                self.current_music = name
+            else:
+                print("MUSIC NOT FOUND: ", name)
 
     @property
     def se_player(self):

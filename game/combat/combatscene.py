@@ -84,8 +84,6 @@ class CombatScene:
                 for x in sorted(self.effects, key=lambda x: -x.spd_on_action)
                 if not x.done
             ]:
-
-                print(effects)
                 skip = self.run_effect(effects[0], effects[0].on_action)
                 if skip:
                     for effect in self.get_effects_on_target(move_effect.user):

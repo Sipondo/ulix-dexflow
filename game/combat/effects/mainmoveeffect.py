@@ -24,8 +24,13 @@ class MainMove(BaseEffect):
         # added effects
         self.effects = []
         # TEMP
-        for func in [move.function]:
-            move_effect = self.scene.effect_lib[func](self.scene, self)
+        for func in move.function:
+            function_args = func.split(" ")
+            if len(function_args) > 1:
+                func, args = function_args
+                move_effect = self.scene.effect_lib[func](self.scene, self, *args)
+            else:
+                move_effect = self.scene.effect_lib[func](self.scene, self)
             self.effects.append(move_effect)
             self.scene.effects.append(move_effect)
 
@@ -104,9 +109,9 @@ class MainMove(BaseEffect):
         # damage
         damage = (0.4 * user_mon.level + 2) * self.power
         damage *= (
-            ((user_mon.stats[1]*atk_mod) / (target_mon.stats[2]*def_mod))
+            ((user_mon.stats[1] * atk_mod) / (target_mon.stats[2] * def_mod))
             if self.type == "Physical"
-            else ((user_mon.stats[1]*atk_mod) / (target_mon.stats[2]*def_mod))
+            else ((user_mon.stats[1] * atk_mod) / (target_mon.stats[2] * def_mod))
         )
         damage = damage / 50 + 2
         damage *= move_effectiveness * stab
@@ -135,8 +140,13 @@ class MainMove(BaseEffect):
                 self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
                 return True, False, False
         if self.move_hit():
+            if self.chance == 0:
+                for effect in self.effects:
+                    effect.after_move()
+                return True, False, False
             for effect in self.effects:
-                effect.after_move()
+                if self.scene.board.random_roll() < self.chance:
+                    effect.after_move()
         return True, False, False
 
     def on_switch(self, target_old, target_new):

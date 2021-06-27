@@ -1,4 +1,4 @@
-from .baseeffect import BaseEffect
+from game.combat.effects.baseeffect import BaseEffect
 
 
 class ChargeEffect(BaseEffect):

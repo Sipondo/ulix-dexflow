@@ -49,8 +49,30 @@ class EntityManager:
                     self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
                     region["f_target_coords"],
                 )
+                self.game.m_act.create_region(
+                    PortalEntity,
+                    (
+                        floor(region["location"][0] / 16) - offset[0],
+                        ceil(region["location"][1] // 16) - offset[1],
+                    ),
+                    (region["width"] // 16, region["height"] // 16),
+                    None,
+                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
+                    region["f_target_coords"],
+                )
             elif region["identifier"] == "PortalConnection":
                 self.create_region(
+                    PortalConnectionEntity,
+                    (
+                        floor(region["location"][0] / 16) - offset[0],
+                        ceil(region["location"][1] // 16) - offset[1],
+                    ),
+                    (region["width"] // 16, region["height"] // 16),
+                    region["f_direction"],
+                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
+                    region["f_target_coords"],
+                )
+                self.game.m_act.create_region(
                     PortalConnectionEntity,
                     (
                         floor(region["location"][0] / 16) - offset[0],

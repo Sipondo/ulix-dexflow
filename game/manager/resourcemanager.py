@@ -251,11 +251,12 @@ class ResourceManager:
         return img.reshape(((4, img.shape[1], img.shape[0])))
 
     def get_sound(self, pth):
+        pth = self.p_audio / pth
         pth = self.resolve_resource_path(pth)
+        if pth is None:
+            return pth
         if pth.stem not in self.audiocache:
-            self.audiocache[pth.stem] = pyglet.media.load(
-                str(self.p_audio / pth), streaming=False
-            )
+            self.audiocache[pth.stem] = pyglet.media.load(str(pth), streaming=False)
         return self.audiocache[pth.stem]
 
     def get_world_data(self):

@@ -51,26 +51,48 @@ class BattleRender:
         # Rendering
         self.render_prog = self.game.m_res.get_program("texture")
         self.render_prog["texture0"].value = 0
+
+        self.render_prog_neg = self.game.m_res.get_program("negative_blend")
+        self.render_prog_neg["texture0"].value = 0
+        self.render_prog_neg["texture1"].value = 1
         self.quad_fs = geometry.quad_fs()
 
         # RGBA color/diffuse layer for alpha
         self.alpha_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
         self.alpha_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
 
+        # RGBA color/diffuse layer for anti
+        self.anti_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
+        self.anti_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
+
         # RGBA color/diffuse layer for solid
         self.solid_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
         self.solid_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
 
+        # RGBA color/diffuse layer for solid
+        self.final_diffuse = self.ctx.texture(self.game.resolution_render, 4)
+        self.final_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
+
         # Textures for storing depth values
         self.alpha_depth = self.ctx.depth_texture(self.game.resolution_combat_particles)
+        self.final_depth = self.ctx.depth_texture(self.game.resolution_render)
         # self.solid_depth = self.ctx.depth_texture(self.game.resolution_combat_particles)
         # Create a framebuffer we can render to
         self.alpha_offscreen = self.ctx.framebuffer(
             color_attachments=[self.alpha_diffuse,], depth_attachment=self.alpha_depth,
         )
         # Create a framebuffer we can render to
+        self.anti_offscreen = self.ctx.framebuffer(
+            color_attachments=[self.anti_diffuse,], depth_attachment=self.alpha_depth,
+        )
+        # Create a framebuffer we can render to
         self.solid_offscreen = self.ctx.framebuffer(
             color_attachments=[self.solid_diffuse,], depth_attachment=self.alpha_depth,
+        )
+
+        # Create a framebuffer we can render to
+        self.final_offscreen = self.ctx.framebuffer(
+            color_attachments=[self.final_diffuse,], depth_attachment=self.final_depth,
         )
 
     def get_loc_fighter(self, team, base):
@@ -118,7 +140,7 @@ class BattleRender:
     def set_movement(self, team, position, speed, recover):
         self.bmove.set_movement(team, position, speed, recover)
 
-    def do_particle(self, name, target, miss=False):
+    def do_particle(self, name, user, target, miss=False):
         if name:
             name = name.replace(" ", "-")
             if miss:
@@ -145,10 +167,12 @@ class BattleRender:
         self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
         self.prog_bg["Brightness"] = self.dark
         self.render_prog["Contrast"] = 3.0 - 2 * self.dark
+        self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
         self.camera.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
-        self.prog_bg["Shake"] = self.camera.shake
-        self.render_prog["Shake"] = self.camera.shake
-        self.prog["Shake"] = self.camera.shake * 6  # TODO: this is a temporary fix
+        self.prog_bg["Shake"] = 0  # self.camera.shake
+        self.render_prog["Shake"] = 0  # self.camera.shake
+        self.render_prog_neg["Shake"] = self.camera.shake
+        self.prog["Shake"] = 0  # self.camera.shake * 6  # TODO: this is a temporary fix
 
         # TODO
         """redo:
@@ -169,7 +193,10 @@ class BattleRender:
         # Clear
         self.ctx.clear()
         self.alpha_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        self.anti_offscreen.clear(0.0, 0.0, 0.0, 0.0)
         self.solid_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        self.final_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        self.final_offscreen.use()
 
         # Render main screen base
         self.render_background()
@@ -193,7 +220,6 @@ class BattleRender:
         # ### Aggregate picture
         self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
         self.ctx.blend_equation = moderngl.FUNC_ADD
-        self.game.offscreen.use()
 
         # Solid
         self.ctx.disable(moderngl.BLEND)
@@ -205,9 +231,24 @@ class BattleRender:
         self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
         self.ctx.enable(moderngl.BLEND)
         self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
+        # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
         self.alpha_diffuse.use(location=0)
         self.quad_fs.render(self.render_prog)
 
+        # Anti
+        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
+        self.ctx.enable(moderngl.BLEND)
+        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
+        # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
+        self.anti_diffuse.use(location=1)
+        # self.quad_fs.render(self.render_prog)
+
+        self.game.offscreen.use()
+        self.final_diffuse.use(location=0)
+        self.render_prog_neg["Contrast"] = 1.0
+        # self.ctx.disable(moderngl.BLEND)
+        # self.ctx.blend_func = moderngl.ONE, moderngl.ONE
+        self.quad_fs.render(self.render_prog_neg)
         self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
         self.ctx.blend_equation = moderngl.FUNC_ADD
         return locking
