@@ -20,8 +20,12 @@ from game.manager.dbmanager import DbManager
 from game.manager.pbsmanager import PbsManager
 from game.manager.hotkeymanager import HotkeyManager
 from game.manager.entitymanager import EntityManager
-from game.manager.aimanager import AiManager
+
 from game.manager.eventmanager import EventManager
+from game.manager.actionmanager import ActionManager
+from game.manager.regionmanager import RegionManager
+
+from game.manager.aimanager import AiManager
 from game.manager.cameramanager import CameraManager
 
 # Swap these to get new/old particles
