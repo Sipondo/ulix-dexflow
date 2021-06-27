@@ -27,3 +27,4 @@ class BadPoison(BaseEffect):
 
     def on_switch(self, old_target, new_target):
         self.count = 1
+        return False, False, False

@@ -10,5 +10,5 @@ class MinimizeEffect(BaseEffect):
 
     def on_switch(self, target_old, target_new):
         if self.target == target_old:
-            return True
-        return False
+            return True, False, False
+        return False, False, False

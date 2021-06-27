@@ -29,4 +29,5 @@ class BaseStatChangeEffect(BaseEffect):
 
     def on_switch(self, target_old, target_new):
         if target_old == self.target:
-            return True
+            return True, False, False
+        return False, False, False

@@ -7,5 +7,5 @@ class Antiminimize(BaseMoveEffect):
         if "Minimize" in [x.name for x in target_effects]:
             self.move.perfect_accuracy = True
             self.move.power *= 2
-            return True
+        return True
 

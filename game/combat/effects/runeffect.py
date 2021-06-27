@@ -9,7 +9,11 @@ class RunEffect(BaseEffect):
 
     def on_action(self):
         # TODO speed check of both pokemon
-        self.scene.add_effect(GenericEffect(self.scene, "BLA ran away!"))
+        self.scene.add_effect(
+            GenericEffect(
+                self.scene,
+                f"{self.scene.board.get_actor(self.scene.board.get_active(0))} ran away!",
+            )
+        )
         self.scene.add_effect(EndBattleEffect(self.scene))
-
         return False, False, True

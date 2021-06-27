@@ -10,7 +10,6 @@ class CombatFighter:
 
         self.name = str(fighter["name"])
         self.id = fighter.name
-        self.hp = 350
 
         self.starting_hp = fighter.current_hp
 

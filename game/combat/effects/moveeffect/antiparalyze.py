@@ -6,4 +6,4 @@ class Antiparalyze(BaseMoveEffect):
         target_effects = self.scene.get_effects_on_target(self.move.target)
         if "Paralysis" in [x.name for x in target_effects]:
             self.move.power *= 2
-            return True
+        return True

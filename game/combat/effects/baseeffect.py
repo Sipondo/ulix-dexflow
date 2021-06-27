@@ -23,7 +23,10 @@ class BaseEffect(abc.ABC):
         return False, False, False
 
     def on_switch(self, target_old, target_new):
-        return False
+        return False, False, False
+
+    def on_send_out(self, new_target):
+        return False, False, False
 
     def on_end_turn(self):
         return False, False, False

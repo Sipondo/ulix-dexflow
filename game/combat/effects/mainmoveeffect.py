@@ -147,6 +147,7 @@ class MainMove(BaseEffect):
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
             particle=self.name,
         )
+        print("User:", self.user, "Target:", self.target)
         for effect in self.effects:
             if not effect.before_move():
                 self.scene.board.particle = ""
@@ -165,6 +166,7 @@ class MainMove(BaseEffect):
     def on_switch(self, target_old, target_new):
         if self.target == target_old:
             self.target = target_new
+        return False, False, False
 
     def on_delete(self):
         for effect in self.effects:
