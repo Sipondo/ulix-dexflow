@@ -10,6 +10,7 @@ class EventManager:
         self.interact_entity = None
 
     def check_events(self, time, frame_time):
+        print("Scanning")
         if self.game.maphack:
             return False
         locked = False

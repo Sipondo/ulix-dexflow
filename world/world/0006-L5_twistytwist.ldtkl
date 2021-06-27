@@ -158,6 +158,13 @@
 								"id": "V_String",
 								"params": ["W"]
 							}]
+						},
+						{
+							"__identifier": "on_enter",
+							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__type": "String",
+							"defUid": 387,
+							"realEditorValues": []
 						}
 					]
 				},
@@ -197,6 +204,13 @@
 								"id": "V_String",
 								"params": ["E"]
 							}]
+						},
+						{
+							"__identifier": "on_enter",
+							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__type": "String",
+							"defUid": 387,
+							"realEditorValues": []
 						}
 					]
 				},
@@ -236,6 +250,13 @@
 								"id": "V_String",
 								"params": ["N"]
 							}]
+						},
+						{
+							"__identifier": "on_enter",
+							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__type": "String",
+							"defUid": 387,
+							"realEditorValues": []
 						}
 					]
 				},
@@ -275,6 +296,13 @@
 								"id": "V_String",
 								"params": ["E"]
 							}]
+						},
+						{
+							"__identifier": "on_enter",
+							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__type": "String",
+							"defUid": 387,
+							"realEditorValues": []
 						}
 					]
 				}

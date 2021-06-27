@@ -44,6 +44,8 @@ class BaseMoveAnimation(BaseAnimation):
         return self.lock
 
     def check_continue(self):
+        print("GA IK DOOR?!?!")
+        self.game.m_act.check_regions(self.entity.game_position)
         if (
             self.entity == self.game.m_ent.player
             and self.movement_type == self.entity.movement_type

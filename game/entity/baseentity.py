@@ -35,7 +35,6 @@ class BaseEntity(abc.ABC):
         self.on_enter()
 
     def set_current_sprite(self, sprite):
-        print(sprite)
         self.current_sprite = sprite
 
     def set_position(self, x, y):
@@ -53,7 +52,6 @@ class BaseEntity(abc.ABC):
 
     def check_collision(self, direction):
         x = self.game.m_col.check_collision(self.game_position, direction, self.height)
-        print(x)
         return x
 
     def get_draw(self):

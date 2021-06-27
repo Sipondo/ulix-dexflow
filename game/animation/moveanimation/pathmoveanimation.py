@@ -14,4 +14,16 @@ class PathMoveAnimation(BaseMoveAnimation):
         self.on_enter()
 
     def conditions(self):
-        return self.entity.check_collision(self.path[0])
+        if self.entity.check_collision(self.path[0]):
+            return True
+        path = self.game.m_col.a_star(
+            self.entity.game_position,
+            (27 - self.game.m_col.offset[0], 12 - self.game.m_col.offset[1]),
+            # (self.game_position[0] - 5, self.game_position[1] - 8),
+            next_to=True,
+        )
+        if path is not None:
+            self.path = path
+            self.distance = len(self.path)
+            return True
+        return False
