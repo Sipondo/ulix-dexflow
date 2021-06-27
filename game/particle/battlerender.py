@@ -222,6 +222,7 @@ class BattleRender:
         # ### Aggregate picture
         self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
         self.ctx.blend_equation = moderngl.FUNC_ADD
+        self.final_offscreen.use()
 
         # Solid
         self.ctx.disable(moderngl.BLEND)
