@@ -32,7 +32,7 @@ class HotkeyManager:
         self.keys[key] = name
 
     def key_event(self, key, action, modifiers):
-        request = self.game.m_key.lookup_key(key)
+        request = self.lookup_key(key)
         # print(f"keypress {key}\t{request}\t{action}\t{modifiers}")
 
         if key == self.game.wnd.keys.P and action == self.game.wnd.keys.ACTION_PRESS:

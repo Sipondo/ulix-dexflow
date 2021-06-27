@@ -1,7 +1,7 @@
 from .basemoveeffect import BaseMoveEffect
 
 
-class Weatheraccuracy(BaseMoveEffect):
+class Weatheracc(BaseMoveEffect):
     def before_move(self):
         global_effects = self.scene.get_global_effects()
         for weather in [x.name for x in global_effects if x.type == "Weather"]:
