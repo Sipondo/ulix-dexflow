@@ -175,7 +175,10 @@ class GameStateBattle(BaseGameState):
                 self.particle_test_cooldown = 5.0
         else:
             self.render.do_particle(
-                self.board.particle, self.board.user, self.board.target, miss=self.board.particle_miss
+                self.board.particle,
+                self.board.user,
+                self.board.target,
+                miss=self.board.particle_miss,
             )
 
     def synchronize(self):

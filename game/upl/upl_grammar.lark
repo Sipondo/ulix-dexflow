@@ -18,16 +18,20 @@
 // %import common.WS
 // %ignore WS
 
-?value: [object ("\n" object)*]
-object: say
-say : source ":" command
+?upl: [statement ("\n" statement)*]
+statement : source ":" command
 source : /[a-zA-Z0-9_]+/
-command: function
+command: fcall
     |   string
-function: "move" "(" fargs ")"
-fargs: [string|number ("," (string|number))*]
+
+fcall: function "(" fargs ")"
+function : /[a-zA-Z0-9_]+/
+fargs: [object ("," (object))*]
+
+object: string|number|variable
 string: ESCAPED_STRING
 number: SIGNED_NUMBER
+variable: /[a-zA-Z0-9_.]+/
 
 %import common.ESCAPED_STRING
 %import common.SIGNED_NUMBER

@@ -34,10 +34,11 @@ class PlayerEntity(BaseEntity):
                 self.set_current_sprite((self.movement_type, self.get_offset()))
 
     def after_move(self, time, frame_time):
+        # self.game.m_act.check_regions(self.game_position)
         self.moving = False
-        self.game.m_gst.current_state.lock = self.game.m_evt.check_events(
-            time, frame_time
-        )
+        # self.game.m_gst.current_state.lock = self.game.m_evt.check_events(
+        #     time, frame_time
+        # )
         self.game.m_sav.save("player_pos", self.game_position)
 
         print(
