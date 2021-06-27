@@ -215,7 +215,9 @@ class BattleRender:
         self.render_pokemon(time, frame_time, cutout=True)
 
         # Render
-        locking = self.game.m_par.on_tick(time, frame_time, self.alpha_offscreen)
+        locking = self.game.m_par.on_tick(
+            time, frame_time, self.alpha_offscreen, self.anti_offscreen
+        )
 
         # ### Aggregate picture
         self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
