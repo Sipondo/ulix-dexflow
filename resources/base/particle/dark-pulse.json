@@ -42,8 +42,8 @@
         {
             "id": 2445532551536,
             "title": "Trigger",
-            "pos_x": 340.75,
-            "pos_y": -153.29687500000003,
+            "pos_x": 340.75000000000006,
+            "pos_y": -155.796875,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -58,7 +58,7 @@
                 "field_shake_enabled": false,
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.7",
+                "field_dark": "0.6",
                 "field_dark_speed": "1",
                 "field_dark_speed_enabled": true
             },
@@ -67,8 +67,8 @@
         {
             "id": 2445532553168,
             "title": "Actor",
-            "pos_x": 339.99609375,
-            "pos_y": -81.0,
+            "pos_x": 341.55859375000006,
+            "pos_y": -87.25000000000001,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -161,8 +161,8 @@
         {
             "id": 1290637872240,
             "title": "Emit",
-            "pos_x": -41.191406250000014,
-            "pos_y": -268.8671875000002,
+            "pos_x": -39.941406250000014,
+            "pos_y": -270.1171875000002,
             "inputs": [
                 {
                     "id": 1290637871712,
@@ -192,7 +192,7 @@
                 "field_vel_y": "0",
                 "field_vel_range_y": "1",
                 "field_vel_z": "0.05",
-                "field_vel_range_z": "0.1",
+                "field_vel_range_z": "0.05",
                 "field_rot": 0,
                 "field_rot_range": "360",
                 "field_rot_vel": "720",
@@ -700,7 +700,7 @@
             "id": 1290637871520,
             "title": "Equation",
             "pos_x": 378.12499999999994,
-            "pos_y": -476.5625,
+            "pos_y": -476.56250000000006,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -822,13 +822,13 @@
             "id": 1381231830976,
             "title": "Actor",
             "pos_x": 566.1132812499997,
-            "pos_y": -82.94921874999997,
+            "pos_y": -95.44921874999994,
             "inputs": [],
             "outputs": [],
             "content": {
                 "field_delay": "!start!+1.1",
-                "field_duration": "5",
-                "field_continuous": false,
+                "field_duration": "2",
+                "field_continuous": true,
                 "field_user_enabled": "",
                 "field_user_recover": true,
                 "field_user_speed": 1.0,
@@ -837,11 +837,11 @@
                 "field_user_y": 0,
                 "field_user_z": 0,
                 "field_target_enabled": true,
-                "field_target_recover": true,
+                "field_target_recover": false,
                 "field_target_speed": "1",
                 "field_target_speed_enabled": true,
                 "field_target_x": "1.4",
-                "field_target_y": 0,
+                "field_target_y": "!shake_hit!",
                 "field_target_z": "0"
             },
             "op_code": 3
@@ -870,7 +870,7 @@
             "id": 1381236405392,
             "title": "Trigger",
             "pos_x": 562.5000000000001,
-            "pos_y": -159.99999999999997,
+            "pos_y": -162.49999999999994,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -885,7 +885,7 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": true,
-                "field_dark": "0.7",
+                "field_dark": "0.6",
                 "field_dark_speed": "1",
                 "field_dark_speed_enabled": true
             },
@@ -895,7 +895,7 @@
             "id": 1381231874928,
             "title": "Emit",
             "pos_x": 32.81250000000003,
-            "pos_y": -484.37499999999955,
+            "pos_y": -485.6249999999996,
             "inputs": [
                 {
                     "id": 1381231874352,
@@ -925,10 +925,10 @@
                 "field_vel_y": "0",
                 "field_vel_range_y": "1",
                 "field_vel_z": "0.05",
-                "field_vel_range_z": "0.1",
+                "field_vel_range_z": "0.05",
                 "field_rot": 0,
                 "field_rot_range": "360",
-                "field_rot_vel": "360",
+                "field_rot_vel": "720",
                 "field_rot_vel_range": 0,
                 "field_col_r": "0.01",
                 "field_col_range_r": "0",
@@ -943,7 +943,7 @@
             "id": 1381164885760,
             "title": "Emit",
             "pos_x": -42.18749999999997,
-            "pos_y": -585.9374999999997,
+            "pos_y": -584.6874999999997,
             "inputs": [
                 {
                     "id": 1381235485424,
@@ -973,10 +973,10 @@
                 "field_vel_y": "0",
                 "field_vel_range_y": "1",
                 "field_vel_z": "0.05",
-                "field_vel_range_z": "0.1",
+                "field_vel_range_z": "0.05",
                 "field_rot": 0,
                 "field_rot_range": "360",
-                "field_rot_vel": "360",
+                "field_rot_vel": "720",
                 "field_rot_vel_range": 0,
                 "field_col_r": "0.01",
                 "field_col_range_r": "0",
@@ -990,8 +990,8 @@
         {
             "id": 1381231877952,
             "title": "Emit",
-            "pos_x": 87.49999999999994,
-            "pos_y": -709.3749999999997,
+            "pos_x": 87.49999999999996,
+            "pos_y": -710.9374999999997,
             "inputs": [
                 {
                     "id": 1381231875936,
@@ -1009,7 +1009,7 @@
                 "field_size_range": "0.5",
                 "field_delay": "!start!",
                 "field_duration": "0.1",
-                "field_count": "50",
+                "field_count": "60",
                 "field_pos_x": "-1",
                 "field_pos_range_x": 0,
                 "field_pos_y": 0,
@@ -1034,6 +1034,47 @@
                 "field_col_range_b": "0"
             },
             "op_code": 9
+        },
+        {
+            "id": 2121507739728,
+            "title": "Equation",
+            "pos_x": 628.1249999999999,
+            "pos_y": -384.37499999999994,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "shake_hit",
+                "field_equation": "sin(t*80)*1.2"
+            },
+            "op_code": 7
+        },
+        {
+            "id": 2121509341840,
+            "title": "Actor",
+            "pos_x": 792.1874999999999,
+            "pos_y": -89.0625,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "!start!+3.11",
+                "field_duration": "0.1",
+                "field_continuous": false,
+                "field_user_enabled": "",
+                "field_user_recover": true,
+                "field_user_speed": 1.0,
+                "field_user_speed_enabled": true,
+                "field_user_x": -1,
+                "field_user_y": 0,
+                "field_user_z": 0,
+                "field_target_enabled": true,
+                "field_target_recover": true,
+                "field_target_speed": "1",
+                "field_target_speed_enabled": true,
+                "field_target_x": "!target_x!",
+                "field_target_y": "!target_y!",
+                "field_target_z": "!target_z!"
+            },
+            "op_code": 3
         }
     ],
     "edges": [
