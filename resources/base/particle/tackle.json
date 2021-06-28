@@ -173,7 +173,7 @@
             "id": 2336750645648,
             "title": "Render",
             "pos_x": 142.0937500000001,
-            "pos_y": -83.15624999999983,
+            "pos_y": -85.15624999999983,
             "inputs": [
                 {
                     "id": 2336750646560,
@@ -190,15 +190,17 @@
                 "field_depth": 0,
                 "field_opacity": "0.1",
                 "field_blur_count": 3,
-                "field_blur_delay": "0.2"
+                "field_blur_delay": "0.2",
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
         {
             "id": 2336750647088,
             "title": "Render",
-            "pos_x": 561.5937500000002,
-            "pos_y": -450.4062499999999,
+            "pos_x": 553.5937500000002,
+            "pos_y": -459.4062499999999,
             "inputs": [
                 {
                     "id": 2336750646704,
@@ -215,7 +217,9 @@
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": 3,
-                "field_blur_delay": "0.4"
+                "field_blur_delay": "0.4",
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
