@@ -24,3 +24,6 @@ class StatChange(BasePartialEffect):
             effect = StatModEffect(self.scene, self.target)
             self.scene.add_effect(effect)
             effect.update(self.name, self.modifier, self.absolute_modifier)
+
+    def on_faint(self, target):
+        return self.target == target, False, False
