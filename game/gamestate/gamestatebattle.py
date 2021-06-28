@@ -135,6 +135,8 @@ class GameStateBattle(BaseGameState):
         print("PARTICLES!!!")
 
     def advance_board(self):
+        if self.board.battle_end:
+            self.end_battle()
         if not self.pending_boards:
             if any(self.board.faint):
                 pass  # switch in new guy
@@ -146,17 +148,20 @@ class GameStateBattle(BaseGameState):
         self.board = self.pending_boards.pop(0)
 
         if self.board.actor_1 != self.actor_1:
-            self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
+            if self.board.actor_1 == -1:
+                self.render.set_pokemon(None, 0)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
             self.actor_1 = self.board.actor_1
         if self.board.actor_2 != self.actor_2:
-            self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
+            if self.board.actor_2 == -1:
+                self.render.set_pokemon(None, 1)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
             self.actor_2 = self.board.actor_2
 
         self.need_to_redraw = True
-        if self.board.battle_end:
-            self.end_battle()
 
-        # TODO: do particle self.board.particle
         if self.board.skip:
             self.advance_board()
             return

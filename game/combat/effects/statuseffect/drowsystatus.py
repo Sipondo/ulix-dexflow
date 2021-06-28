@@ -23,4 +23,7 @@ class Drowsy(BaseEffect):
         return False, False, False
 
     def on_switch(self, target_old, target_new):
-        return True, False, False
+        return target_old == self.target, False, False
+
+    def on_faint(self, target):
+        return self.target == target, False, False

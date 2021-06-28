@@ -35,4 +35,7 @@ class Confusion(BaseEffect):
         return False, False, False
 
     def on_switch(self, old_target, new_target):
-        return True, False, False
+        return self.target == old_target, False, False
+
+    def on_faint(self, target):
+        return self.target == target, False, False

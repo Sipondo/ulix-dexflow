@@ -1,5 +1,6 @@
 from .baseeffect import BaseEffect
 from .returneffect import ReturnEffect
+from .endbattleeffect import EndBattleEffect
 
 
 class FaintEffect(BaseEffect):
@@ -14,6 +15,7 @@ class FaintEffect(BaseEffect):
             particle="Faint",
         )
         end = True
+        self.scene.on_faint_effects(self.target)
         self.scene.add_effect(
             ReturnEffect(self.scene, self.target)
         )
@@ -21,6 +23,7 @@ class FaintEffect(BaseEffect):
             mon_hp = self.scene.board.get_hp((self.target[0], i))
             if mon_hp > 0:
                 end = False
+        self.scene.add_effect(EndBattleEffect(self.scene))
         return True, False, end
 
     def on_end_turn(self):

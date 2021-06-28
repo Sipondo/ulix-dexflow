@@ -26,5 +26,9 @@ class BadPoison(BaseEffect):
         return False, False, False
 
     def on_switch(self, old_target, new_target):
-        self.count = 1
+        if self.target == old_target:
+            self.count = 1
         return False, False, False
+
+    def on_faint(self, target):
+        return self.target == target, False, False

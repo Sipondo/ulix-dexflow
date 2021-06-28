@@ -3,6 +3,7 @@ from .pokeboard import PokeBoard
 from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
 from .effects.switcheffect import SwitchEffect
+from .effects.balleffect import BallEffect
 
 import types
 import importlib
@@ -135,9 +136,6 @@ class CombatScene:
             delete, skip, end = f(*args)
         else:
             delete, skip, end = f()
-        print("all effects:", self.effects)
-        print("current effect:", effect, f)
-        print("hp", [board.actor_1[1] for board in self.board_history])
         if delete:
             self.delete_effect(effect)
         if skip:
@@ -155,6 +153,8 @@ class CombatScene:
             effect = RunEffect(self)
         elif action.action_name == "swap":
             effect = SwitchEffect(self, action)
+        elif action.action_name == "ball":
+            effect = BallEffect(self, action)
         self.effects.append(effect)
         return effect
 
@@ -167,6 +167,12 @@ class CombatScene:
     def on_send_out_effects(self, target):
         for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_send_out)]:
             delete = self.run_effect(effect, effect.on_send_out, target)
+            if delete:
+                self.delete_effect(effect)
+
+    def on_faint_effects(self, target):
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_faint)]:
+            delete = self.run_effect(effect, effect.on_faint, target)
             if delete:
                 self.delete_effect(effect)
 

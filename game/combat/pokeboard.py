@@ -67,8 +67,12 @@ class PokeBoard(CombatBoard):
 
     @property
     def actor_1(self):
+        if self.actives[0][0] == -1:
+            return -1
         return self.teams[0][self.actives[0][0]]
 
     @property
     def actor_2(self):
+        if self.actives[1][0] == -1:
+            return -1
         return self.teams[1][self.actives[1][0]]
