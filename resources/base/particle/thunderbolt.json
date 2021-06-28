@@ -247,8 +247,8 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 186.5,
-            "pos_y": 115.375,
+            "pos_x": 467.7499999999999,
+            "pos_y": 160.375,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -273,8 +273,8 @@
         {
             "id": 1732260790336,
             "title": "Camera",
-            "pos_x": -115.0,
-            "pos_y": 135.0,
+            "pos_x": 197.49999999999994,
+            "pos_y": 254.99999999999997,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -291,8 +291,8 @@
         {
             "id": 1732260790672,
             "title": "Camera",
-            "pos_x": -94.00000000000001,
-            "pos_y": 238.00000000000006,
+            "pos_x": 218.49999999999994,
+            "pos_y": 358.0,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -344,8 +344,8 @@
         {
             "id": 2574248078736,
             "title": "Render",
-            "pos_x": 156.0,
-            "pos_y": -215.0,
+            "pos_x": 144.28125,
+            "pos_y": -209.140625,
             "inputs": [
                 {
                     "id": 2574251264416,
@@ -362,7 +362,9 @@
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": 3,
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -394,8 +396,8 @@
         {
             "id": 2574251263456,
             "title": "Render",
-            "pos_x": -401.0,
-            "pos_y": 136.0,
+            "pos_x": -395.14062500000006,
+            "pos_y": 102.79687500000003,
             "inputs": [
                 {
                     "id": 2574251101200,
@@ -412,7 +414,9 @@
                 "field_depth": 0,
                 "field_opacity": "0.1",
                 "field_blur_count": 3,
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -499,8 +503,8 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 131.0,
-            "pos_y": 13.0,
+            "pos_x": 412.2499999999999,
+            "pos_y": 58.0,
             "inputs": [],
             "outputs": [],
             "content": {
