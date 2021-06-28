@@ -298,8 +298,8 @@
         {
             "id": 1290637812784,
             "title": "Render",
-            "pos_x": -106.56250000000001,
-            "pos_y": 96.56250000000001,
+            "pos_x": -106.5625,
+            "pos_y": 94.60937500000003,
             "inputs": [
                 {
                     "id": 1290639999520,
@@ -511,7 +511,7 @@
                 "field_file": "light_01",
                 "field_equation": "Anti",
                 "field_depth": 0,
-                "field_opacity": "0.1",
+                "field_opacity": "1.0",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1
             },
@@ -632,7 +632,7 @@
                 "field_file": "smoke_08",
                 "field_equation": "Anti",
                 "field_depth": 0,
-                "field_opacity": "0.1",
+                "field_opacity": "1.0",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1
             },
