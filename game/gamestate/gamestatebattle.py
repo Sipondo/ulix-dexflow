@@ -111,8 +111,18 @@ class GameStateBattle(BaseGameState):
 
     def reg_action(self, action):
         # TODO: src, trg
+
         self.selection = 0
         actions = []
+        if self.particle_test:
+            tackle = self.game.m_pbs.get_move(399).copy()
+            tackle.power = 0
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
         user = (0, 0)
         target = (1, 0)
         if action[0] == "swap":
@@ -124,9 +134,10 @@ class GameStateBattle(BaseGameState):
         actions.append(
             (action, user, target)
         )
-        actions.append(
-            (("attack", self.actor_2[0].actions[0]), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-        )
+        if self.particle_test:
+            actions.append(
+                (("attack", self.actor_2[0].actions[0]), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
         self.state = states["action"]
         self.pending_boards = self.combat.run_scene(actions)
         self.advance_board()
