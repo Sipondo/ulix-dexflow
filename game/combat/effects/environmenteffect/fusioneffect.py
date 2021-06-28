@@ -7,6 +7,7 @@ class FusionEffect(BaseEffect):
     def __init__(self, scene, move):
         super().__init__(scene)
         self.move = move
+        self.target = "Global"
         self.action = 1
 
     def after_action(self):

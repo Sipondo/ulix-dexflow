@@ -7,4 +7,4 @@ class Antidig(BaseMoveEffect):
         if dig_effect := [x for x in target_effects if x.name == "Dig"]:
             dig_effect[0].skip = True
             self.move.power *= 2
-            return True
+        return True

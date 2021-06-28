@@ -15,7 +15,7 @@ class PartyMember:
         self.data = fighter.copy()
         self.level = 100
         self.flavor = fighter.pokedex
-        self.current_hp = 0.6
+        self.current_hp = 1.0
 
         self.moves = []
         # TODO:

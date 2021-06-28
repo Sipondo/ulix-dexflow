@@ -1,4 +1,5 @@
 import random
+import copy
 
 
 class CombatBoard:
@@ -22,7 +23,11 @@ class CombatBoard:
             self.actives.append(0)
 
     def from_board(self, board):
-        self.teams = board.teams.copy()
+        for index, team in enumerate(board.teams):
+            self.teams.append([])
+            for member in team:
+                member = (member[0], member[1])
+                self.teams[index].append(member)
         self.actives = board.actives.copy()
         self.action = board.action
         self.user = board.user

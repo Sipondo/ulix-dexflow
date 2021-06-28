@@ -8,9 +8,10 @@ class ChargeEffect(BaseEffect):
         self.count = 1
 
     def on_switch(self, target_old, target_new):
-        if self.target == target_old:
-            return True
-        return False
+        return self.target == target_old, False, False
+
+    def on_faint(self, target):
+        return self.target == target, False, False
 
     def on_end_turn(self):
         if self.count == 0:

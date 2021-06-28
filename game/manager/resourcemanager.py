@@ -65,7 +65,6 @@ class ResourceManager:
                 if file.stem not in names:
                     paths.append(file)
                     names.append(file.stem)
-        print(names)
         return (paths, names)
 
     # def get_splash(self, resource_name):

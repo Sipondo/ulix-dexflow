@@ -32,6 +32,7 @@ class Infatuation(BaseEffect):
         return False, False, False
 
     def on_switch(self, target_old, target_new):
-        if target_old == self.user or target_old == self.target:
-            return True, False, False
+        return (target_old == self.user or target_old == self.target), False, False
 
+    def on_faint(self, target):
+        return (target == self.user or target == self.target), False, False

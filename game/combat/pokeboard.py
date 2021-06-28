@@ -1,29 +1,43 @@
 from .combatboard import CombatBoard
 from .effects.genericeffect import GenericEffect
+from .effects.fainteffect import FaintEffect
 
 import math
+import pandas as pd
 
 
 class PokeBoard(CombatBoard):
     def __init__(self, scene):
         super().__init__(scene)
+        self.legal = pd.DataFrame(
+            columns=["Pokemon", "Team", "Action", "Legal"]
+        )
+        self.faint = []
 
     def copy(self):
         newstate = PokeBoard(self.scene)
         newstate.from_board(self)
+        newstate.faint = self.faint.copy()
+        newstate.legal = self.legal.copy()
         return newstate
 
     def first_init(self, *teams):
         for team in teams:
-            self.teams.append([(x, math.floor(x.stats[0]*x.starting_hp)) for x in team])
+            self.teams.append(
+                [(x, math.floor(x.stats[0] * x.starting_hp)) for x in team]
+            )
             self.actives.append((0, 0))
+            self.faint.append(False)
 
     def inflict_damage(self, target, damage):
         x, hp = self.teams[target[0]][target[1]]
+        damage = min(hp, damage)
         hp -= damage
         self.teams[target[0]][target[1]] = (x, hp)
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
+        if self.teams[target[0]][target[1]][1] < 1:
+            self.scene.add_effect(FaintEffect(self.scene, target))
 
     def inflict_status(self, status, user, target):
         for effect in self.scene.get_effects_on_target(target):
@@ -53,8 +67,12 @@ class PokeBoard(CombatBoard):
 
     @property
     def actor_1(self):
+        if self.actives[0][0] == -1:
+            return -1
         return self.teams[0][self.actives[0][0]]
 
     @property
     def actor_2(self):
-        return self.teams[1][self.actives[0][0]]
+        if self.actives[1][0] == -1:
+            return -1
+        return self.teams[1][self.actives[1][0]]

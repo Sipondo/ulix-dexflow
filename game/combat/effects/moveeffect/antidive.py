@@ -7,4 +7,4 @@ class Antidive(BaseMoveEffect):
         if dive_effect := [x for x in target_effects if x.name == "Dive"]:
             dive_effect[0].skip = True
             self.move.power *= 2
-            return True
+        return True

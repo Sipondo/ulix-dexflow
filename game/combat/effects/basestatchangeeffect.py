@@ -28,5 +28,7 @@ class BaseStatChangeEffect(BaseEffect):
         return None
 
     def on_switch(self, target_old, target_new):
-        if target_old == self.target:
-            return True
+        return self.target == target_old, False, False
+
+    def on_faint(self, target):
+        return self.target == target, False, False

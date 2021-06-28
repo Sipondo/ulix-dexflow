@@ -2,6 +2,8 @@ from .pokefighter import PokeFighter
 from .pokeboard import PokeBoard
 from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
+from .effects.switcheffect import SwitchEffect
+from .effects.balleffect import BallEffect
 
 import types
 import importlib
@@ -50,9 +52,9 @@ class CombatScene:
         # print("Actions:", actions)
 
         # After select
-        for effect in sorted(self.effects, key=lambda x: -x.spd_after_select):
-            self.run_effect(effect, effect.after_select)
-        self.reset_effects_done()
+        # for effect in sorted(self.effects, key=lambda x: -x.spd_after_select):
+        #     self.run_effect(effect, effect.after_select)
+        # self.reset_effects_done()
 
         # Spawn all action effects
         actions.sort(key=lambda x: self.board.get_action_priority(x))
@@ -60,23 +62,22 @@ class CombatScene:
         for action in actions:
             move_effect = self.spawn_action_effect(action)
             action_effects.append((action, move_effect))
-
         while action_effects:
             self.board.action, move_effect = action_effects.pop()
             # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
-            self.board.set_direction(self.board.action)
+            self.board.set_direction(move_effect)
 
-            skip = False
+            # skip = False
 
             # Before action
-            for effect in sorted(self.effects, key=lambda x: -x.spd_before_action):
-                skip = self.run_effect(effect, effect.before_action)
-                if skip:
-                    break
-
-            self.reset_effects_done()
-            if skip:
-                continue
+            # for effect in sorted(self.effects, key=lambda x: -x.spd_before_action):
+            #     skip = self.run_effect(effect, effect.before_action)
+            #     if skip:
+            #         break
+            #
+            # self.reset_effects_done()
+            # if skip:
+            #     continue
 
             # On action
             while effects := [
@@ -108,8 +109,8 @@ class CombatScene:
             #         continue
         self.board.reset_action()
         # Before end
-        for effect in sorted(self.effects, key=lambda x: -x.spd_before_end):
-            self.run_effect(effect, effect.before_end)
+        # for effect in sorted(self.effects, key=lambda x: -x.spd_before_end):
+        #     self.run_effect(effect, effect.before_end)
 
         self.reset_effects_done()
         self.reset_effects_skip()
@@ -128,10 +129,13 @@ class CombatScene:
         for effect in self.effects:
             effect.skip = True
 
-    def run_effect(self, effect, f):
+    def run_effect(self, effect, f, *args):
         effect.done = True
         self.new_board()
-        delete, skip, end = f()
+        if args:
+            delete, skip, end = f(*args)
+        else:
+            delete, skip, end = f()
         if delete:
             self.delete_effect(effect)
         if skip:
@@ -146,27 +150,31 @@ class CombatScene:
         if action.action_name == "attack":
             effect = MainMove(self, action)
         elif action.action_name == "flee":
-            effect = RunEffect(self)
+            effect = RunEffect(self, action.user, action.target)
+        elif action.action_name == "swap":
+            effect = SwitchEffect(self, action)
+        elif action.action_name == "catch":
+            effect = BallEffect(self, action)
         self.effects.append(effect)
         return effect
 
-    def on_switch_effects(self):
-        while effects := [
-            x
-            for x in sorted(self.effects, key=lambda x: -x.spd_on_switch)
-            if not x.done
-        ]:
-            delete = self.run_effect(effects[0], effects[0].on_switch)
+    def on_switch_effects(self, old, new):
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_switch)]:
+            delete = self.run_effect(effect, effect.on_switch, old, new)
             if delete:
-                self.delete_effect((effects[0]))
+                self.delete_effect(effect)
 
-    def on_send_out_effects(self):
-        while effects := [
-            x
-            for x in sorted(self.effects, key=lambda x: -x.spd_on_send_out)
-            if not x.done
-        ]:
-            self.run_effect(effects[0], effects[0].on_send_out)
+    def on_send_out_effects(self, target):
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_send_out)]:
+            delete = self.run_effect(effect, effect.on_send_out, target)
+            if delete:
+                self.delete_effect(effect)
+
+    def on_faint_effects(self, target):
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_faint)]:
+            delete = self.run_effect(effect, effect.on_faint, target)
+            if delete:
+                self.delete_effect(effect)
 
     def get_effects(self):
         return self.effects
@@ -212,12 +220,19 @@ class CombatScene:
             # action.description
             # action.user
             # action.target
+            if name == "swap":
+                action = types.SimpleNamespace()
+                action.action_name = "swap"
+                action.user = user
+                action.target = target
+                action.priority = 6
+                actions.append(action)
             if name == "flee":
                 # TODO fix a RunAction object
                 action = types.SimpleNamespace()
                 action.action_name = "flee"
-                action.user = None
-                action.target = None
+                action.user = user
+                action.target = target
                 action.priority = 6
                 actions.append(action)
             if name == "attack":

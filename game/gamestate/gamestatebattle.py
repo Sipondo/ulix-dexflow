@@ -17,12 +17,14 @@ class GameStateBattle(BaseGameState):
         self.board = self.combat.board
         self.pending_boards = []
 
+        self.actor_1 = self.board.actor_1
+        self.actor_2 = self.board.actor_2
+
         # TODO move away as it should be initiated as a move
-        self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
-        self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
+        self.render.set_pokemon(self.actor_1[0].sprite, 0)
+        self.render.set_pokemon(self.actor_2[0].sprite, 1)
 
         self.need_to_redraw = True
-
         self.selection = 0
         self.state = states["topmenu"]
         self.game.r_aud.play_music("BGM/Battle wild.flac")
@@ -38,7 +40,7 @@ class GameStateBattle(BaseGameState):
             elif self.state == states["action"]:
                 self.advance_board()
             else:
-                self.reg_action(("attack", self.board.actor_1[0].actions[0],))
+                self.reg_action(("attack", self.actor_1[0].actions[0],))
 
         self.redraw(time, frame_time)
         self.lock = self.render.render(time, frame_time)
@@ -81,7 +83,7 @@ class GameStateBattle(BaseGameState):
                             self.reg_action(("flee", None))
                     elif self.state == states["actionmenu"]:
                         self.reg_action(
-                            ("attack", self.board.actor_1[0].actions[self.selection],)
+                            ("attack", self.actor_1[0].actions[self.selection],)
                         )
                     elif self.state == states["swapmenu"]:
                         self.reg_action(("swap", self.selection,),)
@@ -109,14 +111,34 @@ class GameStateBattle(BaseGameState):
 
     def reg_action(self, action):
         # TODO: src, trg
+
         self.selection = 0
         actions = []
+
+        user = (0, 0)
+        target = (1, 0)
+        if action[0] == "swap":
+            user = (0, self.board.get_active(0))
+            target = (0, action[1])
+        if action[0] == "attack":
+            user = (0, self.board.get_active(0))
+            target = (1, self.board.get_active(1))
         actions.append(
-            (action, (0, self.board.get_active(0)), (1, self.board.get_active(1)))
+            (action, user, target)
         )
         actions.append(
-            (action, (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            (("attack", self.actor_2[0].actions[0]), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
         )
+        if self.particle_test:
+            actions = []
+            tackle = self.game.m_pbs.get_move(399).copy()
+            tackle.power = 0
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
         self.state = states["action"]
         self.pending_boards = self.combat.run_scene(actions)
         self.advance_board()
@@ -125,17 +147,33 @@ class GameStateBattle(BaseGameState):
         print("PARTICLES!!!")
 
     def advance_board(self):
+        if self.board.battle_end:
+            self.end_battle()
         if not self.pending_boards:
+            if any(self.board.faint):
+                pass  # switch in new guy
             self.state = states["topmenu"]
             self.render.camera.reset()
             print("--- RESET STATES")
             return
 
         self.board = self.pending_boards.pop(0)
-        if self.board.battle_end:
-            self.end_battle()
-            return
-        # TODO: do particle self.board.particle
+
+        if self.board.actor_1 != self.actor_1:
+            if self.board.actor_1 == -1:
+                self.render.set_pokemon(None, 0)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
+            self.actor_1 = self.board.actor_1
+        if self.board.actor_2 != self.actor_2:
+            if self.board.actor_2 == -1:
+                self.render.set_pokemon(None, 1)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
+            self.actor_2 = self.board.actor_2
+
+        self.need_to_redraw = True
+
         if self.board.skip:
             self.advance_board()
             return
@@ -154,7 +192,10 @@ class GameStateBattle(BaseGameState):
                 self.particle_test_cooldown = 5.0
         else:
             self.render.do_particle(
-                self.board.particle, self.board.user, self.board.target, miss=self.board.particle_miss
+                self.board.particle,
+                self.board.user,
+                self.board.target,
+                miss=self.board.particle_miss,
             )
 
     def synchronize(self):
@@ -171,7 +212,7 @@ class GameStateBattle(BaseGameState):
             return self.board.narration
 
         if self.state == states["actionmenu"]:
-            action = self.board.actor_1[0].actions[self.selection]
+            action = self.actor_1[0].actions[self.selection]
             return action.description
 
         if self.state == states["swapmenu"]:
@@ -215,7 +256,7 @@ class GameStateBattle(BaseGameState):
                     (0.68, 0.53), size=(0.22, 0.32), col="black"
                 )
 
-                actionnames = [x["name"] for x in self.board.actor_1[0].actions]
+                actionnames = [x["name"] for x in self.actor_1[0].actions]
                 for i in range(min(len(actionnames), 4)):
                     self.game.r_int.draw_text(
                         f"{self.selection == i and '' or ''}{actionnames[i]}",
@@ -278,11 +319,12 @@ class GameStateBattle(BaseGameState):
             self.game.r_int.draw_rectangle(
                 (x, 0.1), size=(size_x, 0.05), col="grey",
             )
-            self.game.r_int.draw_rectangle(
-                (x, 0.1),
-                size=(size_x * health, 0.05),
-                col=health > 0.5 and "green" or health > 0.2 and "yellow" or "red",
-            )
+            if health > 0:
+                self.game.r_int.draw_rectangle(
+                    (x, 0.1),
+                    size=(size_x * health, 0.05),
+                    col=health > 0.5 and "green" or health > 0.2 and "yellow" or "red",
+                )
         # Narrator
         self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
         self.game.r_int.draw_text(self.narrate, (0.01, 0.91), to=(0.99, 0.99))

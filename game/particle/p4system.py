@@ -397,7 +397,7 @@ class Renderer:
 
         self.prog["texture0"] = 0
         self.prog["texturearray1"] = 10
-        self.prog["Usenoise"] = self.equation == 2
+        self.prog["Usenoise"] = self.equation != 1
         self.noise_id = 0
 
     def set_fields(self):
