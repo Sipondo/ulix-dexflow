@@ -111,8 +111,10 @@ class GameStateBattle(BaseGameState):
 
     def reg_action(self, action):
         # TODO: src, trg
+
         self.selection = 0
         actions = []
+
         user = (0, 0)
         target = (1, 0)
         if action[0] == "swap":
@@ -127,6 +129,16 @@ class GameStateBattle(BaseGameState):
         actions.append(
             (("attack", self.actor_2[0].actions[0]), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
         )
+        if self.particle_test:
+            actions = []
+            tackle = self.game.m_pbs.get_move(399).copy()
+            tackle.power = 0
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
+            actions.append(
+                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+            )
         self.state = states["action"]
         self.pending_boards = self.combat.run_scene(actions)
         self.advance_board()
@@ -135,6 +147,8 @@ class GameStateBattle(BaseGameState):
         print("PARTICLES!!!")
 
     def advance_board(self):
+        if self.board.battle_end:
+            self.end_battle()
         if not self.pending_boards:
             if any(self.board.faint):
                 pass  # switch in new guy
@@ -146,17 +160,20 @@ class GameStateBattle(BaseGameState):
         self.board = self.pending_boards.pop(0)
 
         if self.board.actor_1 != self.actor_1:
-            self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
+            if self.board.actor_1 == -1:
+                self.render.set_pokemon(None, 0)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
             self.actor_1 = self.board.actor_1
         if self.board.actor_2 != self.actor_2:
-            self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
+            if self.board.actor_2 == -1:
+                self.render.set_pokemon(None, 1)  # empty spriteset for if poke is fainted
+            else:
+                self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
             self.actor_2 = self.board.actor_2
 
         self.need_to_redraw = True
-        if self.board.battle_end:
-            self.end_battle()
 
-        # TODO: do particle self.board.particle
         if self.board.skip:
             self.advance_board()
             return

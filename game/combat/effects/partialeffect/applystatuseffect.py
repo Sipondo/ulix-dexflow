@@ -21,3 +21,6 @@ class ApplyStatus(BasePartialEffect):
             self.scene.board.inflict_status(self.status, self.user, self.target)
         else:
             self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
+
+    def on_faint(self, target):
+        return self.target == target, False, False
