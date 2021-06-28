@@ -150,10 +150,10 @@ class CombatScene:
         if action.action_name == "attack":
             effect = MainMove(self, action)
         elif action.action_name == "flee":
-            effect = RunEffect(self)
+            effect = RunEffect(self, action.user, action.target)
         elif action.action_name == "swap":
             effect = SwitchEffect(self, action)
-        elif action.action_name == "ball":
+        elif action.action_name == "catch":
             effect = BallEffect(self, action)
         self.effects.append(effect)
         return effect
@@ -231,8 +231,8 @@ class CombatScene:
                 # TODO fix a RunAction object
                 action = types.SimpleNamespace()
                 action.action_name = "flee"
-                action.user = None
-                action.target = None
+                action.user = user
+                action.target = target
                 action.priority = 6
                 actions.append(action)
             if name == "attack":
