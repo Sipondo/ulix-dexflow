@@ -28,7 +28,12 @@ fcall: function "(" fargs ")"
 function : /[a-zA-Z0-9_]+/
 fargs: [object ("," (object))*]
 
-object: string|number|variable
+object: string
+    |number
+    |variable
+    | "true"             -> true
+    | "false"            -> false
+    | "null"             -> null
 string: ESCAPED_STRING
 number: SIGNED_NUMBER
 variable: /[a-zA-Z0-9_.]+/

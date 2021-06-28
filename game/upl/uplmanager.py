@@ -1,13 +1,10 @@
 from lark import Lark
 from lark import Transformer
 
+from game.upl.upl_scripts.portal import portal
 
-with open("game/upl/upl_grammar.lark", "r") as infile:
-    parser = Lark(infile.read(), start="upl",)
-
-
-def portalconnection(a, b, c):
-    print(a, b, c)
+# with open("game/upl/upl_grammar.lark", "r") as infile:
+#     parser = Lark(infile.read(), start="upl",)
 
 
 class UPLToPython(Transformer):
@@ -15,11 +12,12 @@ class UPLToPython(Transformer):
         return (source[0], source[1])
 
     def fcall(self, s):
-        return s[0](*s[1])
+        print(s)
+        return s[0](self.src, *s[1])
 
     def function(self, s):
         (s,) = s
-        return portalconnection
+        return portal
 
     def source(self, s):
         (s,) = s
@@ -35,7 +33,7 @@ class UPLToPython(Transformer):
 
     def variable(self, s):
         (s,) = s
-        self = testclass
+        self = self.src
         return eval(s)
 
     def string(self, s):
@@ -54,22 +52,34 @@ class UPLToPython(Transformer):
     false = lambda self, _: False
 
 
-class Test:
-    def __init__(self):
-        self.target_level = "L2"
-        self.target_coords = (20, 35)
-        self.direction = "N"
+class UplManager:
+    def __init__(self, game):
+        self.game = game
+        with open("game/upl/upl_grammar.lark", "r") as infile:
+            self.parser = Lark(infile.read(), start="upl",)
+
+    def parse(self, src, script):
+        transformer = UPLToPython()
+        transformer.src = src
+        transformer.transform(self.parser.parse(script))
 
 
-testclass = Test()
-
-text = """
-target: portalconnection(self.target_level, self.target_coords, self.direction)
-"""
-
-print(parser.parse(text).pretty())
+# class Test:
+#     def __init__(self):
+#         self.target_level = "L2"
+#         self.target_coords = (20, 35)
+#         self.direction = "N"
 
 
-code_parser = parser.parse(text)
-UPLToPython().transform(code_parser)
+# testclass = Test()
+
+# text = """
+# target: portalconnection(self.target_level, self.target_coords, self.direction)
+# """
+
+# print(parser.parse(text).pretty())
+
+
+# code_parser = parser.parse(text)
+# UPLToPython().transform(code_parser)
 

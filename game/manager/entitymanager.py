@@ -56,9 +56,7 @@ class EntityManager:
                         ceil(region["location"][1] // 16) - offset[1],
                     ),
                     (region["width"] // 16, region["height"] // 16),
-                    None,
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
+                    region,
                 )
             elif region["identifier"] == "PortalConnection":
                 self.create_region(
@@ -79,9 +77,7 @@ class EntityManager:
                         ceil(region["location"][1] // 16) - offset[1],
                     ),
                     (region["width"] // 16, region["height"] // 16),
-                    region["f_direction"],
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
+                    region,
                 )
 
     def load_entities(self, offset=(0, 0)):

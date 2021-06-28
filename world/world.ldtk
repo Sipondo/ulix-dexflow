@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 388,
+	"nextUid": 389,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2701,12 +2701,12 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "on_enter",
+					"identifier": "on_enter_action",
 					"__type": "String",
 					"uid": 387,
 					"type": "F_Text",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2719,8 +2719,28 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["target: portalconnection(self.target_level, self.target_coords, self.direction)"]
+						"params": ["target: portal(self.target_level, self.target_coords, self.direction, true)"]
 					},
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_exit_action",
+					"__type": "String",
+					"uid": 388,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
 				}
 			]

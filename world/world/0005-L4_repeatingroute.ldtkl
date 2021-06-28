@@ -156,12 +156,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				},
 				{
@@ -202,12 +203,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				},
 				{
@@ -248,12 +250,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				},
 				{
@@ -294,12 +297,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				}
 			]
