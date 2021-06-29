@@ -1,7 +1,5 @@
 from game.entity.civilianentity import CivilianEntity
 from game.entity.playerentity import PlayerEntity
-from game.entity.portalentity import PortalEntity
-from game.entity.portalconnectionentity import PortalConnectionEntity
 from game.entity.opponententity import OpponentEntity
 
 from itertools import chain
@@ -38,50 +36,22 @@ class EntityManager:
         for region in self.game.m_map.current_regions:
             # print(region)
             if region["identifier"] == "Portal":
-                self.create_region(
-                    PortalEntity,
-                    (
-                        floor(region["location"][0] / 16) - offset[0],
-                        ceil(region["location"][1] // 16) - offset[1],
-                    ),
-                    (region["width"] // 16, region["height"] // 16),
-                    None,
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
-                )
                 self.game.m_act.create_region(
-                    PortalEntity,
                     (
                         floor(region["location"][0] / 16) - offset[0],
                         ceil(region["location"][1] // 16) - offset[1],
                     ),
                     (region["width"] // 16, region["height"] // 16),
-                    None,
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
+                    region,
                 )
             elif region["identifier"] == "PortalConnection":
-                self.create_region(
-                    PortalConnectionEntity,
-                    (
-                        floor(region["location"][0] / 16) - offset[0],
-                        ceil(region["location"][1] // 16) - offset[1],
-                    ),
-                    (region["width"] // 16, region["height"] // 16),
-                    region["f_direction"],
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
-                )
                 self.game.m_act.create_region(
-                    PortalConnectionEntity,
                     (
                         floor(region["location"][0] / 16) - offset[0],
                         ceil(region["location"][1] // 16) - offset[1],
                     ),
                     (region["width"] // 16, region["height"] // 16),
-                    region["f_direction"],
-                    self.game.m_map.convert_mapstring_to_key(region["f_target_level"]),
-                    region["f_target_coords"],
+                    region,
                 )
 
     def load_entities(self, offset=(0, 0)):
@@ -116,16 +86,8 @@ class EntityManager:
         # self.entities = [self.entities[0]]
 
     def flush_regions(self):
-        self.regions.clear()
-
-    def create_region(
-        self, regiontype, pos, size, target_direction, target_level, target_location
-    ):
-        self.regions.append(
-            regiontype(
-                self.game, pos, size, target_direction, target_level, target_location
-            )
-        )
+        # self.regions.clear()
+        self.game.m_act.flush_regions()
 
     def create_entity(self, entitytype, pos, direction, sprite, dialogue):
         self.entities.append(entitytype(self.game, pos, direction, sprite, dialogue))

@@ -73,8 +73,9 @@ class ParticleManager:
         if render:
             return (
                 buffer,
-                "4f 3x4 1f 3f 1f 1x4 1x4 1f 1x4",
+                "4f 3f 1f 3f 1f 1x4 1x4 1f 1x4",
                 "in_pos",
+                "in_vel",
                 "in_size",
                 "in_color",
                 "in_rot",

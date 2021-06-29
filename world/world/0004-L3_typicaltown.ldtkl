@@ -132,14 +132,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [46,69],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ { "id": "V_Int", "params": [46] }, { "id": "V_Int", "params": [69] } ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "W",
 							"__type": "String",
 							"defUid": 315,
@@ -149,12 +149,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				},
 				{
@@ -178,14 +179,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [28,0],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ { "id": "V_Int", "params": [28] }, null ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "S",
 							"__type": "String",
 							"defUid": 315,
@@ -195,12 +196,13 @@
 							}]
 						},
 						{
-							"__identifier": "on_enter",
-							"__value": "target: portalconnection(self.target_level, self.target_coords, self.direction)",
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
-						}
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
 					]
 				}
 			]

@@ -37,6 +37,9 @@ class ParticleSystem:
         if (not self.particles) and self.time_alive > 1:
             return False
 
+        for eq in self.equations.values():
+            eq.reset_eval()
+
         frame_time *= self.warp * (3 if self.game.m_par.fast_forward else 1)
         self.step_size = self.game.m_par.step_size * self.step_warp
 
@@ -398,10 +401,14 @@ class Renderer:
         self.prog["texture0"] = 0
         self.prog["texturearray1"] = 10
         self.prog["Usenoise"] = self.equation != 1
+
+        self.rotvel = bool(self.system.r(self, "rotvel"))
+        self.noise_speed = 0
         self.noise_id = 0
 
     def set_fields(self):
         self.opacity = float(self.system.r(self, "opacity"))
+        self.noise_speed = float(self.system.r(self, "noise"))
 
     def load_programs(self):
         # Renders particle to the screen
@@ -419,7 +426,9 @@ class Renderer:
     def render(self, time, frame_time):
         self.set_fields()
         self.prog["CameraPosition"] = self.game.m_cam.pos
-        self.noise_id = (time * self.step_quantity * 2) % 5680  # 710 * 8
+        self.noise_id = (
+            time * self.step_quantity * 2 * self.noise_speed
+        ) % 5680  # 710 * 8
         self.prog["noise_id"] = self.noise_id // 8
         self.prog["projection"].write(self.game.m_cam.mvp)
         self.prog["BillboardFace"].write(
@@ -432,6 +441,8 @@ class Renderer:
 
     def emit_gpu(self, time, frame_time):
         self.prog["opacity"] = self.opacity
+        self.prog["Usenoise"] = (self.equation != 1) and (self.noise_speed != 0)
+        self.prog["Rotvel"] = self.rotvel
         self.texture.use(0)
         self.texture_noise.use(10)
         self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)

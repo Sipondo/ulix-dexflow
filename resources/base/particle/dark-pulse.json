@@ -136,8 +136,8 @@
         {
             "id": 2445471523456,
             "title": "Render",
-            "pos_x": -106.75,
-            "pos_y": -150.65625,
+            "pos_x": -109.25,
+            "pos_y": -128.15625000000003,
             "inputs": [
                 {
                     "id": 2445471523552,
@@ -154,7 +154,9 @@
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": "3",
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -298,8 +300,8 @@
         {
             "id": 1290637812784,
             "title": "Render",
-            "pos_x": -106.5625,
-            "pos_y": 94.60937500000003,
+            "pos_x": -109.0625,
+            "pos_y": 102.10937500000001,
             "inputs": [
                 {
                     "id": 1290639999520,
@@ -316,7 +318,9 @@
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": 3,
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -495,8 +499,8 @@
         {
             "id": 1290639948864,
             "title": "Render",
-            "pos_x": -808.3789062499997,
-            "pos_y": -262.6953124999999,
+            "pos_x": -809.6289062499997,
+            "pos_y": -241.44531249999994,
             "inputs": [
                 {
                     "id": 1290639949056,
@@ -513,7 +517,9 @@
                 "field_depth": 0,
                 "field_opacity": "1.0",
                 "field_blur_count": 3,
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -617,7 +623,7 @@
             "id": 1290639934080,
             "title": "Render",
             "pos_x": -128.12499999999994,
-            "pos_y": 299.60937500000006,
+            "pos_y": 305.85937500000006,
             "inputs": [
                 {
                     "id": 1290639935952,
@@ -634,7 +640,9 @@
                 "field_depth": 0,
                 "field_opacity": "1.0",
                 "field_blur_count": 3,
-                "field_blur_delay": 0.1
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
             },
             "op_code": 4
         },

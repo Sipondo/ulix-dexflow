@@ -23,10 +23,11 @@ from game.manager.entitymanager import EntityManager
 
 from game.manager.eventmanager import EventManager
 from game.manager.actionmanager import ActionManager
-from game.manager.regionmanager import RegionManager
 
 from game.manager.aimanager import AiManager
 from game.manager.cameramanager import CameraManager
+
+from game.upl.uplmanager import UplManager
 
 # Swap these to get new/old particles
 from game.manager.p4 import ParticleManager
@@ -99,6 +100,7 @@ class PokeGame(mglw.WindowConfig):
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
         self.m_par = ParticleManager(self)
+        self.m_upl = UplManager(self)
 
         # TODO: maybe move to savemanager
         self.inventory = Inventory(self)
