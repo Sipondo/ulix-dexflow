@@ -19,7 +19,7 @@ class CombatBoard:
 
     def first_init(self, *teams):
         for team in teams:
-            self.teams.append([(x, x.starting_hp) for x in team])
+            self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append(0)
 
     def from_board(self, board):
@@ -96,7 +96,10 @@ class CombatBoard:
         return len(self.teams[team])
 
     def get_relative_hp(self, target):
-        return self.teams[target[0]][target[1]][1]/self.teams[target[0]][target[1]][0].stats[0]
+        return self.teams[target[0]][target[1]][1] / self.teams[target[0]][target[1]][0].stats[0]
+
+    def get_relative_xp(self, target):
+        return self.teams[target[0]][target[1]][0].current_xp / self.teams[target[0]][target[1]][0].level_xp
 
     @property
     def actor_1(self):

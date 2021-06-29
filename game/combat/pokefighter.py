@@ -2,7 +2,6 @@ from .combatfighter import CombatFighter
 
 import numpy as np
 import numbers
-import random
 
 
 class PokeFighter(CombatFighter):
@@ -11,6 +10,19 @@ class PokeFighter(CombatFighter):
 
         if isinstance(fighter, numbers.Number):
             fighter = self.game.m_pbs.get_fighter(fighter)
+            self.level = 100
+            self.set_stats(fighter)
+            self.current_hp = self.stats[0]
+        else:
+            self.level = fighter.level
+            self.stats_base = fighter.stats_base
+            self.stats_reward = fighter.stats_reward
+            self.stats_IV = fighter.stats_IV
+            self.stats_EV = fighter.stats_EV
+            self.naturemod = fighter.nature
+            self.current_hp = fighter.current_hp
+            self.current_xp = fighter.current_xp
+            self.level_xp = fighter.level_xp
 
         self.type_1 = str(fighter["type1"])
         self.type_2 = str(fighter["type2"])
@@ -21,11 +33,7 @@ class PokeFighter(CombatFighter):
             self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]
         ]
 
-        self.level = 100
-        self.gender = random.choice(["Male", "Female", "Genderless"])
-
-        self.set_stats(fighter)
-        print(self.name, "HP:", self.stats[0])
+        self.data = fighter.copy()
 
     def set_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -37,10 +45,10 @@ class PokeFighter(CombatFighter):
         self.stats_reward = np.asarray(fighter.effortpoints.split(","), dtype=int)
 
         # TEMP
-        self.stats_individuals = np.random.randint(0, 32, 6)
+        self.stats_IV = np.random.randint(0, 32, 6)
 
         # TEMP
-        self.stats_effort = np.unique(np.random.randint(0, 6, 510), return_counts=True)[
+        self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[
             1
         ]
 
@@ -48,10 +56,20 @@ class PokeFighter(CombatFighter):
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
         return (
-            self.naturemod
-            * (
-                (2 * self.stats_base + self.stats_individuals + self.stats_effort // 4)
-                * (self.level / 100)
-                + hp_mod
-            )
+                self.naturemod
+                * (
+                        (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
+                        * (self.level / 100)
+                        + hp_mod
+                )
         ).astype(int)
+
+    @property
+    def series(self):
+        self.data["level"] = self.level
+        self.data["stats_EV"] = self.stats_EV
+        self.data["current_hp"] = self.current_hp
+        self.data["current_xp"] = self.current_xp
+        self.data["level_xp"] = self.level_xp
+
+        return self.data

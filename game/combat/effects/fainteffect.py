@@ -1,6 +1,7 @@
 from .baseeffect import BaseEffect
 from .returneffect import ReturnEffect
 from .endbattleeffect import EndBattleEffect
+from .experienceeffect import ExperienceEffect
 
 
 class FaintEffect(BaseEffect):
@@ -23,8 +24,13 @@ class FaintEffect(BaseEffect):
             mon_hp = self.scene.board.get_hp((self.target[0], i))
             if mon_hp > 0:
                 end = False
-        self.scene.add_effect(EndBattleEffect(self.scene))
-        return True, False, end
+        if self.target[0] == 1:
+            # experience if enemy fainted
+            # TODO make the experience dependent on fainted mon
+            self.scene.add_effect(ExperienceEffect(self.scene, (0, self.scene.board.get_active(0)), 100))
+        if end:
+            self.scene.add_effect(EndBattleEffect(self.scene))
+        return True, False, False
 
     def on_end_turn(self):
         self.scene.board.need_sendout[self.target[0]] = True

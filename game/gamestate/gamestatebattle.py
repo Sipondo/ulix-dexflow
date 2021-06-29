@@ -143,9 +143,6 @@ class GameStateBattle(BaseGameState):
         self.pending_boards = self.combat.run_scene(actions)
         self.advance_board()
 
-    def show_stuff(self, partname):
-        print("PARTICLES!!!")
-
     def advance_board(self):
         if self.board.battle_end:
             self.end_battle()
@@ -199,8 +196,9 @@ class GameStateBattle(BaseGameState):
             )
 
     def synchronize(self):
-        # TODO battle rewards/punish, save new party health, PP, etc
-        pass
+        for i, member in enumerate(self.game.inventory.members):
+            member.from_series(self.board.get_actor((0, i)).series)
+        # TODO transfer status effects.
 
     def end_battle(self):
         self.synchronize()
@@ -325,6 +323,18 @@ class GameStateBattle(BaseGameState):
                     size=(size_x * health, 0.05),
                     col=health > 0.5 and "green" or health > 0.2 and "yellow" or "red",
                 )
+        # EXP bar
+        self.game.r_int.draw_rectangle(
+            (0.1, 0.158), size=(0.25, 0.012), col="grey",
+        )
+        rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
+        print("rel_xp:", rel_xp)
+        if rel_xp > 0:
+            self.game.r_int.draw_rectangle(
+                (0.1, 0.158),
+                size=(0.25 * rel_xp, 0.012),
+                col="blue",
+            )
         # Narrator
         self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
         self.game.r_int.draw_text(self.narrate, (0.01, 0.91), to=(0.99, 0.99))

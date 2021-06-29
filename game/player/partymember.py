@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class PartyMember:
@@ -14,19 +15,21 @@ class PartyMember:
         self.type_2 = fighter.type2
         self.data = fighter.copy()
         self.level = 100
+        self.gender = random.choice(["Male", "Female", "Genderless"])
         self.flavor = fighter.pokedex
-        self.current_hp = 1.0
 
         self.moves = []
         # TODO:
 
-        self.exp_total = 560
-        self.exp_next = 182
+        self.current_xp = 500
+        self.level_xp = 700
 
         self.nature = self.game.m_dat.get_nature()
         self.nature_name = self.nature.identifier.capitalize()
 
         self.set_stats(fighter)
+
+        self.current_hp = self.stats[0]
 
     def set_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -52,6 +55,12 @@ class PartyMember:
         self.characteristic_id = 6 * (self.stats_individuals[best_id] % 5) + best_id
         self.characteristic = self.game.m_dat.get_characteristic(self.characteristic_id)
 
+    def from_series(self, data):
+        self.level = data.level
+        self.current_xp = data.current_xp
+        self.level_xp = data.level_xp
+        self.current_hp = data.current_hp
+
     @property
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
@@ -66,8 +75,14 @@ class PartyMember:
 
     @property
     def series(self):
-        self.data.current_hp = self.current_hp
-        self.data.level = self.level
-        self.data["stats"] = self.stats
+        self.data["level"] = self.level
+        self.data["nature"] = self.naturemod
+        self.data["stats_base"] = self.stats_base
+        self.data["stats_reward"] = self.stats_reward
+        self.data["stats_IV"] = self.stats_individuals
+        self.data["stats_EV"] = self.stats_effort
+        self.data["current_hp"] = self.current_hp
+        self.data["current_xp"] = self.current_xp
+        self.data["level_xp"] = self.level_xp
 
         return self.data
