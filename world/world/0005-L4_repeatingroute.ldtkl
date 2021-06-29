@@ -139,14 +139,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [15,26],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ { "id": "V_Int", "params": [15] }, { "id": "V_Int", "params": [26] } ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "N",
 							"__type": "String",
 							"defUid": 315,
@@ -157,7 +157,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -186,14 +186,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [0,12],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ null, { "id": "V_Int", "params": [12] } ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "E",
 							"__type": "String",
 							"defUid": 315,
@@ -204,7 +204,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -233,14 +233,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [33,11],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ { "id": "V_Int", "params": [33] }, { "id": "V_Int", "params": [11] } ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "W",
 							"__type": "String",
 							"defUid": 315,
@@ -251,7 +251,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -280,14 +280,14 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [16,0],
 							"__type": "Array<Int>",
 							"defUid": 314,
 							"realEditorValues": [ { "id": "V_Int", "params": [16] }, null ]
 						},
 						{
-							"__identifier": "direction",
+							"__identifier": "target_direction",
 							"__value": "S",
 							"__type": "String",
 							"defUid": 315,
@@ -298,7 +298,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_coords, self.direction, true)",
+							"__value": "target: portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []

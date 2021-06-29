@@ -101,11 +101,25 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [15,11],
 							"__type": "Array<Int>",
 							"defUid": 20,
 							"realEditorValues": [ { "id": "V_Int", "params": [15] }, { "id": "V_Int", "params": [11] } ]
+						},
+						{
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__type": "String",
+							"defUid": 389,
+							"realEditorValues": []
+						},
+						{
+							"__identifier": "on_exit_action",
+							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__type": "String",
+							"defUid": 390,
+							"realEditorValues": []
 						}
 					]
 				},
@@ -130,11 +144,25 @@
 							}]
 						},
 						{
-							"__identifier": "target_coords",
+							"__identifier": "target_location",
 							"__value": [8,2],
 							"__type": "Array<Int>",
 							"defUid": 20,
 							"realEditorValues": [ { "id": "V_Int", "params": [8] }, { "id": "V_Int", "params": [2] } ]
+						},
+						{
+							"__identifier": "on_enter_action",
+							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__type": "String",
+							"defUid": 389,
+							"realEditorValues": []
+						},
+						{
+							"__identifier": "on_exit_action",
+							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__type": "String",
+							"defUid": 390,
+							"realEditorValues": []
 						}
 					]
 				}

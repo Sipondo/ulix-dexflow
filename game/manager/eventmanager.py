@@ -1,4 +1,3 @@
-from game.event.portalevent import PortalEvent
 from game.event.opponentevent import OpponentEvent
 from game.event.walkevent import WalkEvent
 
@@ -49,18 +48,6 @@ class EventManager:
         battle_event = OpponentEvent(self.game, [locations[0]], opponent)
         self.events.append(walk_event)
         self.events.append(battle_event)
-
-    def add_portal_event(self, opponent):
-        locations = []
-        for x in range(
-            opponent.game_position[0], opponent.game_position[0] + opponent.size[0]
-        ):
-            for y in range(
-                opponent.game_position[1], opponent.game_position[1] + opponent.size[1]
-            ):
-                locations.append((x, y))
-        portal_event = PortalEvent(self.game, locations, opponent)
-        self.events.append(portal_event)
 
     def flush_events(self):
         self.events.clear()

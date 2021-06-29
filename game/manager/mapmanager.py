@@ -59,8 +59,8 @@ class MapManager:
                     "layers"
                 ],
                 (floor(x["location"][0] / 16), ceil(x["location"][1] // 16)),
-                x["f_target_coords"],
-                x["f_direction"],
+                x["f_target_location"],
+                x["f_target_direction"],
             )
             for x in self.current_regions
             if x["identifier"] == "PortalConnection"

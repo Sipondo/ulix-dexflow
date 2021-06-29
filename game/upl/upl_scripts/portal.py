@@ -1,12 +1,15 @@
-def portal(self, target_level, target_location, target_direction, fade):
-    self.game.m_map.set_level(target_level)
+def portal(self, target_level, target_location, fade):
+    self.game.m_map.set_level(self.game.m_map.convert_mapstring_to_key(target_level))
+    position = (self.x, self.y)
 
-    # direc = self.game.m_ent.player.get_dir()
-    # locat = self.location[0]
-    # self.game.r_wld.set_map_via_manager(
-    #     (
-    #         self.entity.target_location[0] - locat[0] + direc[0],
-    #         self.entity.target_location[1] - locat[1] + direc[1],
-    #     ),
-    #     fade=fade,
-    # )
+    direc = self.game.m_ent.player.get_dir()
+
+    print(target_location, position, direc)
+
+    self.game.r_wld.set_map_via_manager(
+        (
+            target_location[0] - position[0] + direc[0],
+            target_location[1] - position[1] + direc[1],
+        ),
+        fade=fade,
+    )

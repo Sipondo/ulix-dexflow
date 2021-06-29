@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 389,
+	"nextUid": 391,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2595,7 +2595,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "target_coords",
+					"identifier": "target_location",
 					"__type": "Array<Int>",
 					"uid": 20,
 					"type": "F_Int",
@@ -2613,6 +2613,52 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": null
+				},
+				{
+					"identifier": "on_enter_action",
+					"__type": "String",
+					"uid": 389,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["target: portal(self.target_level, self.target_location, true)"]
+					},
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_exit_action",
+					"__type": "String",
+					"uid": 390,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["target: portal(self.target_level, self.target_location, true)"]
+					},
+					"textLanguageMode": "LangRuby"
 				}
 			]
 		},
@@ -2661,7 +2707,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "target_coords",
+					"identifier": "target_location",
 					"__type": "Array<Int>",
 					"uid": 314,
 					"type": "F_Int",
@@ -2681,7 +2727,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "direction",
+					"identifier": "target_direction",
 					"__type": "String",
 					"uid": 315,
 					"type": "F_String",
@@ -2719,7 +2765,7 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["target: portal(self.target_level, self.target_coords, self.direction, true)"]
+						"params": ["target: portal(self.target_level, self.target_location, false)"]
 					},
 					"textLanguageMode": "LangRuby"
 				},
@@ -2769,52 +2815,6 @@
 			"pivotX": 0,
 			"pivotY": 0,
 			"fieldDefs": []
-		},
-		{
-			"identifier": "PolyRegion",
-			"uid": 357,
-			"tags": ["Region"],
-			"width": 16,
-			"height": 16,
-			"resizableX": false,
-			"resizableY": false,
-			"keepAspectRatio": false,
-			"fillOpacity": 1,
-			"lineOpacity": 1,
-			"hollow": true,
-			"color": "#FF00BC",
-			"renderMode": "Ellipse",
-			"showName": true,
-			"tilesetId": null,
-			"tileId": null,
-			"tileRenderMode": "Stretch",
-			"maxCount": 0,
-			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
-			"pivotX": 0,
-			"pivotY": 0,
-			"fieldDefs": [
-				{
-					"identifier": "Polygon",
-					"__type": "Array<Point>",
-					"uid": 358,
-					"type": "F_Point",
-					"isArray": true,
-					"canBeNull": false,
-					"arrayMinLength": 3,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "PointPathLoop",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLanguageMode": null
-				}
-			]
 		}
 	], "tilesets": [
 		{

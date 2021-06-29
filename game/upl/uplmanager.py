@@ -25,7 +25,7 @@ class UPLToPython(Transformer):
 
     def object(self, s):
         (s,) = s
-        return str(s)
+        return s
 
     def command(self, s):
         (s,) = s
@@ -56,7 +56,7 @@ class UplManager:
     def __init__(self, game):
         self.game = game
         with open("game/upl/upl_grammar.lark", "r") as infile:
-            self.parser = Lark(infile.read(), start="upl",)
+            self.parser = Lark(infile.read(), start="upl", parser="lalr")
 
     def parse(self, src, script):
         transformer = UPLToPython()
