@@ -96,7 +96,7 @@ class CombatBoard:
         return len(self.teams[team])
 
     def get_relative_hp(self, target):
-        return self.teams[target[0]][target[1]][1]/self.teams[target[0]][target[1]][0].stats[0]
+        return self.teams[target[0]][target[1]][1] / self.teams[target[0]][target[1]][0].stats[0]
 
     def get_relative_xp(self, target):
         return self.teams[target[0]][target[1]][0].current_xp / self.teams[target[0]][target[1]][0].level_xp

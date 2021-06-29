@@ -76,7 +76,11 @@ class PartyMember:
     @property
     def series(self):
         self.data["level"] = self.level
-        self.data["stats"] = self.stats
+        self.data["nature"] = self.naturemod
+        self.data["stats_base"] = self.stats_base
+        self.data["stats_reward"] = self.stats_reward
+        self.data["stats_IV"] = self.stats_individuals
+        self.data["stats_EV"] = self.stats_effort
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp

@@ -323,11 +323,16 @@ class GameStateBattle(BaseGameState):
                     size=(size_x * health, 0.05),
                     col=health > 0.5 and "green" or health > 0.2 and "yellow" or "red",
                 )
+        # EXP bar
+        self.game.r_int.draw_rectangle(
+            (0.1, 0.158), size=(0.25, 0.012), col="grey",
+        )
         rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
+        print("rel_xp:", rel_xp)
         if rel_xp > 0:
             self.game.r_int.draw_rectangle(
                 (0.1, 0.158),
-                size=(0.3 * rel_xp, 0.012),
+                size=(0.25 * rel_xp, 0.012),
                 col="blue",
             )
         # Narrator
