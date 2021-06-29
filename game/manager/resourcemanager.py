@@ -27,6 +27,7 @@ class ResourceManager:
         self.p_graphics = Path("graphics")
         self.p_icons = self.p_graphics / "icon"
         self.p_items = self.p_graphics / "Items"
+        self.p_interface = self.p_graphics / "interface"
         self.p_fonts = Path("font")
         self.p_sprites = self.p_graphics / "characters_temp"
         self.p_audio = Path("audio")
@@ -100,7 +101,15 @@ class ResourceManager:
 
     def get_item_icon(self, resource_name, size=1):
         pth = self.p_items / f"{str(resource_name)}.png"
-        if pth.is_file():
+        if self.resolve_resource_path(pth):
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
+
+    def get_interface(self, resource_name, size=0.5):
+        pth = self.p_interface / f"{str(resource_name)}.png"
+        if self.resolve_resource_path(pth):
             return self.open_image_interface(pth, size,).convert("RGBA")
         return self.open_image_interface(self.p_items / "000.png", size,).convert(
             "RGBA"

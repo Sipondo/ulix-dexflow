@@ -9,7 +9,7 @@ class CombatBoard:
         self.teams = []
         self.actor = -1
         self.action = None
-        self.narration = "Ik ben een bord"
+        self.narration = "Board state undefined."
         self.particle = ""
         self.user = None
         self.target = None
@@ -96,10 +96,16 @@ class CombatBoard:
         return len(self.teams[team])
 
     def get_relative_hp(self, target):
-        return self.teams[target[0]][target[1]][1] / self.teams[target[0]][target[1]][0].stats[0]
+        return (
+            self.teams[target[0]][target[1]][1]
+            / self.teams[target[0]][target[1]][0].stats[0]
+        )
 
     def get_relative_xp(self, target):
-        return self.teams[target[0]][target[1]][0].current_xp / self.teams[target[0]][target[1]][0].level_xp
+        return (
+            self.teams[target[0]][target[1]][0].current_xp
+            / self.teams[target[0]][target[1]][0].level_xp
+        )
 
     @property
     def actor_1(self):

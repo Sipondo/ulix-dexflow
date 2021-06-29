@@ -19,7 +19,16 @@ class GameStateMenuParty(BaseGameState):
         self.state = states["top"]
         self.pstate = pstates["moves"]
 
-        self.top_menu_options = ["Team", "Bag", "Career", "Save", "Options"]
+        top_menu_options = ["Team", "Bag", "Career", "Save", "Options"]
+
+        self.top_menu_options = [
+            self.game.m_res.get_interface(x) for x in top_menu_options
+        ]
+        self.cell = (
+            self.game.m_res.get_interface("Cell"),
+            self.game.m_res.get_interface("Cell_Selected"),
+        )
+
         self.need_to_redraw = True
 
     def on_tick(self, time, frame_time):
@@ -122,14 +131,19 @@ class GameStateMenuParty(BaseGameState):
         Choose from 5 categories
         """
         if self.state == states["top"]:
-            self.game.r_int.draw_rectangle((0.75, 0.3), size=(0.15, 0.4), col="black")
-            for i, name in enumerate(self.top_menu_options):
-                self.game.r_int.draw_text(
-                    f"{self.selection == i and '' or ''}{name}",
-                    (0.76, 0.31 + 0.08 * i),
-                    size=(0.13, 0.06),
-                    bcol=self.selection == i and "yellow" or "white",
+            # self.game.r_int.draw_rectangle((0.75, 0.3), size=(0.15, 0.4), col="black")
+            for i, img in enumerate(self.top_menu_options):
+                # self.game.r_int.draw_text(
+                #     f"{self.selection == i and '' or ''}{name}",
+                #     (0.76, 0.31 + 0.08 * i),
+                #     size=(0.13, 0.06),
+                #     bcol=self.selection == i and "yellow" or "white",
+                # )
+                self.game.r_int.draw_image(
+                    self.selection == i and self.cell[1] or self.cell[0],
+                    (0.76, 0.15 + 0.14 * i),
                 )
+                self.game.r_int.draw_image(img, (0.76, 0.15 + 0.14 * i))
             """
             Party and Inspect view
             List pokemon and retrieve info via subview

@@ -85,7 +85,7 @@ class AudioRenderer:
             music = self.game.m_res.get_sound(name)
             if music is not None:
                 self.bgm_player.queue(music)
-                self.bgm_player.queue(music)
+                # self.bgm_player.queue(music)
                 if self.bgm_player.playing:
                     self.bgm_player.next_source()
                 self.bgm_player.play()

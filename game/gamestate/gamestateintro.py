@@ -5,8 +5,8 @@ class GameStateIntro(BaseGameState):
     def on_enter(self):
         self.need_to_redraw = True
 
-        self.logo_engine = self.game.m_res.get_splash("ulix_logo")
-        self.logo_framework = self.game.m_res.get_splash("dexflow_logo")
+        # self.logo_engine = self.game.m_res.get_splash("ulix_logo_small")
+        self.logo_framework = self.game.m_res.get_splash("dexflow_logo_small")
 
         self.stage = 0
 
@@ -23,7 +23,7 @@ class GameStateIntro(BaseGameState):
             self.need_to_redraw = True
             self.stage = 2
         self.redraw(time, frame_time)
-        if self.timer > 0.9:
+        if self.timer > 0.7:
             self.game.m_gst.switch_state("overworld")
         return False
 
@@ -40,11 +40,11 @@ class GameStateIntro(BaseGameState):
         pass
 
     def draw_interface(self, time, frame_time):
-        if self.stage == 1:
-            self.game.r_int.draw_image(
-                self.logo_engine, (0.5, 0.5), centre=True, size=0.5
-            )
-        elif self.stage == 2:
+        if self.stage < 3:
+            #     self.game.r_int.draw_image(
+            #         self.logo_engine, (0.5, 0.5), centre=True, size=0.5
+            #     )
+            # elif self.stage == 2:
             self.game.r_int.draw_image(
                 self.logo_framework, (0.5, 0.5), centre=True, size=0.5
             )
