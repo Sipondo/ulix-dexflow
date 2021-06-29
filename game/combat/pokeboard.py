@@ -9,9 +9,7 @@ import pandas as pd
 class PokeBoard(CombatBoard):
     def __init__(self, scene):
         super().__init__(scene)
-        self.legal = pd.DataFrame(
-            columns=["Pokemon", "Team", "Action", "Legal"]
-        )
+        self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
         self.faint = []
 
     def copy(self):
@@ -23,9 +21,7 @@ class PokeBoard(CombatBoard):
 
     def first_init(self, *teams):
         for team in teams:
-            self.teams.append(
-                [(x, x.starting_hp) for x in team]
-            )
+            self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append((0, 0))
             self.faint.append(False)
 
@@ -34,6 +30,7 @@ class PokeBoard(CombatBoard):
         damage = min(hp, damage)
         hp -= damage
         self.teams[target[0]][target[1]] = (x, hp)
+        x.current_hp = hp
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
         if self.teams[target[0]][target[1]][1] < 1:

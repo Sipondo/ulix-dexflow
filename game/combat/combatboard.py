@@ -19,7 +19,7 @@ class CombatBoard:
 
     def first_init(self, *teams):
         for team in teams:
-            self.teams.append([(x, x.starting_hp) for x in team])
+            self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append(0)
 
     def from_board(self, board):

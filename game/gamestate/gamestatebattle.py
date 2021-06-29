@@ -143,9 +143,6 @@ class GameStateBattle(BaseGameState):
         self.pending_boards = self.combat.run_scene(actions)
         self.advance_board()
 
-    def show_stuff(self, partname):
-        print("PARTICLES!!!")
-
     def advance_board(self):
         if self.board.battle_end:
             self.end_battle()
@@ -199,8 +196,9 @@ class GameStateBattle(BaseGameState):
             )
 
     def synchronize(self):
-        # TODO battle rewards/punish, save new party health, PP, etc
-        pass
+        for i, member in enumerate(self.game.inventory.members):
+            member.from_series(self.board.get_actor((0, i)).series)
+        # TODO transfer status effects.
 
     def end_battle(self):
         self.synchronize()

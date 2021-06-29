@@ -21,8 +21,8 @@ class PartyMember:
         self.moves = []
         # TODO:
 
-        self.exp_current = 500
-        self.exp_next = 700
+        self.current_xp = 500
+        self.level_xp = 700
 
         self.nature = self.game.m_dat.get_nature()
         self.nature_name = self.nature.identifier.capitalize()
@@ -55,6 +55,12 @@ class PartyMember:
         self.characteristic_id = 6 * (self.stats_individuals[best_id] % 5) + best_id
         self.characteristic = self.game.m_dat.get_characteristic(self.characteristic_id)
 
+    def from_series(self, data):
+        self.level = data.level
+        self.current_xp = data.current_xp
+        self.level_xp = data.level_xp
+        self.current_hp = data.current_hp
+
     @property
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
@@ -72,7 +78,7 @@ class PartyMember:
         self.data["level"] = self.level
         self.data["stats"] = self.stats
         self.data["current_hp"] = self.current_hp
-        self.data["current_xp"] = self.exp_current
-        self.data["level_xp"] = self.exp_next
+        self.data["current_xp"] = self.current_xp
+        self.data["level_xp"] = self.level_xp
 
         return self.data

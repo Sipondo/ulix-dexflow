@@ -16,7 +16,7 @@ class PokeFighter(CombatFighter):
             self.stats = self.set_stats(fighter)
         else:
             self.level = fighter.level
-            self.starting_hp = fighter.current_hp
+            self.current_hp = fighter.current_hp
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
             self.stats = fighter.stats
@@ -30,12 +30,10 @@ class PokeFighter(CombatFighter):
             self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]
         ]
 
-
-
+        self.data = fighter.copy()
         if number:
             self.set_stats(fighter)
-            print("I am a number with HP:", self.stats[0], "Name:", self.name)
-            self.starting_hp = self.stats[0]
+            self.current_hp = self.stats[0]
 
     def set_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -63,14 +61,12 @@ class PokeFighter(CombatFighter):
                 )
         ).astype(int)
 
-    # @property
-    # def stats(self):
-    #     hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
-    #     return (
-    #         self.naturemod
-    #         * (
-    #             (2 * self.stats_base + self.stats_individuals + self.stats_effort // 4)
-    #             * (self.level / 100)
-    #             + hp_mod
-    #         )
-    #     ).astype(int)
+    @property
+    def series(self):
+        self.data["level"] = self.level
+        self.data["stats"] = self.stats
+        self.data["current_hp"] = self.current_hp
+        self.data["current_xp"] = self.current_xp
+        self.data["level_xp"] = self.level_xp
+
+        return self.data
