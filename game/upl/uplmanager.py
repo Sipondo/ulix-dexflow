@@ -3,9 +3,6 @@ from lark import Transformer
 
 from game.upl.upl_scripts.portal import portal
 
-# with open("game/upl/upl_grammar.lark", "r") as infile:
-#     parser = Lark(infile.read(), start="upl",)
-
 
 class UPLToPython(Transformer):
     def statement(self, source):
@@ -62,24 +59,3 @@ class UplManager:
         transformer = UPLToPython()
         transformer.src = src
         transformer.transform(self.parser.parse(script))
-
-
-# class Test:
-#     def __init__(self):
-#         self.target_level = "L2"
-#         self.target_coords = (20, 35)
-#         self.direction = "N"
-
-
-# testclass = Test()
-
-# text = """
-# target: portalconnection(self.target_level, self.target_coords, self.direction)
-# """
-
-# print(parser.parse(text).pretty())
-
-
-# code_parser = parser.parse(text)
-# UPLToPython().transform(code_parser)
-
