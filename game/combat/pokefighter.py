@@ -2,15 +2,24 @@ from .combatfighter import CombatFighter
 
 import numpy as np
 import numbers
-import random
 
 
 class PokeFighter(CombatFighter):
     def __init__(self, game, fighter):
         super().__init__(game, fighter)
 
+        number = False
         if isinstance(fighter, numbers.Number):
+            number = True
             fighter = self.game.m_pbs.get_fighter(fighter)
+            self.level = 100
+            self.stats = self.set_stats(fighter)
+        else:
+            self.level = fighter.level
+            self.starting_hp = fighter.current_hp
+            self.current_xp = fighter.current_xp
+            self.level_xp = fighter.level_xp
+            self.stats = fighter.stats
 
         self.type_1 = str(fighter["type1"])
         self.type_2 = str(fighter["type2"])
@@ -21,11 +30,12 @@ class PokeFighter(CombatFighter):
             self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]
         ]
 
-        self.level = 100
-        self.gender = random.choice(["Male", "Female", "Genderless"])
 
-        self.set_stats(fighter)
-        print(self.name, "HP:", self.stats[0])
+
+        if number:
+            self.set_stats(fighter)
+            print("I am a number with HP:", self.stats[0], "Name:", self.name)
+            self.starting_hp = self.stats[0]
 
     def set_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -43,15 +53,24 @@ class PokeFighter(CombatFighter):
         self.stats_effort = np.unique(np.random.randint(0, 6, 510), return_counts=True)[
             1
         ]
-
-    @property
-    def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
         return (
-            self.naturemod
-            * (
-                (2 * self.stats_base + self.stats_individuals + self.stats_effort // 4)
-                * (self.level / 100)
-                + hp_mod
-            )
+                self.naturemod
+                * (
+                        (2 * self.stats_base + self.stats_individuals + self.stats_effort // 4)
+                        * (self.level / 100)
+                        + hp_mod
+                )
         ).astype(int)
+
+    # @property
+    # def stats(self):
+    #     hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
+    #     return (
+    #         self.naturemod
+    #         * (
+    #             (2 * self.stats_base + self.stats_individuals + self.stats_effort // 4)
+    #             * (self.level / 100)
+    #             + hp_mod
+    #         )
+    #     ).astype(int)

@@ -24,7 +24,7 @@ class PokeBoard(CombatBoard):
     def first_init(self, *teams):
         for team in teams:
             self.teams.append(
-                [(x, math.floor(x.stats[0] * x.starting_hp)) for x in team]
+                [(x, x.starting_hp) for x in team]
             )
             self.actives.append((0, 0))
             self.faint.append(False)

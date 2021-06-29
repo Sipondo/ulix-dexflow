@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class PartyMember:
@@ -14,19 +15,21 @@ class PartyMember:
         self.type_2 = fighter.type2
         self.data = fighter.copy()
         self.level = 100
+        self.gender = random.choice(["Male", "Female", "Genderless"])
         self.flavor = fighter.pokedex
-        self.current_hp = 1.0
 
         self.moves = []
         # TODO:
 
-        self.exp_total = 560
-        self.exp_next = 182
+        self.exp_current = 500
+        self.exp_next = 700
 
         self.nature = self.game.m_dat.get_nature()
         self.nature_name = self.nature.identifier.capitalize()
 
         self.set_stats(fighter)
+
+        self.current_hp = self.stats[0]
 
     def set_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -66,8 +69,10 @@ class PartyMember:
 
     @property
     def series(self):
-        self.data.current_hp = self.current_hp
-        self.data.level = self.level
+        self.data["level"] = self.level
         self.data["stats"] = self.stats
+        self.data["current_hp"] = self.current_hp
+        self.data["current_xp"] = self.exp_current
+        self.data["level_xp"] = self.exp_next
 
         return self.data
