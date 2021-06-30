@@ -152,9 +152,10 @@ class GameStateMenuParty(BaseGameState):
                         size=(0.14, 0.01),
                         col="gray",
                     )
+                    current_hp = member.current_hp / member.stats[0]
                     self.game.r_int.draw_rectangle(
                         (0.155 + (i % 2) * 0.18, i_v + 0.07),
-                        size=(0.14 * member.current_hp, 0.01),
+                        size=(0.14 * current_hp, 0.01),
                         col="green",
                     )
                     self.game.r_int.draw_image(

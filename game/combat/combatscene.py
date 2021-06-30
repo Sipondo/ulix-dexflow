@@ -22,6 +22,7 @@ class CombatScene:
         self.init_board(t1, t2)
 
         self.round = 0
+        self.end = False
 
         self.effects = []
         self.effect_lib = {}
@@ -62,7 +63,7 @@ class CombatScene:
         for action in actions:
             move_effect = self.spawn_action_effect(action)
             action_effects.append((action, move_effect))
-        while action_effects:
+        while action_effects and not self.end:
             self.board.action, move_effect = action_effects.pop()
             # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
@@ -140,6 +141,8 @@ class CombatScene:
             self.delete_effect(effect)
         if skip:
             return True
+        if end:
+            self.end = True
         return False
 
     def add_effect(self, effect):
@@ -204,42 +207,21 @@ class CombatScene:
     def format_actions(self, action_descriptions):
         actions = []
         for (name, action), user, target in action_descriptions:
-            # action.id
-            # action.identifier
-            # action.name
-            # action.function
-            # action.power
-            # action.type
-            # action.damagecat
-            # action.accuracy
-            # action.pp
-            # action.chance
-            # action.target
-            # action.priority
-            # action.flags
-            # action.description
-            # action.user
-            # action.target
-            if name == "swap":
-                action = types.SimpleNamespace()
-                action.action_name = "swap"
-                action.user = user
-                action.target = target
-                action.priority = 6
-                actions.append(action)
-            if name == "flee":
-                # TODO fix a RunAction object
-                action = types.SimpleNamespace()
-                action.action_name = "flee"
-                action.user = user
-                action.target = target
-                action.priority = 6
-                actions.append(action)
             if name == "attack":
                 action = action.copy()
                 action.action_name = name
                 action["user"] = user
                 action["target"] = target
+                actions.append(action)
+            else:
+                # FLEE, CATCH, SWITCH
+                action_data = action
+                action = types.SimpleNamespace()
+                action.action_data = action_data
+                action.action_name = name
+                action.user = user
+                action.target = target
+                action.priority = 6
                 actions.append(action)
         return actions
 

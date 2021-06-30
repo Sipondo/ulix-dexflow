@@ -123,6 +123,9 @@ class GameStateBattle(BaseGameState):
         if action[0] == "attack":
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
+        if action[0] == "catch":
+            user = (0, self.board.get_active(0))
+            target = (1, self.board.get_active(1))
         actions.append(
             (action, user, target)
         )
@@ -218,6 +221,7 @@ class GameStateBattle(BaseGameState):
             return f"Swap with {name}."
 
         if self.state == states["ballmenu"]:
+            print(self.game.inventory.get_pocket_items(3)[self.selection])
             ball = self.game.inventory.get_pocket_items(3)[self.selection]
             return ball.description
 
@@ -282,9 +286,9 @@ class GameStateBattle(BaseGameState):
                 )
 
                 balls = self.game.inventory.get_pocket_items(3)
-                for i, k in enumerate(balls):
+                for i in range(4):
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{k.name}",
+                        f"{self.selection == i and '' or ''}{balls[i].name}",
                         (0.69, 0.54 + 0.08 * i),
                         size=(0.20, 0.06),
                         bcol=self.selection == i and "yellow" or "white",
@@ -328,7 +332,6 @@ class GameStateBattle(BaseGameState):
             (0.1, 0.158), size=(0.25, 0.012), col="grey",
         )
         rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
-        print("rel_xp:", rel_xp)
         if rel_xp > 0:
             self.game.r_int.draw_rectangle(
                 (0.1, 0.158),

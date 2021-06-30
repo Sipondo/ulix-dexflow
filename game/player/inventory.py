@@ -13,7 +13,7 @@ class Inventory:
         self.members = []
         self.items = []
 
-        for i in range(6):
+        for i in range(3):
             self.members.append(self.init_random_member())
 
         for i in range(400):
