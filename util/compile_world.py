@@ -26,12 +26,12 @@ if ldtk["externalLevels"]:
 
 
 def coldef_to_bool(coldef):
-    return [
-        coldef in ("E", "X"),
-        coldef in ("S", "X"),
-        coldef in ("W", "X"),
-        coldef in ("N", "X"),
-    ] + [coldef in (x,) for x in enumValues]
+    all = "X" in coldef
+    if all:
+        return [True, True, True, True] + [coldef in (x,) for x in enumValues]
+    return ["E" in coldef, "S" in coldef, "W" in coldef, "N" in coldef,] + [
+        x in coldef for x in enumValues
+    ]
 
 
 a = ldtk_json_from_dict(ldtk)
@@ -49,9 +49,9 @@ total_data = {}
 
 coldefs = {
     t.uid: {
-        n: "".join(
-            [x["enumValueId"] for x in t.enum_tags if n in x["tileIds"]]
-        )  # .replace("X", "ESWN")
+        n: [
+            x["enumValueId"] for x in t.enum_tags if n in x["tileIds"]
+        ]  # .replace("X", "ESWN")
         for n in range(t.px_hei * t.px_wid // 256)
     }
     for t in a.defs.tilesets

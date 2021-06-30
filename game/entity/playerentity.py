@@ -20,6 +20,7 @@ class PlayerEntity(BaseEntity):
         pass
 
     def on_enter(self):
+        self.height = self.game.m_sav.load("player_height")
         print("direction:", self.direction)
 
     def start_move(self, direction_str, time):
@@ -40,6 +41,7 @@ class PlayerEntity(BaseEntity):
         #     time, frame_time
         # )
         self.game.m_sav.save("player_pos", self.game_position)
+        self.game.m_sav.save("player_height", self.height)
 
         # print(
         #     "A_STAR",

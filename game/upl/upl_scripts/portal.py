@@ -1,4 +1,5 @@
 def portal(self, target_level, target_location, fade):
+    print(self.target)
     self.game.m_map.set_level(self.game.m_map.convert_mapstring_to_key(target_level))
     position = (self.x, self.y)
 

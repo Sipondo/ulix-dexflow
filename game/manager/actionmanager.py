@@ -44,7 +44,8 @@ class RegionRectangle:
         self.y = y
 
         for k, v in region.items():
-            setattr(self, k, eval(v) if "[" in v else v)
+            print(v)
+            setattr(self, k, eval(str(v)) if "[" in str(v) else v)
             # print(eval(v) if "[" in v else v)
 
         if hasattr(self, "target_direction"):
@@ -79,6 +80,7 @@ class RegionRectangle:
     def check(self, entity):
         pos = entity.get_pos()
         if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
+            self.target = entity
             print("TRIGGER")
             self.on_enter(entity)
 

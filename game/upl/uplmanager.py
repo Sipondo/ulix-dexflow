@@ -12,6 +12,11 @@ class UPLToPython(Transformer):
         print(s)
         return s[0](self.src, *s[1])
 
+    def assign(self, s):
+        print("assign")
+        print(s)
+        return exec(f"self.src.target.{s[0]}={s[1]}")
+
     def function(self, s):
         (s,) = s
         return portal
@@ -27,6 +32,11 @@ class UPLToPython(Transformer):
     def command(self, s):
         (s,) = s
         return s
+
+    def assign_variable(self, s):
+        (s,) = s
+        print(s)
+        return str(s)
 
     def variable(self, s):
         (s,) = s

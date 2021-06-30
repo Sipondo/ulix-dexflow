@@ -34,25 +34,14 @@ class EntityManager:
     def load_regions(self, offset=(0, 0)):
         # print("\n\nREGIONS:")
         for region in self.game.m_map.current_regions:
-            # print(region)
-            if region["identifier"] == "Portal":
-                self.game.m_act.create_region(
-                    (
-                        floor(region["location"][0] / 16) - offset[0],
-                        ceil(region["location"][1] // 16) - offset[1],
-                    ),
-                    (region["width"] // 16, region["height"] // 16),
-                    region,
-                )
-            elif region["identifier"] == "PortalConnection":
-                self.game.m_act.create_region(
-                    (
-                        floor(region["location"][0] / 16) - offset[0],
-                        ceil(region["location"][1] // 16) - offset[1],
-                    ),
-                    (region["width"] // 16, region["height"] // 16),
-                    region,
-                )
+            self.game.m_act.create_region(
+                (
+                    floor(region["location"][0] / 16) - offset[0],
+                    ceil(region["location"][1] // 16) - offset[1],
+                ),
+                (region["width"] // 16, region["height"] // 16),
+                region,
+            )
 
     def load_entities(self, offset=(0, 0)):
         # print("\n\nENTITIES:")
@@ -114,6 +103,9 @@ class EntityManager:
 
     def find_texture_id(self, entity, mt):
         return self.texture_names.index(entity.sprites[mt])
+
+    def all_entities_on_height(self, height):
+        return [self.player] + [x for x in self.entities if x.height == height]
 
     @property
     def all_entities(self):
