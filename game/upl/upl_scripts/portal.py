@@ -4,8 +4,6 @@ def portal(self, target_level, target_location, fade):
 
     direc = self.game.m_ent.player.get_dir()
 
-    print(target_location, position, direc)
-
     self.game.r_wld.set_map_via_manager(
         (
             target_location[0] - position[0] + direc[0],

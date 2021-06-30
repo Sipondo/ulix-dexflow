@@ -15,3 +15,4 @@ moderngl-window
 nodeeditor
 cx-freeze
 pyqt5
+lark
