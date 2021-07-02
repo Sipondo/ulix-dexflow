@@ -63,9 +63,11 @@ class UplManager:
     def __init__(self, game):
         self.game = game
         with open("game/upl/upl_grammar.lark", "r") as infile:
-            self.parser = Lark(infile.read(), start="upl", parser="lalr")
+            self.parser = Lark(infile.read(), start="upl")  # , parser="lalr")
 
     def parse(self, src, script):
         transformer = UPLToPython()
         transformer.src = src
-        transformer.transform(self.parser.parse(script))
+        parse = self.parser.parse(script)
+        print("PARSE:", parse)
+        transformer.transform(parse)
