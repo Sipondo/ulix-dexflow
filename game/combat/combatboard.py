@@ -46,9 +46,10 @@ class CombatBoard:
     def set_direction(self, action):
         # Mostly for particles
         # TODO: possibly move into particle attribute
-        print("User:", action.user, "\nTarget:", action.target)
-        self.user = action.user
-        self.target = action.target
+        if hasattr(action, "user"):
+            self.user = action.user
+        if hasattr(action, "target"):
+            self.target = action.target
 
     def get_actor(self, target):
         # Get actor from (action) tuple

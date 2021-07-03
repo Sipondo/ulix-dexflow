@@ -2,16 +2,18 @@ from .basegamestate import BaseGameState
 
 from game.particle.battlerender import BattleRender
 from game.combat.combatscene import CombatScene
+from game.combat.agent.agentrand import AgentRand
+from game.combat.agent.agentuser import AgentUser
 import traceback
 
 states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu": 4}
 
 
 class GameStateBattle(BaseGameState):
-    def on_enter(self):
+    def on_enter(self, teams=None, agents=None):
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
-            self.game, [x.series for x in self.game.inventory.members], [1]
+            self.game, [x.series for x in self.game.inventory.members], [1, 2]
         )
         self.render.camera.reset()
         self.board = self.combat.board
@@ -24,12 +26,25 @@ class GameStateBattle(BaseGameState):
         self.render.set_pokemon(self.actor_1[0].sprite, 0)
         self.render.set_pokemon(self.actor_2[0].sprite, 1)
 
+        self.agents = []
+        if agents:
+            self.agents = agents
+        else:
+            self.agents.append(self.init_agent("user"))
+            self.agents.append(self.init_agent("random"))
+
         self.need_to_redraw = True
         self.selection = 0
         self.state = states["topmenu"]
         self.game.r_aud.play_music("BGM/Battle wild.flac")
         self.particle_test = False
         self.particle_test_cooldown = 0.0
+
+    def init_agent(self, agent):
+        if agent == "random":
+            return AgentRand(self.game)
+        if agent == "user":
+            return AgentUser(self.game)
 
     def on_tick(self, time, frame_time):
         if self.particle_test and not self.lock:
@@ -143,19 +158,30 @@ class GameStateBattle(BaseGameState):
                 (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
             )
         self.state = states["action"]
-        self.pending_boards = self.combat.run_scene(actions)
+        self.pending_boards = self.combat.run_scene(action_descriptions=actions)
         self.advance_board()
 
     def advance_board(self):
         if self.board.battle_end:
             self.end_battle()
-        if not self.pending_boards:
-            if any(self.board.faint):
-                pass  # switch in new guy
-            self.state = states["topmenu"]
-            self.render.camera.reset()
-            print("--- RESET STATES")
             return
+        if not self.pending_boards:
+            print(self.board.switch)
+            if any(self.board.switch):
+                actions = []
+                for i in range(len(self.board.switch)):
+                    if self.board.switch[i]:
+                        if type(self.agents[i]) == AgentUser:
+                            self.state = states["swapmenu"]
+                        user = (i, self.board.get_active(i))
+                        target = (i, 0)
+                        actions.append((("sendout", (i, self.agents[i].get_sendout(self.combat))), user, target))
+                self.pending_boards = self.combat.run_scene(action_descriptions=actions, next_round=False)
+            else:
+                self.state = states["topmenu"]
+                self.render.camera.reset()
+                print("--- RESET STATES")
+                return
 
         self.board = self.pending_boards.pop(0)
 

@@ -3,19 +3,19 @@ import numpy as np
 
 
 class AgentUser(BaseAgent):
-    def predict(self, obs):
-        while True:
-            obs_active_pmon = 0
-            for move in self.team[obs_active_pmon].moves:
-                move.describe()
+    def __init__(self, game):
+        super().__init__(game)
+        self.sendout = None
+        self.action = None
 
-            print("Choose action: 1-4")
+    def get_action(self, scene):
+        return (1, 1)
 
-            inp = input()
+    def set_action(self, action):
+        self.action = action
 
-            try:
-                inp = int(inp)
-                inp %= 5
-            except Exception as e:
-                inp = 1
-            return max(0, inp - 1)
+    def get_sendout(self, scene):
+        return 1
+
+    def set_sendout(self, sendout):
+        self.sendout = sendout

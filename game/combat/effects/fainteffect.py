@@ -30,7 +30,6 @@ class FaintEffect(BaseEffect):
             self.scene.add_effect(ExperienceEffect(self.scene, (0, self.scene.board.get_active(0)), 100))
         if end:
             self.scene.add_effect(EndBattleEffect(self.scene))
+        self.scene.board.switch[self.target[0]] = True
         return True, False, False
 
-    def on_end_turn(self):
-        self.scene.board.need_sendout[self.target[0]] = True
