@@ -13,9 +13,9 @@ from PIL import Image, ImageFont
 
 ESSENTIALS_DIR = Path("..")
 
-p = ESSENTIALS_DIR / "Graphics/Tilesets"
+p = ESSENTIALS_DIR / "graphics/raw_tilesets"
 
-p_to = Path("resources/essentials/graphics/tilesets")
+p_to = ESSENTIALS_DIR / "graphics/tilesets"
 
 for infile in p.glob("*.png"):
     print(infile)
@@ -28,9 +28,9 @@ for infile in p.glob("*.png"):
     img_new.paste(img, (0, 16, img.size[0], img.size[1] + 16))
     img_new.save(p_to / f"{infile.stem}.png".lower())
 
-p = ESSENTIALS_DIR / "Graphics/Autotiles"
+p = ESSENTIALS_DIR / "graphics/raw_autotiles"
 
-p_to = Path("resources/essentails/graphics/autotiles")
+p_to = ESSENTIALS_DIR / "graphics/autotiles"
 
 for infile in p.glob("*.png"):
     print(infile)
