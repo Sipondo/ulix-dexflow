@@ -22,11 +22,14 @@
 statement : source ":" command
 source : /[a-zA-Z0-9_]+/
 command: fcall
+    |   assign
     |   string
 
 fcall: function "(" fargs ")"
-function : /[a-zA-Z0-9_]+/
+function: /[a-zA-Z0-9_]+/
 fargs: [object ("," (object))*]
+
+assign: assign_variable "=" object
 
 object: string
     |number
@@ -34,8 +37,11 @@ object: string
     | "true"             -> true
     | "false"            -> false
     | "null"             -> null
+
 string: ESCAPED_STRING
 number: SIGNED_NUMBER
+
+assign_variable: /[a-zA-Z0-9_.]+/
 variable: /[a-zA-Z0-9_.]+/
 
 %import common.ESCAPED_STRING

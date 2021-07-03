@@ -30,7 +30,7 @@ class CollisionManager:
         # print(self.colmap[height].shape)
         if self.game.maphack:
             return True
-        for entity in self.game.m_ent.all_entities:
+        for entity in self.game.m_ent.all_entities_on_height(height):
             x1, y1 = entity.get_pos()
             x1 += self.offset[0]
             y1 += self.offset[1]

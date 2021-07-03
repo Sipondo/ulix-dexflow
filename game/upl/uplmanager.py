@@ -12,6 +12,11 @@ class UPLToPython(Transformer):
         print(s)
         return s[0](self.src, *s[1])
 
+    def assign(self, s):
+        print("assign")
+        print(s)
+        return exec(f"self.src.target.{s[0]}={s[1]}")
+
     def function(self, s):
         (s,) = s
         return portal
@@ -27,6 +32,11 @@ class UPLToPython(Transformer):
     def command(self, s):
         (s,) = s
         return s
+
+    def assign_variable(self, s):
+        (s,) = s
+        print(s)
+        return str(s)
 
     def variable(self, s):
         (s,) = s
@@ -53,9 +63,11 @@ class UplManager:
     def __init__(self, game):
         self.game = game
         with open("game/upl/upl_grammar.lark", "r") as infile:
-            self.parser = Lark(infile.read(), start="upl", parser="lalr")
+            self.parser = Lark(infile.read(), start="upl")  # , parser="lalr")
 
     def parse(self, src, script):
         transformer = UPLToPython()
         transformer.src = src
-        transformer.transform(self.parser.parse(script))
+        parse = self.parser.parse(script)
+        print("PARSE:", parse)
+        transformer.transform(parse)
