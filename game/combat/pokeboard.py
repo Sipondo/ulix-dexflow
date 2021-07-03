@@ -9,21 +9,21 @@ import pandas as pd
 class PokeBoard(CombatBoard):
     def __init__(self, scene):
         super().__init__(scene)
-        self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
-        self.faint = []
+        # self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
+        self.switch = []
 
     def copy(self):
         newstate = PokeBoard(self.scene)
         newstate.from_board(self)
-        newstate.faint = self.faint.copy()
-        newstate.legal = self.legal.copy()
+        newstate.switch = self.switch.copy()
+        # newstate.legal = self.legal.copy()
         return newstate
 
     def first_init(self, *teams):
         for team in teams:
             self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append((0, 0))
-            self.faint.append(False)
+            self.switch.append(False)
 
     def inflict_damage(self, target, damage):
         x, hp = self.teams[target[0]][target[1]]

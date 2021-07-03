@@ -8,7 +8,7 @@ class BaseGameState(abc.ABC):
         self.lock = False
 
     @abc.abstractmethod
-    def on_enter(self):
+    def on_enter(self, **kwargs):
         pass
 
     @abc.abstractmethod

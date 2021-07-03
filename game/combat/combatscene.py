@@ -4,6 +4,7 @@ from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
 from .effects.switcheffect import SwitchEffect
 from .effects.balleffect import BallEffect
+from .effects.sendouteffect import SendOutEffect
 
 import types
 import importlib
@@ -27,6 +28,8 @@ class CombatScene:
         self.effects = []
         self.effect_lib = {}
 
+        self.action_effects = []
+
         self.init_effects()
 
     def init_effects(self):
@@ -47,9 +50,17 @@ class CombatScene:
     def init_fighter(self, src):
         return PokeFighter(self.game, src)
 
-    def run_scene(self, action_descriptions):
-        self.round += 1
-        actions = self.format_actions(action_descriptions)
+    def run_scene(self, action_descriptions=None, next_round=True):
+        if next_round:
+            self.round += 1
+        if action_descriptions:
+            actions = self.format_actions(action_descriptions)
+
+            # Spawn all action effects
+            actions.sort(key=lambda x: self.board.get_action_priority(x))
+            for action in actions:
+                move_effect = self.spawn_action_effect(action)
+                self.action_effects.append((action, move_effect))
         # print("Actions:", actions)
 
         # After select
@@ -57,14 +68,8 @@ class CombatScene:
         #     self.run_effect(effect, effect.after_select)
         # self.reset_effects_done()
 
-        # Spawn all action effects
-        actions.sort(key=lambda x: self.board.get_action_priority(x))
-        action_effects = []
-        for action in actions:
-            move_effect = self.spawn_action_effect(action)
-            action_effects.append((action, move_effect))
-        while action_effects and not self.end:
-            self.board.action, move_effect = action_effects.pop()
+        while self.action_effects and not self.end:
+            self.board.action, move_effect = self.action_effects.pop()
             # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
 
@@ -92,12 +97,6 @@ class CombatScene:
                         effect.done = True
                     self.delete_effect(move_effect)
                     break
-            # while effects := [
-            #     x
-            #     for x in sorted(self.board.get_effects_on_target(move_effect.user), key=lambda x: -x.spd_on_action)
-            #     if not x.done
-            # ]:
-            #     skip = self.run_effect(effects[0], effects[0].on_action)
 
             self.reset_effects_done()
 
@@ -153,11 +152,13 @@ class CombatScene:
         if action.action_name == "attack":
             effect = MainMove(self, action)
         elif action.action_name == "flee":
-            effect = RunEffect(self, action.user, action.target)
+            effect = RunEffect(self, action)
         elif action.action_name == "swap":
             effect = SwitchEffect(self, action)
         elif action.action_name == "catch":
             effect = BallEffect(self, action)
+        elif action.action_name == "sendout":
+            effect = SendOutEffect(self, action.action_data)
         self.effects.append(effect)
         return effect
 
@@ -168,7 +169,9 @@ class CombatScene:
                 self.delete_effect(effect)
 
     def on_send_out_effects(self, target):
-        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_send_out)]:
+        for effect in [
+            x for x in sorted(self.effects, key=lambda x: -x.spd_on_send_out)
+        ]:
             delete = self.run_effect(effect, effect.on_send_out, target)
             if delete:
                 self.delete_effect(effect)
@@ -214,7 +217,7 @@ class CombatScene:
                 action["target"] = target
                 actions.append(action)
             else:
-                # FLEE, CATCH, SWITCH
+                # FLEE, CATCH, SWITCH, SEND OUT
                 action_data = action
                 action = types.SimpleNamespace()
                 action.action_data = action_data

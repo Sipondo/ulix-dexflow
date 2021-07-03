@@ -3,5 +3,6 @@ import numpy as np
 
 
 class AgentOnes(BaseAgent):
-    def get_action(self):
-        return 0
+    pass
+    # def get_action(self):
+    #     return 0

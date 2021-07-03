@@ -4,10 +4,10 @@ from .endbattleeffect import EndBattleEffect
 
 
 class RunEffect(BaseEffect):
-    def __init__(self, scene, user, target):
+    def __init__(self, scene, action):
         super().__init__(scene)
-        self.user = user
-        self.target = target
+        self.user = action.user
+        self.target = action.target
 
     def on_action(self):
         # TODO speed check of both pokemon

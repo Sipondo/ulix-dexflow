@@ -9,6 +9,7 @@ class SendOutEffect(BaseEffect):
 
     def on_action(self):
         self.scene.board.set_active(self.target)
+        self.scene.board.switch[self.target[0]] = False
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.target).name}, go!", particle=""
         )

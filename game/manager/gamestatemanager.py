@@ -14,7 +14,7 @@ class GameStateManager:
         self.game = gamegui
         self.current_state = None
 
-    def switch_state(self, new_state):
+    def switch_state(self, new_state, **kwargs):
         self.game.r_int.new_canvas()
         if self.current_state is not None:
             self.current_state.on_exit()
@@ -40,4 +40,4 @@ class GameStateManager:
             self.current_state = GameStateIntro(self.game)
 
         print(f"GAMESTATE SWITCHED: {new_state}")
-        self.current_state.on_enter()
+        self.current_state.on_enter(**kwargs)
