@@ -5,6 +5,7 @@ from io import BytesIO
 from pathlib import Path
 
 from game.helpers.ldtkjson import ldtk_json_from_dict
+from game.upl.uplmanager import UplParser
 
 root = Path("world/")
 
@@ -36,14 +37,15 @@ def coldef_to_bool(coldef):
 
 a = ldtk_json_from_dict(ldtk)
 
-a.levels
-# a.levels[0].layer_instances[0].tileset_rel_path
-# Block if corrupt
-# if (ldtk["minifyJson"] != False) or (ldtk["exportTiled"] != False):
-#     raise Exception("Wrong ldtk file configuration!")
-
-# TODO: include defs
 defs = a.defs
+
+ent_field_upl = {
+    ent.uid: {
+        x.uid: "ruby" in str(x.text_language_mode).lower() for x in ent.field_defs
+    }
+    for ent in defs.entities
+}
+parser = UplParser()
 
 total_data = {}
 
@@ -193,7 +195,10 @@ for level in a.levels:
                     entity["identifier"] = raw_ent.identifier
                     entity["location"] = raw_ent.px
                     for field in raw_ent.field_instances:
-                        entity[f"f_{field.identifier}"] = field.value
+                        if ent_field_upl[raw_ent.def_uid][field.def_uid]:
+                            entity[f"f_{field.identifier}"] = parser.parse(field.value)
+                        else:
+                            entity[f"f_{field.identifier}"] = field.value
                     entity["width"] = raw_ent.width
                     entity["height"] = raw_ent.height
                     regions.append(entity)

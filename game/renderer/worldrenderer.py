@@ -24,10 +24,10 @@ class TileLayer:
     def temp_init(self):
         self.prog["displaySize"].value = self.game.size
 
-        self.prog["tilemapSize"].value = (
-            self.spritemap.size[0] / 16,
-            self.spritemap.size[1] / 16,
-        )
+        # self.prog["tilemapSize"].value = (
+        #     self.spritemap.size[0] / 16,
+        #     self.spritemap.size[1] / 16,
+        # )
         self.prog["Zoom"].value = (100 / 2000, 100 / 2000)
         self.prog["Pan"].value = (0, 0)
         self.prog["offset"].value = self.offset
@@ -58,10 +58,10 @@ class TileLayer:
             self.game.pan_tool.pan_value[1] / 9 + 10,
         )
         self.prog["Zoom"].value = self.game.pan_tool.zoom_value
-        self.prog["tilemapSize"].value = (
-            self.spritemap.size[0] / 16,
-            self.spritemap.size[1] / 16,
-        )
+        # self.prog["tilemapSize"].value = (
+        #     self.spritemap.size[0] / 16,
+        #     self.spritemap.size[1] / 16,
+        # )
         self.prog["layerHeight"].value = self.texture_map.size[2]
         self.prog["worldSize"].value = (
             self.texture_map.size[0],

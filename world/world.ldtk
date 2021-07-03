@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 397,
+	"nextUid": 399,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2900,7 +2900,48 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0,
 			"pivotY": 0,
-			"fieldDefs": []
+			"fieldDefs": [
+				{
+					"identifier": "on_enter_action",
+					"__type": "String",
+					"uid": 397,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_exit_action",
+					"__type": "String",
+					"uid": 398,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": "LangRuby"
+				}
+			]
 		}
 	], "tilesets": [
 		{

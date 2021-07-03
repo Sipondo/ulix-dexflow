@@ -22,7 +22,7 @@ uniform vec2 offset=vec2(0,0);
 uniform vec2 displaySize;
 uniform int layerHeight;
 uniform vec2 worldSize;
-uniform vec2 tilemapSize;
+// uniform vec2 tilemapSize;
 
 uniform sampler2D texture_tileset;
 uniform usampler2DArray texturearray_masks;
@@ -37,7 +37,7 @@ out vec4 fragColor;
 
 void main(){
   vec2 pannedPosition=(((uv0+vec2(-.5,-.5))/Zoom+Pan)*displaySize/displayBase/tileSize+offset);
-  vec2 tilePosition=mod(pannedPosition,modSize)/tilemapSize;
+  ivec2 tilePosition=ivec2(mod(pannedPosition,modSize)*16);
   vec2 worldPosition=floor(pannedPosition/modSize);
   vec4 retrieveColor;
   vec4 outputColor=vec4(0,0,0,0);
@@ -51,13 +51,13 @@ void main(){
     for(int i=0;i<layerHeight;i++){
       
       // Retrieve information regarding which tile should be visualised
-      vec4 mask=texture(texturearray_masks,vec3(worldPosition/worldSize,i));
+      vec4 mask=texelFetch(texturearray_masks,ivec3(worldPosition,i),0);
       
       // Retrieve position of the pixel within the tileset image
-      vec2 layerTilePosition=tilePosition+(vec2(mask.x,mask.y)/tilemapSize);
+      ivec2 layerTilePosition=tilePosition+ivec2(mask.x,mask.y)*16;
       
       // Retrieve the pixel that would be rendered
-      retrieveColor=texture(texture_tileset,layerTilePosition);
+      retrieveColor=texelFetch(texture_tileset,layerTilePosition,0);
       
       // If not transparent, render pixel
       if(retrieveColor.a>0){

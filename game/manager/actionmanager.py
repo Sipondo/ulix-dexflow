@@ -44,9 +44,11 @@ class RegionRectangle:
         self.y = y
 
         for k, v in region.items():
-            print(v)
-            setattr(self, k, eval(str(v)) if "[" in str(v) else v)
-            # print(eval(v) if "[" in v else v)
+            print(type(v), v)
+            if isinstance(v, (int, float, str)):
+                setattr(self, k, eval(str(v)) if "[" in str(v) else v)
+            else:
+                setattr(self, k, v)
 
         if hasattr(self, "target_direction"):
             if self.target_direction == "E":

@@ -21,13 +21,13 @@ class CollisionManager:
             self.colmap[height] = self.colmap[height] | colmap
 
     def check_collision(self, pos, direction, height=0, off=True):
+        height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
         dx, dy = direction
         ox, oy = pos
         new_pos = ox + dx, oy + dy
-        # print(new_pos)
-        # print(self.colmap[height].shape)
+
         if self.game.maphack:
             return True
         for entity in self.game.m_ent.all_entities_on_height(height):
