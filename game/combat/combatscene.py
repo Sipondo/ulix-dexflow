@@ -18,6 +18,7 @@ class CombatScene:
         self.game = game
         t1 = self.init_team(team_1)
         t2 = self.init_team(team_2)
+        self.teams = [t1, t2]
         self.board_history = [PokeBoard(self)]
         self.board_graveyard = []
         self.init_board(t1, t2)

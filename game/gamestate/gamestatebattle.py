@@ -6,6 +6,8 @@ from game.combat.agent.agentrand import AgentRand
 from game.combat.agent.agentuser import AgentUser
 import traceback
 
+import time as ti
+
 states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu": 4}
 
 
@@ -30,8 +32,8 @@ class GameStateBattle(BaseGameState):
         if agents:
             self.agents = agents
         else:
-            self.agents.append(self.init_agent("user"))
-            self.agents.append(self.init_agent("random"))
+            self.agents.append(self.init_agent("user", 0))
+            self.agents.append(self.init_agent("random", 1))
 
         self.need_to_redraw = True
         self.selection = 0
@@ -39,23 +41,44 @@ class GameStateBattle(BaseGameState):
         self.game.r_aud.play_music("BGM/Battle wild.flac")
         self.particle_test = False
         self.particle_test_cooldown = 0.0
+        self.end_time = ti.time()
+        self.max_time = 1
 
-    def init_agent(self, agent):
+    def init_agent(self, agent, team):
         if agent == "random":
-            return AgentRand(self.game)
+            return AgentRand(self, team)
         if agent == "user":
-            return AgentUser(self.game)
+            return AgentUser(self, team)
 
     def on_tick(self, time, frame_time):
-        if self.particle_test and not self.lock:
-            if self.particle_test_cooldown:
-                self.particle_test_cooldown = max(
-                    0, self.particle_test_cooldown - frame_time
-                )
-            elif self.state == states["action"]:
-                self.advance_board()
+        actions = []
+        if self.state != states["action"]:
+            skip = False
+            if self.particle_test and not self.lock:
+                if self.particle_test_cooldown:
+                    self.particle_test_cooldown = max(
+                        0, self.particle_test_cooldown - frame_time
+                    )
+                else:
+                    tackle = self.game.m_pbs.get_move(399).copy()
+                    tackle.power = 0
+                    actions.append(
+                        (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+                    )
+                    actions.append(
+                        (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+                    )
             else:
-                self.reg_action(("attack", self.actor_1[0].actions[0],))
+                for agent in self.agents:
+                    action = agent.get_action(self.combat)
+                    if action is not None:
+                        actions.append(action)
+                    else:
+                        skip = True
+            if not skip:
+                self.state = states["action"]
+                self.pending_boards = self.combat.run_scene(actions)
+                self.advance_board()
 
         self.redraw(time, frame_time)
         self.lock = self.render.render(time, frame_time)
@@ -115,7 +138,6 @@ class GameStateBattle(BaseGameState):
                         self.selection = 2
                     self.state = states["topmenu"]
         else:
-            # TODO: implement ff
             self.game.m_par.fast_forward = True
 
     @property
@@ -125,10 +147,7 @@ class GameStateBattle(BaseGameState):
         return 4
 
     def reg_action(self, action):
-        # TODO: src, trg
-
         self.selection = 0
-        actions = []
 
         user = (0, 0)
         target = (1, 0)
@@ -141,25 +160,21 @@ class GameStateBattle(BaseGameState):
         if action[0] == "catch":
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
-        actions.append(
-            (action, user, target)
-        )
-        actions.append(
-            (("attack", self.actor_2[0].actions[0]), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-        )
-        if self.particle_test:
-            actions = []
-            tackle = self.game.m_pbs.get_move(399).copy()
-            tackle.power = 0
-            actions.append(
-                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-            )
-            actions.append(
-                (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-            )
-        self.state = states["action"]
-        self.pending_boards = self.combat.run_scene(action_descriptions=actions)
-        self.advance_board()
+        action_desc = (action, user, target)
+        self.agents[0].set_action(action_desc)
+
+        # if self.particle_test:
+        #     actions = []
+        #     tackle = self.game.m_pbs.get_move(399).copy()
+        #     tackle.power = 0
+        #     actions.append(
+        #         (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+        #     )
+        #     actions.append(
+        #         (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+        #     )
+        # self.pending_boards = self.combat.run_scene(action_descriptions=actions)
+        # self.advance_board()
 
     def advance_board(self):
         if self.board.battle_end:
@@ -175,10 +190,15 @@ class GameStateBattle(BaseGameState):
                             self.state = states["swapmenu"]
                         user = (i, self.board.get_active(i))
                         target = (i, 0)
+                        # TODO make user able to choose
                         actions.append((("sendout", (i, self.agents[i].get_sendout(self.combat))), user, target))
                 self.pending_boards = self.combat.run_scene(action_descriptions=actions, next_round=False)
             else:
                 self.state = states["topmenu"]
+                for agent in self.agents:
+                    if type(agent) == AgentUser:
+                        agent.set_action(None)
+                    agent.start()
                 self.render.camera.reset()
                 print("--- RESET STATES")
                 return
@@ -223,6 +243,7 @@ class GameStateBattle(BaseGameState):
                 self.board.target,
                 miss=self.board.particle_miss,
             )
+        self.end_time = ti.time()
 
     def synchronize(self):
         for i, member in enumerate(self.game.inventory.members):
