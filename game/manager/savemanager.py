@@ -7,7 +7,7 @@ class SaveManager:
         self.streaming = True
         self.last_save = 0
         try:
-            with open("streamingsave.sssave", "r") as infile:
+            with open("streamingsave.usave", "r") as infile:
                 self.store = json.loads(infile.read())
         except Exception as e:
             print("Warning: No streaming save found. Defaulting...")
@@ -27,9 +27,9 @@ class SaveManager:
         if time - self.last_save < 5:
             return
         self.last_save = time
-        with open("streamingsave.sssave", "w") as outfile:
+        with open("streamingsave.usave", "w") as outfile:
             outfile.write(json.dumps(self.store, indent=4, sort_keys=True))
 
     def write_to_file(self):
-        with open("save1.sssave", "w") as outfile:
+        with open("save1.usave", "w") as outfile:
             outfile.write(json.dumps(self.store, indent=4, sort_keys=True))

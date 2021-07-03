@@ -5,7 +5,7 @@ rawdata
 test.py
 *.ldtkc
 *.backup.ldtk
-*.sssave
+*.usave
 /venv/*
 build
 .vscode
