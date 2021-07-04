@@ -12,7 +12,7 @@ class AgentUser(BaseAgent):
         self.action = action
 
     def get_sendout(self, scene):
-        return self.sendout
+        return 1
 
     def set_sendout(self, sendout):
         self.sendout = sendout

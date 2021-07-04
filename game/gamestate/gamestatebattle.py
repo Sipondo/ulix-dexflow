@@ -34,7 +34,10 @@ class GameStateBattle(BaseGameState):
         else:
             self.agents.append(self.init_agent("user", 0))
             self.agents.append(self.init_agent("random", 1))
+        for agent in self.agents:
+            agent.start(self.combat)
 
+        self.lock_state = False
         self.need_to_redraw = True
         self.selection = 0
         self.state = states["topmenu"]
@@ -69,13 +72,22 @@ class GameStateBattle(BaseGameState):
                         (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
                     )
             else:
-                for agent in self.agents:
-                    action = agent.get_action(self.combat)
-                    if action is not None:
-                        actions.append(action)
+                for i, agent in enumerate(self.agents):
+                    if self.lock_state:
+                        if self.board.switch[i]:
+                            sendout = agent.get_sendout(self.combat)
+                            if sendout is not None:
+                                actions.append((("sendout", (i, sendout)), None, None))
+                            else:
+                                skip = True
                     else:
-                        skip = True
+                        action = agent.get_action(self.combat)
+                        if action is not None:
+                            actions.append(action)
+                        else:
+                            skip = True
             if not skip:
+                self.lock_state = False
                 self.state = states["action"]
                 self.pending_boards = self.combat.run_scene(actions)
                 self.advance_board()
@@ -124,19 +136,27 @@ class GameStateBattle(BaseGameState):
                             ("attack", self.actor_1[0].actions[self.selection],)
                         )
                     elif self.state == states["swapmenu"]:
-                        self.reg_action(("swap", self.selection,),)
+                        if self.lock_state:
+                            for agent in self.agents:
+                                if type(agent) == AgentUser:
+                                    agent.set_sendout(self.selection)
+                        else:
+                            self.reg_action(("swap", self.selection,),)
                     elif self.state == states["ballmenu"]:
                         self.reg_action(("catch", self.selection))
                     self.selection = 0
                 elif key == "backspace":
                     self.game.r_aud.effect("cancel")
-                    if self.state == states["actionmenu"]:
-                        self.selection = 0
-                    elif self.state == states["swapmenu"]:
-                        self.selection = 1
-                    elif self.state == states["ballmenu"]:
-                        self.selection = 2
-                    self.state = states["topmenu"]
+                    if not self.lock_state:
+                        self.game.r_aud.effect("cancel")
+                        if self.state == states["actionmenu"]:
+                            self.selection = 0
+                        elif self.state == states["swapmenu"]:
+                            self.selection = 1
+                        elif self.state == states["ballmenu"]:
+                            self.selection = 2
+                        self.state = states["topmenu"]
+
         else:
             self.game.m_par.fast_forward = True
 
@@ -149,8 +169,8 @@ class GameStateBattle(BaseGameState):
     def reg_action(self, action):
         self.selection = 0
 
-        user = (0, 0)
-        target = (1, 0)
+        user = (0, self.board.get_active(0))
+        target = (1, self.board.get_active(1))
         if action[0] == "swap":
             user = (0, self.board.get_active(0))
             target = (0, action[1])
@@ -161,44 +181,33 @@ class GameStateBattle(BaseGameState):
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
         action_desc = (action, user, target)
-        self.agents[0].set_action(action_desc)
-
-        # if self.particle_test:
-        #     actions = []
-        #     tackle = self.game.m_pbs.get_move(399).copy()
-        #     tackle.power = 0
-        #     actions.append(
-        #         (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-        #     )
-        #     actions.append(
-        #         (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
-        #     )
-        # self.pending_boards = self.combat.run_scene(action_descriptions=actions)
-        # self.advance_board()
+        for agent in self.agents:
+            if type(agent) == AgentUser:
+                self.agents[0].set_action(action_desc)
 
     def advance_board(self):
+        self.lock_state = False
         if self.board.battle_end:
             self.end_battle()
             return
         if not self.pending_boards:
-            print(self.board.switch)
+            self.need_to_redraw = True
             if any(self.board.switch):
-                actions = []
-                for i in range(len(self.board.switch)):
-                    if self.board.switch[i]:
+                self.lock_state = True
+                self.state = states["topmenu"]
+                for i, boo in enumerate(self.board.switch):
+                    if boo:
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
-                        user = (i, self.board.get_active(i))
-                        target = (i, 0)
-                        # TODO make user able to choose
-                        actions.append((("sendout", (i, self.agents[i].get_sendout(self.combat))), user, target))
-                self.pending_boards = self.combat.run_scene(action_descriptions=actions, next_round=False)
+                            self.lock_state = True
+                            self.agents[i].set_action(None)
+                return
             else:
                 self.state = states["topmenu"]
                 for agent in self.agents:
                     if type(agent) == AgentUser:
                         agent.set_action(None)
-                    agent.start()
+                    agent.start(self.combat)
                 self.render.camera.reset()
                 print("--- RESET STATES")
                 return
@@ -265,7 +274,7 @@ class GameStateBattle(BaseGameState):
 
         if self.state == states["swapmenu"]:
             name = self.game.inventory.fighter_names[self.selection]
-            return f"Swap with {name}."
+            return f"Send out {name}."
 
         if self.state == states["ballmenu"]:
             print(self.game.inventory.get_pocket_items(3)[self.selection])
@@ -352,23 +361,24 @@ class GameStateBattle(BaseGameState):
             ((fighters[0], rel_hp[0]), 0.1, 0.3),
             ((fighters[1], rel_hp[1]), 0.6, 0.3),
         ):
-            self.game.r_int.draw_rectangle(
-                (x - lining, 0.05 - lining),
-                size=(size_x / 2 + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_rectangle(
-                (x - lining, 0.10 - lining),
-                size=(size_x + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_text(
-                fighter.name, (x, 0.05), size=(size_x / 2, 0.05),
-            )
-            self.game.r_int.draw_rectangle(
-                (x, 0.1), size=(size_x, 0.05), col="grey",
-            )
             if health > 0:
+                self.game.r_int.draw_rectangle(
+                    (x - lining, 0.05 - lining),
+                    size=(size_x / 2 + 2 * lining, 0.05 + 2 * lining),
+                    col="black",
+                )
+                self.game.r_int.draw_rectangle(
+                    (x - lining, 0.10 - lining),
+                    size=(size_x + 2 * lining, 0.05 + 2 * lining),
+                    col="black",
+                )
+                self.game.r_int.draw_text(
+                    fighter.name, (x, 0.05), size=(size_x / 2, 0.05),
+                )
+                # HP bar
+                self.game.r_int.draw_rectangle(
+                    (x, 0.1), size=(size_x, 0.05), col="grey",
+                )
                 self.game.r_int.draw_rectangle(
                     (x, 0.1),
                     size=(size_x * health, 0.05),
