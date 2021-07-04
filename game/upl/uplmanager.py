@@ -1,6 +1,7 @@
 from lark import Lark
 from lark import Transformer
 
+from game.upl.upl_scripts.debug import debug
 from game.upl.upl_scripts.portal import portal
 
 
@@ -9,17 +10,18 @@ class UPLToPython(Transformer):
         return (source[0], source[1])
 
     def fcall(self, s):
-        print(s)
+        # print(s)
         return s[0](self.src, *s[1])
 
     def assign(self, s):
-        print("assign")
-        print(s)
+        # print("assign")
+        # print(s)
         return exec(f"self.src.target.{s[0]}={s[1]}")
 
     def function(self, s):
         (s,) = s
-        return portal
+        self = self.src
+        return eval(s)
 
     def source(self, s):
         (s,) = s
@@ -35,7 +37,6 @@ class UPLToPython(Transformer):
 
     def assign_variable(self, s):
         (s,) = s
-        print(s)
         return str(s)
 
     def variable(self, s):
@@ -70,6 +71,7 @@ class UplManager:
         # parse = self.parser.parse(script)
         parse = script
         print("PARSE:", parse)
+        print("PARSE_LINES:", "\n\n\n".join([str(x) for x in parse.children]))
         transformer.transform(parse)
 
 

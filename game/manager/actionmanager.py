@@ -44,7 +44,7 @@ class RegionRectangle:
         self.y = y
 
         for k, v in region.items():
-            print(type(v), v)
+            # print(type(v), v)
             if isinstance(v, (int, float, str)):
                 setattr(self, k, eval(str(v)) if "[" in str(v) else v)
             else:
