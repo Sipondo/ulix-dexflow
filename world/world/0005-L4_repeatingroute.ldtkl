@@ -157,7 +157,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, false)",
+							"__value": "target: Portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -204,7 +204,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, false)",
+							"__value": "target: Portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -251,7 +251,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, false)",
+							"__value": "target: Portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []
@@ -298,7 +298,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, false)",
+							"__value": "target: Portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": []

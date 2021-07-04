@@ -109,7 +109,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__value": "target: Portal(self.target_level, self.target_location, true)",
 							"__type": "String",
 							"defUid": 389,
 							"realEditorValues": []
