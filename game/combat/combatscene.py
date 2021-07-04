@@ -70,6 +70,7 @@ class CombatScene:
         # self.reset_effects_done()
 
         while self.action_effects and not self.end:
+            print("ACTIONS:", self.action_effects)
             self.board.action, move_effect = self.action_effects.pop()
             # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
@@ -147,6 +148,11 @@ class CombatScene:
 
     def add_effect(self, effect):
         self.effects.append(effect)
+
+    def remove_action_effects(self, target):
+        for (move_effect, action) in self.action_effects:
+            if move_effect.user == target:
+                self.action_effects.remove((move_effect, action))
 
     def spawn_action_effect(self, action):
         effect = None

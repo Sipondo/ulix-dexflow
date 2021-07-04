@@ -38,27 +38,30 @@ class StatModEffect(BaseEffect):
                     )
                 )
             return
+        real_change = change
         if change > 0:
-            change = min(change, 6 - self.stats[stat])
+            real_change = min(change, 6 - self.stats[stat])
         if change < 0:
-            change = max(change, -6 + self.stats[stat])
-        if change == 0:
+            real_change = max(change, -6 + self.stats[stat])
+        if real_change == 0:
             if change > 0:
                 self.scene.add_effect(
                     GenericEffect(
                         self.scene,
-                        f"{self.scene.board.get_actor(self.target).name}'s can't be raised any higher!",
+                        f"{self.scene.board.get_actor(self.target).name}'s {stat} can't be raised any higher!",
                         particle="",
                     )
                 )
                 return
-            self.scene.add_effect(
-                GenericEffect(
-                    self.scene,
-                    f"{self.scene.board.get_actor(self.target).name}'s can't be dropped any lower!",
-                    particle="",
+            else:
+                self.scene.add_effect(
+                    GenericEffect(
+                        self.scene,
+                        f"{self.scene.board.get_actor(self.target).name}'s {stat} can't be dropped any lower!",
+                        particle="",
+                    )
                 )
-            )
+                return
         self.stats[stat] += change
         if change > 0:
             self.scene.add_effect(

@@ -10,7 +10,7 @@ class Flinch(BaseEffect):
         super().__init__(scene)
         self.spd_on_action = 5
         self.target = target
-        self.apply_narration = "got scared"
+        self.apply_narration = ""
 
     def on_action(self):
         if self.scene.board.user == self.target:

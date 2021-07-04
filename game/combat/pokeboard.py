@@ -42,13 +42,14 @@ class PokeBoard(CombatBoard):
                 return
         status_effect = status(self.scene, user, target)
         self.scene.add_effect(status_effect)
-        self.scene.add_effect(
-            GenericEffect(
-                self.scene,
-                f"{self.get_actor(target).name} {status_effect.apply_narration}!",
-                particle=status_effect.particle,
+        if status_effect.apply_narration != "":
+            self.scene.add_effect(
+                GenericEffect(
+                    self.scene,
+                    f"{self.get_actor(target).name} {status_effect.apply_narration}!",
+                    particle=status_effect.particle,
+                )
             )
-        )
 
     def set_active(self, new_active):
         self.actives[new_active[0]] = (new_active[1], self.scene.round)

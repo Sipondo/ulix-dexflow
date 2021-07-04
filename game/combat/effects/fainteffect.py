@@ -20,6 +20,7 @@ class FaintEffect(BaseEffect):
         self.scene.add_effect(
             ReturnEffect(self.scene, self.target)
         )
+        self.scene.remove_action_effects(self.target)
         for i in range(len(self.scene.board.teams[self.target[0]])):
             mon_hp = self.scene.board.get_hp((self.target[0], i))
             if mon_hp > 0:
