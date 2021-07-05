@@ -111,7 +111,7 @@
 			"layerDefUid": 6,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
-			"visible": true,
+			"visible": false,
 			"optionalRules": [],
 			"intGridCsv": [],
 			"autoLayerTiles": [],
@@ -148,7 +148,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, true)",
+							"__value": "target: Portal(self.target_level, self.target_location, true)",
 							"__type": "String",
 							"defUid": 389,
 							"realEditorValues": []
@@ -195,7 +195,7 @@
 						},
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: portal(self.target_level, self.target_location, false)",
+							"__value": "target: Portal(self.target_level, self.target_location, false)",
 							"__type": "String",
 							"defUid": 387,
 							"realEditorValues": [null]
@@ -251,13 +251,13 @@
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: debug(\"Entered region! Line 1\")\ntarget: debug(\"Entered region! Line 2\")\ntarget: debug(\"Entered region! Line 3\")\ntarget: debug(\"Entered region! Line 4\")\ntarget: debug(\"Entered region! Line 5\")\n",
+							"__value": "target: Debug(\"Entered region! Line 1\")\ntarget: Debug(\"Entered region! Line 2\")\ntarget: Debug(\"Entered region! Line 3\")\ntarget: Debug(\"Entered region! Line 4\")\ntarget: Debug(\"Entered region! Line 5\")\n",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"target: debug(\"Entered region! Line 1\")\ntarget: debug(\"Entered region! Line 2\")\ntarget: debug(\"Entered region! Line 3\")\ntarget: debug(\"Entered region! Line 4\")\ntarget: debug(\"Entered region! Line 5\")\n"
+									"target: Debug(\"Entered region! Line 1\")\ntarget: Debug(\"Entered region! Line 2\")\ntarget: Debug(\"Entered region! Line 3\")\ntarget: Debug(\"Entered region! Line 4\")\ntarget: Debug(\"Entered region! Line 5\")\n"
 								]
 							}]
 						},

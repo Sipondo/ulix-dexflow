@@ -169,6 +169,7 @@ class PokeGame(mglw.WindowConfig):
 
             locking = self.m_gst.current_state.on_tick(time, frame_time)
             self.r_aud.on_tick(time, frame_time)
+            self.m_act.on_tick(time, frame_time)
 
             # TODO
             self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)

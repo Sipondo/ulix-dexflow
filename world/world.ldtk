@@ -2722,7 +2722,7 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["target: portal(self.target_level, self.target_location, true)"]
+						"params": ["target: Portal(self.target_level, self.target_location, true)"]
 					},
 					"textLanguageMode": "LangRuby"
 				},
@@ -2851,7 +2851,7 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["target: portal(self.target_level, self.target_location, false)"]
+						"params": ["target: Portal(self.target_level, self.target_location, false)"]
 					},
 					"textLanguageMode": "LangRuby"
 				},
