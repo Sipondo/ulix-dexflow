@@ -27,6 +27,13 @@ class MapManager:
         self.current_level_id = id
         self.game.m_sav.save("current_level_id", id)
 
+        fields = self.current_level["fields"]
+        self.filter = (
+            fields["filter_red"],
+            fields["filter_green"],
+            fields["filter_blue"],
+        )
+
     @property
     def current_level(self):
         return self.levels[self.current_level_id][()]

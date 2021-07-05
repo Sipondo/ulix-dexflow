@@ -113,7 +113,7 @@ class PokeGame(mglw.WindowConfig):
         self.maphack = False
 
         # Rendering
-        self.render_prog = self.m_res.get_program("texture")
+        self.render_prog = self.m_res.get_program("texture_filter")
         self.render_prog["texture0"].value = 0
         self.quad_fs = geometry.quad_fs()
 
@@ -142,7 +142,9 @@ class PokeGame(mglw.WindowConfig):
             self.m_gst.current_state.particle_test = self.particle
         else:
             self.m_gst.switch_state("intro")
+
         # TODO: TEMP, start rendering
+        self.m_map.set_level(self.m_map.current_level_id)
         self.render_start = False
 
     def render(self, time, frame_time):
@@ -180,14 +182,14 @@ class PokeGame(mglw.WindowConfig):
             self.r_ent.pan(self.pan_tool.pan_value, self.pan_tool.zoom_value)
             self.r_wld.render(time, frame_time, locking=locking)
 
-        self.r_int.update()
-
         # Activate the window as the render target
         self.ctx.screen.use()
 
         # Render offscreen diffuse layer to screen
         self.offscreen_diffuse.use(location=0)
+        self.render_prog["Filter"] = self.m_map.filter
         self.quad_fs.render(self.render_prog)
+        self.r_int.update()
 
         self.m_sav.render(time, frame_time)
 

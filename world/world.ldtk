@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 399,
+	"nextUid": 405,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -191,6 +191,25 @@
 		},
 		{
 			"__type": "Tiles",
+			"identifier": "Collision_B",
+			"type": "Tiles",
+			"uid": 401,
+			"gridSize": 16,
+			"displayOpacity": 1,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"requiredTags": [],
+			"excludedTags": [],
+			"intGridValues": [{ "value": 1, "identifier": null, "color": "#000000" }],
+			"autoTilesetDefUid": null,
+			"autoRuleGroups": [],
+			"autoSourceLayerDefUid": null,
+			"tilesetDefUid": 400,
+			"tilePivotX": 0,
+			"tilePivotY": 0
+		},
+		{
+			"__type": "Tiles",
 			"identifier": "Rooftops_C",
 			"type": "Tiles",
 			"uid": 137,
@@ -262,6 +281,25 @@
 			"autoRuleGroups": [],
 			"autoSourceLayerDefUid": null,
 			"tilesetDefUid": null,
+			"tilePivotX": 0,
+			"tilePivotY": 0
+		},
+		{
+			"__type": "Tiles",
+			"identifier": "Collision_A",
+			"type": "Tiles",
+			"uid": 399,
+			"gridSize": 16,
+			"displayOpacity": 1,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"requiredTags": [],
+			"excludedTags": [],
+			"intGridValues": [{ "value": 1, "identifier": null, "color": "#000000" }],
+			"autoTilesetDefUid": null,
+			"autoRuleGroups": [],
+			"autoSourceLayerDefUid": null,
+			"tilesetDefUid": 400,
 			"tilePivotX": 0,
 			"tilePivotY": 0
 		},
@@ -3188,6 +3226,30 @@
 			"customData": [],
 			"savedSelections": [],
 			"cachedPixelData": { "opaqueTiles": "0000", "averageColors": "9c969b969c969b85" }
+		},
+		{
+			"__cWid": 4,
+			"__cHei": 4,
+			"identifier": "Collision",
+			"uid": 400,
+			"relPath": "editor_helpers/collision.png",
+			"pxWid": 64,
+			"pxHei": 64,
+			"tileGridSize": 16,
+			"spacing": 0,
+			"padding": 0,
+			"tagsSourceEnumUid": 94,
+			"enumTags": [
+				{ "enumValueId": "X", "tileIds": [4] },
+				{ "enumValueId": "W", "tileIds": [3,6,7,9,10,11] },
+				{ "enumValueId": "N", "tileIds": [7,10,11,13,14,15] },
+				{ "enumValueId": "E", "tileIds": [1,2,3,11,14,15] },
+				{ "enumValueId": "S", "tileIds": [2,3,5,6,7,15] },
+				{ "enumValueId": "Encounter", "tileIds": [] }
+			],
+			"customData": [],
+			"savedSelections": [],
+			"cachedPixelData": { "opaqueTiles": "0000000000000000", "averageColors": "000027574868586878682757486858682aa52757486858682aa5275748685868" }
 		}
 	], "enums": [
 		{ "identifier": "Containers", "uid": 360, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
@@ -3216,6 +3278,66 @@
 			{ "id": "Ratata", "tileId": 19, "color": 9667742, "__tileSrcRect": [608,0,32,32] }
 		], "iconTilesetUid": 375, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [
+		{
+			"identifier": "filter_red",
+			"__type": "Float",
+			"uid": 402,
+			"type": "F_Float",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Float", "params": [1] },
+			"textLanguageMode": null
+		},
+		{
+			"identifier": "filter_green",
+			"__type": "Float",
+			"uid": 403,
+			"type": "F_Float",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Float", "params": [1] },
+			"textLanguageMode": null
+		},
+		{
+			"identifier": "filter_blue",
+			"__type": "Float",
+			"uid": 404,
+			"type": "F_Float",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Float", "params": [1] },
+			"textLanguageMode": null
+		},
 		{
 			"identifier": "on_enter",
 			"__type": "String",
@@ -3297,7 +3419,16 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{
+					"__identifier": "filter_red",
+					"__value": 1,
+					"__type": "Float",
+					"defUid": 402,
+					"realEditorValues": [null]
+				},
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
@@ -3321,7 +3452,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
@@ -3345,7 +3479,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -3369,7 +3506,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" } ]
@@ -3393,7 +3533,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 317, "dir": "s" } ]
@@ -3417,7 +3560,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
@@ -3441,7 +3587,10 @@
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 317, "dir": "w" }]

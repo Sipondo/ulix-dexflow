@@ -70,6 +70,7 @@ print("ENUMVALUES", enumValues)
 
 for level in a.levels:
     print(level.identifier)
+    print({field.identifier: field.value for field in level.field_instances})
 
     id_e = [int(x[1:]) for x in level.identifier.lower().split("_")[:-1]]
     id = str(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
@@ -227,6 +228,7 @@ for level in a.levels:
         "entities": entities,
         "regions": regions,
         "enumValues": enumValues,
+        "fields": {field.identifier: field.value for field in level.field_instances},
     }
 
     print("Total tilesets:", [x[0] for x in output_layers])

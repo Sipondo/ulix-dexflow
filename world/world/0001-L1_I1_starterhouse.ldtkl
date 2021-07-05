@@ -26,7 +26,10 @@
 	"fieldInstances": [
 		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -253,6 +256,30 @@
 			"entityInstances": []
 		},
 		{
+			"__identifier": "Collision_B",
+			"__type": "Tiles",
+			"__cWid": 11,
+			"__cHei": 9,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 400,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 179,
+			"layerDefUid": 401,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 7123110,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		},
+		{
 			"__identifier": "Rooftops_C",
 			"__type": "Tiles",
 			"__cWid": 11,
@@ -384,6 +411,30 @@
 					]
 				}
 			]
+		},
+		{
+			"__identifier": "Collision_A",
+			"__type": "Tiles",
+			"__cWid": 11,
+			"__cHei": 9,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 400,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 179,
+			"layerDefUid": 399,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 3717682,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Structures_C",

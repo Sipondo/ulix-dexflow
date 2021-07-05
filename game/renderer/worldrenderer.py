@@ -178,7 +178,9 @@ class WorldRenderer:
                 continue
             ltype, level, tiles, collision = mapdef
             # if h < self.game.m_map.current_height:
-            self.game.m_col.add_collision_layer(collision, entity_h)
+            self.game.m_col.add_collision_layer(
+                collision, entity_h, tiles if "collision" in level.lower() else None
+            )
             self.spawn_tile_layer(h, tiles, level, offset=offset, fade=fade)
 
         if conns := self.game.m_map.current_connected_tilesets:

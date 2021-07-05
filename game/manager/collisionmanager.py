@@ -12,13 +12,18 @@ class CollisionManager:
     def set_offset(self, offset):
         self.offset = offset
 
-    def add_collision_layer(self, colmap, height):
+    def add_collision_layer(self, colmap, height, force):
         if not len(self.colmap) > height:
             # TODO Rewrite
             # UNSAFE
             self.colmap.append(colmap)
         else:
-            self.colmap[height] = self.colmap[height] | colmap
+            if force is not None:
+                force = force[0].sum(axis=2) > 0
+                # print("\n\n\nCOL LAYER!!!!!!", colmap.shape, force[0].sum(axis=2) > 0)
+                self.colmap[height][force] = colmap[force]
+            else:
+                self.colmap[height] = self.colmap[height] | colmap
 
     def check_collision(self, pos, direction, height=0, off=True):
         height = int(height)
