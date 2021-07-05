@@ -2,9 +2,6 @@ from .combatboard import CombatBoard
 from .effects.genericeffect import GenericEffect
 from .effects.fainteffect import FaintEffect
 
-import math
-import pandas as pd
-
 
 class PokeBoard(CombatBoard):
     def __init__(self, scene):
@@ -21,19 +18,24 @@ class PokeBoard(CombatBoard):
 
     def first_init(self, *teams):
         for team in teams:
-            self.teams.append([(x, x.current_hp) for x in team])
+            team_formatted = []
+            for poke in team:
+                # TODO EV gains during battle
+                data = {"hp": poke.current_hp,
+                        "exp": poke.current_xp,
+                        "can_fight": True}
+                team_formatted.append((poke, data))
+            self.teams.append(team_formatted)
             self.actives.append((0, 0))
             self.switch.append(False)
 
     def inflict_damage(self, target, damage):
-        x, hp = self.teams[target[0]][target[1]]
-        damage = min(hp, damage)
-        hp -= damage
-        self.teams[target[0]][target[1]] = (x, hp)
-        x.current_hp = hp
+        x, data = self.teams[target[0]][target[1]]
+        damage = min(data["hp"], damage)
+        data["hp"] -= damage
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
-        if self.teams[target[0]][target[1]][1] < 1:
+        if self.get_hp(target) < 1:
             self.scene.add_effect(FaintEffect(self.scene, target))
 
     def inflict_status(self, status, user, target):
@@ -62,6 +64,44 @@ class PokeBoard(CombatBoard):
 
     def get_active_round(self, team):
         return self.actives[team][1]
+
+    def get_hp(self, target):
+        return self.teams[target[0]][target[1]][1]["hp"]
+
+    def get_exp(self, target):
+        return self.teams[target[0]][target[1]][1]["exp"]
+
+    def set_exp(self, target, new_exp):
+        self.teams[target[0]][target[1]][1]["exp"] = new_exp
+
+    def get_can_fight(self, target):
+        return self.teams[target[0]][target[1]][1]["can_fight"]
+
+    def set_can_fight(self, target, b):
+        self.teams[target[0]][target[1]][1]["can_fight"] = b
+
+    def has_fighter(self, team):
+        for mon, data in self.teams[team]:
+            if data["can_fight"]:
+                return True
+        return False
+
+    def get_relative_hp(self, target):
+        return (
+            self.get_hp(target)
+            / self.teams[target[0]][target[1]][0].stats[0]
+        )
+
+    def get_relative_xp(self, target):
+        return (
+            self.get_exp(target)
+            / self.teams[target[0]][target[1]][0].level_xp
+        )
+
+    def sync_actor(self, target):
+        actor = self.get_actor(target)
+        actor.current_hp = self.get_hp(target)
+        actor.current_xp = self.get_exp(target)
 
     @property
     def actor_1(self):
