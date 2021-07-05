@@ -17,6 +17,8 @@ class TileLayer:
         self.height = height
         self.prog = self.game.m_res.get_program("tilelayer")
 
+        self.render_enabled = self.spritemap is not None
+
         self.terminate = -1 if fade else 0
         self.terminate_step = 0.04
         self.terminated = False
@@ -33,7 +35,7 @@ class TileLayer:
         self.prog["offset"].value = self.offset
 
     def render(self, time, frame_time):
-        if self.terminated:
+        if self.terminated or not self.render_enabled:
             return
 
         if self.terminate >= self.terminate_step:
@@ -123,6 +125,11 @@ class WorldRenderer:
 
     def spawn_tile_layer(self, height, map, spritemap, offset=(0, 0), fade=True):
 
+        if "collision" not in spritemap:
+            spritemap = self.game.m_res.get_tileset(spritemap)
+        else:
+            spritemap = None
+
         map_b = map.tobytes()
         texture_map = self.ctx.texture_array(
             (map.shape[2], map.shape[1], map.shape[0]), 2, map_b, dtype="u2"
@@ -172,9 +179,7 @@ class WorldRenderer:
             ltype, level, tiles, collision = mapdef
             # if h < self.game.m_map.current_height:
             self.game.m_col.add_collision_layer(collision, entity_h)
-            self.spawn_tile_layer(
-                h, tiles, self.game.m_res.get_tileset(level), offset=offset, fade=fade
-            )
+            self.spawn_tile_layer(h, tiles, level, offset=offset, fade=fade)
 
         if conns := self.game.m_map.current_connected_tilesets:
             for (tiles, portal_pos, target_pos, direction,) in conns:
@@ -198,9 +203,5 @@ class WorldRenderer:
                     # if h < self.game.m_map.current_height:
                     #     self.game.m_col.add_collision_layer(collision)
                     self.spawn_tile_layer(
-                        h,
-                        tiles,
-                        self.game.m_res.get_tileset(level),
-                        offset=conn_offset,
-                        fade=fade,
+                        h, tiles, level, offset=conn_offset, fade=fade,
                     )
