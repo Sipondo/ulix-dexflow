@@ -24,15 +24,16 @@ class ExperienceEffect(BaseEffect):
                 particle="",
             )
         actor = self.scene.board.get_actor(self.target)
-        xp_needed = actor.level_xp - actor.current_xp
+        current_xp = self.scene.board.get_exp(self.target)
+        xp_needed = actor.level_xp - current_xp
         if xp_needed <= self.amount:
             self.amount -= xp_needed
-            actor.current_xp += xp_needed
+            self.scene.board.set_exp(self.target, current_xp + xp_needed)
             self.scene.add_effect(LevelEffect(self.scene, self.target))
             self.scene.add_effect(
                 ExperienceEffect(self.scene, self.target, self.amount, cont=True)
             )
         else:
-            actor.current_xp += self.amount
+            self.scene.board.set_exp(self.target, current_xp + self.amount)
 
         return True, False, False

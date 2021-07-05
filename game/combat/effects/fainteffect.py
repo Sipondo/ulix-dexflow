@@ -13,7 +13,7 @@ class FaintEffect(BaseEffect):
     def on_action(self):
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.target).name} fainted",
-            particle="Faint",
+            particle="",
         )
         end = True
         self.scene.on_faint_effects(self.target)
@@ -21,10 +21,9 @@ class FaintEffect(BaseEffect):
             ReturnEffect(self.scene, self.target)
         )
         self.scene.remove_action_effects(self.target)
-        for i in range(len(self.scene.board.teams[self.target[0]])):
-            mon_hp = self.scene.board.get_hp((self.target[0], i))
-            if mon_hp > 0:
-                end = False
+        self.scene.board.set_can_fight(self.target, False)
+        if self.scene.board.has_fighter(self.target[0]):
+            end = False
         if self.target[0] == 1:
             # experience if enemy fainted
             # TODO make the experience dependent on fainted mon

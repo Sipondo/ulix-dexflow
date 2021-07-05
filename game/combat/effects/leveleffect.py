@@ -8,9 +8,11 @@ class LevelEffect(BaseEffect):
         self.target = target
 
     def on_action(self):
+        self.scene.board.copy_actor(self.target)
         actor = self.scene.board.get_actor(self.target)
         actor.level += 1
         actor.current_xp = 0
-        actor.level_xp += 100
+        self.scene.board.set_exp(self.target, 0)
+        actor.set_new_level_xp()
         self.scene.board.no_skip(f"{self.scene.board.get_actor(self.target).name} leveled up!", particle="")
         return True, False, False

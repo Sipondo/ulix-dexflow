@@ -13,6 +13,7 @@ class PokeFighter(CombatFighter):
             self.level = 100
             self.set_stats(fighter)
             self.current_hp = self.stats[0]
+            self.current_xp = 0
         else:
             self.level = fighter.level
             self.stats_base = fighter.stats_base
@@ -51,6 +52,10 @@ class PokeFighter(CombatFighter):
         self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[
             1
         ]
+
+    def set_new_level_xp(self):
+        # TODO exp function
+        self.level_xp += 100
 
     @property
     def stats(self):

@@ -5,7 +5,7 @@ from game.combat.effects.partialeffect.applystatuseffect import ApplyStatus
 
 class Fakeout(BaseMoveEffect):
     def before_move(self):
-        _round = self.scene.board.get_active_round(self.move.target[0])
+        _round = self.scene.board.get_active_round(self.move.user[0])
         if self.scene.round - _round > 1:
             return False
         return True

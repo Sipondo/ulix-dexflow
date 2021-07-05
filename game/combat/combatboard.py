@@ -1,4 +1,5 @@
 import random
+import copy
 
 
 class CombatBoard:
@@ -6,6 +7,7 @@ class CombatBoard:
         self.scene = scene
         self.actives = []
         self.teams = []
+        self.to_copy = []
         self.actor = -1
         self.action = None
         self.narration = "Board state undefined."
@@ -25,7 +27,11 @@ class CombatBoard:
         for index, team in enumerate(board.teams):
             self.teams.append([])
             for member in team:
-                member = (member[0], member[1])
+                new_member = member[0]
+                if member[0] in self.to_copy:
+                    new_member = copy.deepcopy(member[0])
+                    self.to_copy.remove(member[0])
+                member = (new_member, member[1].copy())
                 self.teams[index].append(member)
         self.actives = board.actives.copy()
         self.action = board.action
@@ -53,6 +59,9 @@ class CombatBoard:
     def get_actor(self, target):
         # Get actor from (action) tuple
         return self.teams[target[0]][target[1]][0]
+
+    def copy_actor(self, target):
+        self.to_copy.append(self.teams[target[0]][target[1]][0])
 
     def get_hp(self, target):
         return self.teams[target[0]][target[1]][1]

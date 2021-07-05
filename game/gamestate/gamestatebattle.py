@@ -256,6 +256,7 @@ class GameStateBattle(BaseGameState):
 
     def synchronize(self):
         for i, member in enumerate(self.game.inventory.members):
+            self.combat.board.sync_actor((0, i))
             member.from_series(self.board.get_actor((0, i)).series)
         # TODO transfer status effects.
 
@@ -349,51 +350,76 @@ class GameStateBattle(BaseGameState):
                         size=(0.20, 0.06),
                         bcol=self.selection == i and "yellow" or "white",
                     )
-        # HP Bars
+        # HP Bars & EXP bar
+        # Ally
         lining = 0.008
-        fighters = []
-        rel_hp = []
-        for i in range(2):
-            active_i = self.board.get_active(i)
-            rel_hp.append(self.board.get_relative_hp((i, active_i)))
-            fighters.append(self.board.get_actor((i, active_i)))
-        for ((fighter, health), x, size_x) in (
-            ((fighters[0], rel_hp[0]), 0.1, 0.3),
-            ((fighters[1], rel_hp[1]), 0.6, 0.3),
-        ):
-            if health > 0:
-                self.game.r_int.draw_rectangle(
-                    (x - lining, 0.05 - lining),
-                    size=(size_x / 2 + 2 * lining, 0.05 + 2 * lining),
-                    col="black",
-                )
-                self.game.r_int.draw_rectangle(
-                    (x - lining, 0.10 - lining),
-                    size=(size_x + 2 * lining, 0.05 + 2 * lining),
-                    col="black",
-                )
-                self.game.r_int.draw_text(
-                    fighter.name, (x, 0.05), size=(size_x / 2, 0.05),
-                )
-                # HP bar
-                self.game.r_int.draw_rectangle(
-                    (x, 0.1), size=(size_x, 0.05), col="grey",
-                )
-                self.game.r_int.draw_rectangle(
-                    (x, 0.1),
-                    size=(size_x * health, 0.05),
-                    col=health > 0.5 and "green" or health > 0.2 and "yellow" or "red",
-                )
-        # EXP bar
-        self.game.r_int.draw_rectangle(
-            (0.1, 0.158), size=(0.25, 0.012), col="grey",
-        )
-        rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
-        if rel_xp > 0:
+        fighter = self.board.get_actor((0, self.board.get_active(0)))
+        rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
+        x_off = 0.1
+        x_size = 0.3
+        if rel_hp > 0:
             self.game.r_int.draw_rectangle(
-                (0.1, 0.158),
-                size=(0.25 * rel_xp, 0.012),
-                col="blue",
+                (x_off - lining, 0.05 - lining),
+                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
+                col="black",
+            )
+            self.game.r_int.draw_rectangle(
+                (x_off - lining, 0.10 - lining),
+                size=(x_size + 2 * lining, 0.05 + 2 * lining),
+                col="black",
+            )
+            self.game.r_int.draw_text(
+                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
+            )
+            # HP bar
+            self.game.r_int.draw_rectangle(
+                (x_off, 0.1), size=(x_size, 0.05), col="grey",
+            )
+            self.game.r_int.draw_rectangle(
+                (x_off, 0.1),
+                size=(x_size * rel_hp, 0.05),
+                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
+            )
+            # EXP bar
+            self.game.r_int.draw_rectangle(
+                (0.1, 0.158), size=(0.25, 0.012), col="grey",
+            )
+            rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
+            if rel_xp > 0:
+                self.game.r_int.draw_rectangle(
+                    (0.1, 0.158),
+                    size=(0.25 * rel_xp, 0.012),
+                    col="blue",
+                )
+
+        # Enemy
+        lining = 0.008
+        fighter = self.board.get_actor((1, self.board.get_active(1)))
+        rel_hp = self.board.get_relative_hp((1, self.board.get_active(1)))
+        x_off = 0.6
+        x_size = 0.3
+        if rel_hp > 0:
+            self.game.r_int.draw_rectangle(
+                (x_off - lining, 0.05 - lining),
+                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
+                col="black",
+            )
+            self.game.r_int.draw_rectangle(
+                (x_off - lining, 0.10 - lining),
+                size=(x_size + 2 * lining, 0.05 + 2 * lining),
+                col="black",
+            )
+            self.game.r_int.draw_text(
+                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
+            )
+            # HP bar
+            self.game.r_int.draw_rectangle(
+                (x_off, 0.1), size=(x_size, 0.05), col="grey",
+            )
+            self.game.r_int.draw_rectangle(
+                (x_off, 0.1),
+                size=(x_size * rel_hp, 0.05),
+                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
             )
         # Narrator
         self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
