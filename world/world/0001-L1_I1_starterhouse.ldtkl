@@ -407,6 +407,26 @@
 								"id": "V_String",
 								"params": ["E"]
 							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "mom",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["mom"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Mom",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Mom"]
+							}]
 						}
 					]
 				}

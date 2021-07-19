@@ -11,19 +11,16 @@ class PathMoveAnimation(BaseMoveAnimation):
         self.stop = self.start + self.duration
         # print(self.path)
         self.direction = self.path.pop(0)
+        self.entity.direction = self.direction
         self.on_enter()
 
     def conditions(self):
         if self.entity.check_collision(self.path[0]):
             return True
-        path = self.game.m_col.a_star(
-            self.entity.game_position,
-            (27 - self.game.m_col.offset[0], 12 - self.game.m_col.offset[1]),
-            # (self.game_position[0] - 5, self.game_position[1] - 8),
-            next_to=True,
-        )
-        if path is not None:
-            self.path = path
-            self.distance = len(self.path)
+        return False
+
+    def check_continue(self):
+        self.game.m_act.check_regions(self.entity)
+        if self.distance > 0:
             return True
         return False

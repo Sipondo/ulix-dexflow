@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 405,
+	"nextUid": 407,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2202,7 +2202,7 @@
 					"uid": 380,
 					"type": "F_String",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "ValueOnly",
@@ -2392,12 +2392,12 @@
 			"pivotY": 0.5,
 			"fieldDefs": [
 				{
-					"identifier": "dialogue",
+					"identifier": "entity_uid",
 					"__type": "String",
-					"uid": 89,
-					"type": "F_Text",
+					"uid": 405,
+					"type": "F_String",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2408,10 +2408,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["Missing dialogue"]
-					},
+					"defaultOverride": null,
 					"textLanguageMode": null
 				},
 				{
@@ -2432,6 +2429,49 @@
 					"regex": null,
 					"acceptFileTypes": [".png"],
 					"defaultOverride": null,
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "name",
+					"__type": "String",
+					"uid": 406,
+					"type": "F_String",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "ValueOnly",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "dialogue",
+					"__type": "String",
+					"uid": 89,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["Missing dialogue"]
+					},
 					"textLanguageMode": null
 				},
 				{
@@ -3253,7 +3293,7 @@
 		}
 	], "enums": [
 		{ "identifier": "Containers", "uid": 360, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
-		{ "identifier": "Switches", "uid": 359, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
+		{ "identifier": "Switches", "uid": 359, "values": [{ "id": "Obtained_coat", "tileId": null, "color": 0, "__tileSrcRect": null }], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "Collision", "uid": 94, "values": [
 			{ "id": "X", "tileId": null, "color": 16711840, "__tileSrcRect": null },
 			{ "id": "W", "tileId": null, "color": 14090495, "__tileSrcRect": null },

@@ -1,17 +1,25 @@
 from lark import Lark
 from lark import Transformer
 
+from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.debug import Debug
+from game.upl.upl_scripts.jump import Jump
+from game.upl.upl_scripts.say import Say
+from game.upl.upl_scripts.move import Move
+from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
+from game.upl.upl_scripts.wait import Wait
 
 
 class UPLToPython(Transformer):
     def statement(self, source):
-        return (source[0], source[1])
+        if len(source) > 1:
+            return (source[0], source[1])
+        return source[0]
 
     def fcall(self, s):
         # print(s)
-        return s[0](self.act, self.src, *s[1])
+        return s[0](self.act, self.src, self.user, *s[1])
 
     def assign(self, s):
         # print("assign")
@@ -21,11 +29,15 @@ class UPLToPython(Transformer):
     def function(self, s):
         (s,) = s
         self = self.src
-        return eval(s)
+        ev = eval(s)
+        return ev
 
-    def source(self, s):
+    def user(self, s):
         (s,) = s
-        return str(s)
+        username = str(s)
+        print("\n\nSWITCHING TO SOURCE:", username, "\n\n")
+        self.user = self.parse_username(username)
+        return username
 
     def object(self, s):
         (s,) = s
@@ -48,9 +60,24 @@ class UPLToPython(Transformer):
         (s,) = s
         return s[1:-1]
 
+    def say(self, s):
+        (s,) = s
+        return Say(self.act, self.src, self.user, s[1:-1])
+
     def number(self, n):
         (n,) = n
         return float(n)
+
+    def comment(self, s):
+        return None
+
+    def parse_username(self, name):
+        if name == "target":
+            return self.src.target
+        elif name == "player":
+            return self.act.game.m_ent.player
+        elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
+            return self.act.game.m_ent.entities[name[2:]]
 
     upl = list
     fargs = list
@@ -71,8 +98,10 @@ class UplManager:
         transformer.src = src
         # parse = self.parser.parse(script)
         parse = script
-        print("PARSE:", parse)
-        print("PARSE_LINES:", "\n\n\n".join([str(x) for x in parse.children]))
+        # print("PARSE:", parse)
+        # print(parse.data)
+        # print("PARSE_LINES:", "\n\n\n".join([str(x) for x in parse.children]))
+
         transformer.transform(parse)
 
 

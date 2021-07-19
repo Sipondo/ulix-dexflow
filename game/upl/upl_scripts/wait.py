@@ -1,15 +1,13 @@
-class Debug:
-    def __init__(self, act, src, user, obj):
+class Wait:
+    def __init__(self, act, src, user, time):
         act.funcs.append(self)
         self.init_time = act.current_time
         self.act = act
-        self.obj = obj
         self.src = src
         self.user = user
-        self = user
-        print("DEBUG:", act.current_time, obj)
+        self.time = time
 
     def on_tick(self, time=None, frame_time=None):
-        if time - self.init_time < 1.0:
+        if time - self.init_time < self.time:
             return False
         return True

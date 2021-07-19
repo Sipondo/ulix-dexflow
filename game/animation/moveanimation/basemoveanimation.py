@@ -10,6 +10,7 @@ class BaseMoveAnimation(BaseAnimation):
         self.get_anim_data()
         self.entity = entity
         self.direction = direction
+        self.ended = False
         self.start_pos = self.entity.get_pos()
         self.stop = start + self.duration
         self.frame = self.get_offset()
@@ -44,7 +45,6 @@ class BaseMoveAnimation(BaseAnimation):
         return self.lock
 
     def check_continue(self):
-        print("GA IK DOOR?!?!")
         self.game.m_act.check_regions(self.entity)
         if (
             self.entity == self.game.m_ent.player
@@ -97,6 +97,7 @@ class BaseMoveAnimation(BaseAnimation):
             self.anim_speed = 11
 
     def on_end(self, time, frame_time):
+        self.ended = True
         self.entity.after_move(time, frame_time)
         self.game.m_ani.remove_anim(self)
 

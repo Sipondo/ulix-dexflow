@@ -237,8 +237,8 @@ for level in a.levels:
     )
     print("Player height:", 0)
     print("Entities", entities)
-    print("Regions:", regions)
-    print("")
+    print("Regions:", "\n\n".join([str(x) for x in regions]))
+    print("\n\n\n")
 
 f = BytesIO()
 np.savez_compressed(f, **total_data)

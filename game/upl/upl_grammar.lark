@@ -19,11 +19,12 @@
 // %ignore WS
 
 ?upl: [statement ("\n" statement)*]
-statement : source ":" command
-source : /[a-zA-Z0-9_]+/
+statement : comment
+    |   user ":" command
+user : /[a-zA-Z0-9_]+/
 command: fcall
     |   assign
-    |   string
+    |   say
 
 fcall: function "(" fargs ")"
 function: /[a-zA-Z0-9_]+/
@@ -39,10 +40,12 @@ object: string
     | "null"             -> null
 
 string: ESCAPED_STRING
+say: ESCAPED_STRING
 number: SIGNED_NUMBER
 
 assign_variable: /[a-zA-Z0-9_.]+/
 variable: /[a-zA-Z0-9_.]+/
+comment: /#.*/
 
 %import common.ESCAPED_STRING
 %import common.SIGNED_NUMBER

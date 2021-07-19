@@ -27,3 +27,4 @@ class AnimationManager:
 
     def remove_anim(self, anim):
         self.animations.remove(anim)
+        del anim

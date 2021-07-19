@@ -44,20 +44,62 @@ class ActionManager:
 
 class Action:
     def __init__(self, game, tree, user):
+        print("ACTION INIT")
         self.game = game
         self.tree = tree
         self.user = user
 
+        self.has_run = False
+
         self.pointer = 0
         self.funcs = []
-        self.run()
+
+        self.children = []
+
+        if self.tree.data == "upl":
+            for child in self.tree.children:
+                self.children.append(Action(self.game, child, self.user))
+        # else
+        # self.run()
+
+        print("FUNCS ARE:", self.tree.data, self.funcs)
 
     def run(self):
+        self.has_run = True
         self.game.m_upl.parse(self, self.user, self.tree)
 
     def on_tick(self, time=None, frame_time=None):
-        # print("HEY!")
-        return True
+        self.current_time = time
+
+        if self.funcs:
+            # Need funcs to clear
+            funcs_to_clear = []
+            for func in self.funcs:
+                if func.on_tick(time, frame_time):
+                    funcs_to_clear.append(func)
+
+            for func in funcs_to_clear:
+                self.funcs.remove(func)
+                del func
+
+        # If no functions left
+        if not self.funcs:
+            # No children
+            if not (self.children or self.has_run):
+                self.has_run = True
+                self.run()
+                return False
+
+            # Children
+            elif self.pointer < len(self.children):
+                while (self.pointer < len(self.children)) and self.children[
+                    self.pointer
+                ].on_tick(time, frame_time):
+                    print("NEXT CHILD!!!")
+                    self.pointer += 1
+                return False
+
+        return not self.funcs
 
 
 class RegionRectangle:

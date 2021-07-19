@@ -1,4 +1,4 @@
-class Debug:
+class Say:
     def __init__(self, act, src, user, obj):
         act.funcs.append(self)
         self.init_time = act.current_time
@@ -6,10 +6,11 @@ class Debug:
         self.obj = obj
         self.src = src
         self.user = user
-        self = user
-        print("DEBUG:", act.current_time, obj)
+        self.act.game.m_gst.current_state.dialogue = self.obj
+        self.act.game.m_gst.current_state.author = self.user.name
+        print("PARSING TEXT", self.user, self.obj)
 
     def on_tick(self, time=None, frame_time=None):
-        if time - self.init_time < 1.0:
+        if self.act.game.m_gst.current_state.dialogue is not None:
             return False
         return True

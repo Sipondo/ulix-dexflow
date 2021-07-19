@@ -1615,7 +1615,7 @@
 							}]
 						},
 						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 380, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 380, "realEditorValues": [] },
 						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
 						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 382, "realEditorValues": [] },
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },

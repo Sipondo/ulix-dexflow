@@ -10,12 +10,14 @@ from pathlib import Path
 class EntityManager:
     def __init__(self, gui):
         self.game = gui
-        self.entities = []
+        self.entities = {}
         self.regions = []
         self.textures = []  # lists of paths
         self.texture_names = []
         self.load_textures()
         self.load_player()
+
+        self.entity_autolabel = 0
 
     def get_textures(self):
         return self.textures
@@ -57,6 +59,7 @@ class EntityManager:
                     entity["f_direction"],
                     [Path(entity["f_sprite"]).stem],
                     entity["f_dialogue"],
+                    entity,
                 )
             if entity["identifier"] == "Civilian":
                 self.create_entity(
@@ -68,6 +71,7 @@ class EntityManager:
                     entity["f_direction"],
                     [Path(entity["f_sprite"]).stem],
                     entity["f_dialogue"],
+                    entity,
                 )
 
     def flush_entities(self):
@@ -78,11 +82,24 @@ class EntityManager:
         # self.regions.clear()
         self.game.m_act.flush_regions()
 
-    def create_entity(self, entitytype, pos, direction, sprite, dialogue):
-        self.entities.append(entitytype(self.game, pos, direction, sprite, dialogue))
+    def delete_entity(self, ent):
+        self.entities.remove(ent)
+        del ent
+
+    def create_entity(self, entitytype, pos, direction, sprite, dialogue, blueprint):
+        if blueprint["f_entity_uid"]:
+            label = blueprint["f_entity_uid"]
+        else:
+            label = f"UNLABELLED_ENTITY_{self.entity_autolabel}"
+            self.entity_autolabel += 1
+        self.entities[label] = entitytype(self.game, pos, direction, sprite, dialogue)
+        # TODO: remove hack
+        self.entities[label].name = blueprint["f_name"]
 
     def render(self):
-        draw_entities = sorted(self.entities + [self.player], key=lambda x: x.y)
+        draw_entities = sorted(
+            list(self.entities.values()) + [self.player], key=lambda x: x.y
+        )
         (xoff, yoff) = self.game.pan_tool.pan_value
         xoff *= self.game.pan_tool.warp_x
         yoff *= self.game.pan_tool.warp_y
@@ -105,8 +122,10 @@ class EntityManager:
         return self.texture_names.index(entity.sprites[mt])
 
     def all_entities_on_height(self, height):
-        return [self.player] + [x for x in self.entities if x.height == height]
+        return [self.player] + [
+            x for x in list(self.entities.values()) if x.height == height
+        ]
 
     @property
     def all_entities(self):
-        return [self.player] + self.entities
+        return [self.player] + list(self.entities.values())

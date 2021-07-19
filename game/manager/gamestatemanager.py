@@ -1,5 +1,5 @@
 from ..gamestate.gamestatebattle import GameStateBattle
-from ..gamestate.gamestateinteract import GameStateInteract
+from ..gamestate.gamestatecinematic import GameStateCinematic
 from ..gamestate.gamestateintro import GameStateIntro
 from ..gamestate.gamestatemenubag import GameStateMenuBag
 from ..gamestate.gamestatemenucareer import GameStateMenuCareer
@@ -34,8 +34,8 @@ class GameStateManager:
             self.current_state = GameStateMenuParty(self.game)
         elif new_state == "menusave":
             self.current_state = GameStateMenuSave(self.game)
-        elif new_state == "interact":
-            self.current_state = GameStateInteract(self.game)
+        elif new_state == "cinematic":
+            self.current_state = GameStateCinematic(self.game)
         elif new_state == "intro":
             self.current_state = GameStateIntro(self.game)
 
