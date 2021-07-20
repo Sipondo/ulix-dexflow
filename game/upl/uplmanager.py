@@ -37,6 +37,7 @@ class UPLToPython(Transformer):
         username = str(s)
         print("\n\nSWITCHING TO SOURCE:", username, "\n\n")
         self.user = self.parse_username(username)
+        print("Parsed User")
         return username
 
     def object(self, s):
@@ -101,7 +102,7 @@ class UplManager:
         # print("PARSE:", parse)
         # print(parse.data)
         # print("PARSE_LINES:", "\n\n\n".join([str(x) for x in parse.children]))
-
+        print(parse.pretty())
         transformer.transform(parse)
 
 

@@ -18,13 +18,11 @@
 // %import common.WS
 // %ignore WS
 
-?upl: [(statement | concurrent ) ("\n" (statement | concurrent ))*]
-concurrent: "!" statement
+?upl: [(statement | concurrent | control) ("\n" (statement | concurrent | control ))*]
+concurrent: "!" (statement | control)
 statement: comment
-    |   control
     |   user ":" command
 control: control_func "(" fargs ")" "{" "\n"* upl "\n"* "}" 
-user: /[a-zA-Z0-9_]+/
 command: fcall
     |   assign
     |   say
@@ -39,13 +37,14 @@ assign: assign_variable "=" object
 
 object: string
     | bool
-    | number
+    | SIGNED_NUMBER      -> number
     | variable
+    | number
     | "null"             -> null
 
 string: ESCAPED_STRING
 say: ESCAPED_STRING
-number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | yieldvar
+number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | variable
 bool: bool "and" bool
     | "(" bool "and" bool ")"
     | bool "or" bool
@@ -64,10 +63,10 @@ comparator: ">="         -> greater_or_equal
     | "=="               -> equal
     | "<"                -> smaller
     | "<="               -> smaller_or_equal
-assign_variable: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
-variable: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
-yieldvar: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
+assign_variable: /[a-zA-Z0-9_.]+/
+variable: /[a-zA-Z0-9_.]+/
 comment: /#.*/
+user: /[a-zA-Z0-9_]+/
 
 %import common.ESCAPED_STRING
 %import common.SIGNED_NUMBER

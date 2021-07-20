@@ -56,9 +56,13 @@ class Action:
 
         self.children = []
 
+        print("I AM:", self.tree.data)
         if self.tree.data == "upl":
             for child in self.tree.children:
                 self.children.append(Action(self.game, child, self.user))
+        if self.tree.data == "control":
+            print(self.tree.pretty())
+            raise Exception
         # else
         # self.run()
 
