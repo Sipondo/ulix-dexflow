@@ -112,3 +112,16 @@ class UplParser:
 
     def parse(self, script):
         return self.parser.parse(script)
+
+
+parser = UplParser()
+print(
+    parser.parse(
+        """
+!target: "Hey!"
+If((player.x + 3) > 3){
+    player: "Dit is gegroepeerd"
+}
+"""
+    ).pretty()
+)

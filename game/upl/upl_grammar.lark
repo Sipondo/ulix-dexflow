@@ -18,33 +18,55 @@
 // %import common.WS
 // %ignore WS
 
-?upl: [statement ("\n" statement)*]
-statement : comment
+?upl: [(statement | concurrent ) ("\n" (statement | concurrent ))*]
+concurrent: "!" statement
+statement: comment
+    |   control
     |   user ":" command
-user : /[a-zA-Z0-9_]+/
+control: control_func "(" fargs ")" "{" "\n"* upl "\n"* "}" 
+user: /[a-zA-Z0-9_]+/
 command: fcall
     |   assign
     |   say
 
 fcall: function "(" fargs ")"
-function: /[a-zA-Z0-9_]+/
+function: /[[A-Z][a-z0-9_]*/
+control_func: /[[A-Z][a-z0-9_]*/
 fargs: [object ("," (object))*]
 
 assign: assign_variable "=" object
 
+
 object: string
-    |number
-    |variable
-    | "true"             -> true
-    | "false"            -> false
+    | bool
+    | number
+    | variable
     | "null"             -> null
 
 string: ESCAPED_STRING
 say: ESCAPED_STRING
-number: SIGNED_NUMBER
+number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | yieldvar
+bool: bool "and" bool
+    | "(" bool "and" bool ")"
+    | bool "or" bool
+    | "(" bool "or" bool ")"
+    | compare
+    | "(" compare ")"
+    | "true"             -> true
+    | "false"            -> false
 
-assign_variable: /[a-zA-Z0-9_.]+/
-variable: /[a-zA-Z0-9_.]+/
+compare: number comparator number
+
+logical: "and" | "&&"    -> and
+    | "or" | "||"         -> or
+comparator: ">="         -> greater_or_equal
+    | ">"                -> greater
+    | "=="               -> equal
+    | "<"                -> smaller
+    | "<="               -> smaller_or_equal
+assign_variable: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
+variable: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
+yieldvar: /[a-zA-Z0-9_]+/ "." /[a-zA-Z0-9_.]+/
 comment: /#.*/
 
 %import common.ESCAPED_STRING
