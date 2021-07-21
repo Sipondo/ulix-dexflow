@@ -21,15 +21,20 @@
 ?upl: [(statement | concurrent | control) ("\n" (statement | concurrent | control ))*]
 concurrent: "!" (statement | control)
 statement: comment
+    |   "exit" -> exit
+    |   "break" -> break
     |   user ":" command
-control: control_func "(" fargs ")" "{" "\n"* upl "\n"* "}" 
+control: "if" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_if
+    |    "while" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_while
+    |    "repeat" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_repeat
+//  |    "for" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> for
+    |    "group" "{" "\n"* upl "\n"* "}" -> control_group
 command: fcall
     |   assign
     |   say
 
 fcall: function "(" fargs ")"
 function: /[[A-Z][a-z0-9_]*/
-control_func: /[[A-Z][a-z0-9_]*/
 fargs: [object ("," (object))*]
 
 assign: assign_variable "=" object
@@ -39,16 +44,15 @@ object: string
     | bool
     | SIGNED_NUMBER      -> number
     | variable
+    | index
     | number
     | "null"             -> null
 
 string: ESCAPED_STRING
 say: ESCAPED_STRING
-number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | variable
-bool: bool "and" bool
-    | "(" bool "and" bool ")"
-    | bool "or" bool
-    | "(" bool "or" bool ")"
+number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | variable | index
+bool: bool logical bool
+    | "(" bool logical bool ")"
     | compare
     | "(" compare ")"
     | "true"             -> true
@@ -56,13 +60,17 @@ bool: bool "and" bool
 
 compare: number comparator number
 
-logical: "and" | "&&"    -> and
-    | "or" | "||"         -> or
-comparator: ">="         -> greater_or_equal
-    | ">"                -> greater
-    | "=="               -> equal
-    | "<"                -> smaller
-    | "<="               -> smaller_or_equal
+logical: "and" | "&"    -> logic_and
+    | "or" | "|"         -> logic_or
+comparator: ">="         -> comp_greater_or_equal
+    | ">"                -> comp_greater
+    | "=="               -> comp_equal
+    | "<"                -> comp_smaller
+    | "<="               -> comp_smaller_or_equal
+
+index: variable "[" number "]"
+
+
 assign_variable: /[a-zA-Z0-9_.]+/
 variable: /[a-zA-Z0-9_.]+/
 comment: /#.*/

@@ -49,20 +49,28 @@ class Action:
         self.tree = tree
         self.user = user
 
+        self.data = self.tree.data
+
         self.has_run = False
 
         self.pointer = 0
         self.funcs = []
 
         self.children = []
+        self.elsechildren = []
+
+        self.trigger_else = False
+        self.active_children = []
 
         print("I AM:", self.tree.data)
-        if self.tree.data == "upl":
+        if self.tree.data i== "upl":
             for child in self.tree.children:
                 self.children.append(Action(self.game, child, self.user))
-        if self.tree.data == "control":
-            print(self.tree.pretty())
-            raise Exception
+        elif self.tree.data in ("control_if", "control_while", "control_repeat", "control_group"):
+            self.children.append(Action(self.game, self.children[1], self.user))
+            if len(self.children)>2:
+                self.elsechildren.append(Action(self.game, self.children[2], self.user))
+
         # else
         # self.run()
 
@@ -70,7 +78,7 @@ class Action:
 
     def run(self):
         self.has_run = True
-        self.game.m_upl.parse(self, self.user, self.tree)
+        return self.game.m_upl.parse(self, self.user, self.tree)
 
     def on_tick(self, time=None, frame_time=None):
         self.current_time = time
@@ -90,20 +98,69 @@ class Action:
         if not self.funcs:
             # No children
             if not (self.children or self.has_run):
-                self.has_run = True
                 self.run()
                 return False
 
             # Children
-            elif self.pointer < len(self.children):
-                while (self.pointer < len(self.children)) and self.children[
-                    self.pointer
-                ].on_tick(time, frame_time):
-                    print("NEXT CHILD!!!")
-                    self.pointer += 1
-                return False
+            else:
+                # Process running children
+                children_to_clear = []
+                for child in self.active_children:
+                    if child.on_tick(time, frame_time):
+                        children_to_clear.append(child)
 
-        return not self.funcs
+                for child in children_to_clear:
+                    self.active_children.remove(child)
+
+                # Visit elsechildren
+                if self.trigger_else:
+                    if not self.pointer < len(self.elsechildren):
+                        return False
+                    
+                    # Visits
+                    take_next_child = not len(children_to_clear)
+                    while (self.pointer < len(self.elsechildren)) and take_next_child:
+                        print("NEXT CHILD!!!")
+                        self.pointer += 1
+                        if self.pointer < len(self.elsechildren):
+                            child = self.elsechildren[self.pointer]
+                            self.active_children.append(child)
+                            if child.data != "concurrent":
+                                take_next_child = False
+                    return False
+
+                # Visit normal children
+                elif self.pointer < len(self.children):
+                    
+                    # Check if new visit is required
+                    if self.tree.data in ("control_if", "control_while", "control_repeat", "control_group") and not self.has_run:
+                        if not self.run():
+                            if self.elsechildren:
+                                self.trigger_else = True
+                                self.pointer = 0
+                                return False
+                            else:
+                                return True
+
+                    # Visits
+                    take_next_child = not len(children_to_clear)
+                    while (self.pointer < len(self.children)) and take_next_child:
+                        print("NEXT CHILD!!!")
+                        self.pointer += 1
+                        if self.pointer < len(self.children):
+                            child = self.children[self.pointer]
+                            self.active_children.append(child)
+                            if child.data != "concurrent":
+                                take_next_child = False
+                    return False
+                
+                # Repeat when done
+                elif self.has_run and self.tree.data in ("control_while", "control_repeat"):
+                    self.has_run = False
+                    self.pointer = 0
+
+        # Return True (exit) if nothing left to process
+        return not self.funcs and not self.active_children
 
 
 class RegionRectangle:

@@ -21,6 +21,23 @@ class UPLToPython(Transformer):
         # print(s)
         return s[0](self.act, self.src, self.user, *s[1])
 
+    def control_if(self, s):
+        (s,) = s
+        return eval(s)
+
+    def control_where(self, s):
+        return eval(s[0])
+
+    def control_repeat(self, s):
+        (s,) = s
+        if not hasattr(self, "repeats"):
+            self.repeats = 0
+        self.repeats += 1
+        return self.repeats <= s
+
+    def control_group(self, s):
+        return True
+
     def assign(self, s):
         # print("assign")
         # print(s)
@@ -56,6 +73,35 @@ class UPLToPython(Transformer):
         (s,) = s
         self = self.src
         return eval(s)
+
+    def compare(self, s):
+        self = self.src
+        return eval(" ".join(s))
+
+    def bool(self, s):
+        self = self.src
+        return eval(" ".join(s))
+
+    def logic_and(self, s):
+        return "and"
+
+    def logic_or(self, s):
+        return "or"
+
+    def comp_greater_or_equal(self, s):
+        return ">="
+
+    def comp_greater(self, s):
+        return ">"
+
+    def comp_equal(self, s):
+        return "=="
+
+    def comp_smaller(self, s):
+        return "<"
+
+    def comp_smaller_or_equal(self, s):
+        return "<="
 
     def string(self, s):
         (s,) = s
@@ -120,9 +166,20 @@ print(
     parser.parse(
         """
 !target: "Hey!"
-If((player.x + 3) > 3){
-    player: "Dit is gegroepeerd"
+if((player.x + 3) > 3){
+    player: "Het kan zijn dat dit niet uitgevoerd wordt."
+    player: x = target.game_position[0] + 1
+    !group{
+        player: "Dit is gegroepeerd."
+    }
+    repeat(10){
+        player: "Dit doe ik 10 keer!"
+        break
+    }
+}else{
+    exit
 }
+player: Move(3,5)
 """
     ).pretty()
 )
