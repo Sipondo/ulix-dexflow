@@ -18,10 +18,11 @@
 // %import common.WS
 // %ignore WS
 
-?upl: [(statement | concurrent | control) ("\n" (statement | concurrent | control ))*]
-concurrent: "!" (statement | control)
+?upl: [(statement | try | concurrent | control) ("\n" (statement | try | concurrent | control ))*]
+concurrent: "!" (statement | try | control)
+try: "?" (statement | concurrent | control)
 statement: comment
-    |   "exit" -> exit
+    |   ("exit" | "end") -> exit_end
     |   "break" -> break
     |   user ":" command
 control: "if" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_if
@@ -34,7 +35,7 @@ command: fcall
     |   say
 
 fcall: function "(" fargs ")"
-function: /[[A-Z][a-z0-9_]*/
+function: /[[A-Z][A-Za-z0-9_]*/
 fargs: [object ("," (object))*]
 
 assign: assign_variable "=" object
@@ -55,6 +56,7 @@ bool: bool logical bool
     | "(" bool logical bool ")"
     | compare
     | "(" compare ")"
+    | "not" bool         -> bool_not
     | "true"             -> true
     | "false"            -> false
 

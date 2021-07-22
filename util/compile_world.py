@@ -29,7 +29,7 @@ if ldtk["externalLevels"]:
 def coldef_to_bool(coldef):
     all = "X" in coldef
     if all:
-        return [True, True, True, True] + [coldef in (x,) for x in enumValues]
+        return [True, True, True, True] + [x in coldef for x in enumValues]
     return ["E" in coldef, "S" in coldef, "W" in coldef, "N" in coldef,] + [
         x in coldef for x in enumValues
     ]
@@ -47,7 +47,7 @@ ent_field_upl = {
 }
 parser = UplParser()
 
-total_data = {}
+all_level_data = {}
 
 coldefs = {
     t.uid: {
@@ -66,7 +66,15 @@ enumValues = list(
     )
 )[5:]
 
+for enum in [x for x in a.defs.enums if x.identifier in ("Settables")]:
+    settables = [x.id.lower() for x in enum.values]
+
+for enum in [x for x in a.defs.enums if x.identifier in ("Switches")]:
+    switches = [x.id.lower() for x in enum.values]
+
 print("ENUMVALUES", enumValues)
+print("SETTABLES:", settables)
+print("SWITCHES:", switches)
 
 for level in a.levels:
     print(level.identifier)
@@ -121,7 +129,7 @@ for level in a.levels:
                 (depth_block, height, width, 2), dtype=np.dtype("uint16")
             )
             col_array = np.zeros(
-                (depth_block, height, width, 5), dtype=np.dtype("bool")
+                (depth_block, height, width, 9), dtype=np.dtype("bool")
             )
             for current_depth in range(depth_block):
                 layer = reversed_instances[current_layer]
@@ -222,12 +230,11 @@ for level in a.levels:
                     entities.append(entity)
                 entity_height += 1
 
-    total_data[id] = {
+    all_level_data[id] = {
         "layers": output_layers,
         "p_height": 0,
         "entities": entities,
         "regions": regions,
-        "enumValues": enumValues,
         "fields": {field.identifier: field.value for field in level.field_instances},
     }
 
@@ -240,8 +247,17 @@ for level in a.levels:
     print("Regions:", "\n\n".join([str(x) for x in regions]))
     print("\n\n\n")
 
+world_data = {}
+
+world_data["levels"] = all_level_data
+world_data["world"] = {
+    "enumValues": enumValues,
+    "settables": settables,
+    "switches": switches,
+}
+
 f = BytesIO()
-np.savez_compressed(f, **total_data)
+np.savez_compressed(f, **world_data)
 f.seek(0)
 out = f.read()
 

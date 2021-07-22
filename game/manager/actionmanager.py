@@ -33,7 +33,7 @@ class ActionManager:
         )
 
     def check_regions(self, entity):
-        print("REGION CHECK")
+        # print("REGION CHECK")
         # pos = (pos[0] + self.game.m_col.offset[0], pos[1] + self.game.m_col.offset[1])
         for region in self.regions:
             region.check(entity)
@@ -43,11 +43,12 @@ class ActionManager:
 
 
 class Action:
-    def __init__(self, game, tree, user):
-        print("ACTION INIT")
+    def __init__(self, game, tree, user, parent=None):
+        # print("ACTION INIT")
         self.game = game
         self.tree = tree
         self.user = user
+        self.parent = parent
 
         self.data = self.tree.data
 
@@ -55,6 +56,8 @@ class Action:
 
         self.pointer = 0
         self.funcs = []
+        self.repeats = -1
+        self.terminated = False
 
         self.children = []
         self.elsechildren = []
@@ -62,26 +65,82 @@ class Action:
         self.trigger_else = False
         self.active_children = []
 
-        print("I AM:", self.tree.data)
-        if self.tree.data i== "upl":
-            for child in self.tree.children:
-                self.children.append(Action(self.game, child, self.user))
-        elif self.tree.data in ("control_if", "control_while", "control_repeat", "control_group"):
-            self.children.append(Action(self.game, self.children[1], self.user))
-            if len(self.children)>2:
-                self.elsechildren.append(Action(self.game, self.children[2], self.user))
-
+        # print("I AM:", self.tree.data)
+        self.init_children(include_else=True)
         # else
         # self.run()
 
-        print("FUNCS ARE:", self.tree.data, self.funcs)
+        # print("FUNCS ARE:", self.tree.data, self.funcs)
+
+    def init_children(self, include_else=True):
+        self.pointer = 0
+        self.children = []
+        if include_else:
+            self.elsechildren = []
+
+        if self.tree.data == "upl":
+            for child in self.tree.children:
+                self.children.append(Action(self.game, child, self.user, self))
+        elif self.tree.data in ("control_group", "concurrent", "try"):
+            self.children.append(
+                Action(self.game, self.tree.children[0], self.user, self)
+            )
+        elif self.tree.data in (
+            "control_if",
+            "control_while",
+            "control_repeat",
+            "control_group",
+        ):
+            self.children.append(
+                Action(self.game, self.tree.children[1], self.user, self)
+            )
+            if include_else and len(self.tree.children) > 2:
+                self.elsechildren.append(
+                    Action(self.game, self.tree.children[2], self.user, self)
+                )
+                print("Elsechildren!", self.elsechildren)
+            # print("CHILDREN OF IF:", [x.data for x in self.children])
+            # print("CHILDREN OF IF:", [x.data for x in self.elsechildren])
 
     def run(self):
         self.has_run = True
+        print("Running:", self.data)
+        if self.data == "upl":
+            return True
+        elif self.tree.data == "control_group":
+            return True
+        elif self.tree.data == "concurrent":
+            return True
+        elif self.tree.data == "try":
+            return True
+        elif self.tree.data == "control_repeat":
+            self.repeats += 1
+            print(
+                "Control repeat!", self.elsechildren
+            )  # [x.data for x in self.tree.children])
+            con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
+            return self.repeats <= con[0]
+        elif self.tree.data in ("control_if", "control_while",):
+            print("Control while!", self.elsechildren)
+            con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
+            print("Alive?")
+            print(self.data, con)
+            return con[0]
         return self.game.m_upl.parse(self, self.user, self.tree)
 
+    def terminate(self):
+        self.terminated = True
+        if self.parent is not None:
+            self.parent.terminate()
+
     def on_tick(self, time=None, frame_time=None):
+        if self.terminated:
+            return True
+        # print("TICK ON", self.data)
         self.current_time = time
+
+        # Whether the current loop had any exceptions
+        raised_exception = False
 
         if self.funcs:
             # Need funcs to clear
@@ -106,34 +165,55 @@ class Action:
                 # Process running children
                 children_to_clear = []
                 for child in self.active_children:
-                    if child.on_tick(time, frame_time):
-                        children_to_clear.append(child)
+                    if self.data == "try":
+                        try:
+                            if child.on_tick(time, frame_time):
+                                children_to_clear.append(child)
+                        except Exception as e:
+                            raised_exception = True
+                            children_to_clear.append(child)
+                    else:
+                        if child.on_tick(time, frame_time):
+                            children_to_clear.append(child)
 
                 for child in children_to_clear:
                     self.active_children.remove(child)
+
+                if raised_exception:
+                    return True
 
                 # Visit elsechildren
                 if self.trigger_else:
                     if not self.pointer < len(self.elsechildren):
                         return False
-                    
+
                     # Visits
-                    take_next_child = not len(children_to_clear)
+                    take_next_child = not len(self.active_children)
                     while (self.pointer < len(self.elsechildren)) and take_next_child:
-                        print("NEXT CHILD!!!")
-                        self.pointer += 1
+                        print("NEXT ELSECHILD!!!")
                         if self.pointer < len(self.elsechildren):
                             child = self.elsechildren[self.pointer]
                             self.active_children.append(child)
                             if child.data != "concurrent":
                                 take_next_child = False
+                            self.pointer += 1
                     return False
 
                 # Visit normal children
                 elif self.pointer < len(self.children):
-                    
+
                     # Check if new visit is required
-                    if self.tree.data in ("control_if", "control_while", "control_repeat", "control_group") and not self.has_run:
+                    if (
+                        self.tree.data
+                        in (
+                            "control_if",
+                            "control_while",
+                            "control_repeat",
+                            "control_group",
+                            "concurrent",
+                        )
+                        and not self.has_run
+                    ):
                         if not self.run():
                             if self.elsechildren:
                                 self.trigger_else = True
@@ -143,23 +223,26 @@ class Action:
                                 return True
 
                     # Visits
-                    take_next_child = not len(children_to_clear)
+                    take_next_child = not len(self.active_children)
                     while (self.pointer < len(self.children)) and take_next_child:
                         print("NEXT CHILD!!!")
-                        self.pointer += 1
                         if self.pointer < len(self.children):
                             child = self.children[self.pointer]
                             self.active_children.append(child)
                             if child.data != "concurrent":
                                 take_next_child = False
+                            self.pointer += 1
                     return False
-                
+
                 # Repeat when done
-                elif self.has_run and self.tree.data in ("control_while", "control_repeat"):
+                elif self.has_run and self.data in ("control_while", "control_repeat",):
                     self.has_run = False
-                    self.pointer = 0
+                    self.init_children(include_else=False)
+                    return False
 
         # Return True (exit) if nothing left to process
+        # if self.data == "control_repeat":
+        #     print("REPEAT END-RETURNING:", not self.funcs and not self.active_children)
         return not self.funcs and not self.active_children
 
 

@@ -24,7 +24,8 @@ class JumpAnimation(BaseAnimation):
             self.on_end(time, frame_time)
         else:
             progress = sin(pi * ((self.stop - time) / self.duration)) / 2
-            self.entity.set_position(self.start_pos[0], self.start_pos[1] - progress)
+            # self.entity.set_position(self.start_pos[0], self.start_pos[1] - progress)
+            self.entity.set_position_vertical(-progress)
         return self.lock
 
     def continue_move(self, time, frame_time):

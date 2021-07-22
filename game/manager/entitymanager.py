@@ -111,6 +111,7 @@ class EntityManager:
             mt, cf = entity.get_draw()  # movement type and current frame
             text_id = self.find_texture_id(entity, mt)
             x, y = entity.get_pos()
+            y += entity.pos_vertical
             x *= 16
             y *= 16
             list_of_entity_data.append([x, y, entity.height, text_id, cf])

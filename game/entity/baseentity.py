@@ -4,11 +4,14 @@ import abc
 class BaseEntity(abc.ABC):
     def __init__(self, game, position, direction, sprites=None, height=0, solid=True):
         self.solid = solid  # Can you move through this
+        self.exists = True
         self.game = game
         self.movement_type = 0
         self.moving = False
         self.game_position = position
         self.height = height
+        self.pos_vertical = 0
+
         if isinstance(direction, int):
             if direction == 0:
                 self.direction = (1, 0)
@@ -40,6 +43,9 @@ class BaseEntity(abc.ABC):
     def set_position(self, x, y):
         self.game_position = (x, y)
 
+    def set_position_vertical(self, z):
+        self.pos_vertical = z
+
     def set_movement_type(self, m_type):
         self.movement_type = m_type
         x, sprite = self.current_sprite
@@ -50,8 +56,10 @@ class BaseEntity(abc.ABC):
         ox, oy = self.game_position
         self.game_position = (ox + dx, oy + dy)
 
-    def check_collision(self, direction):
-        x = self.game.m_col.check_collision(self.game_position, direction, self.height)
+    def check_collision(self, direction, flags=False):
+        x = self.game.m_col.check_collision_hop(
+            self.game_position, direction, self.height
+        )
         return x
 
     def get_draw(self):

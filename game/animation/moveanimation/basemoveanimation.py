@@ -1,4 +1,5 @@
 from game.animation.baseanimation import BaseAnimation
+from math import sin, cos, pi
 
 
 class BaseMoveAnimation(BaseAnimation):
@@ -7,12 +8,14 @@ class BaseMoveAnimation(BaseAnimation):
         self.distance = distance
         self.duration = 0
         self.anim_speed = 0
+        self.single_move_distance = 1
         self.get_anim_data()
         self.entity = entity
         self.direction = direction
         self.ended = False
         self.start_pos = self.entity.get_pos()
-        self.stop = start + self.duration
+        # self.stop = start + self.duration
+        self.start = start
         self.frame = self.get_offset()
         self.on_enter()
         super().__init__(game, start, lock=lock)
@@ -26,7 +29,8 @@ class BaseMoveAnimation(BaseAnimation):
         frame_number = self.frame
         if time > self.stop - 0.5 * frame_time:
             self.entity.set_position(
-                int(self.start_pos[0] + xdir), int(self.start_pos[1] + ydir)
+                int(self.start_pos[0] + xdir * self.single_move_distance),
+                int(self.start_pos[1] + ydir * self.single_move_distance),
             )
             self.on_step(time, frame_time)
             if self.check_continue() and self.conditions():
@@ -38,10 +42,26 @@ class BaseMoveAnimation(BaseAnimation):
         else:
             frame_number += int(time * self.anim_speed) % 4
             self.entity.set_current_sprite((self.movement_type, frame_number))
-            progress = 1 - ((self.stop - time) / self.duration)
-            self.entity.set_position(
-                self.start_pos[0] + xdir * progress, self.start_pos[1] + ydir * progress
-            )
+
+            if self.single_move_distance == 1:
+                progress = 1 - ((self.stop - time) / self.duration)
+                self.entity.set_position(
+                    self.start_pos[0] + xdir * progress * self.single_move_distance,
+                    self.start_pos[1] + ydir * progress * self.single_move_distance,
+                )
+
+            elif self.single_move_distance > 1:
+                progress = (1 + cos(pi * ((self.stop - time) / self.duration))) / 2
+
+                progress += 1 - ((self.stop - time) / self.duration)
+                progress /= 2
+                self.entity.set_position(
+                    self.start_pos[0] + xdir * progress * self.single_move_distance,
+                    self.start_pos[1] + ydir * progress * self.single_move_distance,
+                )
+
+                progress = sin(pi * ((self.stop - time) / self.duration)) / 3
+                self.entity.set_position_vertical(-progress)
         return self.lock
 
     def check_continue(self):
@@ -72,7 +92,6 @@ class BaseMoveAnimation(BaseAnimation):
 
     def continue_move(self, time, frame_time):
         self.start = time
-        self.stop = self.start + self.duration
         self.on_enter()
 
     def get_offset(self):
@@ -86,13 +105,16 @@ class BaseMoveAnimation(BaseAnimation):
             return 8
 
     def get_anim_data(self):
-        if self.movement_type == 0:
+        if self.single_move_distance != 1:
+            self.duration = 0.4
+            self.anim_speed = 0.1
+        elif self.movement_type == 0:
             self.duration = 0.3
             self.anim_speed = 4
-        if self.movement_type == 1:
+        elif self.movement_type == 1:
             self.duration = 0.2
             self.anim_speed = 8
-        if self.movement_type == 2:
+        elif self.movement_type == 2:
             self.duration = 0.1
             self.anim_speed = 11
 
@@ -102,4 +124,14 @@ class BaseMoveAnimation(BaseAnimation):
         self.game.m_ani.remove_anim(self)
 
     def conditions(self):
-        return self.entity.check_collision(self.direction)
+        self.single_move_distance = 1
+        res = self.entity.check_collision(self.direction, flags=True)
+        if res:
+            self.single_move_distance = res[0]
+
+        self.get_anim_data()
+        return bool(res)
+
+    @property
+    def stop(self):
+        return self.start + self.duration

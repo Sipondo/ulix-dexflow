@@ -8,6 +8,7 @@ from game.upl.upl_scripts.say import Say
 from game.upl.upl_scripts.move import Move
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
+from game.upl.upl_scripts.setmovement import SetMovement
 from game.upl.upl_scripts.wait import Wait
 
 
@@ -21,27 +22,10 @@ class UPLToPython(Transformer):
         # print(s)
         return s[0](self.act, self.src, self.user, *s[1])
 
-    def control_if(self, s):
-        (s,) = s
-        return eval(s)
-
-    def control_where(self, s):
-        return eval(s[0])
-
-    def control_repeat(self, s):
-        (s,) = s
-        if not hasattr(self, "repeats"):
-            self.repeats = 0
-        self.repeats += 1
-        return self.repeats <= s
-
-    def control_group(self, s):
-        return True
-
     def assign(self, s):
         # print("assign")
         # print(s)
-        return exec(f"self.src.target.{s[0]}={s[1]}")
+        return exec(f"self.user.{s[0]}={s[1]}")
 
     def function(self, s):
         (s,) = s
@@ -52,10 +36,10 @@ class UPLToPython(Transformer):
     def user(self, s):
         (s,) = s
         username = str(s)
-        print("\n\nSWITCHING TO SOURCE:", username, "\n\n")
+        # print("\n\nSWITCHING TO SOURCE:", username, "\n\n")
         self.user = self.parse_username(username)
-        print("Parsed User")
-        return username
+        # print("Parsed User")
+        return self.user  # username
 
     def object(self, s):
         (s,) = s
@@ -71,16 +55,24 @@ class UPLToPython(Transformer):
 
     def variable(self, s):
         (s,) = s
+        if "." in s and not "self." in s:
+            username = str(s).split(".")[0]
+            INTERNAL_VARIABLE = self.parse_username(username)
+            s = ".".join(["INTERNAL_VARIABLE"] + str(s).split(".")[1:])
         self = self.src
         return eval(s)
 
     def compare(self, s):
         self = self.src
-        return eval(" ".join(s))
+        return eval(" ".join([str(x) for x in s]))
 
     def bool(self, s):
         self = self.src
-        return eval(" ".join(s))
+        return eval(" ".join([str(x) for x in s]))
+
+    def bool_not(self, s):
+        self = self.src
+        return not eval(" ".join([str(x) for x in s]))
 
     def logic_and(self, s):
         return "and"
@@ -118,11 +110,21 @@ class UPLToPython(Transformer):
     def comment(self, s):
         return None
 
+    def exit_end(self, s):
+        self.act.terminate()
+        return None
+
     def parse_username(self, name):
         if name == "target":
             return self.src.target
         elif name == "player":
             return self.act.game.m_ent.player
+        elif name == "switch":
+            return self.act.game.m_sav.switches
+        elif name == "set":
+            return self.act.game.m_sav.settables
+        elif name == "game":
+            return self.act.game
         elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
             return self.act.game.m_ent.entities[name[2:]]
 
@@ -148,8 +150,8 @@ class UplManager:
         # print("PARSE:", parse)
         # print(parse.data)
         # print("PARSE_LINES:", "\n\n\n".join([str(x) for x in parse.children]))
-        print(parse.pretty())
-        transformer.transform(parse)
+        # print(parse.pretty())
+        return transformer.transform(parse)
 
 
 class UplParser:
@@ -161,25 +163,25 @@ class UplParser:
         return self.parser.parse(script)
 
 
-parser = UplParser()
-print(
-    parser.parse(
-        """
-!target: "Hey!"
-if((player.x + 3) > 3){
-    player: "Het kan zijn dat dit niet uitgevoerd wordt."
-    player: x = target.game_position[0] + 1
-    !group{
-        player: "Dit is gegroepeerd."
-    }
-    repeat(10){
-        player: "Dit doe ik 10 keer!"
-        break
-    }
-}else{
-    exit
-}
-player: Move(3,5)
-"""
-    ).pretty()
-)
+# parser = UplParser()
+# print(
+#     parser.parse(
+#         """
+# !target: "Hey!"
+# if((player.x + 3) > 3){
+#     player: "Het kan zijn dat dit niet uitgevoerd wordt."
+#     player: x = target.game_position[0] + 1
+#     !group{
+#         player: "Dit is gegroepeerd."
+#     }
+#     repeat(10){
+#         player: "Dit doe ik 10 keer!"
+#         break
+#     }
+# }else{
+#     exit
+# }
+# player: Move(3,5)
+# """
+#     ).pretty()
+# )

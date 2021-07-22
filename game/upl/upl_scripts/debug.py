@@ -10,6 +10,6 @@ class Debug:
         print("DEBUG:", act.current_time, obj)
 
     def on_tick(self, time=None, frame_time=None):
-        if time - self.init_time < 1.0:
+        if time - self.init_time < 0:
             return False
         return True

@@ -49,11 +49,52 @@ class CollisionManager:
             ]
         )
 
-    def get_tile_flags(self, pos, height=0):
-        pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
+    def check_collision_hop(self, pos, direction, height=0, off=True):
+        free = self.check_collision(pos, direction, height=height, off=off)
+
+        dx, dy = direction
+        ox, oy = pos
+        new_pos = ox + dx, oy + dy
+
+        if free:
+            return 1, new_pos
+
+        flags = self.get_tile_flags(new_pos, height=height, off=off)
+
+        new_pos = ox + dx * 2, oy + dy * 2
+
+        if not self.get_col_flag(new_pos, height=height, off=off):
+            if (
+                (direction == (0, -1) and flags["Hop_N"])
+                or (direction == (0, 1) and flags["Hop_S"])
+                or (direction == (-1, 0) and flags["Hop_W"])
+                or (direction == (1, 0) and flags["Hop_E"])
+            ):
+                return 2, new_pos
+
+        return False
+
+    def get_tile_flags(self, pos, height=0, off=True):
+        height = int(height)
+        if off:
+            pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
         return dict(
             zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
         )
+
+    def get_col_flag(self, pos, height=0, off=True):
+        height = int(height)
+        if off:
+            pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
+
+        for entity in self.game.m_ent.all_entities_on_height(height):
+            x1, y1 = entity.get_pos()
+            x1 += self.offset[0]
+            y1 += self.offset[1]
+            x2, y2 = pos
+            if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
+                return True
+        return np.all(self.colmap[height][pos[1], pos[0], :4])
 
     def a_star(self, fr, to, height=0, next_to=False):
         fr = (fr[0] + self.offset[0], fr[1] + self.offset[1])
@@ -97,10 +138,14 @@ class CollisionManager:
                     0 < x < self.colmap[0].shape[0]
                     and 0 < y < self.colmap[0].shape[1]
                     and map[x, y] >= 9999
-                    and self.check_collision(fr, dir, height, off=False)
                 ):
-                    map[x, y] = len(pth)
-                    nodes.append(((x, y), pth + [dir]))
+                    res = self.check_collision_hop(fr, dir, height, off=False)
+                    if res:
+                        # print(x, y, res)
+                        map[x, y] = len(pth)
+                        x, y = res[1]
+                        map[x, y] = len(pth)
+                        nodes.append(((x, y), pth + [dir]))
 
         return None
 
