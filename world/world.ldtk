@@ -2521,7 +2521,7 @@
 			"pivotY": 0,
 			"fieldDefs": [
 				{
-					"identifier": "Container",
+					"identifier": "Settable",
 					"__type": "LocalEnum.Settables",
 					"uid": 367,
 					"type": { "id": "F_Enum", "params": [360] },
@@ -2558,7 +2558,7 @@
 					"regex": null,
 					"acceptFileTypes": null,
 					"defaultOverride": null,
-					"textLanguageMode": "LangPython"
+					"textLanguageMode": "LangRuby"
 				}
 			]
 		},
@@ -2624,7 +2624,7 @@
 					"regex": null,
 					"acceptFileTypes": null,
 					"defaultOverride": null,
-					"textLanguageMode": "LangPython"
+					"textLanguageMode": "LangRuby"
 				}
 			]
 		},

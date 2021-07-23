@@ -56,7 +56,7 @@ class Action:
 
         self.pointer = 0
         self.funcs = []
-        self.repeats = -1
+        self.repeats = 0
         self.terminated = False
 
         self.children = []

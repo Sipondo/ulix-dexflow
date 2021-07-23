@@ -100,8 +100,11 @@ for level in a.levels:
     print(layer_depths)
 
     # TODO: fix renderer so it doesn't require 16x16 worlds
-    width = math.ceil(level.px_wid / 256) * 16
-    height = math.ceil(level.px_hei / 256) * 16
+    width = math.ceil(level.px_wid / 256 + 1) * 16
+    height = math.ceil(level.px_hei / 256 + 1) * 16
+
+    # width = math.ceil(level.px_wid / 16 + 1)
+    # height = math.ceil(level.px_hei / 16 + 1)
 
     # TODO: get rid of this hack as well (2^ maps)
     width = 2 ** math.ceil(math.log2(width))

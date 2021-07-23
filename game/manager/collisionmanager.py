@@ -102,13 +102,13 @@ class CollisionManager:
 
         if (
             not (
-                0 < fr[0] < self.colmap[0].shape[0]
-                and 0 < fr[1] < self.colmap[0].shape[1]
+                0 < fr[0] < self.colmap[0].shape[1]
+                and 0 < fr[1] < self.colmap[0].shape[0]
             )
         ) or (
             not (
-                0 < to[0] < self.colmap[0].shape[0]
-                and 0 < to[1] < self.colmap[0].shape[1]
+                0 < to[0] < self.colmap[0].shape[1]
+                and 0 < to[1] < self.colmap[0].shape[0]
             )
         ):
             return None
@@ -142,10 +142,11 @@ class CollisionManager:
                     res = self.check_collision_hop(fr, dir, height, off=False)
                     if res:
                         # print(x, y, res)
-                        map[x, y] = len(pth)
+                        # map[x, y] = len(pth)
                         x, y = res[1]
-                        map[x, y] = len(pth)
-                        nodes.append(((x, y), pth + [dir]))
+                        if map[x, y] >= 9999:
+                            map[x, y] = len(pth)
+                            nodes.append(((x, y), pth + [dir]))
 
         return None
 
