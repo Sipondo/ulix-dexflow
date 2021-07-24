@@ -44,7 +44,6 @@ class UPLToPython(Transformer):
             user = self.user
             s[0] = f"user.{s[0]}"
         self = self.src
-        print("ASSIGNING!", f"{s[0]}={s[1]}")
         return exec(f"{s[0]}={s[1]}")
 
     def function(self, s):
@@ -81,7 +80,8 @@ class UPLToPython(Transformer):
         elif INTERNAL_VARIABLE := self.parse_username(s):
             s = "INTERNAL_VARIABLE"
         self = self.src
-        print("var", s)
+        print(s)
+        print(eval(s))
         return eval(s)
 
     def index(self, s):
@@ -168,6 +168,10 @@ class UPLToPython(Transformer):
             return self.act.game.m_sav.switches
         elif name == "set":
             return self.act.game.m_sav.settables
+        elif name == "local":
+            return self.act.game.m_sav.locals
+        elif name == "global":
+            return self.act.game.m_sav.globals
         elif name == "game":
             return self.act.game
         elif name == "col":

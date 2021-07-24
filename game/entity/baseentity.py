@@ -5,6 +5,7 @@ class BaseEntity(abc.ABC):
     def __init__(self, game, position, direction, sprites=None, height=0, solid=True):
         self.solid = solid  # Can you move through this
         self.exists = True
+        self.visible = True
         self.game = game
         self.movement_type = 0
         self.moving = False

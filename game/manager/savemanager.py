@@ -10,6 +10,8 @@ class SaveManager:
 
         self.settables = ValueHolder(holder_is_frozen=False)
         self.switches = ValueHolder(holder_is_frozen=False)
+        self.globals = ValueHolder(holder_is_frozen=False)
+        self.locals = ValueHolder(holder_is_frozen=False)
 
         try:
             with open("streamingsave.usave", "r") as infile:
@@ -34,6 +36,9 @@ class SaveManager:
         self.switches.holder_is_frozen = True
         print("SETTABLES:", self.settables.__dict__)
         print("SWITCHES:", self.switches.__dict__)
+
+    def go_to_new_level(self):
+        self.locals = ValueHolder(holder_is_frozen=False)
 
     def save(self, loc, value):
         # print(f"Setting {loc}: {value}")

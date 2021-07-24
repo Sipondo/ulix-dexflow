@@ -1718,7 +1718,13 @@
 								"params": ["Pushy Pete"]
 							}]
 						},
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] }
+						{
+							"__identifier": "on_create_action",
+							"__value": "",
+							"__type": "String",
+							"defUid": 408,
+							"realEditorValues": [null]
+						}
 					]
 				}
 			]

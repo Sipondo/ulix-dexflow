@@ -92,6 +92,8 @@ class EntityManager:
         yoff += 6 / 16
         list_of_entity_data = []
         for entity in draw_entities:
+            if not entity.visible:
+                continue
             entity.on_render()
             mt, cf = entity.get_draw()  # movement type and current frame
             text_id = self.find_texture_id(entity, mt)
