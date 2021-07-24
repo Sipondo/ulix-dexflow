@@ -35,6 +35,7 @@ command: fcall
     |   say
 
 fcall: function "(" fargs ")"
+fcall_object: function "(" fargs ")"
 function: /[[A-Z][A-Za-z0-9_]*/
 fargs: [object ("," (object))*]
 
@@ -44,6 +45,7 @@ assign: assign_variable "=" object
 object: string
     | bool
     | SIGNED_NUMBER      -> number
+    | fcall_object
     | variable
     | index
     | number
@@ -60,13 +62,14 @@ bool: bool logical bool
     | "true"             -> true
     | "false"            -> false
 
-compare: number comparator number
+compare: object comparator object
 
 logical: "and" | "&"    -> logic_and
     | "or" | "|"         -> logic_or
 comparator: ">="         -> comp_greater_or_equal
     | ">"                -> comp_greater
     | "=="               -> comp_equal
+    | "!="               -> comp_nequal
     | "<"                -> comp_smaller
     | "<="               -> comp_smaller_or_equal
 

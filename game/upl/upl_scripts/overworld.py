@@ -9,3 +9,6 @@ class Overworld:
 
     def on_tick(self, time=None, frame_time=None):
         return True
+
+    def on_read(self):
+        return None

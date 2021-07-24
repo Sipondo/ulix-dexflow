@@ -98,7 +98,7 @@ class EntityManager:
 
     def render(self):
         draw_entities = sorted(
-            list(self.entities.values()) + [self.player], key=lambda x: x.y
+            list(self.entities.values()) + [self.player], key=lambda x: x.y_g
         )
         (xoff, yoff) = self.game.pan_tool.pan_value
         xoff *= self.game.pan_tool.warp_x

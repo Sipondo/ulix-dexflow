@@ -7,9 +7,10 @@ class Debug:
         self.src = src
         self.user = user
         self = user
-        print("DEBUG:", act.current_time, obj)
 
     def on_tick(self, time=None, frame_time=None):
-        if time - self.init_time < 0:
-            return False
+        print("DEBUG:", self.act.current_time, self.obj)
         return True
+
+    def on_read(self):
+        return None

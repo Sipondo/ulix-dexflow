@@ -13,3 +13,6 @@ class SetMovement:
     def on_tick(self, time=None, frame_time=None):
         self.user.set_movement_type(int(self.movement))
         return True
+
+    def on_read(self):
+        return None

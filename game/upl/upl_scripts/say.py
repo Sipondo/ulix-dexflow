@@ -14,3 +14,6 @@ class Say:
         if self.act.game.m_gst.current_state.dialogue is not None:
             return False
         return True
+
+    def on_read(self):
+        return None

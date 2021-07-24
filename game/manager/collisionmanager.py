@@ -25,7 +25,7 @@ class CollisionManager:
             else:
                 self.colmap[height] = self.colmap[height] | colmap
 
-    def check_collision(self, pos, direction, height=0, off=True):
+    def check_collision(self, pos, direction, height=0, off=True, src_entity=None):
         height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
@@ -36,12 +36,16 @@ class CollisionManager:
         if self.game.maphack:
             return True
         for entity in self.game.m_ent.all_entities_on_height(height):
+            if entity == src_entity:
+                continue
+            # print(entity.game_position)
             x1, y1 = entity.get_pos()
             x1 += self.offset[0]
             y1 += self.offset[1]
             x2, y2 = new_pos
             if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
                 return False
+
         return not (
             self.colmap[height][pos[1], pos[0], self.get_direction_num(direction)]
             or self.colmap[height][
@@ -49,8 +53,11 @@ class CollisionManager:
             ]
         )
 
-    def check_collision_hop(self, pos, direction, height=0, off=True):
-        free = self.check_collision(pos, direction, height=height, off=off)
+    def check_collision_hop(self, pos, direction, height=0, off=True, src_entity=None):
+        height = int(height)
+        free = self.check_collision(
+            pos, direction, height=height, off=off, src_entity=src_entity
+        )
 
         dx, dy = direction
         ox, oy = pos
@@ -59,6 +66,7 @@ class CollisionManager:
         if free:
             return 1, new_pos
 
+        old_new_pos = new_pos
         flags = self.get_tile_flags(new_pos, height=height, off=off)
 
         new_pos = ox + dx * 2, oy + dy * 2
@@ -82,12 +90,14 @@ class CollisionManager:
             zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
         )
 
-    def get_col_flag(self, pos, height=0, off=True):
+    def get_col_flag(self, pos, height=0, off=True, src_entity=None):
         height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
 
         for entity in self.game.m_ent.all_entities_on_height(height):
+            if entity == src_entity:
+                continue
             x1, y1 = entity.get_pos()
             x1 += self.offset[0]
             y1 += self.offset[1]
@@ -96,7 +106,7 @@ class CollisionManager:
                 return True
         return np.all(self.colmap[height][pos[1], pos[0], :4])
 
-    def a_star(self, fr, to, height=0, next_to=False):
+    def a_star(self, fr, to, height=0, next_to=False, src_entity=None):
         fr = (fr[0] + self.offset[0], fr[1] + self.offset[1])
         to = (to[0] + self.offset[0], to[1] + self.offset[1])
 
@@ -139,7 +149,9 @@ class CollisionManager:
                     and 0 < y < self.colmap[0].shape[1]
                     and map[x, y] >= 9999
                 ):
-                    res = self.check_collision_hop(fr, dir, height, off=False)
+                    res = self.check_collision_hop(
+                        fr, dir, height, off=False, src_entity=src_entity
+                    )
                     if res:
                         # print(x, y, res)
                         # map[x, y] = len(pth)

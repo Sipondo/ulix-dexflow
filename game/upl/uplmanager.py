@@ -4,10 +4,11 @@ from lark import Transformer
 from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.debug import Debug
 from game.upl.upl_scripts.jump import Jump
-from game.upl.upl_scripts.say import Say
+from game.upl.upl_scripts.manhattan import Manhattan
 from game.upl.upl_scripts.move import Move
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
+from game.upl.upl_scripts.say import Say
 from game.upl.upl_scripts.setmovement import SetMovement
 from game.upl.upl_scripts.wait import Wait
 
@@ -22,6 +23,10 @@ class UPLToPython(Transformer):
         # print(s)
         return s[0](self.act, self.src, self.user, *s[1])
 
+    def fcall_object(self, s):
+        # print(s)
+        return s[0](self.act, self.src, self.user, *s[1]).on_read()
+
     def assign(self, s):
         # print("assign")
         # print(s)
@@ -30,8 +35,7 @@ class UPLToPython(Transformer):
     def function(self, s):
         (s,) = s
         self = self.src
-        ev = eval(s)
-        return ev
+        return eval(s)
 
     def user(self, s):
         (s,) = s
@@ -59,12 +63,26 @@ class UPLToPython(Transformer):
             username = str(s).split(".")[0]
             INTERNAL_VARIABLE = self.parse_username(username)
             s = ".".join(["INTERNAL_VARIABLE"] + str(s).split(".")[1:])
+        elif INTERNAL_VARIABLE := self.parse_username(s):
+            s = "INTERNAL_VARIABLE"
         self = self.src
         return eval(s)
 
+    def index(self, s):
+        a = s[0]
+        b = s[1]
+        if isinstance(b, float):
+            b = int(b)
+        self = self.src
+        return eval(f"a[b]")
+
     def compare(self, s):
         self = self.src
-        return eval(" ".join([str(x) for x in s]))
+        a = s[0]
+        b = s[2]
+        return eval(f"a {s[1]} b")
+        # print("COMPARING:", " ".join([str(x) for x in s]))
+        # return eval(" ".join([str(x) for x in s]))
 
     def bool(self, s):
         self = self.src
@@ -89,6 +107,9 @@ class UPLToPython(Transformer):
     def comp_equal(self, s):
         return "=="
 
+    def comp_nequal(self, s):
+        return "!="
+
     def comp_smaller(self, s):
         return "<"
 
@@ -104,8 +125,11 @@ class UPLToPython(Transformer):
         return Say(self.act, self.src, self.user, s[1:-1])
 
     def number(self, n):
-        (n,) = n
-        return float(n)
+        if len(n) == 1:
+            (n,) = n
+            return float(n)
+
+        return eval(f"float(n[0]) {n[1]} float(n[2])")
 
     def comment(self, s):
         return None
@@ -125,6 +149,8 @@ class UPLToPython(Transformer):
             return self.act.game.m_sav.settables
         elif name == "game":
             return self.act.game
+        elif name == "col":
+            return self.act.game.m_col
         elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
             return self.act.game.m_ent.entities[name[2:]]
 

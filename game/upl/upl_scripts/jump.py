@@ -23,3 +23,6 @@ class Jump:
         if not self.anim.ended or not self.init:
             return False
         return True
+
+    def on_read(self):
+        return None

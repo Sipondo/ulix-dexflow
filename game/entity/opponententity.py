@@ -15,9 +15,6 @@ class OpponentEntity(BaseEntity):
         self.direction = (-direc[0], -direc[1])
         self.current_sprite = (0, self.get_offset())
 
-    def on_render(self):
-        pass
-
     def on_enter(self):
         self.current_sprite = (0, self.get_offset())
         self.game.m_evt.add_opponent_event(self)
@@ -51,14 +48,3 @@ class OpponentEntity(BaseEntity):
             else:
                 self.direction = direction
                 self.set_current_sprite((self.movement_type, self.get_offset()))
-
-    def after_move(self, time, frame_time):
-        return
-        # self.game.m_act.check_regions(self.game_position)
-        # pass
-        # self.game.m_gst.current_state.lock = self.game.m_evt.check_events(
-        #     time, frame_time
-        # )
-
-    def on_step(self, time, frame_time):
-        pass

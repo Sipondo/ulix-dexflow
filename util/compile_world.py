@@ -209,6 +209,7 @@ for level in a.levels:
                     for field in raw_ent.field_instances:
                         if ent_field_upl[raw_ent.def_uid][field.def_uid]:
                             entity[f"f_{field.identifier}"] = parser.parse(field.value)
+                            print(entity[f"f_{field.identifier}"].pretty())
                         else:
                             entity[f"f_{field.identifier}"] = field.value
                     entity["width"] = raw_ent.width

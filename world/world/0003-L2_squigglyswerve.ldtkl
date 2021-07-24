@@ -292,23 +292,23 @@
 				},
 				{
 					"__identifier": "Region",
-					"__grid": [19,14],
+					"__grid": [12,10],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 16,
-					"height": 16,
+					"height": 128,
 					"defUid": 356,
-					"px": [304,224],
+					"px": [192,160],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "repeat(2){\n  game: Debug(\"Repeat!\")\n  ?e_girl: Move(21, 11)\n  ?e_girl: Move(18, 17)\n}else{\n  game: Debug(\"Else!\")\n  ?e_girl: Move(15, 15)\n}",
+							"__value": "if(target != player){\n  exit\n}\n  \nwhile(e_girl){\n    if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}else{\n  game: Debug(\"Else!\")\n  e_girl: Wait(1.0)\n  ?e_girl: Move(15, 15)\n}",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"repeat(2){\n  game: Debug(\"Repeat!\")\n  ?e_girl: Move(21, 11)\n  ?e_girl: Move(18, 17)\n}else{\n  game: Debug(\"Else!\")\n  ?e_girl: Move(15, 15)\n}"
+									"if(target != player){\n  exit\n}\n  \nwhile(e_girl){\n    if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}else{\n  game: Debug(\"Else!\")\n  e_girl: Wait(1.0)\n  ?e_girl: Move(15, 15)\n}"
 								]
 							}]
 						},
@@ -1614,46 +1614,6 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "Opponent",
-					"__grid": [29,51],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 4,
-					"px": [472,824],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar011.png",
-							"__type": "FilePath",
-							"defUid": 66,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar011.png"]
-							}]
-						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
-						{
-							"__identifier": "direction",
-							"__value": "E",
-							"__type": "LocalEnum.Direction",
-							"defUid": 378,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["E"]
-							}]
-						},
-						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 380, "realEditorValues": [] },
-						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
-						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 382, "realEditorValues": [] },
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
-					]
-				},
-				{
 					"__identifier": "Civilian",
 					"__grid": [16,10],
 					"__pivot": [0.5,0.5],
@@ -1730,10 +1690,7 @@
 			"seed": 9528867,
 			"overrideTilesetUid": null,
 			"gridTiles": [
-				{ "px": [272,160], "src": [16,96], "f": 0, "t": 25, "d": [487] },
-				{ "px": [272,176], "src": [16,96], "f": 0, "t": 25, "d": [534] },
 				{ "px": [272,192], "src": [0,80], "f": 0, "t": 20, "d": [581] },
-				{ "px": [288,192], "src": [0,80], "f": 0, "t": 20, "d": [582] },
 				{ "px": [256,208], "src": [0,80], "f": 0, "t": 20, "d": [627] },
 				{ "px": [288,208], "src": [0,80], "f": 0, "t": 20, "d": [629] },
 				{ "px": [304,208], "src": [0,80], "f": 0, "t": 20, "d": [630] },
@@ -1744,9 +1701,6 @@
 				{ "px": [288,240], "src": [0,80], "f": 0, "t": 20, "d": [723] },
 				{ "px": [320,240], "src": [16,96], "f": 0, "t": 25, "d": [725] },
 				{ "px": [352,240], "src": [0,80], "f": 0, "t": 20, "d": [727] },
-				{ "px": [272,272], "src": [0,16], "f": 0, "t": 4, "d": [816] },
-				{ "px": [304,272], "src": [16,96], "f": 0, "t": 25, "d": [818] },
-				{ "px": [288,288], "src": [16,96], "f": 0, "t": 25, "d": [864] },
 				{ "px": [304,304], "src": [0,80], "f": 0, "t": 20, "d": [912] }
 			],
 			"entityInstances": []

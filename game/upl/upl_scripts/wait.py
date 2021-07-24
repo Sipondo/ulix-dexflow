@@ -11,3 +11,6 @@ class Wait:
         if time - self.init_time < self.time:
             return False
         return True
+
+    def on_read(self):
+        return None

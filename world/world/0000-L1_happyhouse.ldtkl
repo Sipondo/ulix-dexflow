@@ -415,7 +415,7 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
 							}]
 						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_aggro", "__value": null, "__type": "String", "defUid": 90, "realEditorValues": [] },
 						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
@@ -1013,7 +1013,7 @@
 							}]
 						},
 						{
-							"__identifier": "aggro_action",
+							"__identifier": "on_aggro",
 							"__value": "!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: ",
 							"__type": "String",
 							"defUid": 90,
@@ -1091,7 +1091,7 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_aggro", "__value": null, "__type": "String", "defUid": 90, "realEditorValues": [] },
 						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",

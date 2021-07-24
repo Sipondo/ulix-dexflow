@@ -70,7 +70,7 @@ class Action:
         # else
         # self.run()
 
-        # print("FUNCS ARE:", self.tree.data, self.funcs)
+        # print("CHILDREN:", self.tree.data, self.children)
 
     def init_children(self, include_else=True):
         self.pointer = 0
@@ -98,13 +98,13 @@ class Action:
                 self.elsechildren.append(
                     Action(self.game, self.tree.children[2], self.user, self)
                 )
-                print("Elsechildren!", self.elsechildren)
+                # print("Elsechildren!", self.elsechildren)
             # print("CHILDREN OF IF:", [x.data for x in self.children])
             # print("CHILDREN OF IF:", [x.data for x in self.elsechildren])
 
     def run(self):
         self.has_run = True
-        print("Running:", self.data)
+        # print("Running:", self.data)
         if self.data == "upl":
             return True
         elif self.tree.data == "control_group":
@@ -115,16 +115,16 @@ class Action:
             return True
         elif self.tree.data == "control_repeat":
             self.repeats += 1
-            print(
-                "Control repeat!", self.elsechildren
-            )  # [x.data for x in self.tree.children])
+            # print(
+            #     "Control repeat!", self.elsechildren
+            # )  # [x.data for x in self.tree.children])
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
             return self.repeats <= con[0]
         elif self.tree.data in ("control_if", "control_while",):
-            print("Control while!", self.elsechildren)
+            # print("Control while!", self.elsechildren)
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
-            print("Alive?")
-            print(self.data, con)
+            # print("Alive?")
+            # print(self.data, con)
             return con[0]
         return self.game.m_upl.parse(self, self.user, self.tree)
 
@@ -134,9 +134,10 @@ class Action:
             self.parent.terminate()
 
     def on_tick(self, time=None, frame_time=None):
+        # print("TICK ON", self.data)
+        # print(self.funcs, self.active_children, [x.data for x in self.active_children])
         if self.terminated:
             return True
-        # print("TICK ON", self.data)
         self.current_time = time
 
         # Whether the current loop had any exceptions
@@ -185,23 +186,24 @@ class Action:
                 # Visit elsechildren
                 if self.trigger_else:
                     if not self.pointer < len(self.elsechildren):
-                        return False
+                        #     return False
 
-                    # Visits
-                    take_next_child = not len(self.active_children)
-                    while (self.pointer < len(self.elsechildren)) and take_next_child:
-                        print("NEXT ELSECHILD!!!")
-                        if self.pointer < len(self.elsechildren):
-                            child = self.elsechildren[self.pointer]
-                            self.active_children.append(child)
-                            if child.data != "concurrent":
-                                take_next_child = False
-                            self.pointer += 1
-                    return False
+                        # Visits
+                        take_next_child = not len(self.active_children)
+                        while (
+                            self.pointer < len(self.elsechildren)
+                        ) and take_next_child:
+                            print("NEXT ELSECHILD!!!")
+                            if self.pointer < len(self.elsechildren):
+                                child = self.elsechildren[self.pointer]
+                                self.active_children.append(child)
+                                if child.data != "concurrent":
+                                    take_next_child = False
+                                self.pointer += 1
+                        return False
 
                 # Visit normal children
                 elif self.pointer < len(self.children):
-
                     # Check if new visit is required
                     if (
                         self.tree.data
@@ -225,7 +227,6 @@ class Action:
                     # Visits
                     take_next_child = not len(self.active_children)
                     while (self.pointer < len(self.children)) and take_next_child:
-                        print("NEXT CHILD!!!")
                         if self.pointer < len(self.children):
                             child = self.children[self.pointer]
                             self.active_children.append(child)

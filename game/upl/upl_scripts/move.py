@@ -11,13 +11,32 @@ class Move:
         self.game = act.game
 
         self.init_time = act.current_time
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
         self.init = False
         self.next_to = next_to
 
     def on_tick(self, time=None, frame_time=None):
         if not self.init and time is not None:
+            # print(
+            #     "MOVE:",
+            #     (
+            #         self.user.game_position[0] + self.game.m_col.offset[0],
+            #         self.user.game_position[1] + self.game.m_col.offset[1],
+            #         self.user.game_position[0],
+            #         self.user.game_position[1],
+            #     ),
+            #     (
+            #         self.x,
+            #         self.y,
+            #         self.x - self.game.m_col.offset[0],
+            #         self.y - self.game.m_col.offset[1],
+            #     ),
+            # )
+            if self.user.moving:
+                print("Entity is already moving!")
+                raise Exception("Entity is already moving!")
+
             path = self.game.m_col.a_star(
                 self.user.game_position,
                 (
@@ -25,6 +44,7 @@ class Move:
                     self.y - self.game.m_col.offset[1],
                 ),
                 next_to=self.next_to,
+                src_entity=self.user,
             )
             self.anim = PathMoveAnimation(
                 self.game,
@@ -41,3 +61,6 @@ class Move:
         if not self.anim.ended or not self.init:
             return False
         return True
+
+    def on_read(self):
+        return None

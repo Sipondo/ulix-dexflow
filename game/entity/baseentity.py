@@ -58,7 +58,7 @@ class BaseEntity(abc.ABC):
 
     def check_collision(self, direction, flags=False):
         x = self.game.m_col.check_collision_hop(
-            self.game_position, direction, self.height
+            self.game_position, direction, self.height, src_entity=self
         )
         return x
 
@@ -86,7 +86,7 @@ class BaseEntity(abc.ABC):
 
     def after_move(self, time, frame_time):
         self.moving = False
-        self.after_move(time, frame_time)
+        # self.after_move(time, frame_time)
 
     def on_enter(self):
         pass
@@ -98,5 +98,17 @@ class BaseEntity(abc.ABC):
         pass
 
     @property
+    def x(self):
+        return self.game_position[0] + self.game.m_col.offset[0]
+
+    @property
     def y(self):
+        return self.game_position[1] + self.game.m_col.offset[1]
+
+    @property
+    def x_g(self):
+        return self.game_position[0]
+
+    @property
+    def y_g(self):
         return self.game_position[1]
