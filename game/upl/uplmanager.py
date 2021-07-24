@@ -140,8 +140,15 @@ class UPLToPython(Transformer):
         (s,) = s
         return s[1:-1]
 
+    def multiline(self, s):
+        (s,) = s
+        return s[3:-3]
+
     def list(self, items):
         return list(items)
+
+    def tuple(self, items):
+        return tuple(items)
 
     def say(self, s):
         (s,) = s
