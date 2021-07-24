@@ -4,6 +4,7 @@ from lark import Transformer
 from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.concat import Concat
 from game.upl.upl_scripts.debug import Debug
+from game.upl.upl_scripts.face import Face
 from game.upl.upl_scripts.isentity import IsEntity
 from game.upl.upl_scripts.jump import Jump
 from game.upl.upl_scripts.manhattan import Manhattan
