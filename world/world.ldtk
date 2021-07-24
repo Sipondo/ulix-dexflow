@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 408,
+	"nextUid": 412,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2316,7 +2316,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": { "id": "V_Int", "params": [5] },
 					"textLanguageMode": null
 				},
 				{
@@ -2325,7 +2325,7 @@
 					"uid": 90,
 					"type": "F_Text",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2337,15 +2337,15 @@
 					"regex": null,
 					"acceptFileTypes": null,
 					"defaultOverride": null,
-					"textLanguageMode": null
+					"textLanguageMode": "LangRuby"
 				},
 				{
-					"identifier": "dialogue",
+					"identifier": "on_interact",
 					"__type": "String",
 					"uid": 91,
 					"type": "F_Text",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2358,9 +2358,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["Missing dialogue"]
+						"params": ["game: Cinematic() self: \"Missing Dialogue\" game: Overworld()"]
 					},
-					"textLanguageMode": null
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_create",
+					"__type": "String",
+					"uid": 410,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": "LangRuby"
 				}
 			]
 		},
@@ -2449,7 +2469,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "dialogue",
+					"identifier": "on_interact",
 					"__type": "String",
 					"uid": 89,
 					"type": "F_Text",
@@ -2467,9 +2487,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["Missing dialogue"]
+						"params": ["game: Cinematic() self: \"Missing Dialogue\" game: Overworld()"]
 					},
-					"textLanguageMode": null
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_create",
+					"__type": "String",
+					"uid": 408,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": "LangRuby"
 				},
 				{
 					"identifier": "direction",

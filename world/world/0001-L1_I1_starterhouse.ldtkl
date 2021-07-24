@@ -397,7 +397,13 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar006.png"]
 							}]
 						},
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact",
+							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": []
+						},
 						{
 							"__identifier": "direction",
 							"__value": "E",
@@ -427,7 +433,8 @@
 								"id": "V_String",
 								"params": ["Mom"]
 							}]
-						}
+						},
+						{ "__identifier": "on_create", "__value": null, "__type": "String", "defUid": 408, "realEditorValues": [] }
 					]
 				}
 			]

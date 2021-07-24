@@ -21,7 +21,7 @@ from game.manager.pbsmanager import PbsManager
 from game.manager.hotkeymanager import HotkeyManager
 from game.manager.entitymanager import EntityManager
 
-from game.manager.eventmanager import EventManager
+# from game.manager.eventmanager import EventManager
 from game.manager.actionmanager import ActionManager
 
 from game.manager.aimanager import AiManager
@@ -96,7 +96,7 @@ class PokeGame(mglw.WindowConfig):
         self.m_dat = DbManager(self)
         self.m_pbs = PbsManager(self)
         self.m_ent = EntityManager(self)
-        self.m_evt = EventManager(self)
+        # self.m_evt = EventManager(self)
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
         self.m_par = ParticleManager(self)

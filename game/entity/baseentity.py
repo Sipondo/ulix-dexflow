@@ -11,6 +11,8 @@ class BaseEntity(abc.ABC):
         self.game_position = position
         self.height = height
         self.pos_vertical = 0
+        self.interactable = True
+        self.col_override = False
 
         if isinstance(direction, int):
             if direction == 0:

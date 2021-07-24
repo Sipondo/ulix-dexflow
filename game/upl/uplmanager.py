@@ -2,14 +2,18 @@ from lark import Lark
 from lark import Transformer
 
 from game.upl.upl_scripts.cinematic import Cinematic
+from game.upl.upl_scripts.concat import Concat
 from game.upl.upl_scripts.debug import Debug
+from game.upl.upl_scripts.isentity import IsEntity
 from game.upl.upl_scripts.jump import Jump
 from game.upl.upl_scripts.manhattan import Manhattan
 from game.upl.upl_scripts.move import Move
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
+from game.upl.upl_scripts.push import Push
 from game.upl.upl_scripts.say import Say
 from game.upl.upl_scripts.setmovement import SetMovement
+from game.upl.upl_scripts.step import Step
 from game.upl.upl_scripts.wait import Wait
 
 
@@ -30,7 +34,18 @@ class UPLToPython(Transformer):
     def assign(self, s):
         # print("assign")
         # print(s)
-        return exec(f"self.user.{s[0]}={s[1]}")
+        if "." in s[0] and not "self." in s[0]:
+            username = str(s[0]).split(".")[0]
+            INTERNAL_VARIABLE = self.parse_username(username)
+            s = ".".join(["INTERNAL_VARIABLE"] + str(s[0]).split(".")[1:])
+        elif INTERNAL_VARIABLE := self.parse_username(s[0]):
+            s[0] = "INTERNAL_VARIABLE"
+        else:
+            user = self.user
+            s[0] = f"user.{s[0]}"
+        self = self.src
+        print("ASSIGNING!", f"{s[0]}={s[1]}")
+        return exec(f"{s[0]}={s[1]}")
 
     def function(self, s):
         (s,) = s
@@ -66,6 +81,7 @@ class UPLToPython(Transformer):
         elif INTERNAL_VARIABLE := self.parse_username(s):
             s = "INTERNAL_VARIABLE"
         self = self.src
+        print("var", s)
         return eval(s)
 
     def index(self, s):
@@ -120,6 +136,9 @@ class UPLToPython(Transformer):
         (s,) = s
         return s[1:-1]
 
+    def list(self, items):
+        return list(items)
+
     def say(self, s):
         (s,) = s
         return Say(self.act, self.src, self.user, s[1:-1])
@@ -141,6 +160,8 @@ class UPLToPython(Transformer):
     def parse_username(self, name):
         if name == "target":
             return self.src.target
+        elif name == "self":
+            return self.src
         elif name == "player":
             return self.act.game.m_ent.player
         elif name == "switch":

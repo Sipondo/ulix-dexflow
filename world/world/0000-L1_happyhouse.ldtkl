@@ -415,8 +415,14 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro", "__value": null, "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{ "__identifier": "on_aggro", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact",
+							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": []
+						},
 						{
 							"__identifier": "direction",
 							"__value": "W",
@@ -450,7 +456,8 @@
 							}]
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				}
 			]
@@ -1014,15 +1021,18 @@
 						},
 						{
 							"__identifier": "on_aggro",
-							"__value": "!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: ",
+							"__value": "",
 							"__type": "String",
 							"defUid": 90,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: "]
-							}]
+							"realEditorValues": [null]
 						},
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact",
+							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": []
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -1068,7 +1078,8 @@
 							}]
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1091,8 +1102,14 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro", "__value": null, "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{ "__identifier": "on_aggro", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact",
+							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": []
+						},
 						{
 							"__identifier": "direction",
 							"__value": "E",
@@ -1138,7 +1155,8 @@
 							}]
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				}
 			]

@@ -23,6 +23,16 @@ class ActionManager:
             self.actions.remove(act)
             del act
 
+    def check_interact(self):
+        pos = self.game.m_ent.player.get_pos()
+        direc = self.game.m_ent.player.get_dir()
+
+        target_pos = (pos[0] + direc[0], pos[1] + direc[1])
+        for entity in self.game.m_ent.entities.values():
+            if entity.interactable and entity.game_position == target_pos:
+                entity.when_interact()
+                return
+
     def create_region(self, pos, size, region):
         region = {k[2:]: v for k, v in region.items() if "f_" in k}
         # print(
@@ -31,6 +41,10 @@ class ActionManager:
         self.regions.append(
             RegionRectangle(self.game, pos[0], pos[1], size[0], size[1], region)
         )
+
+    def create_action(self, upl, user):
+        if upl is not None:
+            self.actions.append(Action(self.game, upl, user))
 
     def check_regions(self, entity):
         # print("REGION CHECK")
@@ -115,16 +129,10 @@ class Action:
             return True
         elif self.tree.data == "control_repeat":
             self.repeats += 1
-            # print(
-            #     "Control repeat!", self.elsechildren
-            # )  # [x.data for x in self.tree.children])
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
             return self.repeats <= con[0]
         elif self.tree.data in ("control_if", "control_while",):
-            # print("Control while!", self.elsechildren)
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
-            # print("Alive?")
-            # print(self.data, con)
             return con[0]
         return self.game.m_upl.parse(self, self.user, self.tree)
 

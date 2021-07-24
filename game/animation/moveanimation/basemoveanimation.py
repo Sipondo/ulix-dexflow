@@ -3,7 +3,9 @@ from math import sin, cos, pi
 
 
 class BaseMoveAnimation(BaseAnimation):
-    def __init__(self, game, start, direction, entity, distance=1, lock=False):
+    def __init__(
+        self, game, start, direction, entity, distance=1, lock=False, colcheck=True
+    ):
         self.movement_type = entity.movement_type
         self.distance = distance
         self.duration = 0
@@ -18,6 +20,7 @@ class BaseMoveAnimation(BaseAnimation):
         self.start = start
         self.frame = self.get_offset()
         self.on_enter()
+        self.colcheck = colcheck
         super().__init__(game, start, lock=lock)
 
     def on_enter(self):
@@ -125,6 +128,10 @@ class BaseMoveAnimation(BaseAnimation):
 
     def conditions(self):
         self.single_move_distance = 1
+
+        if not self.colcheck:
+            return True
+
         res = self.entity.check_collision(self.direction, flags=True)
         if res:
             self.single_move_distance = res[0]

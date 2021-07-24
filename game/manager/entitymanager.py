@@ -1,6 +1,8 @@
-from game.entity.civilianentity import CivilianEntity
+# from game.entity.civilianentity import CivilianEntity
+from game.entity.normalentity import NormalEntity
 from game.entity.playerentity import PlayerEntity
-from game.entity.opponententity import OpponentEntity
+
+# from game.entity.opponententity import OpponentEntity
 
 from itertools import chain
 from math import floor, ceil
@@ -49,28 +51,13 @@ class EntityManager:
         # print("\n\nENTITIES:")
         for entity in self.game.m_map.current_entities:
             # print(entity)
-            if entity["identifier"] == "Opponent":
+            if entity["identifier"] in ("Civilian", "Opponent"):
                 self.create_entity(
-                    OpponentEntity,
+                    NormalEntity,
                     (
                         floor(entity["location"][0] / 16) - offset[0],
                         ceil(entity["location"][1] // 16) - offset[1],
                     ),
-                    entity["f_direction"],
-                    [Path(entity["f_sprite"]).stem],
-                    entity["f_dialogue"],
-                    entity,
-                )
-            if entity["identifier"] == "Civilian":
-                self.create_entity(
-                    CivilianEntity,
-                    (
-                        floor(entity["location"][0] / 16) - offset[0],
-                        ceil(entity["location"][1] // 16) - offset[1],
-                    ),
-                    entity["f_direction"],
-                    [Path(entity["f_sprite"]).stem],
-                    entity["f_dialogue"],
                     entity,
                 )
 
@@ -86,15 +73,13 @@ class EntityManager:
         self.entities.remove(ent)
         del ent
 
-    def create_entity(self, entitytype, pos, direction, sprite, dialogue, blueprint):
-        if blueprint["f_entity_uid"]:
-            label = blueprint["f_entity_uid"]
+    def create_entity(self, entitytype, pos, ldtk_info):
+        if ldtk_info["f_entity_uid"]:
+            label = ldtk_info["f_entity_uid"]
         else:
             label = f"UNLABELLED_ENTITY_{self.entity_autolabel}"
             self.entity_autolabel += 1
-        self.entities[label] = entitytype(self.game, pos, direction, sprite, dialogue)
-        # TODO: remove hack
-        self.entities[label].name = blueprint["f_name"]
+        self.entities[label] = entitytype(self.game, pos, ldtk_info)
 
     def render(self):
         draw_entities = sorted(

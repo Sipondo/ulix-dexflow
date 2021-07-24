@@ -49,8 +49,10 @@ object: string
     | variable
     | index
     | number
+    | list
     | "null"             -> null
 
+list : "[" [object ("," object)*] "]"
 string: ESCAPED_STRING
 say: ESCAPED_STRING
 number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | variable | index

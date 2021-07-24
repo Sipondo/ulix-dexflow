@@ -162,7 +162,7 @@ class WorldRenderer:
         self.game.m_sav.save("current_offset", offset)
         self.clear_tile_layers(fade)
         self.game.m_col.clear_collision()
-        self.game.m_evt.flush_events()
+        # self.game.m_evt.flush_events()
         self.game.m_ent.flush_regions()
         self.game.m_ent.flush_entities()
         self.game.m_ent.load_regions(offset)

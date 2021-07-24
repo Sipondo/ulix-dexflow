@@ -1,5 +1,5 @@
-class Manhattan:
-    def __init__(self, act, src, user, a, b):
+class Concat:
+    def __init__(self, act, src, user, *args):
         self.init_time = act.current_time
         self.act = act
         self.src = src
@@ -7,9 +7,8 @@ class Manhattan:
         self.game = act.game
 
         self.init_time = act.current_time
-        self.a = a
-        self.b = b
+        self.s = args
 
     def on_read(self):
-        return abs(self.a[0] - self.b[0]) + abs(self.a[1] - self.b[1])
+        return "".join([str(x) for x in self.s])
 

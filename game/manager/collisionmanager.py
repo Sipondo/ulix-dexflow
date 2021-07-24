@@ -35,6 +35,13 @@ class CollisionManager:
 
         if self.game.maphack:
             return True
+
+        # Mapcheck
+        col_fr = self.colmap[height][pos[1], pos[0], self.get_direction_num(direction)]
+        col_to = self.colmap[height][
+            new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
+        ]
+
         for entity in self.game.m_ent.all_entities_on_height(height):
             if entity == src_entity:
                 continue
@@ -42,16 +49,14 @@ class CollisionManager:
             x1, y1 = entity.get_pos()
             x1 += self.offset[0]
             y1 += self.offset[1]
+            x2, y2 = pos
+            if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
+                col_fr = not entity.col_override
             x2, y2 = new_pos
             if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
-                return False
+                col_to = not entity.col_override
 
-        return not (
-            self.colmap[height][pos[1], pos[0], self.get_direction_num(direction)]
-            or self.colmap[height][
-                new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
-            ]
-        )
+        return not (col_fr or col_to)
 
     def check_collision_hop(self, pos, direction, height=0, off=True, src_entity=None):
         height = int(height)

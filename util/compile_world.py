@@ -226,6 +226,11 @@ for level in a.levels:
                             entity[f"f_{field.identifier}"] = field.value.replace(
                                 "../sprites/characters/", "",
                             ).replace(".png", "")
+                            if ent_field_upl[raw_ent.def_uid][field.def_uid]:
+                                entity[f"f_{field.identifier}"] = parser.parse(
+                                    entity[f"f_{field.identifier}"]
+                                )
+                                print(entity[f"f_{field.identifier}"].pretty())
                         else:
                             entity[f"f_{field.identifier}"] = field.value
                     entity["width"] = raw_ent.width
