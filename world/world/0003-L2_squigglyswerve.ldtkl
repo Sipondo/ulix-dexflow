@@ -1646,13 +1646,13 @@
 						},
 						{
 							"__identifier": "on_create_action",
-							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
+							"__value": "?while(True){\n  game: Debug(\"N\")\n  self: Face(\"N\")\n  game: Wait(0.5)\n  game: Debug(\"S\")\n  self: Face(\"S\")\n  game: Wait(0.5)\n}\n\nexit\nwhile(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
 							"__type": "String",
 							"defUid": 408,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
+									"?while(True){\n  game: Debug(\"N\")\n  self: Face(\"N\")\n  game: Wait(0.5)\n  game: Debug(\"S\")\n  self: Face(\"S\")\n  game: Wait(0.5)\n}\n\nexit\nwhile(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
 								]
 							}]
 						}

@@ -162,26 +162,34 @@ class UPLToPython(Transformer):
         return None
 
     def parse_username(self, name):
+        ret = None
         if name == "target":
-            return self.src.target
+            ret = self.src.target
         elif name == "self":
-            return self.src
+            ret = self.src
         elif name == "player":
-            return self.act.game.m_ent.player
+            ret = self.act.game.m_ent.player
         elif name == "switch":
-            return self.act.game.m_sav.switches
+            ret = self.act.game.m_sav.switches
         elif name == "set":
-            return self.act.game.m_sav.settables
+            ret = self.act.game.m_sav.settables
         elif name == "local":
-            return self.act.game.m_sav.locals
+            ret = self.act.game.m_sav.locals
         elif name == "global":
-            return self.act.game.m_sav.globals
+            ret = self.act.game.m_sav.globals
         elif name == "game":
-            return self.act.game
+            ret = self.act.game
         elif name == "col":
-            return self.act.game.m_col
+            ret = self.act.game.m_col
         elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
-            return self.act.game.m_ent.entities[name[2:]]
+            ret = self.act.game.m_ent.entities[name[2:]]
+
+        if ret is None:
+            return
+        else:
+            if hasattr(ret, "entity_is_deleted") and ret.entity_is_deleted:
+                raise Exception(f"User {name} has been deleted.")
+        return ret
 
     upl = list
     fargs = list

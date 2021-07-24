@@ -5,7 +5,6 @@ from pathlib import Path
 
 class NormalEntity(BaseEntity):
     def __init__(self, game, position, ldtk_info):
-        print(ldtk_info)
         for k, v in ldtk_info.items():
             if k[:2] == "f_":
                 setattr(self, k[2:], v)
@@ -22,6 +21,7 @@ class NormalEntity(BaseEntity):
         self.game.m_act.create_action(self.on_interact_action, self)
 
     def on_enter(self):
+        print("ON ENTER!!!", self.name)
         self.current_sprite = (0, self.get_offset())
         self.game.m_act.create_action(self.on_create_action, self)
 

@@ -104,7 +104,6 @@ class PokeGame(mglw.WindowConfig):
 
         # TODO: maybe move to savemanager
         self.inventory = Inventory(self)
-        self.m_ent.load_entities()
 
         self.query = self.ctx.query(primitives=True)
 

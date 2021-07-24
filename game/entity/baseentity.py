@@ -14,6 +14,7 @@ class BaseEntity(abc.ABC):
         self.pos_vertical = 0
         self.interactable = True
         self.col_override = False
+        self.entity_is_deleted = False
 
         if isinstance(direction, int):
             if direction == 0:

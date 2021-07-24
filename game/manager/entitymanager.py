@@ -50,6 +50,7 @@ class EntityManager:
     def load_entities(self, offset=(0, 0)):
         # print("\n\nENTITIES:")
         for entity in self.game.m_map.current_entities:
+            print("INITIALISING ENTITY")
             # print(entity)
             if entity["identifier"] in ("Civilian", "Opponent"):
                 self.create_entity(
@@ -62,16 +63,14 @@ class EntityManager:
                 )
 
     def flush_entities(self):
+        for ent in self.entities.values():
+            ent.entity_is_deleted = True
+            del ent
         self.entities.clear()
-        # self.entities = [self.entities[0]]
 
     def flush_regions(self):
         # self.regions.clear()
         self.game.m_act.flush_regions()
-
-    def delete_entity(self, ent):
-        self.entities.remove(ent)
-        del ent
 
     def create_entity(self, entitytype, pos, ldtk_info):
         if ldtk_info["f_entity_uid"]:

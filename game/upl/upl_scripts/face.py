@@ -34,6 +34,7 @@ class Face:
 
     def on_tick(self, time=None, frame_time=None):
         self.user.direction = self.direction
+        self.user.current_sprite = (0, self.user.get_offset())
         return True
 
     def on_read(self):
