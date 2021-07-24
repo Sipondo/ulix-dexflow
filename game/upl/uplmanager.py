@@ -40,7 +40,7 @@ class UPLToPython(Transformer):
             s = ".".join(["INTERNAL_VARIABLE"] + str(s[0]).split(".")[1:])
         elif INTERNAL_VARIABLE := self.parse_username(s[0]):
             s[0] = "INTERNAL_VARIABLE"
-        elif hasattr(self.user, s):
+        elif isinstance(s[0], str) and hasattr(self.user, s[0]):
             user = self.user
             s[0] = f"user.{s[0]}"
         self = self.src
