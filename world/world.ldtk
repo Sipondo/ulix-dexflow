@@ -2300,29 +2300,9 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "aggro_range",
-					"__type": "Int",
-					"uid": 386,
-					"type": "F_Int",
-					"isArray": false,
-					"canBeNull": false,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": { "id": "V_Int", "params": [5] },
-					"textLanguageMode": null
-				},
-				{
-					"identifier": "on_aggro",
+					"identifier": "on_create_action",
 					"__type": "String",
-					"uid": 90,
+					"uid": 410,
 					"type": "F_Text",
 					"isArray": false,
 					"canBeNull": false,
@@ -2340,7 +2320,7 @@
 					"textLanguageMode": "LangRuby"
 				},
 				{
-					"identifier": "on_interact",
+					"identifier": "on_interact_action",
 					"__type": "String",
 					"uid": 91,
 					"type": "F_Text",
@@ -2363,9 +2343,9 @@
 					"textLanguageMode": "LangRuby"
 				},
 				{
-					"identifier": "on_create",
+					"identifier": "on_aggro_action",
 					"__type": "String",
-					"uid": 410,
+					"uid": 90,
 					"type": "F_Text",
 					"isArray": false,
 					"canBeNull": false,
@@ -2381,6 +2361,26 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "aggro_range",
+					"__type": "Int",
+					"uid": 386,
+					"type": "F_Int",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Int", "params": [5] },
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -2469,12 +2469,32 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "on_interact",
+					"identifier": "on_create_action",
+					"__type": "String",
+					"uid": 408,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_interact_action",
 					"__type": "String",
 					"uid": 89,
 					"type": "F_Text",
 					"isArray": false,
-					"canBeNull": true,
+					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "Hidden",
@@ -2489,26 +2509,6 @@
 						"id": "V_String",
 						"params": ["game: Cinematic() self: \"Missing Dialogue\" game: Overworld()"]
 					},
-					"textLanguageMode": "LangRuby"
-				},
-				{
-					"identifier": "on_create",
-					"__type": "String",
-					"uid": 408,
-					"type": "F_Text",
-					"isArray": false,
-					"canBeNull": true,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
 				},
 				{

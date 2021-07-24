@@ -19,11 +19,11 @@ class NormalEntity(BaseEntity):
         direc = self.game.m_ent.player.get_dir()
         self.direction = (-direc[0], -direc[1])
         self.current_sprite = (0, self.get_offset())
-        self.game.m_act.create_action(self.on_interact, self)
+        self.game.m_act.create_action(self.on_interact_action, self)
 
     def on_enter(self):
         self.current_sprite = (0, self.get_offset())
-        self.game.m_act.create_action(self.on_create, self)
+        self.game.m_act.create_action(self.on_create_action, self)
 
     # def start_move(self, direction, time, distance=1, lock=False):
     #     if not self.moving:

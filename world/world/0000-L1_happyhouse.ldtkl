@@ -415,9 +415,9 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
 						{
-							"__identifier": "on_interact",
+							"__identifier": "on_interact_action",
 							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 91,
@@ -457,7 +457,7 @@
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				}
 			]
@@ -1020,14 +1020,14 @@
 							}]
 						},
 						{
-							"__identifier": "on_aggro",
+							"__identifier": "on_aggro_action",
 							"__value": "",
 							"__type": "String",
 							"defUid": 90,
 							"realEditorValues": [null]
 						},
 						{
-							"__identifier": "on_interact",
+							"__identifier": "on_interact_action",
 							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 91,
@@ -1079,7 +1079,7 @@
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1102,9 +1102,9 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
 						{
-							"__identifier": "on_interact",
+							"__identifier": "on_interact_action",
 							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 91,
@@ -1156,7 +1156,7 @@
 						},
 						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
 					]
 				}
 			]

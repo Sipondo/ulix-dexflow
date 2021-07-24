@@ -398,7 +398,7 @@
 							}]
 						},
 						{
-							"__identifier": "on_interact",
+							"__identifier": "on_interact_action",
 							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 89,
@@ -434,7 +434,7 @@
 								"params": ["Mom"]
 							}]
 						},
-						{ "__identifier": "on_create", "__value": null, "__type": "String", "defUid": 408, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] }
 					]
 				}
 			]
