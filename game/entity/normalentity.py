@@ -13,6 +13,7 @@ class NormalEntity(BaseEntity):
 
         super().__init__(game, position, self.direction, [Path(self.sprite).stem])
         self.orig_pos = self.game_position
+        self.memory = self.game.m_sav.get_memory_holder(self.level, self.entity_uid)
 
     def when_interact(self):
         direc = self.game.m_ent.player.get_dir()
@@ -25,27 +26,6 @@ class NormalEntity(BaseEntity):
         self.current_sprite = (0, self.get_offset())
         self.game.m_act.create_action(self.on_create_action, self)
 
-    # def start_move(self, direction, time, distance=1, lock=False):
-    #     if not self.moving:
-    #         if self.direction == direction:
-    #             anim = BaseMoveAnimation(
-    #                 self.game, time, direction, self, distance=distance, lock=lock
-    #             )
-    #             if self.game.m_ani.add_animation(anim):
-    #                 self.moving = True
-    #         else:
-    #             self.direction = direction
-    #             self.set_current_sprite((self.movement_type, self.get_offset()))
-
-    # self.create_entity(
-    #     OpponentEntity,
-    #     (
-    #         floor(entity["location"][0] / 16) - offset[0],
-    #         ceil(entity["location"][1] // 16) - offset[1],
-    #     ),
-    #     entity["f_direction"],
-    #     [Path(entity["f_sprite"]).stem],
-    #     entity["f_dialogue"],
-    #     entity,
-    # )
-
+    @property
+    def mem(self):
+        return self.memory

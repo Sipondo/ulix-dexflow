@@ -17,6 +17,7 @@ class PartyItem:
         self.move = template.move
         self.icon = self.game.m_res.get_item_icon(self.identifier, size=0.5)
 
+        self.price = 0
         self.quantity = quantity
 
         #         "id",

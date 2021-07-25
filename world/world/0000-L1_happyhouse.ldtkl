@@ -416,13 +416,7 @@
 							}]
 						},
 						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 91,
-							"realEditorValues": []
-						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "W",
@@ -1026,13 +1020,7 @@
 							"defUid": 90,
 							"realEditorValues": [null]
 						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 91,
-							"realEditorValues": []
-						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -1103,13 +1091,7 @@
 							}]
 						},
 						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 91,
-							"realEditorValues": []
-						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "E",

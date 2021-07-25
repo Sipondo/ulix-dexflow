@@ -14,7 +14,7 @@ class GameStateMenuOptions(BaseGameState):
 
     def on_tick(self, time, frame_time):
         self.time = time
-        self.lock = self.game.m_ani.on_tick(time, frame_time)
+        # self.lock = self.game.m_ani.on_tick(time, frame_time)
         self.redraw(time, frame_time)
         return False
 

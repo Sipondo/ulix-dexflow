@@ -12,6 +12,7 @@ class SaveManager:
         self.switches = ValueHolder(holder_is_frozen=False)
         self.globals = ValueHolder(holder_is_frozen=False)
         self.locals = ValueHolder(holder_is_frozen=False)
+        self.memory = {}
 
         try:
             with open("streamingsave.usave", "r") as infile:
@@ -21,6 +22,7 @@ class SaveManager:
             self.store = {
                 "player_pos": (15, 15),
                 "current_level_id": 1000,
+                "MEMORY": {},
                 "SETTABLES": {},
                 "SWITCHES": {},
             }
@@ -32,6 +34,16 @@ class SaveManager:
             if k != "holder_is_frozen":
                 self.set_switch(k, v)
 
+        for k, v in self.store["MEMORY"].items():
+            self.memory[k] = {}
+            for k_2, v_2 in v.items():
+                self.memory[k][k_2] = ValueHolder(holder_is_frozen=False)
+                for k_3, v_3 in v_2.items():
+                    if k_3 != "holder_is_frozen":
+                        setattr(self.memory[k][k_2], k_3, v_3)
+
+        # self.store["MEMORY"] = {k: {k_2: v_2.__dict__ for k_2, v_2 in v.items()} for k,v self.memory.items()}
+
         self.settables.holder_is_frozen = True
         self.switches.holder_is_frozen = True
         print("SETTABLES:", self.settables.__dict__)
@@ -39,6 +51,17 @@ class SaveManager:
 
     def go_to_new_level(self):
         self.locals = ValueHolder(holder_is_frozen=False)
+
+    def get_memory_holder(self, level, entity):
+        level = str(level)
+        entity = str(entity)
+        if level not in self.memory:
+            self.memory[level] = {}
+
+        if entity not in self.memory[level]:
+            self.memory[level][entity] = ValueHolder(holder_is_frozen=False)
+
+        return self.memory[level][entity]
 
     def save(self, loc, value):
         # print(f"Setting {loc}: {value}")
@@ -95,8 +118,14 @@ class SaveManager:
     def write_to_file(self, fname="save1.usave"):
         self.store["SETTABLES"] = self.settables.__dict__
         self.store["SWITCHES"] = self.switches.__dict__
+
+        self.store["MEMORY"] = {
+            str(k): {str(k_2): v_2.__dict__ for k_2, v_2 in v.items()}
+            for k, v in self.memory.items()
+        }
+
         with open(fname, "w") as outfile:
-            outfile.write(json.dumps(self.store, indent=4, sort_keys=True))
+            outfile.write(json.dumps(self.store, indent=4))
 
 
 class ValueHolder(types.SimpleNamespace):

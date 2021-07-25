@@ -1,19 +1,26 @@
 from lark import Lark
 from lark import Transformer
 
+from game.upl.upl_scripts.additem import AddItem
+from game.upl.upl_scripts.ask import Ask
 from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.concat import Concat
+from game.upl.upl_scripts.countitem import CountItem
 from game.upl.upl_scripts.debug import Debug
 from game.upl.upl_scripts.face import Face
 from game.upl.upl_scripts.isentity import IsEntity
 from game.upl.upl_scripts.jump import Jump
 from game.upl.upl_scripts.manhattan import Manhattan
 from game.upl.upl_scripts.move import Move
+from game.upl.upl_scripts.music import Music
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
 from game.upl.upl_scripts.push import Push
+from game.upl.upl_scripts.removeitem import RemoveItem
 from game.upl.upl_scripts.say import Say
 from game.upl.upl_scripts.setmovement import SetMovement
+from game.upl.upl_scripts.shop import Shop
+from game.upl.upl_scripts.sound import Sound
 from game.upl.upl_scripts.step import Step
 from game.upl.upl_scripts.wait import Wait
 
@@ -33,17 +40,18 @@ class UPLToPython(Transformer):
         return s[0](self.act, self.src, self.user, *s[1]).on_read()
 
     def assign(self, s):
-        # print("assign")
-        # print(s)
-        if "." in s[0] and not "self." in s[0]:
+        if isinstance(s[0], str) and hasattr(
+            self.user, ".".join(s[0].split(".")[:-1]) or s[0]
+        ):
+            user = self.user
+            s[0] = f"user.{s[0]}"
+        elif "." in s[0] and not "self." in s[0]:
             username = str(s[0]).split(".")[0]
             INTERNAL_VARIABLE = self.parse_username(username)
             s = ".".join(["INTERNAL_VARIABLE"] + str(s[0]).split(".")[1:])
         elif INTERNAL_VARIABLE := self.parse_username(s[0]):
             s[0] = "INTERNAL_VARIABLE"
-        elif isinstance(s[0], str) and hasattr(self.user, s[0]):
-            user = self.user
-            s[0] = f"user.{s[0]}"
+
         self = self.src
         return exec(f"{s[0]}={s[1]}")
 
@@ -74,18 +82,18 @@ class UPLToPython(Transformer):
 
     def variable(self, s):
         (s,) = s
-        if "." in s and not "self." in s:
+        if isinstance(s, str) and hasattr(self.user, ".".join(s.split(".")[:-1]) or s):
+            user = self.user
+            s = f"user.{s}"
+        elif "." in s and not "self." in s:
             username = str(s).split(".")[0]
             INTERNAL_VARIABLE = self.parse_username(username)
             s = ".".join(["INTERNAL_VARIABLE"] + str(s).split(".")[1:])
         elif INTERNAL_VARIABLE := self.parse_username(s):
             s = "INTERNAL_VARIABLE"
-        elif isinstance(s, str) and hasattr(self.user, s):
-            user = self.user
-            s = f"user.{s}"
         self = self.src
-        print(s)
-        print(eval(s))
+        # print(s)
+        # print(eval(s))
         return eval(s)
 
     def index(self, s):

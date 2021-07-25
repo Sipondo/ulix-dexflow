@@ -201,7 +201,7 @@ class Action:
                         while (
                             self.pointer < len(self.elsechildren)
                         ) and take_next_child:
-                            print("NEXT ELSECHILD!!!")
+                            # print("NEXT ELSECHILD!!!")
                             if self.pointer < len(self.elsechildren):
                                 child = self.elsechildren[self.pointer]
                                 self.active_children.append(child)

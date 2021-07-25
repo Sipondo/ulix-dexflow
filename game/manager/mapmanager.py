@@ -37,8 +37,8 @@ class MapManager:
         return int(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
 
     def set_level(self, id):
-        self.game.m_sav.go_to_new_level()
         self.current_level_id = id
+        self.game.m_sav.go_to_new_level()
         self.game.m_sav.save("current_level_id", id)
 
         fields = self.current_level["fields"]

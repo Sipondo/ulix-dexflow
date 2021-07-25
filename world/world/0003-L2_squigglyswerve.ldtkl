@@ -1604,13 +1604,13 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\ngame: Overworld()",
+							"__value": "game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"game: Cinematic()\nself: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\ngame: Overworld()"
+									"game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()"
 								]
 							}]
 						},
@@ -1680,12 +1680,14 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "?self: Push(player.direction)",
+							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["?self: Push(player.direction)"]
+								"params": [
+									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
+								]
 							}]
 						},
 						{
@@ -1720,10 +1722,13 @@
 						},
 						{
 							"__identifier": "on_create_action",
-							"__value": "",
+							"__value": "?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0",
 							"__type": "String",
 							"defUid": 408,
-							"realEditorValues": [null]
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0"]
+							}]
 						}
 					]
 				}

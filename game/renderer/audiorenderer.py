@@ -13,10 +13,14 @@ emap = {
     "cancel": "SE/GUI sel cancel.ogg",
     "menuopen": "SE/GUI menu open.ogg",
     "menuclose": "SE/GUI menu close.ogg",
+    "spotted": "SE/Exclaim.wav",
+    "receive": "SE/Pkmn move learnt.ogg",
+    "buy": "SE/Mart buy item.ogg",
 }
 
 SOUND_EFFECT_CHANNELS = 8
-VOLUME = 0.001
+VOLUME = 1.0
+VOLUME_MUSIC = 0.7
 
 
 class AudioRenderer:
@@ -43,6 +47,8 @@ class AudioRenderer:
         return
 
     def play_effect(self, name):
+        if name in emap:
+            name = emap[name]
         if self.silent:
             return
         try:
@@ -62,7 +68,7 @@ class AudioRenderer:
             print("Music exception:", e)
 
     def effect(self, name):
-        self.play_effect(emap[name])
+        self.play_effect(name)
 
     def cache_effect(self, name):
         if self.silent:
@@ -80,7 +86,7 @@ class AudioRenderer:
             # name = "ME/Battle victory.ogg"
             # self.bgm_player.loop = True
             # self.bgm_player.eos_action = "loop"
-            self.bgm_player.volume = 0.4 * VOLUME
+            self.bgm_player.volume = 0.4 * VOLUME * VOLUME_MUSIC
             # music = pyglet.media.load(str(self.p_audio / name), streaming=True)
             music = self.game.m_res.get_sound(name)
             if music is not None:

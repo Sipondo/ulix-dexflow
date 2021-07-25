@@ -2336,10 +2336,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["game: Cinematic() self: \"Missing Dialogue\" game: Overworld()"]
-					},
+					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
 				},
 				{
@@ -2505,10 +2502,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["game: Cinematic() self: \"Missing Dialogue\" game: Overworld()"]
-					},
+					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
 				},
 				{

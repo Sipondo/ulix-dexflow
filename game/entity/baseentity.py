@@ -15,6 +15,7 @@ class BaseEntity(abc.ABC):
         self.interactable = True
         self.col_override = False
         self.entity_is_deleted = False
+        self.level = self.game.m_map.current_level_id
 
         if isinstance(direction, int):
             if direction == 0:
@@ -116,3 +117,4 @@ class BaseEntity(abc.ABC):
     @property
     def y_g(self):
         return self.game_position[1]
+

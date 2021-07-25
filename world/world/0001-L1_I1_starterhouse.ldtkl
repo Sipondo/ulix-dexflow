@@ -397,13 +397,7 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar006.png"]
 							}]
 						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"Missing Dialogue\"\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": []
-						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "E",
