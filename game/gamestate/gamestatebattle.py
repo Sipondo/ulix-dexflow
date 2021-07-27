@@ -55,7 +55,7 @@ class GameStateBattle(BaseGameState):
 
     def on_tick(self, time, frame_time):
         actions = []
-        if self.state != states["action"]:
+        if self.state != states["action"] or self.particle_test:
             skip = False
             if self.particle_test and not self.lock:
                 if self.particle_test_cooldown:
@@ -66,10 +66,18 @@ class GameStateBattle(BaseGameState):
                     tackle = self.game.m_pbs.get_move(399).copy()
                     tackle.power = 0
                     actions.append(
-                        (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+                        (
+                            ("attack", tackle),
+                            (1, self.board.get_active(1)),
+                            (0, self.board.get_active(0)),
+                        )
                     )
                     actions.append(
-                        (("attack", tackle), (1, self.board.get_active(1)), (0, self.board.get_active(0)))
+                        (
+                            ("attack", tackle),
+                            (1, self.board.get_active(1)),
+                            (0, self.board.get_active(0)),
+                        )
                     )
             else:
                 for i, agent in enumerate(self.agents):
@@ -216,13 +224,17 @@ class GameStateBattle(BaseGameState):
 
         if self.board.actor_1 != self.actor_1:
             if self.board.actor_1 == -1:
-                self.render.set_pokemon(None, 0)  # empty spriteset for if poke is fainted
+                self.render.set_pokemon(
+                    None, 0
+                )  # empty spriteset for if poke is fainted
             else:
                 self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
             self.actor_1 = self.board.actor_1
         if self.board.actor_2 != self.actor_2:
             if self.board.actor_2 == -1:
-                self.render.set_pokemon(None, 1)  # empty spriteset for if poke is fainted
+                self.render.set_pokemon(
+                    None, 1
+                )  # empty spriteset for if poke is fainted
             else:
                 self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
             self.actor_2 = self.board.actor_2
@@ -387,9 +399,7 @@ class GameStateBattle(BaseGameState):
             rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
             if rel_xp > 0:
                 self.game.r_int.draw_rectangle(
-                    (0.1, 0.158),
-                    size=(0.25 * rel_xp, 0.012),
-                    col="blue",
+                    (0.1, 0.158), size=(0.25 * rel_xp, 0.012), col="blue",
                 )
 
         # Enemy
