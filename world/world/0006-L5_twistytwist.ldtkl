@@ -169,7 +169,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -216,7 +217,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -263,7 +265,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -310,7 +313,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				}
 			]

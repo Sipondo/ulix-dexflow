@@ -111,6 +111,9 @@ class PbsManager:
     def get_fighter(self, id):
         return self.fighters.loc[id]
 
+    def get_fighter_by_name(self, name):
+        return self.fighters[self.fighters["name"].str.lower() == name.lower()].iloc[0]
+
     def get_move(self, id):
         return self.moves.loc[id]
 

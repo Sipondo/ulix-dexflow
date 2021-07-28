@@ -19,7 +19,7 @@ emap = {
 }
 
 SOUND_EFFECT_CHANNELS = 8
-VOLUME = 1.0
+VOLUME = 0.0
 VOLUME_MUSIC = 0.7
 
 

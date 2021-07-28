@@ -38,9 +38,18 @@ class ActionManager:
         # print(
         #     "REGION CREATE:", regiontype, pos, size, region,
         # )
-        self.regions.append(
-            RegionRectangle(self.game, pos[0], pos[1], size[0], size[1], region)
-        )
+        rect = RegionRectangle(self.game, pos[0], pos[1], size[0], size[1], region)
+        self.regions.append(rect)
+        return rect
+
+    def create_aggro_region(self, entity, region):
+        region = {k[2:]: v for k, v in region.items() if "f_" in k}
+        # print(
+        #     "REGION CREATE:", regiontype, pos, size, region,
+        # )
+        rect = RegionAggro(self.game, entity, region)
+        self.regions.append(rect)
+        return rect
 
     def create_action(self, upl, user):
         if upl is not None:
@@ -299,6 +308,9 @@ class RegionRectangle:
         self.y2 = self.y + h - 1
 
     def check(self, entity):
+        if entity != self.game.m_ent.player and self.player_exclusive:
+            return
+
         pos = entity.get_pos()
         if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
             if entity not in self.containing:
@@ -319,4 +331,62 @@ class RegionRectangle:
         # print("on_exit:", self, entity)
         self.containing.remove(entity)
         self.game.m_act.actions.append(Action(self.game, self.on_exit_action, self))
+        # self.game.m_upl.parse(self, self.on_exit_action)
+
+
+class RegionAggro:
+    def __init__(self, game, entity, region):
+        self.game = game
+        self.entity = entity
+        self.player_exclusive = True
+        self.containing = set()
+
+        for k, v in region.items():
+            # print(type(v), v)
+            if isinstance(v, (int, float, str)):
+                setattr(self, k, eval(str(v)) if "[" in str(v) else v)
+            else:
+                setattr(self, k, v)
+        self.refresh_region()
+
+    def refresh_region(self):
+        x1 = self.entity.x + self.entity.direction[0]
+        y1 = self.entity.y + self.entity.direction[1]
+
+        x2 = self.entity.x + (self.entity.direction[0] * self.entity.aggro_range)
+        y2 = self.entity.y + (self.entity.direction[1] * self.entity.aggro_range)
+
+        self.x = min(x1, x2)
+        self.x2 = max(x1, x2)
+        self.y = min(y1, y2)
+        self.y2 = max(y1, y2)
+
+        print("AGGROREGION:", self.x, self.x2, self.y, self.y2)
+
+    def check(self, entity):
+        if entity != self.game.m_ent.player and self.player_exclusive:
+            return
+
+        pos = entity.get_pos()
+        if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
+            if entity not in self.containing:
+                self.target = entity
+                print("TRIGGER ENTER", self.x, pos[0], self.x2, self.y, pos[1], self.y2)
+                self.on_enter(entity)
+        else:
+            if entity in self.containing:
+                print("TRIGGER EXIT", self.x, pos[0], self.x2, self.y, pos[1], self.y2)
+                self.on_exit(entity)
+
+    def on_enter(self, entity):
+        self.containing.add(entity)
+        self.game.m_act.actions.append(
+            Action(self.game, self.entity.on_aggro_action, self.entity)
+        )
+        # self.game.m_upl.parse(self, self.on_enter_action)
+
+    def on_exit(self, entity):
+        # print("on_exit:", self, entity)
+        self.containing.remove(entity)
+        # self.game.m_act.actions.append(Action(self.game, self.on_exit_action, self.entity))
         # self.game.m_upl.parse(self, self.on_exit_action)

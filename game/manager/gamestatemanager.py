@@ -13,12 +13,15 @@ class GameStateManager:
     def __init__(self, gamegui):
         self.game = gamegui
         self.current_state = None
+        self.current_state_name = None
 
     def switch_state(self, new_state, **kwargs):
         self.game.r_int.new_canvas()
         if self.current_state is not None:
             self.current_state.on_exit()
             del self.current_state
+
+        self.current_state_name = new_state
 
         if new_state == "overworld":
             self.current_state = GameStateOverworld(self.game)

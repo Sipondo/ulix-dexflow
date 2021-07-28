@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 412,
+	"nextUid": 421,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2255,7 +2255,7 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["{  \"pokemon1\":{       name: \"aapmans\",             } }"]
+						"params": ["{}"]
 					},
 					"textLanguageMode": "LangJson"
 				},
@@ -2300,6 +2300,75 @@
 					"textLanguageMode": null
 				},
 				{
+					"identifier": "spot_text",
+					"__type": "String",
+					"uid": 418,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["Stop!"]
+					},
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "encounter_text",
+					"__type": "String",
+					"uid": 419,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["We should have a battle!"]
+					},
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "defeat_text",
+					"__type": "String",
+					"uid": 420,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["Damn the... luck."]
+					},
+					"textLanguageMode": null
+				},
+				{
 					"identifier": "on_create_action",
 					"__type": "String",
 					"uid": 410,
@@ -2336,7 +2405,10 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["<<<opponent_on_interact>>>"]
+					},
 					"textLanguageMode": "LangRuby"
 				},
 				{
@@ -2356,7 +2428,10 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["<<<opponent_on_aggro>>>"]
+					},
 					"textLanguageMode": "LangRuby"
 				},
 				{
@@ -2552,7 +2627,7 @@
 			"pivotY": 0,
 			"fieldDefs": [
 				{
-					"identifier": "Settable",
+					"identifier": "settable",
 					"__type": "LocalEnum.Settables",
 					"uid": 367,
 					"type": { "id": "F_Enum", "params": [360] },
@@ -2572,7 +2647,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "Value",
+					"identifier": "value",
 					"__type": "String",
 					"uid": 368,
 					"type": "F_Text",
@@ -2590,6 +2665,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 413,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -2618,7 +2716,7 @@
 			"pivotY": 0,
 			"fieldDefs": [
 				{
-					"identifier": "Switch",
+					"identifier": "switch",
 					"__type": "LocalEnum.Switches",
 					"uid": 372,
 					"type": { "id": "F_Enum", "params": [359] },
@@ -2638,7 +2736,7 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "Value",
+					"identifier": "value",
 					"__type": "String",
 					"uid": 371,
 					"type": "F_Text",
@@ -2656,6 +2754,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 414,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -2745,6 +2866,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 415,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -2854,6 +2998,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 416,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -2983,6 +3150,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 417,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		},
@@ -3049,6 +3239,29 @@
 					"acceptFileTypes": null,
 					"defaultOverride": null,
 					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 412,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
 				}
 			]
 		}
@@ -3384,7 +3597,7 @@
 			{ "id": "Pichu", "tileId": 172, "color": 10788419, "__tileSrcRect": [1408,64,32,32] },
 			{ "id": "Flygon", "tileId": 330, "color": 8488791, "__tileSrcRect": [320,160,32,32] },
 			{ "id": "Ponyta", "tileId": 77, "color": 12428638, "__tileSrcRect": [416,32,32,32] },
-			{ "id": "Ratata", "tileId": 19, "color": 9667742, "__tileSrcRect": [608,0,32,32] }
+			{ "id": "Rattata", "tileId": 19, "color": 9667742, "__tileSrcRect": [608,0,32,32] }
 		], "iconTilesetUid": 375, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [
 		{

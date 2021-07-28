@@ -117,7 +117,8 @@
 							"defUid": 389,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
 					]
 				},
 				{
@@ -154,7 +155,8 @@
 							"defUid": 389,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
 					]
 				}
 			]

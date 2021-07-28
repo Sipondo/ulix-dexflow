@@ -162,7 +162,8 @@
 							"defUid": 389,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
 					]
 				},
 				{
@@ -209,7 +210,8 @@
 							"defUid": 387,
 							"realEditorValues": [null]
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -230,7 +232,8 @@
 							"__type": "Int",
 							"defUid": 396,
 							"realEditorValues": [{ "id": "V_Int", "params": [1] }]
-						}
+						},
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
 					]
 				},
 				{
@@ -245,7 +248,8 @@
 					"fieldInstances": [
 						{ "__identifier": "on_enter_action", "__value": "target: height=self.height", "__type": "String", "defUid": 394, "realEditorValues": [] },
 						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 395, "realEditorValues": [] },
-						{ "__identifier": "height", "__value": 0, "__type": "Int", "defUid": 396, "realEditorValues": [] }
+						{ "__identifier": "height", "__value": 0, "__type": "Int", "defUid": 396, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
 					]
 				},
 				{
@@ -260,17 +264,27 @@
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  #target: Move(24, 20)\n  #target: Move(19, 20)\n  #target: Move(16, 18)\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}",
+							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  #target: Move(24, 20)\n  #target: Move(19, 20)\n  #target: Move(16, 18)\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}"
+									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}"
 								]
 							}]
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{
+							"__identifier": "player_exclusive",
+							"__value": true,
+							"__type": "Bool",
+							"defUid": 412,
+							"realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ true ]
+							}]
+						}
 					]
 				},
 				{
@@ -295,7 +309,8 @@
 								]
 							}]
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 412, "realEditorValues": [] }
 					]
 				}
 			]
@@ -415,8 +430,8 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{ "__identifier": "on_aggro_action", "__value": "<<<opponent_on_aggro>>>", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "W",
@@ -449,9 +464,12 @@
 								"params": ["3_old_man"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
 					]
 				}
 			]
@@ -1015,12 +1033,24 @@
 						},
 						{
 							"__identifier": "on_aggro_action",
-							"__value": "",
+							"__value": "self: Debug(self)",
 							"__type": "String",
 							"defUid": 90,
-							"realEditorValues": [null]
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["self: Debug(self)"]
+							}]
 						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "!group{\n  self: Move(22,15)\n  self: Jump()\n}\ne_1_joey: Move(23,16)",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["!group{\n  self: Move(22,15)\n  self: Jump()\n}\ne_1_joey: Move(23,16)"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -1033,7 +1063,7 @@
 						},
 						{
 							"__identifier": "battlers",
-							"__value": [ "Meganium", "Ratata" ],
+							"__value": [ "Meganium", "Rattata" ],
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
 							"realEditorValues": [ {
@@ -1041,7 +1071,7 @@
 								"params": ["Meganium"]
 							}, {
 								"id": "V_String",
-								"params": ["Ratata"]
+								"params": ["Rattata"]
 							} ]
 						},
 						{
@@ -1065,9 +1095,27 @@
 								"params": ["2_kim"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{
+							"__identifier": "config",
+							"__value": "{\n  \"team\": [\n      {\n        \"name\": \"Bladieblaa\",\n      }\n ]\n}",
+							"__type": "String",
+							"defUid": 383,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["{\n  \"team\": [\n      {\n        \"name\": \"Bladieblaa\",\n      }\n ]\n}"]
+							}]
+						},
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{
+							"__identifier": "on_create_action",
+							"__value": "",
+							"__type": "String",
+							"defUid": 410,
+							"realEditorValues": [null]
+						},
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1090,8 +1138,14 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "on_aggro_action", "__value": "", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_aggro_action",
+							"__value": "<<<opponent_on_aggro>>>",
+							"__type": "String",
+							"defUid": 90,
+							"realEditorValues": [null]
+						},
+						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "E",
@@ -1104,7 +1158,7 @@
 						},
 						{
 							"__identifier": "battlers",
-							"__value": [ "Meganium", "Ratata" ],
+							"__value": [ "Meganium", "Rattata" ],
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
 							"realEditorValues": [ {
@@ -1112,7 +1166,7 @@
 								"params": ["Meganium"]
 							}, {
 								"id": "V_String",
-								"params": ["Ratata"]
+								"params": ["Rattata"]
 							} ]
 						},
 						{
@@ -1136,9 +1190,12 @@
 								"params": ["1_joey"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] }
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
 					]
 				}
 			]

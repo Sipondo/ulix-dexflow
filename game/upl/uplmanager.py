@@ -1,8 +1,11 @@
 from lark import Lark
 from lark import Transformer
+from pathlib import Path
+import re
 
 from game.upl.upl_scripts.additem import AddItem
 from game.upl.upl_scripts.ask import Ask
+from game.upl.upl_scripts.battle import Battle
 from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.concat import Concat
 from game.upl.upl_scripts.countitem import CountItem
@@ -234,11 +237,23 @@ class UplManager:
 
 class UplParser:
     def __init__(self):
+        self.resource_dirs = list(Path("").glob("resources/*/"))
+        self.upl_files = {}
+        for directory in self.resource_dirs:
+            for file in (directory / "upl").glob("**/*.upl"):
+                if file.stem not in self.upl_files:
+                    with open(file) as infile:
+                        self.upl_files[file.stem] = infile.read()
         with open("game/upl/upl_grammar.lark", "r") as infile:
             self.parser = Lark(infile.read(), start="upl")  # , parser="lalr")
 
     def parse(self, script):
-        return self.parser.parse(script)
+        outscript = ""
+        while outscript != script:
+            outscript = script
+            for k, v in self.upl_files.items():
+                script = re.sub(f"<<<{k}>>>", v, script, flags=re.M,)
+        return self.parser.parse(outscript)
 
 
 # parser = UplParser()

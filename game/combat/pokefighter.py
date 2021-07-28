@@ -30,9 +30,7 @@ class PokeFighter(CombatFighter):
 
         # Init actions starting from id:
         # start_id = 580
-        self.actions = [
-            self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]
-        ]
+        self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]]
 
         self.data = fighter.copy()
 
@@ -49,9 +47,7 @@ class PokeFighter(CombatFighter):
         self.stats_IV = np.random.randint(0, 32, 6)
 
         # TEMP
-        self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[
-            1
-        ]
+        self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[1]
 
     def set_new_level_xp(self):
         # TODO exp function
@@ -61,12 +57,12 @@ class PokeFighter(CombatFighter):
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
         return (
-                self.naturemod
-                * (
-                        (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
-                        * (self.level / 100)
-                        + hp_mod
-                )
+            self.naturemod
+            * (
+                (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
+                * (self.level / 100)
+                + hp_mod
+            )
         ).astype(int)
 
     @property
