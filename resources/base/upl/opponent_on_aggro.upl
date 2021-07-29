@@ -1,6 +1,6 @@
 game: Cinematic()
 !self: Say(spot_text)
-self: Move(player.x, player.y, True)
+?self: Move(player.x, player.y, True)
 self: Say(encounter_text)
 game: Battle()
 game: Cinematic()

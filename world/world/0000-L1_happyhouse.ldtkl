@@ -469,7 +469,9 @@
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
-						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
 					]
 				}
 			]
@@ -1115,7 +1117,9 @@
 						},
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
-						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1195,7 +1199,9 @@
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
-						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] }
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
 					]
 				}
 			]

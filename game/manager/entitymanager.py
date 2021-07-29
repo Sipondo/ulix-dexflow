@@ -52,7 +52,7 @@ class EntityManager:
         for entity in self.game.m_map.current_entities:
             print("INITIALISING ENTITY")
             # print(entity)
-            if entity["identifier"] in ("Civilian", "Opponent"):
+            if entity["identifier"] in ("Civilian", "Opponent", "Invisible"):
                 self.create_entity(
                     NormalEntity,
                     (
@@ -67,10 +67,6 @@ class EntityManager:
             ent.entity_is_deleted = True
             del ent
         self.entities.clear()
-
-    def flush_regions(self):
-        # self.regions.clear()
-        self.game.m_act.flush_regions()
 
     def create_entity(self, entitytype, pos, ldtk_info):
         if ldtk_info["f_entity_uid"]:
@@ -91,7 +87,7 @@ class EntityManager:
         yoff += 6 / 16
         list_of_entity_data = []
         for entity in draw_entities:
-            if not entity.visible:
+            if not entity.visible or not entity.sprites:
                 continue
             entity.on_render()
             mt, cf = entity.get_draw()  # movement type and current frame

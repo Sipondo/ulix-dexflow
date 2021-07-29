@@ -1,5 +1,7 @@
 from collections import deque
 
+from pandas.core import frame
+
 
 class ActionManager:
     def __init__(self, game):
@@ -143,7 +145,8 @@ class Action:
         elif self.tree.data in ("control_if", "control_while",):
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
             return con[0]
-        return self.game.m_upl.parse(self, self.user, self.tree)
+        res = self.game.m_upl.parse(self, self.user, self.tree)
+        return res
 
     def terminate(self):
         self.terminated = True
@@ -175,11 +178,33 @@ class Action:
         if not self.funcs:
             # No children
             if not (self.children or self.has_run):
+                # return self.run() is not None
                 self.run()
-                return False
+                return not self.funcs
 
             # Children
-            else:
+            if self.children:
+                # Check if new visit is required
+                if (
+                    self.tree.data
+                    in (
+                        "control_if",
+                        "control_while",
+                        "control_repeat",
+                        "control_group",
+                        "concurrent",
+                    )
+                    and not self.has_run
+                ):
+                    if not self.run():
+                        self.active_children.clear()
+                        if self.elsechildren:
+                            self.trigger_else = True
+                            self.pointer = 0
+                            return self.on_tick(time, frame_time)
+                        else:
+                            return True
+
                 # Process running children
                 children_to_clear = []
                 for child in self.active_children:
@@ -201,66 +226,52 @@ class Action:
                     return True
 
                 # Visit elsechildren
-                if self.trigger_else:
-                    if not self.pointer < len(self.elsechildren):
-                        #     return False
+                if not self.active_children:
+                    if self.trigger_else:
+                        if self.pointer < len(self.elsechildren):
+                            # Visits
+                            take_next_child = not len(self.active_children)
+                            prevpointer = self.pointer
+                            while (
+                                self.pointer < len(self.elsechildren)
+                            ) and take_next_child:
+                                if self.pointer < len(self.elsechildren):
+                                    child = self.elsechildren[self.pointer]
+                                    self.active_children.append(child)
+                                    if child.data != "concurrent":
+                                        take_next_child = False
+                                    self.pointer += 1
+                            if self.pointer != prevpointer:
+                                return self.on_tick(time, frame_time)
+                            return False
+
+                    # Visit normal children
+                    elif self.pointer < len(self.children):
 
                         # Visits
                         take_next_child = not len(self.active_children)
-                        while (
-                            self.pointer < len(self.elsechildren)
-                        ) and take_next_child:
-                            # print("NEXT ELSECHILD!!!")
-                            if self.pointer < len(self.elsechildren):
-                                child = self.elsechildren[self.pointer]
+                        prevpointer = self.pointer
+                        while (self.pointer < len(self.children)) and take_next_child:
+                            if self.pointer < len(self.children):
+                                child = self.children[self.pointer]
                                 self.active_children.append(child)
                                 if child.data != "concurrent":
                                     take_next_child = False
                                 self.pointer += 1
+                        if self.pointer != prevpointer:
+                            return self.on_tick(time, frame_time)
                         return False
 
-                # Visit normal children
-                elif self.pointer < len(self.children):
-                    # Check if new visit is required
-                    if (
-                        self.tree.data
-                        in (
-                            "control_if",
-                            "control_while",
-                            "control_repeat",
-                            "control_group",
-                            "concurrent",
-                        )
-                        and not self.has_run
+                    # Repeat when done
+                    elif self.has_run and self.data in (
+                        "control_while",
+                        "control_repeat",
                     ):
-                        if not self.run():
-                            if self.elsechildren:
-                                self.trigger_else = True
-                                self.pointer = 0
-                                return False
-                            else:
-                                return True
-
-                    # Visits
-                    take_next_child = not len(self.active_children)
-                    while (self.pointer < len(self.children)) and take_next_child:
-                        if self.pointer < len(self.children):
-                            child = self.children[self.pointer]
-                            self.active_children.append(child)
-                            if child.data != "concurrent":
-                                take_next_child = False
-                            self.pointer += 1
-                    return False
-
-                # Repeat when done
-                elif self.has_run and self.data in ("control_while", "control_repeat",):
-                    self.has_run = False
-                    self.init_children(include_else=False)
-                    return False
+                        self.has_run = False
+                        self.init_children(include_else=False)
+                        return self.on_tick(time, frame_time)
 
         # Return True (exit) if nothing left to process
-        # if self.data == "control_repeat":
-        #     print("REPEAT END-RETURNING:", not self.funcs and not self.active_children)
         return not self.funcs and not self.active_children
 
 
@@ -272,7 +283,6 @@ class RegionRectangle:
         self.containing = set()
 
         for k, v in region.items():
-            # print(type(v), v)
             if isinstance(v, (int, float, str)):
                 setattr(self, k, eval(str(v)) if "[" in str(v) else v)
             else:

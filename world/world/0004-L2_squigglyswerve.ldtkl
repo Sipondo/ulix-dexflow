@@ -1690,7 +1690,9 @@
 									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
 								]
 							}]
-						}
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1705,12 +1707,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
 							}]
 						},
 						{
@@ -1764,7 +1766,9 @@
 								"id": "V_String",
 								"params": ["?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0"]
 							}]
-						}
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] }
 					]
 				}
 			]

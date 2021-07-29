@@ -111,6 +111,10 @@ class BaseEntity(abc.ABC):
         return self.game_position[1] + self.game.m_col.offset[1]
 
     @property
+    def pos(self):
+        return (self.x, self.y)
+
+    @property
     def x_g(self):
         return self.game_position[0]
 

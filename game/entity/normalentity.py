@@ -6,6 +6,8 @@ import json
 
 class NormalEntity(BaseEntity):
     def __init__(self, game, position, ldtk_info):
+        self.direction = (1, 0)
+        self.sprite = None
         for k, v in ldtk_info.items():
             print(k, v)
             if k[:2] == "f_":
@@ -13,13 +15,19 @@ class NormalEntity(BaseEntity):
             else:
                 setattr(self, k, v)
 
-        super().__init__(game, position, self.direction, [Path(self.sprite).stem])
+        super().__init__(
+            game,
+            position,
+            self.direction,
+            self.sprite and [Path(self.sprite).stem] or [],
+        )
         self.orig_pos = self.game_position
         self.memory = self.game.m_sav.get_memory_holder(self.level, self.entity_uid)
 
         if hasattr(self, "aggro_range"):
             print(self.name, "HAS AGGRO RANGE ", self.aggro_range)
             print("POKEMON ARE:", self.battlers, self.config)
+            self.aggro_region = self.game.m_act.create_aggro_region(self, {})
 
             self.team = []
             for battler in self.battlers:
@@ -38,7 +46,6 @@ class NormalEntity(BaseEntity):
                         member[k] = v
 
             print(self.team)
-            self.aggro_region = self.game.m_act.create_aggro_region(self, {})
 
     def when_interact(self):
         direc = self.game.m_ent.player.get_dir()
