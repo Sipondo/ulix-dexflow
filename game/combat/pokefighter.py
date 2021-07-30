@@ -11,7 +11,7 @@ class PokeFighter(CombatFighter):
         if isinstance(fighter, numbers.Number):
             fighter = self.game.m_pbs.get_fighter(fighter)
             self.level = 100
-            self.set_stats(fighter)
+            self.init_stats(fighter)
             self.current_hp = self.stats[0]
             self.current_xp = 0
         else:
@@ -20,13 +20,13 @@ class PokeFighter(CombatFighter):
             self.stats_reward = fighter.stats_reward
             self.stats_IV = fighter.stats_IV
             self.stats_EV = fighter.stats_EV
-            self.naturemod = fighter.nature
+            self.nature = fighter.nature
             self.current_hp = fighter.current_hp
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
 
-        self.type_1 = str(fighter["type1"])
-        self.type_2 = str(fighter["type2"])
+        self.type1 = str(fighter["type1"])
+        self.type2 = str(fighter["type2"])
 
         # Init actions starting from id:
         # start_id = 580
@@ -34,9 +34,9 @@ class PokeFighter(CombatFighter):
 
         self.data = fighter.copy()
 
-    def set_stats(self, fighter, ivs=None):
+    def init_stats(self, fighter, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
-        self.naturemod = [1, 1, 1, 1, 1, 1]
+        self.nature = [1, 1, 1, 1, 1, 1]
 
         self.stats_base = np.asarray(fighter.basestats.split(","), dtype=int)
 
@@ -57,7 +57,7 @@ class PokeFighter(CombatFighter):
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
         return (
-            self.naturemod
+            self.nature
             * (
                 (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
                 * (self.level / 100)

@@ -115,7 +115,31 @@ class SaveManager:
 
         self.write_to_file("streamingsave.usave")
 
+    def get_lazy_data(self):
+        # Party
+        team = []
+        for member in self.game.inventory.members:
+            team.append(member.series)
+        self.save("team", team)
+
+        # Storage
+        storage = []
+        for member in self.game.inventory.storage:
+            storage.append(member.series)
+        self.save("storage", team)
+
+        # Items
+        items = []
+        for member in self.game.inventory.items:
+            items.append(member.series)
+        self.save("items", items)
+
+    def set_lazy_data(self):
+        self.game.inventory.members = []
+
     def write_to_file(self, fname="save1.usave"):
+        self.get_lazy_data()
+
         self.store["SETTABLES"] = self.settables.__dict__
         self.store["SWITCHES"] = self.switches.__dict__
 
