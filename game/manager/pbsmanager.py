@@ -50,8 +50,7 @@ class PbsManager:
             comment="#",
         )
         move_functions = pd.read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
-            index_col=0,
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))

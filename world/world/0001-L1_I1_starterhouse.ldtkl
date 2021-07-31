@@ -470,7 +470,8 @@
 						},
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				}
 			]

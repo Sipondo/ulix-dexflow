@@ -24,6 +24,9 @@ class NormalEntity(BaseEntity):
         self.orig_pos = self.game_position
         self.memory = self.game.m_sav.get_memory_holder(self.level, self.entity_uid)
 
+        if hasattr(self, "splash") and self.splash:
+            self.splash = self.game.m_res.get_trainer_splash(Path(self.splash).stem)
+
         if hasattr(self, "aggro_range"):
             print(self.name, "HAS AGGRO RANGE ", self.aggro_range)
             print("POKEMON ARE:", self.battlers, self.config)

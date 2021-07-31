@@ -7,7 +7,7 @@ class PartyItem:
         self.data = data.copy()
         self.id = data.name
         # self.identifier = data.identifier
-        # self.name = data.itemanme
+        # self.name = data.itemname
         # self.names = data.itemplural
         # self.pocket = data.pocket
         # self.price = data.price

@@ -11,10 +11,10 @@ class Inventory:
         self.storage = []
         self.items = []
 
-        for i in range(3):
+        for i in range(6):
             self.members.append(self.init_random_member())
 
-        for i in range(10):
+        for i in range(30):
             self.storage.append(self.init_random_member())
 
         self.sort_items()

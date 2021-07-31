@@ -19,7 +19,7 @@ class GameStateMenuParty(BaseGameState):
         self.state = states["top"]
         self.pstate = pstates["moves"]
 
-        top_menu_options = ["Team", "Bag", "Career", "Save", "Options"]
+        top_menu_options = ["Team", "Bag", "Dex", "Career", "Save", "Options"]
 
         self.top_menu_options = [
             self.game.m_res.get_interface(x) for x in top_menu_options
@@ -79,10 +79,12 @@ class GameStateMenuParty(BaseGameState):
                     elif self.selection == 1:
                         self.game.m_gst.switch_state("menubag")
                     elif self.selection == 2:
-                        self.game.m_gst.switch_state("menucareer")
+                        self.game.m_gst.switch_state("menudex")
                     elif self.selection == 3:
-                        self.game.m_gst.switch_state("menusave")
+                        self.game.m_gst.switch_state("menucareer")
                     elif self.selection == 4:
+                        self.game.m_gst.switch_state("menusave")
+                    elif self.selection == 5:
                         self.game.m_gst.switch_state("menuoptions")
                     else:
                         self.game.m_gst.switch_state("overworld")
@@ -128,7 +130,7 @@ class GameStateMenuParty(BaseGameState):
     def draw_interface(self, time, frame_time):
         """
         Top menu view
-        Choose from 5 categories
+        Choose from 6 categories
         """
         if self.state == states["top"]:
             # self.game.r_int.draw_rectangle((0.75, 0.3), size=(0.15, 0.4), col="black")
@@ -141,9 +143,11 @@ class GameStateMenuParty(BaseGameState):
                 # )
                 self.game.r_int.draw_image(
                     self.selection == i and self.cell[1] or self.cell[0],
-                    (0.76, 0.15 + 0.14 * i),
+                    (0.76 + (self.selection == i and -0.01 or 0), 0.10 + 0.14 * i),
                 )
-                self.game.r_int.draw_image(img, (0.76, 0.15 + 0.14 * i))
+                self.game.r_int.draw_image(
+                    img, (0.76 + (self.selection == i and -0.01 or 0), 0.10 + 0.14 * i)
+                )
             """
             Party and Inspect view
             List pokemon and retrieve info via subview
@@ -200,12 +204,12 @@ class GameStateMenuParty(BaseGameState):
             if self.pstate == pstates["overview"]:
                 for i, stat in enumerate(
                     (
-                        ("Dex No.", member.id),
-                        ("Species", member.species),
+                        ("Dex No.", member.name),
+                        ("Species", member.kind),
                         ("Nature", member.nature_name),
                         ("Char", member.characteristic),
                         ("Exp Total", member.exp_total),
-                        ("To Next", member.exp_next),
+                        ("To Next", member.level_xp - member.current_xp),
                     )
                 ):
                     self.game.r_int.draw_text(
@@ -226,7 +230,7 @@ class GameStateMenuParty(BaseGameState):
 
                 if self.state == states["inspect"]:
                     self.game.r_int.draw_text(
-                        f"{member.flavor}", (0.4, 0.25), size=(0.28, 0.6), fsize=10,
+                        f"{member.pokedex}", (0.4, 0.25), size=(0.28, 0.6), fsize=10,
                     )
 
             elif self.pstate == pstates["moves"]:
@@ -283,8 +287,8 @@ class GameStateMenuParty(BaseGameState):
                 for i, stat in enumerate(
                     zip(
                         ("HP", "ATK", "DEF", "S.ATK", "S.DEF", "SPD"),
-                        member.stats_individuals,
-                        member.stats_effort,
+                        member.stats_IV,
+                        member.stats_EV,
                     )
                 ):
                     self.game.r_int.draw_text(

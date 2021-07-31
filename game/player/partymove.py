@@ -11,7 +11,7 @@ class PartyMove:
         # self.type = data.type
         # self.damagecat = data.damagecat
         # self.accuracy = data.accuracy
-        # self.max_pp = int(data.pp)
+        self.max_pp = int(data.pp)
         # self.pp = self.max_pp
         # self.chance = data.chance
         # self.target = data.target

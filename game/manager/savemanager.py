@@ -119,19 +119,25 @@ class SaveManager:
         # Party
         team = []
         for member in self.game.inventory.members:
-            team.append(member.series)
+            team.append(
+                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+            )
         self.save("team", team)
 
         # Storage
         storage = []
         for member in self.game.inventory.storage:
-            storage.append(member.series)
-        self.save("storage", team)
+            storage.append(
+                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+            )
+        self.save("storage", storage)
 
         # Items
         items = []
         for member in self.game.inventory.items:
-            items.append(member.series)
+            items.append(
+                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+            )
         self.save("items", items)
 
     def set_lazy_data(self):

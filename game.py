@@ -83,6 +83,7 @@ class PokeGame(mglw.WindowConfig):
         self.r_int = InterfaceRenderer(self, self.ctx)
         self.r_wld = WorldRenderer(self, self.ctx)
 
+        self.m_res.init_types()
         self.pan_tool = PanTool(self.size)
         # TODO
         self.r_wld.offset = (0.5, 13 / 16)

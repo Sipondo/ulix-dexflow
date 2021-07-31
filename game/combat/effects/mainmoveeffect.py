@@ -87,10 +87,10 @@ class MainMove(BaseEffect):
 
         # move type mods
         stab = 1
-        if self.type in (user_mon.type_1, user_mon.type_2):
+        if self.type in (user_mon.type1, user_mon.type2):
             stab = 1.5
         move_effectiveness = self.get_move_effectiveness(
-            self.type, target_mon.type_1, target_mon.type_2
+            self.type, target_mon.type1, target_mon.type2
         )
         for effect in self.scene.get_effects_on_target(self.target):
             if effect.on_hit(self):
@@ -139,7 +139,7 @@ class MainMove(BaseEffect):
         self.scene.add_effect(DamageEffect(self.scene, self.target, abs_dmg=damage))
         return True
 
-    def get_move_effectiveness(self, move_type, target_type_1, target_type_2):
+    def get_move_effectiveness(self, move_type, target_type1, target_type2):
         # TODO get move effectiveness
         return 1
 
@@ -153,7 +153,9 @@ class MainMove(BaseEffect):
         )
         print("User:", self.user, "Target:", self.target)
         if self.target_fainted:
-            self.scene.add_effect(GenericEffect(self.scene, "But there was no target.."))
+            self.scene.add_effect(
+                GenericEffect(self.scene, "But there was no target..")
+            )
             return True, False, False
         for effect in self.effects:
             if not effect.before_move():

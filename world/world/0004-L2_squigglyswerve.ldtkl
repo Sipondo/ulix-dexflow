@@ -1692,7 +1692,8 @@
 							}]
 						},
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1717,13 +1718,13 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
+							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
+									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
 								]
 							}]
 						},
@@ -1768,7 +1769,74 @@
 							}]
 						},
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [5,9],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [88,152],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar067.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar067.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Storage()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["game: Storage()"]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "storage_person",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["storage_person"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Storage Sylvia",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Storage Sylvia"]
+							}]
+						},
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				}
 			]

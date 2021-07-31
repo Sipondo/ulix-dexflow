@@ -11,7 +11,7 @@ class AddItem:
         self.s = s
         self.q = q
         item = self.game.inventory.add_item(self.s, self.q)
-        self.act.game.m_gst.current_state.dialogue = f"Received {q}x {item.name}"
+        self.act.game.m_gst.current_state.dialogue = f"Received {q}x {item.itemname}"
         self.game.r_aud.play_effect("receive")
 
     def on_tick(self, time=None, frame_time=None):

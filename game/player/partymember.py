@@ -10,8 +10,6 @@ class PartyMember:
         # self.species = self.name
         # self.id = data.name
         # self.internalname = data.internalname
-        # self.icon = self.game.m_res.get_party_icon(self.internalname)
-        # self.sprite = self.game.m_res.get_sprite_from_anim(self.id, size=2.0)
         # self.type1 = data.type1
         # self.type2 = data.type2
         self.level = 100
@@ -21,11 +19,15 @@ class PartyMember:
         for k, v in data.items():
             setattr(self, k, v)
 
+        self.icon = self.game.m_res.get_party_icon(self.internalname)
+        self.sprite = self.game.m_res.get_sprite_from_anim(data.name, size=2.0)
+
         self.moves = []
         # TODO:
 
         self.current_xp = 500
         self.level_xp = 700
+        self.exp_total = 10000
 
         self.nature = self.game.m_dat.get_nature()
         self.nature_name = self.nature.identifier.capitalize()

@@ -471,7 +471,17 @@
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/Trainers/GAMBLER.png",
+							"__type": "FilePath",
+							"defUid": 437,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/Trainers/GAMBLER.png"]
+							}]
+						}
 					]
 				}
 			]
@@ -1119,7 +1129,8 @@
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 437, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1201,7 +1212,17 @@
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] }
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png",
+							"__type": "FilePath",
+							"defUid": 437,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png"]
+							}]
+						}
 					]
 				}
 			]
