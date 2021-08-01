@@ -372,11 +372,11 @@ class RegionAggro:
         self.refresh_region()
 
     def refresh_region(self):
-        x1 = self.entity.x + self.entity.direction[0]
-        y1 = self.entity.y + self.entity.direction[1]
+        x1 = self.entity.x_g + self.entity.direction[0]
+        y1 = self.entity.y_g + self.entity.direction[1]
 
-        x2 = self.entity.x + (self.entity.direction[0] * self.entity.aggro_range)
-        y2 = self.entity.y + (self.entity.direction[1] * self.entity.aggro_range)
+        x2 = self.entity.x_g + (self.entity.direction[0] * self.entity.aggro_range)
+        y2 = self.entity.y_g + (self.entity.direction[1] * self.entity.aggro_range)
 
         self.x = min(x1, x2)
         self.x2 = max(x1, x2)
