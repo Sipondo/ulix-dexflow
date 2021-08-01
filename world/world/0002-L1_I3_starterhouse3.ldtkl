@@ -537,7 +537,7 @@
 								"params": ["lightbounce_a"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,1)",
@@ -603,7 +603,7 @@
 								"params": ["lightbounce_b"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0,3)",
@@ -669,7 +669,7 @@
 								"params": ["lightbounce_c"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)",
@@ -735,7 +735,7 @@
 								"params": ["lightbounce_g"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
@@ -801,7 +801,7 @@
 								"params": ["lightbounce_f"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
@@ -867,7 +867,7 @@
 								"params": ["lightbounce_h"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (-1, 0)\nself: light_tile = (1, 1)",
@@ -933,7 +933,7 @@
 								"params": ["lightbounce_e"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, 1)\nself: light_dir_b = (1, 0)\nself: light_tile = (0, 1)",
@@ -999,7 +999,7 @@
 								"params": ["lightbounce_d"]
 							}]
 						},
-						{ "__identifier": "name", "__value": "", "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
 						{
 							"__identifier": "on_create_action",
 							"__value": "self: light_dir_a = (0, -1)\nself: light_dir_b = (1, 0)\nself: light_tile = (3, 1)",

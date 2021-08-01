@@ -1720,13 +1720,13 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
+							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
+									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
 								]
 							}]
 						},
