@@ -12,10 +12,12 @@ states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu":
 
 
 class GameStateBattle(BaseGameState):
-    def on_enter(self, teams=None, agents=None):
+    def on_enter(self, enemy_team=None, agents=None):
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
-            self.game, [x.series for x in self.game.inventory.members], [1, 2]
+            self.game,
+            [x.series for x in self.game.inventory.members],
+            enemy_team or [1, 2],
         )
         self.render.camera.reset()
         self.board = self.combat.board
@@ -27,6 +29,11 @@ class GameStateBattle(BaseGameState):
         # TODO move away as it should be initiated as a move
         self.render.set_pokemon(self.actor_1[0].sprite, 0)
         self.render.set_pokemon(self.actor_2[0].sprite, 1)
+
+        self.spr_battlecell = (
+            self.game.m_res.get_interface("battlecell"),
+            self.game.m_res.get_interface("battlecell_selected"),
+        )
 
         self.agents = []
         if agents:
@@ -128,6 +135,14 @@ class GameStateBattle(BaseGameState):
                 elif key == "up":
                     self.selection = (self.selection - 1) % self.max_selection
                     self.game.r_aud.effect("select")
+                elif key == "left":
+                    if self.state == states["topmenu"]:
+                        self.selection = (self.selection - 2) % self.max_selection
+                        self.game.r_aud.effect("select")
+                elif key == "right":
+                    if self.state == states["topmenu"]:
+                        self.selection = (self.selection + 2) % self.max_selection
+                        self.game.r_aud.effect("select")
                 elif key == "interact":
                     self.game.r_aud.effect("confirm")
                     if self.state == states["topmenu"]:
@@ -310,16 +325,22 @@ class GameStateBattle(BaseGameState):
     def draw_interface(self, time, frame_time):
         if not len(self.pending_boards):
             if self.state == states["topmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.80, 0.53), size=(0.15, 0.32), col="black"
-                )
+                # self.game.r_int.draw_rectangle(
+                #     (0.80, 0.53), size=(0.15, 0.32), col="black"
+                # )
 
                 for i, name in enumerate(["Fight", "Pokemon", "Ball", "Run"]):
-                    self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name}",
-                        (0.81, 0.54 + 0.08 * i),
-                        size=(0.13, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                    #     self.game.r_int.draw_text(
+                    #         f"{self.selection == i and '' or ''}{name}",
+                    #         (0.81, 0.54 + 0.08 * i),
+                    #         size=(0.13, 0.06),
+                    #         bcol=self.selection == i and "yellow" or "white",
+                    #     )
+
+                    self.game.r_int.draw_image(
+                        self.spr_battlecell[self.selection == i and 1 or 0],
+                        (0.85 + 0.9 * 0.09 * (i // 2), 0.63 + 0.89 * 0.16 * (i % 2)),
+                        centre=True,
                     )
 
             elif self.state == states["actionmenu"]:

@@ -11,6 +11,8 @@ class ActionManager:
 
         self.regions = []
 
+        self.prefab_actions = {}
+
     def on_tick(self, time, frame_time):
         self.queue.clear()
         to_clear = []
@@ -54,6 +56,16 @@ class ActionManager:
         return rect
 
     def create_action(self, upl, user):
+        if upl is not None:
+            self.actions.append(Action(self.game, upl, user))
+
+    def create_prefab_action(self, name, user):
+        if name not in self.prefab_actions:
+            self.prefab_actions[name] = self.game.m_upl.parser.parse(
+                self.game.m_upl.parser.upl_files[name]
+            )
+
+        upl = self.prefab_actions[name]
         if upl is not None:
             self.actions.append(Action(self.game, upl, user))
 

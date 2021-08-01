@@ -11,6 +11,7 @@ from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.concat import Concat
 from game.upl.upl_scripts.countitem import CountItem
 from game.upl.upl_scripts.debug import Debug
+from game.upl.upl_scripts.encounter import Encounter
 from game.upl.upl_scripts.face import Face
 from game.upl.upl_scripts.flushtiles import FlushTiles
 from game.upl.upl_scripts.getentities import GetEntities
@@ -24,8 +25,11 @@ from game.upl.upl_scripts.music import Music
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
 from game.upl.upl_scripts.push import Push
+from game.upl.upl_scripts.random import Random
 from game.upl.upl_scripts.removeitem import RemoveItem
+from game.upl.upl_scripts.resetlocalencounters import ResetLocalEncounters
 from game.upl.upl_scripts.say import Say
+from game.upl.upl_scripts.setlocalencounters import SetLocalEncounters
 from game.upl.upl_scripts.setmovement import SetMovement
 from game.upl.upl_scripts.settile import SetTile
 from game.upl.upl_scripts.shop import Shop
@@ -212,6 +216,8 @@ class UPLToPython(Transformer):
             ret = self.act.game
         elif name == "col":
             ret = self.act.game.m_col
+        elif name == "map":
+            ret = self.act.game.m_map
         elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
             ret = self.act.game.m_ent.entities[name[2:]]
 

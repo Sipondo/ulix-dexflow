@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 439,
+	"nextUid": 447,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -3525,6 +3525,144 @@
 					"textLanguageMode": null
 				}
 			]
+		},
+		{
+			"identifier": "Encounter",
+			"uid": 441,
+			"tags": ["Region_Function"],
+			"width": 16,
+			"height": 16,
+			"resizableX": true,
+			"resizableY": true,
+			"keepAspectRatio": false,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": true,
+			"color": "#A700FF",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileId": null,
+			"tileRenderMode": "FitInside",
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": [
+				{
+					"identifier": "local_encounter_rate",
+					"__type": "Float",
+					"uid": 446,
+					"type": "F_Float",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Float", "params": [1] },
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "local_encounters",
+					"__type": "String",
+					"uid": 445,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["100x BEEDRILL"]
+					},
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "on_enter_action",
+					"__type": "String",
+					"uid": 442,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["self: SetLocalEncounters(local_encounter_rate, local_encounters)"]
+					},
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "on_exit_action",
+					"__type": "String",
+					"uid": 443,
+					"type": "F_Text",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["self: ResetLocalEncounters()"]
+					},
+					"textLanguageMode": "LangRuby"
+				},
+				{
+					"identifier": "player_exclusive",
+					"__type": "Bool",
+					"uid": 444,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ true ]
+					},
+					"textLanguageMode": null
+				}
+			]
 		}
 	], "tilesets": [
 		{
@@ -3879,6 +4017,49 @@
 		], "iconTilesetUid": 375, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [
 		{
+			"identifier": "encounter_rate",
+			"__type": "Float",
+			"uid": 440,
+			"type": "F_Float",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Float", "params": [0.05] },
+			"textLanguageMode": null
+		},
+		{
+			"identifier": "encounters",
+			"__type": "String",
+			"uid": 439,
+			"type": "F_Text",
+			"isArray": false,
+			"canBeNull": true,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": {
+				"id": "V_String",
+				"params": ["100x RATTATA"]
+			},
+			"textLanguageMode": null
+		},
+		{
 			"identifier": "filter_red",
 			"__type": "Float",
 			"uid": 402,
@@ -4028,7 +4209,18 @@
 					"realEditorValues": [null]
 				},
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{
+					"__identifier": "encounters",
+					"__value": "100x RATTATA\n10x STARYU",
+					"__type": "String",
+					"defUid": 439,
+					"realEditorValues": [{
+						"id": "V_String",
+						"params": ["100x RATTATA\n10x STARYU"]
+					}]
+				},
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
@@ -4055,7 +4247,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
@@ -4082,7 +4276,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4109,7 +4305,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4136,7 +4334,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" } ]
@@ -4163,7 +4363,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 317, "dir": "s" } ]
@@ -4190,7 +4392,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
@@ -4217,7 +4421,9 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 317, "dir": "w" }]

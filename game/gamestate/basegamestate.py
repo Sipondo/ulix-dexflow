@@ -2,7 +2,7 @@ import abc
 
 
 class BaseGameState(abc.ABC):
-    def __init__(self, game):
+    def __init__(self, game, config=None):
         self.game = game
         self.animations = None
         self.lock = False

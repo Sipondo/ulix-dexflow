@@ -70,7 +70,7 @@ class PbsManager:
             self.terrain_mods[terrain].apply(lambda x: float(x))
 
         self.fighters = self.read_fighters()
-        self.fighters["current_hp"] = 1.0
+        # self.fighters["current_hp"] = 1.0
 
     def get_random_item(self):
         return self.items.sample().iloc[0]

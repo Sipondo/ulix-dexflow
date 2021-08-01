@@ -42,8 +42,7 @@ class PlayerEntity(BaseEntity):
 
     def on_step(self, time, frame_time):
         if self.game.m_col.get_tile_flags(self.game_position)["Encounter"]:
-            if random.random() < 0.1:
-                self.game.m_ani.add_animation(EncounterAnimation(self.game, time))
+            self.game.m_act.create_prefab_action("on_encounter", self.game)
 
     def direction_to_tuple(self, direction):
         if direction == "up":

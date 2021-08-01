@@ -35,7 +35,18 @@
 			"realEditorValues": [null]
 		},
 		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+		{
+			"__identifier": "encounters",
+			"__value": "100x RATTATA\n10x STARYU",
+			"__type": "String",
+			"defUid": 439,
+			"realEditorValues": [{
+				"id": "V_String",
+				"params": ["100x RATTATA\n10x STARYU"]
+			}]
+		},
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -312,6 +323,29 @@
 						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
 						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 412, "realEditorValues": [] }
 					]
+				},
+				{
+					"__identifier": "Encounter",
+					"__grid": [30,14],
+					"__pivot": [0,0],
+					"__tile": null,
+					"width": 128,
+					"height": 128,
+					"defUid": 441,
+					"px": [480,224],
+					"fieldInstances": [
+						{
+							"__identifier": "on_enter_action",
+							"__value": "self: SetLocalEncounters(local_encounter_rate, local_encounters)",
+							"__type": "String",
+							"defUid": 442,
+							"realEditorValues": []
+						},
+						{ "__identifier": "on_exit_action", "__value": "self: ResetLocalEncounters()", "__type": "String", "defUid": 443, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 444, "realEditorValues": [] },
+						{ "__identifier": "local_encounters", "__value": "100x BEEDRILL", "__type": "String", "defUid": 445, "realEditorValues": [] },
+						{ "__identifier": "local_encounter_rate", "__value": 1, "__type": "Float", "defUid": 446, "realEditorValues": [] }
+					]
 				}
 			]
 		},
@@ -442,7 +476,19 @@
 								"params": ["W"]
 							}]
 						},
-						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
+						{
+							"__identifier": "battlers",
+							"__value": [ "Stunfisk", "Smeargle" ],
+							"__type": "Array<LocalEnum.Battlers>",
+							"defUid": 379,
+							"realEditorValues": [ {
+								"id": "V_String",
+								"params": ["Stunfisk"]
+							}, {
+								"id": "V_String",
+								"params": ["Smeargle"]
+							} ]
+						},
 						{
 							"__identifier": "name",
 							"__value": "Mister Old Man",
