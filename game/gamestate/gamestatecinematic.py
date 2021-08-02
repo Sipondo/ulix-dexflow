@@ -146,17 +146,18 @@ class GameStateCinematic(BaseGameState):
             )
 
         if self.shop:
-            self.game.r_int.draw_image(
-                self.spr_textbox, (0.02, 0.82),
-            )
-            self.game.r_int.draw_text(
-                "How many of this article would you like?"
-                if self.shop_confirm is not None
-                else (self.dialogue if self.dialogue is not None else ""),
-                (0.025, 0.825),
-                to=(0.98, 0.98),
-                bcol=None,
-            )
+            if self.dialogue:
+                self.game.r_int.draw_image(
+                    self.spr_textbox, (0.02, 0.82),
+                )
+                self.game.r_int.draw_text(
+                    "How many of this article would you like?"
+                    if self.shop_confirm is not None
+                    else (self.dialogue if self.dialogue is not None else ""),
+                    (0.025, 0.825),
+                    to=(0.98, 0.98),
+                    bcol=None,
+                )
 
             self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
 
@@ -203,15 +204,16 @@ class GameStateCinematic(BaseGameState):
                     )
             return
 
-        self.game.r_int.draw_image(
-            self.spr_textbox, (0.02, 0.82),
-        )
-        self.game.r_int.draw_text(
-            self.dialogue if self.dialogue is not None else "",
-            (0.025, 0.825),
-            to=(0.98, 0.98),
-            bcol=None,
-        )
+        if self.dialogue:
+            self.game.r_int.draw_image(
+                self.spr_textbox, (0.02, 0.82),
+            )
+            self.game.r_int.draw_text(
+                self.dialogue if self.dialogue is not None else "",
+                (0.025, 0.825),
+                to=(0.98, 0.98),
+                bcol=None,
+            )
 
         if self.options:
             self.game.r_int.draw_rectangle(
