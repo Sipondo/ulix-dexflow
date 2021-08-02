@@ -493,7 +493,7 @@
 						{
 							"__identifier": "battlers",
 							"__value": [
-								null,
+								"Charizard",
 								"Smeargle",
 								"Smeargle",
 								"Ponyta",
@@ -503,7 +503,10 @@
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
 							"realEditorValues": [
-								null,
+								{
+									"id": "V_String",
+									"params": ["Charizard"]
+								},
 								{
 									"id": "V_String",
 									"params": ["Smeargle"]
