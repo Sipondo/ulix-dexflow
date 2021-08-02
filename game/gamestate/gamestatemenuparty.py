@@ -29,6 +29,10 @@ class GameStateMenuParty(BaseGameState):
             self.game.m_res.get_interface("Cell_Selected"),
         )
         self.spr_partyback = self.game.m_res.get_interface("partyback")
+        self.spr_partymemberback = (
+            self.game.m_res.get_interface("partymemberback"),
+            self.game.m_res.get_interface("partymemberbackmirror"),
+        )
         self.spr_iconback = self.game.m_res.get_interface("iconback")
 
         self.need_to_redraw = True
@@ -162,13 +166,7 @@ class GameStateMenuParty(BaseGameState):
             # Draw left full party view if in party
             if self.state == states["party"]:
                 for i, member in enumerate(self.game.inventory.members):
-                    i_v = 0.2 + 0.09 * i
-                    self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{member.name}",
-                        (0.15 + (i % 2) * 0.18, i_v),
-                        size=(0.15, 0.07),
-                        bcol=self.selection == i and "yellow" or "white",
-                    )
+                    i_v = 0.25 + 0.10 * i
                     self.game.r_int.draw_rectangle(
                         (0.155 + (i % 2) * 0.18, i_v + 0.07),
                         size=(0.14, 0.01),
@@ -181,7 +179,9 @@ class GameStateMenuParty(BaseGameState):
                         col="green",
                     )
                     self.game.r_int.draw_image(
-                        self.spr_iconback, (0.12 + (i % 2) * 0.4, i_v), centre=True,
+                        self.spr_partymemberback[(i + 1) % 2],
+                        (0.21 + (i % 2) * 0.22, i_v),
+                        centre=True,
                     )
                     self.game.r_int.draw_image(
                         member.icon[self.icon_frame]
@@ -189,6 +189,12 @@ class GameStateMenuParty(BaseGameState):
                         else member.icon[0],
                         (0.12 + (i % 2) * 0.4, i_v),
                         centre=True,
+                    )
+                    self.game.r_int.draw_text(
+                        f"{self.selection == i and '' or ''}{member.name}",
+                        (0.15 + (i % 2) * 0.18, i_v),
+                        size=(0.15, 0.07),
+                        bcol=None,
                     )
                 # Draw left inspect view if in inspect
             elif self.state == states["inspect"]:
