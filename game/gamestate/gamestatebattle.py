@@ -187,12 +187,13 @@ class GameStateBattle(BaseGameState):
                             ("attack", self.actor_1[0].actions[self.selection],)
                         )
                     elif self.state == states["swapmenu"]:
-                        if self.lock_state:
-                            for agent in self.agents:
-                                if type(agent) == AgentUser:
-                                    agent.set_sendout(self.selection)
-                        else:
-                            self.reg_action(("swap", self.selection,),)
+                        if self.board.teams[0][self.selection][1]["can_fight"]:
+                            if self.lock_state:
+                                for agent in self.agents:
+                                    if type(agent) == AgentUser:
+                                        agent.set_sendout(self.selection)
+                            else:
+                                self.reg_action(("swap", self.selection,),)
                     elif self.state == states["ballmenu"]:
                         self.reg_action(("catch", self.selection))
                     self.selection = 0
@@ -244,13 +245,13 @@ class GameStateBattle(BaseGameState):
         if not self.pending_boards:
             self.need_to_redraw = True
             if any(self.board.switch):
-                self.lock_state = True
+                # self.lock_state = "user_switch"
                 self.state = states["topmenu"]
                 for i, boo in enumerate(self.board.switch):
                     if boo:
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
-                            self.lock_state = True
+                            self.lock_state = "user_switch"
                             self.agents[i].set_sendout(None)
                 return
             else:
@@ -450,7 +451,7 @@ class GameStateBattle(BaseGameState):
         self.game.r_int.draw_rectangle(
             (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
         )
-        if rel_hp > 0:
+        if rel_hp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
                 (x_off + 0.028, 0.14),
                 size=(x_size * rel_hp, 0.035),
@@ -461,7 +462,7 @@ class GameStateBattle(BaseGameState):
             (x_off + 0.029, 0.19), size=(0.223, 0.014), col="grey",
         )
         rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
-        if rel_xp > 0:
+        if rel_xp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
                 (x_off + 0.029, 0.19), size=(0.223 * rel_xp, 0.014), col="blue",
             )
@@ -470,9 +471,10 @@ class GameStateBattle(BaseGameState):
             self.spr_battlestatus[0], (x_off, 0.08), centre=False,
         )
 
-        self.game.r_int.draw_text(
-            fighter.name, (x_off + 0.015, 0.09), size=(x_size / 2, 0.05), bcol=None,
-        )
+        if self.lock_state != "user_switch":
+            self.game.r_int.draw_text(
+                fighter.name, (x_off + 0.015, 0.09), size=(x_size / 2, 0.05), bcol=None,
+            )
 
         for i in range(6):
             print(self.board.teams[0][i][1])

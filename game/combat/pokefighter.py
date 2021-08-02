@@ -55,7 +55,7 @@ class PokeFighter(CombatFighter):
         # Init actions starting from id:
         # start_id = 580
         # self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]]
-        self.actions = [self.game.m_pbs.get_move(x) for x in [399, 399, 399, 399]]
+        self.actions = [self.game.m_pbs.get_move(x) for x in [87, 399, 399, 399]]
 
         self.data = fighter.copy()
 
