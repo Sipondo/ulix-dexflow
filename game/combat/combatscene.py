@@ -14,7 +14,8 @@ EFFECTS_PATH = Path("game/combat/effects/moveeffect/")
 
 
 class CombatScene:
-    def __init__(self, game, team_1, team_2):
+    def __init__(self, game, team_1, team_2, battle_type="trainer"):
+
         self.game = game
         t1 = self.init_team(team_1)
         t2 = self.init_team(team_2)
@@ -22,7 +23,7 @@ class CombatScene:
         self.board_history = [PokeBoard(self)]
         self.board_graveyard = []
         self.init_board(t1, t2)
-
+        self.battle_type = battle_type
         self.round = 0
         self.end = False
 

@@ -12,12 +12,13 @@ states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu":
 
 
 class GameStateBattle(BaseGameState):
-    def on_enter(self, enemy_team=None, agents=None):
+    def on_enter(self, battle_type="trainer", enemy_team=None, agents=None):
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
             self.game,
             [x.series for x in self.game.inventory.members],
             enemy_team or [1, 2],
+            battle_type=battle_type
         )
         self.render.camera.reset()
         self.board = self.combat.board
@@ -318,6 +319,7 @@ class GameStateBattle(BaseGameState):
 
     def end_battle(self):
         self.synchronize()
+        self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.m_gst.switch_state("overworld")
 
     @property
@@ -479,7 +481,6 @@ class GameStateBattle(BaseGameState):
             )
 
         for i in range(6):
-            print(self.board.teams[0][i][1])
             self.game.r_int.draw_image(
                 self.spr_teamstatus[
                     (0 if self.board.teams[0][i][1]["can_fight"] else 2)

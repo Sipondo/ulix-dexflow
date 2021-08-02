@@ -23,7 +23,7 @@ class Encounter:
         probabilities = probabilities / probabilities.sum()
 
         res = choice(options, p=probabilities)
-        self.act.game.m_gst.switch_state("battle", enemy_team=[res])
+        self.act.game.m_gst.switch_state("battle", battle_type="wild", enemy_team=[res])
 
     def on_tick(self, time=None, frame_time=None):
         return True
