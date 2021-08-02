@@ -26,7 +26,7 @@ class InterfaceRenderer:
 
         texture_bytes = self.canvas.tobytes()
         self.texture = self.ctx.texture(self.canvas.size, 4, texture_bytes)
-        self.texture.filter = moderngl.NEAREST, moderngl.NEAREST
+        # self.texture.filter = moderngl.NEAREST, moderngl.NEAREST
         self.texture.write(texture_bytes)
 
     def update(self, force=False):

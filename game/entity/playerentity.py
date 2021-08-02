@@ -22,6 +22,7 @@ class PlayerEntity(BaseEntity):
     def on_enter(self):
         self.height = self.game.m_sav.load("player_height")
         print("direction:", self.direction)
+        self.name = "Player"
 
     def start_move(self, direction_str, time):
         direction = self.direction_to_tuple(direction_str)
@@ -35,25 +36,13 @@ class PlayerEntity(BaseEntity):
                 self.set_current_sprite((self.movement_type, self.get_offset()))
 
     def after_move(self, time, frame_time):
-        # self.game.m_act.check_regions(self.game_position)
         self.moving = False
-        # self.game.m_gst.current_state.lock = self.game.m_evt.check_events(
-        #     time, frame_time
-        # )
         self.game.m_sav.save("player_pos", self.game_position)
         self.game.m_sav.save("player_height", self.height)
 
-        # print(
-        #     "A_STAR",
-        #     self.game.m_col.a_star(
-        #         self.game_position, (self.game_position[0] - 2, self.game_position[1])
-        #     ),
-        # )
-
     def on_step(self, time, frame_time):
         if self.game.m_col.get_tile_flags(self.game_position)["Encounter"]:
-            if random.random() < 0.1:
-                self.game.m_ani.add_animation(EncounterAnimation(self.game, time))
+            self.game.m_act.create_prefab_action("on_encounter", self.game)
 
     def direction_to_tuple(self, direction):
         if direction == "up":

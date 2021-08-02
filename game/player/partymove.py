@@ -2,25 +2,25 @@ import pandas as pd
 
 
 class PartyMove:
-    def __init__(self, move_info):
-        self.data = move_info.copy()
-        # print(move_info)
-        self.identifier = move_info.identifier
-        self.name = move_info["name"]
-        self.function = move_info.function
-        self.power = move_info.power
-        self.type = move_info.type
-        self.damagecat = move_info.damagecat
-        self.accuracy = move_info.accuracy
-        self.max_pp = int(move_info.pp)
-        self.pp = self.max_pp
-        self.chance = move_info.chance
-        self.target = move_info.target
-        self.priority = move_info.priority
-        self.flags = move_info.flags
-        self.description = move_info.description
+    def __init__(self, data):
+        self.data = data.copy()
+        # self.identifier = data.identifier
+        # self.name = data["name"]
+        # self.function = data.function
+        # self.power = data.power
+        # self.type = data.type
+        # self.damagecat = data.damagecat
+        # self.accuracy = data.accuracy
+        self.max_pp = int(data.pp)
+        # self.pp = self.max_pp
+        # self.chance = data.chance
+        # self.target = data.target
+        # self.priority = data.priority
+        # self.flags = data.flags
+        # self.description = data.description
+        for k, v in data.items():
+            setattr(self, k, v)
 
-        # ef = self.db.get_move_map(move_info.effect_id)
-
-        # self.effect = ef.effect
-        # self.effect_short = ef.short_effect
+    @property
+    def series(self):
+        return self.data

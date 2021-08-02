@@ -14,8 +14,21 @@ class MapManager:
         print("ID:", self.current_level_id)
 
     def load_world_data(self):
+        print(self.game.m_res.get_world_data().files)
         data = self.game.m_res.get_world_data()
-        self.levels = {int(key): data[key] for key in data.files}
+        level_data, self.world_data = [data[key][()] for key in data.files]
+        self.levels = {int(key): level_data[key] for key in level_data.keys()}
+
+        self.game.m_sav.settables.holder_is_frozen = False
+        self.game.m_sav.switches.holder_is_frozen = False
+        for value in self.world_data["settables"]:
+            self.game.m_sav.set_new_settable(value, 0)
+
+        for value in self.world_data["switches"]:
+            self.game.m_sav.set_new_switch(value, False)
+
+        self.game.m_sav.settables.holder_is_frozen = True
+        self.game.m_sav.switches.holder_is_frozen = True
 
     def convert_mapstring_to_key(self, mapstr):
         if mapstr[-1] != "_":
@@ -25,11 +38,24 @@ class MapManager:
 
     def set_level(self, id):
         self.current_level_id = id
+        self.game.m_sav.go_to_new_level()
         self.game.m_sav.save("current_level_id", id)
+
+        fields = self.current_level["fields"]
+        self.filter = (
+            fields["filter_red"],
+            fields["filter_green"],
+            fields["filter_blue"],
+        )
+
+        self.encounters = fields["encounters"]
+        self.encounter_rate = fields["encounter_rate"]
+        self.local_encounters = ""
+        self.local_encounter_rate = 0
 
     @property
     def current_level(self):
-        return self.levels[self.current_level_id][()]
+        return self.levels[self.current_level_id]  # [()]
 
     @property
     def level_index(self):
@@ -45,7 +71,7 @@ class MapManager:
 
     @property
     def enum_values(self):
-        return self.current_level["enumValues"]
+        return self.world_data["enumValues"]
 
     @property
     def current_tilesets(self):
@@ -55,7 +81,7 @@ class MapManager:
     def current_connected_tilesets(self):
         return [
             (
-                self.levels[self.convert_mapstring_to_key(x["f_target_level"])][()][
+                self.levels[self.convert_mapstring_to_key(x["f_target_level"])][
                     "layers"
                 ],
                 (floor(x["location"][0] / 16), ceil(x["location"][1] // 16)),

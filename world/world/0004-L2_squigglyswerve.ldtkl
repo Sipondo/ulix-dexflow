@@ -26,7 +26,12 @@
 	"fieldInstances": [
 		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -237,7 +242,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -284,7 +290,41 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Region",
+					"__grid": [8,11],
+					"__pivot": [0,0],
+					"__tile": null,
+					"width": 32,
+					"height": 32,
+					"defUid": 356,
+					"px": [128,176],
+					"fieldInstances": [
+						{
+							"__identifier": "on_enter_action",
+							"__value": "target: Debug(target)",
+							"__type": "String",
+							"defUid": 397,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["target: Debug(target)"]
+							}]
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{
+							"__identifier": "player_exclusive",
+							"__value": false,
+							"__type": "Bool",
+							"defUid": 412,
+							"realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ false ]
+							}]
+						}
 					]
 				}
 			]
@@ -381,6 +421,30 @@
 			"intGridCsv": [],
 			"autoLayerTiles": [],
 			"seed": 3290733,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		},
+		{
+			"__identifier": "Collision_B",
+			"__type": "Tiles",
+			"__cWid": 47,
+			"__cHei": 86,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 407,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 311,
+			"layerDefUid": 401,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 9514510,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": []
@@ -1556,46 +1620,265 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "Opponent",
-					"__grid": [29,51],
+					"__identifier": "Civilian",
+					"__grid": [16,10],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [264,168],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar012.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar012.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()"
+								]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "girl",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["girl"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Jumpy Girl",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Jumpy Girl"]
+							}]
+						},
+						{
+							"__identifier": "on_create_action",
+							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
+							"__type": "String",
+							"defUid": 408,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
+								]
+							}]
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [11,14],
 					"__pivot": [0.5,0.5],
 					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
 					"width": 16,
 					"height": 16,
-					"defUid": 4,
-					"px": [472,824],
+					"defUid": 72,
+					"px": [184,232],
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar011.png",
+							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
 							"__type": "FilePath",
-							"defUid": 66,
+							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar011.png"]
+								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
 							}]
 						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
+								]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "E",
 							"__type": "LocalEnum.Direction",
-							"defUid": 378,
+							"defUid": 385,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": ["E"]
 							}]
 						},
-						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 380, "realEditorValues": [] },
-						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
-						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 382, "realEditorValues": [] },
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{
+							"__identifier": "entity_uid",
+							"__value": "pete",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["pete"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Pushy Pete",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Pushy Pete"]
+							}]
+						},
+						{
+							"__identifier": "on_create_action",
+							"__value": "?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0",
+							"__type": "String",
+							"defUid": 408,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0"]
+							}]
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [5,9],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [88,152],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar067.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar067.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Storage()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["game: Storage()"]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "storage_person",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["storage_person"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Storage Sylvia",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Storage Sylvia"]
+							}]
+						},
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				}
 			]
+		},
+		{
+			"__identifier": "Collision_A",
+			"__type": "Tiles",
+			"__cWid": 47,
+			"__cHei": 86,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 407,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 311,
+			"layerDefUid": 399,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 9528867,
+			"overrideTilesetUid": null,
+			"gridTiles": [
+				{ "px": [272,192], "src": [0,80], "f": 0, "t": 20, "d": [581] },
+				{ "px": [256,208], "src": [0,80], "f": 0, "t": 20, "d": [627] },
+				{ "px": [288,208], "src": [0,80], "f": 0, "t": 20, "d": [629] },
+				{ "px": [304,208], "src": [0,80], "f": 0, "t": 20, "d": [630] },
+				{ "px": [336,208], "src": [0,80], "f": 0, "t": 20, "d": [632] },
+				{ "px": [352,208], "src": [0,80], "f": 0, "t": 20, "d": [633] },
+				{ "px": [384,224], "src": [0,80], "f": 0, "t": 20, "d": [682] },
+				{ "px": [240,240], "src": [0,80], "f": 0, "t": 20, "d": [720] },
+				{ "px": [288,240], "src": [0,80], "f": 0, "t": 20, "d": [723] },
+				{ "px": [320,240], "src": [16,96], "f": 0, "t": 25, "d": [725] },
+				{ "px": [352,240], "src": [0,80], "f": 0, "t": 20, "d": [727] },
+				{ "px": [304,304], "src": [0,80], "f": 0, "t": 20, "d": [912] }
+			],
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Structures_C",
@@ -2023,6 +2306,8 @@
 				{ "px": [704,144], "src": [64,864], "f": 0, "t": 436, "d": [467] },
 				{ "px": [720,144], "src": [80,864], "f": 0, "t": 437, "d": [468] },
 				{ "px": [64,160], "src": [96,976], "f": 0, "t": 494, "d": [474] },
+				{ "px": [224,160], "src": [32,1648], "f": 0, "t": 826, "d": [484] },
+				{ "px": [288,160], "src": [96,1648], "f": 0, "t": 830, "d": [488] },
 				{ "px": [368,160], "src": [96,960], "f": 0, "t": 486, "d": [493] },
 				{ "px": [432,160], "src": [64,880], "f": 0, "t": 444, "d": [497] },
 				{ "px": [448,160], "src": [80,880], "f": 0, "t": 445, "d": [498] },
@@ -2038,6 +2323,9 @@
 				{ "px": [704,160], "src": [64,880], "f": 0, "t": 444, "d": [514] },
 				{ "px": [720,160], "src": [80,880], "f": 0, "t": 445, "d": [515] },
 				{ "px": [736,160], "src": [64,864], "f": 0, "t": 436, "d": [516] },
+				{ "px": [224,176], "src": [32,1664], "f": 0, "t": 834, "d": [531] },
+				{ "px": [288,176], "src": [96,1664], "f": 0, "t": 838, "d": [535] },
+				{ "px": [304,176], "src": [96,1648], "f": 0, "t": 830, "d": [536] },
 				{ "px": [368,176], "src": [96,976], "f": 0, "t": 494, "d": [540] },
 				{ "px": [432,176], "src": [64,864], "f": 0, "t": 436, "d": [544] },
 				{ "px": [448,176], "src": [80,864], "f": 0, "t": 437, "d": [545] },
@@ -2056,6 +2344,7 @@
 				{ "px": [672,176], "src": [64,864], "f": 0, "t": 436, "d": [559] },
 				{ "px": [688,176], "src": [80,864], "f": 0, "t": 437, "d": [560] },
 				{ "px": [736,176], "src": [64,880], "f": 0, "t": 444, "d": [563] },
+				{ "px": [304,192], "src": [96,1664], "f": 0, "t": 838, "d": [583] },
 				{ "px": [432,192], "src": [64,880], "f": 0, "t": 444, "d": [591] },
 				{ "px": [448,192], "src": [80,880], "f": 0, "t": 445, "d": [592] },
 				{ "px": [464,192], "src": [64,880], "f": 0, "t": 444, "d": [593] },
@@ -2125,6 +2414,10 @@
 				{ "px": [112,256], "src": [80,880], "f": 0, "t": 445, "d": [759] },
 				{ "px": [160,256], "src": [64,864], "f": 0, "t": 436, "d": [762] },
 				{ "px": [176,256], "src": [80,864], "f": 0, "t": 437, "d": [763] },
+				{ "px": [256,256], "src": [32,1632], "f": 0, "t": 818, "d": [768] },
+				{ "px": [272,256], "src": [48,1632], "f": 0, "t": 819, "d": [769] },
+				{ "px": [304,256], "src": [80,1632], "f": 0, "t": 821, "d": [771] },
+				{ "px": [320,256], "src": [96,1632], "f": 0, "t": 822, "d": [772] },
 				{ "px": [592,256], "src": [64,880], "f": 0, "t": 444, "d": [789] },
 				{ "px": [608,256], "src": [80,880], "f": 0, "t": 445, "d": [790] },
 				{ "px": [624,256], "src": [64,880], "f": 0, "t": 444, "d": [791] },
@@ -2143,6 +2436,8 @@
 				{ "px": [128,272], "src": [80,864], "f": 0, "t": 437, "d": [807] },
 				{ "px": [160,272], "src": [64,880], "f": 0, "t": 444, "d": [809] },
 				{ "px": [176,272], "src": [80,880], "f": 0, "t": 445, "d": [810] },
+				{ "px": [272,272], "src": [48,1648], "f": 0, "t": 827, "d": [816] },
+				{ "px": [304,272], "src": [80,1648], "f": 0, "t": 829, "d": [818] },
 				{ "px": [576,272], "src": [64,864], "f": 0, "t": 436, "d": [835] },
 				{ "px": [592,272], "src": [80,864], "f": 0, "t": 437, "d": [836] },
 				{ "px": [608,272], "src": [64,864], "f": 0, "t": 436, "d": [837] },
@@ -2165,6 +2460,9 @@
 				{ "px": [176,288], "src": [48,960], "f": 0, "t": 483, "d": [857] },
 				{ "px": [192,288], "src": [64,864], "f": 0, "t": 436, "d": [858] },
 				{ "px": [208,288], "src": [80,864], "f": 0, "t": 437, "d": [859] },
+				{ "px": [272,288], "src": [48,1664], "f": 0, "t": 835, "d": [863] },
+				{ "px": [288,288], "src": [64,1664], "f": 0, "t": 836, "d": [864] },
+				{ "px": [304,288], "src": [80,1664], "f": 0, "t": 837, "d": [865] },
 				{ "px": [576,288], "src": [64,880], "f": 0, "t": 444, "d": [882] },
 				{ "px": [592,288], "src": [80,880], "f": 0, "t": 445, "d": [883] },
 				{ "px": [608,288], "src": [64,880], "f": 0, "t": 444, "d": [884] },
@@ -4153,13 +4451,13 @@
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-				1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,
+				0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -4256,12 +4554,6 @@
 			],
 			"autoLayerTiles": [
 				{ "px": [208,656], "src": [48,96], "f": 0, "t": 45, "d": [258,1940] },
-				{ "px": [256,208], "src": [64,0], "f": 1, "t": 4, "d": [255,627] },
-				{ "px": [272,208], "src": [64,0], "f": 2, "t": 4, "d": [255,628] },
-				{ "px": [288,224], "src": [64,0], "f": 1, "t": 4, "d": [255,676] },
-				{ "px": [320,224], "src": [64,0], "f": 2, "t": 4, "d": [255,678] },
-				{ "px": [336,240], "src": [64,0], "f": 1, "t": 4, "d": [255,726] },
-				{ "px": [368,240], "src": [64,0], "f": 2, "t": 4, "d": [255,728] },
 				{ "px": [416,256], "src": [64,0], "f": 1, "t": 4, "d": [255,778] },
 				{ "px": [448,256], "src": [64,0], "f": 2, "t": 4, "d": [255,780] },
 				{ "px": [464,272], "src": [64,0], "f": 1, "t": 4, "d": [255,828] },
@@ -4304,21 +4596,17 @@
 				{ "px": [448,1104], "src": [64,0], "f": 2, "t": 4, "d": [255,3271] },
 				{ "px": [448,1120], "src": [64,0], "f": 1, "t": 4, "d": [255,3318] },
 				{ "px": [464,1120], "src": [64,0], "f": 2, "t": 4, "d": [255,3319] },
-				{ "px": [304,224], "src": [48,48], "f": 0, "t": 24, "d": [240,677] },
-				{ "px": [352,240], "src": [48,48], "f": 0, "t": 24, "d": [240,727] },
 				{ "px": [432,256], "src": [48,48], "f": 0, "t": 24, "d": [240,779] },
 				{ "px": [480,272], "src": [48,48], "f": 0, "t": 24, "d": [240,829] },
 				{ "px": [512,288], "src": [48,48], "f": 0, "t": 24, "d": [240,878] },
 				{ "px": [512,528], "src": [48,48], "f": 0, "t": 24, "d": [240,1583] },
 				{ "px": [224,912], "src": [48,48], "f": 0, "t": 24, "d": [240,2693] },
 				{ "px": [224,976], "src": [48,48], "f": 0, "t": 24, "d": [240,2881] },
-				{ "px": [272,192], "src": [16,16], "f": 1, "t": 8, "d": [239,581] },
-				{ "px": [320,208], "src": [16,16], "f": 1, "t": 8, "d": [239,631] },
-				{ "px": [256,224], "src": [16,16], "f": 2, "t": 8, "d": [239,674] },
-				{ "px": [368,224], "src": [16,16], "f": 1, "t": 8, "d": [239,681] },
-				{ "px": [288,240], "src": [16,16], "f": 2, "t": 8, "d": [239,723] },
+				{ "px": [224,192], "src": [16,16], "f": 1, "t": 8, "d": [239,578] },
+				{ "px": [224,208], "src": [16,16], "f": 3, "t": 8, "d": [239,625] },
+				{ "px": [384,240], "src": [16,16], "f": 0, "t": 8, "d": [239,729] },
 				{ "px": [448,240], "src": [16,16], "f": 1, "t": 8, "d": [239,733] },
-				{ "px": [336,256], "src": [16,16], "f": 2, "t": 8, "d": [239,773] },
+				{ "px": [384,256], "src": [16,16], "f": 2, "t": 8, "d": [239,776] },
 				{ "px": [496,256], "src": [16,16], "f": 1, "t": 8, "d": [239,783] },
 				{ "px": [416,272], "src": [16,16], "f": 2, "t": 8, "d": [239,825] },
 				{ "px": [528,272], "src": [16,16], "f": 1, "t": 8, "d": [239,832] },
@@ -4378,9 +4666,6 @@
 				{ "px": [176,192], "src": [48,16], "f": 0, "t": 10, "d": [238,575] },
 				{ "px": [192,192], "src": [48,16], "f": 0, "t": 10, "d": [238,576] },
 				{ "px": [208,192], "src": [48,16], "f": 0, "t": 10, "d": [238,577] },
-				{ "px": [224,192], "src": [48,16], "f": 0, "t": 10, "d": [238,578] },
-				{ "px": [240,192], "src": [48,16], "f": 0, "t": 10, "d": [238,579] },
-				{ "px": [256,192], "src": [48,16], "f": 0, "t": 10, "d": [238,580] },
 				{ "px": [0,208], "src": [48,16], "f": 2, "t": 10, "d": [238,611] },
 				{ "px": [16,208], "src": [48,16], "f": 2, "t": 10, "d": [238,612] },
 				{ "px": [32,208], "src": [48,16], "f": 2, "t": 10, "d": [238,613] },
@@ -4395,22 +4680,9 @@
 				{ "px": [176,208], "src": [48,16], "f": 2, "t": 10, "d": [238,622] },
 				{ "px": [192,208], "src": [48,16], "f": 2, "t": 10, "d": [238,623] },
 				{ "px": [208,208], "src": [48,16], "f": 2, "t": 10, "d": [238,624] },
-				{ "px": [224,208], "src": [48,16], "f": 2, "t": 10, "d": [238,625] },
-				{ "px": [240,208], "src": [48,16], "f": 2, "t": 10, "d": [238,626] },
-				{ "px": [288,208], "src": [48,16], "f": 0, "t": 10, "d": [238,629] },
-				{ "px": [304,208], "src": [48,16], "f": 0, "t": 10, "d": [238,630] },
-				{ "px": [272,224], "src": [48,16], "f": 2, "t": 10, "d": [238,675] },
-				{ "px": [336,224], "src": [48,16], "f": 0, "t": 10, "d": [238,679] },
-				{ "px": [352,224], "src": [48,16], "f": 0, "t": 10, "d": [238,680] },
-				{ "px": [304,240], "src": [48,16], "f": 2, "t": 10, "d": [238,724] },
-				{ "px": [320,240], "src": [48,16], "f": 2, "t": 10, "d": [238,725] },
-				{ "px": [384,240], "src": [48,16], "f": 0, "t": 10, "d": [238,729] },
 				{ "px": [400,240], "src": [48,16], "f": 0, "t": 10, "d": [238,730] },
 				{ "px": [416,240], "src": [48,16], "f": 0, "t": 10, "d": [238,731] },
 				{ "px": [432,240], "src": [48,16], "f": 0, "t": 10, "d": [238,732] },
-				{ "px": [352,256], "src": [48,16], "f": 2, "t": 10, "d": [238,774] },
-				{ "px": [368,256], "src": [48,16], "f": 2, "t": 10, "d": [238,775] },
-				{ "px": [384,256], "src": [48,16], "f": 2, "t": 10, "d": [238,776] },
 				{ "px": [400,256], "src": [48,16], "f": 2, "t": 10, "d": [238,777] },
 				{ "px": [464,256], "src": [48,16], "f": 0, "t": 10, "d": [238,781] },
 				{ "px": [480,256], "src": [48,16], "f": 0, "t": 10, "d": [238,782] },
@@ -4709,11 +4981,11 @@
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
+				1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -4854,6 +5126,17 @@
 				{ "px": [16,1008], "src": [64,0], "f": 0, "t": 4, "d": [280,2962] },
 				{ "px": [640,656], "src": [48,64], "f": 0, "t": 31, "d": [278,1967] },
 				{ "px": [656,656], "src": [48,64], "f": 3, "t": 31, "d": [278,1968] },
+				{ "px": [272,192], "src": [64,48], "f": 0, "t": 25, "d": [271,581] },
+				{ "px": [256,208], "src": [64,48], "f": 0, "t": 25, "d": [271,627] },
+				{ "px": [384,224], "src": [64,48], "f": 0, "t": 25, "d": [271,682] },
+				{ "px": [240,240], "src": [64,48], "f": 0, "t": 25, "d": [271,720] },
+				{ "px": [288,240], "src": [64,48], "f": 0, "t": 25, "d": [271,723] },
+				{ "px": [320,240], "src": [64,48], "f": 0, "t": 25, "d": [271,725] },
+				{ "px": [352,240], "src": [64,48], "f": 0, "t": 25, "d": [271,727] },
+				{ "px": [288,208], "src": [16,0], "f": 0, "t": 1, "d": [269,629] },
+				{ "px": [304,208], "src": [16,0], "f": 1, "t": 1, "d": [269,630] },
+				{ "px": [336,208], "src": [16,0], "f": 0, "t": 1, "d": [269,632] },
+				{ "px": [352,208], "src": [16,0], "f": 1, "t": 1, "d": [269,633] },
 				{ "px": [560,768], "src": [48,48], "f": 0, "t": 24, "d": [265,2291] },
 				{ "px": [544,784], "src": [48,48], "f": 0, "t": 24, "d": [265,2337] },
 				{ "px": [560,784], "src": [48,48], "f": 0, "t": 24, "d": [265,2338] },

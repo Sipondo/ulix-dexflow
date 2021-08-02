@@ -1,48 +1,71 @@
-// ?value: dict
-//     | list
-//     | string
-//     | SIGNED_NUMBER      -> number
-//     | "true"             -> true
-//     | "false"            -> false
-//     | "null"             -> null
-
-// list : "[" [value ("," value)*] "]"
-
-// dict : "{" [pair ("," pair)*] "}"
-// pair : string ":" value
-
-// string : ESCAPED_STRING
-
-// %import common.ESCAPED_STRING
-// %import common.SIGNED_NUMBER
-// %import common.WS
-// %ignore WS
-
-?upl: [statement ("\n" statement)*]
-statement : source ":" command
-source : /[a-zA-Z0-9_]+/
+?upl: [(statement | try | concurrent | control) ("\n" (statement | try | concurrent | control ))*]
+concurrent: "!" (statement | try | control)
+try: "?" (statement | concurrent | control)
+statement: comment
+    |   ("exit" | "end") -> exit_end
+    |   "break" -> break
+    |   user ":" command
+control: "if" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_if
+    |    "while" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_while
+    |    "repeat" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> control_repeat
+//  |    "for" "(" fargs ")" "{" "\n"* upl "\n"* "}" ("else" "{" "\n"* upl "\n"* "}")? -> for
+    |    "group" "{" "\n"* upl "\n"* "}" -> control_group
 command: fcall
     |   assign
-    |   string
+    |   say
 
 fcall: function "(" fargs ")"
-function: /[a-zA-Z0-9_]+/
+fcall_object: function "(" fargs ")"
+function: /[[A-Z][A-Za-z0-9_]*/
 fargs: [object ("," (object))*]
 
 assign: assign_variable "=" object
 
+
 object: string
-    |number
-    |variable
-    | "true"             -> true
-    | "false"            -> false
+    | multiline
+    | bool
+    | SIGNED_NUMBER      -> number
+    | fcall_object
+    | variable
+    | index
+    | number
+    | list
+    | tuple
     | "null"             -> null
 
+list : "[" [object ("," object)*] "]"
+tuple : "(" [object ("," |(("," object)*))] ")"
 string: ESCAPED_STRING
-number: SIGNED_NUMBER
+multiline: (/"""([^"\\]*(\\.[^"\\]*)*)"""/)
+say: ESCAPED_STRING
+number: SIGNED_NUMBER | (number /[\+\-\\\*]/ number) | ("(" number /[\+\-\\\*]/ number ")") | variable | index
+bool: bool logical bool
+    | "(" bool logical bool ")"
+    | compare
+    | "(" compare ")"
+    | "not" bool         -> bool_not
+    | "true"             -> true
+    | "false"            -> false
+
+compare: object comparator object
+
+logical: "and" | "&"    -> logic_and
+    | "or" | "|"         -> logic_or
+comparator: ">="         -> comp_greater_or_equal
+    | ">"                -> comp_greater
+    | "=="               -> comp_equal
+    | "!="               -> comp_nequal
+    | "<"                -> comp_smaller
+    | "<="               -> comp_smaller_or_equal
+
+index: variable "[" number "]"
+
 
 assign_variable: /[a-zA-Z0-9_.]+/
 variable: /[a-zA-Z0-9_.]+/
+comment: /#.*/
+user: /[a-zA-Z0-9_]+/
 
 %import common.ESCAPED_STRING
 %import common.SIGNED_NUMBER

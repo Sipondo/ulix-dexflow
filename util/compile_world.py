@@ -29,7 +29,7 @@ if ldtk["externalLevels"]:
 def coldef_to_bool(coldef):
     all = "X" in coldef
     if all:
-        return [True, True, True, True] + [coldef in (x,) for x in enumValues]
+        return [True, True, True, True] + [x in coldef for x in enumValues]
     return ["E" in coldef, "S" in coldef, "W" in coldef, "N" in coldef,] + [
         x in coldef for x in enumValues
     ]
@@ -47,7 +47,7 @@ ent_field_upl = {
 }
 parser = UplParser()
 
-total_data = {}
+all_level_data = {}
 
 coldefs = {
     t.uid: {
@@ -66,10 +66,19 @@ enumValues = list(
     )
 )[5:]
 
+for enum in [x for x in a.defs.enums if x.identifier in ("Settables")]:
+    settables = [x.id.lower() for x in enum.values]
+
+for enum in [x for x in a.defs.enums if x.identifier in ("Switches")]:
+    switches = [x.id.lower() for x in enum.values]
+
 print("ENUMVALUES", enumValues)
+print("SETTABLES:", settables)
+print("SWITCHES:", switches)
 
 for level in a.levels:
     print(level.identifier)
+    print({field.identifier: field.value for field in level.field_instances})
 
     id_e = [int(x[1:]) for x in level.identifier.lower().split("_")[:-1]]
     id = str(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
@@ -91,8 +100,11 @@ for level in a.levels:
     print(layer_depths)
 
     # TODO: fix renderer so it doesn't require 16x16 worlds
-    width = math.ceil(level.px_wid / 256) * 16
-    height = math.ceil(level.px_hei / 256) * 16
+    width = math.ceil(level.px_wid / 256 + 1) * 16
+    height = math.ceil(level.px_hei / 256 + 1) * 16
+
+    # width = math.ceil(level.px_wid / 16 + 1)
+    # height = math.ceil(level.px_hei / 16 + 1)
 
     # TODO: get rid of this hack as well (2^ maps)
     width = 2 ** math.ceil(math.log2(width))
@@ -120,7 +132,7 @@ for level in a.levels:
                 (depth_block, height, width, 2), dtype=np.dtype("uint16")
             )
             col_array = np.zeros(
-                (depth_block, height, width, 5), dtype=np.dtype("bool")
+                (depth_block, height, width, 9), dtype=np.dtype("bool")
             )
             for current_depth in range(depth_block):
                 layer = reversed_instances[current_layer]
@@ -197,6 +209,7 @@ for level in a.levels:
                     for field in raw_ent.field_instances:
                         if ent_field_upl[raw_ent.def_uid][field.def_uid]:
                             entity[f"f_{field.identifier}"] = parser.parse(field.value)
+                            print(entity[f"f_{field.identifier}"].pretty())
                         else:
                             entity[f"f_{field.identifier}"] = field.value
                     entity["width"] = raw_ent.width
@@ -213,6 +226,11 @@ for level in a.levels:
                             entity[f"f_{field.identifier}"] = field.value.replace(
                                 "../sprites/characters/", "",
                             ).replace(".png", "")
+                            if ent_field_upl[raw_ent.def_uid][field.def_uid]:
+                                entity[f"f_{field.identifier}"] = parser.parse(
+                                    entity[f"f_{field.identifier}"]
+                                )
+                                print(entity[f"f_{field.identifier}"].pretty())
                         else:
                             entity[f"f_{field.identifier}"] = field.value
                     entity["width"] = raw_ent.width
@@ -221,12 +239,12 @@ for level in a.levels:
                     entities.append(entity)
                 entity_height += 1
 
-    total_data[id] = {
+    all_level_data[id] = {
         "layers": output_layers,
         "p_height": 0,
         "entities": entities,
         "regions": regions,
-        "enumValues": enumValues,
+        "fields": {field.identifier: field.value for field in level.field_instances},
     }
 
     print("Total tilesets:", [x[0] for x in output_layers])
@@ -235,11 +253,20 @@ for level in a.levels:
     )
     print("Player height:", 0)
     print("Entities", entities)
-    print("Regions:", regions)
-    print("")
+    print("Regions:", "\n\n".join([str(x) for x in regions]))
+    print("\n\n\n")
+
+world_data = {}
+
+world_data["levels"] = all_level_data
+world_data["world"] = {
+    "enumValues": enumValues,
+    "settables": settables,
+    "switches": switches,
+}
 
 f = BytesIO()
-np.savez_compressed(f, **total_data)
+np.savez_compressed(f, **world_data)
 f.seek(0)
 out = f.read()
 

@@ -26,7 +26,27 @@
 	"fieldInstances": [
 		{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 		{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
-		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] }
+		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+		{
+			"__identifier": "filter_red",
+			"__value": 1,
+			"__type": "Float",
+			"defUid": 402,
+			"realEditorValues": [null]
+		},
+		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+		{
+			"__identifier": "encounters",
+			"__value": "100x RATTATA\n10x STARYU",
+			"__type": "String",
+			"defUid": 439,
+			"realEditorValues": [{
+				"id": "V_String",
+				"params": ["100x RATTATA\n10x STARYU"]
+			}]
+		},
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -111,7 +131,7 @@
 			"layerDefUid": 6,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
-			"visible": false,
+			"visible": true,
 			"optionalRules": [],
 			"intGridCsv": [],
 			"autoLayerTiles": [],
@@ -153,7 +173,8 @@
 							"defUid": 389,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
 					]
 				},
 				{
@@ -200,7 +221,8 @@
 							"defUid": 387,
 							"realEditorValues": [null]
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -221,7 +243,8 @@
 							"__type": "Int",
 							"defUid": 396,
 							"realEditorValues": [{ "id": "V_Int", "params": [1] }]
-						}
+						},
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
 					]
 				},
 				{
@@ -236,32 +259,92 @@
 					"fieldInstances": [
 						{ "__identifier": "on_enter_action", "__value": "target: height=self.height", "__type": "String", "defUid": 394, "realEditorValues": [] },
 						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 395, "realEditorValues": [] },
-						{ "__identifier": "height", "__value": 0, "__type": "Int", "defUid": 396, "realEditorValues": [] }
+						{ "__identifier": "height", "__value": 0, "__type": "Int", "defUid": 396, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
 					]
 				},
 				{
 					"__identifier": "Region",
-					"__grid": [28,13],
+					"__grid": [28,14],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 32,
 					"height": 32,
 					"defUid": 356,
-					"px": [448,208],
+					"px": [448,224],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "target: Debug(\"Entered region! Line 1\")\ntarget: Debug(\"Entered region! Line 2\")\ntarget: Debug(\"Entered region! Line 3\")\ntarget: Debug(\"Entered region! Line 4\")\ntarget: Debug(\"Entered region! Line 5\")\n",
+							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"target: Debug(\"Entered region! Line 1\")\ntarget: Debug(\"Entered region! Line 2\")\ntarget: Debug(\"Entered region! Line 3\")\ntarget: Debug(\"Entered region! Line 4\")\ntarget: Debug(\"Entered region! Line 5\")\n"
+									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}"
 								]
 							}]
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{
+							"__identifier": "player_exclusive",
+							"__value": true,
+							"__type": "Bool",
+							"defUid": 412,
+							"realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ true ]
+							}]
+						}
+					]
+				},
+				{
+					"__identifier": "Region",
+					"__grid": [22,24],
+					"__pivot": [0,0],
+					"__tile": null,
+					"width": 32,
+					"height": 32,
+					"defUid": 356,
+					"px": [352,384],
+					"fieldInstances": [
+						{
+							"__identifier": "on_enter_action",
+							"__value": "target: Cinematic()\n# target: \"Hmm, ben ik niet iets vergeten?\"\ne_2_kim: Move(24,14)\ntarget: Overworld()\n",
+							"__type": "String",
+							"defUid": 397,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"target: Cinematic()\n# target: \"Hmm, ben ik niet iets vergeten?\"\ne_2_kim: Move(24,14)\ntarget: Overworld()\n"
+								]
+							}]
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 412, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Encounter",
+					"__grid": [30,14],
+					"__pivot": [0,0],
+					"__tile": null,
+					"width": 128,
+					"height": 128,
+					"defUid": 441,
+					"px": [480,224],
+					"fieldInstances": [
+						{
+							"__identifier": "on_enter_action",
+							"__value": "self: SetLocalEncounters(local_encounter_rate, local_encounters)",
+							"__type": "String",
+							"defUid": 442,
+							"realEditorValues": []
+						},
+						{ "__identifier": "on_exit_action", "__value": "self: ResetLocalEncounters()", "__type": "String", "defUid": 443, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 444, "realEditorValues": [] },
+						{ "__identifier": "local_encounters", "__value": "100x BEEDRILL", "__type": "String", "defUid": 445, "realEditorValues": [] },
+						{ "__identifier": "local_encounter_rate", "__value": 1, "__type": "Float", "defUid": 446, "realEditorValues": [] }
 					]
 				}
 			]
@@ -381,8 +464,8 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
 							}]
 						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{ "__identifier": "on_aggro_action", "__value": "<<<opponent_on_aggro>>>", "__type": "String", "defUid": 90, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "W",
@@ -393,8 +476,29 @@
 								"params": ["W"]
 							}]
 						},
-						{ "__identifier": "battlers", "__value": [], "__type": "Array<LocalEnum.Battlers>", "defUid": 379, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 380, "realEditorValues": [] },
+						{
+							"__identifier": "battlers",
+							"__value": [ "Stunfisk", "Smeargle" ],
+							"__type": "Array<LocalEnum.Battlers>",
+							"defUid": 379,
+							"realEditorValues": [ {
+								"id": "V_String",
+								"params": ["Stunfisk"]
+							}, {
+								"id": "V_String",
+								"params": ["Smeargle"]
+							} ]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Mister Old Man",
+							"__type": "String",
+							"defUid": 380,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Mister Old Man"]
+							}]
+						},
 						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
 						{
 							"__identifier": "entity_uid",
@@ -406,11 +510,51 @@
 								"params": ["3_old_man"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/Trainers/GAMBLER.png",
+							"__type": "FilePath",
+							"defUid": 437,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/Trainers/GAMBLER.png"]
+							}]
+						}
 					]
 				}
 			]
+		},
+		{
+			"__identifier": "Collision_B",
+			"__type": "Tiles",
+			"__cWid": 40,
+			"__cHei": 36,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 407,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 95,
+			"layerDefUid": 401,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 8904804,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Rooftops_C",
@@ -946,16 +1090,25 @@
 							}]
 						},
 						{
-							"__identifier": "aggro_action",
-							"__value": "!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: ",
+							"__identifier": "on_aggro_action",
+							"__value": "self: Debug(self)",
 							"__type": "String",
 							"defUid": 90,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["!self: move(5, 3)\nself: \"ik ben aan het bewegen\"\n\nglobal: wait(xxx)\n\ne_rival: "]
+								"params": ["self: Debug(self)"]
 							}]
 						},
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "!group{\n  self: Move(22,15)\n  self: Jump()\n}\ne_1_joey: Move(23,16)",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["!group{\n  self: Move(22,15)\n  self: Jump()\n}\ne_1_joey: Move(23,16)"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -968,7 +1121,7 @@
 						},
 						{
 							"__identifier": "battlers",
-							"__value": [ "Meganium", "Ratata" ],
+							"__value": [ "Meganium", "Rattata" ],
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
 							"realEditorValues": [ {
@@ -976,7 +1129,7 @@
 								"params": ["Meganium"]
 							}, {
 								"id": "V_String",
-								"params": ["Ratata"]
+								"params": ["Rattata"]
 							} ]
 						},
 						{
@@ -1000,8 +1153,30 @@
 								"params": ["2_kim"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{
+							"__identifier": "config",
+							"__value": "{\n  \"team\": [\n      {\n        \"name\": \"Bladieblaa\",\n      }\n ]\n}",
+							"__type": "String",
+							"defUid": 383,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["{\n  \"team\": [\n      {\n        \"name\": \"Bladieblaa\",\n      }\n ]\n}"]
+							}]
+						},
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{
+							"__identifier": "on_create_action",
+							"__value": "",
+							"__type": "String",
+							"defUid": 410,
+							"realEditorValues": [null]
+						},
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 437, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1024,8 +1199,14 @@
 								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
 							}]
 						},
-						{ "__identifier": "aggro_action", "__value": "Missing dialogue", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "dialogue", "__value": "Missing dialogue", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_aggro_action",
+							"__value": "<<<opponent_on_aggro>>>",
+							"__type": "String",
+							"defUid": 90,
+							"realEditorValues": [null]
+						},
+						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
 						{
 							"__identifier": "direction",
 							"__value": "E",
@@ -1038,7 +1219,7 @@
 						},
 						{
 							"__identifier": "battlers",
-							"__value": [ "Meganium", "Ratata" ],
+							"__value": [ "Meganium", "Rattata" ],
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
 							"realEditorValues": [ {
@@ -1046,7 +1227,7 @@
 								"params": ["Meganium"]
 							}, {
 								"id": "V_String",
-								"params": ["Ratata"]
+								"params": ["Rattata"]
 							} ]
 						},
 						{
@@ -1070,11 +1251,59 @@
 								"params": ["1_joey"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{  \"pokemon1\":{       name: \"aapmans\",             } }", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 0, "__type": "Int", "defUid": 386, "realEditorValues": [] }
+						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
+						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
+						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png",
+							"__type": "FilePath",
+							"defUid": 437,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png"]
+							}]
+						}
 					]
 				}
 			]
+		},
+		{
+			"__identifier": "Collision_A",
+			"__type": "Tiles",
+			"__cWid": 40,
+			"__cHei": 36,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 407,
+			"__tilesetRelPath": "editor_helpers/collision.png",
+			"levelId": 95,
+			"layerDefUid": 399,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 5201212,
+			"overrideTilesetUid": null,
+			"gridTiles": [
+				{ "px": [192,208], "src": [0,64], "f": 0, "t": 16, "d": [532] },
+				{ "px": [208,208], "src": [0,64], "f": 0, "t": 16, "d": [533] },
+				{ "px": [224,208], "src": [0,64], "f": 0, "t": 16, "d": [534] },
+				{ "px": [224,224], "src": [0,64], "f": 0, "t": 16, "d": [574] },
+				{ "px": [224,240], "src": [0,64], "f": 0, "t": 16, "d": [614] },
+				{ "px": [224,272], "src": [0,80], "f": 0, "t": 20, "d": [694] },
+				{ "px": [352,272], "src": [0,80], "f": 0, "t": 20, "d": [702] }
+			],
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Structures_C",
@@ -2439,8 +2668,8 @@
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -2452,6 +2681,10 @@
 			"autoLayerTiles": [
 				{ "px": [432,160], "src": [64,0], "f": 0, "t": 4, "d": [280,427] },
 				{ "px": [400,176], "src": [64,0], "f": 3, "t": 4, "d": [280,465] },
+				{ "px": [384,480], "src": [64,48], "f": 0, "t": 25, "d": [271,1224] },
+				{ "px": [352,464], "src": [48,0], "f": 0, "t": 3, "d": [270,1182] },
+				{ "px": [336,464], "src": [16,0], "f": 0, "t": 1, "d": [269,1181] },
+				{ "px": [368,464], "src": [16,0], "f": 1, "t": 1, "d": [269,1183] },
 				{ "px": [416,112], "src": [48,48], "f": 0, "t": 24, "d": [265,306] },
 				{ "px": [432,112], "src": [48,48], "f": 0, "t": 24, "d": [265,307] },
 				{ "px": [416,128], "src": [48,48], "f": 0, "t": 24, "d": [265,346] },

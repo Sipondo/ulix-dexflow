@@ -13,8 +13,8 @@ class PbsManager:
             names=[
                 "id",
                 "identifier",
-                "single",
-                "plural",
+                "itemname",
+                "itemplural",
                 "pocket",
                 "price",
                 "description",
@@ -50,8 +50,7 @@ class PbsManager:
             comment="#",
         )
         move_functions = pd.read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
-            index_col=0,
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
@@ -71,13 +70,13 @@ class PbsManager:
             self.terrain_mods[terrain].apply(lambda x: float(x))
 
         self.fighters = self.read_fighters()
-        self.fighters["current_hp"] = 1.0
+        # self.fighters["current_hp"] = 1.0
 
     def get_random_item(self):
         return self.items.sample().iloc[0]
 
     def get_item(self, id):
-        s = self.items.loc[id].copy()
+        s = self.items[self.items.identifier == id].iloc[0].copy()
         return s
 
     def read_text(self, filename):
@@ -111,6 +110,9 @@ class PbsManager:
 
     def get_fighter(self, id):
         return self.fighters.loc[id]
+
+    def get_fighter_by_name(self, name):
+        return self.fighters[self.fighters["name"].str.lower() == name.lower()].iloc[0]
 
     def get_move(self, id):
         return self.moves.loc[id]

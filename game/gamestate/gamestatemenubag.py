@@ -19,7 +19,7 @@ class GameStateMenuBag(BaseGameState):
 
     def on_tick(self, time, frame_time):
         self.time = time
-        self.lock = self.game.m_ani.on_tick(time, frame_time)
+        # self.lock = self.game.m_ani.on_tick(time, frame_time)
         self.redraw(time, frame_time)
         return False
 
@@ -98,7 +98,7 @@ class GameStateMenuBag(BaseGameState):
             )
 
             self.game.r_int.draw_text(
-                f"{item.name}",
+                f"{item.itemname}",
                 (0.63, 0.20 + 0.06 * i),
                 size=(0.24, 0.05),
                 bcol=self.selection == i and "yellow" or "white",
@@ -115,6 +115,6 @@ class GameStateMenuBag(BaseGameState):
             )
             self.game.r_int.draw_image(item.icon, (0.25, 0.48), centre=True, size=3.0)
             self.game.r_int.draw_text(
-                f"{item.name}", (0.25, 0.74), size=(0.14, 0.08), centre=True
+                f"{item.itemname}", (0.25, 0.74), size=(0.14, 0.08), centre=True
             )
 

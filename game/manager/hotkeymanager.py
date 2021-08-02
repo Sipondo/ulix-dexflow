@@ -19,11 +19,14 @@ class HotkeyManager:
         self.register_key("backspace", game.wnd.keys.BACKSPACE)
         self.register_key("interact", game.wnd.keys.C)
         self.register_key("interact", game.wnd.keys.ENTER)
+        self.register_key("interact", game.wnd.keys.Z)
+        self.register_key("interact", game.wnd.keys.SPACE)
 
         self.register_key("zoom_out", game.wnd.keys.EQUAL)
         self.register_key("zoom_in", game.wnd.keys.MINUS)
 
         self.register_key("menu", game.wnd.keys.M)
+        self.register_key("menu", game.wnd.keys.X)
         self.register_key("battle", game.wnd.keys.B)
 
         self.register_key("fullscreen", game.wnd.keys.F11)

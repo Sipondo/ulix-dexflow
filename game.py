@@ -21,7 +21,7 @@ from game.manager.pbsmanager import PbsManager
 from game.manager.hotkeymanager import HotkeyManager
 from game.manager.entitymanager import EntityManager
 
-from game.manager.eventmanager import EventManager
+# from game.manager.eventmanager import EventManager
 from game.manager.actionmanager import ActionManager
 
 from game.manager.aimanager import AiManager
@@ -83,6 +83,7 @@ class PokeGame(mglw.WindowConfig):
         self.r_int = InterfaceRenderer(self, self.ctx)
         self.r_wld = WorldRenderer(self, self.ctx)
 
+        self.m_res.init_types()
         self.pan_tool = PanTool(self.size)
         # TODO
         self.r_wld.offset = (0.5, 13 / 16)
@@ -96,7 +97,7 @@ class PokeGame(mglw.WindowConfig):
         self.m_dat = DbManager(self)
         self.m_pbs = PbsManager(self)
         self.m_ent = EntityManager(self)
-        self.m_evt = EventManager(self)
+        # self.m_evt = EventManager(self)
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
         self.m_par = ParticleManager(self)
@@ -104,7 +105,6 @@ class PokeGame(mglw.WindowConfig):
 
         # TODO: maybe move to savemanager
         self.inventory = Inventory(self)
-        self.m_ent.load_entities()
 
         self.query = self.ctx.query(primitives=True)
 
@@ -113,7 +113,7 @@ class PokeGame(mglw.WindowConfig):
         self.maphack = False
 
         # Rendering
-        self.render_prog = self.m_res.get_program("texture")
+        self.render_prog = self.m_res.get_program("texture_filter")
         self.render_prog["texture0"].value = 0
         self.quad_fs = geometry.quad_fs()
 
@@ -142,7 +142,9 @@ class PokeGame(mglw.WindowConfig):
             self.m_gst.current_state.particle_test = self.particle
         else:
             self.m_gst.switch_state("intro")
+
         # TODO: TEMP, start rendering
+        self.m_map.set_level(self.m_map.current_level_id)
         self.render_start = False
 
     def render(self, time, frame_time):
@@ -169,7 +171,9 @@ class PokeGame(mglw.WindowConfig):
 
             locking = self.m_gst.current_state.on_tick(time, frame_time)
             self.r_aud.on_tick(time, frame_time)
-            self.m_act.on_tick(time, frame_time)
+
+            if self.m_gst.current_state_name in ("cinematic", "overworld"):
+                self.m_act.on_tick(time, frame_time)
 
             # TODO
             self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
@@ -180,14 +184,14 @@ class PokeGame(mglw.WindowConfig):
             self.r_ent.pan(self.pan_tool.pan_value, self.pan_tool.zoom_value)
             self.r_wld.render(time, frame_time, locking=locking)
 
-        self.r_int.update()
-
         # Activate the window as the render target
         self.ctx.screen.use()
 
         # Render offscreen diffuse layer to screen
         self.offscreen_diffuse.use(location=0)
+        self.render_prog["Filter"] = self.m_map.filter
         self.quad_fs.render(self.render_prog)
+        self.r_int.update()
 
         self.m_sav.render(time, frame_time)
 

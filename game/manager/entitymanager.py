@@ -1,6 +1,8 @@
-from game.entity.civilianentity import CivilianEntity
+# from game.entity.civilianentity import CivilianEntity
+from game.entity.normalentity import NormalEntity
 from game.entity.playerentity import PlayerEntity
-from game.entity.opponententity import OpponentEntity
+
+# from game.entity.opponententity import OpponentEntity
 
 from itertools import chain
 from math import floor, ceil
@@ -10,12 +12,14 @@ from pathlib import Path
 class EntityManager:
     def __init__(self, gui):
         self.game = gui
-        self.entities = []
+        self.entities = {}
         self.regions = []
         self.textures = []  # lists of paths
         self.texture_names = []
         self.load_textures()
         self.load_player()
+
+        self.entity_autolabel = 0
 
     def get_textures(self):
         return self.textures
@@ -46,43 +50,36 @@ class EntityManager:
     def load_entities(self, offset=(0, 0)):
         # print("\n\nENTITIES:")
         for entity in self.game.m_map.current_entities:
+            print("INITIALISING ENTITY")
             # print(entity)
-            if entity["identifier"] == "Opponent":
+            if entity["identifier"] in ("Civilian", "Opponent", "Invisible"):
                 self.create_entity(
-                    OpponentEntity,
+                    NormalEntity,
                     (
                         floor(entity["location"][0] / 16) - offset[0],
                         ceil(entity["location"][1] // 16) - offset[1],
                     ),
-                    entity["f_direction"],
-                    [Path(entity["f_sprite"]).stem],
-                    entity["f_dialogue"],
-                )
-            if entity["identifier"] == "Civilian":
-                self.create_entity(
-                    CivilianEntity,
-                    (
-                        floor(entity["location"][0] / 16) - offset[0],
-                        ceil(entity["location"][1] // 16) - offset[1],
-                    ),
-                    entity["f_direction"],
-                    [Path(entity["f_sprite"]).stem],
-                    entity["f_dialogue"],
+                    entity,
                 )
 
     def flush_entities(self):
+        for ent in self.entities.values():
+            ent.entity_is_deleted = True
+            del ent
         self.entities.clear()
-        # self.entities = [self.entities[0]]
 
-    def flush_regions(self):
-        # self.regions.clear()
-        self.game.m_act.flush_regions()
-
-    def create_entity(self, entitytype, pos, direction, sprite, dialogue):
-        self.entities.append(entitytype(self.game, pos, direction, sprite, dialogue))
+    def create_entity(self, entitytype, pos, ldtk_info):
+        if ldtk_info["f_entity_uid"]:
+            label = ldtk_info["f_entity_uid"]
+        else:
+            label = f"UNLABELLED_ENTITY_{self.entity_autolabel}"
+            self.entity_autolabel += 1
+        self.entities[label] = entitytype(self.game, pos, ldtk_info)
 
     def render(self):
-        draw_entities = sorted(self.entities + [self.player], key=lambda x: x.y)
+        draw_entities = sorted(
+            list(self.entities.values()) + [self.player], key=lambda x: x.y_g
+        )
         (xoff, yoff) = self.game.pan_tool.pan_value
         xoff *= self.game.pan_tool.warp_x
         yoff *= self.game.pan_tool.warp_y
@@ -90,10 +87,13 @@ class EntityManager:
         yoff += 6 / 16
         list_of_entity_data = []
         for entity in draw_entities:
+            if not entity.visible or not entity.sprites:
+                continue
             entity.on_render()
             mt, cf = entity.get_draw()  # movement type and current frame
             text_id = self.find_texture_id(entity, mt)
             x, y = entity.get_pos()
+            y += entity.pos_vertical
             x *= 16
             y *= 16
             list_of_entity_data.append([x, y, entity.height, text_id, cf])
@@ -105,8 +105,10 @@ class EntityManager:
         return self.texture_names.index(entity.sprites[mt])
 
     def all_entities_on_height(self, height):
-        return [self.player] + [x for x in self.entities if x.height == height]
+        return [self.player] + [
+            x for x in list(self.entities.values()) if x.height == height
+        ]
 
     @property
     def all_entities(self):
-        return [self.player] + self.entities
+        return [self.player] + list(self.entities.values())
