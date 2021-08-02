@@ -1,7 +1,4 @@
 ?if(self.memory.defeated){
-    game: Cinematic()
-    self: Say(defeat_text)
-    game: Overworld()
     exit
 }
 game: Cinematic()
