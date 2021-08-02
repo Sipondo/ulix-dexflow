@@ -10,11 +10,13 @@ class BaseEntity(abc.ABC):
         self.movement_type = 0
         self.moving = False
         self.game_position = position
+        self.start_pos = position
         self.height = height
         self.pos_vertical = 0
         self.interactable = True
         self.col_override = False
         self.entity_is_deleted = False
+        self.render_priority = 0
         self.level = self.game.m_map.current_level_id
 
         if isinstance(direction, int):

@@ -265,13 +265,13 @@
 				},
 				{
 					"__identifier": "Region",
-					"__grid": [28,14],
+					"__grid": [28,16],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 32,
 					"height": 32,
 					"defUid": 356,
-					"px": [448,224],
+					"px": [448,256],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",

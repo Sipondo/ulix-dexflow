@@ -1683,13 +1683,13 @@
 						},
 						{
 							"__identifier": "on_create_action",
-							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
+							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
 							"__type": "String",
 							"defUid": 408,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
+									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
 								]
 							}]
 						},
@@ -1720,14 +1720,12 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: RestoreParty()\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
+							"__value": "self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": [
-									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\nself: Say(\"\"\"1 regel\"\"\")\nself: Say(\"\"\"2 regel\n2 regel\"\"\")\nself: Say(\"\"\"3 regel\n3 regel\n3 regel\"\"\")\nself: Say(\"\"\"4 regel\n4 regel\n4 regel\n4 regel\"\"\")\nself: Say(\"\"\"5 regel\n5 regel\n5 regel\n5 regel\n5 regel\"\"\")\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: RestoreParty()\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\nself: Push(player.direction)\nself: game_position = (x_g-1, y_g)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
-								]
+								"params": ["self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1"]
 							}]
 						},
 						{

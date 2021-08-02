@@ -28,6 +28,7 @@ class BaseMoveAnimation(BaseAnimation):
         self.start_pos = self.entity.get_pos()
 
     def on_tick(self, time, frame_time):
+        self.entity.start_pos = self.start_pos
         xdir, ydir = self.direction
         frame_number = self.frame
         if time > self.stop - 0.5 * frame_time:
@@ -35,6 +36,7 @@ class BaseMoveAnimation(BaseAnimation):
                 int(self.start_pos[0] + xdir * self.single_move_distance),
                 int(self.start_pos[1] + ydir * self.single_move_distance),
             )
+            self.entity.start_pos = self.entity.game_position
             self.on_step(time, frame_time)
             if self.check_continue() and self.conditions():
                 self.after_step(time, frame_time)

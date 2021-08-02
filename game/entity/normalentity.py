@@ -1,7 +1,5 @@
 from .baseentity import BaseEntity
-from game.animation.moveanimation.basemoveanimation import BaseMoveAnimation
 from pathlib import Path
-import json
 
 
 class NormalEntity(BaseEntity):
@@ -9,7 +7,7 @@ class NormalEntity(BaseEntity):
         self.direction = (1, 0)
         self.sprite = None
         for k, v in ldtk_info.items():
-            print(k, v)
+            # print(k, v)
             if k[:2] == "f_":
                 setattr(self, k[2:], v)
             else:
@@ -28,8 +26,6 @@ class NormalEntity(BaseEntity):
             self.splash = self.game.m_res.get_trainer_splash(Path(self.splash).stem)
 
         if hasattr(self, "aggro_range"):
-            print(self.name, "HAS AGGRO RANGE ", self.aggro_range)
-            print("POKEMON ARE:", self.battlers, self.config)
             self.aggro_region = self.game.m_act.create_aggro_region(self, {})
 
             self.team = []
@@ -48,8 +44,6 @@ class NormalEntity(BaseEntity):
                     for k, v in battler_js.items():
                         member[k] = v
 
-            print(self.team)
-
     def when_interact(self):
         direc = self.game.m_ent.player.get_dir()
         self.direction = (-direc[0], -direc[1])
@@ -60,6 +54,10 @@ class NormalEntity(BaseEntity):
         print("ON ENTER!!!", self.name)
         self.current_sprite = (0, self.get_offset())
         self.game.m_act.create_action(self.on_create_action, self)
+
+    def on_step(self, time, frame_time):
+        if hasattr(self, "aggro_range"):
+            self.aggro_region.refresh_region()
 
     @property
     def mem(self):

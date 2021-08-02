@@ -1,5 +1,11 @@
 import json
 import types
+import numpy as np
+from io import BytesIO
+import pandas as pd
+
+ENTITY_SERIALIZE = (int, str, bool, tuple, list, pd.Series)
+ENTITY_SERIALIZE_BLACKLIST = "moving"
 
 
 class SaveManager:
@@ -7,6 +13,7 @@ class SaveManager:
         self.game = game
         self.streaming = True
         self.last_save = 0
+        self.restored_entities = False
 
         self.settables = ValueHolder(holder_is_frozen=False)
         self.switches = ValueHolder(holder_is_frozen=False)
@@ -15,8 +22,10 @@ class SaveManager:
         self.memory = {}
 
         try:
-            with open("streamingsave.usave", "r") as infile:
-                self.store = json.loads(infile.read())
+            with open("streamingsave.usave", "rb") as infile:
+                # self.store = json.loads(infile.read())
+                sav = np.load(BytesIO(infile.read()), allow_pickle=True)
+                self.store = {key: sav[key][()] for key in sav.files}
         except Exception as e:
             print("Warning: No streaming save found. Defaulting...")
             self.store = {
@@ -25,7 +34,12 @@ class SaveManager:
                 "MEMORY": {},
                 "SETTABLES": {},
                 "SWITCHES": {},
+                "TEAM": [],
+                "STORAGE": [],
+                "ITEMS": [],
+                "LEVEL_ENTITIES": {},
             }
+        # print("\n".join([f"{k}: {v}\n" for k, v in self.store.items()]))
 
         for k, v in self.store["SETTABLES"].items():
             if k != "holder_is_frozen":
@@ -46,11 +60,27 @@ class SaveManager:
 
         self.settables.holder_is_frozen = True
         self.switches.holder_is_frozen = True
-        print("SETTABLES:", self.settables.__dict__)
-        print("SWITCHES:", self.switches.__dict__)
+        # print("SETTABLES:", self.settables.__dict__)
+        # print("SWITCHES:", self.switches.__dict__)
 
     def go_to_new_level(self):
         self.locals = ValueHolder(holder_is_frozen=False)
+
+    def restore_entities(self):
+        if self.restored_entities:
+            return None
+        self.restored_entities = True
+
+        for entname, values in self.store["LEVEL_ENTITIES"].items():
+            try:
+                entity = self.game.m_ent.entities[entname]
+                for k, v in values.items():
+                    try:
+                        setattr(entity, k, v)
+                    except Exception:
+                        continue
+            except Exception:
+                continue
 
     def get_memory_holder(self, level, entity):
         level = str(level)
@@ -109,7 +139,10 @@ class SaveManager:
             setattr(self.switches, loc, value)
 
     def render(self, time, frame_time):
-        if time - self.last_save < 5:
+        if (
+            time - self.last_save < 5
+            or self.game.m_gst.current_state_name != "overworld"
+        ):
             return
         self.last_save = time
 
@@ -122,7 +155,7 @@ class SaveManager:
             team.append(
                 {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
             )
-        self.save("team", team)
+        self.save("TEAM", team)
 
         # Storage
         storage = []
@@ -130,7 +163,7 @@ class SaveManager:
             storage.append(
                 {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
             )
-        self.save("storage", storage)
+        self.save("STORAGE", storage)
 
         # Items
         items = []
@@ -138,7 +171,19 @@ class SaveManager:
             items.append(
                 {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
             )
-        self.save("items", items)
+        self.save("ITEMS", items)
+
+        # Current Level Entities
+        level_entities = {}
+        for tag, entity in self.game.m_ent.entities.items():
+            level_entities[tag] = {
+                k: v
+                for k, v in entity.__dict__.items()
+                if type(v) in ENTITY_SERIALIZE and k not in ENTITY_SERIALIZE_BLACKLIST
+            }
+            level_entities[tag]["game_position"] = entity.start_pos
+
+        self.save("LEVEL_ENTITIES", level_entities)
 
     def set_lazy_data(self):
         self.game.inventory.members = []
@@ -154,8 +199,14 @@ class SaveManager:
             for k, v in self.memory.items()
         }
 
-        with open(fname, "w") as outfile:
-            outfile.write(json.dumps(self.store, indent=4))
+        # with open(fname, "w") as outfile:
+        #     outfile.write(json.dumps(self.store, indent=4))
+        f = BytesIO()
+        np.savez_compressed(f, **self.store)
+        f.seek(0)
+        out = f.read()
+        with open(fname, "wb") as outfile:
+            outfile.write(out)
 
 
 class ValueHolder(types.SimpleNamespace):

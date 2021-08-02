@@ -131,7 +131,11 @@ class PokeGame(mglw.WindowConfig):
         )
 
         # Initial map
-        self.r_wld.set_map_via_manager(self.m_sav.load("current_offset") or (0, 0))
+        self.r_wld.set_map_via_manager(
+            isinstance(self.m_sav.load("current_offset"), int)
+            and (0, 0)
+            or tuple(self.m_sav.load("current_offset"))
+        )
         # Start game
         # self.m_gst.switch_state("intro")
 

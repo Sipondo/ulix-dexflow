@@ -61,6 +61,7 @@ class Push:
 
         if self.go_down:
             self.user.sprites = ["pillar_used"]
+            self.user.render_priority = -1
             self.user.interactable = False
             self.user.col_override = True
         return True
