@@ -191,7 +191,7 @@ class GameStateBattle(BaseGameState):
                             if self.lock_state:
                                 for agent in self.agents:
                                     if type(agent) == AgentUser:
-                                        agent.set_sendout(self.selection)
+                                        agent.set_sendout(self.combat, self.selection)
                             else:
                                 self.reg_action(("swap", self.selection,),)
                     elif self.state == states["ballmenu"]:
@@ -252,7 +252,7 @@ class GameStateBattle(BaseGameState):
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
                             self.lock_state = "user_switch"
-                            self.agents[i].set_sendout(None)
+                            self.agents[i].set_sendout(self.combat, None)
                 return
             else:
                 self.state = states["topmenu"]
