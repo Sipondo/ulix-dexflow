@@ -478,16 +478,42 @@
 						},
 						{
 							"__identifier": "battlers",
-							"__value": [ "Stunfisk", "Smeargle" ],
+							"__value": [
+								"Stunfisk",
+								"Smeargle",
+								"Smeargle",
+								"Ponyta",
+								"Pichu",
+								"Pichu"
+							],
 							"__type": "Array<LocalEnum.Battlers>",
 							"defUid": 379,
-							"realEditorValues": [ {
-								"id": "V_String",
-								"params": ["Stunfisk"]
-							}, {
-								"id": "V_String",
-								"params": ["Smeargle"]
-							} ]
+							"realEditorValues": [
+								{
+									"id": "V_String",
+									"params": ["Stunfisk"]
+								},
+								{
+									"id": "V_String",
+									"params": ["Smeargle"]
+								},
+								{
+									"id": "V_String",
+									"params": ["Smeargle"]
+								},
+								{
+									"id": "V_String",
+									"params": ["Ponyta"]
+								},
+								{
+									"id": "V_String",
+									"params": ["Pichu"]
+								},
+								{
+									"id": "V_String",
+									"params": ["Pichu"]
+								}
+							]
 						},
 						{
 							"__identifier": "name",

@@ -23,4 +23,5 @@ class PartyMove:
 
     @property
     def series(self):
+        self.data.max_pp = self.max_pp
         return self.data

@@ -35,6 +35,29 @@ class GameStateBattle(BaseGameState):
             self.game.m_res.get_interface("battlecell_selected"),
         )
 
+        self.spr_battlestatus = (
+            self.game.m_res.get_interface("battlestatus_ours"),
+            self.game.m_res.get_interface("battlestatus_theirs"),
+        )
+
+        self.spr_teamstatus = (
+            self.game.m_res.get_picture("Battle/icon_ball"),
+            self.game.m_res.get_picture("Battle/icon_ball_empty"),
+            self.game.m_res.get_picture("Battle/icon_ball_faint"),
+            self.game.m_res.get_picture("Battle/icon_ball_status"),
+        )
+
+        self.spr_own = self.game.m_res.get_picture("Battle/icon_own")
+
+        self.spr_statusbox = self.game.m_res.get_interface("statusbox")
+
+        self.spr_attackcell = (
+            self.game.m_res.get_interface("attackcell"),
+            self.game.m_res.get_interface("attackcell_selected"),
+        )
+
+        self.spr_attacktypes = self.game.m_res.attack_types
+
         self.agents = []
         if agents:
             self.agents = agents
@@ -345,16 +368,31 @@ class GameStateBattle(BaseGameState):
 
             elif self.state == states["actionmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.68, 0.53), size=(0.22, 0.32), col="black"
+                    (0.685, 0.59), size=(0.29, 0.29), col="white"
                 )
 
-                actionnames = [x["name"] for x in self.actor_1[0].actions]
-                for i in range(min(len(actionnames), 4)):
+                actionlist = self.actor_1[0].actions
+                for i in range(min(len(actionlist), 4)):
+                    self.game.r_int.draw_image(
+                        self.spr_attacktypes[actionlist[i].type],
+                        (0.6938, 0.607 + 0.07 * i),
+                    )
+                    self.game.r_int.draw_image(
+                        self.spr_attackcell[self.selection == i and 1 or 0],
+                        (0.69, 0.6 + 0.07 * i),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{actionnames[i]}",
-                        (0.69, 0.54 + 0.08 * i),
+                        actionlist[i]["name"],
+                        (0.725, 0.607 + 0.07 * i),
                         size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        bcol=None,
+                    )
+                    self.game.r_int.draw_text(
+                        f"{actionlist[i].pp}/{actionlist[i].pp}",
+                        (0.93, 0.616 + 0.07 * i),
+                        size=(0.20, 0.06),
+                        bcol=None,
+                        fsize=6,
                     )
 
             elif self.state == states["swapmenu"]:
@@ -388,70 +426,101 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((0, self.board.get_active(0)))
         rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
-        x_off = 0.1
-        x_size = 0.3
+        x_off = 0.08
+        x_size = 0.28
+
+        # HP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+        )
         if rel_hp > 0:
             self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.05 - lining),
-                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.10 - lining),
-                size=(x_size + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_text(
-                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
-            )
-            # HP bar
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1), size=(x_size, 0.05), col="grey",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1),
-                size=(x_size * rel_hp, 0.05),
+                (x_off + 0.028, 0.14),
+                size=(x_size * rel_hp, 0.035),
                 col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
             )
-            # EXP bar
+        # EXP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.029, 0.19), size=(0.223, 0.014), col="grey",
+        )
+        rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
+        if rel_xp > 0:
             self.game.r_int.draw_rectangle(
-                (0.1, 0.158), size=(0.25, 0.012), col="grey",
+                (x_off + 0.029, 0.19), size=(0.223 * rel_xp, 0.014), col="blue",
             )
-            rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
-            if rel_xp > 0:
-                self.game.r_int.draw_rectangle(
-                    (0.1, 0.158), size=(0.25 * rel_xp, 0.012), col="blue",
-                )
+
+        self.game.r_int.draw_image(
+            self.spr_battlestatus[0], (x_off, 0.08), centre=False,
+        )
+
+        self.game.r_int.draw_text(
+            fighter.name, (x_off + 0.015, 0.09), size=(x_size / 2, 0.05), bcol=None,
+        )
+
+        for i in range(6):
+            print(self.board.teams[0][i][1])
+            self.game.r_int.draw_image(
+                self.spr_teamstatus[
+                    (0 if self.board.teams[0][i][1]["can_fight"] else 2)
+                    if i < len(self.board.teams[0])
+                    else 1
+                ],
+                (x_off + 0.168 + 0.026 * i, 0.107),
+                centre=True,
+            )
 
         # Enemy
         lining = 0.008
         fighter = self.board.get_actor((1, self.board.get_active(1)))
         rel_hp = self.board.get_relative_hp((1, self.board.get_active(1)))
         x_off = 0.6
-        x_size = 0.3
+        x_size = 0.28
+        # HP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+        )
         if rel_hp > 0:
             self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.05 - lining),
-                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.10 - lining),
-                size=(x_size + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_text(
-                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
-            )
-            # HP bar
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1), size=(x_size, 0.05), col="grey",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1),
-                size=(x_size * rel_hp, 0.05),
+                (x_off + 0.028, 0.14),
+                size=(x_size * rel_hp, 0.035),
                 col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
             )
+        # self.game.r_int.draw_rectangle(
+        #     (x_off - lining, 0.05 - lining),
+        #     size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
+        #     col="black",
+        # )
+        # self.game.r_int.draw_rectangle(
+        #     (x_off - lining, 0.10 - lining),
+        #     size=(x_size + 2 * lining, 0.05 + 2 * lining),
+        #     col="black",
+        # )
+        self.game.r_int.draw_image(
+            self.spr_battlestatus[1], (x_off, 0.08), centre=False,
+        )
+        self.game.r_int.draw_text(
+            fighter.name, (x_off + 0.175, 0.09), size=(x_size / 2, 0.05), bcol=None,
+        )
+        self.game.r_int.draw_image(
+            self.spr_own, (x_off + 0.172, 0.11), centre=True,
+        )
+        for i in range(6):
+            self.game.r_int.draw_image(
+                self.spr_teamstatus[
+                    (0 if self.board.teams[1][i][1]["can_fight"] else 2)
+                    if i < len(self.board.teams[1])
+                    else 1
+                ],
+                (x_off + 0.016 + 0.026 * (5 - i), 0.107),
+                centre=True,
+            )
+
         # Narrator
-        self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
-        self.game.r_int.draw_text(self.narrate, (0.01, 0.91), to=(0.99, 0.99))
+        # self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
+        self.game.r_int.draw_image(
+            self.spr_statusbox, (0.0035, 0.9),
+        )
+        self.game.r_int.draw_text(
+            self.narrate, (0.01, 0.91), to=(0.99, 0.99), bcol=None
+        )
+

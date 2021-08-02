@@ -28,6 +28,7 @@ from game.upl.upl_scripts.push import Push
 from game.upl.upl_scripts.random import Random
 from game.upl.upl_scripts.removeitem import RemoveItem
 from game.upl.upl_scripts.resetlocalencounters import ResetLocalEncounters
+from game.upl.upl_scripts.restoreparty import RestoreParty
 from game.upl.upl_scripts.say import Say
 from game.upl.upl_scripts.setlocalencounters import SetLocalEncounters
 from game.upl.upl_scripts.setmovement import SetMovement

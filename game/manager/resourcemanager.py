@@ -23,7 +23,7 @@ TYPES = [
     "BUG",
     "GHOST",
     "STEEL",
-    "???",
+    "UNKNOWN",
     "FIRE",
     "WATER",
     "GRASS",
@@ -51,6 +51,7 @@ class ResourceManager:
         self.p_icons = self.p_graphics / "icon"
         self.p_items = self.p_graphics / "Items"
         self.p_interface = self.p_graphics / "interface"
+        self.p_picture = self.p_graphics / "Pictures"
         self.p_trainers = self.p_graphics / "Trainers"
         self.p_fonts = Path("font")
         self.p_sprites = self.p_graphics / "characters_temp"
@@ -88,15 +89,17 @@ class ResourceManager:
                 ],
             )
         }
-        print(len(self.types))
-        print(self.types)
+
+        self.attack_types = {
+            x: self.get_interface(f"attack_types/attack_{x.lower()}") for x in TYPES
+        }
 
     def get_font(self, name, scale):
         pth = (self.p_fonts / Path(name).stem).with_suffix(".ttf")
         pth = self.resolve_resource_path(pth)
         return {
             x: ImageFont.truetype(str(pth.resolve()), x * scale)
-            for x in range(8, 20, 2)
+            for x in range(6, 20, 2)
         }
 
     def get_entity_textures(self):
@@ -157,6 +160,14 @@ class ResourceManager:
 
     def get_interface(self, resource_name, size=0.5):
         pth = self.p_interface / f"{str(resource_name)}.png"
+        if self.resolve_resource_path(pth):
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
+
+    def get_picture(self, resource_name, size=0.5):
+        pth = self.p_picture / f"{str(resource_name)}.png"
         if self.resolve_resource_path(pth):
             return self.open_image_interface(pth, size,).convert("RGBA")
         return self.open_image_interface(self.p_items / "000.png", size,).convert(
