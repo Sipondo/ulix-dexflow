@@ -61,8 +61,9 @@ class GameStateCinematic(BaseGameState):
                     if self.shop_confirm < 1:
                         self.shop_confirm = 99
                     return
-                self.selection = (self.selection + 1) % self.max_selection
-                self.game.r_aud.effect("select")
+                if self.options:
+                    self.selection = (self.selection + 1) % self.max_selection
+                    self.game.r_aud.effect("select")
             elif key == "up":
                 if self.shop_confirm is not None:
                     self.game.r_aud.effect("select")
@@ -70,8 +71,9 @@ class GameStateCinematic(BaseGameState):
                     if self.shop_confirm > 99:
                         self.shop_confirm = 1
                     return
-                self.selection = (self.selection - 1) % self.max_selection
-                self.game.r_aud.effect("select")
+                if self.options:
+                    self.selection = (self.selection - 1) % self.max_selection
+                    self.game.r_aud.effect("select")
             elif key == "interact":
                 if self.shop:
                     if self.shop_confirm is not None:

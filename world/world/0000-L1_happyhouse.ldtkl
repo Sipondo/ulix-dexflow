@@ -326,22 +326,36 @@
 				},
 				{
 					"__identifier": "Encounter",
-					"__grid": [30,14],
+					"__grid": [31,14],
 					"__pivot": [0,0],
 					"__tile": null,
-					"width": 128,
-					"height": 128,
+					"width": 112,
+					"height": 112,
 					"defUid": 441,
-					"px": [480,224],
+					"px": [496,224],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "self: SetLocalEncounters(local_encounter_rate, local_encounters)",
+							"__value": "self: SetLocalEncounters(local_encounter_rate, local_encounters)\nself: Debug(\"ON ENTER\")",
 							"__type": "String",
 							"defUid": 442,
-							"realEditorValues": []
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"self: SetLocalEncounters(local_encounter_rate, local_encounters)\nself: Debug(\"ON ENTER\")"
+								]
+							}]
 						},
-						{ "__identifier": "on_exit_action", "__value": "self: ResetLocalEncounters()", "__type": "String", "defUid": 443, "realEditorValues": [] },
+						{
+							"__identifier": "on_exit_action",
+							"__value": "self: ResetLocalEncounters()\nself: Debug(\"ON EXIT\")",
+							"__type": "String",
+							"defUid": 443,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["self: ResetLocalEncounters()\nself: Debug(\"ON EXIT\")"]
+							}]
+						},
 						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 444, "realEditorValues": [] },
 						{ "__identifier": "local_encounters", "__value": "100x BEEDRILL", "__type": "String", "defUid": 445, "realEditorValues": [] },
 						{ "__identifier": "local_encounter_rate", "__value": 1, "__type": "Float", "defUid": 446, "realEditorValues": [] }

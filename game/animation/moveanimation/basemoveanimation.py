@@ -37,9 +37,11 @@ class BaseMoveAnimation(BaseAnimation):
             )
             self.on_step(time, frame_time)
             if self.check_continue() and self.conditions():
+                self.after_step(time, frame_time)
                 self.continue_move(time, frame_time)
             else:
-                self.entity.set_current_sprite((self.movement_type, frame_number))
+                self.after_step(time, frame_time)
+                # self.entity.set_current_sprite((self.movement_type, frame_number))
                 self.on_end(time, frame_time)
                 return False
         else:
@@ -80,8 +82,11 @@ class BaseMoveAnimation(BaseAnimation):
         return False
 
     def on_step(self, time, frame_time):
-        self.entity.on_step(time, frame_time)
+        # self.entity.on_step(time, frame_time)
         self.distance -= 1
+
+    def after_step(self, time, frame_time):
+        self.entity.on_step(time, frame_time)
 
     def get_direction(self):
         if self.direction == (0, -1):
@@ -122,6 +127,7 @@ class BaseMoveAnimation(BaseAnimation):
             self.anim_speed = 11
 
     def on_end(self, time, frame_time):
+        self.entity.set_current_sprite((self.movement_type, self.frame))
         self.entity.after_move(time, frame_time)
         self.game.m_ani.remove_anim(self)
         self.ended = True

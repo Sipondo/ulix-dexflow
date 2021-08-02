@@ -14,6 +14,9 @@ class ActionManager:
         self.prefab_actions = {}
 
     def on_tick(self, time, frame_time):
+        self.last_time = time
+        self.last_frame_time = frame_time
+
         self.queue.clear()
         to_clear = []
         for act in self.actions:
@@ -21,6 +24,19 @@ class ActionManager:
         while len(self.queue) != 0:
             act = self.queue.popleft()
             if act.on_tick(time, frame_time):
+                to_clear.append(act)
+
+        for act in to_clear:
+            self.actions.remove(act)
+            del act
+
+    def express_run(self, action):
+        to_clear = []
+        for act in [action]:
+            self.queue.append(act)
+        while len(self.queue) != 0:
+            act = self.queue.popleft()
+            if act.on_tick(self.last_time, self.last_frame_time):
                 to_clear.append(act)
 
         for act in to_clear:
@@ -346,13 +362,17 @@ class RegionRectangle:
 
     def on_enter(self, entity):
         self.containing.add(entity)
-        self.game.m_act.actions.append(Action(self.game, self.on_enter_action, self))
+        act = Action(self.game, self.on_enter_action, self)
+        self.game.m_act.actions.append(act)
+        self.game.m_act.express_run(act)
         # self.game.m_upl.parse(self, self.on_enter_action)
 
     def on_exit(self, entity):
         # print("on_exit:", self, entity)
         self.containing.remove(entity)
-        self.game.m_act.actions.append(Action(self.game, self.on_exit_action, self))
+        act = Action(self.game, self.on_exit_action, self)
+        self.game.m_act.actions.append(act)
+        self.game.m_act.express_run(act)
         # self.game.m_upl.parse(self, self.on_exit_action)
 
 
@@ -402,9 +422,9 @@ class RegionAggro:
 
     def on_enter(self, entity):
         self.containing.add(entity)
-        self.game.m_act.actions.append(
-            Action(self.game, self.entity.on_aggro_action, self.entity)
-        )
+        act = Action(self.game, self.entity.on_aggro_action, self.entity)
+        self.game.m_act.actions.append(act)
+        self.game.m_act.express_run(act)
         # self.game.m_upl.parse(self, self.on_enter_action)
 
     def on_exit(self, entity):
