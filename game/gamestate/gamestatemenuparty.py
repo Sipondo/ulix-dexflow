@@ -24,10 +24,12 @@ class GameStateMenuParty(BaseGameState):
         self.top_menu_options = [
             self.game.m_res.get_interface(x) for x in top_menu_options
         ]
-        self.cell = (
+        self.spr_mainmenucell = (
             self.game.m_res.get_interface("Cell"),
             self.game.m_res.get_interface("Cell_Selected"),
         )
+        self.spr_partyback = self.game.m_res.get_interface("partyback")
+        self.spr_iconback = self.game.m_res.get_interface("iconback")
 
         self.need_to_redraw = True
 
@@ -142,7 +144,9 @@ class GameStateMenuParty(BaseGameState):
                 #     bcol=self.selection == i and "yellow" or "white",
                 # )
                 self.game.r_int.draw_image(
-                    self.selection == i and self.cell[1] or self.cell[0],
+                    self.selection == i
+                    and self.spr_mainmenucell[1]
+                    or self.spr_mainmenucell[0],
                     (0.76 + (self.selection == i and -0.01 or 0), 0.10 + 0.14 * i),
                 )
                 self.game.r_int.draw_image(
@@ -153,8 +157,8 @@ class GameStateMenuParty(BaseGameState):
             List pokemon and retrieve info via subview
             """
         elif self.state == states["party"] or self.state == states["inspect"]:
-            self.game.r_int.draw_rectangle((0.07, 0.12), to=(0.93, 0.88), col="black")
-
+            # self.game.r_int.draw_rectangle((0.07, 0.12), to=(0.93, 0.88), col="black")
+            self.game.r_int.draw_image(self.spr_partyback, (0.5, 0.5), centre=True)
             # Draw left full party view if in party
             if self.state == states["party"]:
                 for i, member in enumerate(self.game.inventory.members):
@@ -175,6 +179,9 @@ class GameStateMenuParty(BaseGameState):
                         (0.155 + (i % 2) * 0.18, i_v + 0.07),
                         size=(0.14 * current_hp, 0.01),
                         col="green",
+                    )
+                    self.game.r_int.draw_image(
+                        self.spr_iconback, (0.12 + (i % 2) * 0.4, i_v), centre=True,
                     )
                     self.game.r_int.draw_image(
                         member.icon[self.icon_frame]

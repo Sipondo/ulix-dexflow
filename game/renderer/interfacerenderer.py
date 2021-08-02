@@ -70,6 +70,7 @@ class InterfaceRenderer:
         bold=True,
         align="left",
         fsize=12,
+        col="black",
     ):
         self.rerender = True
         if bcol:
@@ -98,7 +99,7 @@ class InterfaceRenderer:
             pos = (to[0] - w, pos[1])
 
         self.draw.multiline_text(
-            pos, msg, font=font, fill="black", align=align,
+            pos, msg, font=font, fill=col, align=align,
         )
 
     def draw_image(self, img, pos, centre=False, size=1.0):

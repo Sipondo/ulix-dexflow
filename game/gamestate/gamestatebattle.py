@@ -372,9 +372,9 @@ class GameStateBattle(BaseGameState):
                     )
 
             elif self.state == states["actionmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.685, 0.59), size=(0.29, 0.27), col="white"
-                )
+                # self.game.r_int.draw_rectangle(
+                #     (0.685, 0.59), size=(0.29, 0.27), col="white"
+                # )
 
                 actionlist = self.actor_1[0].actions
                 for i in range(min(len(actionlist), 4)):
@@ -391,6 +391,7 @@ class GameStateBattle(BaseGameState):
                         (0.725, 0.607 + 0.065 * i),
                         size=(0.20, 0.06),
                         bcol=None,
+                        col="white",
                     )
                     self.game.r_int.draw_text(
                         f"{actionlist[i].pp}/{actionlist[i].pp}",
@@ -398,6 +399,7 @@ class GameStateBattle(BaseGameState):
                         size=(0.20, 0.06),
                         bcol=None,
                         fsize=6,
+                        col="white",
                     )
 
             elif self.state == states["swapmenu"]:
