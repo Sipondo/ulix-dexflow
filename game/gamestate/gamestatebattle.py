@@ -251,7 +251,7 @@ class GameStateBattle(BaseGameState):
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
                             self.lock_state = True
-                            self.agents[i].set_action(None)
+                            self.agents[i].set_sendout(None)
                 return
             else:
                 self.state = states["topmenu"]
