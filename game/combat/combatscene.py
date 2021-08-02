@@ -136,6 +136,7 @@ class CombatScene:
         if args:
             delete, skip, end = f(*args)
         else:
+            print(effect, f)
             delete, skip, end = f()
         if delete:
             self.delete_effect(effect)
