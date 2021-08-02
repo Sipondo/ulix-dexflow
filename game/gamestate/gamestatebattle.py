@@ -56,6 +56,11 @@ class GameStateBattle(BaseGameState):
             self.game.m_res.get_interface("attackcell_selected"),
         )
 
+        self.spr_ballcell = (
+            self.game.m_res.get_interface("ballcell"),
+            self.game.m_res.get_interface("ballcell_selected"),
+        )
+
         self.spr_attacktypes = self.game.m_res.attack_types
 
         self.agents = []
@@ -328,9 +333,8 @@ class GameStateBattle(BaseGameState):
             return f"Send out {name}."
 
         if self.state == states["ballmenu"]:
-            print(self.game.inventory.get_pocket_items(3)[self.selection])
-            ball = self.game.inventory.get_pocket_items(3)[self.selection]
-            return ball.description
+            # ball = self.game.inventory.get_pocket_items(3)[self.selection]
+            return "blabla ik ben een bal"  # ball.description
 
         if self.state == states["topmenu"]:
             strings = [
@@ -368,28 +372,28 @@ class GameStateBattle(BaseGameState):
 
             elif self.state == states["actionmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.685, 0.59), size=(0.29, 0.29), col="white"
+                    (0.685, 0.59), size=(0.29, 0.27), col="white"
                 )
 
                 actionlist = self.actor_1[0].actions
                 for i in range(min(len(actionlist), 4)):
                     self.game.r_int.draw_image(
                         self.spr_attacktypes[actionlist[i].type],
-                        (0.6938, 0.607 + 0.07 * i),
+                        (0.6938, 0.607 + 0.065 * i),
                     )
                     self.game.r_int.draw_image(
                         self.spr_attackcell[self.selection == i and 1 or 0],
-                        (0.69, 0.6 + 0.07 * i),
+                        (0.69, 0.6 + 0.065 * i),
                     )
                     self.game.r_int.draw_text(
                         actionlist[i]["name"],
-                        (0.725, 0.607 + 0.07 * i),
+                        (0.725, 0.607 + 0.065 * i),
                         size=(0.20, 0.06),
                         bcol=None,
                     )
                     self.game.r_int.draw_text(
                         f"{actionlist[i].pp}/{actionlist[i].pp}",
-                        (0.93, 0.616 + 0.07 * i),
+                        (0.93, 0.616 + 0.065 * i),
                         size=(0.20, 0.06),
                         bcol=None,
                         fsize=6,
@@ -397,29 +401,42 @@ class GameStateBattle(BaseGameState):
 
             elif self.state == states["swapmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.68, 0.37), size=(0.22, 0.48), col="black"
+                    (0.685, 0.49), size=(0.22, 0.4), col="white"
                 )
 
                 for i, name in enumerate(self.game.inventory.fighter_names):
+                    self.game.r_int.draw_image(
+                        self.spr_ballcell[self.selection == i and 1 or 0],
+                        (0.69, 0.5 + 0.065 * i),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name}",
-                        (0.69, 0.38 + 0.08 * i),
-                        size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        name, (0.725, 0.507 + 0.065 * i), size=(0.20, 0.06), bcol=None,
                     )
 
             elif self.state == states["ballmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.68, 0.53), size=(0.22, 0.32), col="black"
+                    (0.685, 0.49), size=(0.22, 0.4), col="white"
                 )
 
                 balls = self.game.inventory.get_pocket_items(3)
-                for i in range(4):
+                if balls:
+                    for i in range(len(balls)):
+                        self.game.r_int.draw_image(
+                            self.spr_ballcell[self.selection == i and 1 or 0],
+                            (0.69, 0.5 + 0.065 * i),
+                        )
+                        self.game.r_int.draw_text(
+                            balls[i].itemname,
+                            (0.725, 0.507 + 0.065 * i),
+                            size=(0.20, 0.06),
+                            bcol=None,
+                        )
+                else:
+                    self.game.r_int.draw_image(
+                        self.spr_ballcell[1], (0.69, 0.5),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{balls[i].name}",
-                        (0.69, 0.54 + 0.08 * i),
-                        size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        f"No balls!", (0.725, 0.507), size=(0.20, 0.06), bcol=None,
                     )
         # HP Bars & EXP bar
         # Ally
