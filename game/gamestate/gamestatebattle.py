@@ -244,7 +244,6 @@ class GameStateBattle(BaseGameState):
         if not self.pending_boards:
             self.need_to_redraw = True
             if any(self.board.switch):
-                self.lock_state = True
                 self.state = states["topmenu"]
                 for i, boo in enumerate(self.board.switch):
                     if boo:
