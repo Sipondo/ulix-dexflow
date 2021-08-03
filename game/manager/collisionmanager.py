@@ -43,7 +43,7 @@ class CollisionManager:
         ]
 
         for entity in self.game.m_ent.all_entities_on_height(height):
-            if entity == src_entity:
+            if entity == src_entity or not entity.visible:
                 continue
             # print(entity.game_position)
             x1, y1 = entity.get_pos()
@@ -104,7 +104,7 @@ class CollisionManager:
 
         if check_entities:
             for entity in self.game.m_ent.all_entities_on_height(height):
-                if entity == src_entity:
+                if entity == src_entity or not entity.visible:
                     continue
                 x1, y1 = entity.get_pos()
                 x1 += self.offset[0]
