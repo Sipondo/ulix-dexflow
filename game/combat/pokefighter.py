@@ -20,34 +20,35 @@ class PokeFighter(CombatFighter):
             self.init_stats(fighter)
             self.current_hp = self.stats[0]
             self.current_xp = 0
+        if "level" in fighter:
+            self.level = fighter.level
         else:
-            if "level" in fighter:
-                self.level = fighter.level
-            else:
-                self.level = 100
+            self.level = 100
 
-            if "stats_base" in fighter:
-                self.stats_base = fighter.stats_base
-                self.stats_reward = fighter.stats_reward
-                self.stats_IV = fighter.stats_IV
-                self.stats_EV = fighter.stats_EV
-                self.nature = fighter.nature
-            else:
-                self.init_stats(fighter)
+        if "stats_base" in fighter:
+            self.stats_base = fighter.stats_base
+            self.stats_reward = fighter.stats_reward
+            self.stats_IV = fighter.stats_IV
+            self.stats_EV = fighter.stats_EV
+            self.nature = fighter.nature
+        else:
+            self.init_stats(fighter)
 
-            if "current_hp" in fighter:
-                self.current_hp = fighter.current_hp
-                print(self.name, self.current_hp)
-            else:
-                self.current_hp = self.stats[0]
+        if "current_hp" in fighter:
+            self.current_hp = fighter.current_hp
+        else:
+            self.current_hp = self.stats[0]
 
-            if "current_xp" in fighter:
-                self.current_xp = fighter.current_xp
-                self.level_xp = fighter.level_xp
-            else:
-                self.current_xp = 0
-                self.level_xp = 0
-
+        if "current_xp" in fighter:
+            self.current_xp = fighter.current_xp
+            self.level_xp = fighter.level_xp
+        else:
+            self.current_xp = 0
+            self.level_xp = 0
+        if "actions" not in fighter:
+            self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 87, 433]]
+        else:
+            self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
         self.starting_hp = self.current_hp
         self.type1 = str(fighter["type1"])
         self.type2 = str(fighter["type2"])
@@ -55,7 +56,6 @@ class PokeFighter(CombatFighter):
         # Init actions starting from id:
         # start_id = 580
         # self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]]
-        self.actions = [self.game.m_pbs.get_move(x) for x in [87, 399, 399, 399]]
 
         self.data = fighter.copy()
 
@@ -97,5 +97,7 @@ class PokeFighter(CombatFighter):
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
+        self.data["actions"] = [int(action.name) for action in self.actions]
+        print("actions:", [action.name for action in self.actions])
 
         return self.data

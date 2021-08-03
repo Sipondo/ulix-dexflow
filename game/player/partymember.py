@@ -16,13 +16,16 @@ class PartyMember:
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
 
+        self.actions = [1, 15, 399, 87]
+
         for k, v in data.items():
             setattr(self, k, v)
+
+        self.actions = [int(i) for i in self.actions]
 
         self.icon = self.game.m_res.get_party_icon(self.internalname)
         self.sprite = self.game.m_res.get_sprite_from_anim(data.name, size=2.0)
 
-        self.moves = []
         # TODO:
 
         self.current_xp = 500
@@ -63,6 +66,7 @@ class PartyMember:
         self.current_xp = data.current_xp
         self.level_xp = data.level_xp
         self.current_hp = data.current_hp
+        self.actions = [int(i) for i in data.actions]
 
     @property
     def stats(self):
@@ -87,5 +91,6 @@ class PartyMember:
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
+        self.data["actions"] = self.actions
 
         return self.data

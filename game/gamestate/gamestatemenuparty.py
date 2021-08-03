@@ -247,9 +247,10 @@ class GameStateMenuParty(BaseGameState):
                     )
 
             elif self.pstate == pstates["moves"]:
-                for i, move in enumerate(member.moves):
+                for i, move in enumerate(member.actions):
+                    move = self.game.m_pbs.get_move(move)
                     self.game.r_int.draw_text(
-                        f"{move.name}",
+                        f"{move['name']}",
                         (0.7, 0.25 + 0.12 * i,),
                         size=(0.18, 0.1),
                         bcol="white"
@@ -257,7 +258,7 @@ class GameStateMenuParty(BaseGameState):
                         else self.selection == i and "yellow" or "white",
                     )
                     self.game.r_int.draw_text(
-                        f"{move.pp}/{move.max_pp}",
+                        f"{move.pp}/{move.pp}",
                         (0.8, 0.31 + 0.12 * i,),
                         size=(0.08, 0.05),
                         bcol=None,
@@ -267,7 +268,7 @@ class GameStateMenuParty(BaseGameState):
 
                 if self.state == states["inspect"]:
                     self.game.r_int.draw_text(
-                        f"{member.moves[self.selection].description}",
+                        f"{self.game.m_pbs.get_move(member.actions[self.selection]).description}",
                         (0.4, 0.25),
                         size=(0.28, 0.6),
                         fsize=10,

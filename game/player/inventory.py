@@ -1,7 +1,6 @@
 import numpy as np
 from .partyitem import PartyItem
 from .partymember import PartyMember
-from .partymove import PartyMove
 
 
 class Inventory:
@@ -21,8 +20,14 @@ class Inventory:
 
     def init_random_member(self):
         mem = PartyMember(self.game, self.game.m_pbs.get_random_fighter())
-        mem.moves = [PartyMove(self.game.m_pbs.get_random_move()) for _ in range(4)]
         return mem
+
+    def add_member(self, data):
+        new_member = PartyMember(self.game, data)
+        if len(self.members) == 6:
+            self.storage.append(new_member)
+        else:
+            self.members.append(new_member)
 
     def add_item(self, id, quantity):
         pre_exist = [x for x in self.items if x.identifier == id]

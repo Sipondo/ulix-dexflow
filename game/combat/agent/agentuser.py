@@ -19,7 +19,7 @@ class AgentUser(BaseAgent):
         return self.sendout
 
     def set_sendout(self, scene, sendout):
-        if scene.board.get_can_fight(self.team, sendout):
+        if scene.board.get_can_fight((self.team, sendout)):
             self.sendout = sendout
             return True
         return False
