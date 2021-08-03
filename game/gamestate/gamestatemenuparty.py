@@ -189,6 +189,7 @@ class GameStateMenuParty(BaseGameState):
                         else member.icon[0],
                         (0.12 + (i % 2) * 0.4, i_v),
                         centre=True,
+                        size=3 / 4,
                     )
                     self.game.r_int.draw_text(
                         f"{self.selection == i and '' or ''}{member.name}",

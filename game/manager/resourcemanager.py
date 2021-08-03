@@ -134,7 +134,7 @@ class ResourceManager:
             self.fighter_splashes[f"{resource_name}___{size}"] = img.crop((0, 0, h, h))
         return self.fighter_splashes[f"{resource_name}___{size}"]
 
-    def get_party_icon(self, resource_name, size=1):
+    def get_party_icon(self, resource_name, size=1.0):
         if f"{resource_name}___{size}" not in self.fighter_icons:
             img = self.open_image_interface(
                 self.p_graphics

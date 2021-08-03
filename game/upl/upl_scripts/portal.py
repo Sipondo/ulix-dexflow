@@ -8,11 +8,11 @@ class Portal:
         self.game = act.game
 
         if user == self.game.m_ent.player:
-            self = src
+            self = user
             self.game.m_map.set_level(
                 self.game.m_map.convert_mapstring_to_key(target_level)
             )
-            position = (self.x, self.y)
+            position = (self.x_g, self.y_g)
 
             direc = user.get_dir()
 
