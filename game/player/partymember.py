@@ -39,6 +39,10 @@ class PartyMember:
 
         self.current_hp = self.stats[0]
 
+        if isinstance(self.moves, str):
+            print(self.moves)
+            print(self.moves.split(","))
+
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
         self.naturemod = [1, 1, 1, 1, 1, 1]

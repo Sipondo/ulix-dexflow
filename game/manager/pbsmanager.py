@@ -117,6 +117,9 @@ class PbsManager:
     def get_move(self, id):
         return self.moves.loc[id]
 
+    def get_move_by_name(self, name):
+        return self.moves[self.moves["name"].str.lower() == name.lower()].iloc[0]
+
     def get_random_move(self):
         return self.moves.sample().iloc[0]
 

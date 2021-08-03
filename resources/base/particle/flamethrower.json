@@ -415,7 +415,7 @@
             "id": 2503716620416,
             "title": "Emit",
             "pos_x": -167.50000000000003,
-            "pos_y": -272.4999999999998,
+            "pos_y": -271.4999999999998,
             "inputs": [
                 {
                     "id": 2503716620944,
@@ -433,7 +433,7 @@
                 "field_size_range": "0.4",
                 "field_delay": "1.0",
                 "field_duration": "2.0",
-                "field_count": "2000 * !eq!",
+                "field_count": "500 * !eq!",
                 "field_pos_x": "0.95",
                 "field_pos_range_x": "0.4",
                 "field_pos_y": 0,
@@ -516,7 +516,7 @@
             "outputs": [],
             "content": {
                 "field_label": "eq",
-                "field_equation": "max(0, 3-t)**2"
+                "field_equation": "max(0, 3-t)**1.5"
             },
             "op_code": 7
         },
