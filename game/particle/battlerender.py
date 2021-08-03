@@ -140,13 +140,13 @@ class BattleRender:
     def set_movement(self, team, position, speed, recover):
         self.bmove.set_movement(team, position, speed, recover)
 
-    def do_particle(self, name, user, target, miss=False):
+    def do_particle(self, name, user, target, miss=False, move_data=None):
         if name:
             name = name.replace(" ", "-")
             if miss:
                 # TODO Particles miss to left/right
                 pass
-            self.game.m_par.spawn_system(self, name, target, miss)  # name)
+            self.game.m_par.spawn_system(self, name, target, miss, move_data=move_data)  # name)
         else:
             print("Empty particle!")
 

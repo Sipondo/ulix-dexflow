@@ -65,9 +65,9 @@ class ParticleManager:
             self.anti_target.depth_mask = False
             return
 
-    def spawn_system(self, brender, fname, target, miss):
+    def spawn_system(self, brender, fname, target, miss, move_data):
         if target:
-            self.systems.append(ParticleSystem(self.game, brender, fname, target, miss))
+            self.systems.append(ParticleSystem(self.game, brender, fname, target, miss, move_data))
 
     def vao_def(self, buffer, render=False):
         if render:

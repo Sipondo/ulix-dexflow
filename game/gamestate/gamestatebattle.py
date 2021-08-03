@@ -308,6 +308,7 @@ class GameStateBattle(BaseGameState):
                 self.board.user,
                 self.board.target,
                 miss=self.board.particle_miss,
+                move_data=self.board.move_data
             )
         self.end_time = ti.time()
 

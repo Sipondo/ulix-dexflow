@@ -149,7 +149,7 @@ class MainMove(BaseEffect):
 
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
-            particle=self.name,
+            particle=self.name, move_data=self.move
         )
         print("User:", self.user, "Target:", self.target)
         if self.target_fainted:
