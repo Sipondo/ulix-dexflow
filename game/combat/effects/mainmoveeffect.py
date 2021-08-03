@@ -32,7 +32,7 @@ class MainMove(BaseEffect):
             function_args = func.split(" ")
             if len(function_args) > 1:
                 func, args = function_args
-                move_effect = self.scene.effect_lib[func](self.scene, self, *args)
+                move_effect = self.scene.effect_lib[func](self.scene, self, args)
             else:
                 move_effect = self.scene.effect_lib[func](self.scene, self)
             self.effects.append(move_effect)

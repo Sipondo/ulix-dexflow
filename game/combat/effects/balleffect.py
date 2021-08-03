@@ -62,11 +62,11 @@ class BallEffect(BaseEffect):
                 )
                 self.scene.board.set_can_fight(self.target, False)
                 self.scene.add_effect(
-                    GenericEffect(self.scene, f"You caught {catch_actor.name}!", particle="pokemon-catch")
+                    GenericEffect(self.scene, f"You caught {catch_actor.name}!", particle="pokeball-catch")
                 )
                 self.scene.add_effect(EndBattleEffect(self.scene))
                 return True, False, False
         self.scene.add_effect(
-            GenericEffect(self.scene, f"Dahw, {catch_actor.name} broke free!", particle="pokemon-miss")
+            GenericEffect(self.scene, f"Dahw, {catch_actor.name} broke free!", particle="pokeball-miss")
         )
         return True, False, False
