@@ -10,20 +10,20 @@ class PokeFighter(CombatFighter):
 
         if isinstance(fighter, str):
             fighter = self.game.m_pbs.get_fighter_by_name(fighter)
-            self.level = 100
+            self.level = 5
             self.init_stats(fighter)
             self.current_hp = self.stats[0]
             self.current_xp = 0
         elif isinstance(fighter, numbers.Number):
             fighter = self.game.m_pbs.get_fighter(fighter)
-            self.level = 100
+            self.level = 5
             self.init_stats(fighter)
             self.current_hp = self.stats[0]
             self.current_xp = 0
         if "level" in fighter:
             self.level = fighter.level
         else:
-            self.level = 100
+            self.level = 5
 
         if "stats_base" in fighter:
             self.stats_base = fighter.stats_base
@@ -59,7 +59,7 @@ class PokeFighter(CombatFighter):
 
         self.data = fighter.copy()
 
-    def init_stats(self, fighter, ivs=None):
+    def init_stats(self, fighter):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
         self.nature = [1, 1, 1, 1, 1, 1]
 
@@ -72,7 +72,7 @@ class PokeFighter(CombatFighter):
         self.stats_IV = np.random.randint(0, 32, 6)
 
         # TEMP
-        self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[1]
+        self.stats_EV = np.zeros(6, dtype=np.int32)
 
     def set_new_level_xp(self):
         # TODO exp function

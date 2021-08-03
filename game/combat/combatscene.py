@@ -5,6 +5,7 @@ from .effects.runeffect import RunEffect
 from .effects.switcheffect import SwitchEffect
 from .effects.balleffect import BallEffect
 from .effects.sendouteffect import SendOutEffect
+from .effects.forgetmoveeffect import ForgetMoveEffect
 
 import types
 import importlib
@@ -53,6 +54,7 @@ class CombatScene:
         return PokeFighter(self.game, src)
 
     def run_scene(self, action_descriptions=None, next_round=True):
+        self.end = False
         if next_round:
             self.round += 1
         if action_descriptions:
@@ -167,6 +169,8 @@ class CombatScene:
             effect = BallEffect(self, action)
         elif action.action_name == "sendout":
             effect = SendOutEffect(self, action.action_data)
+        elif action.action_name == "forget_move":
+            effect = ForgetMoveEffect(self, action)
         self.effects.append(effect)
         return effect
 
@@ -225,7 +229,7 @@ class CombatScene:
                 action["target"] = target
                 actions.append(action)
             else:
-                # FLEE, CATCH, SWITCH, SEND OUT
+                # FLEE, CATCH, SWITCH, SEND OUT, FORGET MOVE
                 action_data = action
                 action = types.SimpleNamespace()
                 action.action_data = action_data

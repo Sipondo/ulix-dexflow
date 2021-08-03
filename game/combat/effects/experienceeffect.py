@@ -18,7 +18,7 @@ class ExperienceEffect(BaseEffect):
         b_type = 1
         if self.scene.battle_type == "trainer":
             b_type = 1.5
-        base_exp = self.fainted.data["BaseEXP"]
+        base_exp = self.fainted.data["baseexp"]
         # if mon is holding lucky egg
         lucky_egg = 1
         # affection mod
@@ -31,7 +31,7 @@ class ExperienceEffect(BaseEffect):
         trade = 1
         # if past evolution level 1.2
         nevolved = 1
-        return b_type * base_exp * lucky_egg * aff * level_fainted * power * trade * nevolved // (7 * exp_share)
+        return int(b_type * base_exp * lucky_egg * aff * level_fainted * power * trade * nevolved // (7 * exp_share))
 
     def get_ev_reward(self):
         ev_reward = self.fainted.data["EffortPoints"]

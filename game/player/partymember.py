@@ -29,7 +29,7 @@ class PartyMember:
         # TODO:
 
         self.current_xp = 0
-        self.level_xp = 700
+        self.level_xp = 5
         self.exp_total = 10000
 
         self.nature = self.game.m_dat.get_nature()

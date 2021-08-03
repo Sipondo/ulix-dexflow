@@ -1,4 +1,5 @@
 from .baseeffect import BaseEffect
+from .learnmoveeffect import LearnMoveEffect
 
 
 class LevelEffect(BaseEffect):
@@ -14,5 +15,9 @@ class LevelEffect(BaseEffect):
         actor.current_xp = 0
         self.scene.board.set_exp(self.target, 0)
         actor.set_new_level_xp()
+        for level, move_name in actor.data["learnset"]:
+            if actor.level == level:
+                self.scene.add_effect(LearnMoveEffect(self.scene, self.target, move_name))
         self.scene.board.no_skip(f"{self.scene.board.get_actor(self.target).name} leveled up!", particle="")
+        # TODO show stats
         return True, False, False

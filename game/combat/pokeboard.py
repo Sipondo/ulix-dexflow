@@ -8,11 +8,13 @@ class PokeBoard(CombatBoard):
         super().__init__(scene)
         # self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
         self.switch = []
+        self.new_move = False
 
     def copy(self):
         newstate = PokeBoard(self.scene)
         newstate.from_board(self)
         newstate.switch = self.switch.copy()
+        newstate.new_move = self.new_move
         # newstate.legal = self.legal.copy()
         return newstate
 
