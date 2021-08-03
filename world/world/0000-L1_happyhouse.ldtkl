@@ -1297,8 +1297,20 @@
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
+						{
+							"__identifier": "visible",
+							"__value": true,
+							"__type": "Bool",
+							"defUid": 421,
+							"realEditorValues": [null]
+						},
+						{
+							"__identifier": "active",
+							"__value": true,
+							"__type": "Bool",
+							"defUid": 422,
+							"realEditorValues": [null]
+						},
 						{
 							"__identifier": "splash",
 							"__value": "../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png",
@@ -1309,6 +1321,93 @@
 								"params": ["../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png"]
 							}]
 						}
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [18,15],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [296,248],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/object_tree2.PNG",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/object_tree2.PNG"]
+							}]
+						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "direction",
+							"__value": "W",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["W"]
+							}]
+						},
+						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 405, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{
+							"__identifier": "visible",
+							"__value": false,
+							"__type": "Bool",
+							"defUid": 423,
+							"realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ false ]
+							}]
+						},
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [16,15],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [264,248],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/object_tree2.PNG",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/object_tree2.PNG"]
+							}]
+						},
+						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "direction",
+							"__value": "W",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["W"]
+							}]
+						},
+						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 405, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				}
 			]

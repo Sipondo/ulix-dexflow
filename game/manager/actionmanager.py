@@ -422,9 +422,10 @@ class RegionAggro:
 
     def on_enter(self, entity):
         self.containing.add(entity)
-        act = Action(self.game, self.entity.on_aggro_action, self.entity)
-        self.game.m_act.actions.append(act)
-        self.game.m_act.express_run(act)
+        if self.entity.visible and self.entity.active:
+            act = Action(self.game, self.entity.on_aggro_action, self.entity)
+            self.game.m_act.actions.append(act)
+            self.game.m_act.express_run(act)
         # self.game.m_upl.parse(self, self.on_enter_action)
 
     def on_exit(self, entity):
