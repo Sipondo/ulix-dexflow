@@ -55,7 +55,7 @@ class PbsManager:
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
         self.moves["function"] = self.moves["function"].map(
-            lambda x: move_functions[x] if x in move_functions else "noeffect"
+            lambda x: move_functions[x] if x in move_functions else ["noeffect"]
         )
         self.moves["power"] = self.moves["power"].map(lambda x: int(x))
 
