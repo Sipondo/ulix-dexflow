@@ -18,7 +18,7 @@ class GameStateBattle(BaseGameState):
             self.game,
             [x.series for x in self.game.inventory.members],
             enemy_team or [1, 2],
-            battle_type=battle_type
+            battle_type=battle_type,
         )
         self.render.camera.reset()
         self.board = self.combat.board
@@ -82,6 +82,8 @@ class GameStateBattle(BaseGameState):
         self.particle_test_cooldown = 0.0
         self.end_time = ti.time()
         self.max_time = 1
+
+        self.level_up = True
 
     def init_agent(self, agent, team):
         if agent == "random":
@@ -308,7 +310,7 @@ class GameStateBattle(BaseGameState):
                 self.board.user,
                 self.board.target,
                 miss=self.board.particle_miss,
-                move_data=self.board.move_data
+                move_data=self.board.move_data,
             )
         self.end_time = ti.time()
 
@@ -354,7 +356,34 @@ class GameStateBattle(BaseGameState):
         self.game.m_gst.switch_state("overworld")
 
     def draw_interface(self, time, frame_time):
-        if not len(self.pending_boards):
+        if self.level_up:
+            actionlist = self.actor_1[0].actions
+            for i in range(min(len(actionlist), 4)):
+                self.game.r_int.draw_image(
+                    self.spr_attacktypes[actionlist[i].type],
+                    (0.6938, 0.607 + 0.065 * i),
+                )
+                self.game.r_int.draw_image(
+                    self.spr_attackcell[self.selection == i and 1 or 0],
+                    (0.69, 0.6 + 0.065 * i),
+                )
+                self.game.r_int.draw_text(
+                    actionlist[i]["name"],
+                    (0.725, 0.607 + 0.065 * i),
+                    size=(0.20, 0.06),
+                    bcol=None,
+                    col="white",
+                )
+                self.game.r_int.draw_text(
+                    f"{actionlist[i].pp}/{actionlist[i].pp}",
+                    (0.93, 0.616 + 0.065 * i),
+                    size=(0.20, 0.06),
+                    bcol=None,
+                    fsize=6,
+                    col="white",
+                )
+
+        elif not len(self.pending_boards):
             if self.state == states["topmenu"]:
                 # self.game.r_int.draw_rectangle(
                 #     (0.80, 0.53), size=(0.15, 0.32), col="black"
