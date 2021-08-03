@@ -253,7 +253,7 @@
             "id": 1290639999472,
             "title": "Filter Basic",
             "pos_x": -77.55859374999997,
-            "pos_y": -16.56250000000001,
+            "pos_y": -17.56250000000001,
             "inputs": [
                 {
                     "id": 1290640002592,
@@ -846,7 +846,7 @@
                 "field_user_z": 0,
                 "field_target_enabled": true,
                 "field_target_recover": false,
-                "field_target_speed": "1",
+                "field_target_speed": "2",
                 "field_target_speed_enabled": true,
                 "field_target_x": "1.4",
                 "field_target_y": "!shake_hit!",
@@ -1046,20 +1046,20 @@
         {
             "id": 2121507739728,
             "title": "Equation",
-            "pos_x": 628.1249999999999,
+            "pos_x": 630.0781249999999,
             "pos_y": -384.37499999999994,
             "inputs": [],
             "outputs": [],
             "content": {
                 "field_label": "shake_hit",
-                "field_equation": "sin(t*80)*1.2"
+                "field_equation": "sin(t*80)*3"
             },
             "op_code": 7
         },
         {
             "id": 2121509341840,
             "title": "Actor",
-            "pos_x": 792.1874999999999,
+            "pos_x": 794.1406249999999,
             "pos_y": -89.0625,
             "inputs": [],
             "outputs": [],
