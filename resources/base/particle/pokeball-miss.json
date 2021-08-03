@@ -90,34 +90,6 @@
             "op_code": 11
         },
         {
-            "id": 2445532553168,
-            "title": "Actor",
-            "pos_x": 321.0,
-            "pos_y": -75.0,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_delay": 0,
-                "field_duration": "2",
-                "field_continuous": true,
-                "field_user_enabled": true,
-                "field_user_recover": true,
-                "field_user_speed": "2",
-                "field_user_speed_enabled": true,
-                "field_user_x": "-0.8",
-                "field_user_y": 0,
-                "field_user_z": 0,
-                "field_target_enabled": "",
-                "field_target_recover": true,
-                "field_target_speed": 1.0,
-                "field_target_speed_enabled": true,
-                "field_target_x": 1,
-                "field_target_y": 0,
-                "field_target_z": 0
-            },
-            "op_code": 3
-        },
-        {
             "id": 2445532551056,
             "title": "Stage",
             "pos_x": -556.5,
