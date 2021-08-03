@@ -40,8 +40,8 @@ class PartyMember:
         self.current_hp = self.stats[0]
 
         if isinstance(self.moves, str):
-            print(self.moves)
-            print(self.moves.split(","))
+            l = self.moves.split(",")
+            self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -96,5 +96,6 @@ class PartyMember:
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
         self.data["actions"] = self.actions
+        self.data["learnset"] = self.learnset
 
         return self.data
