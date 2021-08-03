@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 
 from game.upl.upl_scripts.additem import AddItem
+from game.upl.upl_scripts.addmember import AddMember
 from game.upl.upl_scripts.ask import Ask
 from game.upl.upl_scripts.battle import Battle
 from game.upl.upl_scripts.checkcollision import CheckCollision

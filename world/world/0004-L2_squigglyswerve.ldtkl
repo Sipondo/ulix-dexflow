@@ -1720,12 +1720,14 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1",
+							"__value": "self: Push(player.direction)\ngame: AddMember(\"CHARIZARD\")\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1"]
+								"params": [
+									"self: Push(player.direction)\ngame: AddMember(\"CHARIZARD\")\nself: mem.push_count = mem.push_count + 1"
+								]
 							}]
 						},
 						{
