@@ -12,7 +12,7 @@ class PartyMember:
         # self.internalname = data.internalname
         # self.type1 = data.type1
         # self.type2 = data.type2
-        self.level = 100
+        self.level = 5
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
 
@@ -28,7 +28,7 @@ class PartyMember:
 
         # TODO:
 
-        self.current_xp = 500
+        self.current_xp = 0
         self.level_xp = 700
         self.exp_total = 10000
 
