@@ -4,7 +4,7 @@ from numpy.random import random
 
 
 class ParticleSystem:
-    def __init__(self, game, brender, fname, target, miss):
+    def __init__(self, game, brender, fname, target, miss, move_data):
         self.game = game
         self.brender = brender  # meh
         self.N = 500000
@@ -12,6 +12,7 @@ class ParticleSystem:
         self.fname = fname
         self.target = target
         self.miss = miss
+        self.move_data = move_data
 
         # TODO: convert to proper change
         self.basis = (-1.0, 1.0, 1.0) if self.target[0] == 0 else (1.0, 1.0, 1.0)

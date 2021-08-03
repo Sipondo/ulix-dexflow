@@ -12,6 +12,7 @@ class CombatBoard:
         self.action = None
         self.narration = "Board state undefined."
         self.particle = ""
+        self.move_data = None
         self.user = None
         self.target = None
         self.skip = True
@@ -76,12 +77,13 @@ class CombatBoard:
     def random_roll(self):
         return random.random()
 
-    def no_skip(self, narration, particle=None, battle_end=False, particle_miss=False):
+    def no_skip(self, narration, particle=None, battle_end=False, particle_miss=False, move_data=None):
         self.narration = narration
         self.skip = False
         self.particle = particle
         self.battle_end = battle_end
         self.particle_miss = particle_miss
+        self.move_data = move_data
 
     def set_hp(self, target, hp):
         self.teams[target[0]][target[1]][1] = hp

@@ -20,6 +20,7 @@ class Paralysis(BaseEffect):
                     particle="Paralysis",
                 )
                 return False, True, False
+        return False, False, False
 
     @property
     def stat_mod(self):

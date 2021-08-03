@@ -48,6 +48,11 @@ class MapManager:
             fields["filter_blue"],
         )
 
+        self.encounters = fields["encounters"]
+        self.encounter_rate = fields["encounter_rate"]
+        self.local_encounters = ""
+        self.local_encounter_rate = 0
+
     @property
     def current_level(self):
         return self.levels[self.current_level_id]  # [()]

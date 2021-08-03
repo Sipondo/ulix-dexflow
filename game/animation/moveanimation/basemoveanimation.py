@@ -28,6 +28,7 @@ class BaseMoveAnimation(BaseAnimation):
         self.start_pos = self.entity.get_pos()
 
     def on_tick(self, time, frame_time):
+        self.entity.start_pos = self.start_pos
         xdir, ydir = self.direction
         frame_number = self.frame
         if time > self.stop - 0.5 * frame_time:
@@ -35,11 +36,14 @@ class BaseMoveAnimation(BaseAnimation):
                 int(self.start_pos[0] + xdir * self.single_move_distance),
                 int(self.start_pos[1] + ydir * self.single_move_distance),
             )
+            self.entity.start_pos = self.entity.game_position
             self.on_step(time, frame_time)
             if self.check_continue() and self.conditions():
+                self.after_step(time, frame_time)
                 self.continue_move(time, frame_time)
             else:
-                self.entity.set_current_sprite((self.movement_type, frame_number))
+                self.after_step(time, frame_time)
+                # self.entity.set_current_sprite((self.movement_type, frame_number))
                 self.on_end(time, frame_time)
                 return False
         else:
@@ -80,8 +84,11 @@ class BaseMoveAnimation(BaseAnimation):
         return False
 
     def on_step(self, time, frame_time):
-        self.entity.on_step(time, frame_time)
+        # self.entity.on_step(time, frame_time)
         self.distance -= 1
+
+    def after_step(self, time, frame_time):
+        self.entity.on_step(time, frame_time)
 
     def get_direction(self):
         if self.direction == (0, -1):
@@ -122,6 +129,7 @@ class BaseMoveAnimation(BaseAnimation):
             self.anim_speed = 11
 
     def on_end(self, time, frame_time):
+        self.entity.set_current_sprite((self.movement_type, self.frame))
         self.entity.after_move(time, frame_time)
         self.game.m_ani.remove_anim(self)
         self.ended = True

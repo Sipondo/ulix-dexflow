@@ -13,8 +13,8 @@ class PbsManager:
             names=[
                 "id",
                 "identifier",
-                "single",
-                "plural",
+                "itemname",
+                "itemplural",
                 "pocket",
                 "price",
                 "description",
@@ -55,7 +55,7 @@ class PbsManager:
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
         self.moves["function"] = self.moves["function"].map(
-            lambda x: move_functions[x] if x in move_functions else "noeffect"
+            lambda x: move_functions[x] if x in move_functions else ["noeffect"]
         )
         self.moves["power"] = self.moves["power"].map(lambda x: int(x))
 
@@ -70,7 +70,7 @@ class PbsManager:
             self.terrain_mods[terrain].apply(lambda x: float(x))
 
         self.fighters = self.read_fighters()
-        self.fighters["current_hp"] = 1.0
+        # self.fighters["current_hp"] = 1.0
 
     def get_random_item(self):
         return self.items.sample().iloc[0]
@@ -110,6 +110,9 @@ class PbsManager:
 
     def get_fighter(self, id):
         return self.fighters.loc[id]
+
+    def get_fighter_by_name(self, name):
+        return self.fighters[self.fighters["name"].str.lower() == name.lower()].iloc[0]
 
     def get_move(self, id):
         return self.moves.loc[id]

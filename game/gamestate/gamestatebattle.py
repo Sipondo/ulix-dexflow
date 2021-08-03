@@ -12,10 +12,13 @@ states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu":
 
 
 class GameStateBattle(BaseGameState):
-    def on_enter(self, teams=None, agents=None):
+    def on_enter(self, battle_type="trainer", enemy_team=None, agents=None):
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
-            self.game, [x.series for x in self.game.inventory.members], [1, 2]
+            self.game,
+            [x.series for x in self.game.inventory.members],
+            enemy_team or [1, 2],
+            battle_type=battle_type
         )
         self.render.camera.reset()
         self.board = self.combat.board
@@ -27,6 +30,39 @@ class GameStateBattle(BaseGameState):
         # TODO move away as it should be initiated as a move
         self.render.set_pokemon(self.actor_1[0].sprite, 0)
         self.render.set_pokemon(self.actor_2[0].sprite, 1)
+
+        self.spr_battlecell = (
+            self.game.m_res.get_interface("battlecell"),
+            self.game.m_res.get_interface("battlecell_selected"),
+        )
+
+        self.spr_battlestatus = (
+            self.game.m_res.get_interface("battlestatus_ours"),
+            self.game.m_res.get_interface("battlestatus_theirs"),
+        )
+
+        self.spr_teamstatus = (
+            self.game.m_res.get_picture("Battle/icon_ball"),
+            self.game.m_res.get_picture("Battle/icon_ball_empty"),
+            self.game.m_res.get_picture("Battle/icon_ball_faint"),
+            self.game.m_res.get_picture("Battle/icon_ball_status"),
+        )
+
+        self.spr_own = self.game.m_res.get_picture("Battle/icon_own")
+
+        self.spr_statusbox = self.game.m_res.get_interface("statusbox")
+
+        self.spr_attackcell = (
+            self.game.m_res.get_interface("attackcell"),
+            self.game.m_res.get_interface("attackcell_selected"),
+        )
+
+        self.spr_ballcell = (
+            self.game.m_res.get_interface("ballcell"),
+            self.game.m_res.get_interface("ballcell_selected"),
+        )
+
+        self.spr_attacktypes = self.game.m_res.attack_types
 
         self.agents = []
         if agents:
@@ -128,6 +164,14 @@ class GameStateBattle(BaseGameState):
                 elif key == "up":
                     self.selection = (self.selection - 1) % self.max_selection
                     self.game.r_aud.effect("select")
+                elif key == "left":
+                    if self.state == states["topmenu"]:
+                        self.selection = (self.selection - 2) % self.max_selection
+                        self.game.r_aud.effect("select")
+                elif key == "right":
+                    if self.state == states["topmenu"]:
+                        self.selection = (self.selection + 2) % self.max_selection
+                        self.game.r_aud.effect("select")
                 elif key == "interact":
                     self.game.r_aud.effect("confirm")
                     if self.state == states["topmenu"]:
@@ -144,12 +188,13 @@ class GameStateBattle(BaseGameState):
                             ("attack", self.actor_1[0].actions[self.selection],)
                         )
                     elif self.state == states["swapmenu"]:
-                        if self.lock_state:
-                            for agent in self.agents:
-                                if type(agent) == AgentUser:
-                                    agent.set_sendout(self.selection)
-                        else:
-                            self.reg_action(("swap", self.selection,),)
+                        if self.board.teams[0][self.selection][1]["can_fight"]:
+                            if self.lock_state:
+                                for agent in self.agents:
+                                    if type(agent) == AgentUser:
+                                        agent.set_sendout(self.combat, self.selection)
+                            else:
+                                self.reg_action(("swap", self.selection,),)
                     elif self.state == states["ballmenu"]:
                         self.reg_action(("catch", self.selection))
                     self.selection = 0
@@ -207,8 +252,8 @@ class GameStateBattle(BaseGameState):
                     if boo:
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
-                            self.lock_state = True
-                            self.agents[i].set_action(None)
+                            self.lock_state = "user_switch"
+                            self.agents[i].set_sendout(self.combat, None)
                 return
             else:
                 self.state = states["topmenu"]
@@ -263,6 +308,7 @@ class GameStateBattle(BaseGameState):
                 self.board.user,
                 self.board.target,
                 miss=self.board.particle_miss,
+                move_data=self.board.move_data
             )
         self.end_time = ti.time()
 
@@ -274,6 +320,7 @@ class GameStateBattle(BaseGameState):
 
     def end_battle(self):
         self.synchronize()
+        self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.m_gst.switch_state("overworld")
 
     @property
@@ -290,9 +337,8 @@ class GameStateBattle(BaseGameState):
             return f"Send out {name}."
 
         if self.state == states["ballmenu"]:
-            print(self.game.inventory.get_pocket_items(3)[self.selection])
-            ball = self.game.inventory.get_pocket_items(3)[self.selection]
-            return ball.description
+            # ball = self.game.inventory.get_pocket_items(3)[self.selection]
+            return "blabla ik ben een bal"  # ball.description
 
         if self.state == states["topmenu"]:
             strings = [
@@ -310,127 +356,194 @@ class GameStateBattle(BaseGameState):
     def draw_interface(self, time, frame_time):
         if not len(self.pending_boards):
             if self.state == states["topmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.80, 0.53), size=(0.15, 0.32), col="black"
-                )
+                # self.game.r_int.draw_rectangle(
+                #     (0.80, 0.53), size=(0.15, 0.32), col="black"
+                # )
 
                 for i, name in enumerate(["Fight", "Pokemon", "Ball", "Run"]):
-                    self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name}",
-                        (0.81, 0.54 + 0.08 * i),
-                        size=(0.13, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                    #     self.game.r_int.draw_text(
+                    #         f"{self.selection == i and '' or ''}{name}",
+                    #         (0.81, 0.54 + 0.08 * i),
+                    #         size=(0.13, 0.06),
+                    #         bcol=self.selection == i and "yellow" or "white",
+                    #     )
+
+                    self.game.r_int.draw_image(
+                        self.spr_battlecell[self.selection == i and 1 or 0],
+                        (0.85 + 0.9 * 0.09 * (i // 2), 0.63 + 0.89 * 0.16 * (i % 2)),
+                        centre=True,
                     )
 
             elif self.state == states["actionmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.68, 0.53), size=(0.22, 0.32), col="black"
-                )
+                # self.game.r_int.draw_rectangle(
+                #     (0.685, 0.59), size=(0.29, 0.27), col="white"
+                # )
 
-                actionnames = [x["name"] for x in self.actor_1[0].actions]
-                for i in range(min(len(actionnames), 4)):
+                actionlist = self.actor_1[0].actions
+                for i in range(min(len(actionlist), 4)):
+                    self.game.r_int.draw_image(
+                        self.spr_attacktypes[actionlist[i].type],
+                        (0.6938, 0.607 + 0.065 * i),
+                    )
+                    self.game.r_int.draw_image(
+                        self.spr_attackcell[self.selection == i and 1 or 0],
+                        (0.69, 0.6 + 0.065 * i),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{actionnames[i]}",
-                        (0.69, 0.54 + 0.08 * i),
+                        actionlist[i]["name"],
+                        (0.725, 0.607 + 0.065 * i),
                         size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        bcol=None,
+                        col="white",
+                    )
+                    self.game.r_int.draw_text(
+                        f"{actionlist[i].pp}/{actionlist[i].pp}",
+                        (0.93, 0.616 + 0.065 * i),
+                        size=(0.20, 0.06),
+                        bcol=None,
+                        fsize=6,
+                        col="white",
                     )
 
             elif self.state == states["swapmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.68, 0.37), size=(0.22, 0.48), col="black"
+                    (0.685, 0.49), size=(0.22, 0.4), col="white"
                 )
 
                 for i, name in enumerate(self.game.inventory.fighter_names):
+                    self.game.r_int.draw_image(
+                        self.spr_ballcell[self.selection == i and 1 or 0],
+                        (0.69, 0.5 + 0.065 * i),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name}",
-                        (0.69, 0.38 + 0.08 * i),
-                        size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        name, (0.725, 0.507 + 0.065 * i), size=(0.20, 0.06), bcol=None,
                     )
 
             elif self.state == states["ballmenu"]:
                 self.game.r_int.draw_rectangle(
-                    (0.68, 0.53), size=(0.22, 0.32), col="black"
+                    (0.685, 0.49), size=(0.22, 0.4), col="white"
                 )
 
                 balls = self.game.inventory.get_pocket_items(3)
-                for i in range(4):
+                if balls:
+                    for i in range(len(balls)):
+                        self.game.r_int.draw_image(
+                            self.spr_ballcell[self.selection == i and 1 or 0],
+                            (0.69, 0.5 + 0.065 * i),
+                        )
+                        self.game.r_int.draw_text(
+                            balls[i].itemname,
+                            (0.725, 0.507 + 0.065 * i),
+                            size=(0.20, 0.06),
+                            bcol=None,
+                        )
+                else:
+                    self.game.r_int.draw_image(
+                        self.spr_ballcell[1], (0.69, 0.5),
+                    )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{balls[i].name}",
-                        (0.69, 0.54 + 0.08 * i),
-                        size=(0.20, 0.06),
-                        bcol=self.selection == i and "yellow" or "white",
+                        f"No balls!", (0.725, 0.507), size=(0.20, 0.06), bcol=None,
                     )
         # HP Bars & EXP bar
         # Ally
         lining = 0.008
         fighter = self.board.get_actor((0, self.board.get_active(0)))
         rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
-        x_off = 0.1
-        x_size = 0.3
-        if rel_hp > 0:
+        x_off = 0.08
+        x_size = 0.28
+
+        # HP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+        )
+        if rel_hp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.05 - lining),
-                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.10 - lining),
-                size=(x_size + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_text(
-                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
-            )
-            # HP bar
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1), size=(x_size, 0.05), col="grey",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1),
-                size=(x_size * rel_hp, 0.05),
+                (x_off + 0.028, 0.14),
+                size=(x_size * rel_hp, 0.035),
                 col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
             )
-            # EXP bar
+        # EXP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.029, 0.19), size=(0.223, 0.014), col="grey",
+        )
+        rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
+        if rel_xp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
-                (0.1, 0.158), size=(0.25, 0.012), col="grey",
+                (x_off + 0.029, 0.19), size=(0.223 * rel_xp, 0.014), col="blue",
             )
-            rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
-            if rel_xp > 0:
-                self.game.r_int.draw_rectangle(
-                    (0.1, 0.158), size=(0.25 * rel_xp, 0.012), col="blue",
-                )
+
+        self.game.r_int.draw_image(
+            self.spr_battlestatus[0], (x_off, 0.08), centre=False,
+        )
+
+        if self.lock_state != "user_switch":
+            self.game.r_int.draw_text(
+                fighter.name, (x_off + 0.015, 0.09), size=(x_size / 2, 0.05), bcol=None,
+            )
+
+        for i in range(6):
+            self.game.r_int.draw_image(
+                self.spr_teamstatus[
+                    (0 if self.board.teams[0][i][1]["can_fight"] else 2)
+                    if i < len(self.board.teams[0])
+                    else 1
+                ],
+                (x_off + 0.168 + 0.026 * i, 0.107),
+                centre=True,
+            )
 
         # Enemy
         lining = 0.008
         fighter = self.board.get_actor((1, self.board.get_active(1)))
         rel_hp = self.board.get_relative_hp((1, self.board.get_active(1)))
         x_off = 0.6
-        x_size = 0.3
+        x_size = 0.28
+        # HP bar
+        self.game.r_int.draw_rectangle(
+            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+        )
         if rel_hp > 0:
             self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.05 - lining),
-                size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off - lining, 0.10 - lining),
-                size=(x_size + 2 * lining, 0.05 + 2 * lining),
-                col="black",
-            )
-            self.game.r_int.draw_text(
-                fighter.name, (x_off, 0.05), size=(x_size / 2, 0.05),
-            )
-            # HP bar
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1), size=(x_size, 0.05), col="grey",
-            )
-            self.game.r_int.draw_rectangle(
-                (x_off, 0.1),
-                size=(x_size * rel_hp, 0.05),
+                (x_off + 0.028, 0.14),
+                size=(x_size * rel_hp, 0.035),
                 col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
             )
+        # self.game.r_int.draw_rectangle(
+        #     (x_off - lining, 0.05 - lining),
+        #     size=(x_size / 2 + 2 * lining, 0.05 + 2 * lining),
+        #     col="black",
+        # )
+        # self.game.r_int.draw_rectangle(
+        #     (x_off - lining, 0.10 - lining),
+        #     size=(x_size + 2 * lining, 0.05 + 2 * lining),
+        #     col="black",
+        # )
+        self.game.r_int.draw_image(
+            self.spr_battlestatus[1], (x_off, 0.08), centre=False,
+        )
+        self.game.r_int.draw_text(
+            fighter.name, (x_off + 0.175, 0.09), size=(x_size / 2, 0.05), bcol=None,
+        )
+        self.game.r_int.draw_image(
+            self.spr_own, (x_off + 0.172, 0.11), centre=True,
+        )
+        for i in range(6):
+            self.game.r_int.draw_image(
+                self.spr_teamstatus[
+                    (0 if self.board.teams[1][i][1]["can_fight"] else 2)
+                    if i < len(self.board.teams[1])
+                    else 1
+                ],
+                (x_off + 0.016 + 0.026 * (5 - i), 0.107),
+                centre=True,
+            )
+
         # Narrator
-        self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
-        self.game.r_int.draw_text(self.narrate, (0.01, 0.91), to=(0.99, 0.99))
+        # self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
+        self.game.r_int.draw_image(
+            self.spr_statusbox, (0.0035, 0.9),
+        )
+        self.game.r_int.draw_text(
+            self.narrate, (0.01, 0.91), to=(0.99, 0.99), bcol=None
+        )
+

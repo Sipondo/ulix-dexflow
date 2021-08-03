@@ -13,6 +13,29 @@ from PIL import Image, ImageFont
 pyglet.options["audio"] = ("openal", "pulse", "directsound", "silent")
 
 
+TYPES = [
+    "NORMAL",
+    "FIGHTING",
+    "FLYING",
+    "POISON",
+    "GROUND",
+    "ROCK",
+    "BUG",
+    "GHOST",
+    "STEEL",
+    "UNKNOWN",
+    "FIRE",
+    "WATER",
+    "GRASS",
+    "ELECTRIC",
+    "PSYCHIC",
+    "ICE",
+    "DRAGON",
+    "DARK",
+    "FAIRY",
+]
+
+
 class ResourceManager:
     def __init__(self, game, ctx):
         self.game = game
@@ -28,6 +51,8 @@ class ResourceManager:
         self.p_icons = self.p_graphics / "icon"
         self.p_items = self.p_graphics / "Items"
         self.p_interface = self.p_graphics / "interface"
+        self.p_picture = self.p_graphics / "Pictures"
+        self.p_trainers = self.p_graphics / "Trainers"
         self.p_fonts = Path("font")
         self.p_sprites = self.p_graphics / "characters_temp"
         self.p_audio = Path("audio")
@@ -39,23 +64,42 @@ class ResourceManager:
         self.tilesets = {}
         self.programs = {}
 
+        self.fighter_splashes = {}
+        self.fighter_icons = {}
+
         self.noise = None
 
         self.audiocache = {}
 
+        self.raw_types = TYPES
+
     def init_types(self):
         types = self.open_image_interface(
-            self.p_graphics / "Pictures" / "Pokedex" / f"icon_types.png"
+            self.p_graphics / "Pictures" / "types.png", size=0.5
         )
         w, h = types.size
-        self.types = [types.crop((0, 0, w, i * 14)) for i in range(h // 14)]
+        icon_height = h // len(TYPES)
+        self.types = {
+            k: v
+            for k, v in zip(
+                TYPES,
+                [
+                    types.crop((0, i * icon_height, w, (i + 1) * icon_height))
+                    for i in range(len(TYPES))
+                ],
+            )
+        }
+
+        self.attack_types = {
+            x: self.get_interface(f"attack_types/attack_{x.lower()}") for x in TYPES
+        }
 
     def get_font(self, name, scale):
         pth = (self.p_fonts / Path(name).stem).with_suffix(".ttf")
         pth = self.resolve_resource_path(pth)
         return {
             x: ImageFont.truetype(str(pth.resolve()), x * scale)
-            for x in range(8, 20, 2)
+            for x in range(6, 20, 2)
         }
 
     def get_entity_textures(self):
@@ -78,26 +122,33 @@ class ResourceManager:
         )
 
     def get_sprite_from_anim(self, resource_name, size=1):
-        pth = (
-            self.p_graphics
-            / "Pokemon_anim"
-            / "Front"
-            / f"{str(resource_name).zfill(3)}.png"
-        )
-        img = self.open_image_interface(pth, size,)
-        w, h = img.size
-        return img.crop((0, 0, h, h))
+        if f"{resource_name}___{size}" not in self.fighter_splashes:
+            pth = (
+                self.p_graphics
+                / "Pokemon_anim"
+                / "Front"
+                / f"{str(resource_name).zfill(3)}.png"
+            )
+            img = self.open_image_interface(pth, size,)
+            w, h = img.size
+            self.fighter_splashes[f"{resource_name}___{size}"] = img.crop((0, 0, h, h))
+        return self.fighter_splashes[f"{resource_name}___{size}"]
 
-    def get_party_icon(self, resource_name, size=1):
-        img = self.open_image_interface(
-            self.p_graphics
-            / "Pokemon"
-            / "Icons"
-            / f"{str(resource_name).zfill(3)}.png",
-            size,
-        )
-        w, h = img.size
-        return img.crop((0, 0, w // 2, h)), img.crop((w // 2, 0, w, h))
+    def get_party_icon(self, resource_name, size=1.0):
+        if f"{resource_name}___{size}" not in self.fighter_icons:
+            img = self.open_image_interface(
+                self.p_graphics
+                / "Pokemon"
+                / "Icons"
+                / f"{str(resource_name).zfill(3)}.png",
+                size,
+            )
+            w, h = img.size
+            self.fighter_icons[f"{resource_name}___{size}"] = (
+                img.crop((0, 0, w // 2, h)),
+                img.crop((w // 2, 0, w, h)),
+            )
+        return self.fighter_icons[f"{resource_name}___{size}"]
 
     def get_item_icon(self, resource_name, size=1):
         pth = self.p_items / f"{str(resource_name)}.png"
@@ -114,6 +165,20 @@ class ResourceManager:
         return self.open_image_interface(self.p_items / "000.png", size,).convert(
             "RGBA"
         )
+
+    def get_picture(self, resource_name, size=0.5):
+        pth = self.p_picture / f"{str(resource_name)}.png"
+        if self.resolve_resource_path(pth):
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
+
+    def get_trainer_splash(self, resource_name, size=0.5):
+        pth = self.p_trainers / f"{str(resource_name)}.png"
+        if self.resolve_resource_path(pth):
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return None
 
     def get_splash(self, resource_name, size=1):
         pth = self.p_graphics / "splash" / f"{str(resource_name)}.png"

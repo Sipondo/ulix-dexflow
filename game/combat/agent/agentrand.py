@@ -17,4 +17,7 @@ class AgentRand(BaseAgent):
         return action, user, target
 
     def get_sendout(self, scene):
-        return 1
+        random_fighter = np.random.randint(len(scene.teams[self.team]))
+        while not scene.board.get_can_fight((self.team, random_fighter)):
+            random_fighter = np.random.randint(len(scene.teams[self.team]))
+        return random_fighter

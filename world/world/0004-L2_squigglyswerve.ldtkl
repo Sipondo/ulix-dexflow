@@ -29,7 +29,9 @@
 		{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
 		{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
 		{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
-		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] }
+		{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+		{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -240,7 +242,8 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
 				},
 				{
@@ -287,7 +290,41 @@
 							"defUid": 387,
 							"realEditorValues": []
 						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] }
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
+						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Region",
+					"__grid": [8,11],
+					"__pivot": [0,0],
+					"__tile": null,
+					"width": 32,
+					"height": 32,
+					"defUid": 356,
+					"px": [128,176],
+					"fieldInstances": [
+						{
+							"__identifier": "on_enter_action",
+							"__value": "target: Debug(target)",
+							"__type": "String",
+							"defUid": 397,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["target: Debug(target)"]
+							}]
+						},
+						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
+						{
+							"__identifier": "player_exclusive",
+							"__value": false,
+							"__type": "Bool",
+							"defUid": 412,
+							"realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ false ]
+							}]
+						}
 					]
 				}
 			]
@@ -1646,16 +1683,19 @@
 						},
 						{
 							"__identifier": "on_create_action",
-							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
+							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
 							"__type": "String",
 							"defUid": 408,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    game: Debug(\"Repeat!\")\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
+									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
 								]
 							}]
-						}
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				},
 				{
@@ -1670,24 +1710,22 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
 							}]
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1",
+							"__value": "self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": [
-									"game: Cinematic()\nself: Ask(\"Push me?\", (\"Yes\", \"No\", \"I'm bored\"))\ngame: Debug(selection)\ngame: Debug(selection_text)\nif(game.selection_text != \"Yes\"){\n  game: AddItem(\"ETHER\")\n  game: Overworld()\n  exit\n}\ngame: RemoveItem(\"ETHER\")\ngame: Overworld()\n!self: Push(player.direction)\ngame: Sound(\"spotted\")\nself: mem.push_count = mem.push_count + 1"
-								]
+								"params": ["self: Push(player.direction)\nself: mem.push_count = mem.push_count + 1"]
 							}]
 						},
 						{
@@ -1729,7 +1767,76 @@
 								"id": "V_String",
 								"params": ["?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0"]
 							}]
-						}
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [5,9],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [88,152],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar067.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar067.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Storage()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["game: Storage()"]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "storage_person",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["storage_person"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Storage Sylvia",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Storage Sylvia"]
+							}]
+						},
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
 				}
 			]

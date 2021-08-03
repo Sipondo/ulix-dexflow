@@ -1,5 +1,7 @@
 from collections import deque
 
+from pandas.core import frame
+
 
 class ActionManager:
     def __init__(self, game):
@@ -9,7 +11,12 @@ class ActionManager:
 
         self.regions = []
 
+        self.prefab_actions = {}
+
     def on_tick(self, time, frame_time):
+        self.last_time = time
+        self.last_frame_time = frame_time
+
         self.queue.clear()
         to_clear = []
         for act in self.actions:
@@ -17,6 +24,19 @@ class ActionManager:
         while len(self.queue) != 0:
             act = self.queue.popleft()
             if act.on_tick(time, frame_time):
+                to_clear.append(act)
+
+        for act in to_clear:
+            self.actions.remove(act)
+            del act
+
+    def express_run(self, action):
+        to_clear = []
+        for act in [action]:
+            self.queue.append(act)
+        while len(self.queue) != 0:
+            act = self.queue.popleft()
+            if act.on_tick(self.last_time, self.last_frame_time):
                 to_clear.append(act)
 
         for act in to_clear:
@@ -38,11 +58,30 @@ class ActionManager:
         # print(
         #     "REGION CREATE:", regiontype, pos, size, region,
         # )
-        self.regions.append(
-            RegionRectangle(self.game, pos[0], pos[1], size[0], size[1], region)
-        )
+        rect = RegionRectangle(self.game, pos[0], pos[1], size[0], size[1], region)
+        self.regions.append(rect)
+        return rect
+
+    def create_aggro_region(self, entity, region):
+        region = {k[2:]: v for k, v in region.items() if "f_" in k}
+        # print(
+        #     "REGION CREATE:", regiontype, pos, size, region,
+        # )
+        rect = RegionAggro(self.game, entity, region)
+        self.regions.append(rect)
+        return rect
 
     def create_action(self, upl, user):
+        if upl is not None:
+            self.actions.append(Action(self.game, upl, user))
+
+    def create_prefab_action(self, name, user):
+        if name not in self.prefab_actions:
+            self.prefab_actions[name] = self.game.m_upl.parser.parse(
+                self.game.m_upl.parser.upl_files[name]
+            )
+
+        upl = self.prefab_actions[name]
         if upl is not None:
             self.actions.append(Action(self.game, upl, user))
 
@@ -134,7 +173,8 @@ class Action:
         elif self.tree.data in ("control_if", "control_while",):
             con = self.game.m_upl.parse(self, self.user, self.tree.children[0])
             return con[0]
-        return self.game.m_upl.parse(self, self.user, self.tree)
+        res = self.game.m_upl.parse(self, self.user, self.tree)
+        return res
 
     def terminate(self):
         self.terminated = True
@@ -166,11 +206,33 @@ class Action:
         if not self.funcs:
             # No children
             if not (self.children or self.has_run):
+                # return self.run() is not None
                 self.run()
-                return False
+                return not self.funcs
 
             # Children
-            else:
+            if self.children:
+                # Check if new visit is required
+                if (
+                    self.tree.data
+                    in (
+                        "control_if",
+                        "control_while",
+                        "control_repeat",
+                        "control_group",
+                        "concurrent",
+                    )
+                    and not self.has_run
+                ):
+                    if not self.run():
+                        self.active_children.clear()
+                        if self.elsechildren:
+                            self.trigger_else = True
+                            self.pointer = 0
+                            return self.on_tick(time, frame_time)
+                        else:
+                            return True
+
                 # Process running children
                 children_to_clear = []
                 for child in self.active_children:
@@ -192,66 +254,52 @@ class Action:
                     return True
 
                 # Visit elsechildren
-                if self.trigger_else:
-                    if not self.pointer < len(self.elsechildren):
-                        #     return False
+                if not self.active_children:
+                    if self.trigger_else:
+                        if self.pointer < len(self.elsechildren):
+                            # Visits
+                            take_next_child = not len(self.active_children)
+                            prevpointer = self.pointer
+                            while (
+                                self.pointer < len(self.elsechildren)
+                            ) and take_next_child:
+                                if self.pointer < len(self.elsechildren):
+                                    child = self.elsechildren[self.pointer]
+                                    self.active_children.append(child)
+                                    if child.data != "concurrent":
+                                        take_next_child = False
+                                    self.pointer += 1
+                            if self.pointer != prevpointer:
+                                return self.on_tick(time, frame_time)
+                            return False
+
+                    # Visit normal children
+                    elif self.pointer < len(self.children):
 
                         # Visits
                         take_next_child = not len(self.active_children)
-                        while (
-                            self.pointer < len(self.elsechildren)
-                        ) and take_next_child:
-                            # print("NEXT ELSECHILD!!!")
-                            if self.pointer < len(self.elsechildren):
-                                child = self.elsechildren[self.pointer]
+                        prevpointer = self.pointer
+                        while (self.pointer < len(self.children)) and take_next_child:
+                            if self.pointer < len(self.children):
+                                child = self.children[self.pointer]
                                 self.active_children.append(child)
                                 if child.data != "concurrent":
                                     take_next_child = False
                                 self.pointer += 1
+                        if self.pointer != prevpointer:
+                            return self.on_tick(time, frame_time)
                         return False
 
-                # Visit normal children
-                elif self.pointer < len(self.children):
-                    # Check if new visit is required
-                    if (
-                        self.tree.data
-                        in (
-                            "control_if",
-                            "control_while",
-                            "control_repeat",
-                            "control_group",
-                            "concurrent",
-                        )
-                        and not self.has_run
+                    # Repeat when done
+                    elif self.has_run and self.data in (
+                        "control_while",
+                        "control_repeat",
                     ):
-                        if not self.run():
-                            if self.elsechildren:
-                                self.trigger_else = True
-                                self.pointer = 0
-                                return False
-                            else:
-                                return True
-
-                    # Visits
-                    take_next_child = not len(self.active_children)
-                    while (self.pointer < len(self.children)) and take_next_child:
-                        if self.pointer < len(self.children):
-                            child = self.children[self.pointer]
-                            self.active_children.append(child)
-                            if child.data != "concurrent":
-                                take_next_child = False
-                            self.pointer += 1
-                    return False
-
-                # Repeat when done
-                elif self.has_run and self.data in ("control_while", "control_repeat",):
-                    self.has_run = False
-                    self.init_children(include_else=False)
-                    return False
+                        self.has_run = False
+                        self.init_children(include_else=False)
+                        return self.on_tick(time, frame_time)
 
         # Return True (exit) if nothing left to process
-        # if self.data == "control_repeat":
-        #     print("REPEAT END-RETURNING:", not self.funcs and not self.active_children)
         return not self.funcs and not self.active_children
 
 
@@ -263,7 +311,6 @@ class RegionRectangle:
         self.containing = set()
 
         for k, v in region.items():
-            # print(type(v), v)
             if isinstance(v, (int, float, str)):
                 setattr(self, k, eval(str(v)) if "[" in str(v) else v)
             else:
@@ -299,6 +346,9 @@ class RegionRectangle:
         self.y2 = self.y + h - 1
 
     def check(self, entity):
+        if entity != self.game.m_ent.player and self.player_exclusive:
+            return
+
         pos = entity.get_pos()
         if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
             if entity not in self.containing:
@@ -312,11 +362,74 @@ class RegionRectangle:
 
     def on_enter(self, entity):
         self.containing.add(entity)
-        self.game.m_act.actions.append(Action(self.game, self.on_enter_action, self))
+        act = Action(self.game, self.on_enter_action, self)
+        self.game.m_act.actions.append(act)
+        self.game.m_act.express_run(act)
         # self.game.m_upl.parse(self, self.on_enter_action)
 
     def on_exit(self, entity):
         # print("on_exit:", self, entity)
         self.containing.remove(entity)
-        self.game.m_act.actions.append(Action(self.game, self.on_exit_action, self))
+        act = Action(self.game, self.on_exit_action, self)
+        self.game.m_act.actions.append(act)
+        self.game.m_act.express_run(act)
+        # self.game.m_upl.parse(self, self.on_exit_action)
+
+
+class RegionAggro:
+    def __init__(self, game, entity, region):
+        self.game = game
+        self.entity = entity
+        self.player_exclusive = True
+        self.containing = set()
+
+        for k, v in region.items():
+            # print(type(v), v)
+            if isinstance(v, (int, float, str)):
+                setattr(self, k, eval(str(v)) if "[" in str(v) else v)
+            else:
+                setattr(self, k, v)
+        self.refresh_region()
+
+    def refresh_region(self):
+        x1 = self.entity.x_g + self.entity.direction[0]
+        y1 = self.entity.y_g + self.entity.direction[1]
+
+        x2 = self.entity.x_g + (self.entity.direction[0] * self.entity.aggro_range)
+        y2 = self.entity.y_g + (self.entity.direction[1] * self.entity.aggro_range)
+
+        self.x = min(x1, x2)
+        self.x2 = max(x1, x2)
+        self.y = min(y1, y2)
+        self.y2 = max(y1, y2)
+
+        print("AGGROREGION:", self.x, self.x2, self.y, self.y2)
+
+    def check(self, entity):
+        if entity != self.game.m_ent.player and self.player_exclusive:
+            return
+
+        pos = entity.get_pos()
+        if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
+            if entity not in self.containing:
+                self.target = entity
+                print("TRIGGER ENTER", self.x, pos[0], self.x2, self.y, pos[1], self.y2)
+                self.on_enter(entity)
+        else:
+            if entity in self.containing:
+                print("TRIGGER EXIT", self.x, pos[0], self.x2, self.y, pos[1], self.y2)
+                self.on_exit(entity)
+
+    def on_enter(self, entity):
+        self.containing.add(entity)
+        if self.entity.visible and self.entity.active:
+            act = Action(self.game, self.entity.on_aggro_action, self.entity)
+            self.game.m_act.actions.append(act)
+            self.game.m_act.express_run(act)
+        # self.game.m_upl.parse(self, self.on_enter_action)
+
+    def on_exit(self, entity):
+        # print("on_exit:", self, entity)
+        self.containing.remove(entity)
+        # self.game.m_act.actions.append(Action(self.game, self.on_exit_action, self.entity))
         # self.game.m_upl.parse(self, self.on_exit_action)

@@ -1,4 +1,5 @@
 from game.animation.moveanimation.pathmoveanimation import PathMoveAnimation
+from game.animation.moveanimation.basemoveanimation import BaseMoveAnimation
 
 
 class Step:
@@ -41,26 +42,9 @@ class Step:
                 print("Entity is already moving!")
                 raise Exception("Entity is already moving!")
 
-            path = self.game.m_col.a_star(
-                self.user.game_position,
-                (
-                    self.user.game_position[0]
-                    + self.game.m_col.offset[0]
-                    + self.direction[0],
-                    self.user.game_position[1]
-                    + self.game.m_col.offset[1]
-                    + self.direction[1],
-                ),
-                src_entity=self.user,
-            )
-            self.anim = PathMoveAnimation(
-                self.game,
-                time,
-                path.pop(0),
-                self.user,
-                distance=len(path) + 1,
-                path=path,
-            )
+            colcheck = self.user.check_collision(self.direction)
+
+            self.anim = BaseMoveAnimation(self.game, time, self.direction, self.user)
             if self.act.game.m_ani.add_animation(self.anim):
                 self.user.moving = True
                 self.init = True

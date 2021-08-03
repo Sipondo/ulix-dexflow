@@ -6,16 +6,12 @@ import re
 
 from pathlib import Path
 
-states = {"topmenu": 0, "movemenu": 1, "pokemenu": 2, "ballmenu": 3}
 letterbox_to = 0.121
 
 
 class GameStateCinematic(BaseGameState):
     def on_enter(self):
         self.selection = 0
-
-        self.state = states["topmenu"]
-
         self.goto = None
         self.options = []
         self.letterbox = 0.0
@@ -26,6 +22,10 @@ class GameStateCinematic(BaseGameState):
         self.author = None
         self.prev_dialogue = None
         self.need_to_redraw = True
+
+        self.spr_textbox = self.game.m_res.get_interface("textbox")
+        self.spr_namebox = self.game.m_res.get_interface("namebox")
+        self.spr_talker = None
 
     def on_tick(self, time, frame_time):
         self.time = time
@@ -61,8 +61,9 @@ class GameStateCinematic(BaseGameState):
                     if self.shop_confirm < 1:
                         self.shop_confirm = 99
                     return
-                self.selection = (self.selection + 1) % self.max_selection
-                self.game.r_aud.effect("select")
+                if self.options:
+                    self.selection = (self.selection + 1) % self.max_selection
+                    self.game.r_aud.effect("select")
             elif key == "up":
                 if self.shop_confirm is not None:
                     self.game.r_aud.effect("select")
@@ -70,8 +71,9 @@ class GameStateCinematic(BaseGameState):
                     if self.shop_confirm > 99:
                         self.shop_confirm = 1
                     return
-                self.selection = (self.selection - 1) % self.max_selection
-                self.game.r_aud.effect("select")
+                if self.options:
+                    self.selection = (self.selection - 1) % self.max_selection
+                    self.game.r_aud.effect("select")
             elif key == "interact":
                 if self.shop:
                     if self.shop_confirm is not None:
@@ -103,6 +105,7 @@ class GameStateCinematic(BaseGameState):
                 self.selection = 0
                 self.dialogue = None
                 self.author = None
+                self.spr_talker = None
             elif key == "backspace":
                 if self.shop:
                     self.game.r_aud.effect("cancel")
@@ -114,6 +117,7 @@ class GameStateCinematic(BaseGameState):
                         self.selection = 0
                         self.dialogue = None
                         self.author = None
+                        self.spr_talker = None
                 # self.game.m_gst.switch_state("overworld")
 
     @property
@@ -128,25 +132,41 @@ class GameStateCinematic(BaseGameState):
         self.game.r_int.draw_rectangle((0, 0), to=(1, self.letterbox), col="black")
         self.game.r_int.draw_rectangle((0, 1 - self.letterbox), to=(1, 1), col="black")
 
-        self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
+        if not self.shop and self.spr_talker:
+            self.game.r_int.draw_image(
+                self.spr_talker, (0.8, 0.7), centre=True, size=3.0
+            )
+
+        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
 
         if self.author is not None:
+            self.game.r_int.draw_image(
+                self.spr_namebox, (0.02, 0.75),
+            )
             self.game.r_int.draw_text(
-                self.author, (0.02, 0.72), to=(0.30, 0.80),
+                self.author, (0.025, 0.755), to=(0.30, 0.80), bcol=None,
             )
 
         if self.shop:
-            self.game.r_int.draw_text(
-                "How many of this article would you like?"
-                if self.shop_confirm is not None
-                else (self.dialogue if self.dialogue is not None else ""),
-                (0.02, 0.82),
-                to=(0.98, 0.98),
-            )
+            if self.dialogue:
+                self.game.r_int.draw_image(
+                    self.spr_textbox, (0.02, 0.82),
+                )
+                self.game.r_int.draw_text(
+                    "How many of this article would you like?"
+                    if self.shop_confirm is not None
+                    else (self.dialogue if self.dialogue is not None else ""),
+                    (0.025, 0.825),
+                    to=(0.98, 0.98),
+                    bcol=None,
+                )
 
             self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
+
             item = self.options[self.selection]
-            self.game.r_int.draw_text(f"{item.name}", (0.20, 0.26), size=(0.14, 0.08))
+            self.game.r_int.draw_text(
+                f"{item.itemname}", (0.20, 0.26), size=(0.14, 0.08)
+            )
             self.game.r_int.draw_text(
                 f"{item.description}", (0.20, 0.5), size=(0.35, 0.15), fsize=10,
             )
@@ -178,7 +198,7 @@ class GameStateCinematic(BaseGameState):
                         bcol=self.selection == i and "yellow" or "white",
                     )
                     self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name.name}",
+                        f"{self.selection == i and '' or ''}{name.itemname}",
                         (0.72, 0.31 + 0.08 * i),
                         size=(0.22, 0.06),
                         centre=False,
@@ -186,11 +206,16 @@ class GameStateCinematic(BaseGameState):
                     )
             return
 
-        self.game.r_int.draw_text(
-            self.dialogue if self.dialogue is not None else "",
-            (0.02, 0.82),
-            to=(0.98, 0.98),
-        )
+        if self.dialogue:
+            self.game.r_int.draw_image(
+                self.spr_textbox, (0.02, 0.82),
+            )
+            self.game.r_int.draw_text(
+                self.dialogue if self.dialogue is not None else "",
+                (0.025, 0.825),
+                to=(0.98, 0.98),
+                bcol=None,
+            )
 
         if self.options:
             self.game.r_int.draw_rectangle(

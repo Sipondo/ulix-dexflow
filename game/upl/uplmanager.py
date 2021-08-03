@@ -1,27 +1,43 @@
 from lark import Lark
 from lark import Transformer
+from pathlib import Path
+import re
 
 from game.upl.upl_scripts.additem import AddItem
 from game.upl.upl_scripts.ask import Ask
+from game.upl.upl_scripts.battle import Battle
+from game.upl.upl_scripts.checkcollision import CheckCollision
 from game.upl.upl_scripts.cinematic import Cinematic
 from game.upl.upl_scripts.concat import Concat
 from game.upl.upl_scripts.countitem import CountItem
 from game.upl.upl_scripts.debug import Debug
+from game.upl.upl_scripts.encounter import Encounter
 from game.upl.upl_scripts.face import Face
+from game.upl.upl_scripts.flushtiles import FlushTiles
+from game.upl.upl_scripts.getentities import GetEntities
+from game.upl.upl_scripts.gettile import GetTile
 from game.upl.upl_scripts.isentity import IsEntity
 from game.upl.upl_scripts.jump import Jump
+from game.upl.upl_scripts.length import Length
 from game.upl.upl_scripts.manhattan import Manhattan
 from game.upl.upl_scripts.move import Move
 from game.upl.upl_scripts.music import Music
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
 from game.upl.upl_scripts.push import Push
+from game.upl.upl_scripts.random import Random
 from game.upl.upl_scripts.removeitem import RemoveItem
+from game.upl.upl_scripts.resetlocalencounters import ResetLocalEncounters
+from game.upl.upl_scripts.restoreparty import RestoreParty
 from game.upl.upl_scripts.say import Say
+from game.upl.upl_scripts.setlocalencounters import SetLocalEncounters
 from game.upl.upl_scripts.setmovement import SetMovement
+from game.upl.upl_scripts.settile import SetTile
 from game.upl.upl_scripts.shop import Shop
 from game.upl.upl_scripts.sound import Sound
 from game.upl.upl_scripts.step import Step
+from game.upl.upl_scripts.storage import Storage
+from game.upl.upl_scripts.updatetiles import UpdateTiles
 from game.upl.upl_scripts.wait import Wait
 
 
@@ -51,9 +67,14 @@ class UPLToPython(Transformer):
             s = ".".join(["INTERNAL_VARIABLE"] + str(s[0]).split(".")[1:])
         elif INTERNAL_VARIABLE := self.parse_username(s[0]):
             s[0] = "INTERNAL_VARIABLE"
+        elif "self." in s[0]:
+            pass
+        else:
+            user = self.user
+            s[0] = f"user.{s[0]}"
 
         self = self.src
-        return exec(f"{s[0]}={s[1]}")
+        return exec(f"{s[0]}=s[1]")
 
     def function(self, s):
         (s,) = s
@@ -97,12 +118,12 @@ class UPLToPython(Transformer):
         return eval(s)
 
     def index(self, s):
-        a = s[0]
-        b = s[1]
-        if isinstance(b, float):
-            b = int(b)
+        INTERNAL_A = s[0]
+        INTERNAL_B = s[1]
+        if isinstance(INTERNAL_B, float):
+            INTERNAL_B = int(INTERNAL_B)
         self = self.src
-        return eval(f"a[b]")
+        return eval(f"INTERNAL_A[INTERNAL_B]")
 
     def compare(self, s):
         self = self.src
@@ -196,6 +217,8 @@ class UPLToPython(Transformer):
             ret = self.act.game
         elif name == "col":
             ret = self.act.game.m_col
+        elif name == "map":
+            ret = self.act.game.m_map
         elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
             ret = self.act.game.m_ent.entities[name[2:]]
 
@@ -234,11 +257,23 @@ class UplManager:
 
 class UplParser:
     def __init__(self):
+        self.resource_dirs = list(Path("").glob("resources/*/"))
+        self.upl_files = {}
+        for directory in self.resource_dirs:
+            for file in (directory / "upl").glob("**/*.upl"):
+                if file.stem not in self.upl_files:
+                    with open(file) as infile:
+                        self.upl_files[file.stem] = infile.read()
         with open("game/upl/upl_grammar.lark", "r") as infile:
             self.parser = Lark(infile.read(), start="upl")  # , parser="lalr")
 
     def parse(self, script):
-        return self.parser.parse(script)
+        outscript = ""
+        while outscript != script:
+            outscript = script
+            for k, v in self.upl_files.items():
+                script = re.sub(f"<<<{k}>>>", v, script, flags=re.M,)
+        return self.parser.parse(outscript)
 
 
 # parser = UplParser()

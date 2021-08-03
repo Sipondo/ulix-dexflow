@@ -1,34 +1,33 @@
 import numpy as np
 from .partyitem import PartyItem
 from .partymember import PartyMember
-from .partymove import PartyMove
 
 
 class Inventory:
     def __init__(self, game):
         self.game = game
-        self.balls = {}
-        self.init_bag()
-
         self.members = []
+        self.storage = []
         self.items = []
 
-        for i in range(3):
+        for i in range(6):
             self.members.append(self.init_random_member())
 
-        # for i in range(400):
-        #     self.add_item(self.game.m_pbs.get_random_item().identifier, 1)
+        for i in range(30):
+            self.storage.append(self.init_random_member())
 
         self.sort_items()
 
     def init_random_member(self):
         mem = PartyMember(self.game, self.game.m_pbs.get_random_fighter())
-        mem.moves = [PartyMove(self.game.m_pbs.get_random_move()) for _ in range(4)]
         return mem
 
-    def init_bag(self):
-        for name in ["Poke Ball", "Bla Ball", "Super Ball", "Great Ball"]:
-            self.balls[name] = np.random.randint(9)
+    def add_member(self, data):
+        new_member = PartyMember(self.game, data)
+        if len(self.members) == 6:
+            self.storage.append(new_member)
+        else:
+            self.members.append(new_member)
 
     def add_item(self, id, quantity):
         pre_exist = [x for x in self.items if x.identifier == id]

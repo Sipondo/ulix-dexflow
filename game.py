@@ -83,6 +83,7 @@ class PokeGame(mglw.WindowConfig):
         self.r_int = InterfaceRenderer(self, self.ctx)
         self.r_wld = WorldRenderer(self, self.ctx)
 
+        self.m_res.init_types()
         self.pan_tool = PanTool(self.size)
         # TODO
         self.r_wld.offset = (0.5, 13 / 16)
@@ -130,7 +131,11 @@ class PokeGame(mglw.WindowConfig):
         )
 
         # Initial map
-        self.r_wld.set_map_via_manager(self.m_sav.load("current_offset") or (0, 0))
+        self.r_wld.set_map_via_manager(
+            isinstance(self.m_sav.load("current_offset"), int)
+            and (0, 0)
+            or tuple(self.m_sav.load("current_offset"))
+        )
         # Start game
         # self.m_gst.switch_state("intro")
 
@@ -170,7 +175,9 @@ class PokeGame(mglw.WindowConfig):
 
             locking = self.m_gst.current_state.on_tick(time, frame_time)
             self.r_aud.on_tick(time, frame_time)
-            self.m_act.on_tick(time, frame_time)
+
+            if self.m_gst.current_state_name in ("cinematic", "overworld"):
+                self.m_act.on_tick(time, frame_time)
 
             # TODO
             self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)

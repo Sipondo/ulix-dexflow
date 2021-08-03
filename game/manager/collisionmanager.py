@@ -43,7 +43,7 @@ class CollisionManager:
         ]
 
         for entity in self.game.m_ent.all_entities_on_height(height):
-            if entity == src_entity:
+            if entity == src_entity or not entity.visible:
                 continue
             # print(entity.game_position)
             x1, y1 = entity.get_pos()
@@ -95,20 +95,23 @@ class CollisionManager:
             zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
         )
 
-    def get_col_flag(self, pos, height=0, off=True, src_entity=None):
+    def get_col_flag(
+        self, pos, height=0, off=True, src_entity=None, check_entities=True
+    ):
         height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
 
-        for entity in self.game.m_ent.all_entities_on_height(height):
-            if entity == src_entity:
-                continue
-            x1, y1 = entity.get_pos()
-            x1 += self.offset[0]
-            y1 += self.offset[1]
-            x2, y2 = pos
-            if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
-                return True
+        if check_entities:
+            for entity in self.game.m_ent.all_entities_on_height(height):
+                if entity == src_entity or not entity.visible:
+                    continue
+                x1, y1 = entity.get_pos()
+                x1 += self.offset[0]
+                y1 += self.offset[1]
+                x2, y2 = pos
+                if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
+                    return True
         return np.all(self.colmap[height][pos[1], pos[0], :4])
 
     def a_star(self, fr, to, height=0, next_to=False, src_entity=None):

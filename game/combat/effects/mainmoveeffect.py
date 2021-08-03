@@ -32,7 +32,7 @@ class MainMove(BaseEffect):
             function_args = func.split(" ")
             if len(function_args) > 1:
                 func, args = function_args
-                move_effect = self.scene.effect_lib[func](self.scene, self, *args)
+                move_effect = self.scene.effect_lib[func](self.scene, self, args)
             else:
                 move_effect = self.scene.effect_lib[func](self.scene, self)
             self.effects.append(move_effect)
@@ -87,10 +87,10 @@ class MainMove(BaseEffect):
 
         # move type mods
         stab = 1
-        if self.type in (user_mon.type_1, user_mon.type_2):
+        if self.type in (user_mon.type1, user_mon.type2):
             stab = 1.5
         move_effectiveness = self.get_move_effectiveness(
-            self.type, target_mon.type_1, target_mon.type_2
+            self.type, target_mon.type1, target_mon.type2
         )
         for effect in self.scene.get_effects_on_target(self.target):
             if effect.on_hit(self):
@@ -139,7 +139,7 @@ class MainMove(BaseEffect):
         self.scene.add_effect(DamageEffect(self.scene, self.target, abs_dmg=damage))
         return True
 
-    def get_move_effectiveness(self, move_type, target_type_1, target_type_2):
+    def get_move_effectiveness(self, move_type, target_type1, target_type2):
         # TODO get move effectiveness
         return 1
 
@@ -149,11 +149,13 @@ class MainMove(BaseEffect):
 
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
-            particle=self.name,
+            particle=self.name, move_data=self.move
         )
         print("User:", self.user, "Target:", self.target)
         if self.target_fainted:
-            self.scene.add_effect(GenericEffect(self.scene, "But there was no target.."))
+            self.scene.add_effect(
+                GenericEffect(self.scene, "But there was no target..")
+            )
             return True, False, False
         for effect in self.effects:
             if not effect.before_move():
