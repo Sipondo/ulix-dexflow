@@ -48,7 +48,7 @@
             "id": 2945980219792,
             "title": "Emit",
             "pos_x": 24.5,
-            "pos_y": -406.37500000000006,
+            "pos_y": -405.12500000000006,
             "inputs": [
                 {
                     "id": 2945980220944,
@@ -83,12 +83,12 @@
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.35",
-                "field_col_range_r": "0.01",
-                "field_col_g": "0.35",
-                "field_col_range_g": "0.01",
-                "field_col_b": "0.85",
-                "field_col_range_b": "0.15"
+                "field_col_r": "0.45",
+                "field_col_range_r": "0.03",
+                "field_col_g": "0.45",
+                "field_col_range_g": "0.03",
+                "field_col_b": "0.95",
+                "field_col_range_b": "0.05"
             },
             "op_code": 9
         },
@@ -260,7 +260,7 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 383.4999999999999,
+            "pos_x": 385.4999999999999,
             "pos_y": 16.75,
             "inputs": [],
             "outputs": [],
@@ -276,8 +276,8 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.6",
-                "field_dark_speed": "2.0",
+                "field_dark": "0.75",
+                "field_dark_speed": "0.3",
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
@@ -285,12 +285,12 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 428.9999999999999,
-            "pos_y": 212.12500000000003,
+            "pos_x": 433.9999999999999,
+            "pos_y": 212.125,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "2.0",
+                "field_delay": "2.2",
                 "field_duration": ".3",
                 "field_count": "1",
                 "field_hit_strength": 0.0,
@@ -301,7 +301,7 @@
                 "field_shake_enabled": false,
                 "field_dark_enabled": true,
                 "field_dark_recover": true,
-                "field_dark": "0.5",
+                "field_dark": "0.75",
                 "field_dark_speed": "1.0",
                 "field_dark_speed_enabled": false,
                 "field_hit": 0.0
@@ -312,7 +312,7 @@
             "id": 2503712330800,
             "title": "Emit",
             "pos_x": 318.37500000000006,
-            "pos_y": -428.49999999999983,
+            "pos_y": -430.99999999999983,
             "inputs": [
                 {
                     "id": 2503712333200,
@@ -347,20 +347,20 @@
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.35",
-                "field_col_range_r": "0.01",
-                "field_col_g": "0.35",
-                "field_col_range_g": "0.01",
-                "field_col_b": "0.85",
-                "field_col_range_b": "0.15"
+                "field_col_r": "0.45",
+                "field_col_range_r": "0.03",
+                "field_col_g": "0.45",
+                "field_col_range_g": "0.03",
+                "field_col_b": "0.95",
+                "field_col_range_b": "0.05"
             },
             "op_code": 9
         },
         {
             "id": 2503717895184,
             "title": "Trigger",
-            "pos_x": 394.37499999999983,
-            "pos_y": 112.18749999999991,
+            "pos_x": 392.3749999999998,
+            "pos_y": 115.18749999999989,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -375,8 +375,8 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.5",
-                "field_dark_speed": "2.0",
+                "field_dark": "0.75",
+                "field_dark_speed": "0.5",
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
@@ -520,7 +520,7 @@
             "content": {
                 "field_VERTICAL_DAMPEN": "1.4",
                 "field_DAMPEN": "1.",
-                "field_LIFE_DAMPEN": "1.4"
+                "field_LIFE_DAMPEN": "2.5"
             },
             "op_code": -1515145737
         },
@@ -528,7 +528,7 @@
             "id": 2754516315680,
             "title": "Emit",
             "pos_x": -596.7499999999997,
-            "pos_y": -326.56249999999994,
+            "pos_y": -320.70312499999994,
             "inputs": [
                 {
                     "id": 2754516315536,
@@ -540,7 +540,7 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "1.4",
+                "field_life": "1.1",
                 "field_life_range": "0.3",
                 "field_size": "0.5",
                 "field_size_range": "0.3",
@@ -563,12 +563,12 @@
                 "field_rot_range": "360",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.35",
+                "field_col_r": "0.45",
                 "field_col_range_r": "0.01",
-                "field_col_g": "0.35",
+                "field_col_g": "0.45",
                 "field_col_range_g": "0.01",
-                "field_col_b": "0.85",
-                "field_col_range_b": "0.15"
+                "field_col_b": "0.95",
+                "field_col_range_b": "0.05"
             },
             "op_code": 9
         },
@@ -602,8 +602,8 @@
         {
             "id": 2754434298112,
             "title": "Trigger",
-            "pos_x": 627.5000000000001,
-            "pos_y": 114.99999999999997,
+            "pos_x": 626.5,
+            "pos_y": 111.0,
             "inputs": [],
             "outputs": [],
             "content": {

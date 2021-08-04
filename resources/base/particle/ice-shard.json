@@ -19,7 +19,7 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "4",
+                "field_life": "2",
                 "field_life_range": 0.0,
                 "field_size": "2",
                 "field_size_range": 0.0,
@@ -136,7 +136,7 @@
         {
             "id": 2945980219792,
             "title": "Emit",
-            "pos_x": -312.56249999999994,
+            "pos_x": -311.56249999999994,
             "pos_y": -302.25,
             "inputs": [
                 {
