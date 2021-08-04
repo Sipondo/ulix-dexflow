@@ -23,9 +23,9 @@
                 "field_life_range": 0.0,
                 "field_size": "1.3",
                 "field_size_range": "0.8",
-                "field_delay": 0,
-                "field_duration": "2.9",
-                "field_count": "50",
+                "field_delay": "0.8",
+                "field_duration": "1.2",
+                "field_count": "30",
                 "field_pos_x": "!tarx!",
                 "field_pos_range_x": "0.2",
                 "field_pos_y": "!tary!",
@@ -95,8 +95,8 @@
         {
             "id": 2193352437040,
             "title": "Render",
-            "pos_x": -8.847656249999801,
-            "pos_y": -386.0898437500001,
+            "pos_x": 35.09765625000017,
+            "pos_y": -378.7656250000001,
             "inputs": [
                 {
                     "id": 2193352484464,
@@ -129,7 +129,7 @@
             "content": {
                 "field_mirror": "mirrornegative",
                 "field_delay": "-0.7",
-                "field_target": "100",
+                "field_target": "15",
                 "field_speed": "5",
                 "field_friction": 3,
                 "field_duration": "0.1",
@@ -147,8 +147,8 @@
             "content": {
                 "field_mirror": "mirrornegative",
                 "field_delay": "0",
-                "field_target": "20",
-                "field_speed": "!eqt!",
+                "field_target": "65",
+                "field_speed": "1",
                 "field_friction": 3,
                 "field_duration": "2.0",
                 "field_count": "250"
@@ -216,8 +216,8 @@
         {
             "id": 2193350892608,
             "title": "Emit",
-            "pos_x": -487.25,
-            "pos_y": -307.0,
+            "pos_x": -518.5,
+            "pos_y": -306.99999999999994,
             "inputs": [
                 {
                     "id": 2193352533664,
@@ -233,13 +233,13 @@
                 "field_life_range": 0.0,
                 "field_size": "1.5",
                 "field_size_range": 0.0,
-                "field_delay": 0,
-                "field_duration": "3.6",
+                "field_delay": "0.8",
+                "field_duration": "1",
                 "field_count": "1000",
                 "field_pos_x": "!tarx!",
-                "field_pos_range_x": "0.2",
+                "field_pos_range_x": "0.03",
                 "field_pos_y": "!tary!",
-                "field_pos_range_y": "0.2",
+                "field_pos_range_y": "0.03",
                 "field_pos_z": "0.1",
                 "field_pos_range_z": 0,
                 "field_vel_x": "0",
@@ -252,11 +252,11 @@
                 "field_rot_range": 360,
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": 1,
-                "field_col_range_r": 0,
-                "field_col_g": "0.9",
-                "field_col_range_g": "0.1",
-                "field_col_b": "0.3",
+                "field_col_r": "0.9",
+                "field_col_range_r": "0.05",
+                "field_col_g": "0.8",
+                "field_col_range_g": "0.05",
+                "field_col_b": "1",
                 "field_col_range_b": 0
             },
             "op_code": 9
@@ -305,8 +305,8 @@
         {
             "id": 2193353428800,
             "title": "Render",
-            "pos_x": -305.74609375,
-            "pos_y": -126.27734375000004,
+            "pos_x": -276.44921875,
+            "pos_y": -123.83593750000004,
             "inputs": [
                 {
                     "id": 2193353425488,
@@ -338,7 +338,7 @@
             "outputs": [],
             "content": {
                 "field_label": "tar",
-                "field_equation": "min(4, t  * t / 2)"
+                "field_equation": "4"
             },
             "op_code": 7
         },
@@ -447,8 +447,8 @@
         {
             "id": 2193353410016,
             "title": "Render",
-            "pos_x": -412.5312499999999,
-            "pos_y": 84.97265624999997,
+            "pos_x": -375.9101562499999,
+            "pos_y": 106.94531249999996,
             "inputs": [
                 {
                     "id": 2193353410256,
@@ -499,7 +499,7 @@
             "id": 2193351033664,
             "title": "Geo Vel Snap",
             "pos_x": -74.0,
-            "pos_y": -211.0,
+            "pos_y": -214.125,
             "inputs": [
                 {
                     "id": 2193353425296,
@@ -519,7 +519,7 @@
             "id": 2193350893088,
             "title": "Trigger",
             "pos_x": 149.5,
-            "pos_y": 120.50000000000003,
+            "pos_y": 118.5,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -534,7 +534,7 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.3",
+                "field_dark": "0.7",
                 "field_dark_speed": "3.0",
                 "field_dark_speed_enabled": true
             },
@@ -677,8 +677,8 @@
         {
             "id": 2193351034864,
             "title": "Render",
-            "pos_x": 740.1601562500001,
-            "pos_y": -74.4453124999998,
+            "pos_x": 757.25,
+            "pos_y": -54.9140624999998,
             "inputs": [
                 {
                     "id": 2193351033568,
@@ -693,7 +693,7 @@
                 "field_file": "square_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": "0.08",
+                "field_opacity": "0.06",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1,
                 "field_noise": 1.0,
@@ -704,8 +704,8 @@
         {
             "id": 2193351034480,
             "title": "Render",
-            "pos_x": 1174.4453125,
-            "pos_y": -435.0742187499997,
+            "pos_x": 1179.3281249999998,
+            "pos_y": -452.1640624999998,
             "inputs": [
                 {
                     "id": 2193351035392,
@@ -720,7 +720,7 @@
                 "field_file": "square_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": "0.8",
+                "field_opacity": "0.6",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1,
                 "field_noise": 1.0,
@@ -731,8 +731,8 @@
         {
             "id": 2193351035728,
             "title": "Emit",
-            "pos_x": 833.0,
-            "pos_y": -563.3125,
+            "pos_x": 833.0000000000001,
+            "pos_y": -567.0625000000001,
             "inputs": [
                 {
                     "id": 2193351035248,
@@ -748,8 +748,8 @@
                 "field_life_range": "0.2",
                 "field_size": "0.4",
                 "field_size_range": "0.2",
-                "field_delay": "0",
-                "field_duration": "2.9",
+                "field_delay": "0.8",
+                "field_duration": "1.2",
                 "field_count": "1200",
                 "field_pos_x": "!tarx!",
                 "field_pos_range_x": "0.2",
@@ -758,20 +758,20 @@
                 "field_pos_z": 0,
                 "field_pos_range_z": 0,
                 "field_vel_x": "1.5",
-                "field_vel_range_x": "5",
+                "field_vel_range_x": "3",
                 "field_vel_y": "-1.5",
-                "field_vel_range_y": "5",
+                "field_vel_range_y": "3",
                 "field_vel_z": "2",
-                "field_vel_range_z": "3",
+                "field_vel_range_z": "2",
                 "field_rot": 0,
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
+                "field_col_r": "0.9",
                 "field_col_range_r": "0.05",
-                "field_col_g": "0.7",
-                "field_col_range_g": "0.1",
-                "field_col_b": "0.4",
+                "field_col_g": "0.8",
+                "field_col_range_g": "0.05",
+                "field_col_b": "1",
                 "field_col_range_b": 0
             },
             "op_code": 9
@@ -865,7 +865,7 @@
             "id": 2193346133632,
             "title": "Emit",
             "pos_x": 694.0624999999995,
-            "pos_y": -706.25,
+            "pos_y": -710.25,
             "inputs": [
                 {
                     "id": 2193350892896,
@@ -881,154 +881,56 @@
                 "field_life_range": "0.6",
                 "field_size": "0.5",
                 "field_size_range": "0.2",
-                "field_delay": "2.7",
-                "field_duration": "0.9",
-                "field_count": "2000",
-                "field_pos_x": "!tarx!",
-                "field_pos_range_x": "0.2",
-                "field_pos_y": "!tary!",
-                "field_pos_range_y": "0.2",
-                "field_pos_z": 0,
-                "field_pos_range_z": 0,
-                "field_vel_x": "0",
-                "field_vel_range_x": "5",
-                "field_vel_y": 0,
-                "field_vel_range_y": "5",
-                "field_vel_z": "2",
-                "field_vel_range_z": "3",
-                "field_rot": 0,
-                "field_rot_range": "0",
-                "field_rot_vel": 0,
-                "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
-                "field_col_range_r": "0.05",
-                "field_col_g": "0.7",
-                "field_col_range_g": "0.1",
-                "field_col_b": "0.4",
-                "field_col_range_b": 0
-            },
-            "op_code": 9
-        },
-        {
-            "id": 2193352484032,
-            "title": "Emit",
-            "pos_x": -115.00000000000011,
-            "pos_y": -624.0,
-            "inputs": [
-                {
-                    "id": 2193352483888,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_life": "3.0",
-                "field_life_range": "0.6",
-                "field_size": "1.5",
-                "field_size_range": "0.2",
-                "field_delay": "2.7",
-                "field_duration": "1.0",
-                "field_count": "50",
-                "field_pos_x": "!tarx!",
-                "field_pos_range_x": "0.2",
-                "field_pos_y": "!tary!",
-                "field_pos_range_y": "0.2",
-                "field_pos_z": 0,
-                "field_pos_range_z": 0,
-                "field_vel_x": "0",
-                "field_vel_range_x": "1",
-                "field_vel_y": 0,
-                "field_vel_range_y": "1",
-                "field_vel_z": "1",
-                "field_vel_range_z": "0.5",
-                "field_rot": 0,
-                "field_rot_range": "0",
-                "field_rot_vel": 0,
-                "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
-                "field_col_range_r": "0",
-                "field_col_g": "0.65",
-                "field_col_range_g": "0",
-                "field_col_b": "0.5",
-                "field_col_range_b": 0
-            },
-            "op_code": 9
-        },
-        {
-            "id": 2193346204528,
-            "title": "Trigger",
-            "pos_x": 146.25000000000006,
-            "pos_y": 504.9999999999998,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_delay": "3.5",
+                "field_delay": "1.9",
                 "field_duration": "0.1",
-                "field_count": 1,
-                "field_hit": 0.0,
-                "field_hit_enabled": "",
-                "field_sound_path": "",
-                "field_sound_enabled": "",
-                "field_shake": "0.1",
-                "field_shake_enabled": true,
-                "field_dark_enabled": false,
-                "field_dark_recover": true,
-                "field_dark": "0.1",
-                "field_dark_speed": 1.0,
-                "field_dark_speed_enabled": false
+                "field_count": "4000",
+                "field_pos_x": "!tarx!",
+                "field_pos_range_x": "0.2",
+                "field_pos_y": "!tary!",
+                "field_pos_range_y": "0.2",
+                "field_pos_z": 0,
+                "field_pos_range_z": 0,
+                "field_vel_x": "0",
+                "field_vel_range_x": "3",
+                "field_vel_y": 0,
+                "field_vel_range_y": "3",
+                "field_vel_z": "2",
+                "field_vel_range_z": "2",
+                "field_rot": 0,
+                "field_rot_range": "0",
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.9",
+                "field_col_range_r": "0.05",
+                "field_col_g": "0.8",
+                "field_col_range_g": "0.05",
+                "field_col_b": "1",
+                "field_col_range_b": 0
             },
-            "op_code": 11
+            "op_code": 9
         },
         {
             "id": 2193345668768,
             "title": "Trigger",
-            "pos_x": 146.50000000000006,
-            "pos_y": 244.25,
+            "pos_x": 154.50000000000006,
+            "pos_y": 206.25,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "0",
-                "field_duration": "2.7",
+                "field_delay": "0.8",
+                "field_duration": "1.1",
                 "field_count": "100",
                 "field_hit": 0.0,
                 "field_hit_enabled": "",
                 "field_sound_path": "",
                 "field_sound_enabled": "",
-                "field_shake": "0.5",
+                "field_shake": "0.65",
                 "field_shake_enabled": true,
-                "field_dark_enabled": "",
-                "field_dark_recover": true,
-                "field_dark": 0.5,
-                "field_dark_speed": 1.0,
-                "field_dark_speed_enabled": true
-            },
-            "op_code": 11
-        },
-        {
-            "id": 2193345649248,
-            "title": "Trigger",
-            "pos_x": 127.74999999999994,
-            "pos_y": 602.9999999999999,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_delay": "3.5",
-                "field_duration": "0.5",
-                "field_count": "100",
-                "field_hit": 0.0,
-                "field_hit_enabled": "",
-                "field_sound_path": "",
-                "field_sound_enabled": "",
-                "field_shake": "0.1",
-                "field_shake_enabled": false,
                 "field_dark_enabled": true,
-                "field_dark_recover": true,
-                "field_dark": "0.1",
-                "field_dark_speed": 1.0,
-                "field_dark_speed_enabled": false
+                "field_dark_recover": false,
+                "field_dark": "0.35",
+                "field_dark_speed": "4.0",
+                "field_dark_speed_enabled": true
             },
             "op_code": 11
         },
@@ -1036,7 +938,7 @@
             "id": 2193353426112,
             "title": "Equation",
             "pos_x": -415.0,
-            "pos_y": 236.0,
+            "pos_y": 238.50000000000003,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -1046,23 +948,10 @@
             "op_code": 7
         },
         {
-            "id": 2140265644864,
-            "title": "Equation",
-            "pos_x": 734.0,
-            "pos_y": 228.0,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_label": "eqt",
-                "field_equation": "pow(max(0.01, t), 3.5)/12"
-            },
-            "op_code": 7
-        },
-        {
             "id": 2140268968352,
             "title": "Emit",
             "pos_x": 462.7499999999999,
-            "pos_y": -575.2499999999995,
+            "pos_y": -571.7499999999997,
             "inputs": [
                 {
                     "id": 2140268966432,
@@ -1078,9 +967,9 @@
                 "field_life_range": "0.6",
                 "field_size": "1.1",
                 "field_size_range": "0.2",
-                "field_delay": "3.55",
+                "field_delay": "1.9",
                 "field_duration": "0.1",
-                "field_count": "5500",
+                "field_count": "500",
                 "field_pos_x": "!tarx!",
                 "field_pos_range_x": "0.2",
                 "field_pos_y": "!tary!",
@@ -1088,20 +977,20 @@
                 "field_pos_z": 0,
                 "field_pos_range_z": 0,
                 "field_vel_x": "0",
-                "field_vel_range_x": "5",
+                "field_vel_range_x": "2",
                 "field_vel_y": 0,
-                "field_vel_range_y": "5",
+                "field_vel_range_y": "2",
                 "field_vel_z": "2",
-                "field_vel_range_z": "3",
+                "field_vel_range_z": "1",
                 "field_rot": 0,
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
+                "field_col_r": "0.9",
                 "field_col_range_r": "0.05",
-                "field_col_g": "0.7",
-                "field_col_range_g": "0.1",
-                "field_col_b": "0.4",
+                "field_col_g": "0.8",
+                "field_col_range_g": "0.05",
+                "field_col_b": "1",
                 "field_col_range_b": 0
             },
             "op_code": 9
@@ -1109,27 +998,317 @@
         {
             "id": 2140268219504,
             "title": "Trigger",
-            "pos_x": 152.24999999999994,
-            "pos_y": 381.25000000000006,
+            "pos_x": 160.25,
+            "pos_y": 320.25,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "2.7",
+                "field_delay": "2.0",
                 "field_duration": "0.75",
                 "field_count": "100",
                 "field_hit": 0.0,
                 "field_hit_enabled": "",
                 "field_sound_path": "",
                 "field_sound_enabled": "",
-                "field_shake": "0.4",
+                "field_shake": "0.55",
                 "field_shake_enabled": true,
-                "field_dark_enabled": "",
+                "field_dark_enabled": true,
                 "field_dark_recover": true,
-                "field_dark": 0.5,
+                "field_dark": "0.25",
                 "field_dark_speed": 1.0,
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
+        },
+        {
+            "id": 2370481906448,
+            "title": "Stage",
+            "pos_x": -911.7989501953118,
+            "pos_y": -757.8362426757809,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2370605991488,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2370605991536,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2370605991584,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2370605991632,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": "13241123"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2370605991824,
+            "title": "Render",
+            "pos_x": -441.3458251953118,
+            "pos_y": -820.4534301757809,
+            "inputs": [
+                {
+                    "id": 2370605992064,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "square_01",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.2",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2370605992112,
+            "title": "Emit",
+            "pos_x": -785.736450195312,
+            "pos_y": -919.6487426757807,
+            "inputs": [
+                {
+                    "id": 2370605992352,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "1",
+                "field_life_range": "0.3",
+                "field_size": "0.5",
+                "field_size_range": "0.3",
+                "field_delay": "0",
+                "field_duration": "2.0",
+                "field_count": "200 * !eqgust!",
+                "field_pos_x": "-1",
+                "field_pos_range_x": "-1",
+                "field_pos_y": "1",
+                "field_pos_range_y": "-1",
+                "field_pos_z": "1",
+                "field_pos_range_z": "-1",
+                "field_vel_x": "5",
+                "field_vel_range_x": "1",
+                "field_vel_y": "-5",
+                "field_vel_range_y": "1",
+                "field_vel_z": "0",
+                "field_vel_range_z": "0.5",
+                "field_rot": 0,
+                "field_rot_range": "360",
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.9",
+                "field_col_range_r": "0.05",
+                "field_col_g": "0.8",
+                "field_col_range_g": "0.05",
+                "field_col_b": "1",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2370605992400,
+            "title": "Filter Blur",
+            "pos_x": -800.361450195312,
+            "pos_y": -531.5862426757809,
+            "inputs": [
+                {
+                    "id": 2370605990816,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 2370605990288,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2370605990432,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_LIFE": "0.1"
+            },
+            "op_code": 1417848045
+        },
+        {
+            "id": 2370605991440,
+            "title": "Geo Set",
+            "pos_x": -460.1739501953118,
+            "pos_y": -639.5237426757808,
+            "inputs": [
+                {
+                    "id": 2370605990768,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-1",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2370605990720,
+            "title": "Stage",
+            "pos_x": -1057.9864501953118,
+            "pos_y": -506.2737426757809,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2370605991200,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2370605991248,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2370605991296,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2370605991344,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": "124314"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2370605991152,
+            "title": "Render",
+            "pos_x": -741.9864501953119,
+            "pos_y": -361.6018676757811,
+            "inputs": [
+                {
+                    "id": 2370605992496,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "square_01",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.1",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2370568587872,
+            "title": "Equation",
+            "pos_x": 95.31249999999994,
+            "pos_y": -928.1249999999993,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "eqgust",
+                "field_equation": "max(0, 3-t)**1.5"
+            },
+            "op_code": 7
         }
     ],
     "edges": [
@@ -1248,16 +1427,46 @@
             "end": 2193350890592
         },
         {
-            "id": 2193346133872,
-            "edge_type": 2,
-            "start": 2193352483888,
-            "end": 2193352437088
-        },
-        {
             "id": 2140269969072,
             "edge_type": 2,
             "start": 2140268966432,
             "end": 2193350890592
+        },
+        {
+            "id": 2370605992448,
+            "edge_type": 2,
+            "start": 2370605992352,
+            "end": 2370605991488
+        },
+        {
+            "id": 2370605992544,
+            "edge_type": 2,
+            "start": 2370605991200,
+            "end": 2370605990288
+        },
+        {
+            "id": 2370605992592,
+            "edge_type": 2,
+            "start": 2370605990768,
+            "end": 2370605991536
+        },
+        {
+            "id": 2370605992736,
+            "edge_type": 2,
+            "start": 2370605992496,
+            "end": 2370605991296
+        },
+        {
+            "id": 2370605992880,
+            "edge_type": 2,
+            "start": 2370605991632,
+            "end": 2370605990816
+        },
+        {
+            "id": 2370605993024,
+            "edge_type": 2,
+            "start": 2370605992064,
+            "end": 2370605991584
         }
     ]
 }

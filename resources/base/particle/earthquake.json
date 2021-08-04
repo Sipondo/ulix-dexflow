@@ -45,58 +45,10 @@
             "op_code": 8
         },
         {
-            "id": 2945980219792,
-            "title": "Emit",
-            "pos_x": -493.50000000000006,
-            "pos_y": -314.75000000000006,
-            "inputs": [
-                {
-                    "id": 2945980220944,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_life": "0.7",
-                "field_life_range": "0.6",
-                "field_size": "0.7",
-                "field_size_range": "0.4",
-                "field_delay": "0.26",
-                "field_duration": "1",
-                "field_count": "7000",
-                "field_pos_x": "-0.9",
-                "field_pos_range_x": 0,
-                "field_pos_y": 0,
-                "field_pos_range_y": "0.1",
-                "field_pos_z": "0.15",
-                "field_pos_range_z": "0.05",
-                "field_vel_x": "7",
-                "field_vel_range_x": "0.6",
-                "field_vel_y": 0,
-                "field_vel_range_y": "0.15",
-                "field_vel_z": "-0.7",
-                "field_vel_range_z": "0.2",
-                "field_rot": 0,
-                "field_rot_range": "0",
-                "field_rot_vel": 0,
-                "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
-                "field_col_range_r": "0.05",
-                "field_col_g": "0.4",
-                "field_col_range_g": "0.15",
-                "field_col_b": "0.1",
-                "field_col_range_b": 0
-            },
-            "op_code": 9
-        },
-        {
             "id": 2945980291104,
             "title": "Stage",
-            "pos_x": -848.5625,
-            "pos_y": 0.6875000000000568,
+            "pos_x": -835.5625,
+            "pos_y": 94.68750000000006,
             "inputs": [],
             "outputs": [
                 {
@@ -158,8 +110,8 @@
         {
             "id": 1732260790336,
             "title": "Camera",
-            "pos_x": 197.49999999999994,
-            "pos_y": 254.99999999999997,
+            "pos_x": 14.499999999999943,
+            "pos_y": 216.0,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -176,8 +128,8 @@
         {
             "id": 1732260790672,
             "title": "Camera",
-            "pos_x": 218.49999999999994,
-            "pos_y": 358.0,
+            "pos_x": 35.49999999999994,
+            "pos_y": 319.0,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -194,8 +146,8 @@
         {
             "id": 2574248078784,
             "title": "Filter Blur",
-            "pos_x": -441.0,
-            "pos_y": -18.0,
+            "pos_x": -594.0,
+            "pos_y": 35.0,
             "inputs": [
                 {
                     "id": 2574249466656,
@@ -256,8 +208,8 @@
         {
             "id": 2574251263456,
             "title": "Render",
-            "pos_x": -408.14062500000006,
-            "pos_y": 90.29687500000001,
+            "pos_x": -587.140625,
+            "pos_y": 225.296875,
             "inputs": [
                 {
                     "id": 2574251101200,
@@ -305,8 +257,8 @@
         {
             "id": 2379075790352,
             "title": "Geo Set",
-            "pos_x": 166.0,
-            "pos_y": -117.0,
+            "pos_x": 108.50000000000003,
+            "pos_y": -80.75000000000001,
             "inputs": [
                 {
                     "id": 2379075790592,
@@ -338,7 +290,7 @@
                 "field_POS_ABS_Z": false,
                 "field_VEL_X": "0",
                 "field_VEL_Y": "0",
-                "field_VEL_Z": "1.5",
+                "field_VEL_Z": "-1",
                 "field_VEL_SWAY_X": "0",
                 "field_VEL_SWAY_Y": "0",
                 "field_VEL_SWAY_Z": "0",
@@ -363,8 +315,8 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 384.7499999999999,
-            "pos_y": 14.25,
+            "pos_x": 336.7499999999999,
+            "pos_y": 77.25,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -388,8 +340,8 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 430.2499999999999,
-            "pos_y": 214.12500000000003,
+            "pos_x": 383.2499999999999,
+            "pos_y": 275.125,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -414,8 +366,8 @@
         {
             "id": 2503716620416,
             "title": "Emit",
-            "pos_x": -169.06250000000003,
-            "pos_y": -271.4999999999998,
+            "pos_x": -503.8125,
+            "pos_y": -292.4999999999998,
             "inputs": [
                 {
                     "id": 2503716620944,
@@ -431,78 +383,30 @@
                 "field_life_range": "0.3",
                 "field_size": "0.7",
                 "field_size_range": "0.4",
-                "field_delay": "1.0",
-                "field_duration": "2.0",
-                "field_count": "500 * !eq!",
-                "field_pos_x": "0.95",
-                "field_pos_range_x": "0.4",
+                "field_delay": "0",
+                "field_duration": "2.1",
+                "field_count": "250 * !eq!",
+                "field_pos_x": "1",
+                "field_pos_range_x": "0.6",
                 "field_pos_y": 0,
-                "field_pos_range_y": "0.4",
+                "field_pos_range_y": "0.6",
                 "field_pos_z": "0",
                 "field_pos_range_z": "0",
-                "field_vel_x": "0",
-                "field_vel_range_x": "0.3",
-                "field_vel_y": 0,
-                "field_vel_range_y": "0.3",
-                "field_vel_z": "0.4",
-                "field_vel_range_z": "0.3",
-                "field_rot": 0,
-                "field_rot_range": "0",
-                "field_rot_vel": 0,
-                "field_rot_vel_range": 0,
-                "field_col_r": "0.85",
-                "field_col_range_r": "0.05",
-                "field_col_g": "0.4",
-                "field_col_range_g": "0.15",
-                "field_col_b": "0.1",
-                "field_col_range_b": 0
-            },
-            "op_code": 9
-        },
-        {
-            "id": 2503712330800,
-            "title": "Emit",
-            "pos_x": -231.87500000000003,
-            "pos_y": -359.99999999999983,
-            "inputs": [
-                {
-                    "id": 2503712333200,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_life": "0.4",
-                "field_life_range": "0.3",
-                "field_size": "0.7",
-                "field_size_range": "0.4",
-                "field_delay": "0.8",
-                "field_duration": ".5",
-                "field_count": "14000",
-                "field_pos_x": "0.95",
-                "field_pos_range_x": "0.2",
-                "field_pos_y": 0,
-                "field_pos_range_y": "0.25",
-                "field_pos_z": ".12",
-                "field_pos_range_z": "0.1",
                 "field_vel_x": "0",
                 "field_vel_range_x": "2",
                 "field_vel_y": 0,
                 "field_vel_range_y": "2",
-                "field_vel_z": "0.4",
-                "field_vel_range_z": "2",
+                "field_vel_z": "0.5",
+                "field_vel_range_z": "0.5",
                 "field_rot": 0,
-                "field_rot_range": "0",
+                "field_rot_range": "360",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
                 "field_col_r": "0.85",
                 "field_col_range_r": "0.05",
-                "field_col_g": "0.4",
-                "field_col_range_g": "0.15",
-                "field_col_b": "0.1",
+                "field_col_g": "0.65",
+                "field_col_range_g": "0.05",
+                "field_col_b": "0.5",
                 "field_col_range_b": 0
             },
             "op_code": 9
@@ -510,8 +414,8 @@
         {
             "id": 2503716531360,
             "title": "Equation",
-            "pos_x": 134.99999999999994,
-            "pos_y": -359.99999999999994,
+            "pos_x": 486.56249999999983,
+            "pos_y": -186.17187499999994,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -523,20 +427,20 @@
         {
             "id": 2503717895184,
             "title": "Trigger",
-            "pos_x": 388.74999999999983,
-            "pos_y": 116.24999999999991,
+            "pos_x": 341.7499999999998,
+            "pos_y": 177.2499999999999,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "0.8",
-                "field_duration": 0.9,
-                "field_count": 1,
+                "field_delay": "0",
+                "field_duration": "1.5",
+                "field_count": "100",
                 "field_hit": 0.0,
                 "field_hit_enabled": "",
                 "field_sound_path": "",
                 "field_sound_enabled": "",
                 "field_shake": 0.5,
-                "field_shake_enabled": "",
+                "field_shake_enabled": true,
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
                 "field_dark": "0.4",
@@ -544,6 +448,272 @@
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
+        },
+        {
+            "id": 2370580906768,
+            "title": "Geo Friction",
+            "pos_x": -152.3437499999999,
+            "pos_y": -519.859375,
+            "inputs": [
+                {
+                    "id": 2370580908016,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".985",
+                "field_FRICTION_Y": ".985",
+                "field_FRICTION_Z": ".985"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2370580906864,
+            "title": "Geo Set",
+            "pos_x": 73.65625000000017,
+            "pos_y": -459.35937500000006,
+            "inputs": [
+                {
+                    "id": 2370580909408,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2370580908928,
+            "title": "Render",
+            "pos_x": 88.18750000000023,
+            "pos_y": -587.75,
+            "inputs": [
+                {
+                    "id": 2370580906288,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_smooth_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2370580908400,
+            "title": "Emit",
+            "pos_x": -395.15624999999983,
+            "pos_y": -668.3593749999997,
+            "inputs": [
+                {
+                    "id": 2370580907920,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "1.5",
+                "field_life_range": "0.3",
+                "field_size": "0.4",
+                "field_size_range": "0.4",
+                "field_delay": "0",
+                "field_duration": "1.5",
+                "field_count": "100 * !eq!",
+                "field_pos_x": "1",
+                "field_pos_range_x": "0.6",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0.6",
+                "field_pos_z": "0",
+                "field_pos_range_z": "0",
+                "field_vel_x": "0",
+                "field_vel_range_x": "2",
+                "field_vel_y": 0,
+                "field_vel_range_y": "2",
+                "field_vel_z": "1",
+                "field_vel_range_z": "1",
+                "field_rot": 0,
+                "field_rot_range": "360",
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.85",
+                "field_col_range_r": "0.05",
+                "field_col_g": "0.65",
+                "field_col_range_g": "0.05",
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2370580906576,
+            "title": "Geo Bounce",
+            "pos_x": -177.8437499999999,
+            "pos_y": -424.609375,
+            "inputs": [
+                {
+                    "id": 2370580908064,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "1.4",
+                "field_DAMPEN": "1.",
+                "field_LIFE_DAMPEN": "3."
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 2370580909360,
+            "title": "Stage",
+            "pos_x": -589.8437499999999,
+            "pos_y": -538.609375,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2370580907632,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2370580872352,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2370580872688,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2370580871200,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": "8725065"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2370480452272,
+            "title": "Emit",
+            "pos_x": -234.25,
+            "pos_y": -282.75000000000006,
+            "inputs": [
+                {
+                    "id": 2370480452368,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "0.7",
+                "field_life_range": "0.3",
+                "field_size": "0.5",
+                "field_size_range": "0.2",
+                "field_delay": "0",
+                "field_duration": "2.0",
+                "field_count": "50 * !eq!",
+                "field_pos_x": "1",
+                "field_pos_range_x": "0.6",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0.6",
+                "field_pos_z": "0",
+                "field_pos_range_z": "0",
+                "field_vel_x": "0",
+                "field_vel_range_x": "2",
+                "field_vel_y": 0,
+                "field_vel_range_y": "2",
+                "field_vel_z": "3",
+                "field_vel_range_z": "2",
+                "field_rot": 0,
+                "field_rot_range": "360",
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.8",
+                "field_col_range_r": "0.05",
+                "field_col_g": "0.6",
+                "field_col_range_g": "0.05",
+                "field_col_b": "0.3",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
         }
     ],
     "edges": [
@@ -572,12 +742,6 @@
             "end": 2574247770000
         },
         {
-            "id": 2574251442240,
-            "edge_type": 2,
-            "start": 2945980220944,
-            "end": 2945980222336
-        },
-        {
             "id": 2574249465360,
             "edge_type": 2,
             "start": 1562491510256,
@@ -602,9 +766,39 @@
             "end": 2945980222336
         },
         {
-            "id": 2503713948384,
+            "id": 2370580909120,
             "edge_type": 2,
-            "start": 2503712333200,
+            "start": 2370580908064,
+            "end": 2370580872352
+        },
+        {
+            "id": 2370580872112,
+            "edge_type": 2,
+            "start": 2370580908016,
+            "end": 2370580872352
+        },
+        {
+            "id": 2370580872832,
+            "edge_type": 2,
+            "start": 2370580907920,
+            "end": 2370580907632
+        },
+        {
+            "id": 2370580872400,
+            "edge_type": 2,
+            "start": 2370580906288,
+            "end": 2370580872688
+        },
+        {
+            "id": 2370580870480,
+            "edge_type": 2,
+            "start": 2370580909408,
+            "end": 2370580872352
+        },
+        {
+            "id": 2370480454528,
+            "edge_type": 2,
+            "start": 2370480452368,
             "end": 2945980222336
         }
     ]
