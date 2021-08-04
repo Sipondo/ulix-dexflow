@@ -1331,7 +1331,13 @@
 								"params": ["../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png"]
 							}]
 						},
-						{ "__identifier": "level", "__value": 5, "__type": "Int", "defUid": 451, "realEditorValues": [] }
+						{
+							"__identifier": "level",
+							"__value": 25,
+							"__type": "Int",
+							"defUid": 451,
+							"realEditorValues": [{ "id": "V_Int", "params": [25] }]
+						}
 					]
 				},
 				{

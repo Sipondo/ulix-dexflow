@@ -43,8 +43,6 @@ class PartyMember:
             self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
 
         if not hasattr(self, "actions"):
-            print([y for x, y in reversed(self.learnset) if int(x) < self.level][:4])
-
             l = [(x, y) for x, y in reversed(self.learnset) if int(x) < self.level]
             k = [y for x, y in l]
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]

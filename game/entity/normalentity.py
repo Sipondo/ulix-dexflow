@@ -1,6 +1,10 @@
 from .baseentity import BaseEntity
 from pathlib import Path
-import numpy.random as rand
+import random
+
+
+def charsum(s):
+    return sum([ord(x) for x in s])
 
 
 class NormalEntity(BaseEntity):
@@ -46,20 +50,20 @@ class NormalEntity(BaseEntity):
             except Exception as e:
                 pass
 
-            rand.seed(hash(f"{self.entity_uid}{self.name}") % 429496729)
             for i, member in enumerate(self.team):
                 if i < len(js):
                     battler_js = js[i]
                     for k, v in battler_js.items():
                         member[k] = v
 
+                local_random = random.Random()
+                local_random.seed(charsum(f"{self.entity_uid}{self.name}") % 429496729)
                 try:
                     member["level"] = member.level
                 except AttributeError:
-                    member["level"] = rand.randint(
-                        int(self.level) - 1, int(self.level) + 2
+                    member["level"] = local_random.randint(
+                        int(self.level) - 1, int(self.level) + 1
                     )
-                    print(member)
 
     def when_interact(self):
         if self.active:
