@@ -1301,7 +1301,16 @@
 								"params": ["1_joey"]
 							}]
 						},
-						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
+						{
+							"__identifier": "config",
+							"__value": "{\"team\": [{\"level\": 50}]}",
+							"__type": "String",
+							"defUid": 383,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["{\"team\": [{\"level\": 50}]}"]
+							}]
+						},
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
