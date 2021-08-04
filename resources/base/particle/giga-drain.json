@@ -42,12 +42,12 @@
         {
             "id": 2445470050288,
             "title": "Trigger",
-            "pos_x": 272.98437500000006,
-            "pos_y": -40.26562500000023,
+            "pos_x": 271.42187500000006,
+            "pos_y": -44.953125000000234,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "!start!+2",
+                "field_delay": "!start!+2.2",
                 "field_duration": 0.9,
                 "field_count": 1,
                 "field_hit": 0.0,
@@ -68,7 +68,7 @@
             "id": 2445532551536,
             "title": "Trigger",
             "pos_x": 271.68750000000006,
-            "pos_y": -131.8125,
+            "pos_y": -136.890625,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -83,8 +83,8 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.8",
-                "field_dark_speed": "1",
+                "field_dark": "0.5",
+                "field_dark_speed": "1.5",
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
@@ -697,7 +697,7 @@
             "id": 1572909834496,
             "title": "Trigger",
             "pos_x": 599.9999999999999,
-            "pos_y": -40.62499999999999,
+            "pos_y": -42.578124999999986,
             "inputs": [],
             "outputs": [],
             "content": {
