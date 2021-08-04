@@ -47,11 +47,12 @@ class PokeBoard(CombatBoard):
         status_effect = status(self.scene, user, target)
         self.scene.add_effect(status_effect)
         if status_effect.apply_narration != "":
+            particle = status_effect.particle if status_effect.particle != "" else "genericstatus"
             self.scene.add_effect(
                 GenericEffect(
                     self.scene,
                     f"{self.get_actor(target).name} {status_effect.apply_narration}!",
-                    particle=status_effect.particle,
+                    particle=particle,
                 )
             )
 

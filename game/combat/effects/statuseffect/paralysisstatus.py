@@ -3,7 +3,7 @@ from game.combat.effects.baseeffect import BaseEffect
 
 class Paralysis(BaseEffect):
     name = "Paralysis"
-    particle = ""
+    particle = "paralysis"
     type = "Majorstatus"
 
     def __init__(self, scene, user, target):

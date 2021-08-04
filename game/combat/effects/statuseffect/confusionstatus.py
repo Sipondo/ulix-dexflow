@@ -4,7 +4,7 @@ from game.combat.effects.damageeffect import DamageEffect
 
 class Confusion(BaseEffect):
     name = "Confusion"
-    particle = ""
+    particle = "confusion"
     type = "Minorstatus"
 
     def __init__(self, scene, user, target):

@@ -4,7 +4,7 @@ from game.combat.effects.damageeffect import DamageEffect
 
 class Poison(BaseEffect):
     name = "Poison"
-    particle = ""
+    particle = "poison"
     type = "Majorstatus"
 
     def __init__(self, scene, user, target):

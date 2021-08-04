@@ -3,7 +3,7 @@ from game.combat.effects.baseeffect import BaseEffect
 
 class Freeze(BaseEffect):
     name = "Freeze"
-    particle = ""
+    particle = "freeze"
     type = "Majorstatus"
 
     def __init__(self, scene, user, target):

@@ -4,7 +4,7 @@ from game.combat.effects.damageeffect import DamageEffect
 
 class Burn(BaseEffect):
     name = "Burn"
-    particle = ""
+    particle = "Burn"
     type = "Majorstatus"
 
     def __init__(self, state, user, target):

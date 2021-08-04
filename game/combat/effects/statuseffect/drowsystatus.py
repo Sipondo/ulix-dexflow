@@ -5,7 +5,7 @@ from game.combat.effects import statuseffect
 
 class Drowsy(BaseEffect):
     name = "Drowsy"
-    particle = ""
+    particle = "genericstatus"
     type = "Minorstatus"
 
     def __init__(self, scene, user, target):

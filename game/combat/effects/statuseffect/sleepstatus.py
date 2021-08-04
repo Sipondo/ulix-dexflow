@@ -3,7 +3,7 @@ from game.combat.effects.baseeffect import BaseEffect
 
 class Sleep(BaseEffect):
     name = "Sleep"
-    particle = "Sleep"
+    particle = "sleep"
     type = "Majorstatus"
 
     def __init__(self, scene, user, target):

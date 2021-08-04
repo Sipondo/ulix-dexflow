@@ -4,7 +4,7 @@ from game.combat.effects.genericeffect import GenericEffect
 
 class Infatuation(BaseEffect):
     name = "Infatuation"
-    particle = ""
+    particle = "genericstatus"
     type = "Minorstatus"
 
     def __init__(self, scene, user, target):
