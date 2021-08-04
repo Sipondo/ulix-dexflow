@@ -47,7 +47,7 @@ class PokeBoard(CombatBoard):
         status_effect = status(self.scene, user, target)
         self.scene.add_effect(status_effect)
         if status_effect.apply_narration != "":
-            particle = status_effect.particle if status_effect.particle != "" else "genericstatus"
+            particle = status_effect.particle if status_effect.particle != "" else "generic-status"
             self.scene.add_effect(
                 GenericEffect(
                     self.scene,
