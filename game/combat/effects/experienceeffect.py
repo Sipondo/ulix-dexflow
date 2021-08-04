@@ -35,7 +35,7 @@ class ExperienceEffect(BaseEffect):
 
     def get_ev_reward(self):
         ev_reward = self.fainted.data["effortpoints"]
-        evs = ev_reward.split(",").map(lambda x: int(x))
+        evs = map(lambda x: int(x), ev_reward.split(","))
         return evs
 
     def on_action(self):
