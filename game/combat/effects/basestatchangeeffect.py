@@ -17,7 +17,7 @@ class BaseStatChangeEffect(BaseEffect):
     def __init__(self, scene, target):
         super().__init__(scene)
         self.target = target
-        self.stats = self.scene.board.get_actor(self.target).copy()
+        self.stats = self.scene.board.get_actor(self.target).stats.copy()
 
     def update(self, stat, new_stat):
         self.stats[STATMAP[stat]] = new_stat

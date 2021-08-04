@@ -8,10 +8,13 @@ class ExperienceEffect(BaseEffect):
         self.spd_on_action = 100
         self.target = target
         self.fainted = fainted
-        if cont is None:
-            self.amount = self.get_flat_experience_reward()
+        if self.scene.board.get_actor(self.target).level == 100:
+            self.amount = 0
         else:
-            self.amount = cont
+            if cont is None:
+                self.amount = self.get_flat_experience_reward()
+            else:
+                self.amount = cont
         self.cont = False if cont is None else True
 
     def get_flat_experience_reward(self):
@@ -39,7 +42,6 @@ class ExperienceEffect(BaseEffect):
         return evs
 
     def on_action(self):
-        # TODO EV reward
         if self.cont:
             self.scene.board.no_skip(
                 "",
