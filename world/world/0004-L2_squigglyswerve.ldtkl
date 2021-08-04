@@ -1840,6 +1840,76 @@
 						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
 						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [4,11],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [72,184],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/object_ball.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/object_ball.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\nself: AddItem(\"POKEBALL\")\nself: visible = False\nself: active = False\nself: memory.picked_up = True\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\nself: AddItem(\"POKEBALL\")\nself: visible = False\nself: active = False\nself: memory.picked_up = True\ngame: Overworld()"
+								]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "N",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["N"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "item_1",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["item_1"]
+							}]
+						},
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{
+							"__identifier": "on_create_action",
+							"__value": "?if(self.memory.picked_up){\n  self: visible = False\n  self: active = False\n  exit\n}",
+							"__type": "String",
+							"defUid": 408,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"?if(self.memory.picked_up){\n  self: visible = False\n  self: active = False\n  exit\n}"
+								]
+							}]
+						},
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
 				}
 			]
 		},

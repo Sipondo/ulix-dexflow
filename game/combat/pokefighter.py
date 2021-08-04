@@ -46,7 +46,14 @@ class PokeFighter(CombatFighter):
             self.current_xp = 0
             self.level_xp = 0
         if "actions" not in fighter:
-            self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 87, 433]]
+            self.moves = fighter.moves
+            l = self.moves.split(",")
+            self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
+
+            l = [(x, y) for x, y in reversed(self.learnset) if int(x) < self.level]
+            k = [y for x, y in l]
+            l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
+            self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
         else:
             self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
         self.starting_hp = self.current_hp

@@ -1,14 +1,16 @@
+import json
 import moderngl
 import pyglet
+import traceback
 
 import numpy as np
-import json
 
 from io import BytesIO
 from moderngl import Texture
 from moderngl_window import resources
 from pathlib import Path
 from PIL import Image, ImageFont
+
 
 pyglet.options["audio"] = ("openal", "pulse", "directsound", "silent")
 
@@ -350,11 +352,34 @@ class ResourceManager:
             pth = self.p_pbs / name
         return self.resolve_resource_path(pth)
 
-    def get_particle(self, pth):
-        pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
-        if pth:
-            with open(pth) as f:
-                return json.load(f)
+    def get_particle(self, pth, move_data=None):
+        try:
+            pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
+            if pth:
+                with open(pth) as f:
+                    return json.load(f)
+        except Exception as e:
+            traceback.print_exc()
+
+        try:
+            if move_data is not None:
+                if move_data.power < 5:
+                    pth = self.resolve_resource_path(
+                        self.p_particle / ("generic-powerless.json")
+                    )
+                else:
+                    pth = self.resolve_resource_path(
+                        self.p_particle
+                        / (
+                            f"{self.game.m_pbs.get_related_anim(move_data.type, move_data.power)}.json"
+                        )
+                    )
+                if pth:
+                    with open(pth) as f:
+                        return json.load(f)
+        except Exception as e:
+            traceback.print_exc()
+
         pth = self.resolve_resource_path(self.p_particle / ("tackle.json"))
         with open(pth) as f:
             return json.load(f)

@@ -19,7 +19,7 @@ class GameStateMenuParty(BaseGameState):
         self.state = states["top"]
         self.pstate = pstates["moves"]
 
-        top_menu_options = ["Team", "Bag", "Dex", "Career", "Save", "Options"]
+        top_menu_options = ["Team", "Bag", "Dex", "Career"]  # , "Save", "Options"]
 
         self.top_menu_options = [
             self.game.m_res.get_interface(x) for x in top_menu_options
@@ -88,10 +88,10 @@ class GameStateMenuParty(BaseGameState):
                         self.game.m_gst.switch_state("menudex")
                     elif self.selection == 3:
                         self.game.m_gst.switch_state("menucareer")
-                    elif self.selection == 4:
-                        self.game.m_gst.switch_state("menusave")
-                    elif self.selection == 5:
-                        self.game.m_gst.switch_state("menuoptions")
+                    # elif self.selection == 4:
+                    #     self.game.m_gst.switch_state("menusave")
+                    # elif self.selection == 5:
+                    #     self.game.m_gst.switch_state("menuoptions")
                     else:
                         self.game.m_gst.switch_state("overworld")
                     self.game.r_aud.effect("confirm")
@@ -151,10 +151,10 @@ class GameStateMenuParty(BaseGameState):
                     self.selection == i
                     and self.spr_mainmenucell[1]
                     or self.spr_mainmenucell[0],
-                    (0.76 + (self.selection == i and -0.01 or 0), 0.10 + 0.14 * i),
+                    (0.76 + (self.selection == i and -0.01 or 0), 0.25 + 0.14 * i),
                 )
                 self.game.r_int.draw_image(
-                    img, (0.76 + (self.selection == i and -0.01 or 0), 0.10 + 0.14 * i)
+                    img, (0.76 + (self.selection == i and -0.01 or 0), 0.25 + 0.14 * i)
                 )
             """
             Party and Inspect view

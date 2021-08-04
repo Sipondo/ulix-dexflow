@@ -21,10 +21,10 @@ class NormalEntity(BaseEntity):
 
         for k, v in ldtk_info.items():
             if k != "f_direction" and k != "f_sprite":
-                print(k, v)
+                # print(k, v)
                 if k[:2] == "f_":
                     setattr(self, k[2:], v)
-        print("ACTIVE", self.active, self.sprites)
+        # print("ACTIVE", self.active, self.sprites)
 
         self.orig_pos = self.game_position
         self.memory = self.game.m_sav.get_memory_holder(self.level, self.entity_uid)

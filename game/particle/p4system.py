@@ -120,7 +120,7 @@ class ParticleSystem:
         self.vbo2 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
 
     def spawn_elements(self):
-        js = self.game.m_res.get_particle(self.fname)
+        js = self.game.m_res.get_particle(self.fname, self.move_data)
         self.transformer = Transformer(self.game, self)
 
         stage_dict = {}

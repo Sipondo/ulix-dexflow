@@ -16,12 +16,11 @@ class PartyMember:
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
 
-        self.actions = [1, 15, 399, 87]
-
         for k, v in data.items():
             setattr(self, k, v)
 
-        self.actions = [int(i) for i in self.actions]
+        if hasattr(self, "actions"):
+            self.actions = [int(i) for i in self.actions]
 
         self.icon = self.game.m_res.get_party_icon(self.internalname)
         self.sprite = self.game.m_res.get_sprite_from_anim(data.name, size=2.0)
@@ -42,6 +41,14 @@ class PartyMember:
         if isinstance(self.moves, str):
             l = self.moves.split(",")
             self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
+
+        if not hasattr(self, "actions"):
+            print([y for x, y in reversed(self.learnset) if int(x) < self.level][:4])
+
+            l = [(x, y) for x, y in reversed(self.learnset) if int(x) < self.level]
+            k = [y for x, y in l]
+            l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
+            self.actions = [self.game.m_pbs.get_move_by_name(y).name for x, y in l][:4]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED

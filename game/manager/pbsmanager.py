@@ -72,12 +72,26 @@ class PbsManager:
         self.fighters = self.read_fighters()
         # self.fighters["current_hp"] = 1.0
 
+        self.move_anim = pd.read_csv(
+            self.game.m_res.get_pbs_loc("move_anim_map.csv", compressed=False),
+            index_col=0,
+        )
+
+        self.move_anim = self.move_anim.dropna(axis=1, how="all").dropna(
+            axis=0, how="all"
+        )
+
     def get_random_item(self):
         return self.items.sample().iloc[0]
 
     def get_item(self, id):
         s = self.items[self.items.identifier == id].iloc[0].copy()
         return s
+
+    def get_related_anim(self, type, power):
+        if power > 75:
+            return self.move_anim.loc[type, "highpower"]
+        return self.move_anim.loc[type, "lowpower"]
 
     def read_text(self, filename):
         frame = []
@@ -119,7 +133,9 @@ class PbsManager:
 
     def get_move_by_name(self, name):
         name = name.strip()
-        return self.moves[self.moves["name"].str.lower() == name.lower()].iloc[0]
+        return self.moves[
+            self.moves["identifier"].str.lower().str.strip() == name.lower()
+        ].iloc[0]
 
     def get_random_move(self):
         return self.moves.sample().iloc[0]
