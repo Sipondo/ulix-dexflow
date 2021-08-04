@@ -225,7 +225,7 @@ class GameStateBattle(BaseGameState):
                             self.selection = 2
                         self.state = states["topmenu"]
         else:
-            self.game.m_par.fast_forward = True
+            self.game.m_par.fast_forward = False # True
 
     @property
     def max_selection(self):
