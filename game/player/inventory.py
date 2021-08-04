@@ -10,11 +10,11 @@ class Inventory:
         self.storage = []
         self.items = []
 
-        for i in range(1):
-            self.members.append(self.init_random_member())
+        # for i in range(1):
+        #     self.members.append(self.init_random_member())
 
-        for i in range(10):
-            self.storage.append(self.init_random_member())
+        # for i in range(10):
+        #     self.storage.append(self.init_random_member())
 
         self.sort_items()
 
@@ -28,6 +28,10 @@ class Inventory:
             self.storage.append(new_member)
         else:
             self.members.append(new_member)
+
+    def add_member_to_storage(self, data, l=5):
+        new_member = PartyMember(self.game, data, l)
+        self.storage.append(new_member)
 
     def add_item(self, id, quantity):
         pre_exist = [x for x in self.items if x.identifier == id]

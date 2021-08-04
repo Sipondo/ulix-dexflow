@@ -56,6 +56,24 @@ class SaveManager:
                     if k_3 != "holder_is_frozen":
                         setattr(self.memory[k][k_2], k_3, v_3)
 
+        for member in self.store["TEAM"]:
+            member = pd.Series(member)
+            raw = self.game.m_pbs.get_fighter_by_name(member["name"])
+
+            for k, v in member.items():
+                raw[k] = v
+            self.game.inventory.add_member(raw, raw.level)
+
+        for member in self.store["STORAGE"]:
+            member = pd.Series(member)
+            raw = self.game.m_pbs.get_fighter_by_name(member["name"])
+
+            for k, v in member.items():
+                raw[k] = v
+            self.game.inventory.add_member_to_storage(raw, raw.level)
+
+        for item in self.store["ITEMS"]:
+            self.game.inventory.add_item(item[0], item[1])
         # self.store["MEMORY"] = {k: {k_2: v_2.__dict__ for k_2, v_2 in v.items()} for k,v self.memory.items()}
 
         self.settables.holder_is_frozen = True
@@ -150,27 +168,27 @@ class SaveManager:
 
     def get_lazy_data(self):
         # Party
-        team = []
-        for member in self.game.inventory.members:
-            team.append(
-                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
-            )
+        team = [x.series.to_dict() for x in self.game.inventory.members]
+        # for member in self.game.inventory.members:
+        #     team.append(
+        #         {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+        #     )
         self.save("TEAM", team)
 
         # Storage
-        storage = []
-        for member in self.game.inventory.storage:
-            storage.append(
-                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
-            )
+        storage = [x.series.to_dict() for x in self.game.inventory.storage]
+        # for member in self.game.inventory.storage:
+        #     storage.append(
+        #         {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+        #     )
         self.save("STORAGE", storage)
 
         # Items
-        items = []
-        for member in self.game.inventory.items:
-            items.append(
-                {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
-            )
+        items = [(x.identifier, x.quantity) for x in self.game.inventory.items]
+        # for member in self.game.inventory.items:
+        #     items.append(
+        #         {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+        #     )
         self.save("ITEMS", items)
 
         # Current Level Entities

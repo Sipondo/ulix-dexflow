@@ -80,7 +80,8 @@ class GameStateMenuParty(BaseGameState):
             if self.state == states["top"]:
                 if key == "interact":
                     if self.selection == 0:
-                        self.state = states["party"]
+                        if len(self.game.inventory.members):
+                            self.state = states["party"]
                         self.selection = 0
                     elif self.selection == 1:
                         self.game.m_gst.switch_state("menubag")

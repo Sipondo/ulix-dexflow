@@ -74,13 +74,16 @@ class PokeGame(mglw.WindowConfig):
         self.m_res.init_noise()
 
         # TODO
+        self.m_dat = DbManager(self)
+        self.m_pbs = PbsManager(self)
+        self.r_int = InterfaceRenderer(self, self.ctx)
+        self.inventory = Inventory(self)
         self.m_sav = SaveManager(self)
         self.m_map = MapManager(self)
         self.m_map.load_world_data()
         # Top level renderers
         self.r_aud = AudioRenderer(self)
         self.r_ent = EntityRenderer(self, self.ctx)
-        self.r_int = InterfaceRenderer(self, self.ctx)
         self.r_wld = WorldRenderer(self, self.ctx)
 
         self.m_res.init_types()
@@ -94,17 +97,12 @@ class PokeGame(mglw.WindowConfig):
         self.m_act = ActionManager(self)
         self.m_cam = CameraManager(self)
         self.m_col = CollisionManager(self)
-        self.m_dat = DbManager(self)
-        self.m_pbs = PbsManager(self)
         self.m_ent = EntityManager(self)
         # self.m_evt = EventManager(self)
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
         self.m_par = ParticleManager(self)
         self.m_upl = UplManager(self)
-
-        # TODO: maybe move to savemanager
-        self.inventory = Inventory(self)
 
         self.query = self.ctx.query(primitives=True)
 
