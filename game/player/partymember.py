@@ -12,7 +12,7 @@ class PartyMember:
         # self.internalname = data.internalname
         # self.type1 = data.type1
         # self.type2 = data.type2
-        self.level = l
+        self.level = int(l)
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
 
