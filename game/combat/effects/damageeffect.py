@@ -12,5 +12,5 @@ class DamageEffect(BaseEffect):
     def on_action(self):
         damage = self.abs_damage + int(self.scene.board.get_actor(self.target).stats[0] * self.rel_damage)
         self.scene.board.inflict_damage(self.target, damage)
-        self.scene.board.no_skip(f"{self.scene.board.get_actor(self.target).name} took {damage} damage!", particle="")
+        # self.scene.board.no_skip(f"{self.scene.board.get_actor(self.target).name} took {damage} damage!", particle="")
         return True, False, False
