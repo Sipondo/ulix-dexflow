@@ -47,7 +47,7 @@ class PokeFighter(CombatFighter):
             self.level_xp = fighter.level_xp
         except AttributeError:
             self.current_xp = 0
-            self.level_xp = 0
+            self.level_xp = 750
 
         if "actions" not in fighter:
             self.moves = fighter.moves
@@ -84,11 +84,21 @@ class PokeFighter(CombatFighter):
         self.stats_IV = np.random.randint(0, 32, 6)
 
         # TEMP
-        self.stats_EV = np.zeros(6, dtype=np.int32)
+        self.stats_EV = np.zeros(6, dtype=np.int64)
 
     def set_new_level_xp(self):
-        # TODO exp function
-        self.level_xp += 100
+        self.level_xp = self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
+
+    def gain_evs(self, evs):
+        ev_np = np.array(evs)
+        if np.sum(self.stats_EV) >= 510:
+            return
+        self.stats_EV = ev_np + self.stats_EV
+        stat = 5
+        while np.sum(self.stats_EV) >= 510:
+            self.stats_EV[stat] -= 1 if ev_np[stat] > 0 else 0
+            stat -= 1 % 6
+        return
 
     @property
     def stats(self):

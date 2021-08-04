@@ -29,7 +29,7 @@ class PartyMember:
 
         self.current_xp = 0
         self.level_xp = 5
-        self.exp_total = 10000
+        self.set_new_level_xp()
 
         self.nature = self.game.m_dat.get_nature()
         self.nature_name = self.nature.identifier.capitalize()
@@ -66,6 +66,9 @@ class PartyMember:
         self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[1]
 
         self.set_characteristic()
+
+    def set_new_level_xp(self):
+        self.level_xp = self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
 
     def set_characteristic(self):
         best_id = np.argmax(self.stats_IV)

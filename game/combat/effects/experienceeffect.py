@@ -34,7 +34,7 @@ class ExperienceEffect(BaseEffect):
         return int(b_type * base_exp * lucky_egg * aff * level_fainted * power * trade * nevolved // (7 * exp_share))
 
     def get_ev_reward(self):
-        ev_reward = self.fainted.data["EffortPoints"]
+        ev_reward = self.fainted.data["effortpoints"]
         evs = ev_reward.split(",").map(lambda x: int(x))
         return evs
 
@@ -51,6 +51,7 @@ class ExperienceEffect(BaseEffect):
                 particle="",
             )
             # EV reward here (don't repeat after levelup)
+            self.scene.board.get_actor(self.target).gain_evs(self.get_ev_reward())
         actor = self.scene.board.get_actor(self.target)
         current_xp = self.scene.board.get_exp(self.target)
         xp_needed = actor.level_xp - current_xp
