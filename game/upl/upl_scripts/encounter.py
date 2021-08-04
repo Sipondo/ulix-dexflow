@@ -23,7 +23,14 @@ class Encounter:
         probabilities = probabilities / probabilities.sum()
 
         res = choice(options, p=probabilities)
-        self.act.game.m_gst.switch_state("battle", battle_type="wild", enemy_team=[res])
+
+        fighter = self.act.game.m_pbs.get_fighter_by_name(res).copy()
+
+        fighter.level = self.act.game.m_map.get_encounter_level()
+
+        self.act.game.m_gst.switch_state(
+            "battle", battle_type="wild", enemy_team=[fighter]
+        )
 
     def on_tick(self, time=None, frame_time=None):
         return True

@@ -50,8 +50,33 @@ class MapManager:
 
         self.encounters = fields["encounters"]
         self.encounter_rate = fields["encounter_rate"]
+        self.encounter_level_min = fields["encounter_level_min"]
+        self.encounter_level_max = fields["encounter_level_max"]
+
         self.local_encounters = ""
         self.local_encounter_rate = 0
+        self.local_encounter_level_min = 0
+        self.local_encounter_level_max = 0
+
+    def get_encounter_level(self):
+        if self.local_encounter_level_max > 0:
+            return np.random.choice(
+                [
+                    int(x)
+                    for x in range(
+                        int(self.local_encounter_level_min),
+                        int(self.local_encounter_level_max),
+                    )
+                ]
+            )
+        return np.random.choice(
+            [
+                int(x)
+                for x in range(
+                    int(self.encounter_level_min), int(self.encounter_level_max)
+                )
+            ]
+        )
 
     @property
     def current_level(self):

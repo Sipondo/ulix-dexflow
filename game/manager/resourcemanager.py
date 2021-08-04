@@ -380,6 +380,6 @@ class ResourceManager:
         except Exception as e:
             traceback.print_exc()
 
-        pth = self.resolve_resource_path(self.p_particle / ("tackle.json"))
+        pth = self.resolve_resource_path(self.p_particle / ("gemeric-powerless.json"))
         with open(pth) as f:
             return json.load(f)

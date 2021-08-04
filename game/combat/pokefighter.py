@@ -20,31 +20,35 @@ class PokeFighter(CombatFighter):
             self.init_stats(fighter)
             self.current_hp = self.stats[0]
             self.current_xp = 0
-        if "level" in fighter:
+
+        try:
             self.level = fighter.level
-        else:
+        except AttributeError:
             self.level = 5
 
-        if "stats_base" in fighter:
+        print("IK", fighter["name"], "HEB EEN LEVEL", fighter.level)
+
+        try:
             self.stats_base = fighter.stats_base
             self.stats_reward = fighter.stats_reward
             self.stats_IV = fighter.stats_IV
             self.stats_EV = fighter.stats_EV
             self.nature = fighter.nature
-        else:
+        except AttributeError:
             self.init_stats(fighter)
 
-        if "current_hp" in fighter:
+        try:
             self.current_hp = fighter.current_hp
-        else:
+        except AttributeError:
             self.current_hp = self.stats[0]
 
-        if "current_xp" in fighter:
+        try:
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
-        else:
+        except AttributeError:
             self.current_xp = 0
             self.level_xp = 0
+
         if "actions" not in fighter:
             self.moves = fighter.moves
             l = self.moves.split(",")
@@ -56,6 +60,7 @@ class PokeFighter(CombatFighter):
             self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
         else:
             self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
+
         self.starting_hp = self.current_hp
         self.type1 = str(fighter["type1"])
         self.type2 = str(fighter["type2"])

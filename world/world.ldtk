@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 447,
+	"nextUid": 451,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -3594,6 +3594,46 @@
 					"textLanguageMode": null
 				},
 				{
+					"identifier": "local_encounter_level_min",
+					"__type": "Int",
+					"uid": 449,
+					"type": "F_Int",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Int", "params": [5] },
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "local_encounter_level_max",
+					"__type": "Int",
+					"uid": 450,
+					"type": "F_Int",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Int", "params": [10] },
+					"textLanguageMode": null
+				},
+				{
 					"identifier": "on_enter_action",
 					"__type": "String",
 					"uid": 442,
@@ -3612,7 +3652,9 @@
 					"acceptFileTypes": null,
 					"defaultOverride": {
 						"id": "V_String",
-						"params": ["self: SetLocalEncounters(local_encounter_rate, local_encounters)"]
+						"params": [
+							"self: SetLocalEncounters(local_encounter_rate, local_encounters, local_encounter_level_min, local_encounter_level_max)"
+						]
 					},
 					"textLanguageMode": "LangRuby"
 				},
@@ -4547,6 +4589,46 @@
 			"textLanguageMode": null
 		},
 		{
+			"identifier": "encounter_level_min",
+			"__type": "Int",
+			"uid": 447,
+			"type": "F_Int",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Int", "params": [5] },
+			"textLanguageMode": null
+		},
+		{
+			"identifier": "encounter_level_max",
+			"__type": "Int",
+			"uid": 448,
+			"type": "F_Int",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": { "id": "V_Int", "params": [10] },
+			"textLanguageMode": null
+		},
+		{
 			"identifier": "filter_red",
 			"__type": "Float",
 			"uid": 402,
@@ -4707,7 +4789,9 @@
 						"params": ["100x RATTATA\n10x STARYU"]
 					}]
 				},
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
@@ -4736,7 +4820,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
@@ -4765,7 +4851,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4794,7 +4882,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4823,7 +4913,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" } ]
@@ -4852,7 +4944,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 317, "dir": "s" } ]
@@ -4881,7 +4975,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
@@ -4910,7 +5006,9 @@
 				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
 				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
 				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
-				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] }
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 317, "dir": "w" }]

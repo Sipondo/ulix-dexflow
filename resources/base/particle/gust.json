@@ -175,7 +175,7 @@
                 "field_file": "square_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": "0.2",
+                "field_opacity": "0.1",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1,
                 "field_noise": 1.0,
@@ -186,7 +186,7 @@
         {
             "id": 2574251263456,
             "title": "Render",
-            "pos_x": -587.140625,
+            "pos_x": -586.140625,
             "pos_y": 225.296875,
             "inputs": [
                 {
@@ -202,7 +202,7 @@
                 "field_file": "square_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": "0.1",
+                "field_opacity": "0.05",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1,
                 "field_noise": 1.0,
@@ -341,7 +341,7 @@
                 "field_size_range": "0.4",
                 "field_delay": "0",
                 "field_duration": "1.2",
-                "field_count": "400 * !eq!",
+                "field_count": "350 * !eq!",
                 "field_pos_x": "-1",
                 "field_pos_range_x": "-1",
                 "field_pos_y": "1",

@@ -12,6 +12,8 @@ class ResetLocalEncounters:
     def on_tick(self, time=None, frame_time=None):
         self.game.m_map.local_encounter_rate = 0
         self.game.m_map.local_encounters = ""
+        self.game.m_map.local_encounter_level_min = 0
+        self.game.m_map.local_encounter_level_max = 0
         return True
 
     def on_read(self):
