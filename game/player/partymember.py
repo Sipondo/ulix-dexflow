@@ -3,7 +3,7 @@ import random
 
 
 class PartyMember:
-    def __init__(self, game, data):
+    def __init__(self, game, data, l=5):
         self.game = game
         self.data = data.copy()
         self.name = str(data["name"])
@@ -12,7 +12,7 @@ class PartyMember:
         # self.internalname = data.internalname
         # self.type1 = data.type1
         # self.type2 = data.type2
-        self.level = 5
+        self.level = l
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
 
@@ -66,7 +66,9 @@ class PartyMember:
         self.set_characteristic()
 
     def set_new_level_xp(self):
-        self.level_xp = self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
+        self.level_xp = self.game.m_pbs.get_level_exp(
+            self.data["growthrate"], self.level
+        )
 
     def set_characteristic(self):
         best_id = np.argmax(self.stats_IV)

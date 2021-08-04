@@ -23,8 +23,7 @@ class Inventory:
         return mem
 
     def add_member(self, data, l=5):
-        new_member = PartyMember(self.game, data)
-        new_member.level = l
+        new_member = PartyMember(self.game, data, l)
         if len(self.members) == 6:
             self.storage.append(new_member)
         else:
