@@ -1,5 +1,6 @@
 from .baseentity import BaseEntity
 from pathlib import Path
+import numpy.random as rand
 
 
 class NormalEntity(BaseEntity):
@@ -45,11 +46,20 @@ class NormalEntity(BaseEntity):
             except Exception as e:
                 pass
 
+            rand.seed(hash(f"{self.entity_uid}{self.name}") % 429496729)
             for i, member in enumerate(self.team):
                 if i < len(js):
                     battler_js = js[i]
                     for k, v in battler_js.items():
                         member[k] = v
+
+                try:
+                    member["level"] = member.level
+                except AttributeError:
+                    member["level"] = rand.randint(
+                        int(self.level) - 1, int(self.level) + 2
+                    )
+                    print(member)
 
     def when_interact(self):
         if self.active:

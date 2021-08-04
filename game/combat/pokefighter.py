@@ -26,8 +26,6 @@ class PokeFighter(CombatFighter):
         except AttributeError:
             self.level = 5
 
-        print("IK", fighter["name"], "HEB EEN LEVEL", fighter.level)
-
         try:
             self.stats_base = fighter.stats_base
             self.stats_reward = fighter.stats_reward
