@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 451,
+	"nextUid": 452,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -2278,6 +2278,26 @@
 						"params": ["{}"]
 					},
 					"textLanguageMode": "LangJson"
+				},
+				{
+					"identifier": "level",
+					"__type": "Int",
+					"uid": 451,
+					"type": "F_Int",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": { "id": "V_Int", "params": [5] },
+					"textLanguageMode": null
 				},
 				{
 					"identifier": "battlers",
