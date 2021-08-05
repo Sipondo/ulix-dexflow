@@ -81,7 +81,7 @@ class PbsManager:
             axis=0, how="all"
         )
 
-        self.level_curves = pd.read_csv(self.game.m_res.get_pbs_loc("level_curves.csv"), index_col=0)
+        self.level_exp = pd.read_csv(self.game.m_res.get_pbs_loc("level_exp.csv"), index_col=0)
 
         self.type_effectiveness = pd.read_csv(self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0)
 
@@ -151,7 +151,7 @@ class PbsManager:
         return self.weather_changes.loc[weather]
 
     def get_level_exp(self, growth_type, level):
-        return self.level_curves[growth_type].loc[level]
+        return self.level_exp[growth_type].loc[level]
 
     def get_type_effectiveness(self, atk_type, def_type):
         atk_type = atk_type.lower().capitalize()
