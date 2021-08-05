@@ -16,9 +16,11 @@ class GameStateBattle(BaseGameState):
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
         if particle_test:
+            print(f"{particle_test=}")
             self.game.inventory.init_random_member()
         if len(self.game.inventory.members) < 1:
             self.game.inventory.init_random_member()
+        print(f"{self.game.inventory.members[0]=}")
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
             self.game,
