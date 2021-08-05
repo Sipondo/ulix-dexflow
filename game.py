@@ -124,7 +124,9 @@ class PokeGame(mglw.WindowConfig):
 
         # Create a framebuffer we can render to
         self.offscreen = self.ctx.framebuffer(
-            color_attachments=[self.offscreen_diffuse,],
+            color_attachments=[
+                self.offscreen_diffuse,
+            ],
             depth_attachment=self.offscreen_depth,
         )
 
@@ -140,8 +142,7 @@ class PokeGame(mglw.WindowConfig):
         self.m_res.init_types()
 
         if self.particle is not None:
-            self.m_gst.switch_state("battle")
-            self.m_gst.current_state.particle_test = self.particle
+            self.m_gst.switch_state("battle", particle_test=self.particle)
         else:
             self.m_gst.switch_state("intro")
 
