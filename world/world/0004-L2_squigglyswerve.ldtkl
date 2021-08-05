@@ -1685,13 +1685,13 @@
 						},
 						{
 							"__identifier": "on_create_action",
-							"__value": "while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
+							"__value": "?while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
 							"__type": "String",
 							"defUid": 408,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
+									"?while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
 								]
 							}]
 						},

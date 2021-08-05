@@ -37,7 +37,7 @@ class PartyMember:
         self.current_hp = self.stats[0]
         self.status = None
 
-        #LMAO
+        # LMAO
         for k, v in data.items():
             setattr(self, k, v)
 
