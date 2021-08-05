@@ -25,8 +25,6 @@ class PartyMember:
         self.icon = self.game.m_res.get_party_icon(self.internalname)
         self.sprite = self.game.m_res.get_sprite_from_anim(data.name, size=2.0)
 
-        # TODO:
-
         self.current_xp = 0
         self.level_xp = 5
         self.set_new_level_xp()

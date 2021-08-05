@@ -145,10 +145,10 @@ class MainMove(BaseEffect):
 
     def get_move_effectiveness(self, move_type, target_type1, target_type2):
         type_1_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type1)
-        print(target_type1, move_type)
-        type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
-        print(target_type2, move_type)
-        print(type_1_eff, type_2_eff)
+        if target_type2.lower() != "nan":
+            type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
+        else:
+            type_2_eff = 1
         return type_1_eff * type_2_eff
 
     def on_action(self):
@@ -159,7 +159,6 @@ class MainMove(BaseEffect):
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
             particle=self.name, move_data=self.move
         )
-        print("User:", self.user, "Target:", self.target)
         if self.target_fainted:
             self.scene.add_effect(
                 GenericEffect(self.scene, "But there was no target..")
