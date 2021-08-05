@@ -27,7 +27,6 @@ class MainMove(BaseEffect):
 
         # added effects
         self.effects = []
-        # TEMP
         for func in move.function:
             function_args = func.split(" ")
             if len(function_args) > 1:
@@ -96,7 +95,12 @@ class MainMove(BaseEffect):
             if effect.on_hit(self):
                 return False
         if move_effectiveness == 0:
+            self.scene.add_effect(GenericEffect(self.scene, f"It doesn't affect foe {target_mon.name}"))
             return False
+        if move_effectiveness < 1:
+            self.scene.add_effect(GenericEffect(self.scene, "It's not very effective"))
+        if move_effectiveness > 1:
+            self.scene.add_effect(GenericEffect(self.scene, "It's super effective"))
 
         # stat modifiers
         target_effects = self.scene.get_effects_on_target(self.target)
@@ -140,8 +144,12 @@ class MainMove(BaseEffect):
         return True
 
     def get_move_effectiveness(self, move_type, target_type1, target_type2):
-        # TODO get move effectiveness
-        return 1
+        type_1_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type1)
+        print(target_type1, move_type)
+        type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
+        print(target_type2, move_type)
+        print(type_1_eff, type_2_eff)
+        return type_1_eff * type_2_eff
 
     def on_action(self):
         if self.scene.board.user != self.user:
