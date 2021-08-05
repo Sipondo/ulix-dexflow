@@ -2,8 +2,9 @@ import numbers
 
 
 class CombatFighter:
-    def __init__(self, game, fighter):
+    def __init__(self, game, scene, fighter):
         self.game = game
+        self.scene = scene
 
         if isinstance(fighter, str):
             fighter = self.game.m_pbs.get_fighter_by_name(fighter)

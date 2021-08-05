@@ -18,12 +18,12 @@ class CombatScene:
     def __init__(self, game, team_1, team_2, battle_type="trainer"):
 
         self.game = game
+        self.board_history = [PokeBoard(self)]
         t1 = self.init_team(team_1)
         t2 = self.init_team(team_2)
-        self.teams = [t1, t2]
-        self.board_history = [PokeBoard(self)]
-        self.board_graveyard = []
         self.init_board(t1, t2)
+        self.teams = [t1, t2]
+        self.board_graveyard = []
         self.battle_type = battle_type
         self.round = 0
         self.end = False
@@ -51,7 +51,7 @@ class CombatScene:
         return [self.init_fighter(x) for x in team]
 
     def init_fighter(self, src):
-        return PokeFighter(self.game, src)
+        return PokeFighter(self.game, self, src)
 
     def run_scene(self, action_descriptions=None, next_round=True):
         self.end = False
@@ -74,7 +74,7 @@ class CombatScene:
 
         while self.action_effects and not self.end:
             self.board.action, move_effect = self.action_effects.pop()
-            # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
+            # dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
 
             # skip = False

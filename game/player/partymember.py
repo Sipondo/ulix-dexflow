@@ -35,6 +35,7 @@ class PartyMember:
         self.init_stats(data)
 
         self.current_hp = self.stats[0]
+        self.status = None
 
         if isinstance(self.moves, str):
             l = self.moves.split(",")
@@ -79,6 +80,7 @@ class PartyMember:
         self.level_xp = data.level_xp
         self.current_hp = data.current_hp
         self.actions = [int(i) for i in data.actions]
+        self.status = data.status
 
     @property
     def stats(self):
@@ -105,5 +107,6 @@ class PartyMember:
         self.data["level_xp"] = self.level_xp
         self.data["actions"] = self.actions
         self.data["learnset"] = self.learnset
+        self.data["status"] = self.status
 
         return self.data

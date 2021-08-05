@@ -35,7 +35,6 @@ class GameStateBattle(BaseGameState):
         self.actor_1 = self.board.actor_1
         self.actor_2 = self.board.actor_2
 
-        # TODO move away as it should be initiated as a move
         self.render.set_pokemon(self.actor_1[0].sprite, 0)
         self.render.set_pokemon(self.actor_2[0].sprite, 1)
 
@@ -369,7 +368,6 @@ class GameStateBattle(BaseGameState):
         for i, member in enumerate(self.game.inventory.members):
             self.combat.board.sync_actor((0, i))
             member.from_series(self.board.get_actor((0, i)).series)
-        # TODO transfer status effects.
 
     def end_battle(self):
         self.synchronize()

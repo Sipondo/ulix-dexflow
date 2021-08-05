@@ -24,7 +24,6 @@ class FaintEffect(BaseEffect):
             end = False
         if self.target[0] == 1:
             # experience if enemy fainted
-            # TODO make the experience dependent on fainted mon
             self.scene.add_effect(
                 ExperienceEffect(
                     self.scene,
