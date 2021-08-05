@@ -31,7 +31,6 @@ class PokeBoard(CombatBoard):
         for i, team in enumerate(teams):
             team_formatted = []
             for j, poke in enumerate(team):
-                # TODO EV gains during battle
                 data = {
                     "hp": poke.current_hp,
                     "exp": poke.current_xp,
@@ -43,6 +42,18 @@ class PokeBoard(CombatBoard):
             self.teams.append(team_formatted)
             self.actives.append((0, 0))
             self.switch.append(False)
+
+    def get_action_priority(self, action):
+        prio = action.priority
+        user_actor = self.get_actor(action.user)
+        user_speed = user_actor.stats[0]
+        for speed_mod in [
+            x.stat_mod[4]
+            for x in self.scene.get_effects_on_target(action.user)
+            if x.name == "Statmod"
+        ]:
+            user_speed *= speed_mod
+        return 1_000_000 * prio + user_speed
 
     def inflict_damage(self, target, damage):
         x, data = self.teams[target[0]][target[1]]

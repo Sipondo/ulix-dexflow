@@ -68,7 +68,6 @@ class CombatBoard:
         return self.teams[target[0]][target[1]][1]
 
     def get_action_priority(self, action):
-        # TODO: not just priority
         return action.priority
 
     def random_int(self, a, b):

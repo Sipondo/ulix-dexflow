@@ -74,7 +74,7 @@ class CombatScene:
 
         while self.action_effects and not self.end:
             self.board.action, move_effect = self.action_effects.pop()
-            # TODO: dit is alleen om in de state de huidige 'actor' aan te geven
+            # dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
 
             # skip = False
