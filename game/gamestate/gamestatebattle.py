@@ -17,6 +17,8 @@ class GameStateBattle(BaseGameState):
     ):
         if particle_test:
             self.game.inventory.init_random_member()
+        if len(self.game.inventory.members) < 1:
+            self.game.inventory.init_random_member()
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
             self.game,
