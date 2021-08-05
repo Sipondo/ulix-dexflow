@@ -3,6 +3,7 @@ from .basegamestate import BaseGameState
 
 class GameStateIntro(BaseGameState):
     def on_enter(self):
+        self.game.r_int.fade = True
         self.need_to_redraw = True
 
         # self.logo_engine = self.game.m_res.get_splash("ulix_logo_small")
@@ -28,6 +29,7 @@ class GameStateIntro(BaseGameState):
         return False
 
     def on_exit(self):
+        self.game.r_int.fade = False
         pass
 
     def redraw(self, time, frame_time):

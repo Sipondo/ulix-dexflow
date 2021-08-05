@@ -124,9 +124,7 @@ class PokeGame(mglw.WindowConfig):
 
         # Create a framebuffer we can render to
         self.offscreen = self.ctx.framebuffer(
-            color_attachments=[
-                self.offscreen_diffuse,
-            ],
+            color_attachments=[self.offscreen_diffuse,],
             depth_attachment=self.offscreen_depth,
         )
 
@@ -172,6 +170,7 @@ class PokeGame(mglw.WindowConfig):
             self.offscreen.clear()
             self.offscreen.use()
 
+            self.r_int.on_tick(time, frame_time)
             locking = self.m_gst.current_state.on_tick(time, frame_time)
             self.r_aud.on_tick(time, frame_time)
 

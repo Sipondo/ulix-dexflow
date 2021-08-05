@@ -3,6 +3,7 @@ from .basegamestate import BaseGameState
 
 class GameStateMenuBag(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.selection = 0
         self.selection_window = 0
         self.icon_frame = 0
@@ -15,6 +16,7 @@ class GameStateMenuBag(BaseGameState):
             for x in range(1, 9)
         ]
 
+        self.spr_partyback = self.game.m_res.get_interface("partyback")
         self.need_to_redraw = True
 
     def on_tick(self, time, frame_time):
@@ -82,7 +84,7 @@ class GameStateMenuBag(BaseGameState):
         Party and Inspect view
         List pokemon and retrieve info via subview
         """
-        self.game.r_int.draw_rectangle((0.07, 0.12), to=(0.93, 0.88), col="black")
+        self.game.r_int.draw_image(self.spr_partyback, (0.5, 0.5), centre=True)
 
         items = self.game.inventory.get_pocket_items(self.filter)[
             self.selection_window : self.selection_window + 10

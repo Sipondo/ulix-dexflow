@@ -32,9 +32,11 @@ class PokeBoard(CombatBoard):
             team_formatted = []
             for j, poke in enumerate(team):
                 # TODO EV gains during battle
-                data = {"hp": poke.current_hp,
-                        "exp": poke.current_xp,
-                        "can_fight": True}
+                data = {
+                    "hp": poke.current_hp,
+                    "exp": poke.current_xp,
+                    "can_fight": True,
+                }
                 team_formatted.append((poke, data))
                 if poke.status is not None:
                     self.scene.add_effect(STATUS_CLASSES[poke.status](self.scene, None, (i, j)))
@@ -58,7 +60,11 @@ class PokeBoard(CombatBoard):
         status_effect = status(self.scene, user, target)
         self.scene.add_effect(status_effect)
         if status_effect.apply_narration != "":
-            particle = status_effect.particle if status_effect.particle != "" else "generic-status"
+            particle = (
+                status_effect.particle
+                if status_effect.particle != ""
+                else "generic-status"
+            )
             self.scene.add_effect(
                 GenericEffect(
                     self.scene,
@@ -101,16 +107,10 @@ class PokeBoard(CombatBoard):
         return False
 
     def get_relative_hp(self, target):
-        return (
-            self.get_hp(target)
-            / self.teams[target[0]][target[1]][0].stats[0]
-        )
+        return self.get_hp(target) / self.teams[target[0]][target[1]][0].stats[0]
 
     def get_relative_xp(self, target):
-        return (
-            self.get_exp(target)
-            / self.teams[target[0]][target[1]][0].level_xp
-        )
+        return self.get_exp(target) / self.teams[target[0]][target[1]][0].level_xp
 
     def sync_actor(self, target):
         actor = self.get_actor(target)

@@ -11,6 +11,7 @@ letterbox_to = 0.121
 
 class GameStateMenuDex(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.selection_team = 0
         self.selection_storage = 0
         self.selection_storage_window = 0
@@ -24,7 +25,6 @@ class GameStateMenuDex(BaseGameState):
 
         self.goto = None
         self.shop_confirm = None
-        self.letterbox = 0.0
         self.dialogue = None
         self.author = None
         self.prev_dialogue = None
@@ -48,7 +48,6 @@ class GameStateMenuDex(BaseGameState):
 
     def on_tick(self, time, frame_time):
         self.time = time
-        # self.lock = self.game.m_ani.on_tick(time, frame_time)
         self.redraw(time, frame_time)
         return False
 
@@ -56,10 +55,6 @@ class GameStateMenuDex(BaseGameState):
         pass
 
     def redraw(self, time, frame_time):
-        if self.letterbox < letterbox_to:
-            self.letterbox = min(self.letterbox + frame_time * 0.25, letterbox_to)
-            self.need_to_redraw = True
-
         self.game.m_ent.render()
         if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
             self.game.r_int.new_canvas()
@@ -156,9 +151,7 @@ class GameStateMenuDex(BaseGameState):
                 return
             elif key == "backspace":
                 self.game.r_aud.effect("cancel")
-
                 self.game.m_gst.switch_state("menuparty")
-                # self.game.m_gst.switch_state("overworld")
 
     def update_lists(self):
         self.storage = self.game.m_pbs.fighters
@@ -179,20 +172,6 @@ class GameStateMenuDex(BaseGameState):
         return self.storage_paged.iloc[self.selection_storage]
 
     def draw_interface(self, time, frame_time):
-        self.game.r_int.draw_rectangle((0, 0), to=(1, self.letterbox), col="black")
-        self.game.r_int.draw_rectangle((0, 1 - self.letterbox), to=(1, 1), col="black")
-
-        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.584, 0.99), col="gray")
-
-        # if self.author is not None:
-        #     self.game.r_int.draw_text(
-        #         self.author, (0.02, 0.72), to=(0.30, 0.80),
-        #     )
-
-        # self.game.r_int.draw_text(
-        #     self.dialogue or "", (0.02, 0.82), to=(0.58, 0.98),
-        # )
-
         self.game.r_int.draw_rectangle((0.04, 0.25), size=(0.27, 0.52), col="black")
         item = self.selected_storage
         self.game.r_int.draw_image(

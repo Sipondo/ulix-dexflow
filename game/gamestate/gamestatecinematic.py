@@ -6,15 +6,14 @@ import re
 
 from pathlib import Path
 
-letterbox_to = 0.121
-
 
 class GameStateCinematic(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = True
+
         self.selection = 0
         self.goto = None
         self.options = []
-        self.letterbox = 0.0
         self.shop = False
         self.shop_confirm = None
 
@@ -37,10 +36,6 @@ class GameStateCinematic(BaseGameState):
         pass
 
     def redraw(self, time, frame_time):
-        if self.letterbox < letterbox_to:
-            self.letterbox = min(self.letterbox + frame_time * 0.25, letterbox_to)
-            self.need_to_redraw = True
-
         self.game.m_ent.render()
         if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
             self.game.r_int.new_canvas()
@@ -129,9 +124,6 @@ class GameStateCinematic(BaseGameState):
         self.game.m_gst.switch_state("overworld")
 
     def draw_interface(self, time, frame_time):
-        self.game.r_int.draw_rectangle((0, 0), to=(1, self.letterbox), col="black")
-        self.game.r_int.draw_rectangle((0, 1 - self.letterbox), to=(1, 1), col="black")
-
         if not self.shop and self.spr_talker:
             self.game.r_int.draw_image(
                 self.spr_talker, (0.8, 0.7), centre=True, size=3.0

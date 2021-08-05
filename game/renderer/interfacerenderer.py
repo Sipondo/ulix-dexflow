@@ -4,6 +4,8 @@ from textwrap import wrap as textwrap
 import moderngl
 from moderngl_window import geometry
 
+LETTERBOX_TO = 0.121
+
 
 class InterfaceRenderer:
     def __init__(self, game, ctx):
@@ -14,7 +16,14 @@ class InterfaceRenderer:
         self.height = int(self.width / 16 * 9)
         self.scale = self.width // 640
 
+        self.letterbox_amount = 0.0
+        self.fade_amount = 1
+
+        self.letterbox = False
+        self.fade = True
+
         self.rerender = True
+        self.need_to_redraw = False
 
         self.font = self.game.m_res.get_font("Lexend-Regular", self.scale)
         self.font_bold = self.game.m_res.get_font("Lexend-SemiBold", self.scale)
@@ -29,7 +38,35 @@ class InterfaceRenderer:
         # self.texture.filter = moderngl.NEAREST, moderngl.NEAREST
         self.texture.write(texture_bytes)
 
-    def update(self, force=False):
+    def on_tick(self, time, frame_time):
+        frame_time = max(0.01, min(0.03, frame_time))
+        if self.letterbox:
+            if self.letterbox_amount < LETTERBOX_TO:
+                self.letterbox_amount = min(
+                    self.letterbox_amount + frame_time * 0.25, LETTERBOX_TO
+                )
+                self.game.m_gst.current_state.need_to_redraw = True
+        else:
+            if self.letterbox_amount > 0:
+                self.letterbox_amount = max(
+                    self.letterbox_amount - frame_time * 0.25, 0
+                )
+                self.game.m_gst.current_state.need_to_redraw = True
+
+        if self.fade:
+            if self.fade_amount < 1:
+                self.fade_amount = min(self.fade_amount + frame_time * 3, 1)
+                self.game.m_gst.current_state.need_to_redraw = True
+        else:
+            if self.fade_amount > 0:
+                self.fade_amount = max(self.fade_amount - frame_time * 3, 0)
+                self.game.m_gst.current_state.need_to_redraw = True
+
+        # if self.need_to_redraw:
+        #     self.need_to_redraw = False
+        #     self.new_canvas()
+
+    def update(self):
         if self.rerender:
             self.rerender = False
             self.texture.write(np.array(self.canvas).tobytes())
@@ -42,8 +79,17 @@ class InterfaceRenderer:
 
     def new_canvas(self):
         self.rerender = True
-        self.canvas = Image.new("RGBA", (self.width, self.height), "#00000000")
-        self.draw = ImageDraw.Draw(self.canvas)
+
+        if self.fade_amount == 0:
+            self.canvas = Image.new("RGBA", (self.width, self.height), "#00000000")
+        else:
+            self.canvas = Image.new(
+                "RGBA",
+                (self.width, self.height),
+                "#000000" + (str(hex(int(self.fade_amount * 255)))[2:]).zfill(2),
+            )
+        self.draw = ImageDraw.Draw(self.canvas, "RGBA")
+        self.draw_interface()
 
     def draw_rectangle(self, pos, to=None, size=None, col="white", centre=False):
         self.rerender = True
@@ -89,7 +135,11 @@ class InterfaceRenderer:
             to = self.to_screen_coords(to)
 
         font = self.font_bold[fsize] if bold else self.font[fsize]
-        msg = "\n".join(textwrap(text, size[0] // fsize)) if size else text
+        msg = (
+            "\n".join(textwrap(text, int((size[0] ** 1.25) / (fsize * 4.5))))
+            if size
+            else text
+        )
 
         w, _ = self.draw.textsize(msg, font=font)
 
@@ -119,3 +169,7 @@ class InterfaceRenderer:
 
     def to_screen_coords(self, tup):
         return (int(tup[0] * self.width), int(tup[1] * self.height))
+
+    def draw_interface(self):
+        self.draw_rectangle((0, 0), to=(1, self.letterbox_amount), col="black")
+        self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
