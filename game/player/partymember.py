@@ -37,6 +37,10 @@ class PartyMember:
         self.current_hp = self.stats[0]
         self.status = None
 
+        #LMAO
+        for k, v in data.items():
+            setattr(self, k, v)
+
         if isinstance(self.moves, str):
             l = self.moves.split(",")
             self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
