@@ -8,6 +8,7 @@ from pathlib import Path
 
 class GameStateMenuOptions(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.selection = 0
 
         self.need_to_redraw = True

@@ -3,8 +3,11 @@ from .basegamestate import BaseGameState
 
 class GameStateOverworld(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
+
         self.time = None
         self.movement_type = 0
+        self.need_to_redraw = True
         self.game.r_aud.play_music("BGM/021-Field04.flac")
 
     def on_tick(self, time, frame_time):
@@ -20,6 +23,9 @@ class GameStateOverworld(BaseGameState):
         pass
 
     def redraw(self):
+        if self.need_to_redraw:
+            self.game.r_int.new_canvas()
+            self.need_to_redraw = False
         self.game.m_ent.render()
 
     def check_direction(self):

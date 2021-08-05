@@ -59,6 +59,7 @@ class TileLayer:
         self.prog["offset"].value = self.offset
 
     def render(self, time, frame_time):
+        frame_time = max(0.03, min(0.06, frame_time))
         if self.terminated or not self.render_enabled or self.map is None:
             return
 

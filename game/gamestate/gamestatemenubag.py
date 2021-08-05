@@ -3,6 +3,7 @@ from .basegamestate import BaseGameState
 
 class GameStateMenuBag(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.selection = 0
         self.selection_window = 0
         self.icon_frame = 0

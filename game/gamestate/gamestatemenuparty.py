@@ -11,6 +11,7 @@ pstates = {"overview": 0, "moves": 1, "stats": 2, "values": 3}
 
 class GameStateMenuParty(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.selection = 0
         self.selectedmember = 0
         self.icon_frame = 0

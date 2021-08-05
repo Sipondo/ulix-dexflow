@@ -24,15 +24,23 @@ class Encounter:
 
         res = choice(options, p=probabilities)
 
-        fighter = self.act.game.m_pbs.get_fighter_by_name(res).copy()
+        self.fighter = self.act.game.m_pbs.get_fighter_by_name(res).copy()
 
-        fighter.level = self.act.game.m_map.get_encounter_level()
+        self.fighter.level = self.act.game.m_map.get_encounter_level()
+        self.act.game.r_int.fade = True
 
-        self.act.game.m_gst.switch_state(
-            "battle", battle_type="wild", enemy_team=[fighter]
-        )
+        self.encounter_init = False
 
     def on_tick(self, time=None, frame_time=None):
+        if time - self.init_time < 0.5:
+            return False
+
+        if not self.encounter_init:
+            self.act.game.m_gst.switch_state(
+                "battle", battle_type="wild", enemy_team=[self.fighter]
+            )
+            self.encounter_init = True
+            return False
         return True
 
     def on_read(self):

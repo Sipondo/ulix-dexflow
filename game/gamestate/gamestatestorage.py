@@ -11,6 +11,7 @@ letterbox_to = 0.121
 
 class GameStateStorage(BaseGameState):
     def on_enter(self):
+        self.game.r_int.letterbox = False
         self.focus = 0
 
         self.selection_team = 0
@@ -26,7 +27,6 @@ class GameStateStorage(BaseGameState):
 
         self.goto = None
         self.shop_confirm = None
-        self.letterbox = 0.0
         self.dialogue = None
         self.author = None
         self.prev_dialogue = None
@@ -44,10 +44,6 @@ class GameStateStorage(BaseGameState):
         pass
 
     def redraw(self, time, frame_time):
-        if self.letterbox < letterbox_to:
-            self.letterbox = min(self.letterbox + frame_time * 0.25, letterbox_to)
-            self.need_to_redraw = True
-
         self.game.m_ent.render()
         if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
             self.game.r_int.new_canvas()
@@ -195,16 +191,6 @@ class GameStateStorage(BaseGameState):
         return self.storage_paged[self.selection_storage]
 
     def draw_interface(self, time, frame_time):
-        self.game.r_int.draw_rectangle((0, 0), to=(1, self.letterbox), col="black")
-        self.game.r_int.draw_rectangle((0, 1 - self.letterbox), to=(1, 1), col="black")
-
-        self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.584, 0.99), col="gray")
-
-        if self.author is not None:
-            self.game.r_int.draw_text(
-                self.author, (0.02, 0.72), to=(0.30, 0.80),
-            )
-
         self.game.r_int.draw_text(
             self.dialogue or "", (0.02, 0.82), to=(0.58, 0.98),
         )
