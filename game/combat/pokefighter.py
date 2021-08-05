@@ -5,8 +5,8 @@ import numbers
 
 
 class PokeFighter(CombatFighter):
-    def __init__(self, game, fighter):
-        super().__init__(game, fighter)
+    def __init__(self, game, scene, fighter):
+        super().__init__(game, scene, fighter)
 
         if isinstance(fighter, str):
             fighter = self.game.m_pbs.get_fighter_by_name(fighter)
@@ -58,6 +58,11 @@ class PokeFighter(CombatFighter):
             self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
         else:
             self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
+
+        try:
+            self.status = fighter.status
+        except AttributeError:
+            self.status = None
 
         self.starting_hp = self.current_hp
         self.type1 = str(fighter["type1"])
@@ -120,6 +125,6 @@ class PokeFighter(CombatFighter):
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
         self.data["actions"] = [int(action.name) for action in self.actions]
-        print("actions:", [action.name for action in self.actions])
+        self.data["status"] = self.status
 
         return self.data

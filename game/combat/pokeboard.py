@@ -1,6 +1,15 @@
 from .combatboard import CombatBoard
 from .effects.genericeffect import GenericEffect
 from .effects.fainteffect import FaintEffect
+from .effects.statuseffect import *
+
+
+STATUS_CLASSES = {"badpoison": BadPoison,
+                  "poison": Poison,
+                  "sleep": Sleep,
+                  "freeze": Freeze,
+                  "burn": Burn,
+                  "paralysis": Paralysis}
 
 
 class PokeBoard(CombatBoard):
@@ -19,14 +28,16 @@ class PokeBoard(CombatBoard):
         return newstate
 
     def first_init(self, *teams):
-        for team in teams:
+        for i, team in enumerate(teams):
             team_formatted = []
-            for poke in team:
+            for j, poke in enumerate(team):
                 # TODO EV gains during battle
                 data = {"hp": poke.current_hp,
                         "exp": poke.current_xp,
                         "can_fight": True}
                 team_formatted.append((poke, data))
+                if poke.status is not None:
+                    self.scene.add_effect(STATUS_CLASSES[poke.status](self.scene, None, (i, j)))
             self.teams.append(team_formatted)
             self.actives.append((0, 0))
             self.switch.append(False)
@@ -105,6 +116,8 @@ class PokeBoard(CombatBoard):
         actor = self.get_actor(target)
         actor.current_hp = self.get_hp(target)
         actor.current_xp = self.get_exp(target)
+        if mjr_status := [x for x in self.scene.get_effects_on_target(target) if x.type == "Majorstatus"]:
+            actor.status = mjr_status[0].name.lower()
 
     @property
     def actor_1(self):
