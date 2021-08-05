@@ -6,7 +6,7 @@ import math
 from pathlib import Path
 
 states = {"top": 0, "party": 1, "inspect": 2}
-pstates = {"overview": 0, "moves": 1, "stats": 2, "values": 3}
+pstates = {"moves": 0, "stats": 1, "values": 2, "overview": 3}
 
 
 class GameStateMenuParty(BaseGameState):
@@ -43,6 +43,17 @@ class GameStateMenuParty(BaseGameState):
             self.game.m_res.get_interface("moveinfocell"),
             self.game.m_res.get_interface("moveinfocell_selected"),
         )
+
+        self.spr_inspect_statscell = self.game.m_res.get_interface("inspect_statscell")
+        self.spr_inspect_efficiencycell = self.game.m_res.get_interface(
+            "inspect_efficiencycell"
+        )
+        self.spr_inspect_namecell = self.game.m_res.get_interface("inspect_namecell")
+        self.spr_inspect_textcell = self.game.m_res.get_interface("inspect_textcell")
+        self.spr_inspectwindow = self.game.m_res.get_interface("inspectwindow")
+        self.spr_inspectwindow_tabs = [
+            self.game.m_res.get_interface(f"inspectwindow_tab{x}") for x in (1, 2, 3, 4)
+        ]
 
         self.need_to_redraw = True
 
@@ -141,7 +152,7 @@ class GameStateMenuParty(BaseGameState):
         elif self.state == states["party"]:
             return len(self.game.inventory.member_names)
         elif self.state == states["inspect"]:
-            return len(self.game.inventory.members[self.selectedmember].moves)
+            return len(self.game.inventory.members[self.selectedmember].actions)
 
     def draw_interface(self, time, frame_time):
         """
@@ -173,6 +184,13 @@ class GameStateMenuParty(BaseGameState):
         elif self.state == states["party"] or self.state == states["inspect"]:
             # self.game.r_int.draw_rectangle((0.07, 0.12), to=(0.93, 0.88), col="black")
             self.game.r_int.draw_image(self.spr_partyback, (0.5, 0.5), centre=True)
+
+            self.game.r_int.draw_image(
+                self.spr_inspectwindow, (0.693, 0.23), centre=False
+            )
+            self.game.r_int.draw_image(
+                self.spr_inspectwindow_tabs[self.pstate], (0.693, 0.213), centre=False
+            )
             # Draw left full party view if in party
             if self.state == states["party"]:
                 for i, member in enumerate(self.game.inventory.members):
@@ -238,8 +256,15 @@ class GameStateMenuParty(BaseGameState):
                 self.game.r_int.draw_image(
                     member.sprite, (0.25, 0.48), centre=True,
                 )
+                self.game.r_int.draw_image(
+                    self.spr_inspect_namecell, (0.235, 0.74), centre=True,
+                )
                 self.game.r_int.draw_text(
-                    f"{member.name}", (0.25, 0.74), size=(0.14, 0.08), centre=True
+                    f"{member.name}",
+                    (0.25, 0.755),
+                    size=(0.15, 0.08),
+                    centre=True,
+                    bcol=None,
                 )
 
             # Selected party member
@@ -261,25 +286,35 @@ class GameStateMenuParty(BaseGameState):
                         ("To Next", member.level_xp - member.current_xp),
                     )
                 ):
+                    self.game.r_int.draw_image(
+                        self.spr_inspect_statscell, (0.698, 0.24 + 0.095 * i,),
+                    )
                     self.game.r_int.draw_text(
                         f"{stat[0]}:",
-                        (0.7, 0.25 + 0.09 * i,),
+                        (0.7, 0.25 + 0.095 * i,),
                         size=(0.064, 0.07),
-                        bcol="white",
+                        bcol=None,
                         fsize=8,
                     )
                     self.game.r_int.draw_text(
                         f"{stat[1]}",
-                        (0.77, 0.25 + 0.09 * i,),
+                        (0.77, 0.25 + 0.095 * i,),
                         size=(0.11, 0.07),
-                        bcol="white",
+                        bcol=None,
                         fsize=8,
                         align="right",
                     )
 
                 if self.state == states["inspect"]:
+                    self.game.r_int.draw_image(
+                        self.spr_inspect_textcell, (0.397, 0.23),
+                    )
                     self.game.r_int.draw_text(
-                        f"{member.pokedex}", (0.4, 0.25), size=(0.28, 0.6), fsize=10,
+                        f"{member.pokedex}",
+                        (0.4, 0.24),
+                        size=(0.26, 0.6),
+                        fsize=10,
+                        bcol=None,
                     )
 
             elif self.pstate == pstates["moves"]:
@@ -291,8 +326,7 @@ class GameStateMenuParty(BaseGameState):
                             if self.state == states["party"] or self.selection != i
                             else 1
                         ],
-                        (0.79, 0.3 + 0.12 * i),
-                        centre=True,
+                        (0.698, 0.24 + 0.12 * i),
                     )
                     self.game.r_int.draw_text(
                         f"{move['name']}",
@@ -310,28 +344,35 @@ class GameStateMenuParty(BaseGameState):
                     )
 
                 if self.state == states["inspect"]:
+                    self.game.r_int.draw_image(
+                        self.spr_inspect_textcell, (0.397, 0.23),
+                    )
                     self.game.r_int.draw_text(
                         f"{self.game.m_pbs.get_move(member.actions[self.selection]).description}",
-                        (0.4, 0.25),
-                        size=(0.28, 0.6),
+                        (0.4, 0.24),
+                        size=(0.26, 0.6),
                         fsize=10,
+                        bcol=None,
                     )
             elif self.pstate == pstates["stats"]:
                 for i, stat in enumerate(
                     zip(("HP", "ATK", "DEF", "S.ATK", "S.DEF", "SPD"), member.stats)
                 ):
+                    self.game.r_int.draw_image(
+                        self.spr_inspect_statscell, (0.698, 0.24 + 0.095 * i,),
+                    )
                     self.game.r_int.draw_text(
                         f"{stat[0]}:",
-                        (0.7, 0.25 + 0.09 * i,),
+                        (0.7, 0.25 + 0.095 * i,),
                         size=(0.064, 0.07),
-                        bcol="white",
+                        bcol=None,
                         fsize=8,
                     )
                     self.game.r_int.draw_text(
                         f"{stat[1]}",
-                        (0.77, 0.25 + 0.09 * i,),
+                        (0.77, 0.25 + 0.095 * i,),
                         size=(0.11, 0.07),
-                        bcol="white",
+                        bcol=None,
                         fsize=8,
                         align="right",
                     )
@@ -348,26 +389,29 @@ class GameStateMenuParty(BaseGameState):
                         member.stats_EV,
                     )
                 ):
+                    self.game.r_int.draw_image(
+                        self.spr_inspect_efficiencycell, (0.698, 0.24 + 0.095 * i,),
+                    )
                     self.game.r_int.draw_text(
                         f"{stat[0]}:",
-                        (0.7, 0.25 + 0.09 * i,),
+                        (0.7, 0.25 + 0.095 * i,),
                         size=(0.064, 0.07),
-                        bcol="white",
+                        bcol=None,
                         fsize=8,
                     )
                     self.game.r_int.draw_text(
                         f"{stat[1]}",
-                        (0.77, 0.25 + 0.09 * i,),
+                        (0.77, 0.25 + 0.095 * i,),
                         size=(0.043, 0.07),
-                        bcol="blue",
+                        bcol=None,
                         fsize=8,
                         align="right",
                     )
                     self.game.r_int.draw_text(
                         f"{stat[2]}",
-                        (0.82, 0.25 + 0.09 * i,),
+                        (0.82, 0.25 + 0.095 * i,),
                         size=(0.06, 0.07),
-                        bcol="red",
+                        bcol=None,
                         fsize=8,
                         align="right",
                     )
