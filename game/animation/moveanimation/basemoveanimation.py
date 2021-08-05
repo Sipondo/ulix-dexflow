@@ -73,13 +73,7 @@ class BaseMoveAnimation(BaseAnimation):
 
     def check_continue(self):
         self.game.m_act.check_regions(self.entity)
-        if (
-            self.entity == self.game.m_ent.player
-            and self.movement_type == self.entity.movement_type
-        ):
-            if not self.game.m_gst.current_state.lock:
-                return self.get_direction() in self.game.m_key.pressed_keys
-        elif self.distance > 0:
+        if self.distance > 0:
             return True
         return False
 
