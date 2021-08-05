@@ -70,6 +70,10 @@ class GameStateBattle(BaseGameState):
             self.game.m_res.get_interface("ballcell_selected"),
         )
 
+        self.spr_attackwindow = self.game.m_res.get_interface("attackwindow")
+        self.spr_ballwindow = self.game.m_res.get_interface("ballwindow")
+        self.spr_switchwindow = self.game.m_res.get_interface("switchwindow")
+
         self.spr_attacktypes = self.game.m_res.attack_types
 
         self.agents = []
@@ -429,6 +433,7 @@ class GameStateBattle(BaseGameState):
                 # self.game.r_int.draw_rectangle(
                 #     (0.685, 0.59), size=(0.29, 0.27), col="white"
                 # )
+                self.game.r_int.draw_image(self.spr_attackwindow, (0.685, 0.59))
 
                 actionlist = self.actor_1[0].actions
                 for i in range(min(len(actionlist), 5)):
@@ -445,7 +450,7 @@ class GameStateBattle(BaseGameState):
                         (0.725, 0.607 + 0.065 * i),
                         size=(0.20, 0.06),
                         bcol=None,
-                        col="white",
+                        col="black",
                     )
                     self.game.r_int.draw_text(
                         f"{actionlist[i].pp}/{actionlist[i].pp}",
@@ -453,47 +458,43 @@ class GameStateBattle(BaseGameState):
                         size=(0.20, 0.06),
                         bcol=None,
                         fsize=6,
-                        col="white",
+                        col="black",
                     )
 
             elif self.state == states["swapmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.685, 0.49), size=(0.22, 0.4), col="white"
-                )
+                self.game.r_int.draw_image(self.spr_switchwindow, (0.685, 0.49))
 
                 for i, name in enumerate(self.game.inventory.fighter_names):
                     self.game.r_int.draw_image(
                         self.spr_ballcell[self.selection == i and 1 or 0],
-                        (0.69, 0.5 + 0.065 * i),
+                        (0.69, 0.5 + 0.063 * i),
                     )
                     self.game.r_int.draw_text(
-                        name, (0.725, 0.507 + 0.065 * i), size=(0.20, 0.06), bcol=None,
+                        name, (0.725, 0.507 + 0.063 * i), size=(0.20, 0.06), bcol=None,
                     )
 
             elif self.state == states["ballmenu"]:
-                self.game.r_int.draw_rectangle(
-                    (0.685, 0.49), size=(0.22, 0.4), col="white"
-                )
+                self.game.r_int.draw_image(self.spr_ballwindow, (0.685, 0.616))
 
                 balls = self.game.inventory.get_pocket_items(3)
                 if balls:
                     for i in range(len(balls)):
                         self.game.r_int.draw_image(
                             self.spr_ballcell[self.selection == i and 1 or 0],
-                            (0.69, 0.5 + 0.065 * i),
+                            (0.69, 0.626 + 0.063 * i),
                         )
                         self.game.r_int.draw_text(
                             balls[i].itemname,
-                            (0.725, 0.507 + 0.065 * i),
+                            (0.725, 0.633 + 0.063 * i),
                             size=(0.20, 0.06),
                             bcol=None,
                         )
                 else:
                     self.game.r_int.draw_image(
-                        self.spr_ballcell[1], (0.69, 0.5),
+                        self.spr_ballcell[1], (0.69, 0.626),
                     )
                     self.game.r_int.draw_text(
-                        f"No balls!", (0.725, 0.507), size=(0.20, 0.06), bcol=None,
+                        f"No balls!", (0.725, 0.633), size=(0.20, 0.06), bcol=None,
                     )
         # HP Bars & EXP bar
         # Ally

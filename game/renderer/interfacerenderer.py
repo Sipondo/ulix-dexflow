@@ -135,7 +135,11 @@ class InterfaceRenderer:
             to = self.to_screen_coords(to)
 
         font = self.font_bold[fsize] if bold else self.font[fsize]
-        msg = "\n".join(textwrap(text, size[0] // fsize)) if size else text
+        msg = (
+            "\n".join(textwrap(text, int((size[0] ** 1.25) / (fsize * 4.5))))
+            if size
+            else text
+        )
 
         w, _ = self.draw.textsize(msg, font=font)
 
@@ -169,4 +173,3 @@ class InterfaceRenderer:
     def draw_interface(self):
         self.draw_rectangle((0, 0), to=(1, self.letterbox_amount), col="black")
         self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
-
