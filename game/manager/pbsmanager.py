@@ -156,4 +156,4 @@ class PbsManager:
     def get_type_effectiveness(self, atk_type, def_type):
         atk_type = atk_type.lower().capitalize()
         def_type = def_type.lower().capitalize()
-        return int(self.type_effectiveness[def_type].loc[atk_type])
+        return self.type_effectiveness[def_type].loc[atk_type]
