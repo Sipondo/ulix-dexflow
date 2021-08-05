@@ -12,6 +12,7 @@ class RestoreParty:
     def on_tick(self, time=None, frame_time=None):
         for member in self.game.inventory.members:
             member.current_hp = member.stats[0]
+            member.status = None
         return True
 
     def on_read(self):
