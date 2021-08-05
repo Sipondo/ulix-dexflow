@@ -154,4 +154,6 @@ class PbsManager:
         return self.level_curves[growth_type].loc[level]
 
     def get_type_effectiveness(self, atk_type, def_type):
-        return int(self.type_effectiveness[atk_type].loc[def_type])
+        atk_type = atk_type.lower().capitalize()
+        def_type = def_type.lower().capitalize()
+        return int(self.type_effectiveness[def_type].loc[atk_type])
