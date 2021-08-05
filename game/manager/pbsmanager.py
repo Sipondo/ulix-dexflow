@@ -83,6 +83,8 @@ class PbsManager:
 
         self.level_curves = pd.read_csv(self.game.m_res.get_pbs_loc("level_curves.csv"), index_col=0)
 
+        self.type_effectiveness = pd.read_csv(self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0)
+
     def get_random_item(self):
         return self.items.sample().iloc[0]
 
@@ -150,3 +152,6 @@ class PbsManager:
 
     def get_level_exp(self, growth_type, level):
         return self.level_curves[growth_type].loc[level]
+
+    def get_type_effectiveness(self, atk_type, def_type):
+        return int(self.type_effectiveness[atk_type].loc[def_type])
