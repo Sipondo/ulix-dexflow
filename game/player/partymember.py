@@ -60,7 +60,7 @@ class PartyMember:
         self.stats_IV = np.random.randint(0, 32, 6)
 
         # TEMP
-        self.stats_EV = np.unique(np.random.randint(0, 6, 510), return_counts=True)[1]
+        self.stats_EV = np.zeros(6, dtype=int)
 
         self.set_characteristic()
 
