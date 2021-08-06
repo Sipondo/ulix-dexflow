@@ -94,6 +94,7 @@ class PokeFighter(CombatFighter):
             self.level_xp = self.game.m_pbs.get_level_exp(
                 self.data["growthrate"], self.level
             )
+            return
         self.level_xp = 0
 
     def gain_evs(self, evs):

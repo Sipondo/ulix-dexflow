@@ -215,7 +215,9 @@ class GameStateMenuParty(BaseGameState):
                         size=(0.087, 0.01),
                         col="gray",
                     )
-                    current_xp = member.current_xp / member.level_xp
+                    current_xp = (
+                        member.level_xp and (member.current_xp / member.level_xp) or 0
+                    )
                     self.game.r_int.draw_rectangle(
                         (0.197 + (i % 2) * 0.138, i_v + 0.055),
                         size=(0.087 * current_xp, 0.01),
