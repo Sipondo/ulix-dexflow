@@ -40,7 +40,7 @@ from game.upl.upl_scripts.sound import Sound
 from game.upl.upl_scripts.step import Step
 from game.upl.upl_scripts.storage import Storage
 from game.upl.upl_scripts.updatetiles import UpdateTiles
-from game.upl.upl_scripts.unface import Unface
+from game.upl.upl_scripts.unfade import Unfade
 from game.upl.upl_scripts.wait import Wait
 
 
