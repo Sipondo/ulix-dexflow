@@ -14,6 +14,7 @@ from game.upl.upl_scripts.countitem import CountItem
 from game.upl.upl_scripts.debug import Debug
 from game.upl.upl_scripts.encounter import Encounter
 from game.upl.upl_scripts.face import Face
+from game.upl.upl_scripts.fade import Fade
 from game.upl.upl_scripts.flushtiles import FlushTiles
 from game.upl.upl_scripts.getentities import GetEntities
 from game.upl.upl_scripts.gettile import GetTile
@@ -39,6 +40,7 @@ from game.upl.upl_scripts.sound import Sound
 from game.upl.upl_scripts.step import Step
 from game.upl.upl_scripts.storage import Storage
 from game.upl.upl_scripts.updatetiles import UpdateTiles
+from game.upl.upl_scripts.unface import Unface
 from game.upl.upl_scripts.wait import Wait
 
 
@@ -273,7 +275,12 @@ class UplParser:
         while outscript != script:
             outscript = script
             for k, v in self.upl_files.items():
-                script = re.sub(f"<<<{k}>>>", v, script, flags=re.M,)
+                script = re.sub(
+                    f"<<<{k}>>>",
+                    v,
+                    script,
+                    flags=re.M,
+                )
         return self.parser.parse(outscript)
 
 
