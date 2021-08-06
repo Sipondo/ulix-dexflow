@@ -45,6 +45,7 @@ class Move:
                 ),
                 next_to=self.next_to,
                 src_entity=self.user,
+                height=self.user.height,
             )
             self.anim = PathMoveAnimation(
                 self.game,
