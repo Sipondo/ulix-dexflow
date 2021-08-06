@@ -91,7 +91,9 @@ class PokeFighter(CombatFighter):
 
     def set_new_level_xp(self):
         if self.level < 100:
-            self.level_xp = self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
+            self.level_xp = self.game.m_pbs.get_level_exp(
+                self.data["growthrate"], self.level
+            )
         self.level_xp = 0
 
     def gain_evs(self, evs):
@@ -102,7 +104,7 @@ class PokeFighter(CombatFighter):
         stat = 5
         while np.sum(self.stats_EV) >= 510:
             self.stats_EV[stat] -= 1 if ev_np[stat] > 0 else 0
-            stat -= 1 % 6
+            stat = (stat - 1) % 6
         return
 
     @property
