@@ -5,7 +5,7 @@ class Unfade:
         self.act = act
         self.src = src
         self.user = user
-        self.game.r_int.fade = False
+        self.act.game.r_int.fade = False
 
     def on_tick(self, time=None, frame_time=None):
         return True

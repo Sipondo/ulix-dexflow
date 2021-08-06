@@ -5,7 +5,7 @@ class Fade:
         self.act = act
         self.src = src
         self.user = user
-        self.game.r_int.fade = True
+        self.act.game.r_int.fade = True
 
     def on_tick(self, time=None, frame_time=None):
         return True
