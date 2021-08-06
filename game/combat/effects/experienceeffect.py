@@ -34,18 +34,27 @@ class ExperienceEffect(BaseEffect):
         trade = 1
         # if past evolution level 1.2
         nevolved = 1
-        return int(b_type * base_exp * lucky_egg * aff * level_fainted * power * trade * nevolved // (7 * exp_share))
+        return int(
+            b_type
+            * base_exp
+            * lucky_egg
+            * aff
+            * level_fainted
+            * power
+            * trade
+            * nevolved
+            // (7 * exp_share)
+        )
 
     def get_ev_reward(self):
         ev_reward = self.fainted.data["effortpoints"]
-        evs = map(lambda x: int(x), ev_reward.split(","))
+        evs = [x for x in map(lambda x: int(x), ev_reward.split(","))]
         return evs
 
     def on_action(self):
         if self.cont:
             self.scene.board.no_skip(
-                "",
-                particle="",
+                "", particle="",
             )
         else:
             self.scene.board.no_skip(
@@ -62,7 +71,9 @@ class ExperienceEffect(BaseEffect):
             self.scene.board.set_exp(self.target, current_xp + xp_needed)
             self.scene.add_effect(LevelEffect(self.scene, self.target))
             self.scene.add_effect(
-                ExperienceEffect(self.scene, self.target, self.fainted, cont=self.amount)
+                ExperienceEffect(
+                    self.scene, self.target, self.fainted, cont=self.amount
+                )
             )
         else:
             self.scene.board.set_exp(self.target, current_xp + self.amount)
