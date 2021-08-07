@@ -259,7 +259,7 @@ class GameStateBattle(BaseGameState):
         if self.state == states["swapmenu"]:
             return len(self.game.inventory.members)
         if self.state == states["actionmenu"]:
-            return len(self.actor_1.actions)
+            return len(self.actor_1[0].actions)
         if self.state == states["ballmenu"]:
             return len(self.game.inventory.get_pocket_items(3))
         return 4
