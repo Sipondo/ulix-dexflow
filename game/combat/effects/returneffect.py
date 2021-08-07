@@ -2,9 +2,10 @@ from .baseeffect import BaseEffect
 
 
 class ReturnEffect(BaseEffect):
+    spd_on_action = 1000
+
     def __init__(self, scene, target):
         super().__init__(scene)
-        self.spd_on_action = 11
         self.target = target
 
     def on_action(self):

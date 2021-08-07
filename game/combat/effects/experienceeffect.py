@@ -3,9 +3,10 @@ from .leveleffect import LevelEffect
 
 
 class ExperienceEffect(BaseEffect):
+    spd_on_action = 99
+
     def __init__(self, scene, target, fainted, cont=None):
         super().__init__(scene)
-        self.spd_on_action = 100
         self.target = target
         self.fainted = fainted
         if self.scene.board.get_actor(self.target).level == 100:

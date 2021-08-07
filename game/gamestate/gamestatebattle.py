@@ -149,18 +149,19 @@ class GameStateBattle(BaseGameState):
             else:
                 for i, agent in enumerate(self.agents):
                     if self.lock_state:
-                        if self.board.switch[i]:
+                        if self.board.new_move:
+                            if type(agent) == AgentUser:
+                                action = agent.get_action(self.combat)
+                                if action is not None:
+                                    actions.append(action)
+                                else:
+                                    skip = True
+                        elif self.board.switch[i]:
                             sendout = agent.get_sendout(self.combat)
                             if sendout is not None:
                                 actions.append(
                                     (("sendout", (i, sendout)), None, None)
                                 )  # TODO refactor this
-                            else:
-                                skip = True
-                        if self.board.new_move:
-                            action = agent.get_action(self.combat)
-                            if action is not None:
-                                actions.append(action)
                             else:
                                 skip = True
                     else:
@@ -170,9 +171,9 @@ class GameStateBattle(BaseGameState):
                         else:
                             skip = True
             if not skip:
-                self.lock_state = False
                 self.state = states["action"]
-                self.pending_boards = self.combat.run_scene(actions)
+                self.pending_boards = self.combat.run_scene(actions, next_round=self.lock_state)
+                self.lock_state = False
                 self.advance_board()
 
         self.redraw(time, frame_time)
@@ -231,7 +232,7 @@ class GameStateBattle(BaseGameState):
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
                             self.reg_action(
-                                ("forget_move", self.actor_1[0].actions[self.selection])
+                                ("forget_move", self.selection)
                             )
                         else:
                             self.action_choice = self.selection
@@ -249,7 +250,8 @@ class GameStateBattle(BaseGameState):
                     elif self.state == states["ballmenu"]:
                         if self.game.inventory.get_pocket_items(3):
                             self.reg_action(("catch", self.selection))
-                    self.selection = 0
+                    if self.state != states["actionmenu"]:
+                        self.selection = 0
                 elif key == "backspace" or key == "menu":
                     self.game.r_aud.effect("cancel")
                     if not self.lock_state:
@@ -298,8 +300,21 @@ class GameStateBattle(BaseGameState):
 
     def advance_board(self):
         self.lock_state = False
+        if self.board.battle_end:
+            self.end_battle()
+            return
         if not self.pending_boards:
             self.need_to_redraw = True
+            if self.board.new_move:
+                if len(self.actor_1[0].actions) > 4:
+                    self.state = states["topmenu"]
+                    self.lock_state = True
+                    for agent in self.agents:
+                        if type(agent) == AgentUser:
+                            agent.set_action(None)
+                            self.state = states["actionmenu"]
+                            self.lock_state = "user_forget_move"
+                    return
             if any(self.board.switch):
                 self.lock_state = True
                 self.state = states["topmenu"]
@@ -310,12 +325,6 @@ class GameStateBattle(BaseGameState):
                             self.lock_state = "user_switch"
                             self.agents[i].set_sendout(self.combat, None)
                 return
-            if self.board.new_move:
-                if len(self.actor_1.actions) > 4:
-                    self.lock_state = True
-                    self.state = states["actionmenu"]
-                    return
-
             self.state = states["topmenu"]
             for agent in self.agents:
                 if type(agent) == AgentUser:
@@ -325,9 +334,6 @@ class GameStateBattle(BaseGameState):
             print("--- RESET STATES")
             return
 
-        if self.board.battle_end and not self.board.new_move:
-            self.end_battle()
-            return
         self.board = self.pending_boards.pop(0)
 
         if self.board.narration == "Battle ends!":
@@ -439,7 +445,7 @@ class GameStateBattle(BaseGameState):
         return "ERROR: Missing String"
 
     def draw_interface(self, time, frame_time):
-        if not len(self.pending_boards):
+        if not len(self.pending_boards) or self.lock_state:
             if self.state == states["topmenu"]:
                 # self.game.r_int.draw_rectangle(
                 #     (0.80, 0.53), size=(0.15, 0.32), col="black"
@@ -469,7 +475,6 @@ class GameStateBattle(BaseGameState):
                 #     (0.685, 0.59), size=(0.29, 0.27), col="white"
                 # )
                 self.game.r_int.draw_image(self.spr_attackwindow, (0.685, 0.59))
-
                 actionlist = self.actor_1[0].actions
                 for i in range(min(len(actionlist), 5)):
                     self.game.r_int.draw_image(

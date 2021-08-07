@@ -4,6 +4,7 @@ from .baseeffect import BaseEffect
 class LearnMoveEffect(BaseEffect):
     def __init__(self, scene, target, move_name):
         super().__init__(scene)
+        self.spd_on_action = 500
         self.target = target
         self.move = self.scene.game.m_pbs.get_move_by_name(move_name)
 

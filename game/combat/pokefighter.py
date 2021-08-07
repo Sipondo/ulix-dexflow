@@ -107,6 +107,7 @@ class PokeFighter(CombatFighter):
         while np.sum(self.stats_EV) >= 510:
             self.stats_EV[stat] -= 1 if ev_np[stat] > 0 else 0
             stat = (stat - 1) % 6
+        print(self.stats_EV)
         return
 
     @property

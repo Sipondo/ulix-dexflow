@@ -132,7 +132,7 @@ class CombatScene:
 
     def reset_effects_skip(self):
         for effect in self.effects:
-            effect.skip = True
+            effect.skip = False
 
     def run_effect(self, effect, f, *args):
         effect.done = True
@@ -145,9 +145,7 @@ class CombatScene:
             self.delete_effect(effect)
         if end:
             self.end = True
-        if skip:
-            return True
-        return False
+        return skip
 
     def add_effect(self, effect):
         self.effects.append(effect)
@@ -211,13 +209,11 @@ class CombatScene:
 
     def delete_effect(self, effect):
         effect.on_delete()
-        print(f"{effect=}, {type(effect)=}")
         self.effects.remove(effect)
         del effect
 
     def new_board(self):
         new_board = self.board.copy()
-        new_board.skip = True
         self.board_history.append(new_board)
 
     def format_actions(self, action_descriptions):
