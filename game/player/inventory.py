@@ -34,6 +34,7 @@ class Inventory:
         self.storage.append(new_member)
 
     def add_item(self, id, quantity):
+        quantity = int(quantity)
         pre_exist = [x for x in self.items if x.identifier == id]
         if pre_exist:
             pre_exist[0].quantity += quantity

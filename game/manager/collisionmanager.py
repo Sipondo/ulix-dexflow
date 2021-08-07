@@ -111,7 +111,7 @@ class CollisionManager:
                 y1 += self.offset[1]
                 x2, y2 = pos
                 if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
-                    return True
+                    return not entity.col_override
         return np.all(self.colmap[height][pos[1], pos[0], :4])
 
     def a_star(self, fr, to, height=0, next_to=False, src_entity=None):
