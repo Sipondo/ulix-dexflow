@@ -380,7 +380,7 @@ class GameStateBattle(BaseGameState):
         self.synchronize()
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.r_int.fade = False
-        if self.game.battle_result == 0:
+        if self.game.battle_result == 1:
             self.game.m_act.flush()
             self.game.m_map.set_level(
                 self.game.m_map.convert_mapstring_to_key(self.game.m_map.hospital)
