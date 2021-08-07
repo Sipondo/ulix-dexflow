@@ -140,14 +140,13 @@ class CombatScene:
         if args:
             delete, skip, end = f(*args)
         else:
-            print(effect, f)
             delete, skip, end = f()
         if delete:
             self.delete_effect(effect)
-        if skip:
-            return True
         if end:
             self.end = True
+        if skip:
+            return True
         return False
 
     def add_effect(self, effect):

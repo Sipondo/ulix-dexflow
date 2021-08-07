@@ -8,11 +8,12 @@ class LearnMoveEffect(BaseEffect):
         self.move = self.scene.game.m_pbs.get_move_by_name(move_name)
 
     def on_action(self):
-        print("Learning move!", self.target, self.move)
         actor = self.scene.board.get_actor(self.target)
         actor.actions.append(self.move)
         self.scene.board.new_move = True
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.target).name} learned {self.move['name']}!", particle=""
         )
-        return True, True, True
+        if len(actor.actions) > 4:
+            return True, True, True
+        return True, False, False
