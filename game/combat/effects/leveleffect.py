@@ -11,8 +11,7 @@ class LevelEffect(BaseEffect):
     def on_action(self):
         self.scene.board.copy_actor(self.target)
         actor = self.scene.board.get_actor(self.target)
-        actor.level += 1
-        actor.current_xp = 0
+        self.scene.board.get_data(self.target)["level"] += 1
         self.scene.board.set_exp(self.target, 0)
         actor.set_new_level_xp()
         for level, move_name in actor.data["learnset"]:

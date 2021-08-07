@@ -35,6 +35,7 @@ class PokeBoard(CombatBoard):
                     "hp": poke.current_hp,
                     "exp": poke.current_xp,
                     "can_fight": True,
+                    "level": poke.level,
                 }
                 team_formatted.append((poke, data))
                 if poke.status is not None:
@@ -61,7 +62,7 @@ class PokeBoard(CombatBoard):
         data["hp"] -= damage
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
-        if self.get_hp(target) < 1:
+        if self.get_data(target)["hp"] < 1:
             self.scene.add_effect(FaintEffect(self.scene, target))
 
     def inflict_status(self, status, user, target):
@@ -96,17 +97,14 @@ class PokeBoard(CombatBoard):
     def get_active_round(self, team):
         return self.actives[team][1]
 
-    def get_hp(self, target):
-        return self.teams[target[0]][target[1]][1]["hp"]
-
-    def get_exp(self, target):
-        return self.teams[target[0]][target[1]][1]["exp"]
+    def get_data(self, target):
+        return self.teams[target[0]][target[1]][1]
 
     def set_exp(self, target, new_exp):
         self.teams[target[0]][target[1]][1]["exp"] = new_exp
 
-    def get_can_fight(self, target):
-        return self.teams[target[0]][target[1]][1]["can_fight"]
+    def set_level(self, target, new_level):
+        self.teams[target[0]][target[1]][1]["level"] = new_level
 
     def set_can_fight(self, target, b):
         self.teams[target[0]][target[1]][1]["can_fight"] = b
@@ -118,15 +116,16 @@ class PokeBoard(CombatBoard):
         return False
 
     def get_relative_hp(self, target):
-        return self.get_hp(target) / self.teams[target[0]][target[1]][0].stats[0]
+        return self.get_data(target)["hp"] / self.teams[target[0]][target[1]][0].stats[0]
 
     def get_relative_xp(self, target):
-        return self.get_exp(target) / self.teams[target[0]][target[1]][0].level_xp
+        return self.get_data(target)["exp"] / self.teams[target[0]][target[1]][0].level_xp
 
     def sync_actor(self, target):
         actor = self.get_actor(target)
-        actor.current_hp = self.get_hp(target)
-        actor.current_xp = self.get_exp(target)
+        actor.current_hp = self.get_data(target)["hp"]
+        actor.current_xp = self.get_data(target)["exp"]
+        actor.level = self.get_data(target)["level"]
         if mjr_status := [x for x in self.scene.get_effects_on_target(target) if x.type == "Majorstatus"]:
             actor.status = mjr_status[0].name.lower()
 

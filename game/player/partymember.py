@@ -34,12 +34,12 @@ class PartyMember:
 
         self.init_stats(data)
 
-        self.current_hp = self.stats[0]
-        self.status = None
-
         # LMAO
         for k, v in data.items():
             setattr(self, k, v)
+
+        self.current_hp = self.stats[0]
+        self.status = None
 
         if isinstance(self.moves, str):
             l = self.moves.split(",")

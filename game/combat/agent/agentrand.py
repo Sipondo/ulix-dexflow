@@ -29,6 +29,6 @@ class AgentRand(BaseAgent):
 
     def get_sendout(self, scene):
         random_fighter = np.random.randint(len(scene.teams[self.team]))
-        while not scene.board.get_can_fight((self.team, random_fighter)):
+        while not scene.board.get_data((self.team, random_fighter))["can_fight"]:
             random_fighter = np.random.randint(len(scene.teams[self.team]))
         return random_fighter

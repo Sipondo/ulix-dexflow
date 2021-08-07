@@ -3,9 +3,9 @@ from game.combat.effects.moveeffect.basemoveeffect import BaseMoveEffect
 
 class Avghp(BaseMoveEffect):
     def after_move(self):
-        user_hp = self.scene.board.get_hp(self.move.user)
+        user_hp = self.scene.board.get_data(self.move.user)["hp"]
         user_max_hp = self.scene.board.get_actor(self.move.user).stats[0]
-        target_hp = self.scene.board.get_hp(self.move.target)
+        target_hp = self.scene.board.get_data(self.move.target)["hp"]
         target_max_hp = self.scene.board.get_actor(self.move.target).stats[0]
 
         average = (user_hp + target_hp) // 2

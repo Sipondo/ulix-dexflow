@@ -4,14 +4,14 @@ from ..damageeffect import DamageEffect
 
 class Sethpequal(BaseMoveEffect):
     def before_move(self):
-        user_hp = self.scene.board.get_hp(self.move.user)
-        target_hp = self.scene.board.get_hp(self.move.target)
+        user_hp = self.scene.board.get_data(self.move.user)["hp"]
+        target_hp = self.scene.board.get_data(self.move.target)["hp"]
         if target_hp <= user_hp:
             return False
 
     def after_move(self):
-        user_hp = self.scene.board.get_hp(self.move.user)
-        target_hp = self.scene.board.get_hp(self.move.target)
+        user_hp = self.scene.board.get_data(self.move.user)["hp"]
+        target_hp = self.scene.board.get_data(self.move.target)["hp"]
         dmg = target_hp-user_hp
         self.scene.add_effect(DamageEffect(self.scene, self.move.target, abs_dmg=dmg))
         return True

@@ -42,12 +42,11 @@ class BallEffect(BaseEffect):
         catch_actor = self.scene.board.get_actor(self.target)
         catch_rate = catch_actor.data["rareness"]
         hp_max = catch_actor.stats[0]
-        hp_curr = self.scene.board.get_hp(self.target)
+        hp_curr = self.scene.board.get_data(self.target)["hp"]
         mod_catch_rate = (
             ((3 * hp_max - 2 * hp_curr) * catch_rate * ball_bonus) / (3 * hp_max)
         ) * status_bonus
         shake_chance = 1 / math.pow((255 / mod_catch_rate), 0.1875)
-        print(f"{shake_chance=}")
         fail = False
         counter = 0
         while not fail:
