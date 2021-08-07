@@ -216,6 +216,7 @@ class GameStateBattle(BaseGameState):
                     if self.state == states["topmenu"]:
                         if self.selection == 0:
                             self.state = states["actionmenu"]
+                            self.selection = self.action_choice
                         elif self.selection == 1:
                             self.state = states["swapmenu"]
                         elif self.selection == 2 and self.battle_type != "trainer":
@@ -243,7 +244,7 @@ class GameStateBattle(BaseGameState):
                     elif self.state == states["ballmenu"]:
                         if self.game.inventory.get_pocket_items(3):
                             self.reg_action(("catch", self.selection))
-                    self.selection = self.action_choice if self.state == states["actionmenu"] else 0
+                    self.selection = 0
                 elif key == "backspace" or key == "menu":
                     self.game.r_aud.effect("cancel")
                     if not self.lock_state:
@@ -395,7 +396,7 @@ class GameStateBattle(BaseGameState):
             )
             self.game.m_gst.switch_state("overworld")
             return
-        self.game.m_gst.switch_state("menuevolve")
+        self.game.m_gst.switch_state("overworld")
 
     @property
     def narrate(self):
