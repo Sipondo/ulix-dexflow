@@ -378,9 +378,20 @@ class GameStateBattle(BaseGameState):
 
     def end_battle(self):
         self.synchronize()
-        self.game.battle_result = 0 if self.board.has_fighter(0) else 1
+        self.game.battle_result = 1 if self.board.has_fighter(0) else 0
         self.game.r_int.fade = False
-        # self.game
+        if self.game.battle_result == 0:
+            self.game.m_act.flush()
+            self.game.m_map.set_level(
+                self.game.m_map.convert_mapstring_to_key(self.game.m_map.hospital)
+            )
+            self.game.m_ent.player.game_position = (5, 5)
+            self.game.r_wld.offset = (0.5, 13 / 16)
+            self.game.m_col.offset = (0.5, 13 / 16)
+            self.game.r_wld.set_map_via_manager(
+                (0, 0,), fade=False,
+            )
+            self.game.m_gst.switch_state("overworld")
         self.game.m_gst.switch_state("overworld")
 
     @property
