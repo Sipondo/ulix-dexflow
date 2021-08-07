@@ -12,7 +12,7 @@ class Push:
         self.game = act.game
 
         self.init_time = act.current_time
-        self.force = force
+        self.force = int(force)
 
         if isinstance(direction, int):
             if direction == 0:
@@ -61,7 +61,7 @@ class Push:
             return False
 
         if self.go_down:
-            for _ in range(self.force - 1):
+            for _ in range(int(self.force) - 1):
                 self.user.game_position = (
                     self.user.x_g + self.direction[0],
                     self.user.x_y + self.direction[1],
