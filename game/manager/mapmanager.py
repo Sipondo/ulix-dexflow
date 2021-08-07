@@ -58,6 +58,8 @@ class MapManager:
         self.local_encounter_level_min = 0
         self.local_encounter_level_max = 0
 
+        self.allow_save = fields["allow_save"]
+
     def get_encounter_level(self):
         if self.local_encounter_level_max > 0:
             return np.random.choice(

@@ -1643,13 +1643,13 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()",
+							"__value": "game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the Pokémon Supahshop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the SupahShop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()"
+									"game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the Pokémon Supahshop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()"
 								]
 							}]
 						},
