@@ -26,6 +26,12 @@ class GameStateCinematic(BaseGameState):
         self.spr_namebox = self.game.m_res.get_interface("namebox")
         self.spr_talker = None
 
+        self.spr_shopwindow = self.game.m_res.get_interface("shopwindow")
+        self.spr_itemcell = (
+            self.game.m_res.get_interface("shop_itemcell"),
+            self.game.m_res.get_interface("shop_itemcell_selected"),
+        )
+
     def on_tick(self, time, frame_time):
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
@@ -165,8 +171,8 @@ class GameStateCinematic(BaseGameState):
             self.game.r_int.draw_image(item.icon, (0.45, 0.375), centre=True, size=3.0)
 
             if self.shop_confirm is not None:
-                self.game.r_int.draw_rectangle(
-                    (0.59, 0.3), size=(0.37, 0.08), col="black"
+                self.game.r_int.draw_image(
+                    self.spr_shopwindow, (0.55, 0.23), centre=False
                 )
                 self.game.r_int.draw_text(
                     f"Quantity: {self.shop_confirm}",
