@@ -24,6 +24,8 @@ class GameStateCinematic(BaseGameState):
 
         self.spr_textbox = self.game.m_res.get_interface("textbox")
         self.spr_namebox = self.game.m_res.get_interface("namebox")
+
+        self.spr_namebox = self.game.m_res.get_interface("namebox")
         self.spr_talker = None
 
         self.spr_shopwindow = self.game.m_res.get_interface("shopwindow")
@@ -31,6 +33,10 @@ class GameStateCinematic(BaseGameState):
             self.game.m_res.get_interface("shop_itemcell"),
             self.game.m_res.get_interface("shop_itemcell_selected"),
         )
+        self.spr_shop_itemtext_cell = self.game.m_res.get_interface(
+            "shop_itemtext_cell"
+        )
+        self.spr_shoplistwindow = self.game.m_res.get_interface("shop_list_window")
 
     def on_tick(self, time, frame_time):
         self.time = time
@@ -107,7 +113,7 @@ class GameStateCinematic(BaseGameState):
                 self.dialogue = None
                 self.author = None
                 self.spr_talker = None
-            elif key == "backspace":
+            elif key == "backspace" or key == "menu":
                 if self.shop:
                     self.game.r_aud.effect("cancel")
                     if self.shop_confirm is not None:
@@ -146,6 +152,7 @@ class GameStateCinematic(BaseGameState):
             )
 
         if self.shop:
+            self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.45), centre=True)
             if self.dialogue:
                 self.game.r_int.draw_image(
                     self.spr_textbox, (0.02, 0.82),
@@ -159,7 +166,7 @@ class GameStateCinematic(BaseGameState):
                     bcol=None,
                 )
 
-            self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
+            # self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
 
             item = self.options[self.selection]
             self.game.r_int.draw_text(
@@ -171,9 +178,6 @@ class GameStateCinematic(BaseGameState):
             self.game.r_int.draw_image(item.icon, (0.45, 0.375), centre=True, size=3.0)
 
             if self.shop_confirm is not None:
-                self.game.r_int.draw_image(
-                    self.spr_shopwindow, (0.55, 0.23), centre=False
-                )
                 self.game.r_int.draw_text(
                     f"Quantity: {self.shop_confirm}",
                     (0.60, 0.31),
