@@ -381,7 +381,7 @@ class GameStateBattle(BaseGameState):
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.r_int.fade = False
         # self.game
-        self.game.m_gst.switch_state("overworld")
+        self.game.m_gst.switch_state("menuevolve")
 
     @property
     def narrate(self):
