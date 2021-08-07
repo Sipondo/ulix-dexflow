@@ -304,9 +304,10 @@ class GameStateBattle(BaseGameState):
                             self.agents[i].set_sendout(self.combat, None)
                 return
             if self.board.new_move:
-                self.lock_state = True
-                self.state = states["actionmenu"]
-                return
+                if len(self.actor_1.actions) > 4:
+                    self.lock_state = True
+                    self.state = states["actionmenu"]
+                    return
 
             self.state = states["topmenu"]
             for agent in self.agents:
