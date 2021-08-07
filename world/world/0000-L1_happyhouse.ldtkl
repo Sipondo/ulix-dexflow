@@ -52,12 +52,12 @@
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{
 			"__identifier": "environment",
-			"__value": "bridge",
+			"__value": "lunaforest",
 			"__type": "String",
 			"defUid": 453,
 			"realEditorValues": [{
 				"id": "V_String",
-				"params": ["bridge"]
+				"params": ["lunaforest"]
 			}]
 		},
 		{
