@@ -26,8 +26,6 @@ class GameStateMenuEvolve(BaseGameState):
         self.evolving = False
         self.evolve = False
 
-        self.stage = 0
-
     def on_tick(self, time, frame_time):
         if not self.evolving:
             if self.to_evolve:
@@ -35,19 +33,11 @@ class GameStateMenuEvolve(BaseGameState):
                 self.get_evo_data()
                 self.evolving = True
                 self.evolve = False
+                self.need_to_redraw = True
             else:
                 self.game.m_gst.switch_state("overworld")
         self.time = time
 
-        if self.stage == 0:
-            self.stage = 1
-            self.timer = 0
-        else:
-            self.timer += frame_time
-
-        if self.stage == 1 and self.timer > 0.5:
-            self.need_to_redraw = True
-            self.stage = 2
         self.redraw(time, frame_time)
         return False
 
