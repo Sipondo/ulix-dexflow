@@ -27,7 +27,16 @@ class GameStateMenuBag(BaseGameState):
             self.game.m_res.get_interface("inventory_itemcell_selected"),
         )
 
+        self.spr_shop_item_background = self.game.m_res.get_interface(
+            "shop_item_background_window"
+        )
+
+        self.spr_shop_header = self.game.m_res.get_interface("shop_headertile")
+        self.spr_shop_descript = self.game.m_res.get_interface("shop_descript")
         self.spr_partyback = self.game.m_res.get_interface("partyback")
+        self.spr_shop_item_background = self.game.m_res.get_interface(
+            "shop_item_background_window"
+        )
         self.need_to_redraw = True
 
     def on_tick(self, time, frame_time):
@@ -131,19 +140,24 @@ class GameStateMenuBag(BaseGameState):
 
         if len(items) > self.selection:
             item = items[self.selection]
-            self.game.r_int.draw_text(
-                f"{item.description}",
-                (0.34, 0.25),
-                size=(0.20, 0.6),
-                fsize=10,
-                bcol=False,
+            self.game.r_int.draw_image(
+                self.spr_shop_item_background, (0.3, 0.465), centre=True
             )
-            self.game.r_int.draw_image(item.icon, (0.25, 0.48), centre=True, size=3.0)
+            self.game.r_int.draw_image(item.icon, (0.3, 0.41), centre=True, size=3.0)
+            self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.275), centre=True)
+            self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
             self.game.r_int.draw_text(
                 f"{item.itemname}",
-                (0.25, 0.74),
+                (0.31, 0.285),
                 size=(0.14, 0.08),
+                bcol=None,
                 centre=True,
-                bcol=False,
             )
-
+            self.game.r_int.draw_text(
+                f"{item.description}",
+                (0.3, 0.622),
+                size=(0.35, 0.15),
+                fsize=10,
+                bcol=None,
+                centre=True,
+            )
