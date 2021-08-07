@@ -3,7 +3,7 @@ from .basemoveeffect import BaseMoveEffect
 
 class Antiweight(BaseMoveEffect):
     def before_move(self):
-        target_actor = self.scene.get_actor(self.move.target)
+        target_actor = self.scene.board.get_actor(self.move.target)
         target_weight = target_actor.data["weight"]
         if target_weight < 10:
             self.move.power = 20

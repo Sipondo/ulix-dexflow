@@ -507,7 +507,7 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((0, self.board.get_active(0)))
         rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
-        level = self.board.get_data((1, self.board.get_active(1)))["level"]
+        level = self.board.get_data((0, self.board.get_active(0)))["level"]
         x_off = 0.08
         x_size = 0.28
 
