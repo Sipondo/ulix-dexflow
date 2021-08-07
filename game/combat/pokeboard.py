@@ -46,6 +46,8 @@ class PokeBoard(CombatBoard):
 
     def get_action_priority(self, action):
         prio = action.priority
+        if action.user is None or action.target is None:
+            return 7_000_000
         user_actor = self.get_actor(action.user)
         user_speed = user_actor.stats[0]
         for speed_mod in [
