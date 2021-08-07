@@ -191,7 +191,10 @@ class PokeGame(mglw.WindowConfig):
 
         # Render offscreen diffuse layer to screen
         self.offscreen_diffuse.use(location=0)
-        self.render_prog["Filter"] = self.m_map.filter
+        if self.m_gst.current_state_name not in ("battle", "evolution"):
+            self.render_prog["Filter"] = self.m_map.filter
+        else:
+            self.render_prog["Filter"] = (1, 1, 1)
         self.quad_fs.render(self.render_prog)
         self.r_int.update()
 

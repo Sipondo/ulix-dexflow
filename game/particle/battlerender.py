@@ -43,7 +43,7 @@ class BattleRender:
             self.prog, [(self.vbo_pkm, "3f", "in_pos")],
         )
 
-        self.environment = self.game.m_res.get_environment("forest")
+        self.environment = self.game.m_res.get_environment(self.game.m_map.environment)
 
         # self.tex_p_cls = self.game.m_res.get_texture("splash", "parallax_close_shift_d")
         # self.tex_p_far = self.game.m_res.get_texture("splash", "parallax_far_shift_d")
@@ -146,7 +146,9 @@ class BattleRender:
             if miss:
                 # TODO Particles miss to left/right
                 pass
-            self.game.m_par.spawn_system(self, name, target, miss, move_data=move_data)  # name)
+            self.game.m_par.spawn_system(
+                self, name, target, miss, move_data=move_data
+            )  # name)
         else:
             print("Empty particle!")
 
