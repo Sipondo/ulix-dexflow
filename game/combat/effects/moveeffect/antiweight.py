@@ -1,7 +1,7 @@
 from .basemoveeffect import BaseMoveEffect
 
 
-class Antistatus(BaseMoveEffect):
+class Antiweight(BaseMoveEffect):
     def before_move(self):
         target_actor = self.scene.get_actor(self.move.target)
         target_weight = target_actor.data["weight"]
