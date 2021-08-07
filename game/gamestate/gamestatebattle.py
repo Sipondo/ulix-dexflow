@@ -242,7 +242,7 @@ class GameStateBattle(BaseGameState):
                         if self.game.inventory.get_pocket_items(3):
                             self.reg_action(("catch", self.selection))
                     self.selection = 0
-                elif key == "backspace":
+                elif key == "backspace" or key == "menu":
                     self.game.r_aud.effect("cancel")
                     if not self.lock_state:
                         self.game.r_aud.effect("cancel")

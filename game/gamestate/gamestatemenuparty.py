@@ -120,7 +120,7 @@ class GameStateMenuParty(BaseGameState):
                     self.game.m_gst.switch_state("overworld")
                     self.game.r_aud.effect("menuclose")
             elif self.state == states["party"]:
-                if key == "backspace":
+                if key == "backspace" or key == "menu":
                     self.state = states["top"]
                     self.selection = 0
                     self.game.r_aud.effect("cancel")
@@ -130,7 +130,7 @@ class GameStateMenuParty(BaseGameState):
                     self.selection = 0
                     self.game.r_aud.effect("confirm")
             elif self.state == states["inspect"]:
-                if key == "backspace":
+                if key == "backspace" or key == "menu":
                     self.state = states["party"]
                     self.selection = self.selectedmember
                     self.game.r_aud.effect("cancel")
