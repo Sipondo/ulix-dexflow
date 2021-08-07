@@ -102,6 +102,9 @@ class PokeBoard(CombatBoard):
     def get_data(self, target):
         return self.teams[target[0]][target[1]][1]
 
+    def set_hp(self, target, new_hp):
+        self.teams[target[0]][target[1]][1]["hp"] = new_hp
+
     def set_exp(self, target, new_exp):
         self.teams[target[0]][target[1]][1]["exp"] = new_exp
 

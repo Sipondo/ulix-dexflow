@@ -9,7 +9,7 @@ class GameStateMenuEvolve(BaseGameState):
             evolve_target, cond, cond_req = evolution_data.split(",")
             if cond == "Level":
                 if member.level > int(cond_req):
-                    self.to_evolve.append((member, evolve_target))
+                    self.to_evolve.append((member, self.game.m_pbs.get_figher_by_name(evolve_target)))
         self.game.r_int.fade = True
 
         self.evo = None
@@ -18,7 +18,8 @@ class GameStateMenuEvolve(BaseGameState):
         self.need_to_redraw = True
 
         # self.logo_engine = self.game.m_res.get_splash("ulix_logo_small")
-        self.logo_framework = self.game.m_res.get_splash("dexflow_logo_small")
+        self.small_splash = None
+        self.big_splash = None
 
         self.stage = 0
 
@@ -26,6 +27,7 @@ class GameStateMenuEvolve(BaseGameState):
         if not self.lock:
             if self.to_evolve:
                 self.evo, self.evo_target = self.to_evolve.pop()
+                self.get_evo_data()
             else:
                 self.game.m_gst.switch_state("overworld")
         self.time = time
@@ -41,6 +43,10 @@ class GameStateMenuEvolve(BaseGameState):
             self.stage = 2
         self.redraw(time, frame_time)
         return False
+
+    def get_evo_data(self):
+        self.small_splash = self.evo.sprite
+        self.big_splash = self.game.m_res.get_sprite_from_anim(self.evo_target.name, size=2.0)
 
     def on_exit(self):
         self.game.r_int.fade = False
