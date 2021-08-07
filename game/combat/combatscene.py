@@ -114,8 +114,9 @@ class CombatScene:
         self.board.reset_action()
 
         # Before end
-        for effect in sorted(self.effects, key=lambda x: -x.spd_before_end):
-            self.run_effect(effect, effect.before_end)
+        if not self.end:
+            for effect in sorted(self.effects, key=lambda x: -x.spd_before_end):
+                self.run_effect(effect, effect.before_end)
 
         self.reset_effects_done()
         self.reset_effects_skip()
