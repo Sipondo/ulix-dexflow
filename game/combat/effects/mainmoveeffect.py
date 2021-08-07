@@ -176,7 +176,10 @@ class MainMove(BaseEffect):
                 return True, False, False
             for effect in self.effects:
                 if self.scene.board.random_roll() < self.chance:
-                    effect.after_move()
+                    if not effect.after_move():
+                        if self.chance < 1:
+                            continue
+                        self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
         return True, False, False
 
     def on_switch(self, target_old, target_new):

@@ -9,3 +9,4 @@ class Enemyatk(BaseMoveEffect):
 
     def after_move(self):
         StatChange(self.scene, self.move.target, "Attack", self.mod).apply()
+        return True

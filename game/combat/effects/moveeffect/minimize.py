@@ -7,3 +7,4 @@ class Minimize(BaseMoveEffect):
         target_effects = self.scene.get_effects_on_target(self.move.target)
         if "Minimize" not in [x.name for x in target_effects]:
             self.scene.add_effect(MinimizeEffect(self.scene, self.target))
+        return True

@@ -5,4 +5,4 @@ from game.combat.effects import statuseffect
 
 class Putmist(BaseMoveEffect):
     def after_move(self):
-        ApplyStatus(self.scene, statuseffect.MIST, self.move.user, self.move.user).apply()
+        return ApplyStatus(self.scene, statuseffect.MIST, self.move.user, self.move.user).apply()

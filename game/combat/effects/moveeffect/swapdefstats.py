@@ -29,3 +29,4 @@ class Swapdefstats(BaseMoveEffect):
         self.scene.add_effect(
             GenericEffect(self.scene, "The pokemon swapped defense changes")
         )
+        return True

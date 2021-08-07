@@ -14,3 +14,4 @@ class Sethpequal(BaseMoveEffect):
         target_hp = self.scene.board.get_hp(self.move.target)
         dmg = target_hp-user_hp
         self.scene.add_effect(DamageEffect(self.scene, self.move.target, abs_dmg=dmg))
+        return True

@@ -12,3 +12,4 @@ class Fusionmove(BaseMoveEffect):
 
     def after_move(self):
         self.scene.add_effect(FusionEffect(self.scene, self.move.name))
+        return True

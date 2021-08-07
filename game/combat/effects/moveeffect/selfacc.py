@@ -9,4 +9,5 @@ class Selfacc(BaseMoveEffect):
 
     def after_move(self):
         StatChange(self.scene, self.move.user, "Accuracy", self.mod).apply()
+        return True
 
