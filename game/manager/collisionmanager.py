@@ -76,14 +76,15 @@ class CollisionManager:
 
         new_pos = ox + dx * 2, oy + dy * 2
 
-        if not self.get_col_flag(new_pos, height=height, off=off):
-            if (
-                (direction == (0, -1) and flags["Hop_N"])
-                or (direction == (0, 1) and flags["Hop_S"])
-                or (direction == (-1, 0) and flags["Hop_W"])
-                or (direction == (1, 0) and flags["Hop_E"])
-            ):
-                return 2, new_pos
+        if self.game.inventory.count_item("JUMPYJUMPERS"):
+            if not self.get_col_flag(new_pos, height=height, off=off):
+                if (
+                    (direction == (0, -1) and flags["Hop_N"])
+                    or (direction == (0, 1) and flags["Hop_S"])
+                    or (direction == (-1, 0) and flags["Hop_W"])
+                    or (direction == (1, 0) and flags["Hop_E"])
+                ):
+                    return 2, new_pos
 
         return False
 
