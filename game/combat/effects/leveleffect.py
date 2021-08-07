@@ -21,7 +21,7 @@ class LevelEffect(BaseEffect):
 
         actor.set_new_level_xp()
         for level, move_name in actor.data["learnset"]:
-            if actor.level == level:
+            if actor.level == int(level):
                 self.scene.add_effect(LearnMoveEffect(self.scene, self.target, move_name))
         self.scene.board.no_skip(f"{self.scene.board.get_actor(self.target).name} leveled up!", particle="level-up")
         # TODO show stats
