@@ -25,9 +25,13 @@ class GameStateCinematic(BaseGameState):
         self.spr_textbox = self.game.m_res.get_interface("textbox")
         self.spr_namebox = self.game.m_res.get_interface("namebox")
 
-        self.spr_namebox = self.game.m_res.get_interface("namebox")
+        self.spr_shop_header = self.game.m_res.get_interface("shop_headertile")
+        self.spr_shop_descript = self.game.m_res.get_interface("shop_descript")
         self.spr_talker = None
 
+        self.spr_shop_item_background = self.game.m_res.get_interface(
+            "shop_item_background_window"
+        )
         self.spr_shopwindow = self.game.m_res.get_interface("shopwindow")
         self.spr_itemcell = (
             self.game.m_res.get_interface("shop_itemcell"),
@@ -152,7 +156,17 @@ class GameStateCinematic(BaseGameState):
             )
 
         if self.shop:
+            item = self.options[self.selection]
             self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.45), centre=True)
+            self.game.r_int.draw_image(
+                self.spr_shop_item_background, (0.3, 0.465), centre=True
+            )
+            self.game.r_int.draw_image(item.icon, (0.3, 0.41), centre=True, size=3.0)
+            self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.275), centre=True)
+            self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
+            self.game.r_int.draw_image(
+                self.spr_shoplistwindow, (0.55, 0.23), centre=False
+            )
             if self.dialogue:
                 self.game.r_int.draw_image(
                     self.spr_textbox, (0.02, 0.82),
@@ -167,15 +181,21 @@ class GameStateCinematic(BaseGameState):
                 )
 
             # self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
-
-            item = self.options[self.selection]
             self.game.r_int.draw_text(
-                f"{item.itemname}", (0.20, 0.26), size=(0.14, 0.08)
+                f"{item.itemname}",
+                (0.31, 0.285),
+                size=(0.14, 0.08),
+                bcol=None,
+                centre=True,
             )
             self.game.r_int.draw_text(
-                f"{item.description}", (0.20, 0.5), size=(0.35, 0.15), fsize=10,
+                f"{item.description}",
+                (0.3, 0.622),
+                size=(0.35, 0.15),
+                fsize=10,
+                bcol=None,
+                centre=True,
             )
-            self.game.r_int.draw_image(item.icon, (0.45, 0.375), centre=True, size=3.0)
 
             if self.shop_confirm is not None:
                 self.game.r_int.draw_text(
@@ -186,25 +206,29 @@ class GameStateCinematic(BaseGameState):
                     bcol="yellow",
                 )
             else:
-                self.game.r_int.draw_rectangle(
-                    (0.59, 0.3),
-                    size=(0.37, 0.02 + 0.08 * len(self.options)),
-                    col="black",
-                )
+                # self.game.r_int.draw_rectangle(
+                #     (0.59, 0.3),
+                #     size=(0.37, 0.02 + 0.08 * len(self.options)),
+                #     col="black",
+                # )
                 for i, name in enumerate(self.options):
+                    self.game.r_int.draw_image(
+                        self.spr_itemcell[1 if self.selection == i else 0],
+                        (0.56, 0.24 + 0.08 * i),
+                    )
                     self.game.r_int.draw_text(
                         f"{self.selection == i and '' or ''}{name.price}",
-                        (0.60, 0.31 + 0.08 * i),
+                        (0.57, 0.26 + 0.08 * i),
                         size=(0.10, 0.06),
                         centre=False,
-                        bcol=self.selection == i and "yellow" or "white",
+                        bcol=None,
                     )
                     self.game.r_int.draw_text(
                         f"{self.selection == i and '' or ''}{name.itemname}",
-                        (0.72, 0.31 + 0.08 * i),
+                        (0.65, 0.26 + 0.08 * i),
                         size=(0.22, 0.06),
                         centre=False,
-                        bcol=self.selection == i and "yellow" or "white",
+                        bcol=None,
                     )
             return
 
