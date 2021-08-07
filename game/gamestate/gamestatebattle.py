@@ -293,9 +293,6 @@ class GameStateBattle(BaseGameState):
 
     def advance_board(self):
         self.lock_state = False
-        if self.board.battle_end:
-            self.end_battle()
-            return
         if not self.pending_boards:
             self.need_to_redraw = True
             if any(self.board.switch):
@@ -323,6 +320,9 @@ class GameStateBattle(BaseGameState):
             print("--- RESET STATES")
             return
 
+        if self.board.battle_end and not self.board.new_move:
+            self.end_battle()
+            return
         self.board = self.pending_boards.pop(0)
 
         if self.board.narration == "Battle ends!":
@@ -384,6 +384,9 @@ class GameStateBattle(BaseGameState):
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.r_int.fade = False
         if self.game.battle_result == 1:
+            for member in self.game.inventory.members:
+                member.current_hp = member.stats[0]
+                member.status = None
             self.game.m_act.flush()
             self.game.m_map.set_level(
                 self.game.m_map.convert_mapstring_to_key(self.game.m_map.hospital)
