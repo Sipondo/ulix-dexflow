@@ -1,7 +1,7 @@
 from .basegamestate import BaseGameState
 
 
-class GameStateIntro(BaseGameState):
+class GameStateMenuEvolve(BaseGameState):
     def on_enter(self):
         self.to_evolve = []  # list of members who evolve, evolution target
         for member in self.game.inventory.members:

@@ -9,6 +9,7 @@ from ..gamestate.gamestatemenuparty import GameStateMenuParty
 from ..gamestate.gamestatemenusave import GameStateMenuSave
 from ..gamestate.gamestateoverworld import GameStateOverworld
 from ..gamestate.gamestatestorage import GameStateStorage
+from ..gamestate.gamestatemenuevolve import GameStateMenuEvolve
 
 
 class GameStateManager:
@@ -47,6 +48,8 @@ class GameStateManager:
             self.current_state = GameStateStorage(self.game)
         elif new_state == "intro":
             self.current_state = GameStateIntro(self.game)
+        elif new_state == "menuevolve":
+            self.current_state = GameStateMenuEvolve(self.game)
 
         print(f"GAMESTATE SWITCHED: {new_state}")
         self.current_state.on_enter(**kwargs)

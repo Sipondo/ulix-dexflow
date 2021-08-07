@@ -121,9 +121,9 @@ class MainMove(BaseEffect):
 
         if crit:
             if atk_mod < 1:
-                atk_mod = 0
+                atk_mod = 1
             if def_mod > 1:
-                def_mod = 0
+                def_mod = 1
 
         # damage
         damage = (0.4 * user_mon.level + 2) * self.power
