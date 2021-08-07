@@ -23,3 +23,4 @@ class Counterphys(BaseMoveEffect):
 
     def after_move(self):
         self.scene.add_effect(DamageEffect(self.scene, self.move.target, abs_dmg=self.damage))
+        return True

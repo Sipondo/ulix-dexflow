@@ -21,3 +21,4 @@ class Swapbaseatkdef(BaseMoveEffect):
                 target_swap_effect = BaseStatChangeEffect(self.scene, self.move.target)
                 target_swap_effect.update(stat, user_stats[STATMAP[stat]])
                 self.scene.add_effect(target_swap_effect)
+        return True

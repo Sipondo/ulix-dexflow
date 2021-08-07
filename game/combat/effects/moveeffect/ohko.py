@@ -16,3 +16,4 @@ class Ohko(BaseMoveEffect):
         self.scene.add_effect(
             DamageEffect(self.scene, self.move.target, abs_dmg=damage)
         )
+        return True

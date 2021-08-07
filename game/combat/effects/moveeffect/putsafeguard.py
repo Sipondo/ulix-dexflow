@@ -5,4 +5,4 @@ from game.combat.effects import statuseffect
 
 class Putsafeguard(BaseMoveEffect):
     def after_move(self):
-        ApplyStatus(self.scene, statuseffect.SAFEGUARD, self.move.user, self.move.user).apply()
+        return ApplyStatus(self.scene, statuseffect.SAFEGUARD, self.move.user, self.move.user).apply()

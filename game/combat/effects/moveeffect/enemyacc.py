@@ -9,3 +9,4 @@ class Enemyacc(BaseMoveEffect):
 
     def after_move(self):
         StatChange(self.scene, self.move.target, "Accuracy", self.mod).apply()
+        return True

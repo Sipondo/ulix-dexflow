@@ -11,3 +11,4 @@ class Avghp(BaseMoveEffect):
         average = (user_hp + target_hp) // 2
         self.scene.board.set_hp(self.move.user, min(average, user_max_hp))
         self.scene.board.set_hp(self.move.target, min(average, target_max_hp))
+        return True

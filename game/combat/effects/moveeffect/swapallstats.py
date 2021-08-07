@@ -37,3 +37,4 @@ class Swapallstats(BaseMoveEffect):
         self.scene.add_effect(
             GenericEffect(self.scene, "The pokemon swapped stat changes")
         )
+        return True

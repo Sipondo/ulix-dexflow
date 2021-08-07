@@ -13,4 +13,5 @@ class Paralyze(BaseMoveEffect):
         return True
 
     def after_move(self):
-        ApplyStatus(self.scene, statuseffect.PARALYSIS, self.move.user, self.move.target).apply()
+        return ApplyStatus(self.scene, statuseffect.PARALYSIS, self.move.user, self.move.target).apply()
+

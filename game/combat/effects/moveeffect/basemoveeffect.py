@@ -14,4 +14,4 @@ class BaseMoveEffect(BaseEffect, abc.ABC):
         return True
 
     def after_move(self):
-        return
+        return True

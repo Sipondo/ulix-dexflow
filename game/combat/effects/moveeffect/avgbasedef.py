@@ -22,3 +22,4 @@ class Avgbasedef(BaseMoveEffect):
                 target_swap_effect = BaseStatChangeEffect(self.scene, self.move.target)
                 target_swap_effect.update(stat, avg_stat)
                 self.scene.add_effect(target_swap_effect)
+        return True

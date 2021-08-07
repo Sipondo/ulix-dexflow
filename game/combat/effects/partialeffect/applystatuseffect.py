@@ -15,12 +15,11 @@ class ApplyStatus(BasePartialEffect):
         if self.status.type == "Majorstatus":
             if "Majorstatus" not in [x.type for x in target_effects]:
                 self.scene.board.inflict_status(self.status, self.user, self.target)
-            else:
-                self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
+                return True
         elif self.status.name not in [x.name for x in target_effects]:
             self.scene.board.inflict_status(self.status, self.user, self.target)
-        else:
-            self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
+            return True
+        return False
 
     def on_faint(self, target):
         return self.target == target, False, False

@@ -29,3 +29,4 @@ class Swapatkstats(BaseMoveEffect):
         self.scene.add_effect(
             GenericEffect(self.scene, "The pokemon swapped attack changes")
         )
+        return True
