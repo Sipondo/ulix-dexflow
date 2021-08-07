@@ -68,6 +68,12 @@ class PartyMember:
 
         self.set_characteristic()
 
+    def evolve(self, evolution_data):
+        self.icon = self.game.m_res.get_party_icon(evolution_data.internalname)
+        self.sprite = self.game.m_res.get_sprite_from_anim(evolution_data.name, size=2.0)
+        self.data = evolution_data.copy()
+        self.name = str(evolution_data["name"])
+
     def set_new_level_xp(self):
         self.level_xp = self.game.m_pbs.get_level_exp(
             self.data["growthrate"], self.level
