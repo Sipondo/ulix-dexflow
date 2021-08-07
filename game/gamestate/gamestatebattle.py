@@ -228,10 +228,10 @@ class GameStateBattle(BaseGameState):
                                 ("forget_move", self.actor_1[0].actions[self.selection])
                             )
                         else:
+                            self.action_choice = self.selection
                             self.reg_action(
                                 ("attack", self.actor_1[0].actions[self.selection],)
                             )
-                            self.action_choice = self.selection
                     elif self.state == states["swapmenu"]:
                         if self.board.teams[0][self.selection][1]["can_fight"]:
                             if self.lock_state:

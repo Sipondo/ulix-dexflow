@@ -28,7 +28,7 @@ class GameStateMenuEvolve(BaseGameState):
 
     def on_tick(self, time, frame_time):
         if not self.evolving:
-            if self.to_evolve:
+            if len(self.to_evolve) > 0:
                 self.evo, self.evo_target = self.to_evolve.pop()
                 self.get_evo_data()
                 self.evolving = True
@@ -45,12 +45,12 @@ class GameStateMenuEvolve(BaseGameState):
         self.small_splash = self.evo.sprite
         self.big_splash = self.game.m_res.get_sprite_from_anim(self.evo_target.name, size=2.0)
 
-
     def on_exit(self):
         self.game.r_int.fade = True
 
     def redraw(self, time, frame_time):
         if self.need_to_redraw:
+            print(self.evo, self.evo_target)
             self.game.r_int.new_canvas()
             self.draw_interface(time, frame_time)
             self.need_to_redraw = False
