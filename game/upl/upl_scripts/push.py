@@ -3,7 +3,7 @@ from game.animation.moveanimation.basemoveanimation import BaseMoveAnimation
 
 
 class Push:
-    def __init__(self, act, src, user, direction):
+    def __init__(self, act, src, user, direction, force=1):
         act.funcs.append(self)
         self.init_time = act.current_time
         self.act = act
@@ -12,6 +12,7 @@ class Push:
         self.game = act.game
 
         self.init_time = act.current_time
+        self.force = force
 
         if isinstance(direction, int):
             if direction == 0:
@@ -60,6 +61,11 @@ class Push:
             return False
 
         if self.go_down:
+            for _ in range(self.force - 1):
+                self.user.game_position = (
+                    self.user.x_g + self.direction[0],
+                    self.user.x_y + self.direction[1],
+                )
             self.user.sprites = ["pillar_used"]
             self.user.render_priority = -1
             self.user.interactable = False
