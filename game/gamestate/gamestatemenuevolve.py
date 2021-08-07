@@ -11,7 +11,6 @@ class GameStateMenuEvolve(BaseGameState):
         self.evolve = False
         for member in self.game.inventory.members:
             evolution_data = member.data["evolutions"]
-            print(member.name, evolution_data)
             if evolution_data != evolution_data:
                 continue
             evolve_target, cond, cond_req = evolution_data.split(",")
