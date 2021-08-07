@@ -19,6 +19,7 @@ class CombatScene:
 
         self.game = game
         self.board_history = [PokeBoard(self)]
+        self.effects = []
         t1 = self.init_team(team_1)
         t2 = self.init_team(team_2)
         self.init_board(t1, t2)
@@ -28,7 +29,6 @@ class CombatScene:
         self.round = 0
         self.end = False
 
-        self.effects = []
         self.effect_lib = {}
 
         self.action_effects = []
