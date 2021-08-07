@@ -16,7 +16,7 @@ class BadPoison(BaseEffect):
     def before_end(self):
         if self.scene.board.is_active(self.target):
             self.scene.board.no_skip(
-                f"{self.scene.board.board.get_actor(self.target)[0].name} was hurt by poison",
+                f"{self.scene.board.board.get_actor(self.target).name} was hurt by poison",
                 particle=self.particle,
             )
             self.scene.add_effect(

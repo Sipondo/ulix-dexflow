@@ -17,13 +17,13 @@ class Freeze(BaseEffect):
             if self.scene.board.action.action_name == "attack":
                 if self.scene.board.action.type == "Fire" and self.scene.board.action.power > 0:
                     self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.scene.board.user).name} thawed out!",
+                        f"{self.scene.board.get_actor(self.target).name} thawed out!",
                         particle=self.name,
                     )
                     return True, False, False
                 else:
                     self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.scene.board.user).name} is frozen solid!",
+                        f"{self.scene.board.get_actor(self.target).name} is frozen solid!",
                         particle=self.name,
                     )
                     return False, True, False
