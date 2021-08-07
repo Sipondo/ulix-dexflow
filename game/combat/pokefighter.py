@@ -21,6 +21,8 @@ class PokeFighter(CombatFighter):
             self.current_hp = self.stats[0]
             self.current_xp = 0
 
+        self.data = fighter.copy()
+
         try:
             self.level = fighter.level
         except AttributeError:
@@ -45,7 +47,8 @@ class PokeFighter(CombatFighter):
             self.level_xp = fighter.level_xp
         except AttributeError:
             self.current_xp = 0
-            self.level_xp = 750
+            self.level_xp = 0
+            self.set_new_level_xp()
 
         if "actions" not in fighter:
             self.moves = fighter.moves
@@ -72,8 +75,6 @@ class PokeFighter(CombatFighter):
         # start_id = 580
         # self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]]
 
-        self.data = fighter.copy()
-
     def init_stats(self, fighter):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
         self.nature = [1, 1, 1, 1, 1, 1]
@@ -99,7 +100,6 @@ class PokeFighter(CombatFighter):
 
     def gain_evs(self, evs):
         ev_np = np.array(evs)
-        print("EVGAIN:", ev_np)
         if np.sum(self.stats_EV) >= 510:
             return
         self.stats_EV = ev_np + self.stats_EV
@@ -107,7 +107,6 @@ class PokeFighter(CombatFighter):
         while np.sum(self.stats_EV) >= 510:
             self.stats_EV[stat] -= 1 if ev_np[stat] > 0 else 0
             stat = (stat - 1) % 6
-        print(f"{self.stats_EV=}")
         return
 
     @property

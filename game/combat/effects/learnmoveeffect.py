@@ -8,7 +8,6 @@ class LearnMoveEffect(BaseEffect):
         self.move = self.scene.game.m_pbs.get_move_by_name(move_name)
 
     def on_action(self):
-        return True, False, False
         print("Learning move!", self.target, self.move)
         actor = self.scene.board.get_actor(self.target)
         actor.actions.append(self.move)

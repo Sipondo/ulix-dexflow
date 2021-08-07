@@ -99,7 +99,6 @@ class CombatScene:
                 if skip:
                     for effect in self.get_effects_on_target(move_effect.user):
                         effect.done = True
-                    self.delete_effect(move_effect)
                     break
 
             self.reset_effects_done()
