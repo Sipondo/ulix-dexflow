@@ -258,6 +258,10 @@ class GameStateBattle(BaseGameState):
     def max_selection(self):
         if self.state == states["swapmenu"]:
             return len(self.game.inventory.members)
+        if self.state == states["actionmenu"]:
+            return len(self.actor_1.actions)
+        if self.state == states["ballmenu"]:
+            return len(self.game.inventory.get_pocket_items(3))
         return 4
 
     def reg_action(self, action):
