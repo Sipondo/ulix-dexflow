@@ -87,6 +87,7 @@ class GameStateBattle(BaseGameState):
 
         self.lock_state = False
         self.need_to_redraw = True
+        self.action_choice = 0
         self.selection = 0
         self.state = states["topmenu"]
         self.game.r_aud.play_music("BGM/Battle wild.flac")
@@ -230,6 +231,7 @@ class GameStateBattle(BaseGameState):
                             self.reg_action(
                                 ("attack", self.actor_1[0].actions[self.selection],)
                             )
+                            self.action_choice = self.selection
                     elif self.state == states["swapmenu"]:
                         if self.board.teams[0][self.selection][1]["can_fight"]:
                             if self.lock_state:
@@ -241,7 +243,7 @@ class GameStateBattle(BaseGameState):
                     elif self.state == states["ballmenu"]:
                         if self.game.inventory.get_pocket_items(3):
                             self.reg_action(("catch", self.selection))
-                    self.selection = 0
+                    self.selection = self.action_choice if self.state == states["actionmenu"] else 0
                 elif key == "backspace" or key == "menu":
                     self.game.r_aud.effect("cancel")
                     if not self.lock_state:

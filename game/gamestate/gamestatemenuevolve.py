@@ -17,7 +17,7 @@ class GameStateMenuEvolve(BaseGameState):
         self.evo = None
         self.evo_target = None
 
-        self.need_to_redraw = True
+        self.need_to_redraw = False
 
         # self.logo_engine = self.game.m_res.get_splash("ulix_logo_small")
         self.small_splash = None
@@ -44,6 +44,7 @@ class GameStateMenuEvolve(BaseGameState):
     def get_evo_data(self):
         self.small_splash = self.evo.sprite
         self.big_splash = self.game.m_res.get_sprite_from_anim(self.evo_target.name, size=2.0)
+
 
     def on_exit(self):
         self.game.r_int.fade = True
