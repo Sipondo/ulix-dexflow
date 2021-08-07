@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 454,
+	"nextUid": 455,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -4566,6 +4566,26 @@
 		], "iconTilesetUid": 375, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [
 		{
+			"identifier": "hospital",
+			"__type": "String",
+			"uid": 454,
+			"type": "F_String",
+			"isArray": false,
+			"canBeNull": true,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null
+		},
+		{
 			"identifier": "allow_save",
 			"__type": "Bool",
 			"uid": 452,
@@ -4861,12 +4881,22 @@
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{
 					"__identifier": "environment",
-					"__value": "volcano",
+					"__value": "bridge",
 					"__type": "String",
 					"defUid": 453,
 					"realEditorValues": [{
 						"id": "V_String",
-						"params": ["volcano"]
+						"params": ["bridge"]
+					}]
+				},
+				{
+					"__identifier": "hospital",
+					"__value": "L1_I1",
+					"__type": "String",
+					"defUid": 454,
+					"realEditorValues": [{
+						"id": "V_String",
+						"params": ["L1_I1"]
 					}]
 				}
 			],
@@ -4901,7 +4931,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
@@ -4934,7 +4965,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -4967,7 +4999,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []
@@ -5000,7 +5033,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" } ]
@@ -5033,7 +5067,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 317, "dir": "s" } ]
@@ -5066,7 +5101,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
@@ -5099,7 +5135,8 @@
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
-				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] }
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 317, "dir": "w" }]

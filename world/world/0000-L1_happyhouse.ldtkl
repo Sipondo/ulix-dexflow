@@ -52,12 +52,22 @@
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{
 			"__identifier": "environment",
-			"__value": "volcano",
+			"__value": "bridge",
 			"__type": "String",
 			"defUid": 453,
 			"realEditorValues": [{
 				"id": "V_String",
-				"params": ["volcano"]
+				"params": ["bridge"]
+			}]
+		},
+		{
+			"__identifier": "hospital",
+			"__value": "L1_I1",
+			"__type": "String",
+			"defUid": 454,
+			"realEditorValues": [{
+				"id": "V_String",
+				"params": ["L1_I1"]
 			}]
 		}
 	],
