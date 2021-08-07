@@ -54,7 +54,7 @@ class ExperienceEffect(BaseEffect):
 
     def on_action(self):
         print("Hallo")
-        if self.cont is not None:
+        if self.cont:
             print("Hallo2")
             self.scene.board.no_skip(
                 "", particle="",
