@@ -198,12 +198,15 @@ class GameStateCinematic(BaseGameState):
             )
 
             if self.shop_confirm is not None:
+                self.game.r_int.draw_image(
+                    self.spr_itemcell[1], (0.56, 0.24),
+                )
                 self.game.r_int.draw_text(
                     f"Quantity: {self.shop_confirm}",
-                    (0.60, 0.31),
-                    size=(0.35, 0.06),
+                    (0.65, 0.26),
+                    size=(0.22, 0.06),
                     centre=False,
-                    bcol="yellow",
+                    bcol=None,
                 )
             else:
                 # self.game.r_int.draw_rectangle(

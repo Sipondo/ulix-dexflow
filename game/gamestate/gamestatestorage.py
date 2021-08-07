@@ -32,6 +32,24 @@ class GameStateStorage(BaseGameState):
         self.prev_dialogue = None
         self.need_to_redraw = True
 
+        self.spr_partyback = self.game.m_res.get_interface("partyback")
+        self.spr_deposit_team_background = self.game.m_res.get_interface(
+            "deposit_team_background"
+        )
+        self.spr_deposit_background = self.game.m_res.get_interface(
+            "deposit_background"
+        )
+
+        self.spr_deposit_poketile = (
+            self.game.m_res.get_interface("deposit_poketile"),
+            self.game.m_res.get_interface("deposit_poketile_selected"),
+        )
+
+        self.spr_deposit_deposittile = (
+            self.game.m_res.get_interface("deposit_deposittile"),
+            self.game.m_res.get_interface("deposit_deposittile_selected"),
+        )
+        self.spr_inspect_namecell = self.game.m_res.get_interface("inspect_namecell")
         self.update_lists()
 
     def on_tick(self, time, frame_time):
@@ -191,11 +209,12 @@ class GameStateStorage(BaseGameState):
         return self.storage_paged[self.selection_storage]
 
     def draw_interface(self, time, frame_time):
-        self.game.r_int.draw_text(
-            self.dialogue or "", (0.02, 0.82), to=(0.58, 0.98),
-        )
+        # self.game.r_int.draw_text(
+        #     self.dialogue or "", (0.02, 0.82), to=(0.58, 0.98),
+        # )
 
-        self.game.r_int.draw_rectangle((0.04, 0.25), size=(0.27, 0.52), col="black")
+        # self.game.r_int.draw_rectangle((0.04, 0.25), size=(0.27, 0.52), col="black")
+        self.game.r_int.draw_image(self.spr_partyback, (0.5, 0.5), centre=True)
 
         if self.focus == 0:
             item = self.selected_team
@@ -204,48 +223,71 @@ class GameStateStorage(BaseGameState):
 
         if not isinstance(item, str):
             self.game.r_int.draw_image(
-                item.sprite, (0.18, 0.505), centre=True, size=1.0
+                item.sprite, (0.25, 0.505), centre=True, size=1.0
             )
-            self.game.r_int.draw_text(f"{item.name}", (0.05, 0.26), size=(0.14, 0.05))
+            self.game.r_int.draw_image(
+                self.spr_inspect_namecell, (0.235, 0.74), centre=True,
+            )
             self.game.r_int.draw_text(
-                f"{item.type1}", (0.05, 0.7), size=(0.25, 0.05), fsize=10,
+                f"{item.name}",
+                (0.25, 0.755),
+                size=(0.15, 0.08),
+                centre=True,
+                bcol=None,
             )
 
-        self.game.r_int.draw_rectangle(
-            (0.37, 0.25), size=(0.25, 0.02 + 0.08 * len(self.team)), col="black",
+        # self.game.r_int.draw_rectangle(
+        #     (0.37, 0.25), size=(0.25, 0.02 + 0.08 * len(self.team)), col="black",
+        # )
+        self.game.r_int.draw_image(
+            self.spr_deposit_team_background, (0.5, 0.458), centre=True
         )
         for i, name in enumerate(self.team):
             if not isinstance(name, str):
                 self.game.r_int.draw_image(
-                    name.icon[0], (0.395, 0.28 + 0.08 * i), centre=True, size=0.5
+                    self.spr_deposit_poketile[
+                        self.selection_team == i and (self.focus == 0 and 1 or 1) or 0
+                    ],
+                    (0.43, 0.19 + 0.08 * i),
+                    centre=False,
+                )
+                self.game.r_int.draw_image(
+                    name.icon[0], (0.405, 0.21 + 0.08 * i), centre=True, size=0.5
                 )
                 self.game.r_int.draw_text(
                     str(name.level),
-                    (0.42, 0.27 + 0.08 * i),
+                    (0.44, 0.21 + 0.08 * i),
                     size=(0.04, 0.05),
                     centre=False,
-                    bcol=self.selection_team == i
-                    and (self.focus == 0 and "yellow" or "red")
-                    or "white",
+                    bcol=None,
+                )
+            else:
+                self.game.r_int.draw_image(
+                    self.spr_deposit_deposittile[
+                        self.selection_team == i and (self.focus == 0 and 1 or 1) or 0
+                    ],
+                    (0.43, 0.19 + 0.08 * i),
+                    centre=False,
                 )
             self.game.r_int.draw_text(
                 isinstance(name, str) and name or str(name.name),
-                (0.47, 0.27 + 0.08 * i),
+                (0.48, 0.21 + 0.08 * i),
                 size=(0.14, 0.05),
                 centre=False,
-                bcol=self.selection_team == i
-                and (self.focus == 0 and "yellow" or "red")
-                or "white",
+                bcol=None,
             )
 
         if self.selection_page > 0:
             self.game.r_int.draw_image(
                 self.selection_page_type[1], (0.82, 0.21), centre=True, size=1.0
             )
-        self.game.r_int.draw_rectangle(
-            (0.69, 0.25),
-            size=(0.25, 0.02 + 0.08 * min(7, len(self.storage_paged))),
-            col="black",
+        # self.game.r_int.draw_rectangle(
+        #     (0.69, 0.25),
+        #     size=(0.25, 0.02 + 0.08 * min(7, len(self.storage_paged))),
+        #     col="black",
+        # )
+        self.game.r_int.draw_image(
+            self.spr_deposit_background, (0.78, 0.5), centre=True
         )
         for i, name in enumerate(self.storage_paged):
             if (
@@ -256,23 +298,36 @@ class GameStateStorage(BaseGameState):
 
             if not isinstance(name, str):
                 self.game.r_int.draw_image(
+                    self.spr_deposit_poketile[self.selection_storage == i and 1 or 0],
+                    (0.71, 0.19 + 0.08 * (i - self.selection_storage_window)),
+                    centre=False,
+                )
+                self.game.r_int.draw_image(
                     name.icon[0],
-                    (0.715, 0.28 + 0.08 * (i - self.selection_storage_window)),
+                    (0.685, 0.21 + 0.08 * (i - self.selection_storage_window)),
                     centre=True,
                     size=0.5,
                 )
                 self.game.r_int.draw_text(
                     str(name.level),
-                    (0.74, 0.27 + 0.08 * (i - self.selection_storage_window)),
+                    (0.72, 0.21 + 0.08 * (i - self.selection_storage_window)),
                     size=(0.04, 0.05),
                     centre=False,
-                    bcol=self.selection_storage == i and "yellow" or "white",
+                    bcol=None,
+                )
+            else:
+                self.game.r_int.draw_image(
+                    self.spr_deposit_deposittile[
+                        self.selection_storage == i and 1 or 0
+                    ],
+                    (0.71, 0.19 + 0.08 * (i - self.selection_storage_window)),
+                    centre=False,
                 )
             self.game.r_int.draw_text(
                 isinstance(name, str) and name or str(name.name),
-                (0.79, 0.27 + 0.08 * (i - self.selection_storage_window)),
+                (0.76, 0.21 + 0.08 * (i - self.selection_storage_window)),
                 size=(0.14, 0.05),
                 centre=False,
-                bcol=self.selection_storage == i and "yellow" or "white",
+                bcol=None,
             )
 
