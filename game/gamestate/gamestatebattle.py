@@ -28,6 +28,7 @@ class GameStateBattle(BaseGameState):
             enemy_team or [1, 2],
             battle_type=battle_type,
         )
+        self.battle_type = battle_type
         self.render.camera.reset()
         self.board = self.combat.board
         self.pending_boards = []
@@ -216,9 +217,9 @@ class GameStateBattle(BaseGameState):
                             self.state = states["actionmenu"]
                         elif self.selection == 1:
                             self.state = states["swapmenu"]
-                        elif self.selection == 2:
+                        elif self.selection == 2 and self.battle_type != "trainer":
                             self.state = states["ballmenu"]
-                        elif self.selection == 3:
+                        elif self.selection == 3 and self.battle_type != "trainer":
                             self.reg_action(("flee", None))
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
@@ -238,7 +239,8 @@ class GameStateBattle(BaseGameState):
                             else:
                                 self.reg_action(("swap", self.selection,),)
                     elif self.state == states["ballmenu"]:
-                        self.reg_action(("catch", self.selection))
+                        if self.game.inventory.get_pocket_items(3):
+                            self.reg_action(("catch", self.selection))
                     self.selection = 0
                 elif key == "backspace":
                     self.game.r_aud.effect("cancel")
@@ -399,7 +401,7 @@ class GameStateBattle(BaseGameState):
 
         if self.state == states["ballmenu"]:
             # ball = self.game.inventory.get_pocket_items(3)[self.selection]
-            return "blabla ik ben een bal"  # ball.description
+            return "Throw a ball to catch the Pokémon!"  # ball.description
 
         if self.state == states["topmenu"]:
             strings = [
