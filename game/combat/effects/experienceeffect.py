@@ -81,5 +81,4 @@ class ExperienceEffect(BaseEffect):
             )
         else:
             self.scene.board.set_exp(self.target, current_xp + self.amount)
-
         return True, False, False
