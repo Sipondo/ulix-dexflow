@@ -207,24 +207,25 @@ class SaveManager:
         self.game.inventory.members = []
 
     def write_to_file(self, fname="save1.usave"):
-        self.get_lazy_data()
+        if self.game.m_map.allow_save:
+            self.get_lazy_data()
 
-        self.store["SETTABLES"] = self.settables.__dict__
-        self.store["SWITCHES"] = self.switches.__dict__
+            self.store["SETTABLES"] = self.settables.__dict__
+            self.store["SWITCHES"] = self.switches.__dict__
 
-        self.store["MEMORY"] = {
-            str(k): {str(k_2): v_2.__dict__ for k_2, v_2 in v.items()}
-            for k, v in self.memory.items()
-        }
+            self.store["MEMORY"] = {
+                str(k): {str(k_2): v_2.__dict__ for k_2, v_2 in v.items()}
+                for k, v in self.memory.items()
+            }
 
-        # with open(fname, "w") as outfile:
-        #     outfile.write(json.dumps(self.store, indent=4))
-        f = BytesIO()
-        np.savez_compressed(f, **self.store)
-        f.seek(0)
-        out = f.read()
-        with open(fname, "wb") as outfile:
-            outfile.write(out)
+            # with open(fname, "w") as outfile:
+            #     outfile.write(json.dumps(self.store, indent=4))
+            f = BytesIO()
+            np.savez_compressed(f, **self.store)
+            f.seek(0)
+            out = f.read()
+            with open(fname, "wb") as outfile:
+                outfile.write(out)
 
 
 class ValueHolder(types.SimpleNamespace):

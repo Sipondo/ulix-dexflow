@@ -4861,12 +4861,12 @@
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{
 					"__identifier": "environment",
-					"__value": "cave",
+					"__value": "volcano",
 					"__type": "String",
 					"defUid": 453,
 					"realEditorValues": [{
 						"id": "V_String",
-						"params": ["cave"]
+						"params": ["volcano"]
 					}]
 				}
 			],
