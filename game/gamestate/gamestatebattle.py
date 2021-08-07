@@ -74,6 +74,11 @@ class GameStateBattle(BaseGameState):
         self.spr_ballwindow = self.game.m_res.get_interface("ballwindow")
         self.spr_switchwindow = self.game.m_res.get_interface("switchwindow")
 
+        self.spr_actionbuttons = [
+            self.game.m_res.get_interface(x)
+            for x in ("Attack", "Switch", "Throw_Ball", "Run")
+        ]
+
         self.spr_attacktypes = self.game.m_res.attack_types
 
         self.agents = []
@@ -450,6 +455,11 @@ class GameStateBattle(BaseGameState):
 
                     self.game.r_int.draw_image(
                         self.spr_battlecell[self.selection == i and 1 or 0],
+                        (0.85 + 0.9 * 0.09 * (i // 2), 0.63 + 0.89 * 0.16 * (i % 2)),
+                        centre=True,
+                    )
+                    self.game.r_int.draw_image(
+                        self.spr_actionbuttons[i],
                         (0.85 + 0.9 * 0.09 * (i // 2), 0.63 + 0.89 * 0.16 * (i % 2)),
                         centre=True,
                     )
