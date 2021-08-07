@@ -219,7 +219,7 @@ class GameStateBattle(BaseGameState):
                             self.state = states["swapmenu"]
                         elif self.selection == 2 and self.battle_type != "trainer":
                             self.state = states["ballmenu"]
-                        elif self.selection == 3 and self.battle_type != "trainer":
+                        elif self.selection == 3:  # and self.battle_type != "trainer":
                             self.reg_action(("flee", None))
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
