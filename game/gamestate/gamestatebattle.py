@@ -506,6 +506,7 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((0, self.board.get_active(0)))
         rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
+        level = self.board.get_data((1, self.board.get_active(1)))["level"]
         x_off = 0.08
         x_size = 0.28
 
@@ -535,7 +536,7 @@ class GameStateBattle(BaseGameState):
 
         if self.lock_state != "user_switch":
             self.game.r_int.draw_text(
-                f"Lv.{fighter.level}",
+                f"Lv.{level}",
                 (x_off + 0.01, 0.10),
                 size=(x_size / 2, 0.05),
                 bcol=None,
@@ -564,6 +565,7 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((1, self.board.get_active(1)))
         rel_hp = self.board.get_relative_hp((1, self.board.get_active(1)))
+        level = self.board.get_data((1, self.board.get_active(1)))["level"]
         x_off = 0.6
         x_size = 0.28
         # HP bar
@@ -590,7 +592,7 @@ class GameStateBattle(BaseGameState):
             self.spr_battlestatus[1], (x_off, 0.08), centre=False,
         )
         self.game.r_int.draw_text(
-            f"Lv.{fighter.level}",
+            f"Lv.{level}",
             (x_off + 0.178, 0.10),
             size=(x_size / 2, 0.05),
             bcol=None,
