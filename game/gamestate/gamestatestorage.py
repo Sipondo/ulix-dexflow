@@ -149,7 +149,7 @@ class GameStateStorage(BaseGameState):
                     self.selection_storage = None
                     self.update_lists()
                 return
-            elif key == "backspace":
+            elif key == "backspace" or key == "menu":
                 self.game.r_aud.effect("cancel")
 
                 if self.focus == 0:
