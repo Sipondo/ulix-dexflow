@@ -49,10 +49,11 @@ class ExperienceEffect(BaseEffect):
     def get_ev_reward(self):
         ev_reward = self.fainted.data["effortpoints"]
         evs = list(map(lambda x: int(x), ev_reward.split(",")))
+        print(evs)
         return evs
 
     def on_action(self):
-        if self.cont:
+        if self.cont is not None:
             self.scene.board.no_skip(
                 "", particle="",
             )
