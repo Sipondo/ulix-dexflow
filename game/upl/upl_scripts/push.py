@@ -64,7 +64,7 @@ class Push:
             for _ in range(int(self.force) - 1):
                 self.user.game_position = (
                     self.user.x_g + self.direction[0],
-                    self.user.x_y + self.direction[1],
+                    self.user.y_g + self.direction[1],
                 )
             self.user.sprites = ["pillar_used"]
             self.user.render_priority = -1
