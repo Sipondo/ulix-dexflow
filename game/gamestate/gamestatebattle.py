@@ -219,7 +219,7 @@ class GameStateBattle(BaseGameState):
                             self.state = states["swapmenu"]
                         elif self.selection == 2 and self.battle_type != "trainer":
                             self.state = states["ballmenu"]
-                        elif self.selection == 3:  # and self.battle_type != "trainer":
+                        elif self.selection == 3 and self.battle_type != "trainer":
                             self.reg_action(("flee", None))
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
@@ -380,6 +380,7 @@ class GameStateBattle(BaseGameState):
         self.synchronize()
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         self.game.r_int.fade = False
+        # self.game
         self.game.m_gst.switch_state("overworld")
 
     @property
