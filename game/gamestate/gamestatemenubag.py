@@ -16,6 +16,17 @@ class GameStateMenuBag(BaseGameState):
             for x in range(1, 9)
         ]
 
+        self.spr_inventory_tabs = [
+            self.game.m_res.get_interface(f"inventory_tab{x}")
+            for x in (1, 2, 3, 4, 5, 6, 7, 8)
+        ]
+        self.spr_inventorywindow = self.game.m_res.get_interface("inventory_window")
+
+        self.spr_cell = (
+            self.game.m_res.get_interface("inventory_itemcell"),
+            self.game.m_res.get_interface("inventory_itemcell_selected"),
+        )
+
         self.spr_partyback = self.game.m_res.get_interface("partyback")
         self.need_to_redraw = True
 
@@ -89,34 +100,50 @@ class GameStateMenuBag(BaseGameState):
         items = self.game.inventory.get_pocket_items(self.filter)[
             self.selection_window : self.selection_window + 10
         ]
+
+        self.game.r_int.draw_image(self.spr_inventorywindow, (0.55, 0.23), centre=False)
+        self.game.r_int.draw_image(
+            self.spr_inventory_tabs[self.filter - 1], (0.55, 0.199), centre=False
+        )
         for i, item in enumerate(items):
+            self.game.r_int.draw_image(
+                self.spr_cell[1 if self.selection == i else 0], (0.56, 0.24 + 0.08 * i)
+            )
 
             self.game.r_int.draw_text(
                 f"{item.quantity}x",
-                (0.55, 0.20 + 0.06 * i),
+                (0.57, 0.26 + 0.08 * i),
                 size=(0.04, 0.05),
-                bcol=self.selection == i and "yellow" or "white",
+                bcol=False,
                 align="right",
             )
 
             self.game.r_int.draw_text(
                 f"{item.itemname}",
-                (0.63, 0.20 + 0.06 * i),
+                (0.65, 0.26 + 0.08 * i),
                 size=(0.24, 0.05),
-                bcol=self.selection == i and "yellow" or "white",
+                bcol=False,
             )
 
             self.game.r_int.draw_image(
-                item.icon, (0.61, 0.225 + 0.06 * i), centre=True,
+                item.icon, (0.62, 0.28 + 0.08 * i), centre=True,
             )
 
         if len(items) > self.selection:
             item = items[self.selection]
             self.game.r_int.draw_text(
-                f"{item.description}", (0.34, 0.25), size=(0.20, 0.6), fsize=10,
+                f"{item.description}",
+                (0.34, 0.25),
+                size=(0.20, 0.6),
+                fsize=10,
+                bcol=False,
             )
             self.game.r_int.draw_image(item.icon, (0.25, 0.48), centre=True, size=3.0)
             self.game.r_int.draw_text(
-                f"{item.itemname}", (0.25, 0.74), size=(0.14, 0.08), centre=True
+                f"{item.itemname}",
+                (0.25, 0.74),
+                size=(0.14, 0.08),
+                centre=True,
+                bcol=False,
             )
 
