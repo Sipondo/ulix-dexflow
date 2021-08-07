@@ -53,14 +53,11 @@ class ExperienceEffect(BaseEffect):
         return evs
 
     def on_action(self):
-        print("Hallo")
         if self.cont:
-            print("Hallo2")
             self.scene.board.no_skip(
                 "", particle="",
             )
         else:
-            print("Hallo1")
             self.scene.board.no_skip(
                 f"{self.scene.board.get_actor(self.target).name} gained {self.amount} experience",
                 particle="",
