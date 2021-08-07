@@ -385,7 +385,7 @@ class GameStateBattle(BaseGameState):
             self.game.m_map.set_level(
                 self.game.m_map.convert_mapstring_to_key(self.game.m_map.hospital)
             )
-            self.game.m_ent.player.game_position = (5, 5)
+            self.game.m_ent.player.game_position = (7, 6)
             self.game.r_wld.offset = (0.5, 13 / 16)
             self.game.m_col.offset = (0.5, 13 / 16)
             self.game.r_wld.set_map_via_manager(
