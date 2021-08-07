@@ -391,6 +391,8 @@ class GameStateBattle(BaseGameState):
             self.game.r_wld.set_map_via_manager(
                 (0, 0,), fade=False,
             )
+            self.game.m_gst.switch_state("overworld")
+            return
         self.game.m_gst.switch_state("menuevolve")
 
     @property
