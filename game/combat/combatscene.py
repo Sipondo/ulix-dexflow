@@ -213,6 +213,7 @@ class CombatScene:
 
     def delete_effect(self, effect):
         effect.on_delete()
+        print(f"{effect=}, {type(effect)=}")
         self.effects.remove(effect)
         del effect
 
