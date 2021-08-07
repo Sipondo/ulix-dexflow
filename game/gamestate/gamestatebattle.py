@@ -396,7 +396,7 @@ class GameStateBattle(BaseGameState):
             )
             self.game.m_gst.switch_state("overworld")
             return
-        self.game.m_gst.switch_state("overworld")
+        self.game.m_gst.switch_state("menuevolve")
 
     @property
     def narrate(self):
