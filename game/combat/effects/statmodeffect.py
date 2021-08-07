@@ -34,7 +34,7 @@ class StatModEffect(BaseEffect):
                     GenericEffect(
                         self.scene,
                         f"{self.scene.board.get_actor(self.target).name} maximized its {stat}",
-                        particle="generic-buff",
+                        particle="",  # "generic-buff"
                     )
                 )
             return
@@ -68,7 +68,7 @@ class StatModEffect(BaseEffect):
                 GenericEffect(
                     self.scene,
                     f"{self.scene.board.get_actor(self.target).name}{RAISE_TEXTS[change]} raised its {stat}",
-                    particle="generic-buff",
+                    particle="",  # "generic-buff"
                 )
             )
             return
@@ -77,7 +77,7 @@ class StatModEffect(BaseEffect):
             GenericEffect(
                 self.scene,
                 f"{self.scene.board.get_actor(self.target).name}'s {stat} got lowered{RAISE_TEXTS[change]}",
-                particle="generic-debuff",
+                particle="",  # "generic-debuff"
             )
         )
 
