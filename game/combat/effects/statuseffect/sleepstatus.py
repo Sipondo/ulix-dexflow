@@ -18,7 +18,7 @@ class Sleep(BaseEffect):
             if self.scene.board.action.action_name == "attack":
                 if self.counter == 0:
                     self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.scene.board.user).name} woke up!",
+                        f"{self.scene.board.get_actor(self.target).name} woke up!",
                         particle=self.name,
                     )
                     return True, False, False

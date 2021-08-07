@@ -18,13 +18,13 @@ class Confusion(BaseEffect):
             if self.scene.board.action.action_name == "attack":
                 if self.counter == 0:
                     self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.scene.board.user).name} snapped out of confusion!",
+                        f"{self.scene.board.get_actor(self.target).name} snapped out of confusion!",
                         particle=self.name,
                     )
                     return True, False, False
                 else:
                     self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.scene.board.user).name} is confused!",
+                        f"{self.scene.board.get_actor(self.target).name} is confused!",
                         # for {self.counter} more turns!",
                         particle=self.name,
                     )
