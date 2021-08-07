@@ -70,11 +70,11 @@ class ExperienceEffect(BaseEffect):
             self.amount -= xp_needed
             self.scene.board.set_exp(self.target, current_xp + xp_needed)
             self.scene.add_effect(LevelEffect(self.scene, self.target))
-            # self.scene.add_effect(
-            #     ExperienceEffect(
-            #         self.scene, self.target, self.fainted, cont=self.amount
-            #     )
-            # )
+            self.scene.add_effect(
+                ExperienceEffect(
+                    self.scene, self.target, self.fainted, cont=self.amount
+                )
+            )
         else:
             self.scene.board.set_exp(self.target, current_xp + self.amount)
 
