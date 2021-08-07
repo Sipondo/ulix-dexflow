@@ -99,7 +99,7 @@ class PokeFighter(CombatFighter):
 
     def gain_evs(self, evs):
         ev_np = np.array(evs)
-        print("EVGAIN:", {ev_np})
+        print("EVGAIN:", ev_np)
         if np.sum(self.stats_EV) >= 510:
             return
         self.stats_EV = ev_np + self.stats_EV
