@@ -14,6 +14,7 @@ class MapManager:
         print("ID:", self.current_level_id)
         self.allow_save = False
         self.environment = "forest"
+        self.hospital = "L1"
 
     def load_world_data(self):
         print(self.game.m_res.get_world_data().files)
@@ -62,6 +63,8 @@ class MapManager:
 
         self.allow_save = fields["allow_save"]
         self.environment = fields["environment"]
+        if fields["hospital"]:
+            self.hospital = fields["hospital"]
 
     def get_encounter_level(self):
         if self.local_encounter_level_max > 0:
