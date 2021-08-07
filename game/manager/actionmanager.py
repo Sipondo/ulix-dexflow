@@ -43,6 +43,11 @@ class ActionManager:
             self.actions.remove(act)
             del act
 
+    def flush(self):
+        for act in self.actions:
+            self.actions.remove(act)
+            del act
+
     def check_interact(self):
         pos = self.game.m_ent.player.get_pos()
         direc = self.game.m_ent.player.get_dir()
