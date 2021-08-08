@@ -18,7 +18,9 @@ class FaintEffect(BaseEffect):
         end = True
         self.scene.on_faint_effects(self.target)
         for effect in self.scene.get_effects_on_target(self.target):
-            self.scene.delete_effect(effect)
+            if effect in self.scene.effects:
+                if effect is not self:
+                    self.scene.delete_effect(effect)
         self.scene.add_effect(ReturnEffect(self.scene, self.target))
         self.scene.remove_action_effects(self.target)
         self.scene.board.set_can_fight(self.target, False)

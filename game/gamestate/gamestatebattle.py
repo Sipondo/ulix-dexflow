@@ -101,7 +101,7 @@ class GameStateBattle(BaseGameState):
         self.end_time = ti.time()
         self.max_time = 1
 
-        self.level_up = True
+        self.to_end = False
 
         self.time_lock = 0.5
         self.time_press = None
@@ -120,6 +120,9 @@ class GameStateBattle(BaseGameState):
                 print("PRESSING", self.time_press)
                 self.event_keypress(self.time_press, [])
                 self.time_press = None
+        if self.to_end:
+            self.end_battle()
+            return
 
         actions = []
         if self.state != states["action"] or self.particle_test:
@@ -301,7 +304,9 @@ class GameStateBattle(BaseGameState):
     def advance_board(self):
         self.lock_state = False
         if self.board.battle_end:
-            self.end_battle()
+            self.to_end = True
+            self.game.r_int.fade = True
+            self.time_lock = 0.5
             return
         if not self.pending_boards:
             self.need_to_redraw = True
@@ -335,10 +340,6 @@ class GameStateBattle(BaseGameState):
             return
 
         self.board = self.pending_boards.pop(0)
-
-        if self.board.narration == "Battle ends!":
-            self.game.r_int.fade = True
-            self.time_lock = 0.5
 
         if self.board.actor_1 != self.actor_1:
             if self.board.actor_1 == -1:
