@@ -5,7 +5,7 @@ from .learnmoveeffect import LearnMoveEffect
 class LevelEffect(BaseEffect):
     def __init__(self, scene, target):
         super().__init__(scene)
-        self.spd_on_action = 200
+        self.spd_on_action = 95
         self.target = target
 
     def on_action(self):

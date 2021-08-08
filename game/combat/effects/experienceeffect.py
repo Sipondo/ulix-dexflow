@@ -3,7 +3,7 @@ from .leveleffect import LevelEffect
 
 
 class ExperienceEffect(BaseEffect):
-    spd_on_action = 99
+    spd_on_action = 90
 
     def __init__(self, scene, target, fainted, cont=None):
         super().__init__(scene)
