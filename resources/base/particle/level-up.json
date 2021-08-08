@@ -144,8 +144,8 @@
         {
             "id": 2503603319232,
             "title": "Emit",
-            "pos_x": -388.74999999999983,
-            "pos_y": -709.7656249999997,
+            "pos_x": -390.31249999999983,
+            "pos_y": -706.6406249999997,
             "inputs": [
                 {
                     "id": 2503603319040,
@@ -180,11 +180,11 @@
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.45",
+                "field_col_r": "2",
                 "field_col_range_r": "0.1",
-                "field_col_g": "0.45",
+                "field_col_g": "1.5",
                 "field_col_range_g": "0.1",
-                "field_col_b": "0.95",
+                "field_col_b": "1",
                 "field_col_range_b": "0.1"
             },
             "op_code": 9
