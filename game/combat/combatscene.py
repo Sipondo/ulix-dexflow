@@ -97,8 +97,6 @@ class CombatScene:
             ]:
                 skip = self.run_effect(effects[0], effects[0].on_action)
                 if skip:
-                    for effect in self.get_effects_on_target(move_effect.user):
-                        effect.done = True
                     break
 
             self.reset_effects_done()
@@ -114,8 +112,14 @@ class CombatScene:
 
         # Before end
         if not self.end:
-            for effect in sorted(self.effects, key=lambda x: -x.spd_before_end):
-                self.run_effect(effect, effect.before_end)
+            while effects := [
+                x
+                for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
+                if not x.done and not x.skip
+            ]:
+                skip = self.run_effect(effects[0], effects[0].before_end)
+                if skip:
+                    break
 
         self.reset_effects_done()
         self.reset_effects_skip()
