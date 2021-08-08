@@ -10,6 +10,7 @@ class JumpAnimation(BaseAnimation):
         self.entity = entity
         self.ended = False
         self.start_pos = self.entity.get_pos()
+        print("START_POS", self.start_pos)
         self.stop = start + self.duration
         self.on_enter()
         super().__init__(game, start, lock=False)
@@ -20,7 +21,6 @@ class JumpAnimation(BaseAnimation):
     def on_tick(self, time, frame_time):
 
         if time > self.stop - 0.5 * frame_time:
-            print("START_POS", self.start_pos)
             print("CURR_POS", self.entity.get_pos())
             self.entity.set_position(int(self.start_pos[0]), int(self.start_pos[1]))
             self.on_end(time, frame_time)
