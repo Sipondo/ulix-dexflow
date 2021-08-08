@@ -43,7 +43,7 @@
             "id": 2336754655488,
             "title": "Equation",
             "pos_x": -296.5624999999999,
-            "pos_y": 264.43749999999994,
+            "pos_y": 266.39062499999994,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -55,8 +55,8 @@
         {
             "id": 2336719063648,
             "title": "Equation",
-            "pos_x": -294.8124999999999,
-            "pos_y": 102.18749999999994,
+            "pos_x": -294.81249999999983,
+            "pos_y": 104.14062499999991,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -68,8 +68,8 @@
         {
             "id": 2336750629792,
             "title": "Equation",
-            "pos_x": -289.8124999999999,
-            "pos_y": 188.18749999999994,
+            "pos_x": -289.8124999999998,
+            "pos_y": 184.28124999999994,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -82,7 +82,7 @@
             "id": 2336750661696,
             "title": "Trigger",
             "pos_x": -16.5,
-            "pos_y": 97.0,
+            "pos_y": 95.046875,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -107,12 +107,12 @@
             "id": 2503703551856,
             "title": "Equation",
             "pos_x": -297.0,
-            "pos_y": -18.0,
+            "pos_y": -16.046875,
             "inputs": [],
             "outputs": [],
             "content": {
                 "field_label": "eq_c",
-                "field_equation": "0.8*(t if t < 0.2 else ((t-0.6) if t > 0.8 else 0.2))"
+                "field_equation": "0.8*(t if t < 0.2 else ((t0.6) if t > 0.8 else 0.2))"
             },
             "op_code": 7
         },
@@ -164,11 +164,11 @@
                 "field_delay": "0.2",
                 "field_duration": ".3",
                 "field_count": "600",
-                "field_pos_x": "!user_x!",
+                "field_pos_x": "!target_x!",
                 "field_pos_range_x": "0.3",
-                "field_pos_y": "!user_y!",
+                "field_pos_y": "!target_y!",
                 "field_pos_range_y": "0.3",
-                "field_pos_z": "!user_z!+0.1",
+                "field_pos_z": "!target_z!+0.1",
                 "field_pos_range_z": "0.3",
                 "field_vel_x": "0",
                 "field_vel_range_x": "0",
@@ -260,8 +260,8 @@
         {
             "id": 2503604179056,
             "title": "Geo Set",
-            "pos_x": -195.0,
-            "pos_y": -473.75000000000006,
+            "pos_x": -210.62500000000003,
+            "pos_y": -432.7343750000001,
             "inputs": [
                 {
                     "id": 2503604179296,
@@ -353,9 +353,9 @@
             ],
             "outputs": [],
             "content": {
-                "field_GRAV_POS_X": "!user_x!",
-                "field_GRAV_POS_Y": "!user_y!",
-                "field_GRAV_POS_Z": "!user_z!+0.1",
+                "field_GRAV_POS_X": "!target_x!",
+                "field_GRAV_POS_Y": "!target_y!",
+                "field_GRAV_POS_Z": "!target_z!+0.1",
                 "field_GRAV_EXPONENT": ".5",
                 "field_GRAV_FORCE": "15"
             },
@@ -365,7 +365,7 @@
             "id": 2503716619600,
             "title": "Filter Blur",
             "pos_x": -453.74999999999983,
-            "pos_y": -351.2499999999999,
+            "pos_y": -353.20312499999983,
             "inputs": [
                 {
                     "id": 2503716621568,
