@@ -15,7 +15,7 @@ class JumpAnimation(BaseAnimation):
         super().__init__(game, start, lock=False)
 
     def on_enter(self):
-        pass
+        self.start_pos = self.entity.get_pos()
 
     def on_tick(self, time, frame_time):
 
