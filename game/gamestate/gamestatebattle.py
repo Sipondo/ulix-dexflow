@@ -410,7 +410,6 @@ class GameStateBattle(BaseGameState):
                 (0, 0,), fade=False,
             )
             self.game.m_gst.switch_state("overworld")
-            self.game.r_int.fade = False
             return
         self.game.m_gst.switch_state("menuevolve")
 
