@@ -22,5 +22,5 @@ class Flinch(BaseEffect):
                 return True, True, False
         return False, False, False
 
-    def on_end_turn(self):
+    def before_end(self):
         return True, False, False
