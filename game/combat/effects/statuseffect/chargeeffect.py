@@ -13,7 +13,7 @@ class ChargeEffect(BaseEffect):
     def on_faint(self, target):
         return self.target == target, False, False
 
-    def on_end_turn(self):
+    def before_end(self):
         if self.count == 0:
             return True
         self.count -= 1

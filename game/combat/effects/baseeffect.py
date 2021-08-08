@@ -32,9 +32,6 @@ class BaseEffect(abc.ABC):
     def on_faint(self, target):
         return False, False, False
 
-    def on_end_turn(self):
-        return False, False, False
-
     def before_action(self):
         return False, False, False
 
