@@ -25,7 +25,7 @@
             "id": 1732260790672,
             "title": "Camera",
             "pos_x": -14.812499999999886,
-            "pos_y": 284.1875,
+            "pos_y": 287.2392578125,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -68,8 +68,8 @@
         {
             "id": 2336750629792,
             "title": "Equation",
-            "pos_x": -289.8124999999999,
-            "pos_y": 188.18749999999994,
+            "pos_x": -292.8642578124999,
+            "pos_y": 191.23925781249994,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -164,11 +164,11 @@
                 "field_delay": "0.2",
                 "field_duration": "0.7",
                 "field_count": "600",
-                "field_pos_x": "!target_x!",
+                "field_pos_x": "!user_x!",
                 "field_pos_range_x": "0.8",
-                "field_pos_y": "!target_y!",
+                "field_pos_y": "!user_y!",
                 "field_pos_range_y": "0.8",
-                "field_pos_z": "!target_z!+0.1",
+                "field_pos_z": "!user_z!+0.1",
                 "field_pos_range_z": "0.8",
                 "field_vel_x": "0",
                 "field_vel_range_x": "0",
@@ -340,8 +340,8 @@
         {
             "id": 2503714246816,
             "title": "Geo Gravity",
-            "pos_x": 18.75,
-            "pos_y": -602.4999999999999,
+            "pos_x": 15.6982421875,
+            "pos_y": -602.4999999999998,
             "inputs": [
                 {
                     "id": 2503604249120,
@@ -353,9 +353,9 @@
             ],
             "outputs": [],
             "content": {
-                "field_GRAV_POS_X": "!target_x!",
-                "field_GRAV_POS_Y": "!target_y!",
-                "field_GRAV_POS_Z": "!target_z!+0.1",
+                "field_GRAV_POS_X": "!user_x!",
+                "field_GRAV_POS_Y": "!user_y!",
+                "field_GRAV_POS_Z": "!user_z!+0.1",
                 "field_GRAV_EXPONENT": ".5",
                 "field_GRAV_FORCE": "15"
             },
