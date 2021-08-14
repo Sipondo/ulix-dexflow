@@ -15,7 +15,7 @@ class GameStateMenuEvolve(BaseGameState):
                 continue
             evolve_target, cond, cond_req = evolution_data.split(",")
             if cond == "Level":
-                if member.level > int(cond_req):
+                if member.level >= int(cond_req):
                     self.to_evolve.append((member, self.game.m_pbs.get_fighter_by_name(evolve_target)))
 
         self.spr_statusbox = self.game.m_res.get_interface("statusbox")
