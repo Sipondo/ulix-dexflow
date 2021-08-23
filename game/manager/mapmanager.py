@@ -14,7 +14,7 @@ class MapManager:
         print("ID:", self.current_level_id)
         self.allow_save = False
         self.environment = "forest"
-        self.hospital = "L1"
+        self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 
     def load_world_data(self):
         print(self.game.m_res.get_world_data().files)
