@@ -31,6 +31,7 @@ class SaveManager:
             self.store = {
                 "player_pos": (15, 15),
                 "current_level_id": 1000,
+                "current_hospital": "L1",
                 "MEMORY": {},
                 "SETTABLES": {},
                 "SWITCHES": {},

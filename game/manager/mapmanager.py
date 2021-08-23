@@ -65,6 +65,7 @@ class MapManager:
         self.environment = fields["environment"]
         if fields["hospital"]:
             self.hospital = fields["hospital"]
+        self.game.m_sav.save("current_hospital", self.hospital)
 
     def get_encounter_level(self):
         if self.local_encounter_level_max > 0:
