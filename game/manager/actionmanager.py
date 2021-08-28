@@ -93,6 +93,9 @@ class ActionManager:
     def check_regions(self, entity):
         # print("REGION CHECK")
         # pos = (pos[0] + self.game.m_col.offset[0], pos[1] + self.game.m_col.offset[1])
+        if self.game.maphack and entity == self.game.m_ent.player:
+            return
+
         for region in self.regions:
             region.check(entity)
 
@@ -352,9 +355,6 @@ class RegionRectangle:
 
     def check(self, entity):
         if entity != self.game.m_ent.player and self.player_exclusive:
-            return
-
-        if self.game.maphack and self.game.m_ent.player:
             return
 
         pos = entity.get_pos()

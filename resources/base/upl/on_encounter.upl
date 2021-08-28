@@ -1,6 +1,9 @@
 if(game.m_gst.current_state_name != "overworld"){
     exit
 }
+if(game.maphack){
+    exit
+}
 
 if(map.local_encounter_rate > 0){
     if(Random() > map.local_encounter_rate){
