@@ -40,6 +40,8 @@ from game.manager.savemanager import SaveManager
 
 from game.player.inventory import Inventory
 
+from game.util.compile_world import compile_world
+
 import logging
 import pyglet
 
@@ -258,6 +260,12 @@ def run_window_custom(
     parser = parser
     config_cls.add_arguments(parser)
     values = mglw.parse_args(args=args, parser=parser)
+
+    if (values.compile_world or values.develop) is not None:
+        compile_world(values.compile_world or values.develop)
+        if values.develop is None:
+            return
+
     config_cls.argv = values
     window_cls = mglw.get_local_window_cls(values.window)
 
