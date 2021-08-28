@@ -22,6 +22,7 @@ class NormalEntity(BaseEntity):
             position,
             self.direction,
             self.sprite and [Path(self.sprite).stem] or [],
+            ldtk_info["layer"],
         )
 
         for k, v in ldtk_info.items():

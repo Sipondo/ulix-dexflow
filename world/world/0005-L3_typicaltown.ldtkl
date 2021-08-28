@@ -371,30 +371,30 @@
 				},
 				{
 					"__identifier": "Portal",
-					"__grid": [27,18],
+					"__grid": [4,14],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 16,
 					"height": 16,
 					"defUid": 7,
-					"px": [432,288],
+					"px": [64,224],
 					"fieldInstances": [
 						{
 							"__identifier": "target_level",
-							"__value": "L3_I3",
+							"__value": "L1",
 							"__type": "String",
 							"defUid": 18,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["L3_I3"]
+								"params": ["L1"]
 							}]
 						},
 						{
 							"__identifier": "target_location",
-							"__value": [9,0],
+							"__value": [18,10],
 							"__type": "Array<Int>",
 							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [9] }, null ]
+							"realEditorValues": [ { "id": "V_Int", "params": [18] }, { "id": "V_Int", "params": [10] } ]
 						},
 						{
 							"__identifier": "on_enter_action",
@@ -433,44 +433,6 @@
 							"__type": "Array<Int>",
 							"defUid": 20,
 							"realEditorValues": [ { "id": "V_Int", "params": [9] }, { "id": "V_Int", "params": [11] } ]
-						},
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Portal(self.target_level, self.target_location, true)",
-							"__type": "String",
-							"defUid": 389,
-							"realEditorValues": []
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 390, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 416, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Portal",
-					"__grid": [4,14],
-					"__pivot": [0,0],
-					"__tile": null,
-					"width": 16,
-					"height": 16,
-					"defUid": 7,
-					"px": [64,224],
-					"fieldInstances": [
-						{
-							"__identifier": "target_level",
-							"__value": "L1",
-							"__type": "String",
-							"defUid": 18,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["L1"]
-							}]
-						},
-						{
-							"__identifier": "target_location",
-							"__value": [18,10],
-							"__type": "Array<Int>",
-							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [18] }, { "id": "V_Int", "params": [10] } ]
 						},
 						{
 							"__identifier": "on_enter_action",
