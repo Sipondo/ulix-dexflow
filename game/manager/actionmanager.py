@@ -354,6 +354,9 @@ class RegionRectangle:
         if entity != self.game.m_ent.player and self.player_exclusive:
             return
 
+        if self.game.maphack and self.game.m_ent.player:
+            return
+
         pos = entity.get_pos()
         if (self.x <= pos[0] <= self.x2) and (self.y <= pos[1] <= self.y2):
             if entity not in self.containing:

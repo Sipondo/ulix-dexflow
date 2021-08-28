@@ -22,6 +22,8 @@ class HotkeyManager:
         self.register_key("interact", game.wnd.keys.Z)
         self.register_key("interact", game.wnd.keys.SPACE)
 
+        self.register_key("maphack", game.wnd.keys.H)
+
         self.register_key("zoom_out", game.wnd.keys.EQUAL)
         self.register_key("zoom_in", game.wnd.keys.MINUS)
 
@@ -41,7 +43,7 @@ class HotkeyManager:
         if key == self.game.wnd.keys.P and action == self.game.wnd.keys.ACTION_PRESS:
             print(self.game.m_ent.player.get_pos())
 
-        if key == self.game.wnd.keys.H and action == self.game.wnd.keys.ACTION_PRESS:
+        if request == "maphack" and action == self.game.wnd.keys.ACTION_PRESS:
             self.game.maphack = not self.game.maphack
             print(f"Maphack is now {self.game.maphack}")
 
