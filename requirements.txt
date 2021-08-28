@@ -16,3 +16,4 @@ nodeeditor
 cx-freeze
 pyqt5
 lark
+termcolor

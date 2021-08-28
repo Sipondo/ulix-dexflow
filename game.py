@@ -43,7 +43,12 @@ from game.player.inventory import Inventory
 from game.util.compile_world import compile_world
 
 import logging
+import os
 import pyglet
+
+from termcolor import colored
+
+os.system("color")
 
 
 SIZE_X = 320
@@ -262,9 +267,42 @@ def run_window_custom(
     values = mglw.parse_args(args=args, parser=parser)
 
     if (values.compile_world or values.develop) is not None:
+        print(
+            colored(
+                """
+            ooooo     ooo ooooo        ooooo ooooooo  ooooo      
+            `888'     `8' `888'        `888'  `8888    d8'       
+             888       8   888          888     Y888..8P         
+             888       8   888          888      `8888'          
+             888       8   888          888     .8PY888.         
+             `88.    .8'   888       o  888    d8'  `888b        
+               `YbodP'    o888ooooood8 o888o o888o  o88888o      
+
+             +-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+             |W|O|R|L|D| |C|O|M|P|I|L|E|R|
+             +-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+            """,
+                "cyan",
+            )
+        )
         compile_world(values.compile_world or values.develop)
         if values.develop is None:
             return
+
+    print(
+        colored(
+            """
+        ooooo     ooo ooooo        ooooo ooooooo  ooooo      
+        `888'     `8' `888'        `888'  `8888    d8'       
+         888       8   888          888     Y888..8P         
+         888       8   888          888      `8888'          
+         888       8   888          888     .8PY888.         
+         `88.    .8'   888       o  888    d8'  `888b        
+           `YbodP'    o888ooooood8 o888o o888o  o88888o      
+        """,
+            "cyan",
+        )
+    )
 
     config_cls.argv = values
     window_cls = mglw.get_local_window_cls(values.window)

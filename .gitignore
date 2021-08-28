@@ -13,3 +13,5 @@ fluidsynth
 resources/*
 !resources/base
 battler_ldtk_list.png
+.exportvenv
+export
