@@ -40,7 +40,10 @@ from game.manager.savemanager import SaveManager
 
 from game.player.inventory import Inventory
 
+from game.util.compile_world import compile_world
+
 import logging
+import pyglet
 
 
 SIZE_X = 320
@@ -199,6 +202,8 @@ class PokeGame(mglw.WindowConfig):
         self.r_int.update()
 
         self.m_sav.render(time, frame_time)
+        pyglet.clock.tick()
+        pyglet.app.platform_event_loop.dispatch_posted_events()
 
     def key_event(self, key, action, modifiers):
         self.m_key.key_event(key, action, modifiers)
@@ -255,6 +260,12 @@ def run_window_custom(
     parser = parser
     config_cls.add_arguments(parser)
     values = mglw.parse_args(args=args, parser=parser)
+
+    if (values.compile_world or values.develop) is not None:
+        compile_world(values.compile_world or values.develop)
+        if values.develop is None:
+            return
+
     config_cls.argv = values
     window_cls = mglw.get_local_window_cls(values.window)
 
@@ -321,5 +332,7 @@ def run_window_custom(
 
 if __name__ == "__main__":
     parser = mglw.create_parser()
-    parser.add_argument("--particle", help="If testing particle, particle name")
+    parser.add_argument("--compile-world", help="Compile world file.")
+    parser.add_argument("--develop", help="Compile world file and run game.")
+    parser.add_argument("--particle", help="If testing particle, particle name.")
     run_window_custom(PokeGame, parser=parser)

@@ -1,2 +1,2 @@
-python -m util.compile_world
+python game.py --compile-world world
 pause

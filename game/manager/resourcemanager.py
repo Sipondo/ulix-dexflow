@@ -131,10 +131,7 @@ class ResourceManager:
                 / "Front"
                 / f"{str(resource_name).zfill(3)}.png"
             )
-            img = self.open_image_interface(
-                pth,
-                size,
-            )
+            img = self.open_image_interface(pth, size,)
             w, h = img.size
             self.fighter_splashes[f"{resource_name}___{size}"] = img.crop((0, 0, h, h))
         return self.fighter_splashes[f"{resource_name}___{size}"]
@@ -158,54 +155,36 @@ class ResourceManager:
     def get_item_icon(self, resource_name, size=1):
         pth = self.p_items / f"{str(resource_name)}.png"
         if self.resolve_resource_path(pth):
-            return self.open_image_interface(
-                pth,
-                size,
-            ).convert("RGBA")
-        return self.open_image_interface(
-            self.p_items / "000.png",
-            size,
-        ).convert("RGBA")
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
 
     def get_interface(self, resource_name, size=0.5):
         pth = self.p_interface / f"{str(resource_name)}.png"
         if self.resolve_resource_path(pth):
-            return self.open_image_interface(
-                pth,
-                size,
-            ).convert("RGBA")
-        return self.open_image_interface(
-            self.p_items / "000.png",
-            size,
-        ).convert("RGBA")
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
 
     def get_picture(self, resource_name, size=0.5):
         pth = self.p_picture / f"{str(resource_name)}.png"
         if self.resolve_resource_path(pth):
-            return self.open_image_interface(
-                pth,
-                size,
-            ).convert("RGBA")
-        return self.open_image_interface(
-            self.p_items / "000.png",
-            size,
-        ).convert("RGBA")
+            return self.open_image_interface(pth, size,).convert("RGBA")
+        return self.open_image_interface(self.p_items / "000.png", size,).convert(
+            "RGBA"
+        )
 
     def get_trainer_splash(self, resource_name, size=0.5):
         pth = self.p_trainers / f"{str(resource_name)}.png"
         if self.resolve_resource_path(pth):
-            return self.open_image_interface(
-                pth,
-                size,
-            ).convert("RGBA")
+            return self.open_image_interface(pth, size,).convert("RGBA")
         return None
 
     def get_splash(self, resource_name, size=1):
         pth = self.p_graphics / "splash" / f"{str(resource_name)}.png"
-        return self.open_image_interface(
-            pth,
-            size,
-        ).convert("RGBA")
+        return self.open_image_interface(pth, size,).convert("RGBA")
 
     def get_sprite_tiled(self, ts, resource_name, sub="", size=1):
         # TODO: dit is retarded
@@ -246,8 +225,7 @@ class ResourceManager:
             if not geo_name:
                 # print(f"LOADING SHADER VARYINGS: {vertex_name}.glsl\n\n")
                 return self.ctx.program(
-                    vertex_shader=file_ver.read(),
-                    varyings=varyings,
+                    vertex_shader=file_ver.read(), varyings=varyings,
                 )
             if geoblocks is None:
                 with open(
@@ -357,7 +335,7 @@ class ResourceManager:
         return self.audiocache[pth.stem]
 
     def get_world_data(self):
-        pth = Path("world/world.ldtkc")
+        pth = Path("world.ldtkc")
         with open(pth, "rb") as file:
             return np.load(BytesIO(file.read()), allow_pickle=True)
 

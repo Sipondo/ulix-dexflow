@@ -33,7 +33,7 @@ class CollisionManager:
         ox, oy = pos
         new_pos = ox + dx, oy + dy
 
-        if self.game.maphack:
+        if self.game.maphack and src_entity == self.game.m_ent.player:
             return True
 
         # Mapcheck

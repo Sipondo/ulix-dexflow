@@ -39,8 +39,8 @@ class GameStateOverworld(BaseGameState):
             self.game.m_ent.player.set_movement_type(0)
         elif modifiers.shift:
             self.game.m_ent.player.set_movement_type(1)
-        # elif modifiers.ctrl:
-        #     self.game.m_ent.player.set_movement_type(2)
+        elif modifiers.ctrl:
+            self.game.m_ent.player.set_movement_type(2)
         if not self.lock:
             if key == "interact":
                 self.game.m_act.check_interact()

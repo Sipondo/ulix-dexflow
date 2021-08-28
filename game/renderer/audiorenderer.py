@@ -19,7 +19,7 @@ emap = {
 }
 
 SOUND_EFFECT_CHANNELS = 8
-VOLUME = 0.0
+VOLUME = 0.5
 VOLUME_MUSIC = 0.7
 
 
@@ -52,10 +52,8 @@ class AudioRenderer:
         if self.silent:
             return
         try:
-            # name = "ME/Battle victory.ogg"
             self.se_player.loop = False
             self.se_player.volume = 0.4 * VOLUME
-            # sound = pyglet.media.load(str(self.p_audio / name), streaming=True)
             if name not in self.cache_se:
                 self.cache_se[name] = self.game.m_res.get_sound(name)
             sound = self.cache_se[name]
@@ -83,15 +81,12 @@ class AudioRenderer:
         if self.silent:
             return
         if self.current_music != name:
-            # name = "ME/Battle victory.ogg"
-            # self.bgm_player.loop = True
-            # self.bgm_player.eos_action = "loop"
+            self.bgm_player.loop = True
+            self.bgm_player.eos_action = "loop"
             self.bgm_player.volume = 0.4 * VOLUME * VOLUME_MUSIC
-            # music = pyglet.media.load(str(self.p_audio / name), streaming=True)
             music = self.game.m_res.get_sound(name)
             if music is not None:
                 self.bgm_player.queue(music)
-                # self.bgm_player.queue(music)
                 if self.bgm_player.playing:
                     self.bgm_player.next_source()
                 self.bgm_player.play()
