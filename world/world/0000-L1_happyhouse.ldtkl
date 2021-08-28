@@ -249,52 +249,14 @@
 					]
 				},
 				{
-					"__identifier": "Height",
-					"__grid": [12,14],
-					"__pivot": [0,0],
-					"__tile": null,
-					"width": 32,
-					"height": 16,
-					"defUid": 391,
-					"px": [192,224],
-					"fieldInstances": [
-						{ "__identifier": "on_enter_action", "__value": "target: height=self.height", "__type": "String", "defUid": 394, "realEditorValues": [] },
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 395, "realEditorValues": [] },
-						{
-							"__identifier": "height",
-							"__value": 1,
-							"__type": "Int",
-							"defUid": 396,
-							"realEditorValues": [{ "id": "V_Int", "params": [1] }]
-						},
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Height",
-					"__grid": [29,7],
-					"__pivot": [0,0],
-					"__tile": null,
-					"width": 16,
-					"height": 32,
-					"defUid": 391,
-					"px": [464,112],
-					"fieldInstances": [
-						{ "__identifier": "on_enter_action", "__value": "target: height=self.height", "__type": "String", "defUid": 394, "realEditorValues": [] },
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 395, "realEditorValues": [] },
-						{ "__identifier": "height", "__value": 0, "__type": "Int", "defUid": 396, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 415, "realEditorValues": [] }
-					]
-				},
-				{
 					"__identifier": "Region",
-					"__grid": [28,16],
+					"__grid": [28,14],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 32,
 					"height": 32,
 					"defUid": 356,
-					"px": [448,256],
+					"px": [448,224],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
@@ -322,40 +284,14 @@
 					]
 				},
 				{
-					"__identifier": "Region",
-					"__grid": [22,24],
-					"__pivot": [0,0],
-					"__tile": null,
-					"width": 32,
-					"height": 32,
-					"defUid": 356,
-					"px": [352,384],
-					"fieldInstances": [
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Cinematic()\n# target: \"Hmm, ben ik niet iets vergeten?\"\ne_2_kim: Move(24,14)\ntarget: Overworld()\n",
-							"__type": "String",
-							"defUid": 397,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"target: Cinematic()\n# target: \"Hmm, ben ik niet iets vergeten?\"\ne_2_kim: Move(24,14)\ntarget: Overworld()\n"
-								]
-							}]
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
-						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 412, "realEditorValues": [] }
-					]
-				},
-				{
 					"__identifier": "Encounter",
-					"__grid": [31,14],
+					"__grid": [31,15],
 					"__pivot": [0,0],
 					"__tile": null,
 					"width": 112,
-					"height": 112,
+					"height": 96,
 					"defUid": 441,
-					"px": [496,224],
+					"px": [496,240],
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
@@ -1369,93 +1305,6 @@
 							"realEditorValues": [{ "id": "V_Int", "params": [25] }]
 						}
 					]
-				},
-				{
-					"__identifier": "Civilian",
-					"__grid": [18,15],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 72,
-					"px": [296,248],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/object_tree2.PNG",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/object_tree2.PNG"]
-							}]
-						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
-						{
-							"__identifier": "direction",
-							"__value": "W",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["W"]
-							}]
-						},
-						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 405, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{
-							"__identifier": "visible",
-							"__value": false,
-							"__type": "Bool",
-							"defUid": 423,
-							"realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ false ]
-							}]
-						},
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Civilian",
-					"__grid": [16,15],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 72,
-					"px": [264,248],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/object_tree2.PNG",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/object_tree2.PNG"]
-							}]
-						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
-						{
-							"__identifier": "direction",
-							"__value": "W",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["W"]
-							}]
-						},
-						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 405, "realEditorValues": [] },
-						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
-					]
 				}
 			]
 		},
@@ -1480,15 +1329,7 @@
 			"autoLayerTiles": [],
 			"seed": 5201212,
 			"overrideTilesetUid": null,
-			"gridTiles": [
-				{ "px": [192,208], "src": [0,64], "f": 0, "t": 16, "d": [532] },
-				{ "px": [208,208], "src": [0,64], "f": 0, "t": 16, "d": [533] },
-				{ "px": [224,208], "src": [0,64], "f": 0, "t": 16, "d": [534] },
-				{ "px": [224,224], "src": [0,64], "f": 0, "t": 16, "d": [574] },
-				{ "px": [224,240], "src": [0,64], "f": 0, "t": 16, "d": [614] },
-				{ "px": [224,272], "src": [0,80], "f": 0, "t": 20, "d": [694] },
-				{ "px": [352,272], "src": [0,80], "f": 0, "t": 20, "d": [702] }
-			],
+			"gridTiles": [],
 			"entityInstances": []
 		},
 		{

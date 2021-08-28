@@ -298,39 +298,6 @@
 						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 388, "realEditorValues": [] },
 						{ "__identifier": "player_exclusive", "__value": true, "__type": "Bool", "defUid": 417, "realEditorValues": [] }
 					]
-				},
-				{
-					"__identifier": "Region",
-					"__grid": [8,11],
-					"__pivot": [0,0],
-					"__tile": null,
-					"width": 32,
-					"height": 32,
-					"defUid": 356,
-					"px": [128,176],
-					"fieldInstances": [
-						{
-							"__identifier": "on_enter_action",
-							"__value": "target: Debug(target)",
-							"__type": "String",
-							"defUid": 397,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["target: Debug(target)"]
-							}]
-						},
-						{ "__identifier": "on_exit_action", "__value": "", "__type": "String", "defUid": 398, "realEditorValues": [] },
-						{
-							"__identifier": "player_exclusive",
-							"__value": false,
-							"__type": "Bool",
-							"defUid": 412,
-							"realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ false ]
-							}]
-						}
-					]
 				}
 			]
 		},
@@ -1626,162 +1593,6 @@
 			"entityInstances": [
 				{
 					"__identifier": "Civilian",
-					"__grid": [16,10],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 72,
-					"px": [264,168],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar012.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar012.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the Pokémon Supahshop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"game: Cinematic()\n#self: Say(Concat(\"My position is: \", self.game_position, \" - Haha!\"))\nself: Shop(\"Welcome to the Pokémon Supahshop!\", ((\"ETHER\", 1000), (\"MAXETHER\", 500), (\"POKEBALL\", 300)))\n\ngame: Overworld()"
-								]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "girl",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["girl"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Jumpy Girl",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Jumpy Girl"]
-							}]
-						},
-						{
-							"__identifier": "on_create_action",
-							"__value": "?while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"?while(IsEntity(\"e_girl\")){\n  game: Wait(0.05)\n  ?if(Manhattan(e_girl.game_position, player.game_position) > 2){\n    ?e_girl: Move(player.x, player.y, True)\n    game: Wait(0.05)\n  }\n}"
-								]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Civilian",
-					"__grid": [11,14],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [0,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 72,
-					"px": [184,232],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
-							"__type": "FilePath",
-							"defUid": 76,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
-							}]
-						},
-						{
-							"__identifier": "on_interact_action",
-							"__value": "self: Push(player.direction)\ngame: AddMember(\"CHARIZARD\")\nself: mem.push_count = mem.push_count + 1",
-							"__type": "String",
-							"defUid": 89,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"self: Push(player.direction)\ngame: AddMember(\"CHARIZARD\")\nself: mem.push_count = mem.push_count + 1"
-								]
-							}]
-						},
-						{
-							"__identifier": "direction",
-							"__value": "E",
-							"__type": "LocalEnum.Direction",
-							"defUid": 385,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["E"]
-							}]
-						},
-						{
-							"__identifier": "entity_uid",
-							"__value": "pete",
-							"__type": "String",
-							"defUid": 405,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["pete"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Pushy Pete",
-							"__type": "String",
-							"defUid": 406,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Pushy Pete"]
-							}]
-						},
-						{
-							"__identifier": "on_create_action",
-							"__value": "?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0",
-							"__type": "String",
-							"defUid": 408,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["?if(self.memory.push_count){\n  exit\n}\nself: memory.push_count = 0"]
-							}]
-						},
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
-						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Civilian",
 					"__grid": [5,9],
 					"__pivot": [0.5,0.5],
 					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
@@ -1848,13 +1659,13 @@
 				},
 				{
 					"__identifier": "Civilian",
-					"__grid": [4,11],
+					"__grid": [23,31],
 					"__pivot": [0.5,0.5],
 					"__tile": { "tilesetUid": 384, "srcRect": [48,0,16,16] },
 					"width": 16,
 					"height": 16,
 					"defUid": 72,
-					"px": [72,184],
+					"px": [376,504],
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
@@ -1939,20 +1750,7 @@
 			"autoLayerTiles": [],
 			"seed": 9528867,
 			"overrideTilesetUid": null,
-			"gridTiles": [
-				{ "px": [272,192], "src": [0,80], "f": 0, "t": 20, "d": [581] },
-				{ "px": [256,208], "src": [0,80], "f": 0, "t": 20, "d": [627] },
-				{ "px": [288,208], "src": [0,80], "f": 0, "t": 20, "d": [629] },
-				{ "px": [304,208], "src": [0,80], "f": 0, "t": 20, "d": [630] },
-				{ "px": [336,208], "src": [0,80], "f": 0, "t": 20, "d": [632] },
-				{ "px": [352,208], "src": [0,80], "f": 0, "t": 20, "d": [633] },
-				{ "px": [384,224], "src": [0,80], "f": 0, "t": 20, "d": [682] },
-				{ "px": [240,240], "src": [0,80], "f": 0, "t": 20, "d": [720] },
-				{ "px": [288,240], "src": [0,80], "f": 0, "t": 20, "d": [723] },
-				{ "px": [320,240], "src": [16,96], "f": 0, "t": 25, "d": [725] },
-				{ "px": [352,240], "src": [0,80], "f": 0, "t": 20, "d": [727] },
-				{ "px": [304,304], "src": [0,80], "f": 0, "t": 20, "d": [912] }
-			],
+			"gridTiles": [{ "px": [304,304], "src": [0,80], "f": 0, "t": 20, "d": [912] }],
 			"entityInstances": []
 		},
 		{
@@ -5056,11 +4854,11 @@
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
-				1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -5201,17 +4999,6 @@
 				{ "px": [16,1008], "src": [64,0], "f": 0, "t": 4, "d": [280,2962] },
 				{ "px": [640,656], "src": [48,64], "f": 0, "t": 31, "d": [278,1967] },
 				{ "px": [656,656], "src": [48,64], "f": 3, "t": 31, "d": [278,1968] },
-				{ "px": [272,192], "src": [64,48], "f": 0, "t": 25, "d": [271,581] },
-				{ "px": [256,208], "src": [64,48], "f": 0, "t": 25, "d": [271,627] },
-				{ "px": [384,224], "src": [64,48], "f": 0, "t": 25, "d": [271,682] },
-				{ "px": [240,240], "src": [64,48], "f": 0, "t": 25, "d": [271,720] },
-				{ "px": [288,240], "src": [64,48], "f": 0, "t": 25, "d": [271,723] },
-				{ "px": [320,240], "src": [64,48], "f": 0, "t": 25, "d": [271,725] },
-				{ "px": [352,240], "src": [64,48], "f": 0, "t": 25, "d": [271,727] },
-				{ "px": [288,208], "src": [16,0], "f": 0, "t": 1, "d": [269,629] },
-				{ "px": [304,208], "src": [16,0], "f": 1, "t": 1, "d": [269,630] },
-				{ "px": [336,208], "src": [16,0], "f": 0, "t": 1, "d": [269,632] },
-				{ "px": [352,208], "src": [16,0], "f": 1, "t": 1, "d": [269,633] },
 				{ "px": [560,768], "src": [48,48], "f": 0, "t": 24, "d": [265,2291] },
 				{ "px": [544,784], "src": [48,48], "f": 0, "t": 24, "d": [265,2337] },
 				{ "px": [560,784], "src": [48,48], "f": 0, "t": 24, "d": [265,2338] },
