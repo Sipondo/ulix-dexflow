@@ -1,4 +1,4 @@
-class Portal:
+class Teleport:
     def __init__(self, act, src, user, target_level, target_location, fade=True):
         act.funcs.append(self)
         self.init_time = act.current_time
@@ -8,7 +8,7 @@ class Portal:
         self.game = act.game
 
         if user == self.game.m_ent.player:
-            self = src
+            self = user
             self.game.m_map.set_level(
                 self.game.m_map.convert_mapstring_to_key(target_level)
             )

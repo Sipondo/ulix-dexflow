@@ -1343,6 +1343,56 @@
 							"realEditorValues": [{ "id": "V_Int", "params": [25] }]
 						}
 					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [29,21],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [472,344],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters_temp/trchar068.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters_temp/trchar068.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\nself: \"I will teleport you to the city!\"\nplayer: Teleport(\"L3\", (19, 18))\nplayer: \"(Heh... that was wierd.)\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\nself: \"I will teleport you to the city!\"\nplayer: Teleport(\"L3\", (19, 18))\nplayer: \"(Heh... that was wierd.)\"\ngame: Overworld()"
+								]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "W",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["W"]
+							}]
+						},
+						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 405, "realEditorValues": [] },
+						{ "__identifier": "name", "__value": null, "__type": "String", "defUid": 406, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
+					]
 				}
 			]
 		},
