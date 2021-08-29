@@ -202,7 +202,7 @@ class ResourceManager:
         if name not in self.tilesets:
             pth = self.p_graphics / Path(name).with_suffix(".png")
             pth = self.resolve_resource_path(pth)
-            sprite = Image.open(pth)
+            sprite = Image.open(pth).convert("RGBA")
             spritemap = sprite.tobytes()
             texture_spritemap = self.ctx.texture(sprite.size, 4, spritemap)
             texture_spritemap.repeat_x = True
@@ -313,7 +313,7 @@ class ResourceManager:
 
     def open_image(self, pth, size=1):
         pth = self.resolve_resource_path(pth)
-        img = Image.open(pth)
+        img = Image.open(pth).convert("RGBA")
         img = img.resize(
             (int(img.size[0] * size), int(img.size[1] * size)), resample=Image.NEAREST
         )
