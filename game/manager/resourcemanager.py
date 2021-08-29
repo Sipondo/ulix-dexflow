@@ -127,8 +127,8 @@ class ResourceManager:
         if f"{resource_name}___{size}" not in self.fighter_splashes:
             pth = (
                 self.p_graphics
-                / "Pokemon_anim"
-                / "Front"
+                / "pokemon_anim"
+                / "front"
                 / f"{str(resource_name).zfill(3)}.png"
             )
             img = self.open_image_interface(pth, size,)
@@ -140,8 +140,8 @@ class ResourceManager:
         if f"{resource_name}___{size}" not in self.fighter_icons:
             img = self.open_image_interface(
                 self.p_graphics
-                / "Pokemon"
-                / "Icons"
+                / "pokemon"
+                / "icons"
                 / f"{str(resource_name).zfill(3)}.png",
                 size,
             )
@@ -305,10 +305,10 @@ class ResourceManager:
         return texture, height_share
 
     def prepare_battle_animset(self, id):
-        root = self.p_graphics / "Pokemon_anim"
+        root = self.p_graphics / "pokemon_anim"
         spriteset = []
-        spriteset.append(self.prepare_battle_sprite(root / f"Back/{id}.png"))
-        spriteset.append(self.prepare_battle_sprite(root / f"Front/{id}.png"))
+        spriteset.append(self.prepare_battle_sprite(root / f"back/{id}.png"))
+        spriteset.append(self.prepare_battle_sprite(root / f"front/{id}.png"))
         return spriteset
 
     def open_image(self, pth, size=1):
