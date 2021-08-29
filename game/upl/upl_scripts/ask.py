@@ -8,7 +8,9 @@ class Ask:
         self.user = user
         self.options = options
         self.act.game.m_gst.current_state.dialogue = self.obj
-        self.act.game.m_gst.current_state.author = self.user.name
+        self.act.game.m_gst.current_state.author = (
+            "" if self.user == self.act.game else self.user.name
+        )
         self.act.game.m_gst.current_state.options = self.options
         if hasattr(self.user, "splash") and self.user.splash:
             self.act.game.m_gst.current_state.spr_talker = self.user.splash

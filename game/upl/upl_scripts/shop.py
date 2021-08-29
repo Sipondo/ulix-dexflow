@@ -20,7 +20,9 @@ class Shop:
 
         self.act.game.m_gst.current_state.shop = self.obj
         self.act.game.m_gst.current_state.dialogue = self.obj
-        self.act.game.m_gst.current_state.author = self.user.name
+        self.act.game.m_gst.current_state.author = (
+            "" if self.user == self.act.game else self.user.name
+        )
         self.act.game.m_gst.current_state.options = self.items
 
     def on_tick(self, time=None, frame_time=None):
