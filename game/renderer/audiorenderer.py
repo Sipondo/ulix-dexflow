@@ -8,14 +8,14 @@ from pathlib import Path
 
 
 emap = {
-    "select": "SE/GUI sel cursor.ogg",
-    "confirm": "SE/GUI sel decision.ogg",
-    "cancel": "SE/GUI sel cancel.ogg",
-    "menuopen": "SE/GUI menu open.ogg",
-    "menuclose": "SE/GUI menu close.ogg",
-    "spotted": "SE/Exclaim.wav",
-    "receive": "SE/Pkmn move learnt.ogg",
-    "buy": "SE/Mart buy item.ogg",
+    "select": "se/gui_sel_cursor.ogg",
+    "confirm": "se/gui_sel_decision.ogg",
+    "cancel": "se/gui_sel_cancel.ogg",
+    "menuopen": "se/gui_menu_open.ogg",
+    "menuclose": "se/gui_menu_close.ogg",
+    "spotted": "se/exclaim.wav",
+    "receive": "se/pkmn_move_learnt.ogg",
+    "buy": "se/mart_buy_item.ogg",
 }
 
 SOUND_EFFECT_CHANNELS = 8

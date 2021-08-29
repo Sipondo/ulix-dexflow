@@ -50,7 +50,7 @@ class EntityRenderer:
             # TODO move to resource manager ipv just reference
             # print("SET TEXTURE MAP")
             # print(x)
-            arr = np.array(Image.open(x))
+            arr = np.array(Image.open(x).convert("RGBA"))
             array_list.append(arr)
 
             # print(arr.shape)

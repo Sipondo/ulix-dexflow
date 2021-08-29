@@ -279,12 +279,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar055.png",
+							"__value": "../resources/essentials/graphics/characters/trchar055.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar055.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar055.png"]
 							}]
 						},
 						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
@@ -327,12 +327,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar038.png",
+							"__value": "../resources/essentials/graphics/characters/trchar038.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar038.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar038.png"]
 							}]
 						},
 						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
@@ -447,7 +447,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 456,
 			"layerDefUid": 9,
 			"pxOffsetX": 0,
@@ -548,7 +548,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 456,
 			"layerDefUid": 132,
 			"pxOffsetX": 0,
@@ -572,7 +572,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 456,
 			"layerDefUid": 12,
 			"pxOffsetX": 0,
@@ -696,7 +696,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Brick path formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
 			"levelId": 456,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -728,7 +728,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Dirt formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
 			"levelId": 456,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -792,7 +792,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Still water new formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
 			"levelId": 456,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -848,7 +848,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 456,
 			"layerDefUid": 11,
 			"pxOffsetX": 0,
@@ -872,7 +872,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 456,
 			"layerDefUid": 2,
 			"pxOffsetX": 0,

@@ -473,12 +473,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar016.png",
+							"__value": "../resources/essentials/graphics/characters/trchar016.png",
 							"__type": "FilePath",
 							"defUid": 66,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar016.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar016.png"]
 							}]
 						},
 						{ "__identifier": "on_aggro_action", "__value": "<<<opponent_on_aggro>>>", "__type": "String", "defUid": 90, "realEditorValues": [] },
@@ -1125,12 +1125,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar042.png",
+							"__value": "../resources/essentials/graphics/characters/trchar042.png",
 							"__type": "FilePath",
 							"defUid": 66,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar042.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar042.png"]
 							}]
 						},
 						{
@@ -1236,12 +1236,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar063.png",
+							"__value": "../resources/essentials/graphics/characters/trchar063.png",
 							"__type": "FilePath",
 							"defUid": 66,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar063.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar063.png"]
 							}]
 						},
 						{
@@ -1356,12 +1356,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar068.png",
+							"__value": "../resources/essentials/graphics/characters/trchar068.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar068.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar068.png"]
 							}]
 						},
 						{
@@ -2430,7 +2430,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Brick path formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
 			"levelId": 95,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -2497,7 +2497,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Dirt formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
 			"levelId": 95,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -2742,7 +2742,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Still water new formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
 			"levelId": 95,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,

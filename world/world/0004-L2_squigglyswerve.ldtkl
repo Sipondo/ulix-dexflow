@@ -1603,12 +1603,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/trchar067.png",
+							"__value": "../resources/essentials/graphics/characters/trchar067.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/trchar067.png"]
+								"params": ["../resources/essentials/graphics/characters/trchar067.png"]
 							}]
 						},
 						{
@@ -1669,12 +1669,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/Object ball.png",
+							"__value": "../resources/essentials/graphics/characters/object_ball.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/Object ball.png"]
+								"params": ["../resources/essentials/graphics/characters/object_ball.png"]
 							}]
 						},
 						{
@@ -4117,7 +4117,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Brick path formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
 			"levelId": 311,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -4285,7 +4285,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Dirt formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
 			"levelId": 311,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -4838,7 +4838,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Still water new formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
 			"levelId": 311,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,

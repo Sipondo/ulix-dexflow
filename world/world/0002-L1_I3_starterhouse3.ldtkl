@@ -350,7 +350,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 9,
 			"pxOffsetX": 0,
@@ -504,12 +504,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -570,12 +570,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -636,12 +636,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -702,12 +702,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -768,12 +768,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -834,12 +834,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -900,12 +900,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -966,12 +966,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/base/graphics/characters_temp/pillar_full.png",
+							"__value": "../resources/base/graphics/characters/pillar_full.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/base/graphics/characters_temp/pillar_full.png"]
+								"params": ["../resources/base/graphics/characters/pillar_full.png"]
 							}]
 						},
 						{
@@ -1056,7 +1056,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 133,
 			"pxOffsetX": 0,
@@ -1080,7 +1080,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 132,
 			"pxOffsetX": 0,
@@ -1111,7 +1111,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 12,
 			"pxOffsetX": 0,
@@ -1159,7 +1159,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Brick path formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
 			"levelId": 435,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -1196,7 +1196,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Dirt formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
 			"levelId": 435,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -1270,7 +1270,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/Still water new formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
 			"levelId": 435,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -1307,7 +1307,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 23,
 			"pxOffsetX": 0,
@@ -1331,7 +1331,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 11,
 			"pxOffsetX": 0,
@@ -1417,7 +1417,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 180,
-			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior general.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/tilesets/interior_general.png",
 			"levelId": 435,
 			"layerDefUid": 2,
 			"pxOffsetX": 0,

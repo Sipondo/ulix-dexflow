@@ -56,7 +56,7 @@ class ResourceManager:
         self.p_picture = self.p_graphics / "Pictures"
         self.p_trainers = self.p_graphics / "Trainers"
         self.p_fonts = Path("font")
-        self.p_sprites = self.p_graphics / "characters_temp"
+        self.p_sprites = self.p_graphics / "characters"
         self.p_audio = Path("audio")
         self.p_particle = Path("particle")
 
