@@ -50,13 +50,13 @@ class GameStateBattle(BaseGameState):
         )
 
         self.spr_teamstatus = (
-            self.game.m_res.get_picture("Battle/icon_ball"),
-            self.game.m_res.get_picture("Battle/icon_ball_empty"),
-            self.game.m_res.get_picture("Battle/icon_ball_faint"),
-            self.game.m_res.get_picture("Battle/icon_ball_status"),
+            self.game.m_res.get_picture("battle/icon_ball"),
+            self.game.m_res.get_picture("battle/icon_ball_empty"),
+            self.game.m_res.get_picture("battle/icon_ball_faint"),
+            self.game.m_res.get_picture("battle/icon_ball_status"),
         )
 
-        self.spr_own = self.game.m_res.get_picture("Battle/icon_own")
+        self.spr_own = self.game.m_res.get_picture("battle/icon_own")
 
         self.spr_statusbox = self.game.m_res.get_interface("statusbox")
 
@@ -76,7 +76,7 @@ class GameStateBattle(BaseGameState):
 
         self.spr_actionbuttons = [
             self.game.m_res.get_interface(x)
-            for x in ("Attack", "Switch", "Throw_Ball", "Run")
+            for x in ("attack", "switch", "throw_ball", "run")
         ]
 
         self.spr_attacktypes = self.game.m_res.attack_types
@@ -95,7 +95,7 @@ class GameStateBattle(BaseGameState):
         self.action_choice = 0
         self.selection = 0
         self.state = states["topmenu"]
-        self.game.r_aud.play_music("BGM/Battle wild.flac")
+        self.game.r_aud.play_music("BGM/battle wild.flac")
         self.particle_test = particle_test
         self.particle_test_cooldown = 0.0
         self.end_time = ti.time()
@@ -175,7 +175,9 @@ class GameStateBattle(BaseGameState):
                             skip = True
             if not skip:
                 self.state = states["action"]
-                self.pending_boards = self.combat.run_scene(actions, next_round=self.lock_state)
+                self.pending_boards = self.combat.run_scene(
+                    actions, next_round=self.lock_state
+                )
                 self.lock_state = False
                 self.advance_board()
 
@@ -234,9 +236,7 @@ class GameStateBattle(BaseGameState):
                             self.reg_action(("flee", None))
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
-                            self.reg_action(
-                                ("forget_move", self.selection)
-                            )
+                            self.reg_action(("forget_move", self.selection))
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
