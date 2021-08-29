@@ -25,8 +25,8 @@ class InterfaceRenderer:
         self.rerender = True
         self.need_to_redraw = False
 
-        self.font = self.game.m_res.get_font("Lexend-Regular", self.scale)
-        self.font_bold = self.game.m_res.get_font("Lexend-SemiBold", self.scale)
+        self.font = self.game.m_res.get_font("lexend-regular", self.scale)
+        self.font_bold = self.game.m_res.get_font("lexend-semibold", self.scale)
 
         self.new_canvas()
 

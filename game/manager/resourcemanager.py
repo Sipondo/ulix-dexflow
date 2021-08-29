@@ -51,10 +51,10 @@ class ResourceManager:
         self.p_shaders = Path("shader")
         self.p_graphics = Path("graphics")
         self.p_icons = self.p_graphics / "icon"
-        self.p_items = self.p_graphics / "Items"
+        self.p_items = self.p_graphics / "items"
         self.p_interface = self.p_graphics / "interface"
-        self.p_picture = self.p_graphics / "Pictures"
-        self.p_trainers = self.p_graphics / "Trainers"
+        self.p_picture = self.p_graphics / "pictures"
+        self.p_trainers = self.p_graphics / "trainers"
         self.p_fonts = Path("font")
         self.p_sprites = self.p_graphics / "characters"
         self.p_audio = Path("audio")
@@ -77,7 +77,7 @@ class ResourceManager:
 
     def init_types(self):
         types = self.open_image_interface(
-            self.p_graphics / "Pictures" / "types.png", size=0.5
+            self.p_graphics / "pictures" / "types.png", size=0.5
         )
         w, h = types.size
         icon_height = h // len(TYPES)

@@ -14,15 +14,10 @@ class Teleport:
             )
             position = (self.x, self.y)
 
-            direc = user.get_dir()
-
             target_location = (int(target_location[0]), int(target_location[1]))
 
             self.game.r_wld.set_map_via_manager(
-                (
-                    target_location[0] - position[0] + direc[0],
-                    target_location[1] - position[1] + direc[1],
-                ),
+                (target_location[0] - position[0], target_location[1] - position[1],),
                 fade=fade,
             )
         else:
