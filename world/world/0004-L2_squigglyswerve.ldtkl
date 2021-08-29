@@ -1669,12 +1669,12 @@
 					"fieldInstances": [
 						{
 							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters_temp/object_ball.png",
+							"__value": "../resources/essentials/graphics/characters_temp/Object ball.png",
 							"__type": "FilePath",
 							"defUid": 76,
 							"realEditorValues": [{
 								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters_temp/object_ball.png"]
+								"params": ["../resources/essentials/graphics/characters_temp/Object ball.png"]
 							}]
 						},
 						{
