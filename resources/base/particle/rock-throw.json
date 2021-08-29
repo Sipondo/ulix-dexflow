@@ -1,0 +1,3091 @@
+{
+    "id": 1923550262224,
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 1923550439120,
+            "title": "Emit",
+            "pos_x": -378.85937499999994,
+            "pos_y": -469.43750000000006,
+            "inputs": [
+                {
+                    "id": 1923570671040,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "3.5",
+                "field_life_range": 0.0,
+                "field_size": "3",
+                "field_size_range": 0.0,
+                "field_delay": 0,
+                "field_duration": "0.1",
+                "field_count": "15",
+                "field_pos_x": "-0.7",
+                "field_pos_range_x": 0,
+                "field_pos_y": 0,
+                "field_pos_range_y": 0,
+                "field_pos_z": 0,
+                "field_pos_range_z": 0,
+                "field_vel_x": "0",
+                "field_vel_range_x": 0,
+                "field_vel_y": 0,
+                "field_vel_range_y": 0,
+                "field_vel_z": "0.8",
+                "field_vel_range_z": 0,
+                "field_rot": 0,
+                "field_rot_range": "360",
+                "field_rot_vel": "10",
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.85",
+                "field_col_range_r": 0,
+                "field_col_g": "0.65",
+                "field_col_range_g": 0,
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 1923570798448,
+            "title": "Stage",
+            "pos_x": -693.0,
+            "pos_y": -387.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1923570798160,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1923570798208,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1923570798256,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1923570797968,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 48530834
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1923570720672,
+            "title": "Render",
+            "pos_x": -375.0,
+            "pos_y": -280.00000000000006,
+            "inputs": [
+                {
+                    "id": 1923570797488,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1923619135296,
+            "title": "Geo Set",
+            "pos_x": -357.95312500000006,
+            "pos_y": -371.48437500000006,
+            "inputs": [
+                {
+                    "id": 1923570851408,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-2",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1923619135248,
+            "title": "Stage",
+            "pos_x": -711.0468749999999,
+            "pos_y": -90.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1923619132464,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1923619134528,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1923619132128,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1923619135056,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 3961994
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1923570754704,
+            "title": "Filter Basic",
+            "pos_x": -457.0,
+            "pos_y": -182.0,
+            "inputs": [
+                {
+                    "id": 1923570753648,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 1923570757152,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1923570754320,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_LIFE_MIN": "0",
+                "field_LIFE_MAX": "100",
+                "field_MIN_POS_X": "-100",
+                "field_MIN_POS_Y": "-100",
+                "field_MIN_POS_Z": "-100",
+                "field_MAX_POS_X": "100",
+                "field_MAX_POS_Y": "100",
+                "field_MAX_POS_Z": "100",
+                "field_MIN_VEL_X": "-100",
+                "field_MIN_VEL_Y": "-100",
+                "field_MIN_VEL_Z": "-100",
+                "field_MAX_VEL_X": "100",
+                "field_MAX_VEL_Y": "100",
+                "field_MAX_VEL_Z": "0.2"
+            },
+            "op_code": -1077480815
+        },
+        {
+            "id": 1923619134576,
+            "title": "Render",
+            "pos_x": -458.50000000000006,
+            "pos_y": 12.500000000000014,
+            "inputs": [
+                {
+                    "id": 1923619134048,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1923570849200,
+            "title": "Geo Gravity",
+            "pos_x": -143.1250000000004,
+            "pos_y": -38.79687500000004,
+            "inputs": [
+                {
+                    "id": 1923570851504,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.71",
+                "field_GRAV_POS_Y": "0.01",
+                "field_GRAV_POS_Z": "0.45",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "5"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 1923611234608,
+            "title": "Geo Gravity",
+            "pos_x": -159.0,
+            "pos_y": -415.95312500000006,
+            "inputs": [
+                {
+                    "id": 1923611234848,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.71",
+                "field_GRAV_POS_Y": "0",
+                "field_GRAV_POS_Z": "0.51",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "0.1"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 1923570755088,
+            "title": "Geo Friction",
+            "pos_x": -129.0,
+            "pos_y": -330.0,
+            "inputs": [
+                {
+                    "id": 1923610232288,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".995",
+                "field_FRICTION_Y": ".995",
+                "field_FRICTION_Z": ".995"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 1923570795232,
+            "title": "Geo Friction",
+            "pos_x": -80.0000000000002,
+            "pos_y": -135.76562499999997,
+            "inputs": [
+                {
+                    "id": 1923570795904,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".985",
+                "field_FRICTION_Y": ".985",
+                "field_FRICTION_Z": ".95"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 1923570850256,
+            "title": "Stage",
+            "pos_x": -728.0,
+            "pos_y": 218.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1923570849728,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1923570848960,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1923570848528,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1923570850736,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 39714074
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1923570756960,
+            "title": "Filter Switch",
+            "pos_x": -448.43749999999966,
+            "pos_y": 132.8124999999999,
+            "inputs": [
+                {
+                    "id": 1923610232672,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 1923610233008,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1923610230944,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_STATEMENT": "time>1.7"
+            },
+            "op_code": -433272175
+        },
+        {
+            "id": 1923610232000,
+            "title": "Render",
+            "pos_x": -452.18749999999966,
+            "pos_y": 344.8749999999998,
+            "inputs": [
+                {
+                    "id": 1923610234064,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1720627090048,
+            "title": "Camera",
+            "pos_x": -475.39062499999955,
+            "pos_y": -641.7968749999997,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "-0.8",
+                "field_duration": "0.1",
+                "field_count": 1,
+                "field_mirror": "mirrornegative",
+                "field_target": "35",
+                "field_speed": "2.2",
+                "field_friction": 3
+            },
+            "op_code": 5
+        },
+        {
+            "id": 1720625120496,
+            "title": "Camera",
+            "pos_x": -244.53124999999963,
+            "pos_y": -635.5468749999998,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": 0,
+                "field_duration": "0.11",
+                "field_count": 1,
+                "field_mirror": "mirrornegative",
+                "field_target": "50",
+                "field_speed": "1",
+                "field_friction": 3
+            },
+            "op_code": 5
+        },
+        {
+            "id": 1720627092256,
+            "title": "Geo Set",
+            "pos_x": -426.5624999999998,
+            "pos_y": 235.93749999999991,
+            "inputs": [
+                {
+                    "id": 1720627090336,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-6",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1720628817104,
+            "title": "Geo Set",
+            "pos_x": -170.31249999999997,
+            "pos_y": 132.81249999999997,
+            "inputs": [
+                {
+                    "id": 1720628817536,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "2.5",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "1.5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": true,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": true,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "100",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1720626515248,
+            "title": "Geo Bounce",
+            "pos_x": -198.43749999999983,
+            "pos_y": 257.81249999999983,
+            "inputs": [
+                {
+                    "id": 1720626514480,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "1.5",
+                "field_DAMPEN": "3.5",
+                "field_LIFE_DAMPEN": "2"
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 1720626515728,
+            "title": "Stage",
+            "pos_x": -710.9374999999991,
+            "pos_y": 558.5937499999991,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1720626515344,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1720626515152,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1720626514528,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1720626515680,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 76599925
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1720627090720,
+            "title": "Emit",
+            "pos_x": -437.4999999999996,
+            "pos_y": 505.85937499999943,
+            "inputs": [
+                {
+                    "id": 1720627092592,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "1.5",
+                "field_life_range": 0.0,
+                "field_size": "0.75",
+                "field_size_range": 0.0,
+                "field_delay": "2.42",
+                "field_duration": "0.1",
+                "field_count": "250",
+                "field_pos_x": "1",
+                "field_pos_range_x": 0,
+                "field_pos_y": 0,
+                "field_pos_range_y": 0,
+                "field_pos_z": 0,
+                "field_pos_range_z": 0,
+                "field_vel_x": "0.5",
+                "field_vel_range_x": "1.8",
+                "field_vel_y": "0.1",
+                "field_vel_range_y": "0.1",
+                "field_vel_z": "1",
+                "field_vel_range_z": "1.8",
+                "field_rot": 0,
+                "field_rot_range": 360,
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.85",
+                "field_col_range_r": 0,
+                "field_col_g": "0.65",
+                "field_col_range_g": 0,
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 1720626515008,
+            "title": "Geo Set",
+            "pos_x": -439.45312499999943,
+            "pos_y": 590.6249999999991,
+            "inputs": [
+                {
+                    "id": 1720628816624,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1720625120160,
+            "title": "Stage",
+            "pos_x": -48.82812499999993,
+            "pos_y": 601.5624999999991,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1720628816096,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1720628814512,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1720628816864,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1720628813888,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 46000575
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1720629078240,
+            "title": "Emit",
+            "pos_x": 255.8593749999996,
+            "pos_y": 539.0624999999994,
+            "inputs": [
+                {
+                    "id": 1720629077856,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "0.5",
+                "field_life_range": "0.75",
+                "field_size": "2",
+                "field_size_range": 0.0,
+                "field_delay": "2.42",
+                "field_duration": "0.05",
+                "field_count": "9000",
+                "field_pos_x": "1",
+                "field_pos_range_x": "0.2",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0.2",
+                "field_pos_z": 0,
+                "field_pos_range_z": "0.2",
+                "field_vel_x": "0",
+                "field_vel_range_x": "0.2",
+                "field_vel_y": "0",
+                "field_vel_range_y": "0.1",
+                "field_vel_z": "0",
+                "field_vel_range_z": "0.2",
+                "field_rot": 0,
+                "field_rot_range": 360,
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.6",
+                "field_col_range_r": 0,
+                "field_col_g": "0.6",
+                "field_col_range_g": 0,
+                "field_col_b": "0.4",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 1720629079632,
+            "title": "Render",
+            "pos_x": 226.32812499999983,
+            "pos_y": 695.8593749999992,
+            "inputs": [
+                {
+                    "id": 1720629079872,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "smoke_08",
+                "field_equation": "normal",
+                "field_depth": 0,
+                "field_opacity": "0.6",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1720627602624,
+            "title": "Render",
+            "pos_x": -428.9062499999994,
+            "pos_y": 670.7031249999992,
+            "inputs": [
+                {
+                    "id": 1720627605456,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1303180015120,
+            "title": "Actor",
+            "pos_x": 164.84374999999994,
+            "pos_y": 199.60937499999997,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "2.42",
+                "field_duration": "1",
+                "field_continuous": true,
+                "field_user_enabled": "",
+                "field_user_recover": true,
+                "field_user_speed": 1.0,
+                "field_user_speed_enabled": true,
+                "field_user_x": -1,
+                "field_user_y": 0,
+                "field_user_z": 0,
+                "field_target_enabled": true,
+                "field_target_recover": true,
+                "field_target_speed": "8",
+                "field_target_speed_enabled": true,
+                "field_target_x": "1.2",
+                "field_target_y": "0",
+                "field_target_z": 0
+            },
+            "op_code": 3
+        },
+        {
+            "id": 1303129639136,
+            "title": "Trigger",
+            "pos_x": 202.34375,
+            "pos_y": -82.42187499999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "2.42",
+                "field_duration": "0.6",
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": "",
+                "field_shake": "0.5",
+                "field_shake_enabled": true,
+                "field_dark_enabled": false,
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1303131581744,
+            "title": "Trigger",
+            "pos_x": 235.9375,
+            "pos_y": -3.5156250000000124,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0",
+                "field_duration": "3.5",
+                "field_count": "0.01",
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": true,
+                "field_dark_recover": false,
+                "field_dark": "0.75",
+                "field_dark_speed": "0.5",
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1303130220432,
+            "title": "Trigger",
+            "pos_x": 266.796875,
+            "pos_y": 75.78124999999997,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "3.5",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": true,
+                "field_dark_recover": true,
+                "field_dark": "0.75",
+                "field_dark_speed": "0.5",
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 2382832270448,
+            "title": "Stage",
+            "pos_x": 335.93749999999955,
+            "pos_y": -386.7187499999997,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382832270688,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382832270736,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382832270784,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382832270832,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 93414897
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382831228048,
+            "title": "Emit",
+            "pos_x": 611.4687499999995,
+            "pos_y": -487.59374999999955,
+            "inputs": [
+                {
+                    "id": 2382831228432,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "0.75",
+                "field_life_range": "0.75",
+                "field_size": 1.0,
+                "field_size_range": 0.0,
+                "field_delay": "0.1",
+                "field_duration": "0.9",
+                "field_count": "900*(1-!eq!)*(1-!eq!)",
+                "field_pos_x": "-0.7",
+                "field_pos_range_x": "0.1",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0",
+                "field_pos_z": "!eq!/4.3",
+                "field_pos_range_z": "0.1",
+                "field_vel_x": "0",
+                "field_vel_range_x": "0.05",
+                "field_vel_y": 0,
+                "field_vel_range_y": "0.05",
+                "field_vel_z": "0.2",
+                "field_vel_range_z": "0.05",
+                "field_rot": 0,
+                "field_rot_range": 360,
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.6",
+                "field_col_range_r": 0,
+                "field_col_g": "0.6",
+                "field_col_range_g": 0,
+                "field_col_b": "0.4",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2382831228288,
+            "title": "Render",
+            "pos_x": 576.7187499999997,
+            "pos_y": -273.34374999999983,
+            "inputs": [
+                {
+                    "id": 2382831205392,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "smoke_08",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.5",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382831207664,
+            "title": "Geo Gravity",
+            "pos_x": -1098.4843749999984,
+            "pos_y": -427.4726562499995,
+            "inputs": [
+                {
+                    "id": 2382831207424,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.9",
+                "field_GRAV_POS_Y": "0",
+                "field_GRAV_POS_Z": "0.51",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "0.1"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 2382831207376,
+            "title": "Geo Friction",
+            "pos_x": -1017.531249999999,
+            "pos_y": -147.2851562499995,
+            "inputs": [
+                {
+                    "id": 2382831208624,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".97",
+                "field_FRICTION_Y": ".97",
+                "field_FRICTION_Z": ".96"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2382831207568,
+            "title": "Geo Set",
+            "pos_x": -1105.109374999998,
+            "pos_y": 120.90234375000048,
+            "inputs": [
+                {
+                    "id": 2382831206992,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "2.75",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "1.5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": true,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": true,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382831206944,
+            "title": "Geo Set",
+            "pos_x": -1364.4843749999984,
+            "pos_y": 210.35546875000045,
+            "inputs": [
+                {
+                    "id": 2382831206656,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-6",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382831206848,
+            "title": "Geo Bounce",
+            "pos_x": -1137.9218749999984,
+            "pos_y": 246.29296875000034,
+            "inputs": [
+                {
+                    "id": 2382831208240,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "1.5",
+                "field_DAMPEN": "3.5",
+                "field_LIFE_DAMPEN": "2"
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 2382831207184,
+            "title": "Render",
+            "pos_x": -1416.6718749999984,
+            "pos_y": 336.6054687500004,
+            "inputs": [
+                {
+                    "id": 2382831208192,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382831208480,
+            "title": "Geo Friction",
+            "pos_x": -1068.4843749999984,
+            "pos_y": -339.95703124999955,
+            "inputs": [
+                {
+                    "id": 2382831209776,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".99",
+                "field_FRICTION_Y": ".99",
+                "field_FRICTION_Z": ".99"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2382831210112,
+            "title": "Geo Set",
+            "pos_x": -1310.3281249999982,
+            "pos_y": -377.92578124999943,
+            "inputs": [
+                {
+                    "id": 2382831207472,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-2",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382831207856,
+            "title": "Filter Switch",
+            "pos_x": -1387.9218749999984,
+            "pos_y": 121.29296875000045,
+            "inputs": [
+                {
+                    "id": 2382835336576,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 2382835337776,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2382835336048,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_STATEMENT": "time>1.72"
+            },
+            "op_code": -433272175
+        },
+        {
+            "id": 2382835338832,
+            "title": "Geo Gravity",
+            "pos_x": -1085.050781249999,
+            "pos_y": -50.31640624999952,
+            "inputs": [
+                {
+                    "id": 2382835337152,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.9",
+                "field_GRAV_POS_Y": "0.01",
+                "field_GRAV_POS_Z": "0.55",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "4"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 2382835337440,
+            "title": "Render",
+            "pos_x": -1425.7343749999984,
+            "pos_y": 0.48046875000054534,
+            "inputs": [
+                {
+                    "id": 2382834248528,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382834249344,
+            "title": "Render",
+            "pos_x": -1368.2343749999984,
+            "pos_y": -287.7695312499996,
+            "inputs": [
+                {
+                    "id": 2382834248768,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382834249152,
+            "title": "Filter Basic",
+            "pos_x": -1396.4843749999984,
+            "pos_y": -193.51953124999952,
+            "inputs": [
+                {
+                    "id": 2382834246176,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 2382831209872,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2382831210400,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_LIFE_MIN": "0",
+                "field_LIFE_MAX": "100",
+                "field_MIN_POS_X": "-100",
+                "field_MIN_POS_Y": "-100",
+                "field_MIN_POS_Z": "-100",
+                "field_MAX_POS_X": "100",
+                "field_MAX_POS_Y": "100",
+                "field_MAX_POS_Z": "100",
+                "field_MIN_VEL_X": "-100",
+                "field_MIN_VEL_Y": "-100",
+                "field_MIN_VEL_Z": "-100",
+                "field_MAX_VEL_X": "100",
+                "field_MAX_VEL_Y": "100",
+                "field_MAX_VEL_Z": "0.2"
+            },
+            "op_code": -1077480815
+        },
+        {
+            "id": 2382831210304,
+            "title": "Emit",
+            "pos_x": -1318.3437499999984,
+            "pos_y": -479.0039062499995,
+            "inputs": [
+                {
+                    "id": 2382831210064,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "3.5",
+                "field_life_range": 0.0,
+                "field_size": "0.75",
+                "field_size_range": 0.0,
+                "field_delay": "0.1",
+                "field_duration": "0.1",
+                "field_count": "15",
+                "field_pos_x": "-0.9",
+                "field_pos_range_x": 0,
+                "field_pos_y": 0,
+                "field_pos_range_y": 0,
+                "field_pos_z": 0,
+                "field_pos_range_z": 0,
+                "field_vel_x": "0",
+                "field_vel_range_x": 0,
+                "field_vel_y": 0,
+                "field_vel_range_y": 0,
+                "field_vel_z": "0.55",
+                "field_vel_range_z": 0,
+                "field_rot": "0",
+                "field_rot_range": "360",
+                "field_rot_vel": "-10",
+                "field_rot_vel_range": "45",
+                "field_col_r": "0.85",
+                "field_col_range_r": 0,
+                "field_col_g": "0.65",
+                "field_col_range_g": 0,
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2382831209488,
+            "title": "Stage",
+            "pos_x": -1708.9843749999977,
+            "pos_y": -421.8749999999995,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382831209152,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382831209200,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382831209920,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382831208912,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 46296863
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382835336480,
+            "title": "Stage",
+            "pos_x": -1701.1718749999977,
+            "pos_y": -87.89062499999987,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382835338976,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382835336528,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382835339024,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382835336720,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 16568138
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382835336672,
+            "title": "Stage",
+            "pos_x": -1724.6093749999977,
+            "pos_y": 193.35937499999974,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382835338304,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382835335904,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382835336384,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382835338352,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 96276476
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382839225072,
+            "title": "Geo Gravity",
+            "pos_x": -2019.4062499999968,
+            "pos_y": -71.3124999999992,
+            "inputs": [
+                {
+                    "id": 2382839225168,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.6",
+                "field_GRAV_POS_Y": "0.01",
+                "field_GRAV_POS_Z": "0.3",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "4"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 2382839225648,
+            "title": "Geo Gravity",
+            "pos_x": -2034.0312499999955,
+            "pos_y": -448.46874999999926,
+            "inputs": [
+                {
+                    "id": 2382839223728,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "-0.6",
+                "field_GRAV_POS_Y": "0",
+                "field_GRAV_POS_Z": "0.45",
+                "field_GRAV_EXPONENT": ".5",
+                "field_GRAV_FORCE": "0.1"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 2382839222816,
+            "title": "Filter Switch",
+            "pos_x": -2323.4687499999955,
+            "pos_y": 100.2968750000008,
+            "inputs": [
+                {
+                    "id": 2382839225552,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 2382839224304,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2382839225600,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_STATEMENT": "time>1.68"
+            },
+            "op_code": -433272175
+        },
+        {
+            "id": 2382839225120,
+            "title": "Emit",
+            "pos_x": -2253.8906249999955,
+            "pos_y": -501.9531249999992,
+            "inputs": [
+                {
+                    "id": 2382839224016,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "3.5",
+                "field_life_range": 0.0,
+                "field_size": "0.75",
+                "field_size_range": 0.0,
+                "field_delay": "0.2",
+                "field_duration": "0.1",
+                "field_count": "15",
+                "field_pos_x": "-0.6",
+                "field_pos_range_x": "0",
+                "field_pos_y": 0,
+                "field_pos_range_y": 0,
+                "field_pos_z": 0,
+                "field_pos_range_z": 0,
+                "field_vel_x": "0",
+                "field_vel_range_x": 0,
+                "field_vel_y": 0,
+                "field_vel_range_y": 0,
+                "field_vel_z": "0.45",
+                "field_vel_range_z": 0,
+                "field_rot": "0",
+                "field_rot_range": "360",
+                "field_rot_vel": "-10",
+                "field_rot_vel_range": "45",
+                "field_col_r": "0.85",
+                "field_col_range_r": 0,
+                "field_col_g": "0.65",
+                "field_col_range_g": 0,
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2382839223344,
+            "title": "Render",
+            "pos_x": -2357.218749999995,
+            "pos_y": 305.60937500000074,
+            "inputs": [
+                {
+                    "id": 2382839223632,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382839222384,
+            "title": "Geo Bounce",
+            "pos_x": -2073.4687499999955,
+            "pos_y": 225.29687500000057,
+            "inputs": [
+                {
+                    "id": 2382839222480,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "1.5",
+                "field_DAMPEN": "3.5",
+                "field_LIFE_DAMPEN": "2"
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 2382839224160,
+            "title": "Render",
+            "pos_x": -2328.781249999995,
+            "pos_y": -25.515624999999204,
+            "inputs": [
+                {
+                    "id": 2382839225504,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382839226272,
+            "title": "Geo Set",
+            "pos_x": -2252.515624999996,
+            "pos_y": -388.3749999999992,
+            "inputs": [
+                {
+                    "id": 2382832268432,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-2",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382916252048,
+            "title": "Geo Friction",
+            "pos_x": -1955.0312499999966,
+            "pos_y": -168.28124999999926,
+            "inputs": [
+                {
+                    "id": 2382839224592,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".97",
+                "field_FRICTION_Y": ".97",
+                "field_FRICTION_Z": ".96"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2382839224832,
+            "title": "Geo Friction",
+            "pos_x": -2004.0312499999957,
+            "pos_y": -360.95312499999926,
+            "inputs": [
+                {
+                    "id": 2382839223248,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".99",
+                "field_FRICTION_Y": ".99",
+                "field_FRICTION_Z": ".99"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2382839224784,
+            "title": "Geo Set",
+            "pos_x": -2307.8437499999955,
+            "pos_y": 201.85937500000077,
+            "inputs": [
+                {
+                    "id": 2382835336960,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-6",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382835335568,
+            "title": "Render",
+            "pos_x": -2285.031249999995,
+            "pos_y": -310.01562499999926,
+            "inputs": [
+                {
+                    "id": 2382835336240,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_large_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": 1.0,
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382835337968,
+            "title": "Geo Set",
+            "pos_x": -2045.734374999996,
+            "pos_y": 104.20312500000078,
+            "inputs": [
+                {
+                    "id": 2382832267616,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "2.5",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "1.5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": true,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": true,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382832267904,
+            "title": "Filter Basic",
+            "pos_x": -2332.0312499999955,
+            "pos_y": -214.5156249999992,
+            "inputs": [
+                {
+                    "id": 2382832271024,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 2382832270928,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2382832267328,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_LIFE_MIN": "0",
+                "field_LIFE_MAX": "100",
+                "field_MIN_POS_X": "-100",
+                "field_MIN_POS_Y": "-100",
+                "field_MIN_POS_Z": "-100",
+                "field_MAX_POS_X": "100",
+                "field_MAX_POS_Y": "100",
+                "field_MAX_POS_Z": "100",
+                "field_MIN_VEL_X": "-100",
+                "field_MIN_VEL_Y": "-100",
+                "field_MIN_VEL_Z": "-100",
+                "field_MAX_VEL_X": "100",
+                "field_MAX_VEL_Y": "100",
+                "field_MAX_VEL_Z": "0"
+            },
+            "op_code": -1077480815
+        },
+        {
+            "id": 2382832267664,
+            "title": "Stage",
+            "pos_x": -2587.499999999996,
+            "pos_y": -443.7499999999992,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382832268096,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382832268240,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382832267520,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382832271072,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 6021185
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382835338208,
+            "title": "Stage",
+            "pos_x": -2652.499999999996,
+            "pos_y": -152.49999999999977,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382839226080,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382839225984,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382839224544,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382839226320,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 71900926
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382832228000,
+            "title": "Stage",
+            "pos_x": -2654.999999999996,
+            "pos_y": 197.4999999999997,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382831204960,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382831204384,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382831205344,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382831205872,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 89795459
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382832229824,
+            "title": "Actor",
+            "pos_x": 165.62499999999972,
+            "pos_y": 284.3749999999996,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "1.7",
+                "field_duration": 0.9,
+                "field_continuous": false,
+                "field_user_enabled": true,
+                "field_user_recover": true,
+                "field_user_speed": "2.5",
+                "field_user_speed_enabled": true,
+                "field_user_x": "-0.8",
+                "field_user_y": 0,
+                "field_user_z": 0,
+                "field_target_enabled": "",
+                "field_target_recover": true,
+                "field_target_speed": 1.0,
+                "field_target_speed_enabled": true,
+                "field_target_x": "1",
+                "field_target_y": 0,
+                "field_target_z": 0
+            },
+            "op_code": 3
+        },
+        {
+            "id": 2382831207616,
+            "title": "Equation",
+            "pos_x": 858.0,
+            "pos_y": -433.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "eq",
+                "field_equation": "t"
+            },
+            "op_code": 7
+        },
+        {
+            "id": 2382831206112,
+            "title": "Geo Set",
+            "pos_x": 614.71875,
+            "pos_y": -384.953125,
+            "inputs": [
+                {
+                    "id": 2382834247424,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-0.7",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 2382843400832,
+            "title": "Render",
+            "pos_x": 838.7500000000001,
+            "pos_y": 41.499999999999766,
+            "inputs": [
+                {
+                    "id": 2382843403664,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "solid_smooth_stone_01",
+                "field_equation": "Solid",
+                "field_depth": 0,
+                "field_opacity": "1",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2382843402560,
+            "title": "Equation",
+            "pos_x": 1132.5312500000005,
+            "pos_y": -134.40625000000045,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "eq1",
+                "field_equation": "t"
+            },
+            "op_code": 7
+        },
+        {
+            "id": 2382843401696,
+            "title": "Emit",
+            "pos_x": 886.0,
+            "pos_y": -193.90625,
+            "inputs": [
+                {
+                    "id": 2382843403088,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "2.5",
+                "field_life_range": "0.5",
+                "field_size": "0.5",
+                "field_size_range": 0.0,
+                "field_delay": "0.1",
+                "field_duration": "0.9",
+                "field_count": "40*(1-!eq1!)",
+                "field_pos_x": "-0.7",
+                "field_pos_range_x": "0.1",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0",
+                "field_pos_z": "!eq!/4",
+                "field_pos_range_z": "0.1",
+                "field_vel_x": "0",
+                "field_vel_range_x": "0.05",
+                "field_vel_y": 0,
+                "field_vel_range_y": "0.05",
+                "field_vel_z": "0.2",
+                "field_vel_range_z": "0.05",
+                "field_rot": 0,
+                "field_rot_range": 360,
+                "field_rot_vel": 0,
+                "field_rot_vel_range": 0,
+                "field_col_r": "0.85",
+                "field_col_range_r": 0,
+                "field_col_g": "0.65",
+                "field_col_range_g": 0,
+                "field_col_b": "0.5",
+                "field_col_range_b": 0
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2382843400640,
+            "title": "Stage",
+            "pos_x": 590.0,
+            "pos_y": -115.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2382843401840,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2382843402464,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2382843400304,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2382843402272,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": 4894699
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2382287949152,
+            "title": "Geo Bounce",
+            "pos_x": 1113.2812499999989,
+            "pos_y": -15.624999999999986,
+            "inputs": [
+                {
+                    "id": 2382286324832,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "2",
+                "field_DAMPEN": "1.",
+                "field_LIFE_DAMPEN": "8"
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 2382841775728,
+            "title": "Geo Set",
+            "pos_x": 892.5781249999993,
+            "pos_y": -83.98437499999989,
+            "inputs": [
+                {
+                    "id": 2382841776352,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-1.5",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false
+            },
+            "op_code": 1661913081
+        }
+    ],
+    "edges": [
+        {
+            "id": 1923570755376,
+            "edge_type": 2,
+            "start": 1923570671040,
+            "end": 1923570798160
+        },
+        {
+            "id": 1923570731856,
+            "edge_type": 2,
+            "start": 1923570797488,
+            "end": 1923570798256
+        },
+        {
+            "id": 1923570730560,
+            "edge_type": 2,
+            "start": 1923570851408,
+            "end": 1923570798208
+        },
+        {
+            "id": 1923619134432,
+            "edge_type": 2,
+            "start": 1923570753648,
+            "end": 1923570797968
+        },
+        {
+            "id": 1923619135440,
+            "edge_type": 2,
+            "start": 1923570757152,
+            "end": 1923619132464
+        },
+        {
+            "id": 1923570754032,
+            "edge_type": 2,
+            "start": 1923619134048,
+            "end": 1923619132128
+        },
+        {
+            "id": 1923619131984,
+            "edge_type": 2,
+            "start": 1923570851504,
+            "end": 1923619134528
+        },
+        {
+            "id": 1923570847904,
+            "edge_type": 2,
+            "start": 1923611234848,
+            "end": 1923570798208
+        },
+        {
+            "id": 1923570796048,
+            "edge_type": 2,
+            "start": 1923610232288,
+            "end": 1923570798208
+        },
+        {
+            "id": 1923610230896,
+            "edge_type": 2,
+            "start": 1923570795904,
+            "end": 1923619134528
+        },
+        {
+            "id": 1923570754656,
+            "edge_type": 2,
+            "start": 1923610232672,
+            "end": 1923619135056
+        },
+        {
+            "id": 1923570755232,
+            "edge_type": 2,
+            "start": 1923610233008,
+            "end": 1923570849728
+        },
+        {
+            "id": 1923570754608,
+            "edge_type": 2,
+            "start": 1923610234064,
+            "end": 1923570848528
+        },
+        {
+            "id": 1720628703440,
+            "edge_type": 2,
+            "start": 1720627090336,
+            "end": 1923570848960
+        },
+        {
+            "id": 1720627091008,
+            "edge_type": 2,
+            "start": 1720628817536,
+            "end": 1923610230944
+        },
+        {
+            "id": 1720629048464,
+            "edge_type": 2,
+            "start": 1720626514480,
+            "end": 1923570848960
+        },
+        {
+            "id": 1720629050048,
+            "edge_type": 2,
+            "start": 1720627092592,
+            "end": 1720626515344
+        },
+        {
+            "id": 1720628816576,
+            "edge_type": 2,
+            "start": 1720628816624,
+            "end": 1720626515152
+        },
+        {
+            "id": 1720629078768,
+            "edge_type": 2,
+            "start": 1720629079872,
+            "end": 1720628816864
+        },
+        {
+            "id": 1720628815328,
+            "edge_type": 2,
+            "start": 1720629077856,
+            "end": 1720628816096
+        },
+        {
+            "id": 1720627605360,
+            "edge_type": 2,
+            "start": 1720627605456,
+            "end": 1720626514528
+        },
+        {
+            "id": 2382831228480,
+            "edge_type": 2,
+            "start": 2382831205392,
+            "end": 2382832270784
+        },
+        {
+            "id": 2382916252000,
+            "edge_type": 2,
+            "start": 2382831228432,
+            "end": 2382832270688
+        },
+        {
+            "id": 2382831209824,
+            "edge_type": 2,
+            "start": 2382831206992,
+            "end": 2382835336048
+        },
+        {
+            "id": 2382835338880,
+            "edge_type": 2,
+            "start": 2382831210064,
+            "end": 2382831209152
+        },
+        {
+            "id": 2382831193824,
+            "edge_type": 2,
+            "start": 2382831207424,
+            "end": 2382831209200
+        },
+        {
+            "id": 2382835335856,
+            "edge_type": 2,
+            "start": 2382831209776,
+            "end": 2382831209200
+        },
+        {
+            "id": 2382835337536,
+            "edge_type": 2,
+            "start": 2382831207472,
+            "end": 2382831209200
+        },
+        {
+            "id": 2382831184960,
+            "edge_type": 2,
+            "start": 2382834248768,
+            "end": 2382831209920
+        },
+        {
+            "id": 2382835337104,
+            "edge_type": 2,
+            "start": 2382834246176,
+            "end": 2382831208912
+        },
+        {
+            "id": 2382835339168,
+            "edge_type": 2,
+            "start": 2382831209872,
+            "end": 2382835338976
+        },
+        {
+            "id": 2382287949104,
+            "edge_type": 2,
+            "start": 2382831208624,
+            "end": 2382835336528
+        },
+        {
+            "id": 2382835335376,
+            "edge_type": 2,
+            "start": 2382835337152,
+            "end": 2382835336528
+        },
+        {
+            "id": 2382835338544,
+            "edge_type": 2,
+            "start": 2382834248528,
+            "end": 2382835339024
+        },
+        {
+            "id": 2382831229920,
+            "edge_type": 2,
+            "start": 2382835336720,
+            "end": 2382835336576
+        },
+        {
+            "id": 2382835338256,
+            "edge_type": 2,
+            "start": 2382835337776,
+            "end": 2382835338304
+        },
+        {
+            "id": 2382835337728,
+            "edge_type": 2,
+            "start": 2382831206656,
+            "end": 2382835335904
+        },
+        {
+            "id": 2382835338928,
+            "edge_type": 2,
+            "start": 2382831208240,
+            "end": 2382835335904
+        },
+        {
+            "id": 2382835336768,
+            "edge_type": 2,
+            "start": 2382831208192,
+            "end": 2382835336384
+        },
+        {
+            "id": 2382832268384,
+            "edge_type": 2,
+            "start": 2382832267616,
+            "end": 2382839225600
+        },
+        {
+            "id": 2382839223680,
+            "edge_type": 2,
+            "start": 2382839224016,
+            "end": 2382832268096
+        },
+        {
+            "id": 2382839223152,
+            "edge_type": 2,
+            "start": 2382839223728,
+            "end": 2382832268240
+        },
+        {
+            "id": 2382839222576,
+            "edge_type": 2,
+            "start": 2382839223248,
+            "end": 2382832268240
+        },
+        {
+            "id": 2382835336432,
+            "edge_type": 2,
+            "start": 2382832268432,
+            "end": 2382832268240
+        },
+        {
+            "id": 2382839226224,
+            "edge_type": 2,
+            "start": 2382835336240,
+            "end": 2382832267520
+        },
+        {
+            "id": 2382839223440,
+            "edge_type": 2,
+            "start": 2382832271024,
+            "end": 2382832271072
+        },
+        {
+            "id": 2382832229440,
+            "edge_type": 2,
+            "start": 2382832270928,
+            "end": 2382839226080
+        },
+        {
+            "id": 2382832227664,
+            "edge_type": 2,
+            "start": 2382839225984,
+            "end": 2382839224592
+        },
+        {
+            "id": 2382832227184,
+            "edge_type": 2,
+            "start": 2382839225168,
+            "end": 2382839225984
+        },
+        {
+            "id": 2382832228624,
+            "edge_type": 2,
+            "start": 2382839225504,
+            "end": 2382839224544
+        },
+        {
+            "id": 2382832227328,
+            "edge_type": 2,
+            "start": 2382839226320,
+            "end": 2382839225552
+        },
+        {
+            "id": 2382832229584,
+            "edge_type": 2,
+            "start": 2382839224304,
+            "end": 2382831204960
+        },
+        {
+            "id": 2382832227040,
+            "edge_type": 2,
+            "start": 2382835336960,
+            "end": 2382831204384
+        },
+        {
+            "id": 2382831204816,
+            "edge_type": 2,
+            "start": 2382839222480,
+            "end": 2382831204384
+        },
+        {
+            "id": 2382831204912,
+            "edge_type": 2,
+            "start": 2382839223632,
+            "end": 2382831205344
+        },
+        {
+            "id": 2382843401552,
+            "edge_type": 2,
+            "start": 2382834247424,
+            "end": 2382832270736
+        },
+        {
+            "id": 2382840598928,
+            "edge_type": 2,
+            "start": 2382843403088,
+            "end": 2382843401840
+        },
+        {
+            "id": 2382840600464,
+            "edge_type": 2,
+            "start": 2382843403664,
+            "end": 2382843400304
+        },
+        {
+            "id": 2382843403472,
+            "edge_type": 2,
+            "start": 2382286324832,
+            "end": 2382843402464
+        },
+        {
+            "id": 2382839223584,
+            "edge_type": 2,
+            "start": 2382841776352,
+            "end": 2382843402464
+        }
+    ]
+}

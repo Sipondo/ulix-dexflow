@@ -1,0 +1,4 @@
+Move,Sun,Rain,Hail,Sandstorm,Harsh_sun,Heavy_rain,Strong_winds
+Thunder,-20,perf,0,0,-20,perf,0
+Blizzard,0,0,perf,0,0,0,0
+Hurricane,-20,perf,0,0,-20,perf,0

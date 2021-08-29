@@ -1,0 +1,12 @@
+?if(self.memory.defeated){
+    exit
+}
+game: Cinematic()
+!self: Say(spot_text)
+?self: Move(player.x, player.y, True)
+self: Say(encounter_text)
+self: Battle()
+game: Cinematic()
+self: Say(defeat_text)
+self: memory.defeated = True
+game: Overworld()
