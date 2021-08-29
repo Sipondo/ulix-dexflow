@@ -1,4 +1,0 @@
-Duration:
-Basic attack move: 3.0s max
-Strong attack move: 5.0s max
-Effect/status: 0.5s ~ 1s
