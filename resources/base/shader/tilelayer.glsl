@@ -39,7 +39,6 @@ void main(){
   vec2 pannedPosition=(((uv0+vec2(-.5,-.5))/Zoom+Pan)*displaySize/displayBase/tileSize+offset);
   ivec2 tilePosition=ivec2(mod(pannedPosition,modSize)*16);
   vec2 worldPosition=floor(pannedPosition/modSize);
-  vec4 retrieveColor;
   vec4 outputColor=vec4(0,0,0,0);
   
   if((worldPosition.x>=0)&&
@@ -51,13 +50,13 @@ void main(){
     for(int i=0;i<layerHeight;i++){
       
       // Retrieve information regarding which tile should be visualised
-      vec4 mask=texelFetch(texturearray_masks,ivec3(worldPosition,i),0);
+      uvec4 mask=texelFetch(texturearray_masks,ivec3(worldPosition,i),0);
       
       // Retrieve position of the pixel within the tileset image
       ivec2 layerTilePosition=tilePosition+ivec2(mask.x,mask.y)*16;
       
       // Retrieve the pixel that would be rendered
-      retrieveColor=texelFetch(texture_tileset,layerTilePosition,0);
+      vec4 retrieveColor=texelFetch(texture_tileset,layerTilePosition,0);
       
       // If not transparent, render pixel
       if(retrieveColor.a>0){
