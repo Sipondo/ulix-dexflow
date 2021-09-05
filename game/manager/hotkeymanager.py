@@ -23,6 +23,7 @@ class HotkeyManager:
         self.register_key("interact", game.wnd.keys.SPACE)
 
         self.register_key("maphack", game.wnd.keys.H)
+        self.register_key("teleport", game.wnd.keys.T)
 
         self.register_key("zoom_out", game.wnd.keys.EQUAL)
         self.register_key("zoom_in", game.wnd.keys.MINUS)
