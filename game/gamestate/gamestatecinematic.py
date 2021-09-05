@@ -147,7 +147,7 @@ class GameStateCinematic(BaseGameState):
 
         # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
 
-        if self.author is not None:
+        if self.author is not None and self.author:
             self.game.r_int.draw_image(
                 self.spr_namebox, (0.02, 0.75),
             )
