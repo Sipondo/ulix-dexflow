@@ -48,7 +48,9 @@ class GameStateOverworld(BaseGameState):
             #     self.game.m_gst.switch_state("battle")
             if key == "menu":
                 self.game.m_gst.switch_state("menuparty")
-            # if key == "zoom_in":
-            #     self.game.pan_tool.zoom_in()
-            # if key == "zoom_out":
-            #     self.game.pan_tool.zoom_out()
+            if key == "zoom_in":
+                self.game.pan_tool.zoom_in()
+            if key == "zoom_out":
+                self.game.pan_tool.zoom_out()
+            if key == "teleport":
+                self.game.m_act.create_prefab_action("debug_teleport", self.game)
