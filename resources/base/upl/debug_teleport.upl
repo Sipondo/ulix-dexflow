@@ -1,1 +1,5 @@
+?group{
+    player: Teleport("L999", (32, 29))
+    exit
+}
 player: Teleport("L2", (10, 15))
