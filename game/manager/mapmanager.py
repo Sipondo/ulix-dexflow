@@ -34,6 +34,13 @@ class MapManager:
         self.game.m_sav.switches.holder_is_frozen = True
 
     def convert_mapstring_to_key(self, mapstr):
+        # Now also accepts integers
+        mapstr = str(mapstr).strip()
+        if mapstr[0] != "L":
+            mapint = int(mapstr)
+            if mapint < 1000:
+                return 1000 * mapint
+            return mapint
         if mapstr[-1] != "_":
             mapstr = mapstr + "_"
         id_e = [int(x[1:]) for x in mapstr.lower().split("_")[:-1]]
@@ -86,6 +93,13 @@ class MapManager:
                 )
             ]
         )
+
+    def get_level_size(self, level_id):
+        return self.levels[level_id]["orig_dimensions"]
+        for mapdef in self.levels[level_id]["layers"]:
+            if mapdef[0] == "TILES":
+                ltype, level, tiles, collision = mapdef
+                return tiles.shape[1:3]
 
     @property
     def current_level(self):

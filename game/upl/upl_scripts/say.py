@@ -1,12 +1,13 @@
 class Say:
-    def __init__(self, act, src, user, obj):
+    def __init__(self, act, src, user, dialogue):
         act.funcs.append(self)
         self.init_time = act.current_time
         self.act = act
-        self.obj = obj
         self.src = src
         self.user = user
-        self.act.game.m_gst.current_state.dialogue = self.obj
+        self.dialogue = dialogue
+
+        self.act.game.m_gst.current_state.dialogue = self.dialogue
         self.act.game.m_gst.current_state.author = (
             "" if self.user == self.act.game else self.user.name
         )

@@ -6,6 +6,7 @@ class BaseGameState(abc.ABC):
         self.game = game
         self.animations = None
         self.lock = False
+        self.block_input = False
 
     @abc.abstractmethod
     def on_enter(self, **kwargs):
@@ -21,4 +22,7 @@ class BaseGameState(abc.ABC):
 
     @abc.abstractmethod
     def event_keypress(self, key, modifiers):
+        pass
+
+    def event_unicode(self, char):
         pass

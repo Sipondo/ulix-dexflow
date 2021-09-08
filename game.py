@@ -213,6 +213,10 @@ class PokeGame(mglw.WindowConfig):
     def key_event(self, key, action, modifiers):
         self.m_key.key_event(key, action, modifiers)
 
+    def unicode_char_entered(self, char: str):
+        self.m_key.unicode_char_entered(char)
+        return super().unicode_char_entered(char)
+
 
 from moderngl_window.context.base import WindowConfig, BaseWindow
 from moderngl_window.timers.clock import Timer

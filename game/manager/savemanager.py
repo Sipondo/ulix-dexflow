@@ -168,6 +168,10 @@ class SaveManager:
         self.write_to_file("streamingsave.usave")
 
     def get_lazy_data(self):
+        # TODO: remove player name from here
+        self.save("player_name", self.game.m_ent.player.name)
+        self.save("player_gender", self.game.m_ent.player.gender)
+
         # Party
         team = [x.series.to_dict() for x in self.game.inventory.members]
         # for member in self.game.inventory.members:

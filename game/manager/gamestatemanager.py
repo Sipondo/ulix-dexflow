@@ -8,8 +8,10 @@ from ..gamestate.gamestatemenuoptions import GameStateMenuOptions
 from ..gamestate.gamestatemenuparty import GameStateMenuParty
 from ..gamestate.gamestatemenusave import GameStateMenuSave
 from ..gamestate.gamestateoverworld import GameStateOverworld
+from ..gamestate.gamestateprompt import GameStatePrompt
 from ..gamestate.gamestatestorage import GameStateStorage
-from ..gamestate.gamestatemenuevolve import GameStateMenuEvolve
+from ..gamestate.gamestateevolve import GameStateEvolve
+from ..gamestate.gamestatedebug import GameStateDebug
 
 
 class GameStateManager:
@@ -17,6 +19,11 @@ class GameStateManager:
         self.game = gamegui
         self.current_state = None
         self.current_state_name = None
+        self.previous_state_name = None
+
+    def switch_to_previous_state(self):
+        if self.previous_state_name is not None:
+            self.switch_state(self.previous_state_name)
 
     def switch_state(self, new_state, **kwargs):
         self.game.r_int.new_canvas()
@@ -24,6 +31,7 @@ class GameStateManager:
             self.current_state.on_exit()
             del self.current_state
 
+        self.previous_state_name = self.current_state_name
         self.current_state_name = new_state
 
         if new_state == "overworld":
@@ -48,8 +56,12 @@ class GameStateManager:
             self.current_state = GameStateStorage(self.game)
         elif new_state == "intro":
             self.current_state = GameStateIntro(self.game)
-        elif new_state == "menuevolve":
-            self.current_state = GameStateMenuEvolve(self.game)
+        elif new_state == "evolve":
+            self.current_state = GameStateEvolve(self.game)
+        elif new_state == "prompt":
+            self.current_state = GameStatePrompt(self.game)
+        elif new_state == "debug":
+            self.current_state = GameStateDebug(self.game)
 
         print(f"GAMESTATE SWITCHED: {new_state}")
         self.current_state.on_enter(**kwargs)

@@ -1726,6 +1726,160 @@
 						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
 						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [11,11],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [184,184],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters/trchar027.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters/trchar027.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\nself: \"Hey {player.name}! Have an ETHER!\"\ngame: AddItem(\"ETHER\")\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\nself: \"Hey {player.name}! Have an ETHER!\"\ngame: AddItem(\"ETHER\")\ngame: Overworld()"
+								]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "bob",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["bob"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Billy Bob",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Billy Bob"]
+							}]
+						},
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/trainers/sailor.png",
+							"__type": "FilePath",
+							"defUid": 438,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/trainers/sailor.png"]
+							}]
+						}
+					]
+				},
+				{
+					"__identifier": "Civilian",
+					"__grid": [8,11],
+					"__pivot": [0.5,0.5],
+					"__tile": { "tilesetUid": 384, "srcRect": [16,0,16,16] },
+					"width": 16,
+					"height": 16,
+					"defUid": 72,
+					"px": [136,184],
+					"fieldInstances": [
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters/npc_18.png",
+							"__type": "FilePath",
+							"defUid": 76,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters/npc_18.png"]
+							}]
+						},
+						{
+							"__identifier": "on_interact_action",
+							"__value": "game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()"
+								]
+							}]
+						},
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 385,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{
+							"__identifier": "entity_uid",
+							"__value": "name_changer",
+							"__type": "String",
+							"defUid": 405,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["name_changer"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "Name Changer",
+							"__type": "String",
+							"defUid": 406,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["Name Changer"]
+							}]
+						},
+						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 408, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/trainers/gentleman.png",
+							"__type": "FilePath",
+							"defUid": 438,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/trainers/gentleman.png"]
+							}]
+						}
+					]
 				}
 			]
 		},
