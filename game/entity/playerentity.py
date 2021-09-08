@@ -21,8 +21,8 @@ class PlayerEntity(BaseEntity):
 
     def on_enter(self):
         self.height = self.game.m_sav.load("player_height")
-        print("direction:", self.direction)
-        self.name = "Player"
+        self.name = self.game.m_sav.load("player_name") or "Player"
+        self.gender = self.game.m_sav.load("player_gender") or "male"
 
     def start_move(self, direction_str, time):
         direction = self.direction_to_tuple(direction_str)

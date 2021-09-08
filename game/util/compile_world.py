@@ -100,6 +100,8 @@ def compile_world(pth):
         print(layer_depths)
 
         # TODO: fix renderer so it doesn't require 16x16 worlds
+        orig_width = level.px_wid // 16
+        orig_height = level.px_hei // 16
         width = math.ceil(level.px_wid / 256 + 1) * 16
         height = math.ceil(level.px_hei / 256 + 1) * 16
 
@@ -253,6 +255,7 @@ def compile_world(pth):
             "fields": {
                 field.identifier: field.value for field in level.field_instances
             },
+            "orig_dimensions": (orig_width, orig_height),
         }
 
         print("Total tilesets:", [x[0] for x in output_layers])
