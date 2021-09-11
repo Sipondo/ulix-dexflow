@@ -18,6 +18,7 @@ class BaseEntity(abc.ABC):
         self.entity_is_deleted = False
         self.render_priority = 0
         self.level = self.game.m_map.current_level_id
+        self.active = True
 
         self.gender = "male"
 
