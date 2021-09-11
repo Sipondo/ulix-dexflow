@@ -179,10 +179,8 @@ for infile in p.glob("raw/*.png"):
         if src_repeats == 1:
             test.save(p / f"{infile.stem}.png")
         else:
-            (p / f"animated/{infile.stem}").mkdir(parents=True, exist_ok=True)
-            test.save(
-                p / f"animated/{infile.stem}/animated_{infile.stem}_{i}_{500}.png"
-            )
+            (p / f"slide/{infile.stem}").mkdir(parents=True, exist_ok=True)
+            test.save(p / f"slide/{infile.stem}/{infile.stem}_slide_{i}_{500}.png")
 
         print(f"finished file {infile.stem}")
 
