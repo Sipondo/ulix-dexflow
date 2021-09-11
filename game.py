@@ -214,7 +214,6 @@ class PokeGame(mglw.WindowConfig):
         self.m_key.key_event(key, action, modifiers)
 
     def unicode_char_entered(self, char: str):
-        print("ENTERED:", char)
         self.m_key.unicode_char_entered(char)
         return super().unicode_char_entered(char)
 
