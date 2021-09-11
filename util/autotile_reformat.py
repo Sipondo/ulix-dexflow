@@ -3,15 +3,19 @@ import os
 from PIL import Image, ImageFont
 import numpy as np
 
-p = Path("../resources/graphics/Autotiles")
+p = Path("../resources/essentials/graphics/autotiles")
 
 print(p.absolute())
 
-for infile in p.glob("*.png"):
+for infile in p.glob("raw/*.png"):
     print(f"started file {infile.stem}")
-    if "formatted" in infile.stem:
-        continue
-    img = Image.open(infile).convert("RGBA").resize((48, 64), resample = Image.NEAREST)
+
+    src_img = Image.open(infile).convert("RGBA")
+    src_w, src_h = src_img.size
+
+    src_repeats = src_h // 4 * 3 // src_w
+
+    img = src_img.resize((48, 64), resample=Image.NEAREST)
     old_format = np.asarray(img)
 
     stupid_bits = old_format[:][0:16]
@@ -43,13 +47,11 @@ for infile in p.glob("*.png"):
     random_bot_left = stupid_bits[8:16, 32:40]
     random_bot_right = stupid_bits[8:16, 40:48]
 
-
     # new img
-    formatted_img_array = np.zeros((112, 112, 4), dtype = np.uint8)
+    formatted_img_array = np.zeros((112, 112, 4), dtype=np.uint8)
     # alpha = flat_img[3::4]
     # alpha[:] = 255
     # formatted_img_array = np.reshape(flat_img, (112, 112, 4))
-
 
     # single tile things
     single_tile_horizontal = top_center.copy()
@@ -146,9 +148,6 @@ for infile in p.glob("*.png"):
     formatted_img_array[96:104, 48:56] = random_top_left
     formatted_img_array[96:104, 72:80] = random_top_right
 
-
-
-
     # all shapes already exist, so copy some stuff
 
     formatted_img_array[64:96, :32] = formatted_img_array[16:48, 16:48]
@@ -166,7 +165,7 @@ for infile in p.glob("*.png"):
 
     test = Image.fromarray(formatted_img_array)
 
-    test.save(p / f"{infile.stem} formatted.png")
+    test.save(p / f"{infile.stem}.png")
 
     print(f"finished file {infile.stem}")
 
