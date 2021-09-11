@@ -98,9 +98,19 @@ class CollisionManager:
         height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
-        return dict(
-            zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
-        )
+        try:
+            return dict(
+                zip(
+                    self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:]
+                )
+            )
+        except IndexError:
+            return dict(
+                zip(
+                    self.game.m_map.enum_values,
+                    [False for _ in self.game.m_map.enum_values],
+                )
+            )
 
     def get_col_flag(
         self, pos, height=0, off=True, src_entity=None, check_entities=True
