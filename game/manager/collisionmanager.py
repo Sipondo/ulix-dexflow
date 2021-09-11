@@ -37,13 +37,19 @@ class CollisionManager:
             return True
 
         # Mapcheck
-        col_fr = self.colmap[height][pos[1], pos[0], self.get_direction_num(direction)]
-        col_to = self.colmap[height][
-            new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
-        ]
+        try:
+            col_fr = self.colmap[height][
+                pos[1], pos[0], self.get_direction_num(direction)
+            ]
+            col_to = self.colmap[height][
+                new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
+            ]
+        except IndexError as e:
+            print("Indexerror!", pos, direction, src_entity)
+            return False
 
         for entity in self.game.m_ent.all_entities_on_height(height):
-            if entity == src_entity or not entity.visible:
+            if entity == src_entity or not entity.visible or not entity.active:
                 continue
             # print(entity.game_position)
             x1, y1 = entity.get_pos()
@@ -92,9 +98,19 @@ class CollisionManager:
         height = int(height)
         if off:
             pos = (pos[0] + self.offset[0], pos[1] + self.offset[1])
-        return dict(
-            zip(self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:])
-        )
+        try:
+            return dict(
+                zip(
+                    self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:]
+                )
+            )
+        except IndexError:
+            return dict(
+                zip(
+                    self.game.m_map.enum_values,
+                    [False for _ in self.game.m_map.enum_values],
+                )
+            )
 
     def get_col_flag(
         self, pos, height=0, off=True, src_entity=None, check_entities=True

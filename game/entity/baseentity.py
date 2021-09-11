@@ -18,6 +18,9 @@ class BaseEntity(abc.ABC):
         self.entity_is_deleted = False
         self.render_priority = 0
         self.level = self.game.m_map.current_level_id
+        self.active = True
+
+        self.gender = "male"
 
         if isinstance(direction, int):
             if direction == 0:
@@ -124,3 +127,26 @@ class BaseEntity(abc.ABC):
     def y_g(self):
         return self.game_position[1]
 
+    @property
+    def he(self):
+        if self.gender == "male":
+            return "he"
+        elif self.gender == "female":
+            return "she"
+        return "them"
+
+    @property
+    def his(self):
+        if self.gender == "male":
+            return "his"
+        elif self.gender == "female":
+            return "her"
+        return "their"
+
+    @property
+    def che(self):
+        return self.he.capitalize()
+
+    @property
+    def chis(self):
+        return self.his.capitalize()

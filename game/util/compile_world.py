@@ -9,7 +9,6 @@ from game.upl.uplmanager import UplParser
 
 
 def compile_world(pth):
-
     root = Path(pth)
 
     """
@@ -59,6 +58,8 @@ def compile_world(pth):
         for t in a.defs.tilesets
     }
 
+    customData = {t.uid: t.custom_data for t in a.defs.tilesets}
+
     enumValues = list(
         dict.fromkeys(
             ["E", "S", "W", "N", "X"]
@@ -72,13 +73,14 @@ def compile_world(pth):
     for enum in [x for x in a.defs.enums if x.identifier in ("Switches")]:
         switches = [x.id.lower() for x in enum.values]
 
-    print("ENUMVALUES", enumValues)
+    print("ENUMVALUES:", enumValues)
+    print("CUSTOMDATA:", customData)
     print("SETTABLES:", settables)
     print("SWITCHES:", switches)
 
     for level in a.levels:
-        print(level.identifier)
-        print({field.identifier: field.value for field in level.field_instances})
+        print("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)
+        # print({field.identifier: field.value for field in level.field_instances})
 
         id_e = [int(x[1:]) for x in level.identifier.lower().split("_")[:-1]]
         id = str(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
@@ -100,6 +102,8 @@ def compile_world(pth):
         print(layer_depths)
 
         # TODO: fix renderer so it doesn't require 16x16 worlds
+        orig_width = level.px_wid // 16
+        orig_height = level.px_hei // 16
         width = math.ceil(level.px_wid / 256 + 1) * 16
         height = math.ceil(level.px_hei / 256 + 1) * 16
 
@@ -124,9 +128,27 @@ def compile_world(pth):
         for index, depth_block in enumerate(reversed(layer_depths)):
             print("Depth Block:", depth_block)
             curinst = reversed_instances[current_layer]
+            # if curinst.tileset_rel_path:
+            #     print(
+            #         "\n\nParents:",
+            #         [
+            #             x.stem
+            #             for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
+            #             if "graphics" in str(x)
+            #         ],
+            #         "\n\n",
+            #     )
             tileset = (
                 curinst.tileset_rel_path
-                and f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
+                and "/".join(
+                    [
+                        x.stem
+                        for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
+                        if "graphics" in str(x)
+                    ][1:]
+                    + [Path(curinst.tileset_rel_path).stem]
+                )
+                # f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
             )
 
             if tileset != None:
@@ -149,7 +171,7 @@ def compile_world(pth):
 
                             loc = (tile.px[0] // 16, tile.px[1] // 16)
                             tile_array[current_depth, loc[1], loc[0]] = (
-                                tile.src[0] // 16,
+                                tile.src[0] // 16 + 1,
                                 tile.src[1] // 16,
                             )
                             col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
@@ -162,7 +184,7 @@ def compile_world(pth):
                                 tile.px[1] // 16,
                             )
                             tile_array[current_depth, loc[1], loc[0]] = (
-                                tile.src[0] // 16 + (tile.f % 2),
+                                tile.src[0] // 16 + (tile.f % 2) + 1,
                                 tile.src[1] // 16 + (tile.f // 2),
                             )
                             col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
@@ -215,7 +237,7 @@ def compile_world(pth):
                                 entity[f"f_{field.identifier}"] = parser.parse(
                                     field.value
                                 )
-                                print(entity[f"f_{field.identifier}"].pretty())
+                                # print(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
@@ -236,7 +258,7 @@ def compile_world(pth):
                                     entity[f"f_{field.identifier}"] = parser.parse(
                                         entity[f"f_{field.identifier}"]
                                     )
-                                    print(entity[f"f_{field.identifier}"].pretty())
+                                    # print(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
@@ -253,17 +275,18 @@ def compile_world(pth):
             "fields": {
                 field.identifier: field.value for field in level.field_instances
             },
+            "orig_dimensions": (orig_width, orig_height),
         }
 
-        print("Total tilesets:", [x[0] for x in output_layers])
-        print(
-            "Total shapes:",
-            [x[2].shape if x[0] == "TILES" else x for x in output_layers],
-        )
-        print("Player height:", 0)
-        print("Entities", entities)
-        print("Regions:", "\n\n".join([str(x) for x in regions]))
-        print("\n\n\n")
+        # print("Total tilesets:", [x[0] for x in output_layers])
+        # print(
+        #     "Total shapes:",
+        #     [x[2].shape if x[0] == "TILES" else x for x in output_layers],
+        # )
+        # print("Player height:", 0)
+        # print("Entities", entities)
+        # print("Regions:", "\n\n".join([str(x) for x in regions]))
+        # print("\n\n\n")
 
     world_data = {}
 

@@ -19,13 +19,14 @@ uniform vec2 modSize=vec2(1,1);
 uniform vec2 displayBase=vec2(20,20);
 uniform vec2 offset=vec2(0,0);
 uniform uint emptyThreshhold=uint(1);
+uniform uint slideshowFrame=uint(0);
 
 uniform vec2 displaySize;
 uniform int layerHeight;
 uniform vec2 worldSize;
 // uniform vec2 tilemapSize;
 
-uniform sampler2D texture_tileset;
+uniform sampler2DArray texture_tileset;
 uniform usampler2DArray texturearray_masks;
 
 uniform vec2 Zoom;
@@ -60,7 +61,7 @@ void main(){
       mask.x-=uint(1);
       
       // Retrieve position of the pixel within the tileset image
-      ivec2 layerTilePosition=tilePosition+ivec2(mask.x,mask.y)*16;
+      ivec3 layerTilePosition=ivec3(tilePosition+ivec2(mask.x,mask.y)*16,slideshowFrame);
       
       // Retrieve the pixel that would be rendered
       vec4 retrieveColor=texelFetch(texture_tileset,layerTilePosition,0);

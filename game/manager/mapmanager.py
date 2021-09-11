@@ -13,6 +13,7 @@ class MapManager:
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
         self.allow_save = False
+        self.allow_cycle = False
         self.environment = "forest"
         self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 
@@ -34,6 +35,13 @@ class MapManager:
         self.game.m_sav.switches.holder_is_frozen = True
 
     def convert_mapstring_to_key(self, mapstr):
+        # Now also accepts integers
+        mapstr = str(mapstr).strip()
+        if mapstr[0] != "L":
+            mapint = int(mapstr)
+            if mapint < 1000:
+                return 1000 * mapint
+            return mapint
         if mapstr[-1] != "_":
             mapstr = mapstr + "_"
         id_e = [int(x[1:]) for x in mapstr.lower().split("_")[:-1]]
@@ -62,6 +70,7 @@ class MapManager:
         self.local_encounter_level_max = 0
 
         self.allow_save = fields["allow_save"]
+        self.allow_cycle = fields["allow_cycle"]
         self.environment = fields["environment"]
         if fields["hospital"]:
             self.hospital = fields["hospital"]
@@ -86,6 +95,9 @@ class MapManager:
                 )
             ]
         )
+
+    def get_level_size(self, level_id):
+        return self.levels[level_id]["orig_dimensions"]
 
     @property
     def current_level(self):

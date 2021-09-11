@@ -140,6 +140,16 @@ class GameStateCinematic(BaseGameState):
         self.game.m_gst.switch_state("overworld")
 
     def draw_interface(self, time, frame_time):
+        # TODO: move this away from here
+        if self.dialogue:
+            self.dialogue = (
+                self.dialogue.replace("{player.name}", self.game.m_ent.player.name)
+                .replace("{player.he}", self.game.m_ent.player.he)
+                .replace("{player.his}", self.game.m_ent.player.his)
+                .replace("{player.che}", self.game.m_ent.player.che)
+                .replace("{player.chis}", self.game.m_ent.player.chis)
+            )
+
         if not self.shop and self.spr_talker:
             self.game.r_int.draw_image(
                 self.spr_talker, (0.8, 0.7), centre=True, size=3.0
@@ -147,7 +157,7 @@ class GameStateCinematic(BaseGameState):
 
         # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
 
-        if self.author is not None:
+        if self.author is not None and self.author:
             self.game.r_int.draw_image(
                 self.spr_namebox, (0.02, 0.75),
             )

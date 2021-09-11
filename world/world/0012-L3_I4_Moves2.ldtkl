@@ -10,8 +10,8 @@
 	},
 	"identifier": "L3_I4_Moves2",
 	"uid": 459,
-	"worldX": 1616,
-	"worldY": 528,
+	"worldX": 1600,
+	"worldY": 560,
 	"pxWid": 240,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -36,7 +36,17 @@
 		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+		{
+			"__identifier": "allow_cycle",
+			"__value": false,
+			"__type": "Bool",
+			"defUid": 467,
+			"realEditorValues": [{
+				"id": "V_Bool",
+				"params": [ false ]
+			}]
+		}
 	],
 	"layerInstances": [
 		{
@@ -537,7 +547,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path.png",
 			"levelId": 459,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -568,7 +578,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt.png",
 			"levelId": 459,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -599,7 +609,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 321,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles_custom/cliffs.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autocliffs/cliffs.png",
 			"levelId": 459,
 			"layerDefUid": 320,
 			"pxOffsetX": 0,
@@ -630,7 +640,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water.png",
 			"levelId": 459,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,

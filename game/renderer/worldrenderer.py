@@ -15,7 +15,14 @@ class TileLayer:
         self.spritemap = spritemap
         self.height = height
         self.map = map
-        self.prog = self.game.m_res.get_program("tilelayer")
+
+        if spritemap:
+            print("Spritemapsize", spritemap.size)
+            if len(spritemap.size) > 2:
+                self.slideshowFrame = 0
+                self.prog = self.game.m_res.get_program("tilelayer_slideshow")
+            else:
+                self.prog = self.game.m_res.get_program("tilelayer")
 
         self.render_enabled = self.spritemap is not None
 
@@ -47,10 +54,13 @@ class TileLayer:
             self.map[h] = self.map[h] * 0
 
     def set_tile(self, h, x, y, tile):
-        self.map[int(h), int(y), int(x)] = (int(tile[0]), int(tile[1]))
+        self.map[int(h), int(y), int(x)] = (int(tile[0]) + 1, int(tile[1]))
 
     def get_tile(self, h, x, y):
-        return self.map[int(h), int(y), int(x)]
+        tile = self.map[int(h), int(y), int(x)]
+        if tile[0] == 0 and tile[1] == 0:
+            return tile
+        return (tile[0] - 1, tile[1])
 
     def temp_init(self):
         self.prog["displaySize"].value = self.game.size
@@ -59,16 +69,16 @@ class TileLayer:
         self.prog["offset"].value = self.offset
 
     def render(self, time, frame_time):
-        frame_time = max(0.03, min(0.06, frame_time))
+        frame_time = max(0.001, min(0.06, frame_time))
         if self.terminated or not self.render_enabled or self.map is None:
             return
 
         if self.terminate >= self.terminate_step:
-            self.terminate += self.terminate_step * 20 * frame_time
+            self.terminate += self.terminate_step * 150 * frame_time
             if self.terminate >= 1:
                 self.terminated = True
         elif self.terminate <= -self.terminate_step:
-            self.terminate += self.terminate_step * 20 * frame_time
+            self.terminate += self.terminate_step * 150 * frame_time
         else:
             self.terminate = 0
 
@@ -90,6 +100,12 @@ class TileLayer:
             self.texture_map.size[0],
             self.texture_map.size[1],
         )
+
+        if len(self.spritemap.size) > 2:
+            self.slideshowFrame += frame_time * 2
+            if self.slideshowFrame > 8:
+                self.slideshowFrame -= 8
+            self.prog["slideshowFrame"] = int(self.slideshowFrame)
 
         self.prog["texture_tileset"] = 0
         self.spritemap.use(location=0)
@@ -139,7 +155,10 @@ class WorldRenderer:
 
     def spawn_tile_layer(self, height, map, spritemap, offset=(0, 0), fade=True):
         if "collision" not in spritemap:
-            spritemap = self.game.m_res.get_tileset(spritemap)
+            if "slide" in spritemap:
+                spritemap = self.game.m_res.get_slide_tileset(spritemap)
+            else:
+                spritemap = self.game.m_res.get_tileset(spritemap)
         else:
             spritemap = None
         offset = (offset[0] + self.offset[0], offset[1] + self.offset[1])

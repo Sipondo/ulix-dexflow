@@ -29,6 +29,12 @@ class GameStateOverworld(BaseGameState):
         self.game.m_ent.render()
 
     def check_direction(self):
+        # TODO: move to own function
+        if (
+            not self.game.m_map.allow_cycle
+            and self.game.m_ent.player.movement_type == 2
+        ):
+            self.game.m_ent.player.set_movement_type(1)
         for v in self.game.m_key.pressed_keys:
             if v in ("up", "down", "left", "right"):
                 return v
@@ -39,7 +45,7 @@ class GameStateOverworld(BaseGameState):
             self.game.m_ent.player.set_movement_type(0)
         elif modifiers.shift:
             self.game.m_ent.player.set_movement_type(1)
-        elif modifiers.ctrl:
+        elif modifiers.ctrl and self.game.m_map.allow_cycle:
             self.game.m_ent.player.set_movement_type(2)
         if not self.lock:
             if key == "interact":
@@ -48,7 +54,9 @@ class GameStateOverworld(BaseGameState):
             #     self.game.m_gst.switch_state("battle")
             if key == "menu":
                 self.game.m_gst.switch_state("menuparty")
-            # if key == "zoom_in":
-            #     self.game.pan_tool.zoom_in()
-            # if key == "zoom_out":
-            #     self.game.pan_tool.zoom_out()
+            if key == "zoom_in":
+                self.game.pan_tool.zoom_in()
+            if key == "zoom_out":
+                self.game.pan_tool.zoom_out()
+            if key == "debug":
+                self.game.m_gst.switch_state("debug")

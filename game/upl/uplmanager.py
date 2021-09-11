@@ -23,9 +23,11 @@ from game.upl.upl_scripts.jump import Jump
 from game.upl.upl_scripts.length import Length
 from game.upl.upl_scripts.manhattan import Manhattan
 from game.upl.upl_scripts.move import Move
+from game.upl.upl_scripts.moveto import MoveTo
 from game.upl.upl_scripts.music import Music
 from game.upl.upl_scripts.overworld import Overworld
 from game.upl.upl_scripts.portal import Portal
+from game.upl.upl_scripts.prompt import Prompt
 from game.upl.upl_scripts.push import Push
 from game.upl.upl_scripts.random import Random
 from game.upl.upl_scripts.removeitem import RemoveItem

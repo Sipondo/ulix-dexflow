@@ -3,7 +3,7 @@ from .basegamestate import BaseGameState
 import numpy as np
 
 
-class GameStateMenuEvolve(BaseGameState):
+class GameStateEvolve(BaseGameState):
     def on_enter(self):
         self.game.r_int.fade = False
         self.to_evolve = []  # list of members who evolve, evolution target
@@ -16,7 +16,9 @@ class GameStateMenuEvolve(BaseGameState):
             evolve_target, cond, cond_req = evolution_data.split(",")
             if cond == "Level":
                 if member.level >= int(cond_req):
-                    self.to_evolve.append((member, self.game.m_pbs.get_fighter_by_name(evolve_target)))
+                    self.to_evolve.append(
+                        (member, self.game.m_pbs.get_fighter_by_name(evolve_target))
+                    )
 
         self.spr_statusbox = self.game.m_res.get_interface("statusbox")
 
@@ -51,7 +53,9 @@ class GameStateMenuEvolve(BaseGameState):
 
     def get_evo_data(self):
         self.small_splash = self.evo.sprite
-        self.big_splash = self.game.m_res.get_sprite_from_anim(self.evo_target.name, size=2.0)
+        self.big_splash = self.game.m_res.get_sprite_from_anim(
+            self.evo_target.name, size=2.0
+        )
 
     def on_exit(self):
         self.game.r_int.fade = False
@@ -60,9 +64,7 @@ class GameStateMenuEvolve(BaseGameState):
         if self.need_to_redraw:
             self.game.r_int.new_canvas()
             self.game.r_int.draw_rectangle(
-                (0, 0),
-                to=(1, 1),
-                col="black",
+                (0, 0), to=(1, 1), col="black",
             )
             self.draw_interface(time, frame_time)
             self.need_to_redraw = False
@@ -86,19 +88,20 @@ class GameStateMenuEvolve(BaseGameState):
                 self.spr_statusbox, (0.0035, 0.9),
             )
             if not self.evolve:
-                self.game.r_int.draw_image(
-                    self.small_splash, (0.5, 0.5), centre=True
-                )
+                self.game.r_int.draw_image(self.small_splash, (0.5, 0.5), centre=True)
                 self.game.r_int.draw_text(
-                    f"{self.evo.name} is evolving!", (0.01, 0.91), to=(0.99, 0.99), bcol=None
+                    f"{self.evo.name} is evolving!",
+                    (0.01, 0.91),
+                    to=(0.99, 0.99),
+                    bcol=None,
                 )
             else:
-                self.game.r_int.draw_image(
-                    self.big_splash, (0.5, 0.5), centre=True
-                )
+                self.game.r_int.draw_image(self.big_splash, (0.5, 0.5), centre=True)
                 self.game.r_int.draw_text(
-                    f"{self.evo_name} has evolved into {self.evo.name}!", (0.01, 0.91), to=(0.99, 0.99), bcol=None
+                    f"{self.evo_name} has evolved into {self.evo.name}!",
+                    (0.01, 0.91),
+                    to=(0.99, 0.99),
+                    bcol=None,
                 )
                 self.evolving = False
-
 

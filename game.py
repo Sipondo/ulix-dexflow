@@ -40,6 +40,7 @@ from game.manager.savemanager import SaveManager
 
 from game.player.inventory import Inventory
 
+from game.util.autotile_reformat import autotile_reformat
 from game.util.compile_world import compile_world
 
 import logging
@@ -213,6 +214,10 @@ class PokeGame(mglw.WindowConfig):
     def key_event(self, key, action, modifiers):
         self.m_key.key_event(key, action, modifiers)
 
+    def unicode_char_entered(self, char: str):
+        self.m_key.unicode_char_entered(char)
+        return super().unicode_char_entered(char)
+
 
 from moderngl_window.context.base import WindowConfig, BaseWindow
 from moderngl_window.timers.clock import Timer
@@ -265,6 +270,29 @@ def run_window_custom(
     parser = parser
     config_cls.add_arguments(parser)
     values = mglw.parse_args(args=args, parser=parser)
+
+    if values.autotile_reformat:
+        print(
+            colored(
+                """
+            ooooo     ooo ooooo        ooooo ooooooo  ooooo      
+            `888'     `8' `888'        `888'  `8888    d8'       
+             888       8   888          888     Y888..8P         
+             888       8   888          888      `8888'          
+             888       8   888          888     .8PY888.         
+             `88.    .8'   888       o  888    d8'  `888b        
+               `YbodP'    o888ooooood8 o888o o888o  o88888o      
+
+             +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+             |A|U|T|O|T|I|L|E| |R|E|F|O|R|M|A|T|
+             +-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+            """,
+                "cyan",
+            )
+        )
+        autotile_reformat()
+        if values.develop is None:
+            return
 
     if (values.compile_world or values.develop) is not None:
         print(
@@ -371,6 +399,9 @@ def run_window_custom(
 if __name__ == "__main__":
     parser = mglw.create_parser()
     parser.add_argument("--compile-world", help="Compile world file.")
+    parser.add_argument(
+        "--autotile-reformat", help="Compile world file.", action="store_true"
+    )
     parser.add_argument("--develop", help="Compile world file and run game.")
     parser.add_argument("--particle", help="If testing particle, particle name.")
     run_window_custom(PokeGame, parser=parser)

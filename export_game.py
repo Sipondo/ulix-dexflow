@@ -139,7 +139,7 @@ try:
     )
 
     subprocess.run(
-        r"""call .exportvenv\Scripts\activate.bat && cxfreeze -c game.py --target-dir export --packages "moderngl,moderngl_window,pyglet,moderngl_window.context.pyglet,glcontext,moderngl_window.loaders.texture,moderngl_window.loaders.program" --base-name=WIN32GUI""",
+        r"""call .exportvenv\Scripts\activate.bat && cxfreeze -c game.py --target-dir export --packages "moderngl,moderngl_window,pyglet,moderngl_window.context.pyglet,glcontext,moderngl_window.loaders.texture,moderngl_window.loaders.program" """,
         shell=True,
         check=True,
     )

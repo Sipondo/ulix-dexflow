@@ -11,7 +11,7 @@
 	"identifier": "L3_I2_Moves",
 	"uid": 456,
 	"worldX": 1600,
-	"worldY": 720,
+	"worldY": 752,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -36,7 +36,17 @@
 		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+		{
+			"__identifier": "allow_cycle",
+			"__value": false,
+			"__type": "Bool",
+			"defUid": 467,
+			"realEditorValues": [{
+				"id": "V_Bool",
+				"params": [ false ]
+			}]
+		}
 	],
 	"layerInstances": [
 		{
@@ -287,7 +297,16 @@
 								"params": ["../resources/essentials/graphics/characters/trchar055.png"]
 							}]
 						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "#TODO",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["#TODO"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -335,7 +354,16 @@
 								"params": ["../resources/essentials/graphics/characters/trchar038.png"]
 							}]
 						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "#TODO",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["#TODO"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -696,7 +724,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 177,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/brick_path.png",
 			"levelId": 456,
 			"layerDefUid": 207,
 			"pxOffsetX": 0,
@@ -728,7 +756,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 147,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/dirt.png",
 			"levelId": 456,
 			"layerDefUid": 235,
 			"pxOffsetX": 0,
@@ -760,7 +788,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 321,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles_custom/cliffs.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autocliffs/cliffs.png",
 			"levelId": 456,
 			"layerDefUid": 320,
 			"pxOffsetX": 0,
@@ -792,7 +820,7 @@
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 178,
-			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water_new_formatted.png",
+			"__tilesetRelPath": "../resources/essentials/graphics/autotiles/still_water.png",
 			"levelId": 456,
 			"layerDefUid": 260,
 			"pxOffsetX": 0,
@@ -1058,5 +1086,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
+	"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
 }

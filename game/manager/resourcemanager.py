@@ -212,6 +212,36 @@ class ResourceManager:
             self.tilesets[name] = texture_spritemap
         return self.tilesets[name]
 
+    def get_slide_tileset(self, name: str):
+        if name not in self.tilesets:
+            pth = self.p_graphics / Path(name).with_suffix(".png")
+            pth = self.resolve_resource_path(pth)
+
+            print(pth)
+            print("_".join(pth.stem.split("_")[:-2]))
+            pth_list = list(
+                pth.parent.glob("_".join(pth.stem.split("_")[:-2] + ["*.png"]))
+            )
+
+            sprite_list = []
+            for image_pth in pth_list:
+                sprite_list.append(np.array(Image.open(image_pth).convert("RGBA")))
+
+            print("Normal", sprite_list[0])
+            print("Casted", sprite_list[0].astype("uint8"))
+            sprite = np.stack(sprite_list).astype("uint8")
+
+            spritemap = sprite.tobytes()
+            texture_spritemap = self.ctx.texture_array(
+                (sprite.shape[2], sprite.shape[1], sprite.shape[0]), 4, spritemap
+            )
+            texture_spritemap.repeat_x = True
+            texture_spritemap.repeat_y = True
+            texture_spritemap.filter = moderngl.NEAREST, moderngl.NEAREST
+            texture_spritemap.write(spritemap)
+            self.tilesets[name] = texture_spritemap
+        return self.tilesets[name]
+
     def get_program(self, program_name):
         return self.game.load_program(self.p_shaders / f"{program_name}.glsl")
 
