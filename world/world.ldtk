@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 463,
+	"nextUid": 465,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -3783,7 +3783,7 @@
 				{ "enumValueId": "Hop_E", "tileIds": [829,830,838] },
 				{ "enumValueId": "Hop_S", "tileIds": [818,822,836] }
 			],
-			"customData": [],
+			"customData": [{ "tileId": 14, "data": "animate: (500, this), (500, 561)" }],
 			"savedSelections": [{ "ids": [23,31,39,47,55,63,71,79,87,95,103,111], "mode": "Stamp" }],
 			"cachedPixelData": {
 				"opaqueTiles": "0000000011111110111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111100111111001111110011000111110101111101011111101111011110110011110100111010001110100011101000101111111110111111110111111010111110101111101011111000111110101111101011111010111110101111101001111111110000011100000111010001110000011100000111000111111111000111111001100100101111111111111111111111111111100011111010010010000101100000000010010000000100000011111010111110000001111101011111010111001100100011001000110000001111001011110010111100110000000100011111010111110101110011001000110010001100000011110010111100101111001100000000000000010000000000000001000000010000001100000100000000000000100011101000010010000000100001101000001010000000000000010100001011000011001100000010011011100000000001110000001100000000101000001010000000000000000000011010000000101111101000000000000000000000000000000111011101110111000001110111000000001110111011101110111011100000000000000000000000000000000000000000000000000010000100100000111000100010010111111111111111010111111100100111111111111111111101111111111111111111111111111111111111110000011111111111011101110111111111100000111111111111111111111111000000111111111111111111011111011111111100000111111111111111111101111111011111110000000011111111111111110111111101111111111011111110111101111111011111110110011011111111011001101111111101111111100000111111111111111111001110011111111111111111111111111111111111111111111111111111111111111111000000001111011001110111011001110000100011110000011111110111111101111111011111111111111101111000011110100111111101111000011110000111111101111000011110100111111101111000011110000111111100001111010011111110111100001111000011111110111100001111000111110110111100101111010011110000111111111111011110000111101001111111011110000111100001111111011110000111101001111111011110000111100001111111111011111110111111101111111011111110111111101111000111111111111111111111111111110000011111111111111111111111111100000011111111111111111111111111101011111000111100000100111111111111111111111111111111111111111111111111111111111111111100000001111111110111111111111111111111111100011100000001111111111111111111111111011111110111111111111111111111110000011111111111011111110111111100010001011111011111111101111101000100010111110111111111011111010000011111111111111111111111111001110011000000001111111111111111011001100000000011111111111111110110011000000000111111111111111101100110000000011111111111111111111111111111111101111100110101110000000111111111011111110111111100010001111111111101001100000011111111111111111001111011000100001100000010000011011111010111110101111101011111011100011111111111111111110100001111111111111111111111111111111111000000011111111111111111011111110111110111010111011101111111110011111111111111110000000011111111111111111111111111111111000000001111111111111111011111100111111000011100111010111110001110111101101111011011110111101011011110110111101101111011011110110111101101111011011110110111101101111011000100110111000011111111111111111111111100000111000010101111101011111111111111111111111111011111110111111101111111000010110110101101100011011010000110001100011100111001011111010111110101111101011111010111110101111101111111111111111111111111111111111111111111111000111110101111101011111010111110101111111100000111111110101111100011111111111111111111111111111111000000001111111111111111111111111111111111111111000001000111111111111110111111111111111111111111111111110111111001010101111111101111111111111111111111111111111111111110100000110000111100000011000000110000111111101110111100011111000111110001000111111111111111111111111111110111110010001101100011000000000011111011111111111111100011111000111111100000011111111000",
@@ -4837,7 +4837,7 @@
 	] },
 	"levels": [
 		{
-			"identifier": "L1_happyhouse",
+			"identifier": "L1_HappyHouse",
 			"uid": 95,
 			"worldX": -96,
 			"worldY": 0,
@@ -4851,7 +4851,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0000-L1_happyhouse.ldtkl",
+			"externalRelPath": "world/0000-L1_HappyHouse.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -4904,7 +4904,7 @@
 			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
 		},
 		{
-			"identifier": "L1_I1_starterhouse",
+			"identifier": "L1_I1_StarterHouse",
 			"uid": 179,
 			"worldX": 48,
 			"worldY": -144,
@@ -4918,7 +4918,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0001-L1_I1_starterhouse.ldtkl",
+			"externalRelPath": "world/0001-L1_I1_StarterHouse.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -4938,7 +4938,7 @@
 			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
 		},
 		{
-			"identifier": "L1_I3_starterhouse3",
+			"identifier": "L1_I3_StarterHouseLightPuzzle",
 			"uid": 435,
 			"worldX": 448,
 			"worldY": -320,
@@ -4952,7 +4952,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0002-L1_I3_starterhouse3.ldtkl",
+			"externalRelPath": "world/0002-L1_I3_StarterHouseLightPuzzle.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -4964,7 +4964,16 @@
 				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
-				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
+				{
+					"__identifier": "allow_save",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 452,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				},
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
@@ -4972,7 +4981,7 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "L1_I2_starterhousefloor2",
+			"identifier": "L1_I2_StarterHouseFloor2",
 			"uid": 181,
 			"worldX": 240,
 			"worldY": -144,
@@ -4986,7 +4995,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0003-L1_I2_starterhousefloor2.ldtkl",
+			"externalRelPath": "world/0003-L1_I2_StarterHouseFloor2.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -5006,7 +5015,7 @@
 			"__neighbours": []
 		},
 		{
-			"identifier": "L2_squigglyswerve",
+			"identifier": "L2_SquigglySwerve",
 			"uid": 311,
 			"worldX": 544,
 			"worldY": 0,
@@ -5020,7 +5029,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0004-L2_squigglyswerve.ldtkl",
+			"externalRelPath": "world/0004-L2_SquigglySwerve.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -5037,13 +5046,13 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
+			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
 		},
 		{
-			"identifier": "L3_typicaltown",
+			"identifier": "L3_TypicalTown",
 			"uid": 316,
-			"worldX": 1280,
-			"worldY": 976,
+			"worldX": 1296,
+			"worldY": 944,
 			"pxWid": 688,
 			"pxHei": 432,
 			"__bgColor": "#7F8093",
@@ -5054,7 +5063,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0005-L3_typicaltown.ldtkl",
+			"externalRelPath": "world/0005-L3_TypicalTown.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -5071,10 +5080,16 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 311, "dir": "s" }, { "levelUid": 317, "dir": "s" } ]
+			"__neighbours": [
+				{ "levelUid": 311, "dir": "w" },
+				{ "levelUid": 317, "dir": "s" },
+				{ "levelUid": 455, "dir": "n" },
+				{ "levelUid": 456, "dir": "n" },
+				{ "levelUid": 457, "dir": "n" }
+			]
 		},
 		{
-			"identifier": "L4_repeatingroute",
+			"identifier": "L4_RepeatingRoute",
 			"uid": 317,
 			"worldX": 1088,
 			"worldY": 1376,
@@ -5088,7 +5103,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0006-L4_repeatingroute.ldtkl",
+			"externalRelPath": "world/0006-L4_RepeatingRoute.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -5105,10 +5120,10 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 318, "dir": "e" } ]
+			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
 		},
 		{
-			"identifier": "L5_twistytwist",
+			"identifier": "L5_TwistyTwist",
 			"uid": 318,
 			"worldX": 2032,
 			"worldY": 1376,
@@ -5122,7 +5137,7 @@
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
 			"__bgPos": null,
-			"externalRelPath": "world/0007-L5_twistytwist.ldtkl",
+			"externalRelPath": "world/0007-L5_TwistyTwist.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
 				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
@@ -5145,7 +5160,7 @@
 			"identifier": "L3_I1_NameRater",
 			"uid": 455,
 			"worldX": 1296,
-			"worldY": 720,
+			"worldY": 752,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5173,13 +5188,13 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 456, "dir": "e" } ]
+			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 456, "dir": "e" } ]
 		},
 		{
 			"identifier": "L3_I5_Pokecenter",
 			"uid": 461,
 			"worldX": 2208,
-			"worldY": 720,
+			"worldY": 752,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5213,7 +5228,7 @@
 			"identifier": "L3_I6_Pokemart",
 			"uid": 462,
 			"worldX": 2512,
-			"worldY": 720,
+			"worldY": 752,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5247,7 +5262,7 @@
 			"identifier": "L3_I2_Moves",
 			"uid": 456,
 			"worldX": 1600,
-			"worldY": 720,
+			"worldY": 752,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5275,13 +5290,13 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
+			"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
 		},
 		{
 			"identifier": "L3_I4_Moves2",
 			"uid": 459,
-			"worldX": 1616,
-			"worldY": 528,
+			"worldX": 1600,
+			"worldY": 560,
 			"pxWid": 240,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5315,7 +5330,7 @@
 			"identifier": "L3_I3_Friendship",
 			"uid": 457,
 			"worldX": 1904,
-			"worldY": 720,
+			"worldY": 752,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -5343,7 +5358,7 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
+			"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
 		}
 	]
 }

@@ -18,6 +18,7 @@ uniform vec2 tileSize=vec2(16,16);
 uniform vec2 modSize=vec2(1,1);
 uniform vec2 displayBase=vec2(20,20);
 uniform vec2 offset=vec2(0,0);
+uniform uint emptyThreshhold=uint(1);
 
 uniform vec2 displaySize;
 uniform int layerHeight;
@@ -51,6 +52,12 @@ void main(){
       
       // Retrieve information regarding which tile should be visualised
       uvec4 mask=texelFetch(texturearray_masks,ivec3(worldPosition,i),0);
+      
+      if((mask.x<emptyThreshhold)&&(mask.y<emptyThreshhold)){
+        continue;
+      }
+      
+      mask.x-=uint(1);
       
       // Retrieve position of the pixel within the tileset image
       ivec2 layerTilePosition=tilePosition+ivec2(mask.x,mask.y)*16;

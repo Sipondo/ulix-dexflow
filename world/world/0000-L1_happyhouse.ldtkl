@@ -8,7 +8,7 @@
 		"appVersion": "0.9.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "L1_happyhouse",
+	"identifier": "L1_HappyHouse",
 	"uid": 95,
 	"worldX": -96,
 	"worldY": 0,
@@ -620,7 +620,7 @@
 			"intGridCsv": [],
 			"autoLayerTiles": [],
 			"seed": 658987,
-			"overrideTilesetUid": null,
+			"overrideTilesetUid": 96,
 			"gridTiles": [],
 			"entityInstances": []
 		},

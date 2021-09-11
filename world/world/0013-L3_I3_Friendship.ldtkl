@@ -11,7 +11,7 @@
 	"identifier": "L3_I3_Friendship",
 	"uid": 457,
 	"worldX": 1904,
-	"worldY": 720,
+	"worldY": 752,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -1264,5 +1264,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
+	"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
 }

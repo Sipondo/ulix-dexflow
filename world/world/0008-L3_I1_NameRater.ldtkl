@@ -11,7 +11,7 @@
 	"identifier": "L3_I1_NameRater",
 	"uid": 455,
 	"worldX": 1296,
-	"worldY": 720,
+	"worldY": 752,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -1003,5 +1003,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 456, "dir": "e" } ]
+	"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 456, "dir": "e" } ]
 }

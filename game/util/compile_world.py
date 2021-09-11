@@ -59,6 +59,8 @@ def compile_world(pth):
         for t in a.defs.tilesets
     }
 
+    customData = {t.uid: t.custom_data for t in a.defs.tilesets}
+
     enumValues = list(
         dict.fromkeys(
             ["E", "S", "W", "N", "X"]
@@ -72,13 +74,14 @@ def compile_world(pth):
     for enum in [x for x in a.defs.enums if x.identifier in ("Switches")]:
         switches = [x.id.lower() for x in enum.values]
 
-    print("ENUMVALUES", enumValues)
+    print("ENUMVALUES:", enumValues)
+    print("CUSTOMDATA:", customData)
     print("SETTABLES:", settables)
     print("SWITCHES:", switches)
 
     for level in a.levels:
-        print(level.identifier)
-        print({field.identifier: field.value for field in level.field_instances})
+        print("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)
+        # print({field.identifier: field.value for field in level.field_instances})
 
         id_e = [int(x[1:]) for x in level.identifier.lower().split("_")[:-1]]
         id = str(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
@@ -151,7 +154,7 @@ def compile_world(pth):
 
                             loc = (tile.px[0] // 16, tile.px[1] // 16)
                             tile_array[current_depth, loc[1], loc[0]] = (
-                                tile.src[0] // 16,
+                                tile.src[0] // 16 + 1,
                                 tile.src[1] // 16,
                             )
                             col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
@@ -164,7 +167,7 @@ def compile_world(pth):
                                 tile.px[1] // 16,
                             )
                             tile_array[current_depth, loc[1], loc[0]] = (
-                                tile.src[0] // 16 + (tile.f % 2),
+                                tile.src[0] // 16 + (tile.f % 2) + 1,
                                 tile.src[1] // 16 + (tile.f // 2),
                             )
                             col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
@@ -217,7 +220,7 @@ def compile_world(pth):
                                 entity[f"f_{field.identifier}"] = parser.parse(
                                     field.value
                                 )
-                                print(entity[f"f_{field.identifier}"].pretty())
+                                # print(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
@@ -238,7 +241,7 @@ def compile_world(pth):
                                     entity[f"f_{field.identifier}"] = parser.parse(
                                         entity[f"f_{field.identifier}"]
                                     )
-                                    print(entity[f"f_{field.identifier}"].pretty())
+                                    # print(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
@@ -258,15 +261,15 @@ def compile_world(pth):
             "orig_dimensions": (orig_width, orig_height),
         }
 
-        print("Total tilesets:", [x[0] for x in output_layers])
-        print(
-            "Total shapes:",
-            [x[2].shape if x[0] == "TILES" else x for x in output_layers],
-        )
-        print("Player height:", 0)
-        print("Entities", entities)
-        print("Regions:", "\n\n".join([str(x) for x in regions]))
-        print("\n\n\n")
+        # print("Total tilesets:", [x[0] for x in output_layers])
+        # print(
+        #     "Total shapes:",
+        #     [x[2].shape if x[0] == "TILES" else x for x in output_layers],
+        # )
+        # print("Player height:", 0)
+        # print("Entities", entities)
+        # print("Regions:", "\n\n".join([str(x) for x in regions]))
+        # print("\n\n\n")
 
     world_data = {}
 
