@@ -129,10 +129,29 @@ def compile_world(pth):
         for index, depth_block in enumerate(reversed(layer_depths)):
             print("Depth Block:", depth_block)
             curinst = reversed_instances[current_layer]
+            # if curinst.tileset_rel_path:
+            #     print(
+            #         "\n\nParents:",
+            #         [
+            #             x.stem
+            #             for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
+            #             if "graphics" in str(x)
+            #         ],
+            #         "\n\n",
+            #     )
             tileset = (
                 curinst.tileset_rel_path
-                and f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
+                and "/".join(
+                    [
+                        x.stem
+                        for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
+                        if "graphics" in str(x)
+                    ][1:]
+                    + [Path(curinst.tileset_rel_path).stem]
+                )
+                # f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
             )
+            print("TILESET!!!", tileset)
 
             if tileset != None:
                 tile_array = np.zeros(

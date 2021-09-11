@@ -41,10 +41,10 @@ class HotkeyManager:
 
     def key_event(self, key, action, modifiers):
         request_list = self.lookup_key(key)
-        print(f"keypress {key}\t{action}\t{modifiers}")
+        # print(f"keypress {key}\t{action}\t{modifiers}")
 
         for request in request_list:
-            print(f"--- REQUEST {key}\t{request}\t{action}\t{modifiers}")
+            # print(f"--- REQUEST {key}\t{request}\t{action}\t{modifiers}")
 
             if (
                 key == self.game.wnd.keys.P
