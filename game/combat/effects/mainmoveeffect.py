@@ -26,7 +26,6 @@ class MainMove(BaseEffect):
         self.target_fainted = False
 
         # added effects
-        self.effects = []
         for func in move.function:
             function_args = func.split(" ")
             if len(function_args) > 1:
@@ -34,7 +33,6 @@ class MainMove(BaseEffect):
                 move_effect = self.scene.effect_lib[func](self.scene, self, args)
             else:
                 move_effect = self.scene.effect_lib[func](self.scene, self)
-            self.effects.append(move_effect)
             self.scene.effects.append(move_effect)
 
     def move_hit(self):
@@ -163,24 +161,10 @@ class MainMove(BaseEffect):
             self.scene.add_effect(
                 GenericEffect(self.scene, "But there was no target..")
             )
-            return True, False, False
-        for effect in self.effects:
-            if not effect.before_move():
-                self.scene.board.particle = ""
-                self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
-                return True, False, False
+            return True, True, False
         if self.move_hit():
-            if self.chance == 0:
-                for effect in self.effects:
-                    effect.after_move()
-                return True, False, False
-            for effect in self.effects:
-                if self.scene.board.random_roll() < self.chance:
-                    if not effect.after_move():
-                        if self.chance < 1:
-                            continue
-                        self.scene.add_effect(GenericEffect(self.scene, "But it failed"))
-        return True, False, False
+            return True, False, False
+        return True, True, False
 
     def on_switch(self, target_old, target_new):
         if self.target == target_old:

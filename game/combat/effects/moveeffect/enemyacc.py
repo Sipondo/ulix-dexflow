@@ -7,6 +7,6 @@ class Enemyacc(BaseMoveEffect):
         super().__init__(scene, move)
         self.mod = int(mod)
 
-    def after_move(self):
+    def after_action(self):
         StatChange(self.scene, self.move.target, "Accuracy", self.mod).apply()
         return True

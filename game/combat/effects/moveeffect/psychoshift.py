@@ -3,7 +3,7 @@ from game.combat.effects.genericeffect import GenericEffect
 
 
 class Psychoshift(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         target_effects = self.scene.get_effects_on_target(self.move.user)
         user_effects = self.scene.get_effects_on_target(self.move.user)
         if [x for x in target_effects if x.type == "Majorstatus"]:

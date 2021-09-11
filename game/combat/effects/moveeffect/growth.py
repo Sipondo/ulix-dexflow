@@ -3,7 +3,7 @@ from game.combat.effects.partialeffect.statchange import StatChange
 
 
 class Growth(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         mod = 1
         global_effects = self.scene.get_global_effects()
         if "Sun" in [x.name for x in global_effects]:

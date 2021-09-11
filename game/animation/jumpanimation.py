@@ -36,7 +36,7 @@ class JumpAnimation(BaseAnimation):
 
     def on_end(self, time, frame_time):
         self.ended = True
-        self.entity.after_move(time, frame_time)
+        self.entity.after_action(time, frame_time)
         self.game.m_ani.remove_anim(self)
 
     def conditions(self):

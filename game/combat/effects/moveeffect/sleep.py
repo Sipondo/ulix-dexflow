@@ -4,5 +4,5 @@ from game.combat.effects import statuseffect
 
 
 class Sleep(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         return ApplyStatus(self.scene, statuseffect.SLEEP, self.move.user, self.move.target).apply()

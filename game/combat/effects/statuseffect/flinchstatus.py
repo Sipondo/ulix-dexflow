@@ -12,7 +12,7 @@ class Flinch(BaseEffect):
         self.target = target
         self.apply_narration = ""
 
-    def on_action(self):
+    def before_action(self):
         if self.scene.board.user == self.target:
             if self.scene.board.action.action_name == "attack":
                 self.scene.board.no_skip(

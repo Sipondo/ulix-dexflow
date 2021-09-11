@@ -4,6 +4,6 @@ from game.combat.effects import statuseffect
 
 
 class Badpoison(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         return ApplyStatus(self.scene, statuseffect.BADPOISON, self.move.user, self.move.target).apply()
 

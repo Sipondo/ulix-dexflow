@@ -10,7 +10,7 @@ class Snore(BaseMoveEffect):
             sleep_effects[0].skip = True
         return False, False, False
 
-    def after_move(self):
+    def after_action(self):
         return ApplyStatus(self.scene, statuseffect.FLINCH, self.move.user, self.move.target).apply()
 
 

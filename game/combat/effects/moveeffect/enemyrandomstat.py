@@ -9,7 +9,7 @@ class Enemyrandomstat(BaseMoveEffect):
         super().__init__(scene, move)
         self.mod = int(mod)
 
-    def after_move(self):
+    def after_action(self):
         stat = random.choice(["Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasion"])
         StatChange(self.scene, self.move.target, stat, self.mod).apply()
         return True

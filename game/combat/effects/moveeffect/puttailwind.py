@@ -4,5 +4,5 @@ from game.combat.effects import statuseffect
 
 
 class Puttailwind(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         return ApplyStatus(self.scene, statuseffect.TAILWIND, self.move.user, self.move.user).apply()

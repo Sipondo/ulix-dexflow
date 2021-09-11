@@ -10,7 +10,7 @@ class Antifaster(BaseMoveEffect):
         if self.scene.board.user == self.move.target:
             self.doubles = True
 
-    def before_move(self):
+    def before_action(self):
         if self.doubles:
             self.move.power *= 2
         return True

@@ -1,15 +1,32 @@
+from dataclasses import dataclass
+
+
 from .combatboard import CombatBoard
 from .effects.genericeffect import GenericEffect
 from .effects.fainteffect import FaintEffect
 from .effects.statuseffect import *
 
 
-STATUS_CLASSES = {"badpoison": BadPoison,
-                  "poison": Poison,
-                  "sleep": Sleep,
-                  "freeze": Freeze,
-                  "burn": Burn,
-                  "paralysis": Paralysis}
+STATUS_CLASSES = {
+    "badpoison": BadPoison,
+    "poison": Poison,
+    "sleep": Sleep,
+    "freeze": Freeze,
+    "burn": Burn,
+    "paralysis": Paralysis,
+}
+
+
+@dataclass
+class PokeFighterData:
+    level: int
+    max_hp: int
+    current_hp: int
+    exp_to_level: int
+    current_exp: int
+    can_fight: bool
+    active: bool
+    turn_sent_out: int
 
 
 class PokeBoard(CombatBoard):
@@ -31,15 +48,21 @@ class PokeBoard(CombatBoard):
         for i, team in enumerate(teams):
             team_formatted = []
             for j, poke in enumerate(team):
-                data = {
-                    "hp": poke.current_hp,
-                    "exp": poke.current_xp,
-                    "can_fight": True,
-                    "level": poke.level,
-                }
+                data = PokeFighterData(
+                    max_hp=poke.hp,
+                    current_hp=poke.current_hp,
+                    exp_to_level=poke.level_xp,
+                    current_exp=poke.current_xp,
+                    can_fight=True,
+                    level=poke.level,
+                    active=False,
+                    turn_sent_out=0
+                )
                 team_formatted.append((poke, data))
                 if poke.status is not None:
-                    self.scene.add_effect(STATUS_CLASSES[poke.status](self.scene, None, (i, j)))
+                    self.scene.add_effect(
+                        STATUS_CLASSES[poke.status](self.scene, None, (i, j))
+                    )
             self.teams.append(team_formatted)
             self.actives.append((0, 0))
             self.switch.append(False)
@@ -47,6 +70,7 @@ class PokeBoard(CombatBoard):
     def get_action_priority(self, action):
         prio = action.priority
         if action.user is None or action.target is None:
+            # running or using balls
             return 7_000_000
         user_actor = self.get_actor(action.user)
         user_speed = user_actor.stats[0]
@@ -60,11 +84,11 @@ class PokeBoard(CombatBoard):
 
     def inflict_damage(self, target, damage):
         x, data = self.teams[target[0]][target[1]]
-        damage = min(data["hp"], damage)
-        data["hp"] -= damage
+        damage = min(data.current_hp, damage)
+        data.current_hp -= damage
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
-        if self.get_data(target)["hp"] < 1:
+        if data.current_hp < 1:
             self.scene.add_effect(FaintEffect(self.scene, target))
 
     def inflict_status(self, status, user, target):
@@ -99,20 +123,20 @@ class PokeBoard(CombatBoard):
     def get_active_round(self, team):
         return self.actives[team][1]
 
-    def get_data(self, target):
+    def get_data(self, target) -> PokeFighterData:
         return self.teams[target[0]][target[1]][1]
 
-    def set_hp(self, target, new_hp):
-        self.teams[target[0]][target[1]][1]["hp"] = new_hp
+    def set_hp(self, target, new_hp: int):
+        self.teams[target[0]][target[1]][1].hp = new_hp
 
-    def set_exp(self, target, new_exp):
-        self.teams[target[0]][target[1]][1]["exp"] = new_exp
+    def set_exp(self, target, new_exp: int):
+        self.teams[target[0]][target[1]][1].current_exp = new_exp
 
-    def set_level(self, target, new_level):
-        self.teams[target[0]][target[1]][1]["level"] = new_level
+    def set_level(self, target, new_level: int):
+        self.teams[target[0]][target[1]][1].level = new_level
 
-    def set_can_fight(self, target, b):
-        self.teams[target[0]][target[1]][1]["can_fight"] = b
+    def set_can_fight(self, target, b: bool):
+        self.teams[target[0]][target[1]][1].can_fight = b
 
     def has_fighter(self, team):
         for mon, data in self.teams[team]:
@@ -121,17 +145,25 @@ class PokeBoard(CombatBoard):
         return False
 
     def get_relative_hp(self, target):
-        return self.get_data(target)["hp"] / self.teams[target[0]][target[1]][0].stats[0]
+        return (
+            self.get_data(target)["hp"] / self.teams[target[0]][target[1]][0].stats[0]
+        )
 
     def get_relative_xp(self, target):
-        return self.get_data(target)["exp"] / self.teams[target[0]][target[1]][0].level_xp
+        return (
+            self.get_data(target)["exp"] / self.teams[target[0]][target[1]][0].level_xp
+        )
 
     def sync_actor(self, target):
         actor = self.get_actor(target)
         actor.current_hp = self.get_data(target)["hp"]
         actor.current_xp = self.get_data(target)["exp"]
         actor.level = self.get_data(target)["level"]
-        if mjr_status := [x for x in self.scene.get_effects_on_target(target) if x.type == "Majorstatus"]:
+        if mjr_status := [
+            x
+            for x in self.scene.get_effects_on_target(target)
+            if x.type == "Majorstatus"
+        ]:
             actor.status = mjr_status[0].name.lower()
 
     @property

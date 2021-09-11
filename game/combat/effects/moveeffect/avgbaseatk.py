@@ -3,7 +3,7 @@ from ..basestatchangeeffect import *
 
 
 class Avgbaseatk(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         user_stats = self.scene.board.get_actor(self.move.target).stats
         target_stats = self.scene.board.get_actor(self.move.target).stats
 

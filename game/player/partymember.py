@@ -41,6 +41,11 @@ class PartyMember:
         self.current_hp = self.stats[0]
         self.status = None
 
+        self.abilities = [a for a in self.data.abilities.split(",")]
+        hidden_abilities = [a for a in self.data.hiddenability.split(",")]
+        self.abilities.extend(hidden_abilities)
+        self.current_ability = 0  # default ability will be first listed
+
         if isinstance(self.moves, str):
             l = self.moves.split(",")
             self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
@@ -118,5 +123,6 @@ class PartyMember:
         self.data["actions"] = self.actions
         self.data["learnset"] = self.learnset
         self.data["status"] = self.status
+        self.data["ability"] = self.abilities[self.current_ability]
 
         return self.data

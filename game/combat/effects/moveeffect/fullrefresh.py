@@ -3,7 +3,7 @@ from game.combat.effects.genericeffect import GenericEffect
 
 
 class Fullrefresh(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         for i in range(self.scene.board.get_team_size(self.move.user[0])):
             user = (self.move.user[0], i)
             user_effects = self.scene.get_effects_on_target(user)

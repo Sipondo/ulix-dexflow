@@ -7,6 +7,6 @@ class Enemyatk(BaseMoveEffect):
         super().__init__(scene, move)
         self.mod = int(mod)
 
-    def after_move(self):
+    def after_action(self):
         StatChange(self.scene, self.move.target, "Attack", self.mod).apply()
         return True

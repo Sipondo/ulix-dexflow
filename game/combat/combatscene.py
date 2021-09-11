@@ -11,7 +11,7 @@ import types
 import importlib
 from pathlib import Path
 
-EFFECTS_PATH = Path("game/combat/effects/moveeffect/")
+EFFECTS_PATH = Path("game/combat/effects/")
 
 
 class CombatScene:
@@ -30,19 +30,30 @@ class CombatScene:
         self.end = False
 
         self.effect_lib = {}
+        self.ability_lib = {}
 
         self.action_effects = []
 
-        self.init_effects()
+        self.init_move_effects()
+        self.init_abilities()
 
-    def init_effects(self):
-        for x in EFFECTS_PATH.glob("*.py"):
+    def init_move_effects(self):
+        for x in (EFFECTS_PATH / "moveeffect").glob("*.py"):
             if "basemoveeffect" in x.stem or "init" in x.stem:
                 continue
             lib = importlib.import_module(
                 f".{x.stem}", package="game.combat.effects.moveeffect"
             )
             self.effect_lib[x.stem] = getattr(lib, x.stem.capitalize())
+
+    def init_abilities(self):
+        for x in (EFFECTS_PATH / "abilityeffect").glob("*.py"):
+            if "baseabilityeffect" in x.stem or "init" in x.stem:
+                continue
+            lib = importlib.import_module(
+                f".{x.stem}", package="game.combat.effects.abilityeffect"
+            )
+            self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
 
     def init_board(self, team_1, team_2):
         self.board.first_init(team_1, team_2)
@@ -51,7 +62,9 @@ class CombatScene:
         return [self.init_fighter(x) for x in team]
 
     def init_fighter(self, src):
-        return PokeFighter(self.game, self, src)
+        fighter = PokeFighter(self.game, self, src)
+
+        return fighter
 
     def run_scene(self, action_descriptions=None, next_round=True):
         self.end = False
@@ -77,37 +90,42 @@ class CombatScene:
             # dit is alleen om in de state de huidige 'actor' aan te geven
             self.board.set_direction(move_effect)
 
-            # skip = False
+            # TODO skip is scary. It might introduce bugs where effects are supposed to happen but don't. Should rework
+
+            skip = False
 
             # Before action
-            # for effect in sorted(self.effects, key=lambda x: -x.spd_before_action):
-            #     skip = self.run_effect(effect, effect.before_action)
-            #     if skip:
-            #         break
-            #
-            # self.reset_effects_done()
-            # if skip:
-            #     continue
+            while effects := [
+                x
+                for x in sorted(self.effects, key=lambda x: -x.spd_before_action)
+                if not x.done and not x.skip
+            ]:
+                skip = self.run_effect(effects[0], effects[0].before_action)
+
+            self.reset_effects_done()
 
             # On action
+            if skip:
+                continue
+
             while effects := [
                 x
                 for x in sorted(self.effects, key=lambda x: -x.spd_on_action)
                 if not x.done and not x.skip
             ]:
                 skip = self.run_effect(effects[0], effects[0].on_action)
-                if skip:
-                    break
 
             self.reset_effects_done()
 
-            # if skip:
-            #     continue
-            # # After action
-            # for effect in sorted(self.effects, key=lambda x: -x.spd_after_action):
-            #     skip = self.run_effect(effect, effect.after_action)
-            #     if skip:
-            #         continue
+            # After action
+            if skip:
+                continue
+            while effects := [
+                x
+                for x in sorted(self.effects, key=lambda x: -x.spd_after_action)
+                if not x.done and not x.skip
+            ]:
+                self.run_effect(effects[0], effects[0].after_action)
         self.board.reset_action()
 
         # Before end
@@ -117,9 +135,7 @@ class CombatScene:
                 for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
                 if not x.done and not x.skip
             ]:
-                skip = self.run_effect(effects[0], effects[0].before_end)
-                if skip:
-                    break
+                self.run_effect(effects[0], effects[0].before_end)
 
         self.reset_effects_done()
         self.reset_effects_skip()

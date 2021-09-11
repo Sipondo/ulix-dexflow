@@ -4,5 +4,5 @@ from game.combat.effects import statuseffect
 
 
 class Attract(BaseMoveEffect):
-    def after_move(self):
-        return ApplyStatus(self.scene, statuseffect.INFATUATION, self.move.user, self.move.target).apply()
+    def after_action(self, move):
+        return ApplyStatus(self.scene, statuseffect.INFATUATION, move.user, move.target).apply()

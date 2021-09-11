@@ -4,7 +4,7 @@ from ..genericeffect import GenericEffect
 
 
 class Swapdefstats(BaseMoveEffect):
-    def after_move(self):
+    def after_action(self):
         if statmod_effect := [
             x
             for x in self.scene.get_effects_on_target(self.move.user)

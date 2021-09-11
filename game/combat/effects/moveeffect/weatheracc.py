@@ -2,7 +2,7 @@ from .basemoveeffect import BaseMoveEffect
 
 
 class Weatheracc(BaseMoveEffect):
-    def before_move(self):
+    def before_action(self):
         global_effects = self.scene.get_global_effects()
         for weather in [x.name for x in global_effects if x.type == "Weather"]:
             weather_acc_change = weather.acc_change(self.move.name)

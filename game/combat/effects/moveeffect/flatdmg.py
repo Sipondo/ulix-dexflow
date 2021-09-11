@@ -7,6 +7,6 @@ class Flatdmg(BaseMoveEffect):
         super().__init__(scene, move)
         self.dmg = int(dmg)
 
-    def after_move(self):
+    def after_action(self):
         self.scene.add_effect(DamageEffect(self.scene, self.move.target, abs_dmg=self.dmg))
         return True
