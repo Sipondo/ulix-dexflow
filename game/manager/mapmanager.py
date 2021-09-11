@@ -13,6 +13,7 @@ class MapManager:
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
         self.allow_save = False
+        self.allow_cycle = False
         self.environment = "forest"
         self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 
@@ -69,6 +70,7 @@ class MapManager:
         self.local_encounter_level_max = 0
 
         self.allow_save = fields["allow_save"]
+        self.allow_cycle = fields["allow_cycle"]
         self.environment = fields["environment"]
         if fields["hospital"]:
             self.hospital = fields["hospital"]
@@ -96,10 +98,6 @@ class MapManager:
 
     def get_level_size(self, level_id):
         return self.levels[level_id]["orig_dimensions"]
-        for mapdef in self.levels[level_id]["layers"]:
-            if mapdef[0] == "TILES":
-                ltype, level, tiles, collision = mapdef
-                return tiles.shape[1:3]
 
     @property
     def current_level(self):

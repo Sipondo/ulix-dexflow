@@ -74,11 +74,11 @@ class TileLayer:
             return
 
         if self.terminate >= self.terminate_step:
-            self.terminate += self.terminate_step * 20 * frame_time
+            self.terminate += self.terminate_step * 150 * frame_time
             if self.terminate >= 1:
                 self.terminated = True
         elif self.terminate <= -self.terminate_step:
-            self.terminate += self.terminate_step * 20 * frame_time
+            self.terminate += self.terminate_step * 150 * frame_time
         else:
             self.terminate = 0
 

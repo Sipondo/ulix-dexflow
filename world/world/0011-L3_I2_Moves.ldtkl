@@ -36,7 +36,17 @@
 		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+		{
+			"__identifier": "allow_cycle",
+			"__value": false,
+			"__type": "Bool",
+			"defUid": 467,
+			"realEditorValues": [{
+				"id": "V_Bool",
+				"params": [ false ]
+			}]
+		}
 	],
 	"layerInstances": [
 		{
@@ -287,7 +297,16 @@
 								"params": ["../resources/essentials/graphics/characters/trchar055.png"]
 							}]
 						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "#TODO",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["#TODO"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",
@@ -335,7 +354,16 @@
 								"params": ["../resources/essentials/graphics/characters/trchar038.png"]
 							}]
 						},
-						{ "__identifier": "on_interact_action", "__value": "", "__type": "String", "defUid": 89, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "#TODO",
+							"__type": "String",
+							"defUid": 89,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["#TODO"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "S",

@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 467,
+	"nextUid": 468,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -4052,7 +4052,7 @@
 			"__cHei": 7,
 			"identifier": "Animated_sea_0_500",
 			"uid": 466,
-			"relPath": "../resources/essentials/graphics/autotiles/animated/sea/animated_sea_0_500.png",
+			"relPath": "../resources/essentials/graphics/autotiles/slide/sea/sea_slide_0_500.png",
 			"pxWid": 112,
 			"pxHei": 112,
 			"tileGridSize": 16,
@@ -4063,8 +4063,8 @@
 			"customData": [],
 			"savedSelections": [],
 			"cachedPixelData": {
-				"opaqueTiles": "0001111000111111111111111011001111111111111111111",
-				"averageColors": "0000f569f679f56bf47df47df47de768f569f679f56bf47cf47cf47bf668f56bf67bf47df47cf47cf47bf668f56bf67bf47de768f56bf67bf569f679f56bf56bf56bf56af57af56af57af47bf47cf47cf47cf47cf56af57af47bf47cf47cf47bf47b"
+				"opaqueTiles": "0001111000111100011111111011001111100111111111111",
+				"averageColors": "0000e658e768f669f47cf47cf47ce768f569f669f56bf47cf47cf47ce668f66af66af57bf47cf47cf46bf668f56bf67bf47de767f56af67af569f669f56af56af56af56af67af669f669f56af57bf57bf47bf47bf56af66af46bf47cf47cf47bf47b"
 			}
 		}
 	], "enums": [
@@ -4629,6 +4629,29 @@
 			"textLanguageMode": null
 		},
 		{
+			"identifier": "allow_cycle",
+			"__type": "Bool",
+			"uid": 467,
+			"type": "F_Bool",
+			"isArray": false,
+			"canBeNull": false,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayPos": "Above",
+			"editorAlwaysShow": false,
+			"editorCutLongValues": true,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": {
+				"id": "V_Bool",
+				"params": [ true ]
+			},
+			"textLanguageMode": null
+		},
+		{
 			"identifier": "environment",
 			"__type": "String",
 			"uid": 453,
@@ -4918,7 +4941,8 @@
 						"id": "V_String",
 						"params": ["L1_I1"]
 					}]
-				}
+				},
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 435, "dir": "n" }, { "levelUid": 181, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
@@ -4952,7 +4976,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 181, "dir": "e" } ]
@@ -4995,7 +5029,17 @@
 					}]
 				},
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 181, "dir": "w" }, { "levelUid": 311, "dir": "s" } ]
@@ -5029,7 +5073,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 179, "dir": "w" }, { "levelUid": 435, "dir": "e" } ]
@@ -5063,7 +5117,8 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [
@@ -5103,7 +5158,8 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [
@@ -5143,7 +5199,8 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
@@ -5177,7 +5234,8 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 317, "dir": "w" }]
@@ -5211,7 +5269,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 311, "dir": "w" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 456, "dir": "e" } ]
@@ -5245,7 +5313,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 462, "dir": "e" }, { "levelUid": 457, "dir": "w" } ]
@@ -5279,7 +5357,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 461, "dir": "w" }]
@@ -5313,7 +5401,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
@@ -5347,7 +5445,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelUid": 456, "dir": "s" }]
@@ -5381,7 +5489,17 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{
+					"__identifier": "allow_cycle",
+					"__value": false,
+					"__type": "Bool",
+					"defUid": 467,
+					"realEditorValues": [{
+						"id": "V_Bool",
+						"params": [ false ]
+					}]
+				}
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
@@ -5415,7 +5533,8 @@
 				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": []

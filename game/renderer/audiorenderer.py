@@ -19,8 +19,8 @@ emap = {
 }
 
 SOUND_EFFECT_CHANNELS = 8
-VOLUME = 0.5
-VOLUME_MUSIC = 0.7
+VOLUME = 0.05
+VOLUME_MUSIC = 0.07
 
 
 class AudioRenderer:
