@@ -45,7 +45,17 @@
 			}]
 		},
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+		{
+			"__identifier": "allow_cycle",
+			"__value": false,
+			"__type": "Bool",
+			"defUid": 467,
+			"realEditorValues": [{
+				"id": "V_Bool",
+				"params": [ false ]
+			}]
+		}
 	],
 	"layerInstances": [
 		{
@@ -133,10 +143,10 @@
 						},
 						{
 							"__identifier": "target_location",
-							"__value": [9,5],
+							"__value": [10,6],
 							"__type": "Array<Int>",
 							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [9] }, { "id": "V_Int", "params": [5] } ]
+							"realEditorValues": [ { "id": "V_Int", "params": [10] }, { "id": "V_Int", "params": [6] } ]
 						},
 						{
 							"__identifier": "on_enter_action",

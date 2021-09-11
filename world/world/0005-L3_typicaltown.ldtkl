@@ -36,7 +36,8 @@
 		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
 		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
-		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] },
+		{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{

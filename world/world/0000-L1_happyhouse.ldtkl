@@ -69,7 +69,8 @@
 				"id": "V_String",
 				"params": ["L1_I1"]
 			}]
-		}
+		},
+		{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "defUid": 467, "realEditorValues": [] }
 	],
 	"layerInstances": [
 		{
@@ -184,10 +185,10 @@
 						},
 						{
 							"__identifier": "target_location",
-							"__value": [5,8],
+							"__value": [6,9],
 							"__type": "Array<Int>",
 							"defUid": 20,
-							"realEditorValues": [ { "id": "V_Int", "params": [5] }, { "id": "V_Int", "params": [8] } ]
+							"realEditorValues": [ { "id": "V_Int", "params": [6] }, { "id": "V_Int", "params": [9] } ]
 						},
 						{
 							"__identifier": "on_enter_action",
@@ -260,13 +261,13 @@
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}",
+							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, ben ik niet iets vergeten?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  !e_2_kim: Jump()\n  e_3_old_man: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"Misschien is de McGuffin nog in mijn kamer!\"\n  target: \"Laat ik die maar snel eventjes gaan halen!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hoihoi moeder!\"\n  e_mom: Move(5, 7, True)\n  e_mom: \"Hee schat, ben je er weer?\"\n  # target: Move(5,2)\n  target: Move(9,2)\n  target: \"Ah, daar ligt ie!\"\n  target: Move(2,6)\n  target: Move(8,2)\n  target: Move(3,3, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(5,8)\n  target: Move(26,14)\n  game: Overworld()\n}"
+									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}"
 								]
 							}]
 						},
@@ -460,121 +461,7 @@
 			"seed": 192065,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": [
-				{
-					"__identifier": "Opponent",
-					"__grid": [30,11],
-					"__pivot": [0.5,0.5],
-					"__tile": { "tilesetUid": 384, "srcRect": [32,0,16,16] },
-					"width": 16,
-					"height": 16,
-					"defUid": 4,
-					"px": [488,184],
-					"fieldInstances": [
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar016.png",
-							"__type": "FilePath",
-							"defUid": 66,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar016.png"]
-							}]
-						},
-						{ "__identifier": "on_aggro_action", "__value": "<<<opponent_on_aggro>>>", "__type": "String", "defUid": 90, "realEditorValues": [] },
-						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
-						{
-							"__identifier": "direction",
-							"__value": "W",
-							"__type": "LocalEnum.Direction",
-							"defUid": 378,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["W"]
-							}]
-						},
-						{
-							"__identifier": "battlers",
-							"__value": [
-								"Charizard",
-								"Smeargle",
-								"Smeargle",
-								"Ponyta",
-								"Pichu",
-								"Pichu"
-							],
-							"__type": "Array<LocalEnum.Battlers>",
-							"defUid": 379,
-							"realEditorValues": [
-								{
-									"id": "V_String",
-									"params": ["Charizard"]
-								},
-								{
-									"id": "V_String",
-									"params": ["Smeargle"]
-								},
-								{
-									"id": "V_String",
-									"params": ["Smeargle"]
-								},
-								{
-									"id": "V_String",
-									"params": ["Ponyta"]
-								},
-								{
-									"id": "V_String",
-									"params": ["Pichu"]
-								},
-								{
-									"id": "V_String",
-									"params": ["Pichu"]
-								}
-							]
-						},
-						{
-							"__identifier": "name",
-							"__value": "Mister Old Man",
-							"__type": "String",
-							"defUid": 380,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["Mister Old Man"]
-							}]
-						},
-						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "defUid": 381, "realEditorValues": [] },
-						{
-							"__identifier": "entity_uid",
-							"__value": "3_old_man",
-							"__type": "String",
-							"defUid": 382,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["3_old_man"]
-							}]
-						},
-						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 383, "realEditorValues": [] },
-						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
-						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
-						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
-						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 421, "realEditorValues": [] },
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 422, "realEditorValues": [] },
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/Trainers/GAMBLER.png",
-							"__type": "FilePath",
-							"defUid": 437,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/Trainers/GAMBLER.png"]
-							}]
-						},
-						{ "__identifier": "level", "__value": 5, "__type": "Int", "defUid": 451, "realEditorValues": [] }
-					]
-				}
-			]
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Collision_B",

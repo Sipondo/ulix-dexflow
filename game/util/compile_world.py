@@ -9,7 +9,6 @@ from game.upl.uplmanager import UplParser
 
 
 def compile_world(pth):
-
     root = Path(pth)
 
     """
