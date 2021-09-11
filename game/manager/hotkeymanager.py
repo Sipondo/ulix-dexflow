@@ -41,6 +41,7 @@ class HotkeyManager:
 
     def key_event(self, key, action, modifiers):
         request_list = self.lookup_key(key)
+
         for request in request_list:
             # print(f"keypress {key}\t{request}\t{action}\t{modifiers}")
 
@@ -81,4 +82,6 @@ class HotkeyManager:
             if key == t[0]:
                 if not self.game.m_gst.current_state.block_input or t[2]:
                     r.append(t[1])
-        return r
+        if r:
+            return r
+        return [""]

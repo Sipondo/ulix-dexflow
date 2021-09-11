@@ -47,10 +47,13 @@ class TileLayer:
             self.map[h] = self.map[h] * 0
 
     def set_tile(self, h, x, y, tile):
-        self.map[int(h), int(y), int(x)] = (int(tile[0]), int(tile[1]))
+        self.map[int(h), int(y), int(x)] = (int(tile[0]) + 1, int(tile[1]))
 
     def get_tile(self, h, x, y):
-        return self.map[int(h), int(y), int(x)]
+        tile = self.map[int(h), int(y), int(x)]
+        if tile[0] == 0 and tile[1] == 0:
+            return tile
+        return (tile[0] - 1, tile[1])
 
     def temp_init(self):
         self.prog["displaySize"].value = self.game.size

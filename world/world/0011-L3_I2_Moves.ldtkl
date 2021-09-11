@@ -11,7 +11,7 @@
 	"identifier": "L3_I2_Moves",
 	"uid": 456,
 	"worldX": 1600,
-	"worldY": 720,
+	"worldY": 752,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -1058,5 +1058,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
+	"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 455, "dir": "w" }, { "levelUid": 459, "dir": "n" }, { "levelUid": 457, "dir": "e" } ]
 }

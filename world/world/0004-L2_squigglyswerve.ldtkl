@@ -8,7 +8,7 @@
 		"appVersion": "0.9.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "L2_squigglyswerve",
+	"identifier": "L2_SquigglySwerve",
 	"uid": 311,
 	"worldX": 544,
 	"worldY": 0,
@@ -1826,13 +1826,13 @@
 						},
 						{
 							"__identifier": "on_interact_action",
-							"__value": "game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()",
+							"__value": "game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\", \"Them\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()",
 							"__type": "String",
 							"defUid": 89,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()"
+									"game: Cinematic()\nself: \"I am the Name Changer! What is your name?\"\ngame: Prompt(\"\")\nplayer: name = game.text_input\nself: Ask(\"And are you a he or a she?\", (\"He\", \"She\", \"Them\"))\nif(game.selection_text == \"He\"){\n  player: gender = \"male\"\n}else{\n  if(game.selection_text == \"She\"){\n    player: gender = \"female\"\n  }else{\n    player: gender = \"nonbinary\"\n  }\n}\nself: \"{player.name} {player.he} {player.his} {player.che} {player.chis}\"\ngame: Overworld()"
 								]
 							}]
 						},
@@ -9484,5 +9484,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
+	"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
 }

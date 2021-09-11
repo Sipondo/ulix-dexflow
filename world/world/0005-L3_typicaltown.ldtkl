@@ -8,10 +8,10 @@
 		"appVersion": "0.9.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "L3_typicaltown",
+	"identifier": "L3_TypicalTown",
 	"uid": 316,
-	"worldX": 1280,
-	"worldY": 976,
+	"worldX": 1296,
+	"worldY": 944,
 	"pxWid": 688,
 	"pxHei": 432,
 	"__bgColor": "#7F8093",
@@ -590,7 +590,12 @@
 			"overrideTilesetUid": null,
 			"gridTiles": [
 				{ "px": [320,96], "src": [32,2288], "f": 0, "t": 1146, "d": [278] },
-				{ "px": [336,96], "src": [48,2288], "f": 0, "t": 1147, "d": [279] }
+				{ "px": [336,96], "src": [48,2288], "f": 0, "t": 1147, "d": [279] },
+				{ "px": [304,112], "src": [0,0], "f": 0, "t": 0, "d": [320] },
+				{ "px": [320,112], "src": [0,0], "f": 0, "t": 0, "d": [321] },
+				{ "px": [336,112], "src": [0,0], "f": 0, "t": 0, "d": [322] },
+				{ "px": [272,128], "src": [0,0], "f": 0, "t": 0, "d": [361] },
+				{ "px": [288,128], "src": [0,0], "f": 0, "t": 0, "d": [362] }
 			],
 			"entityInstances": []
 		},
@@ -3294,5 +3299,11 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 311, "dir": "s" }, { "levelUid": 317, "dir": "s" } ]
+	"__neighbours": [
+		{ "levelUid": 311, "dir": "w" },
+		{ "levelUid": 317, "dir": "s" },
+		{ "levelUid": 455, "dir": "n" },
+		{ "levelUid": 456, "dir": "n" },
+		{ "levelUid": 457, "dir": "n" }
+	]
 }

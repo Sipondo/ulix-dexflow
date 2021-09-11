@@ -8,7 +8,7 @@
 		"appVersion": "0.9.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "L4_repeatingroute",
+	"identifier": "L4_RepeatingRoute",
 	"uid": 317,
 	"worldX": 1088,
 	"worldY": 1376,
@@ -3681,5 +3681,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "s" }, { "levelUid": 318, "dir": "e" } ]
+	"__neighbours": [ { "levelUid": 311, "dir": "n" }, { "levelUid": 316, "dir": "n" }, { "levelUid": 318, "dir": "e" } ]
 }

@@ -8,7 +8,7 @@
 		"appVersion": "0.9.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "L1_I3_starterhouse3",
+	"identifier": "L1_I3_StarterHouseLightPuzzle",
 	"uid": 435,
 	"worldX": 448,
 	"worldY": -320,
@@ -34,7 +34,16 @@
 		{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
 		{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
 		{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
-		{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
+		{
+			"__identifier": "allow_save",
+			"__value": false,
+			"__type": "Bool",
+			"defUid": 452,
+			"realEditorValues": [{
+				"id": "V_Bool",
+				"params": [ false ]
+			}]
+		},
 		{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
 		{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 	],
