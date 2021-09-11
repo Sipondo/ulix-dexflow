@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 465,
+	"nextUid": 467,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -4046,6 +4046,26 @@
 			"customData": [],
 			"savedSelections": [],
 			"cachedPixelData": { "opaqueTiles": "000000000000", "averageColors": "00005ef85ef88ef84ef84ef84ef84ef82ef82ef82ef82ef8" }
+		},
+		{
+			"__cWid": 7,
+			"__cHei": 7,
+			"identifier": "Animated_sea_0_500",
+			"uid": 466,
+			"relPath": "../resources/essentials/graphics/autotiles/animated/sea/animated_sea_0_500.png",
+			"pxWid": 112,
+			"pxHei": 112,
+			"tileGridSize": 16,
+			"spacing": 0,
+			"padding": 0,
+			"tagsSourceEnumUid": null,
+			"enumTags": [],
+			"customData": [],
+			"savedSelections": [],
+			"cachedPixelData": {
+				"opaqueTiles": "0001111000111111111111111011001111111111111111111",
+				"averageColors": "0000f569f679f56bf47df47df47de768f569f679f56bf47cf47cf47bf668f56bf67bf47df47cf47cf47bf668f56bf67bf47de768f56bf67bf569f679f56bf56bf56bf56af57af56af57af47bf47cf47cf47cf47cf56af57af47bf47cf47cf47bf47b"
+			}
 		}
 	], "enums": [
 		{ "identifier": "Settables", "uid": 360, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
@@ -5359,6 +5379,40 @@
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelUid": 316, "dir": "s" }, { "levelUid": 461, "dir": "e" }, { "levelUid": 456, "dir": "w" } ]
+		},
+		{
+			"identifier": "L6_SeaSideShore",
+			"uid": 465,
+			"worldX": 930,
+			"worldY": -522,
+			"pxWid": 432,
+			"pxHei": 320,
+			"__bgColor": "#7F8093",
+			"bgColor": null,
+			"useAutoIdentifier": false,
+			"bgRelPath": null,
+			"bgPos": null,
+			"bgPivotX": 0.5,
+			"bgPivotY": 0.5,
+			"__bgPos": null,
+			"externalRelPath": "world/0014-L6_SeaSideShore.ldtkl",
+			"fieldInstances": [
+				{ "__identifier": "on_enter", "__value": null, "__type": "String", "defUid": 361, "realEditorValues": [] },
+				{ "__identifier": "step", "__value": null, "__type": "String", "defUid": 362, "realEditorValues": [] },
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "defUid": 363, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "defUid": 448, "realEditorValues": [] },
+				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "defUid": 452, "realEditorValues": [] },
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
+			],
+			"layerInstances": null,
+			"__neighbours": []
 		}
 	]
 }
