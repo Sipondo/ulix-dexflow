@@ -4921,15 +4921,15 @@
 				}
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
+			"__neighbours": [ { "levelUid": 179, "dir": "n" }, { "levelUid": 435, "dir": "n" }, { "levelUid": 181, "dir": "n" }, { "levelUid": 311, "dir": "e" } ]
 		},
 		{
 			"identifier": "L1_I1_StarterHouse",
 			"uid": 179,
-			"worldX": 48,
-			"worldY": -144,
-			"pxWid": 176,
-			"pxHei": 144,
+			"worldX": -32,
+			"worldY": -176,
+			"pxWid": 208,
+			"pxHei": 176,
 			"__bgColor": "#7F8093",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4955,15 +4955,15 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [{ "levelUid": 95, "dir": "s" }]
+			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 181, "dir": "e" } ]
 		},
 		{
 			"identifier": "L1_I3_StarterHouseLightPuzzle",
 			"uid": 435,
-			"worldX": 448,
+			"worldX": 384,
 			"worldY": -320,
-			"pxWid": 368,
-			"pxHei": 288,
+			"pxWid": 400,
+			"pxHei": 320,
 			"__bgColor": "#7F8093",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -4998,15 +4998,15 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": []
+			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 181, "dir": "w" }, { "levelUid": 311, "dir": "s" } ]
 		},
 		{
 			"identifier": "L1_I2_StarterHouseFloor2",
 			"uid": 181,
-			"worldX": 240,
-			"worldY": -144,
-			"pxWid": 176,
-			"pxHei": 128,
+			"worldX": 176,
+			"worldY": -160,
+			"pxWid": 208,
+			"pxHei": 160,
 			"__bgColor": "#7F8093",
 			"bgColor": null,
 			"useAutoIdentifier": false,
@@ -5032,7 +5032,7 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": []
+			"__neighbours": [ { "levelUid": 95, "dir": "s" }, { "levelUid": 179, "dir": "w" }, { "levelUid": 435, "dir": "e" } ]
 		},
 		{
 			"identifier": "L2_SquigglySwerve",
@@ -5066,7 +5066,13 @@
 				{ "__identifier": "hospital", "__value": null, "__type": "String", "defUid": 454, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
+			"__neighbours": [
+				{ "levelUid": 95, "dir": "w" },
+				{ "levelUid": 435, "dir": "n" },
+				{ "levelUid": 316, "dir": "e" },
+				{ "levelUid": 317, "dir": "s" },
+				{ "levelUid": 455, "dir": "e" }
+			]
 		},
 		{
 			"identifier": "L3_TypicalTown",

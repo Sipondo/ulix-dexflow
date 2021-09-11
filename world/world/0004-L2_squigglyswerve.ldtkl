@@ -9484,5 +9484,11 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelUid": 95, "dir": "w" }, { "levelUid": 316, "dir": "e" }, { "levelUid": 317, "dir": "s" }, { "levelUid": 455, "dir": "e" } ]
+	"__neighbours": [
+		{ "levelUid": 95, "dir": "w" },
+		{ "levelUid": 435, "dir": "n" },
+		{ "levelUid": 316, "dir": "e" },
+		{ "levelUid": 317, "dir": "s" },
+		{ "levelUid": 455, "dir": "e" }
+	]
 }
