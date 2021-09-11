@@ -42,7 +42,7 @@ class PokeBoard(CombatBoard):
             team_formatted = []
             for j, poke in enumerate(team):
                 data = PokeFighterData(
-                    max_hp=poke.hp,
+                    max_hp=poke.stats[0],
                     current_hp=poke.current_hp,
                     exp_to_level=poke.level_xp,
                     current_exp=poke.current_xp,
