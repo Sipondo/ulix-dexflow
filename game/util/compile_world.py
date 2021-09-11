@@ -151,7 +151,6 @@ def compile_world(pth):
                 )
                 # f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
             )
-            print("TILESET!!!", tileset)
 
             if tileset != None:
                 tile_array = np.zeros(
