@@ -5,4 +5,5 @@ from game.combat.effects import statuseffect
 
 class Confusion(BaseMoveEffect):
     def after_action(self):
-        return ApplyStatus(self.scene, statuseffect.CONFUSION, self.move.user, self.move.target).apply()
+        ApplyStatus(self.scene, statuseffect.CONFUSION, self.move.user, self.move.target).apply()
+        return True, False, False

@@ -9,4 +9,4 @@ class Antiselfstatus(BaseMoveEffect):
                 if major_status.name == "Burn":
                     major_status.skip = True
             self.move.power *= 2
-        return True
+        return True, False, False

@@ -39,4 +39,4 @@ class Copyallstats(BaseMoveEffect):
                 f"{self.scene.board.get_actor(self.move.target)}'s stat changes!",
             )
         )
-        return True
+        return True, False, False

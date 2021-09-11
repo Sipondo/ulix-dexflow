@@ -10,4 +10,4 @@ class Weatheracc(BaseMoveEffect):
                 self.move.perfect_accuracy = True
             else:
                 self.move.acc += weather_acc_change
-        return True
+        return True, False, False

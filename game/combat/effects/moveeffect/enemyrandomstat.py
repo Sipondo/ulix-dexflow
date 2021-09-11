@@ -12,4 +12,4 @@ class Enemyrandomstat(BaseMoveEffect):
     def after_action(self):
         stat = random.choice(["Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasion"])
         StatChange(self.scene, self.move.target, stat, self.mod).apply()
-        return True
+        return True, False, False

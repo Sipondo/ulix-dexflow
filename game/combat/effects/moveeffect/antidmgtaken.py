@@ -13,4 +13,4 @@ class Antidmgtaken(BaseMoveEffect):
     def before_action(self):
         if self.doubles:
             self.move.power *= 2
-        return True
+        return False, False, False

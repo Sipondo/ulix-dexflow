@@ -66,7 +66,7 @@ class ExperienceEffect(BaseEffect):
             # EV reward here (don't repeat after levelup)
             self.scene.board.get_actor(self.target).gain_evs(self.get_ev_reward())
         actor = self.scene.board.get_actor(self.target)
-        current_xp = self.scene.board.get_data(self.target)["exp"]
+        current_xp = self.scene.board.get_data(self.target).current_exp
         xp_needed = actor.level_xp - current_xp
         if xp_needed <= self.amount:
             self.amount -= xp_needed

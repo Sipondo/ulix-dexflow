@@ -10,8 +10,9 @@ class Paralyze(BaseMoveEffect):
             if "Minimize" in [x.name for x in target_effects]:
                 self.move.perfect_accuracy = True
                 self.move.power *= 2
-        return True
+        return False, False, False
 
     def after_action(self):
-        return ApplyStatus(self.scene, statuseffect.PARALYSIS, self.move.user, self.move.target).apply()
+        ApplyStatus(self.scene, statuseffect.PARALYSIS, self.move.user, self.move.target).apply()
+        return True, False, False
 

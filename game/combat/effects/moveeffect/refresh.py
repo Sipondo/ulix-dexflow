@@ -13,4 +13,4 @@ class Refresh(BaseMoveEffect):
                 f"{self.scene.board.get_actor(self.move.user).name} was cured!",
             )
         )
-        return True
+        return True, False, False

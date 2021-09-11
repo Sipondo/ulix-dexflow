@@ -5,4 +5,5 @@ from game.combat.effects import statuseffect
 
 class Poison(BaseMoveEffect):
     def after_action(self):
-        return ApplyStatus(self.scene, statuseffect.POISON, self.move.user, self.move.target).apply()
+        ApplyStatus(self.scene, statuseffect.POISON, self.move.user, self.move.target).apply()
+        return True, False, False

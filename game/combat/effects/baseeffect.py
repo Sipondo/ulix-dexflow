@@ -43,12 +43,12 @@ class BaseEffect(abc.ABC):
         """All effects that happen before a turn ends."""
         return False, False, False
 
-    def before_action(self, move):
+    def before_action(self):
         """All effects that happen before an action occurs.
         This includes checks for whether the action can be performed"""
         return False, False, False
 
-    def after_action(self, move):
+    def after_action(self):
         """All effects that happen before an action occurs.
         This includes checks for whether the action can be performed"""
         return False, False, False

@@ -9,4 +9,4 @@ class Enemydef(BaseMoveEffect):
 
     def after_action(self):
         StatChange(self.scene, self.move.target, "Defense", self.mod).apply()
-        return True
+        return True, False, False

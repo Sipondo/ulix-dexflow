@@ -10,4 +10,4 @@ class Growth(BaseMoveEffect):
             mod = 2
         StatChange(self.scene, self.move.user, "Attack", mod).apply()
         StatChange(self.scene, self.move.user, "Defense", mod).apply()
-        return True
+        return True, False, False

@@ -9,4 +9,4 @@ class Selfdef(BaseMoveEffect):
 
     def after_action(self):
         StatChange(self.scene, self.move.user, "Defense", self.mod).apply()
-        return True
+        return True, False, False

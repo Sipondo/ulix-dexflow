@@ -7,4 +7,4 @@ class Curl(BaseMoveEffect):
         target_effects = self.scene.get_effects_on_target(self.move.target)
         if "Curl" not in [x.name for x in target_effects]:
             self.scene.add_effect(CurlEffect(self.scene, self.target))
-        return True
+        return True, False, False

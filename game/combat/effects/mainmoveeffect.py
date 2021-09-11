@@ -22,6 +22,8 @@ class MainMove(BaseEffect):
         self.abs_acc = False
         self.perfect_accuracy = True if move.accuracy == 0 else False
 
+        self.fail = False
+
         # no target (if enemy fainted)
         self.target_fainted = False
 
@@ -152,7 +154,6 @@ class MainMove(BaseEffect):
     def on_action(self):
         if self.scene.board.user != self.user:
             return False, False, False
-
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
             particle=self.name, move_data=self.move
@@ -162,6 +163,10 @@ class MainMove(BaseEffect):
                 GenericEffect(self.scene, "But there was no target..")
             )
             return True, True, False
+        if self.fail:
+            self.scene.add_effect(
+                GenericEffect(self.scene, "But it failed..")
+            )
         if self.move_hit():
             return True, False, False
         return True, True, False
@@ -175,7 +180,3 @@ class MainMove(BaseEffect):
         if self.target == target:
             self.target_fainted = True
         return False, False, False
-
-    def on_delete(self):
-        for effect in self.effects:
-            self.scene.delete_effect(effect)

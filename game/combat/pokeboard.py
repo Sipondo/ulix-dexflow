@@ -1,6 +1,7 @@
-from dataclasses import dataclass
+import dataclasses
 import copy
 
+from numpy.typing import ArrayLike
 
 from .combatboard import CombatBoard
 from .effects.genericeffect import GenericEffect
@@ -18,16 +19,17 @@ STATUS_CLASSES = {
 }
 
 
-@dataclass
+@dataclasses.dataclass
 class PokeFighterData:
+    """Represents all variable data about a Pokémon during a battle."""
     level: int
     max_hp: int
     current_hp: int
     exp_to_level: int
     current_exp: int
     can_fight: bool
-    active: bool
     turn_sent_out: int
+    evs: ArrayLike
 
 
 class PokeBoard(CombatBoard):
@@ -46,10 +48,10 @@ class PokeBoard(CombatBoard):
                     current_hp=poke.current_hp,
                     exp_to_level=poke.level_xp,
                     current_exp=poke.current_xp,
-                    can_fight=True,
+                    can_fight=poke.current_hp > 0,
                     level=poke.level,
-                    active=False,
-                    turn_sent_out=0
+                    turn_sent_out=0,
+                    evs=poke.stats_EV
                 )
                 team_formatted.append((poke, data))
                 if poke.status is not None:
@@ -57,7 +59,8 @@ class PokeBoard(CombatBoard):
                         STATUS_CLASSES[poke.status](self.scene, None, (i, j))
                     )
             self.teams.append(team_formatted)
-            self.actives.append((0, 0))
+            # find first alive poke
+            self.actives.append(next(idx for idx, (poke, data) in enumerate(team_formatted) if data.can_fight))
             self.switch.append(False)
 
     def copy(self):
@@ -71,9 +74,8 @@ class PokeBoard(CombatBoard):
     def from_board(self, board):
         for index, team in enumerate(board.teams):
             self.teams.append([])
-            for member in team:
-                new_member = copy.deepcopy(member[0])
-                member = (new_member, member[1].copy())
+            for actor, data in team:
+                member = (actor, dataclasses.replace(data))
                 self.teams[index].append(member)
         self.actives = board.actives.copy()
         self.action = board.action
@@ -125,16 +127,21 @@ class PokeBoard(CombatBoard):
             )
 
     def set_active(self, new_active):
-        self.actives[new_active[0]] = (new_active[1], self.scene.round)
+        self.actives[new_active[0]] = (new_active[1])
+        self.teams[new_active[0]][new_active[1]][1].turn_sent_out = self.scene.round
 
     def is_active(self, target):
-        return target[1] == self.actives[target[0]][0]
+        return target[1] == self.actives[target[0]]
+
+    def get_actor(self, target):
+        # Get actor from (action) tuple
+        return self.teams[target[0]][target[1]][0]
 
     def get_active(self, team):
-        return self.actives[team][0]
+        return self.actives[team]
 
     def get_active_round(self, team):
-        return self.actives[team][1]
+        return self.get_data((team, self.actives[team])).turn_sent_out
 
     def get_data(self, target) -> PokeFighterData:
         return self.teams[target[0]][target[1]][1]
@@ -153,25 +160,26 @@ class PokeBoard(CombatBoard):
 
     def has_fighter(self, team):
         for mon, data in self.teams[team]:
-            if data["can_fight"]:
+            if data.can_fight:
                 return True
         return False
 
     def get_relative_hp(self, target):
         return (
-            self.get_data(target).current_hp / self.teams[target[0]][target[1]][0].stats[0]
+            self.get_data(target).current_hp / self.get_data(target).max_hp
         )
 
     def get_relative_xp(self, target):
         return (
-            self.get_data(target).current_exp / self.teams[target[0]][target[1]][0].level_xp
+            self.get_data(target).current_exp / self.get_data(target).exp_to_level
         )
 
     def sync_actor(self, target):
         actor = self.get_actor(target)
+        actor.level = self.get_data(target).level
         actor.current_hp = self.get_data(target).current_hp
         actor.current_xp = self.get_data(target).current_exp
-        actor.level = self.get_data(target).level
+        actor.stats_EV = self.get_data(target).evs
         if mjr_status := [
             x
             for x in self.scene.get_effects_on_target(target)
@@ -181,12 +189,12 @@ class PokeBoard(CombatBoard):
 
     @property
     def actor_1(self):
-        if self.actives[0][0] == -1:
+        if self.actives[0] == -1:
             return -1
-        return self.teams[0][self.actives[0][0]]
+        return self.teams[0][self.actives[0]][0]
 
     @property
     def actor_2(self):
-        if self.actives[1][0] == -1:
+        if self.actives[1] == -1:
             return -1
-        return self.teams[1][self.actives[1][0]]
+        return self.teams[1][self.actives[1]][0]

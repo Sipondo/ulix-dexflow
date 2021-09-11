@@ -7,7 +7,8 @@ class Ohko(BaseMoveEffect):
         user_level = self.scene.board.get_actor(self.move.user).level
         target_level = self.scene.board.get_actor(self.move.target).level
         if user_level < target_level:
-            return False
+            self.move.fail = True
+            return False, False, False
         self.move.acc += user_level-target_level
         self.move.abs_acc = True
 
@@ -16,4 +17,4 @@ class Ohko(BaseMoveEffect):
         self.scene.add_effect(
             DamageEffect(self.scene, self.move.target, abs_dmg=damage)
         )
-        return True
+        return True, False, False

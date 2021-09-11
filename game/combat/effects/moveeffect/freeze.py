@@ -6,4 +6,4 @@ from game.combat.effects import statuseffect
 class Freeze(BaseMoveEffect):
     def after_action(self):
         ApplyStatus(self.scene, statuseffect.FREEZE, self.move.user, self.move.target).apply()
-        return True
+        return True, False, False

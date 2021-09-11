@@ -36,8 +36,8 @@ class GameStateBattle(BaseGameState):
         self.actor_1 = self.board.actor_1
         self.actor_2 = self.board.actor_2
 
-        self.render.set_pokemon(self.actor_1[0].sprite, 0)
-        self.render.set_pokemon(self.actor_2[0].sprite, 1)
+        self.render.set_pokemon(self.actor_1.sprite, 0)
+        self.render.set_pokemon(self.actor_2.sprite, 1)
 
         self.spr_battlecell = (
             self.game.m_res.get_interface("battlecell"),
@@ -240,7 +240,7 @@ class GameStateBattle(BaseGameState):
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
-                                ("attack", self.actor_1[0].actions[self.selection],)
+                                ("attack", self.actor_1.actions[self.selection],)
                             )
                     elif self.state == states["swapmenu"]:
                         if self.board.teams[0][self.selection][1]["can_fight"]:
@@ -274,7 +274,7 @@ class GameStateBattle(BaseGameState):
         if self.state == states["swapmenu"]:
             return len(self.game.inventory.members)
         if self.state == states["actionmenu"]:
-            return len(self.actor_1[0].actions)
+            return len(self.actor_1.actions)
         if self.state == states["ballmenu"]:
             return len(self.game.inventory.get_pocket_items(3))
         return 4
@@ -311,7 +311,7 @@ class GameStateBattle(BaseGameState):
         if not self.pending_boards:
             self.need_to_redraw = True
             if self.board.new_move:
-                if len(self.actor_1[0].actions) > 4:
+                if len(self.actor_1.actions) > 4:
                     self.state = states["topmenu"]
                     self.lock_state = True
                     for agent in self.agents:
@@ -347,7 +347,7 @@ class GameStateBattle(BaseGameState):
                     None, 0
                 )  # empty spriteset for if poke is fainted
             else:
-                self.render.set_pokemon(self.board.actor_1[0].sprite, 0)
+                self.render.set_pokemon(self.board.actor_1.sprite, 0)
             self.actor_1 = self.board.actor_1
         if self.board.actor_2 != self.actor_2:
             if self.board.actor_2 == -1:
@@ -355,7 +355,7 @@ class GameStateBattle(BaseGameState):
                     None, 1
                 )  # empty spriteset for if poke is fainted
             else:
-                self.render.set_pokemon(self.board.actor_2[0].sprite, 1)
+                self.render.set_pokemon(self.board.actor_2.sprite, 1)
             self.actor_2 = self.board.actor_2
 
         self.need_to_redraw = True
@@ -419,7 +419,7 @@ class GameStateBattle(BaseGameState):
             return self.board.narration
 
         if self.state == states["actionmenu"]:
-            action = self.actor_1[0].actions[self.selection]
+            action = self.actor_1.actions[self.selection]
             return (
                 action.description
                 if not self.lock_state
@@ -475,7 +475,7 @@ class GameStateBattle(BaseGameState):
                 #     (0.685, 0.59), size=(0.29, 0.27), col="white"
                 # )
                 self.game.r_int.draw_image(self.spr_attackwindow, (0.685, 0.59))
-                actionlist = self.actor_1[0].actions
+                actionlist = self.actor_1.actions
                 for i in range(min(len(actionlist), 5)):
                     self.game.r_int.draw_image(
                         self.spr_attacktypes[actionlist[i].type],
@@ -541,7 +541,7 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((0, self.board.get_active(0)))
         rel_hp = self.board.get_relative_hp((0, self.board.get_active(0)))
-        level = self.board.get_data((0, self.board.get_active(0)))["level"]
+        level = self.board.get_data((0, self.board.get_active(0))).level
         x_off = 0.08
         x_size = 0.28
 
@@ -588,7 +588,7 @@ class GameStateBattle(BaseGameState):
         for i in range(6):
             self.game.r_int.draw_image(
                 self.spr_teamstatus[
-                    (0 if self.board.teams[0][i][1]["can_fight"] else 2)
+                    (0 if self.board.get_data((0, i)).can_fight else 2)
                     if i < len(self.board.teams[0])
                     else 1
                 ],
@@ -600,7 +600,7 @@ class GameStateBattle(BaseGameState):
         lining = 0.008
         fighter = self.board.get_actor((1, self.board.get_active(1)))
         rel_hp = self.board.get_relative_hp((1, self.board.get_active(1)))
-        level = self.board.get_data((1, self.board.get_active(1)))["level"]
+        level = self.board.get_data((1, self.board.get_active(1))).level
         x_off = 0.6
         x_size = 0.28
         # HP bar
@@ -646,7 +646,7 @@ class GameStateBattle(BaseGameState):
         for i in range(6):
             self.game.r_int.draw_image(
                 self.spr_teamstatus[
-                    (0 if self.board.teams[1][i][1]["can_fight"] else 2)
+                    (0 if self.board.get_data((1, i)).can_fight else 2)
                     if i < len(self.board.teams[1])
                     else 1
                 ],

@@ -33,6 +33,8 @@ class CombatScene:
         self.ability_lib = {}
 
         self.action_effects = []
+        self.current_action = None
+        self.current_action_effect = None
 
         self.init_move_effects()
         self.init_abilities()
@@ -86,9 +88,10 @@ class CombatScene:
         # self.reset_effects_done()
 
         while self.action_effects and not self.end:
-            self.board.action, move_effect = self.action_effects.pop()
+            self.current_action, self.current_action_effect = self.action_effects.pop()
+            self.board.action = self.current_action
             # dit is alleen om in de state de huidige 'actor' aan te geven
-            self.board.set_direction(move_effect)
+            self.board.set_direction(self.current_action_effect)
 
             # TODO skip is scary. It might introduce bugs where effects are supposed to happen but don't. Should rework
 

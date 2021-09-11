@@ -11,6 +11,7 @@ class Snore(BaseMoveEffect):
         return False, False, False
 
     def after_action(self):
-        return ApplyStatus(self.scene, statuseffect.FLINCH, self.move.user, self.move.target).apply()
+        ApplyStatus(self.scene, statuseffect.FLINCH, self.move.user, self.move.target).apply()
+        return True, False, False
 
 

@@ -15,11 +15,9 @@ class ApplyStatus(BasePartialEffect):
         if self.status.type == "Majorstatus":
             if "Majorstatus" not in [x.type for x in target_effects]:
                 self.scene.board.inflict_status(self.status, self.user, self.target)
-                return True
         elif self.status.name not in [x.name for x in target_effects]:
             self.scene.board.inflict_status(self.status, self.user, self.target)
-            return True
-        return False
+        self.scene.board.no_skip("But it failed", particle="")
 
     def on_faint(self, target):
         return self.target == target, False, False
