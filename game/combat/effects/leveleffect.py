@@ -9,7 +9,6 @@ class LevelEffect(BaseEffect):
         self.target = target
 
     def on_action(self):
-        self.scene.board.copy_actor(self.target)
         actor = self.scene.board.get_actor(self.target)
         current_hp = self.scene.board.get_data(self.target)["hp"]
         old_max_hp = actor.stats[0]

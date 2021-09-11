@@ -61,9 +61,6 @@ class CombatBoard:
         # Get actor from (action) tuple
         return self.teams[target[0]][target[1]][0]
 
-    def copy_actor(self, target):
-        self.to_copy.append(self.teams[target[0]][target[1]][0])
-
     def get_hp(self, target):
         return self.teams[target[0]][target[1]][1]
 

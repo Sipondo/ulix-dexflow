@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import copy
 
 
 from .combatboard import CombatBoard
@@ -36,14 +37,6 @@ class PokeBoard(CombatBoard):
         self.switch = []
         self.new_move = False
 
-    def copy(self):
-        newstate = PokeBoard(self.scene)
-        newstate.from_board(self)
-        newstate.switch = self.switch.copy()
-        newstate.new_move = self.new_move
-        # newstate.legal = self.legal.copy()
-        return newstate
-
     def first_init(self, *teams):
         for i, team in enumerate(teams):
             team_formatted = []
@@ -66,6 +59,26 @@ class PokeBoard(CombatBoard):
             self.teams.append(team_formatted)
             self.actives.append((0, 0))
             self.switch.append(False)
+
+    def copy(self):
+        newstate = PokeBoard(self.scene)
+        newstate.from_board(self)
+        newstate.switch = self.switch.copy()
+        newstate.new_move = self.new_move
+        # newstate.legal = self.legal.copy()
+        return newstate
+
+    def from_board(self, board):
+        for index, team in enumerate(board.teams):
+            self.teams.append([])
+            for member in team:
+                new_member = copy.deepcopy(member[0])
+                member = (new_member, member[1].copy())
+                self.teams[index].append(member)
+        self.actives = board.actives.copy()
+        self.action = board.action
+        self.user = board.user
+        self.target = board.target
 
     def get_action_priority(self, action):
         prio = action.priority
@@ -146,19 +159,19 @@ class PokeBoard(CombatBoard):
 
     def get_relative_hp(self, target):
         return (
-            self.get_data(target)["hp"] / self.teams[target[0]][target[1]][0].stats[0]
+            self.get_data(target).current_hp / self.teams[target[0]][target[1]][0].stats[0]
         )
 
     def get_relative_xp(self, target):
         return (
-            self.get_data(target)["exp"] / self.teams[target[0]][target[1]][0].level_xp
+            self.get_data(target).current_exp / self.teams[target[0]][target[1]][0].level_xp
         )
 
     def sync_actor(self, target):
         actor = self.get_actor(target)
-        actor.current_hp = self.get_data(target)["hp"]
-        actor.current_xp = self.get_data(target)["exp"]
-        actor.level = self.get_data(target)["level"]
+        actor.current_hp = self.get_data(target).current_hp
+        actor.current_xp = self.get_data(target).current_exp
+        actor.level = self.get_data(target).level
         if mjr_status := [
             x
             for x in self.scene.get_effects_on_target(target)
