@@ -28,7 +28,9 @@ class HotkeyManager:
         self.register_key("debug", game.wnd.keys.T)
 
         self.register_key("zoom_out", game.wnd.keys.EQUAL)
+        self.register_key("zoom_out", game.wnd.keys.NUMPAD_8)
         self.register_key("zoom_in", game.wnd.keys.MINUS)
+        self.register_key("zoom_in", game.wnd.keys.NUMPAD_2)
 
         self.register_key("menu", game.wnd.keys.M)
         self.register_key("menu", game.wnd.keys.X)

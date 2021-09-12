@@ -43,10 +43,8 @@ class PokeFighter(CombatFighter):
             self.current_hp = self.stats[0]
 
         try:
-            print(self.data.abilities)
             self.ability = self.data.abilities[self.data.current_ability]
         except AttributeError:
-
             self.ability = self.data.abilities[0]
         try:
             self.current_xp = fighter.current_xp

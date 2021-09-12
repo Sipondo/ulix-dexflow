@@ -81,7 +81,6 @@ class CombatScene:
 
     def init_fighter(self, src):
         fighter = PokeFighter(self.game, self, src)
-        print(fighter.ability)
         return fighter
 
     def prepare_scene(self, action_descriptions=None, next_round=True):
