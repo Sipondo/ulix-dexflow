@@ -22,6 +22,7 @@ STATUS_CLASSES = {
 @dataclasses.dataclass
 class PokeFighterData:
     """Represents all variable data about a Pokémon during a battle."""
+
     level: int
     max_hp: int
     current_hp: int
@@ -58,7 +59,13 @@ class PokeBoard(CombatBoard):
                     )
             self.teams.append(team_formatted)
             # find first alive poke
-            self.actives.append(next(idx for idx, (poke, data) in enumerate(team_formatted) if data.can_fight))
+            self.actives.append(
+                next(
+                    idx
+                    for idx, (poke, data) in enumerate(team_formatted)
+                    if data.can_fight
+                )
+            )
             self.switch.append(False)
 
     def copy(self):
@@ -124,6 +131,22 @@ class PokeBoard(CombatBoard):
                 )
             )
 
+    def add_member(self, actor):
+        max_hp = actor.stats[0]
+        curr_hp = self.scene.board.get_data(self.target).current_hp
+        self.teams[0].append(
+            actor,
+            PokeFighterData(
+                max_hp=max_hp,
+                current_hp=curr_hp,
+                exp_to_level=actor.set_level_exp(),
+                current_exp=0,
+                can_fight=True,
+                level=actor.level,
+                turn_sent_out=0,
+            ),
+        )
+
     def set_active(self, new_active):
         self.actives[new_active[0]] = new_active[1]
         self.teams[new_active[0]][new_active[1]][1].turn_sent_out = self.scene.round
@@ -163,14 +186,10 @@ class PokeBoard(CombatBoard):
         return False
 
     def get_relative_hp(self, target):
-        return (
-            self.get_data(target).current_hp / self.get_data(target).max_hp
-        )
+        return self.get_data(target).current_hp / self.get_data(target).max_hp
 
     def get_relative_xp(self, target):
-        return (
-            self.get_data(target).current_exp / self.get_data(target).exp_to_level
-        )
+        return self.get_data(target).current_exp / self.get_data(target).exp_to_level
 
     def sync_actor(self, target):
         actor = self.get_actor(target)
