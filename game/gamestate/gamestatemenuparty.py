@@ -20,14 +20,14 @@ class GameStateMenuParty(BaseGameState):
         self.state = states["top"]
         self.pstate = pstates["moves"]
 
-        top_menu_options = ["Team", "Bag"]  # , "Dex", "Career"]  # , "Save", "Options"]
+        top_menu_options = ["team", "bag"]  # , "Dex", "Career"]  # , "Save", "Options"]
 
         self.top_menu_options = [
             self.game.m_res.get_interface(x) for x in top_menu_options
         ]
         self.spr_mainmenucell = (
-            self.game.m_res.get_interface("Cell"),
-            self.game.m_res.get_interface("Cell_Selected"),
+            self.game.m_res.get_interface("cell"),
+            self.game.m_res.get_interface("cell_selected"),
         )
         self.spr_partyback = self.game.m_res.get_interface("partyback")
         self.spr_partymemberback = (
