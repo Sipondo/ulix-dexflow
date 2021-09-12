@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 468,
+	"nextUid": 470,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -1327,7 +1327,7 @@
 						"tileMode": "Single",
 						"pivotX": 0,
 						"pivotY": 0,
-						"outOfBoundsValue": null,
+						"outOfBoundsValue": 1,
 						"perlinActive": false,
 						"perlinSeed": 3220743,
 						"perlinScale": 0.2,
@@ -1481,7 +1481,7 @@
 						"tileMode": "Single",
 						"pivotX": 0,
 						"pivotY": 0,
-						"outOfBoundsValue": null,
+						"outOfBoundsValue": 1,
 						"perlinActive": false,
 						"perlinSeed": 3386041,
 						"perlinScale": 0.2,
@@ -1549,7 +1549,7 @@
 						"tileMode": "Single",
 						"pivotX": 0,
 						"pivotY": 0,
-						"outOfBoundsValue": null,
+						"outOfBoundsValue": 1,
 						"perlinActive": false,
 						"perlinSeed": 4291225,
 						"perlinScale": 0.2,
@@ -1571,7 +1571,7 @@
 						"tileMode": "Single",
 						"pivotX": 0,
 						"pivotY": 0,
-						"outOfBoundsValue": null,
+						"outOfBoundsValue": 1,
 						"perlinActive": false,
 						"perlinSeed": 9188176,
 						"perlinScale": 0.2,
@@ -1593,9 +1593,33 @@
 						"tileMode": "Single",
 						"pivotX": 0,
 						"pivotY": 0,
-						"outOfBoundsValue": null,
+						"outOfBoundsValue": 1,
 						"perlinActive": false,
 						"perlinSeed": 5955216,
+						"perlinScale": 0.2,
+						"perlinOctaves": 2
+					}
+				] },
+				{ "uid": 468, "name": "1x1 Error Tile", "active": true, "collapsed": false, "isOptional": false, "rules": [
+					{
+						"uid": 469,
+						"active": true,
+						"size": 1,
+						"tileIds": [3],
+						"chance": 1,
+						"breakOnMatch": true,
+						"pattern": [1],
+						"flipX": false,
+						"flipY": false,
+						"xModulo": 1,
+						"yModulo": 1,
+						"checker": "None",
+						"tileMode": "Single",
+						"pivotX": 0,
+						"pivotY": 0,
+						"outOfBoundsValue": null,
+						"perlinActive": false,
+						"perlinSeed": 8900798,
 						"perlinScale": 0.2,
 						"perlinOctaves": 2
 					}
@@ -3940,7 +3964,7 @@
 			],
 			"customData": [],
 			"savedSelections": [],
-			"cachedPixelData": { "opaqueTiles": "011011000010010", "averageColors": "0000f977f9770000fca9fca98b98eca98a87e987fca9f876d756f755e755" }
+			"cachedPixelData": { "opaqueTiles": "011011000010010", "averageColors": "0000f977f9773d00fca9fca98b98eca98a87e987fca9f876d756f755e755" }
 		},
 		{
 			"__cWid": 11,
