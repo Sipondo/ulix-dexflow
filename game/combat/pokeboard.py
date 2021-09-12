@@ -29,7 +29,6 @@ class PokeFighterData:
     current_exp: int
     can_fight: bool
     turn_sent_out: int
-    evs: ArrayLike
 
 
 class PokeBoard(CombatBoard):
@@ -51,7 +50,6 @@ class PokeBoard(CombatBoard):
                     can_fight=poke.current_hp > 0,
                     level=poke.level,
                     turn_sent_out=0,
-                    evs=poke.stats_EV
                 )
                 team_formatted.append((poke, data))
                 if poke.status is not None:
@@ -127,7 +125,7 @@ class PokeBoard(CombatBoard):
             )
 
     def set_active(self, new_active):
-        self.actives[new_active[0]] = (new_active[1])
+        self.actives[new_active[0]] = new_active[1]
         self.teams[new_active[0]][new_active[1]][1].turn_sent_out = self.scene.round
 
     def is_active(self, target):

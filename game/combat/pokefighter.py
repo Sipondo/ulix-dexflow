@@ -43,6 +43,12 @@ class PokeFighter(CombatFighter):
             self.current_hp = self.stats[0]
 
         try:
+            print(self.data.abilities)
+            self.ability = self.data.abilities[self.data.current_ability]
+        except AttributeError:
+
+            self.ability = self.data.abilities[0]
+        try:
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
         except AttributeError:
@@ -100,14 +106,15 @@ class PokeFighter(CombatFighter):
 
     def gain_evs(self, evs):
         ev_np = np.array(evs)
+        print("EV_REWARD", ev_np)
         if np.sum(self.stats_EV) >= 510:
             return
-        self.stats_EV = ev_np + self.stats_EV
+        self.stats_EV = np.add(ev_np, self.stats_EV)
         stat = 5
         while np.sum(self.stats_EV) >= 510:
             self.stats_EV[stat] -= 1 if ev_np[stat] > 0 else 0
             stat = (stat - 1) % 6
-        print(self.stats_EV)
+        print("NEW EVs", self.stats_EV)
         return
 
     @property

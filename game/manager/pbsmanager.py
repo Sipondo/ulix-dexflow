@@ -59,7 +59,7 @@ class PbsManager:
         )
         self.moves["power"] = self.moves["power"].map(lambda x: int(x))
 
-        # self.abilities = pd.read_csv(self.game.m_res.get_pbs_loc("abilities.csv"), index_col=0,)
+        self.abilities = pd.read_csv(self.game.m_res.get_pbs_loc("abilities.csv"), index_col=0)
 
         self.weather_changes = pd.read_csv(
             self.game.m_res.get_pbs_loc("weather_acc_moves.csv"), index_col=0
@@ -146,8 +146,8 @@ class PbsManager:
     def get_random_move(self):
         return self.moves.sample().iloc[0]
 
-    # def get_ability(self, ability_name):
-    #     return self.abilities.loc[ability_name]
+    def get_ability(self, ability_name):
+        return self.abilities.loc[ability_name]
 
     def get_terrain_mods(self, terrain):
         return self.terrain_mods.loc[terrain]

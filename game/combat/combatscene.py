@@ -10,8 +10,16 @@ from .effects.forgetmoveeffect import ForgetMoveEffect
 import types
 import importlib
 from pathlib import Path
+from enum import IntEnum
 
 EFFECTS_PATH = Path("game/combat/effects/")
+
+
+class CombatState(IntEnum):
+    IDLE = 1
+    BEFORE_START = 2
+    ACTION = 3
+    BEFORE_END = 4
 
 
 class CombatScene:
@@ -28,6 +36,14 @@ class CombatScene:
         self.battle_type = battle_type
         self.round = 0
         self.end = False
+
+        self.battle_state = CombatState.IDLE
+        self.combat_state_methods = {
+            CombatState.IDLE: self.prepare_scene,
+            CombatState.BEFORE_START: self.run_start,
+            CombatState.ACTION: self.run_actions,
+            CombatState.BEFORE_END: self.run_end,
+        }
 
         self.effect_lib = {}
         self.ability_lib = {}
@@ -65,10 +81,10 @@ class CombatScene:
 
     def init_fighter(self, src):
         fighter = PokeFighter(self.game, self, src)
-
+        print(fighter.ability)
         return fighter
 
-    def run_scene(self, action_descriptions=None, next_round=True):
+    def prepare_scene(self, action_descriptions=None, next_round=True):
         self.end = False
         if next_round:
             self.round += 1
@@ -80,13 +96,22 @@ class CombatScene:
             for action in actions:
                 move_effect = self.spawn_action_effect(action)
                 self.action_effects.append((action, move_effect))
-        # print("Actions:", actions)
+        return self.next_state()
 
-        # After select
-        # for effect in sorted(self.effects, key=lambda x: -x.spd_after_select):
-        #     self.run_effect(effect, effect.after_select)
-        # self.reset_effects_done()
+    def run_start(self):
+        while effects := [
+            x
+            for x in sorted(self.effects, key=lambda x: -x.spd_before_start)
+            if not x.done and not x.skip
+        ]:
+            self.run_effect(effects[0], effects[0].before_action)
 
+        self.reset_effects_done()
+        if self.end:
+            return self.end_actions()
+        return self.next_state()
+
+    def run_actions(self):
         while self.action_effects and not self.end:
             self.current_action, self.current_action_effect = self.action_effects.pop()
             self.board.action = self.current_action
@@ -131,15 +156,23 @@ class CombatScene:
                 self.run_effect(effects[0], effects[0].after_action)
         self.board.reset_action()
 
-        # Before end
-        if not self.end:
-            while effects := [
-                x
-                for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
-                if not x.done and not x.skip
-            ]:
-                self.run_effect(effects[0], effects[0].before_end)
+        if self.end:
+            return self.end_actions()
+        return self.next_state()
 
+    def run_end(self):
+        while effects := [
+            x
+            for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
+            if not x.done and not x.skip
+        ]:
+            self.run_effect(effects[0], effects[0].before_end)
+
+        if self.end:
+            return self.end_actions()
+        return self.next_state()
+
+    def end_actions(self):
         self.reset_effects_done()
         self.reset_effects_skip()
         self.board_graveyard.extend(self.board_history)
@@ -148,6 +181,13 @@ class CombatScene:
         self.new_board()
         self.board_history = [self.board]
         return board_history
+
+    def next_state(self):
+        self.battle_state = self.battle_state + 1
+        if self.battle_state > len(CombatState):
+            self.battle_state = 0
+            return self.end_actions()
+        return self.combat_state_methods[self.battle_state]()
 
     def reset_effects_done(self):
         for effect in self.effects:

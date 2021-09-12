@@ -44,6 +44,7 @@ class PartyMember:
         self.abilities = [a for a in self.data.abilities.split(",")]
         hidden_abilities = [a for a in self.data.hiddenability.split(",")]
         self.abilities.extend(hidden_abilities)
+        print("ABILITIES", self.abilities)
         self.current_ability = 0  # default ability will be first listed
 
         if isinstance(self.moves, str):

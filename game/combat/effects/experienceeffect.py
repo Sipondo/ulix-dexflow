@@ -50,10 +50,10 @@ class ExperienceEffect(BaseEffect):
     def get_ev_reward(self):
         ev_reward = self.fainted.data["effortpoints"]
         evs = list(map(lambda x: int(x), ev_reward.split(",")))
-        print(evs)
         return evs
 
     def on_action(self):
+        actor = self.scene.board.get_actor(self.target)
         if self.cont:
             self.scene.board.no_skip(
                 "", particle="",
@@ -64,8 +64,15 @@ class ExperienceEffect(BaseEffect):
                 particle="",
             )
             # EV reward here (don't repeat after levelup)
-            self.scene.board.get_actor(self.target).gain_evs(self.get_ev_reward())
-        actor = self.scene.board.get_actor(self.target)
+            actor.gain_evs(self.get_ev_reward())
+
+            # after EV gain, check if the HP has increased
+            current_hp = self.scene.board.get_data(self.target).current_hp
+            old_max_hp = self.scene.board.get_data(self.target).max_hp
+            new_max_hp = actor.stats[0]
+            self.scene.board.get_data(self.target).max_hp = new_max_hp
+            self.scene.board.set_hp(self.target, current_hp + (new_max_hp - old_max_hp))
+
         current_xp = self.scene.board.get_data(self.target).current_exp
         xp_needed = actor.level_xp - current_xp
         if xp_needed <= self.amount:

@@ -175,7 +175,7 @@ class GameStateBattle(BaseGameState):
                             skip = True
             if not skip:
                 self.state = states["action"]
-                self.pending_boards = self.combat.run_scene(
+                self.pending_boards = self.combat.prepare_scene(
                     actions, next_round=self.lock_state
                 )
                 self.lock_state = False

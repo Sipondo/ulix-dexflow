@@ -11,7 +11,7 @@ class BaseEffect(abc.ABC):
         self.skip = False
         self.target = "Global"
         self.spd_on_faint = 0
-        self.spd_after_select = 0
+        self.spd_before_start = 0
         self.spd_before_action = 0
         self.spd_on_action = 0
         self.spd_after_action = 0
@@ -35,12 +35,9 @@ class BaseEffect(abc.ABC):
         """All effects that happen after an actor faints"""
         return False, False, False
 
-    def on_action(self):
-        """All effects that happen during or directly influence the action"""
-        return False, False, False
-
-    def before_end(self):
-        """All effects that happen before a turn ends."""
+    def before_start(self):
+        """All effects that happen in a turn before the actions start.
+        Mainly used for changing move priority"""
         return False, False, False
 
     def before_action(self):
@@ -48,9 +45,17 @@ class BaseEffect(abc.ABC):
         This includes checks for whether the action can be performed"""
         return False, False, False
 
+    def on_action(self):
+        """All effects that happen during or directly influence the action"""
+        return False, False, False
+
     def after_action(self):
         """All effects that happen before an action occurs.
         This includes checks for whether the action can be performed"""
+        return False, False, False
+
+    def before_end(self):
+        """All effects that happen before a turn ends."""
         return False, False, False
 
     def on_hit(self, move):
