@@ -4,6 +4,7 @@ import copy
 from numpy.typing import ArrayLike
 
 from .combatboard import CombatBoard
+from .pokefighter import PokeFighter
 from .effects.genericeffect import GenericEffect
 from .effects.fainteffect import FaintEffect
 from .effects.statuseffect import *
@@ -33,8 +34,8 @@ class PokeFighterData:
 
 
 class PokeBoard(CombatBoard):
-    def __init__(self, scene):
-        super().__init__(scene)
+    def __init__(self, game, scene):
+        super().__init__(game, scene)
         # self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
         self.switch = []
         self.new_move = False
@@ -43,21 +44,35 @@ class PokeBoard(CombatBoard):
         for i, team in enumerate(teams):
             team_formatted = []
             for j, poke in enumerate(team):
+                poke_fighter = self.init_fighter(poke)
                 data = PokeFighterData(
-                    max_hp=poke.stats[0],
-                    current_hp=poke.current_hp,
-                    exp_to_level=poke.level_xp,
-                    current_exp=poke.current_xp,
-                    can_fight=poke.current_hp > 0,
-                    level=poke.level,
+                    max_hp=poke_fighter.stats[0],
+                    current_hp=poke_fighter.current_hp,
+                    exp_to_level=poke_fighter.level_xp,
+                    current_exp=poke_fighter.current_xp,
+                    can_fight=poke_fighter.current_hp > 0,
+                    level=poke_fighter.level,
                     turn_sent_out=0,
                 )
-                team_formatted.append((poke, data))
-                if poke.status is not None:
+
+                team_formatted.append((poke_fighter, data))
+
+                # status conversion
+                if poke_fighter.status is not None:
                     self.scene.add_effect(
-                        STATUS_CLASSES[poke.status](self.scene, None, (i, j))
+                        STATUS_CLASSES[poke_fighter.status](self.scene, None, (i, j))
                     )
+
+                # ability load
+                try:
+                    ability = self.scene.ability_lib[poke_fighter.ability.lower()](self.scene, (i, j))
+                except KeyError:
+                    ability = self.scene.ability_lib["noability"](self.scene, (i, j))
+                self.scene.add_effect(ability)
+
             self.teams.append(team_formatted)
+
+            # TODO empty field, send out pokemon at start of battle
             # find first alive poke
             self.actives.append(
                 next(
@@ -68,8 +83,12 @@ class PokeBoard(CombatBoard):
             )
             self.switch.append(False)
 
+    def init_fighter(self, src):
+        fighter = PokeFighter(self.game, self, src)
+        return fighter
+
     def copy(self):
-        newstate = PokeBoard(self.scene)
+        newstate = PokeBoard(self.game, self.scene)
         newstate.from_board(self)
         newstate.switch = self.switch.copy()
         newstate.new_move = self.new_move

@@ -6,5 +6,7 @@ import abc
 class BaseAbilityEffect(BaseEffect, abc.ABC):
     type = "AbilityEffect"
 
-    def __init__(self, scene):
+    def __init__(self, scene, holder):
+        print("A NEW ABILITY!")
         super().__init__(scene)
+        self.holder = holder

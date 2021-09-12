@@ -1,4 +1,3 @@
-from .pokefighter import PokeFighter
 from .pokeboard import PokeBoard
 from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
@@ -26,12 +25,18 @@ class CombatScene:
     def __init__(self, game, team_1, team_2, battle_type="trainer"):
 
         self.game = game
-        self.board_history = [PokeBoard(self)]
+
+        # load moves and ability effects
+        self.effect_lib = {}
+        self.ability_lib = {}
+
+        self.init_move_effects()
+        self.init_abilities()
+
+        # prepare first board
+        self.board_history = [PokeBoard(self.game, self)]
         self.effects = []
-        t1 = self.init_team(team_1)
-        t2 = self.init_team(team_2)
-        self.init_board(t1, t2)
-        self.teams = [t1, t2]
+        self.board.first_init(team_1, team_2)
         self.board_graveyard = []
         self.battle_type = battle_type
         self.round = 0
@@ -45,15 +50,9 @@ class CombatScene:
             CombatState.BEFORE_END: self.run_end,
         }
 
-        self.effect_lib = {}
-        self.ability_lib = {}
-
         self.action_effects = []
         self.current_action = None
         self.current_action_effect = None
-
-        self.init_move_effects()
-        self.init_abilities()
 
     def init_move_effects(self):
         for x in (EFFECTS_PATH / "moveeffect").glob("*.py"):
@@ -72,16 +71,6 @@ class CombatScene:
                 f".{x.stem}", package="game.combat.effects.abilityeffect"
             )
             self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
-
-    def init_board(self, team_1, team_2):
-        self.board.first_init(team_1, team_2)
-
-    def init_team(self, team):
-        return [self.init_fighter(x) for x in team]
-
-    def init_fighter(self, src):
-        fighter = PokeFighter(self.game, self, src)
-        return fighter
 
     def prepare_scene(self, action_descriptions=None, next_round=True):
         self.end = False

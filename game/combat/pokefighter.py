@@ -43,7 +43,7 @@ class PokeFighter(CombatFighter):
             self.current_hp = self.stats[0]
 
         try:
-            self.ability = self.data.abilities[self.data.current_ability]
+            self.ability = self.data.ability
         except AttributeError:
             self.ability = self.data.abilities[0]
         try:

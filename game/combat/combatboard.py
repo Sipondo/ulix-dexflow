@@ -3,7 +3,8 @@ import copy
 
 
 class CombatBoard:
-    def __init__(self, scene):
+    def __init__(self, game, scene):
+        self.game = game
         self.scene = scene
         self.actives = []
         self.teams = []
