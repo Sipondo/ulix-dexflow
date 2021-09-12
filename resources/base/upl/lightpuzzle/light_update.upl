@@ -4,7 +4,7 @@ self: lightbounces = GetEntities("lightbounce")
 self: j = 0
 self: b = 0
 
-while(self.j < Length(self.lightsources)){
+?while(self.j < Length(self.lightsources)){
   self: current_lightsource = lightsources[j]
   self: light_direction = current_lightsource.light_direction
   self: light_x = current_lightsource.x
@@ -76,4 +76,4 @@ while(self.j < Length(self.lightsources)){
 
   self: j = j + 1
 }
-game: UpdateTiles(4)
+?game: UpdateTiles(4)

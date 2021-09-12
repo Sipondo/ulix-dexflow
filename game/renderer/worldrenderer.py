@@ -186,6 +186,8 @@ class WorldRenderer:
         return self.layer_references[int(index)]
 
     def set_map_via_manager(self, offset=(0, 0), fade=True):
+        # TODO: fade override
+        fade = False
         # TODO probably shouldn't be here
         self.game.m_sav.save("current_offset", offset)
         self.clear_tile_layers(fade)
