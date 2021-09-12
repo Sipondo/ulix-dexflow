@@ -56,9 +56,7 @@ class BallEffect(BaseEffect):
                 fail = True
             if counter > 3:
                 self.scene.game.inventory.add_member(catch_actor.series)
-                self.scene.board.teams[0].append(
-                    (catch_actor, {"hp": hp_curr, "exp": 0, "can_fight": True, "level": catch_actor.level})
-                )
+                self.scene.board.add_member(catch_actor)
                 self.scene.board.set_can_fight(self.target, False)
                 self.scene.board.no_skip("", particle="pokeball-catch")
                 self.scene.add_effect(

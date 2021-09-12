@@ -9,9 +9,9 @@ class PartyMember:
         self.name = str(data["name"])
         # self.species = self.name
         # self.id = data.name
-        # self.internalname = data.internalname
-        # self.type1 = data.type1
-        # self.type2 = data.type2
+        self.internalname = data.internalname
+        self.type1 = data.type1
+        self.type2 = data.type2
         self.level = int(l)
         self.gender = random.choice(["Male", "Female", "Genderless"])
         # self.flavor = data.pokedex
