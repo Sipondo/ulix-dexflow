@@ -131,21 +131,9 @@ class PokeBoard(CombatBoard):
                 )
             )
 
-    def add_member(self, actor):
-        max_hp = actor.stats[0]
-        curr_hp = self.scene.board.get_data(self.target).current_hp
-        self.teams[0].append(
-            actor,
-            PokeFighterData(
-                max_hp=max_hp,
-                current_hp=curr_hp,
-                exp_to_level=actor.set_level_exp(),
-                current_exp=0,
-                can_fight=True,
-                level=actor.level,
-                turn_sent_out=0,
-            ),
-        )
+    def catch_member(self, actor):
+        # TODO not fully heal new member
+        self.scene.game.inventory.add_member(actor.series, l=actor.level)
 
     def set_active(self, new_active):
         self.actives[new_active[0]] = new_active[1]
@@ -196,7 +184,6 @@ class PokeBoard(CombatBoard):
         actor.level = self.get_data(target).level
         actor.current_hp = self.get_data(target).current_hp
         actor.current_xp = self.get_data(target).current_exp
-        actor.stats_EV = self.get_data(target).evs
         if mjr_status := [
             x
             for x in self.scene.get_effects_on_target(target)

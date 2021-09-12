@@ -19,12 +19,12 @@ class GameStateBattle(BaseGameState):
             self.game.inventory.init_random_member()
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
-        # if len(self.game.inventory.members) < 1:
-        #     self.game.inventory.init_random_member()
+        if len(self.game.inventory.members) < 1:
+            self.game.inventory.members.append(self.game.inventory.init_random_member())
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
             self.game,
-            [x.series for x in self.game.inventory.members] or [1],
+            [x.series for x in self.game.inventory.members],
             enemy_team or [1, 2],
             battle_type=battle_type,
         )
@@ -387,9 +387,9 @@ class GameStateBattle(BaseGameState):
         self.end_time = ti.time()
 
     def synchronize(self):
-        for i, member in enumerate(self.game.inventory.members):
+        for i, member in enumerate(self.board.teams[0]):
             self.combat.board.sync_actor((0, i))
-            member.from_series(self.board.get_actor((0, i)).series)
+            self.game.inventory.members[i].from_series(self.board.get_actor((0, i)).series)
 
     def end_battle(self):
         self.synchronize()
