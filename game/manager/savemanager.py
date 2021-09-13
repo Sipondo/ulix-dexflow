@@ -42,6 +42,7 @@ class SaveManager:
             }
         # print("\n".join([f"{k}: {v}\n" for k, v in self.store.items()]))
 
+    def init_valueholders(self):
         for k, v in self.store["SETTABLES"].items():
             if k != "holder_is_frozen":
                 self.set_settable(k, v)
