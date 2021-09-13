@@ -1,10 +1,4 @@
 from .basegamestate import BaseGameState
-from copy import deepcopy
-import numpy as np
-import math
-import re
-
-from pathlib import Path
 
 
 class GameStateCinematic(BaseGameState):
@@ -12,10 +6,7 @@ class GameStateCinematic(BaseGameState):
         self.game.r_int.letterbox = True
 
         self.selection = 0
-        self.goto = None
         self.options = []
-        self.shop = False
-        self.shop_confirm = None
 
         self.dialogue = None
         self.author = None
@@ -24,23 +15,6 @@ class GameStateCinematic(BaseGameState):
 
         self.spr_textbox = self.game.m_res.get_interface("textbox")
         self.spr_namebox = self.game.m_res.get_interface("namebox")
-
-        self.spr_shop_header = self.game.m_res.get_interface("shop_headertile")
-        self.spr_shop_descript = self.game.m_res.get_interface("shop_descript")
-        self.spr_talker = None
-
-        self.spr_shop_item_background = self.game.m_res.get_interface(
-            "shop_item_background_window"
-        )
-        self.spr_shopwindow = self.game.m_res.get_interface("shopwindow")
-        self.spr_itemcell = (
-            self.game.m_res.get_interface("shop_itemcell"),
-            self.game.m_res.get_interface("shop_itemcell_selected"),
-        )
-        self.spr_shop_itemtext_cell = self.game.m_res.get_interface(
-            "shop_itemtext_cell"
-        )
-        self.spr_shoplistwindow = self.game.m_res.get_interface("shop_list_window")
 
     def on_tick(self, time, frame_time):
         self.time = time

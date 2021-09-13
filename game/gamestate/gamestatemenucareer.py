@@ -1,9 +1,4 @@
 from .basegamestate import BaseGameState
-from copy import deepcopy
-import numpy as np
-import math
-
-from pathlib import Path
 
 
 class GameStateMenuCareer(BaseGameState):

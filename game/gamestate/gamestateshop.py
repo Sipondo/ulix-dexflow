@@ -1,10 +1,5 @@
 from .basegamestate import BaseGameState
-from copy import deepcopy
-import numpy as np
-import math
-import re
-
-from pathlib import Path
+from ..interface.shopinterface import ShopInterface
 
 
 class GameStateShop(BaseGameState):

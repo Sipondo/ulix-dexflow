@@ -9,12 +9,7 @@ class Inventory:
         self.members = []
         self.storage = []
         self.items = []
-
-        # for i in range(1):
-        #     self.members.append(self.init_random_member())
-
-        # for i in range(10):
-        #     self.storage.append(self.init_random_member())
+        self.money = 3000
 
         self.sort_items()
 

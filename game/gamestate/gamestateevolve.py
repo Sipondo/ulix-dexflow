@@ -1,7 +1,5 @@
 from .basegamestate import BaseGameState
 
-import numpy as np
-
 
 class GameStateEvolve(BaseGameState):
     def on_enter(self):

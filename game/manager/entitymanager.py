@@ -52,7 +52,7 @@ class EntityManager:
         for entity in self.game.m_map.current_entities:
             print("INITIALISING ENTITY")
             # print(entity)
-            if entity["identifier"] in ("Civilian", "Opponent", "Invisible"):
+            if entity["identifier"] in ("Civilian", "Opponent", "Invisible", "Shop"):
                 self.create_entity(
                     NormalEntity,
                     (

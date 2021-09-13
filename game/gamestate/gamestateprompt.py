@@ -1,7 +1,5 @@
 from .basegamestate import BaseGameState
 
-import numpy as np
-
 
 class GameStatePrompt(BaseGameState):
     def on_enter(self, length=15, filter="all"):
