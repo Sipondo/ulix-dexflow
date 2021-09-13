@@ -1,4 +1,5 @@
 import moderngl_window as mglw
+from moderngl_window import screenshot
 import moderngl
 
 from moderngl_window import geometry
@@ -72,28 +73,58 @@ class PokeGame(mglw.WindowConfig):
         [print(x, y) for x, y in self.ctx.info.items()]
         logger = logging.getLogger("moderngl_window")
         logger.setLevel(logging.WARNING)
-        self.size = (SIZE_X, SIZE_Y)
 
-        self.resolution_render = (1920, 1280)
-        self.resolution_interface_width = 1280
-        self.resolution_combat_particles = (320, 180)
+        # Self screenshot prompt
+        if self.screenshot:
+            self.screenshot_mode = 1
 
-        # Map
+            screenshot_level = ""
+
+            while not screenshot_level:
+                print(
+                    "\n" * 3,
+                    colored(
+                        ">>>>> Supply a level (L. or L._I.) to  take a screenshot from. <<<<<",
+                        "yellow",
+                    ),
+                )
+                screenshot_level = input()
+        else:
+            self.screenshot_mode = 0
+
+        # Resources
         self.m_res = ResourceManager(self, self.ctx)
         self.m_res.init_noise()
+
+        # Save & Map
+        self.m_sav = SaveManager(self)
+        self.m_map = MapManager(self, screenshot_level if self.screenshot else False)
+        self.m_map.load_world_data()
+
+        # Init screenshot mode
+        if self.screenshot_mode:
+            self.size = (
+                (s := self.m_map.get_level_size(self.m_map.current_level_id))[0] * 16,
+                s[1] * 16,
+            )
+            self.resolution_render = self.size
+        else:
+            self.size = (SIZE_X, SIZE_Y)
+            self.resolution_render = (1920, 1280)
+
+        self.resolution_interface_width = 1280
+        self.resolution_combat_particles = (320, 180)
 
         # TODO
         self.m_dat = DbManager(self)
         self.m_pbs = PbsManager(self)
         self.r_int = InterfaceRenderer(self, self.ctx)
         self.inventory = Inventory(self)
-        self.m_sav = SaveManager(self)
-        self.m_map = MapManager(self)
-        self.m_map.load_world_data()
+
         # Top level renderers
         self.r_aud = AudioRenderer(self)
         self.r_ent = EntityRenderer(self, self.ctx)
-        self.r_wld = WorldRenderer(self, self.ctx)
+        self.r_wld = WorldRenderer(self, self.ctx, bool(self.screenshot_mode))
 
         self.m_res.init_types()
         self.pan_tool = PanTool(self.size)
@@ -148,7 +179,9 @@ class PokeGame(mglw.WindowConfig):
 
         self.m_res.init_types()
 
-        if self.particle is not None:
+        if self.screenshot_mode:
+            self.m_gst.switch_state("overworld")
+        elif self.particle is not None:
             self.m_gst.switch_state("battle", particle_test=self.particle)
         else:
             self.m_gst.switch_state("intro")
@@ -198,18 +231,36 @@ class PokeGame(mglw.WindowConfig):
         # Activate the window as the render target
         self.ctx.screen.use()
 
-        # Render offscreen diffuse layer to screen
-        self.offscreen_diffuse.use(location=0)
-        if self.m_gst.current_state_name not in ("battle", "evolution"):
-            self.render_prog["Filter"] = self.m_map.filter
+        # Do something different if you want to make a screenshot
+        if self.screenshot_mode:
+            if 2 < self.screenshot_mode < 10000:
+                # Make the no-entities screenshot
+                Path("screenshot").mkdir(exist_ok=True)
+                screenshot.create(
+                    self.offscreen_diffuse, name="screenshot/screenshot.png"
+                )
+                self.screenshot_mode = 10000
+            if 10001 < self.screenshot_mode:
+                # Make the entities screenshot
+                screenshot.create(
+                    self.offscreen_diffuse, name="screenshot/screenshot_entities.png"
+                )
+                exit()
+            self.screenshot_mode += frame_time
         else:
-            self.render_prog["Filter"] = (1, 1, 1)
-        self.quad_fs.render(self.render_prog)
-        self.r_int.update()
+            # Render offscreen diffuse layer to screen
+            self.offscreen_diffuse.use(location=0)
+            if self.m_gst.current_state_name not in ("battle", "evolution"):
+                self.render_prog["Filter"] = self.m_map.filter
+            else:
+                self.render_prog["Filter"] = (1, 1, 1)
+            self.quad_fs.render(self.render_prog)
 
-        self.m_sav.render(time, frame_time)
-        pyglet.clock.tick()
-        pyglet.app.platform_event_loop.dispatch_posted_events()
+            self.r_int.update()
+
+            self.m_sav.render(time, frame_time)
+            pyglet.clock.tick()
+            pyglet.app.platform_event_loop.dispatch_posted_events()
 
     def key_event(self, key, action, modifiers):
         self.m_key.key_event(key, action, modifiers)
@@ -217,6 +268,10 @@ class PokeGame(mglw.WindowConfig):
     def unicode_char_entered(self, char: str):
         self.m_key.unicode_char_entered(char)
         return super().unicode_char_entered(char)
+
+    @property
+    def render_entities_allowed(self):
+        return not self.screenshot_mode or self.screenshot_mode >= 10000
 
 
 from moderngl_window.context.base import WindowConfig, BaseWindow
@@ -360,6 +415,7 @@ def run_window_custom(
     window.print_context_info()
 
     config_cls.particle = values.particle
+    config_cls.screenshot = values.screenshot
 
     mglw.activate_context(window=window)
     timer = timer or Timer()
@@ -404,4 +460,5 @@ if __name__ == "__main__":
     )
     parser.add_argument("--develop", help="Compile world file and run game.")
     parser.add_argument("--particle", help="If testing particle, particle name.")
+    parser.add_argument("--screenshot", help="Screenshot a level", action="store_true")
     run_window_custom(PokeGame, parser=parser)

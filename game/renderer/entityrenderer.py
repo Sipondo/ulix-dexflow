@@ -31,14 +31,21 @@ class EntityRenderer:
         self.texture_size_map = []
 
     def render(self, height):
-        # self.text_texture.use()
+        if not self.game.render_entities_allowed:
+            return
         self.prog_entities["LayerHeight"] = height
         self.tarray_entities.use()
         self.vao_entities.render(moderngl.POINTS, self.amount_of_entities)
 
     def pan(self, pos, zoom):
-        self.prog_entities["WindowPosition"] = (pos[0], pos[1])
-        self.prog_entities["Zoom"] = zoom[0] * 20  # (1 / zoom[0]) / 20
+        if self.game.r_wld.render_static:
+            # TODO: make this windowposition more scientific
+            self.prog_entities["WindowPosition"] = (-8, -13)
+            self.prog_entities["Zoom"] = 1
+            self.game.m_ent.player.visible = False
+        else:
+            self.prog_entities["WindowPosition"] = (pos[0], pos[1])
+            self.prog_entities["Zoom"] = zoom[0] * 20  # (1 / zoom[0]) / 20
 
     def set_texture_map(self, l):
         array_list = []

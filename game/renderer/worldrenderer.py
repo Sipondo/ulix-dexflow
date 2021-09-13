@@ -62,12 +62,6 @@ class TileLayer:
             return tile
         return (tile[0] - 1, tile[1])
 
-    def temp_init(self):
-        self.prog["displaySize"].value = self.game.size
-        self.prog["Zoom"].value = (100 / 2000, 100 / 2000)
-        self.prog["Pan"].value = (0, 0)
-        self.prog["offset"].value = self.offset
-
     def render(self, time, frame_time):
         frame_time = max(0.001, min(0.06, frame_time))
         if self.terminated or not self.render_enabled or self.map is None:
@@ -88,13 +82,20 @@ class TileLayer:
             else 1.0
         )
 
-        self.temp_init()
-        # temp
-        self.prog["Pan"].value = (
-            self.game.pan_tool.pan_value[0] / 16 + 10,
-            self.game.pan_tool.pan_value[1] / 9 + 10,
-        )
-        self.prog["Zoom"].value = self.game.pan_tool.zoom_value
+        self.prog["displaySize"].value = self.game.size
+        self.prog["offset"].value = self.offset
+
+        if self.r_wld.render_static:
+            self.prog["Pan"].value = (0, 0)
+            self.prog["Zoom"].value = (1 / 20, 1 / 20)
+            self.prog["windowOrigin"] = (0, 0)
+        else:
+            self.prog["Pan"].value = (
+                self.game.pan_tool.pan_value[0] / 16 + 10,
+                self.game.pan_tool.pan_value[1] / 9 + 10,
+            )
+            self.prog["Zoom"].value = self.game.pan_tool.zoom_value
+
         self.prog["layerHeight"].value = self.texture_map.size[2]
         self.prog["worldSize"].value = (
             self.texture_map.size[0],
@@ -133,10 +134,16 @@ class EntityLayer:
 
 
 class WorldRenderer:
-    def __init__(self, game, ctx, reserve="4MB"):
+    def __init__(self, game, ctx, render_static=False):
         self.game = game
         self.ctx = ctx
-        self.offset = (0.5, 13 / 16)
+
+        self.render_static = render_static
+
+        if render_static:
+            self.offset = (0, 0)
+        else:
+            self.offset = (0.5, 13 / 16)
 
         self.tile_layers = []
         self.quad_fs = geometry.quad_fs()
@@ -161,7 +168,11 @@ class WorldRenderer:
                 spritemap = self.game.m_res.get_tileset(spritemap)
         else:
             spritemap = None
-        offset = (offset[0] + self.offset[0], offset[1] + self.offset[1])
+
+        if self.render_static:
+            offset = (0, 0)
+        else:
+            offset = (offset[0] + self.offset[0], offset[1] + self.offset[1])
         l = TileLayer(self, offset, height, spritemap, map, fade=fade)
         self.tile_layers.append(l)
         self.tile_layers.sort(key=lambda x: x.height)
@@ -223,28 +234,29 @@ class WorldRenderer:
             (0, "REGIONS"),
         ] + self.layer_references
 
-        if conns := self.game.m_map.current_connected_tilesets:
-            for (tiles, portal_pos, target_pos, direction,) in conns:
-                if direction == "E":
-                    direction = (1, 0)
-                elif direction == "S":
-                    direction = (0, 1)
-                elif direction == "W":
-                    direction = (-1, 0)
-                elif direction == "N":
-                    direction = (0, -1)
-                conn_offset = (
-                    offset[0] - portal_pos[0] - direction[0] + target_pos[0],
-                    offset[1] - portal_pos[1] - direction[1] + target_pos[1],
-                )
-
-                for h, mapdef in enumerate(tiles):
-                    if mapdef[0] != "TILES":
-                        continue
-                    ltype, level, tiles, collision = mapdef
-                    self.spawn_tile_layer(
-                        h, tiles, level, offset=conn_offset, fade=fade,
+        if not self.render_static:
+            if conns := self.game.m_map.current_connected_tilesets:
+                for (tiles, portal_pos, target_pos, direction,) in conns:
+                    if direction == "E":
+                        direction = (1, 0)
+                    elif direction == "S":
+                        direction = (0, 1)
+                    elif direction == "W":
+                        direction = (-1, 0)
+                    elif direction == "N":
+                        direction = (0, -1)
+                    conn_offset = (
+                        offset[0] - portal_pos[0] - direction[0] + target_pos[0],
+                        offset[1] - portal_pos[1] - direction[1] + target_pos[1],
                     )
+
+                    for h, mapdef in enumerate(tiles):
+                        if mapdef[0] != "TILES":
+                            continue
+                        ltype, level, tiles, collision = mapdef
+                        self.spawn_tile_layer(
+                            h, tiles, level, offset=conn_offset, fade=fade,
+                        )
 
         self.game.m_act.flush_regions()
         self.game.m_ent.flush_entities()

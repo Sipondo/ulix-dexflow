@@ -14,6 +14,7 @@ void main(){
 
 #elif defined FRAGMENT_SHADER
 
+uniform vec2 windowOrigin=vec2(-.5,-.5);
 uniform vec2 tileSize=vec2(16,16);
 uniform vec2 modSize=vec2(1,1);
 uniform vec2 displayBase=vec2(20,20);
@@ -38,7 +39,7 @@ in vec2 uv0;
 out vec4 fragColor;
 
 void main(){
-  vec2 pannedPosition=(((uv0+vec2(-.5,-.5))/Zoom+Pan)*displaySize/displayBase/tileSize+offset);
+  vec2 pannedPosition=(((uv0+windowOrigin)/Zoom+Pan)*displaySize/displayBase/tileSize+offset);
   ivec2 tilePosition=ivec2(mod(pannedPosition,modSize)*16);
   vec2 worldPosition=floor(pannedPosition/modSize);
   vec4 outputColor=vec4(0,0,0,0);

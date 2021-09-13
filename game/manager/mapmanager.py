@@ -6,10 +6,16 @@ from pathlib import Path
 
 
 class MapManager:
-    def __init__(self, game):
+    def __init__(self, game, level_override=False):
         self.game = game
         self.levels = None
-        self.current_level_id = self.game.m_sav.load("current_level_id") or 1000
+
+        if level_override:
+            print(level_override)
+            self.current_level_id = self.convert_mapstring_to_key(level_override)
+        else:
+            self.current_level_id = self.game.m_sav.load("current_level_id") or 1000
+
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
         self.allow_save = False
