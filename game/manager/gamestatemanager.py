@@ -11,6 +11,7 @@ from ..gamestate.gamestateoverworld import GameStateOverworld
 from ..gamestate.gamestateprompt import GameStatePrompt
 from ..gamestate.gamestatestorage import GameStateStorage
 from ..gamestate.gamestateevolve import GameStateEvolve
+from ..gamestate.gamestateshop import GameStateShop
 from ..gamestate.gamestatedebug import GameStateDebug
 
 
@@ -60,6 +61,8 @@ class GameStateManager:
             self.current_state = GameStateEvolve(self.game)
         elif new_state == "prompt":
             self.current_state = GameStatePrompt(self.game)
+        elif new_state == "shop":
+            self.current_state = GameStateShop(self.game)
         elif new_state == "debug":
             self.current_state = GameStateDebug(self.game)
 
