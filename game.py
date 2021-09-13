@@ -96,6 +96,10 @@ class PokeGame(mglw.WindowConfig):
         self.m_res = ResourceManager(self, self.ctx)
         self.m_res.init_noise()
 
+        # PBS & Data
+        self.m_dat = DbManager(self)
+        self.m_pbs = PbsManager(self)
+
         # Save & Map
         self.m_sav = SaveManager(self)
         self.m_map = MapManager(self, screenshot_level if self.screenshot else False)
@@ -116,8 +120,6 @@ class PokeGame(mglw.WindowConfig):
         self.resolution_combat_particles = (320, 180)
 
         # TODO
-        self.m_dat = DbManager(self)
-        self.m_pbs = PbsManager(self)
         self.r_int = InterfaceRenderer(self, self.ctx)
         self.inventory = Inventory(self)
 
