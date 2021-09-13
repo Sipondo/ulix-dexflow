@@ -50,7 +50,6 @@ class NormalEntity(BaseEntity):
                 js = eval(self.config)["team"]
             except Exception as e:
                 pass
-
             for i, member in enumerate(self.team):
                 if i < len(js):
                     battler_js = js[i]
@@ -65,6 +64,13 @@ class NormalEntity(BaseEntity):
                     member["level"] = local_random.randint(
                         int(self.level) - 1, int(self.level) + 1
                     )
+        if hasattr(self, "items"):
+            js = []
+            try:
+                js = eval(self.config)["items"]
+            except Exception as e:
+                pass
+            self.items = js or self.items
 
     def when_interact(self):
         if self.active:
