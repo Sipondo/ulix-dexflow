@@ -13,6 +13,8 @@ class GameStateCinematic(BaseGameState):
         self.prev_dialogue = None
         self.need_to_redraw = True
 
+        self.spr_talker = None
+
         self.spr_textbox = self.game.m_res.get_interface("textbox")
         self.spr_namebox = self.game.m_res.get_interface("namebox")
 
@@ -40,45 +42,14 @@ class GameStateCinematic(BaseGameState):
         if self.lock == False:
             self.need_to_redraw = True
             if key == "down":
-                if self.shop_confirm is not None:
-                    self.game.r_aud.effect("select")
-                    self.shop_confirm -= 1
-                    if self.shop_confirm < 1:
-                        self.shop_confirm = 99
-                    return
                 if self.options:
                     self.selection = (self.selection + 1) % self.max_selection
                     self.game.r_aud.effect("select")
             elif key == "up":
-                if self.shop_confirm is not None:
-                    self.game.r_aud.effect("select")
-                    self.shop_confirm += 1
-                    if self.shop_confirm > 99:
-                        self.shop_confirm = 1
-                    return
                 if self.options:
                     self.selection = (self.selection - 1) % self.max_selection
                     self.game.r_aud.effect("select")
             elif key == "interact":
-                if self.shop:
-                    if self.shop_confirm is not None:
-                        if self.shop_confirm < 1:
-                            self.game.r_aud.effect("cancel")
-                            self.shop_confirm = None
-                        else:
-                            self.game.r_aud.effect("buy")
-                            self.game.inventory.add_item(
-                                self.options[self.selection].identifier,
-                                self.shop_confirm,
-                            )
-                            self.shop_confirm = None
-                            self.dialogue = (
-                                "Thank you for your purchase! Anything else?"
-                            )
-                    else:
-                        self.game.r_aud.effect("select")
-                        self.shop_confirm = 1
-                    return
                 if self.options:
                     print("Selected: ", self.options[self.selection])
                     self.game.selection = self.selection
@@ -91,19 +62,6 @@ class GameStateCinematic(BaseGameState):
                 self.dialogue = None
                 self.author = None
                 self.spr_talker = None
-            elif key == "backspace" or key == "menu":
-                if self.shop:
-                    self.game.r_aud.effect("cancel")
-                    if self.shop_confirm is not None:
-                        self.shop_confirm = None
-                    else:
-                        self.options = []
-                        self.shop = False
-                        self.selection = 0
-                        self.dialogue = None
-                        self.author = None
-                        self.spr_talker = None
-                # self.game.m_gst.switch_state("overworld")
 
     @property
     def max_selection(self):
@@ -124,7 +82,7 @@ class GameStateCinematic(BaseGameState):
                 .replace("{player.chis}", self.game.m_ent.player.chis)
             )
 
-        if not self.shop and self.spr_talker:
+        if self.spr_talker:
             self.game.r_int.draw_image(
                 self.spr_talker, (0.8, 0.7), centre=True, size=3.0
             )
@@ -138,86 +96,6 @@ class GameStateCinematic(BaseGameState):
             self.game.r_int.draw_text(
                 self.author, (0.025, 0.755), to=(0.30, 0.80), bcol=None,
             )
-
-        if self.shop:
-            item = self.options[self.selection]
-            self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.45), centre=True)
-            self.game.r_int.draw_image(
-                self.spr_shop_item_background, (0.3, 0.465), centre=True
-            )
-            self.game.r_int.draw_image(item.icon, (0.3, 0.41), centre=True, size=3.0)
-            self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.275), centre=True)
-            self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
-            self.game.r_int.draw_image(
-                self.spr_shoplistwindow, (0.55, 0.23), centre=False
-            )
-            if self.dialogue:
-                self.game.r_int.draw_image(
-                    self.spr_textbox, (0.02, 0.82),
-                )
-                self.game.r_int.draw_text(
-                    "How many of this article would you like?"
-                    if self.shop_confirm is not None
-                    else (self.dialogue if self.dialogue is not None else ""),
-                    (0.025, 0.825),
-                    to=(0.98, 0.98),
-                    bcol=None,
-                )
-
-            # self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
-            self.game.r_int.draw_text(
-                f"{item.itemname}",
-                (0.31, 0.285),
-                size=(0.14, 0.08),
-                bcol=None,
-                centre=True,
-            )
-            self.game.r_int.draw_text(
-                f"{item.description}",
-                (0.3, 0.622),
-                size=(0.35, 0.15),
-                fsize=10,
-                bcol=None,
-                centre=True,
-            )
-
-            if self.shop_confirm is not None:
-                self.game.r_int.draw_image(
-                    self.spr_itemcell[1], (0.56, 0.24),
-                )
-                self.game.r_int.draw_text(
-                    f"Quantity: {self.shop_confirm}",
-                    (0.65, 0.26),
-                    size=(0.22, 0.06),
-                    centre=False,
-                    bcol=None,
-                )
-            else:
-                # self.game.r_int.draw_rectangle(
-                #     (0.59, 0.3),
-                #     size=(0.37, 0.02 + 0.08 * len(self.options)),
-                #     col="black",
-                # )
-                for i, name in enumerate(self.options):
-                    self.game.r_int.draw_image(
-                        self.spr_itemcell[1 if self.selection == i else 0],
-                        (0.56, 0.24 + 0.08 * i),
-                    )
-                    self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name.price}",
-                        (0.57, 0.26 + 0.08 * i),
-                        size=(0.10, 0.06),
-                        centre=False,
-                        bcol=None,
-                    )
-                    self.game.r_int.draw_text(
-                        f"{self.selection == i and '' or ''}{name.itemname}",
-                        (0.65, 0.26 + 0.08 * i),
-                        size=(0.22, 0.06),
-                        centre=False,
-                        bcol=None,
-                    )
-            return
 
         if self.dialogue:
             self.game.r_int.draw_image(

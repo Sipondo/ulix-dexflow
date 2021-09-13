@@ -3,13 +3,13 @@ from ..interface.shopinterface import ShopInterface
 
 
 class GameStateShop(BaseGameState):
-    def on_enter(self):
+    def on_enter(self, options, owner):
         self.game.r_int.letterbox = True
 
         self.selection = 0
         self.goto = None
-        self.options = []
-        self.shop = False
+        self.options = options
+        self.shop = ShopInterface(self.game, self.options, owner)
         self.shop_confirm = None
 
         self.dialogue = None

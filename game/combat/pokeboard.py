@@ -1,8 +1,6 @@
 import dataclasses
 import copy
 
-from numpy.typing import ArrayLike
-
 from .combatboard import CombatBoard
 from .pokefighter import PokeFighter
 from .effects.genericeffect import GenericEffect

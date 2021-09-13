@@ -1,12 +1,19 @@
+import json
+
+
 class Shop:
-    def __init__(self, act, src, user, obj):
+    def __init__(self, act, src, user):
         act.funcs.append(self)
         self.init_time = act.current_time
         self.act = act
-        self.obj = obj
         self.src = src
         self.user = user
-        self.options = self.user.options
+        if "items" in self.user.config:
+            items = json.loads(self.user.config)
+            print(items)
+            self.options = [x for x in self.user.config["items"]]
+        else:
+            self.options = self.user.items
         # self.items = [
         #     isinstance(x, tuple)
         #     and self.act.game.inventory.get_item(x[0])
@@ -18,9 +25,9 @@ class Shop:
         #     if isinstance(opt, tuple) and len(opt) > 1:
         #         item.price = int(opt[1])
 
-        self.act.game.m_gst.switch_state("shop", self.options, self.user)
+        self.act.game.m_gst.switch_state("shop", options=self.options, owner=self.user)
 
-        self.act.game.m_gst.current_state.dialogue = self.obj
+        self.act.game.m_gst.current_state.dialogue = self.user.dialogue
         self.act.game.m_gst.current_state.author = (
             "" if self.user == self.act.game else self.user.name
         )

@@ -1280,6 +1280,80 @@
 						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
 						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
 					]
+				},
+				{
+					"__identifier": "Shop",
+					"__grid": [20,19],
+					"__pivot": [0.5,0.5],
+					"__tile": null,
+					"width": 16,
+					"height": 16,
+					"defUid": 470,
+					"px": [328,312],
+					"fieldInstances": [
+						{ "__identifier": "entity_uid", "__value": "", "__type": "String", "defUid": 471, "realEditorValues": [] },
+						{
+							"__identifier": "sprite",
+							"__value": "../resources/essentials/graphics/characters/trchar001.png",
+							"__type": "FilePath",
+							"defUid": 472,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/characters/trchar001.png"]
+							}]
+						},
+						{
+							"__identifier": "splash",
+							"__value": "../resources/essentials/graphics/trainers/aromalady.png",
+							"__type": "FilePath",
+							"defUid": 473,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["../resources/essentials/graphics/trainers/aromalady.png"]
+							}]
+						},
+						{
+							"__identifier": "name",
+							"__value": "shoppy",
+							"__type": "String",
+							"defUid": 474,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["shoppy"]
+							}]
+						},
+						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 475, "realEditorValues": [] },
+						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 476, "realEditorValues": [] },
+						{
+							"__identifier": "direction",
+							"__value": "S",
+							"__type": "LocalEnum.Direction",
+							"defUid": 477,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["S"]
+							}]
+						},
+						{ "__identifier": "config", "__value": "{}", "__type": "String", "defUid": 478, "realEditorValues": [] },
+						{ "__identifier": "dialogue", "__value": null, "__type": "String", "defUid": 479, "realEditorValues": [] },
+						{ "__identifier": "on_create_action", "__value": "exit", "__type": "String", "defUid": 480, "realEditorValues": [] },
+						{ "__identifier": "on_interact_action", "__value": "<<<openshop>>>", "__type": "String", "defUid": 481, "realEditorValues": [] },
+						{ "__identifier": "enter_text", "__value": "\"Hello!\"", "__type": "String", "defUid": 483, "realEditorValues": [] },
+						{ "__identifier": "leave_text", "__value": "\"Bye!\"", "__type": "String", "defUid": 484, "realEditorValues": [] },
+						{
+							"__identifier": "items",
+							"__value": [ "Potion", "Repel" ],
+							"__type": "Array<LocalEnum.Items>",
+							"defUid": 486,
+							"realEditorValues": [ {
+								"id": "V_String",
+								"params": ["Potion"]
+							}, {
+								"id": "V_String",
+								"params": ["Repel"]
+							} ]
+						}
+					]
 				}
 			]
 		},

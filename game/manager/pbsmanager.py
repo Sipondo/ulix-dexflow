@@ -94,6 +94,9 @@ class PbsManager:
         s = self.items[self.items.identifier == id].iloc[0].copy()
         return s
 
+    def get_item_by_name(self, name):
+        return self.items[self.items[0].str.lower() == name.lower().replace(" ", "")].iloc[0]
+
     def get_related_anim(self, type, power):
         if power > 75:
             return self.move_anim.loc[type, "highpower"]
