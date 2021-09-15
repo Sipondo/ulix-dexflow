@@ -68,12 +68,12 @@ void main(){
       
       // If not transparent, render pixel
       if(retrieveColor.a>0){
-        outputColor=retrieveColor*vec4(1,1,1,Alpha);// + outputColor * vec4(1, 1, 1, 1-Alpha);
+        outputColor=retrieveColor*retrieveColor.a+outputColor*(1-retrieveColor.a);
       }
     }
     
     if(outputColor.a>0){
-      fragColor=outputColor;
+      fragColor=outputColor*vec4(1,1,1,Alpha);
     }else{
       discard;
     }
