@@ -33,7 +33,7 @@ class InterfaceRenderer:
         self.game = game
         self.ctx = ctx
 
-        self.font = self.game.m_res.get_font("lexend-regular", 1)  # , self.scale)
+        self.font = self.game.m_res.get_font("lexend-semibold", 1)  # , self.scale)
         self.rend = DirectFontRender(ctx)
         font_loader.get().mapping["default"] = [FreetypeGlyphProvider(self.font)]
         self.shape = ShapeDrawer(ctx)
