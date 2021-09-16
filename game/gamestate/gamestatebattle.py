@@ -181,15 +181,15 @@ class GameStateBattle(BaseGameState):
                 self.lock_state = False
                 self.advance_board()
 
-        self.redraw(time, frame_time)
+        # self.redraw(time, frame_time)
         self.lock = self.render.render(time, frame_time)
         return True
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        if self.need_to_redraw:
+    def on_render(self, time, frame_time):
+        if self.need_to_redraw or True:
             self.game.r_int.new_canvas()
             self.draw_interface(time, frame_time)
             self.need_to_redraw = False
@@ -389,7 +389,9 @@ class GameStateBattle(BaseGameState):
     def synchronize(self):
         for i, member in enumerate(self.board.teams[0]):
             self.combat.board.sync_actor((0, i))
-            self.game.inventory.members[i].from_series(self.board.get_actor((0, i)).series)
+            self.game.inventory.members[i].from_series(
+                self.board.get_actor((0, i)).series
+            )
 
     def end_battle(self):
         self.synchronize()

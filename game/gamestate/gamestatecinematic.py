@@ -21,19 +21,19 @@ class GameStateCinematic(BaseGameState):
     def on_tick(self, time, frame_time):
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
+        # self.redraw(time, frame_time)
         return False
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
+    def on_render(self, time, frame_time):
         self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
+        if self.need_to_redraw or (self.dialogue != self.prev_dialogue) or True:
             self.game.r_int.new_canvas()
             self.draw_interface(time, frame_time)
             self.prev_dialogue = self.dialogue
-            self.need_to_redraw = False
+            # self.need_to_redraw = False
 
     def set_locked(self, bool):
         self.lock = bool

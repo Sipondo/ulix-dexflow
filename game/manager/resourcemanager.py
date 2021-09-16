@@ -99,6 +99,8 @@ class ResourceManager:
     def get_font(self, name, scale):
         pth = (self.p_fonts / Path(name).stem).with_suffix(".ttf")
         pth = self.resolve_resource_path(pth)
+        return str(pth)
+        return freetype.Face(str(pth))
         return {
             x: ImageFont.truetype(str(pth.resolve()), x * scale)
             for x in range(6, 20, 2)
@@ -140,8 +142,7 @@ class ResourceManager:
         if f"{resource_name}___{size}" not in self.fighter_icons:
             img = self.open_image_interface(
                 self.p_graphics
-                / "pokemon"
-                / "icons"
+                / "pokemon_icons"
                 / f"{str(resource_name).zfill(3)}.png",
                 size,
             )
