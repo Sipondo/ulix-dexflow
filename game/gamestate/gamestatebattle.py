@@ -39,47 +39,58 @@ class GameStateBattle(BaseGameState):
         self.render.set_pokemon(self.actor_1.sprite, 0)
         self.render.set_pokemon(self.actor_2.sprite, 1)
 
-        self.spr_battlecell = (
-            self.game.m_res.get_interface("battlecell"),
-            self.game.m_res.get_interface("battlecell_selected"),
-        )
+        self.spr_battlecell = ("battlecell", "battlecell_selected")
 
         self.spr_battlestatus = (
-            self.game.m_res.get_interface("battlestatus_ours"),
-            self.game.m_res.get_interface("battlestatus_theirs"),
+            "battlestatus_ours",
+            "battlestatus_theirs",
         )
 
         self.spr_teamstatus = (
-            self.game.m_res.get_picture("battle/icon_ball"),
-            self.game.m_res.get_picture("battle/icon_ball_empty"),
-            self.game.m_res.get_picture("battle/icon_ball_faint"),
-            self.game.m_res.get_picture("battle/icon_ball_status"),
+            "battle/icon_ball",
+            "battle/icon_ball_empty",
+            "battle/icon_ball_faint",
+            "battle/icon_ball_status",
         )
 
-        self.spr_own = self.game.m_res.get_picture("battle/icon_own")
+        self.spr_own = "battle/icon_own"
 
-        self.spr_statusbox = self.game.m_res.get_interface("statusbox")
+        self.spr_statusbox = "statusbox"
 
         self.spr_attackcell = (
-            self.game.m_res.get_interface("attackcell"),
-            self.game.m_res.get_interface("attackcell_selected"),
+            "attackcell",
+            "attackcell_selected",
         )
 
         self.spr_ballcell = (
-            self.game.m_res.get_interface("ballcell"),
-            self.game.m_res.get_interface("ballcell_selected"),
+            "ballcell",
+            "ballcell_selected",
         )
 
-        self.spr_attackwindow = self.game.m_res.get_interface("attackwindow")
-        self.spr_ballwindow = self.game.m_res.get_interface("ballwindow")
-        self.spr_switchwindow = self.game.m_res.get_interface("switchwindow")
+        self.spr_attackwindow = "attackwindow"
+        self.spr_ballwindow = "ballwindow"
+        self.spr_switchwindow = "switchwindow"
 
-        self.spr_actionbuttons = [
-            self.game.m_res.get_interface(x)
-            for x in ("attack", "switch", "throw_ball", "run")
-        ]
-
+        self.spr_actionbuttons = ("attack", "switch", "throw_ball", "run")
         self.spr_attacktypes = self.game.m_res.attack_types
+
+        for x in (
+            self.spr_battlecell
+            + self.spr_battlestatus
+            + self.spr_teamstatus
+            + (self.spr_own,)
+            + (self.spr_statusbox,)
+            + self.spr_attackcell
+            + self.spr_ballcell
+            + (self.spr_attackwindow,)
+            + (self.spr_ballwindow,)
+            + (self.spr_switchwindow,)
+            + self.spr_actionbuttons
+            + tuple(self.spr_attacktypes.values())
+        ):
+            self.game.r_int.load_sprite(x)
+
+        self.game.r_int.init_sprite_drawer()
 
         self.agents = []
         if agents:

@@ -1,9 +1,12 @@
 from qlibs.gui.window import Window
 from qlibs.fonts.font_loader import FreetypeGlyphProvider, font_loader
 from qlibs.fonts.font_render import DirectFontRender, FormattedText, FormattingData
+from qlibs.resources.resource_loader import ImageData
 from qlibs.gui.basic_shapes import ShapeDrawer
 from qlibs.highlevel.graphics import SpriteMaster
 from qlibs.math import Matrix4
+
+
 import time
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -35,6 +38,7 @@ class InterfaceRenderer:
         font_loader.get().mapping["default"] = [FreetypeGlyphProvider(self.font)]
         self.shape = ShapeDrawer(ctx)
         self.sprite = SpriteMaster(ctx)
+        self.spritesize = {}
 
         self.width = self.game.resolution_interface_width
         self.height = int(self.width / 16 * 9)
@@ -65,17 +69,17 @@ class InterfaceRenderer:
         self.texture.write(texture_bytes)
 
     def on_tick(self, time, frame_time):
-        frame_time = max(0.01, min(0.03, frame_time))
+        frame_time = max(0.001, min(0.06, frame_time))
         if self.letterbox:
             if self.letterbox_amount < LETTERBOX_TO:
                 self.letterbox_amount = min(
-                    self.letterbox_amount + frame_time * 0.25, LETTERBOX_TO
+                    self.letterbox_amount + frame_time * 0.35, LETTERBOX_TO
                 )
                 self.game.m_gst.current_state.need_to_redraw = True
         else:
             if self.letterbox_amount > 0:
                 self.letterbox_amount = max(
-                    self.letterbox_amount - frame_time * 0.25, 0
+                    self.letterbox_amount - frame_time * 0.35, 0
                 )
                 self.game.m_gst.current_state.need_to_redraw = True
 
@@ -126,7 +130,7 @@ class InterfaceRenderer:
         if size:
             size = self.to_screen_coords(size, flip=False)
             if centre:
-                pos = (pos[0] - size[0] // 2, pos[1] - size[1] // 2)
+                pos = (pos[0] - size[0] // 2, pos[1] + size[1] // 2)
             # to = (pos[0] + size[0], pos[1] + size[1])
         else:
             to = self.to_screen_coords(to)
@@ -159,6 +163,8 @@ class InterfaceRenderer:
         # pos = (pos[0] + 0.004, pos[1])
         pos = self.to_screen_coords(pos)
 
+        pos = (pos[0], pos[1] - fsize * 2)
+
         if size:
             # size = (size[0] - 0.008, size[1])
             size = self.to_screen_coords(size)
@@ -189,13 +195,27 @@ class InterfaceRenderer:
 
     def draw_image(self, img, pos, centre=False, size=1.0):
         self.rerender = True
+
+        if not isinstance(img, str):
+            return
+
+        pos = self.to_screen_coords(pos)
+        w, h = self.spritesize[img]
+
+        if centre:
+            pos = (pos[0] - w // 2, pos[1] + h // 2)
+
+        self.sprite.add_sprite_rect(img, pos[0], pos[1] - h, w, h)
+        self.ctx.enable(moderngl.BLEND)
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
+        # self.ctx.blend_equation = moderngl.FUNC_ADD
+        self.sprite.render(self.mvp)
         return
         if size != 1.0:
             img = img.resize(
                 (int(img.size[0] * size), int(img.size[1] * size)),
                 resample=Image.NEAREST,
             )
-        pos = self.to_screen_coords(pos)
 
         if centre:
             pos = (pos[0] - img.size[0] // 2, pos[1] - img.size[1] // 2)
@@ -204,11 +224,24 @@ class InterfaceRenderer:
         # self.canvas.paste(img, pos, img)
 
     def to_screen_coords(self, tup, flip=True):
-        return (int(tup[0] * self.width), int((1 - tup[1]) * self.height))
+        if flip:
+            return (int(tup[0] * self.width), int((1 - tup[1]) * self.height))
+        else:
+            return (int(tup[0] * self.width), -int((tup[1]) * self.height))
 
     def draw_interface(self):
         self.draw_rectangle((0, 0), to=(1, self.letterbox_amount), col="black")
         self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
+
+    def load_sprite(self, name):
+        if name not in self.spritesize:
+            img = self.game.m_res.get_interface(name)
+            img = img.transpose(Image.FLIP_TOP_BOTTOM)
+            self.sprite.images[name] = ImageData(img.size, img.tobytes())
+            self.spritesize[name] = img.size
+
+    def init_sprite_drawer(self):
+        self.sprite.init()
 
 
 # win = Window()

@@ -92,9 +92,10 @@ class ResourceManager:
             )
         }
 
-        self.attack_types = {
-            x: self.get_interface(f"attack_types/attack_{x.lower()}") for x in TYPES
-        }
+        # self.attack_types = {
+        #     x: self.get_interface(f"attack_types/attack_{x.lower()}") for x in TYPES
+        # }
+        self.attack_types = {x: f"attack_types/attack_{x.lower()}" for x in TYPES}
 
     def get_font(self, name, scale):
         pth = (self.p_fonts / Path(name).stem).with_suffix(".ttf")
