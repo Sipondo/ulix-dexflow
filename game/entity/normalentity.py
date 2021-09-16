@@ -64,13 +64,22 @@ class NormalEntity(BaseEntity):
                     member["level"] = local_random.randint(
                         int(self.level) - 1, int(self.level) + 1
                     )
+        # shops
         if hasattr(self, "items"):
             js = []
             try:
                 js = eval(self.config)["items"]
             except Exception as e:
-                pass
+                print("Exception!", e)
+                item_dict = {}
+                for item in self.items:
+                    item_dict[item] = {}
+                self.items = item_dict
             self.items = js or self.items
+            if hasattr(self.memory, "items"):
+                print("ITEMS IN MEMORY")
+                print(self.memory.items)
+                self.items = self.memory.items
 
     def when_interact(self):
         if self.active:

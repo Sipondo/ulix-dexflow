@@ -12,10 +12,10 @@ class GameStateShop(BaseGameState):
         self.cd = 0
         self.goto = None
         self.shop = ShopInterface(self.game, owner)
+        self.top_item = 0
         self.item_amount = None
 
         self.dialogue = None
-        self.author = None
         self.prev_dialogue = None
         self.need_to_redraw = True
 
@@ -28,7 +28,7 @@ class GameStateShop(BaseGameState):
         self.spr_shop_item_background = self.game.m_res.get_interface(
             "shop_item_background_window"
         )
-        self.spr_shopwindow = self.game.m_res.get_interface("shopwindow")
+        self.spr_shopwindow = self.game.m_res.get_interface("shopwindow_e")
         self.spr_itemcell = (
             self.game.m_res.get_interface("shop_itemcell"),
             self.game.m_res.get_interface("shop_itemcell_selected"),
@@ -38,6 +38,9 @@ class GameStateShop(BaseGameState):
         )
         self.spr_shoplistwindow = self.game.m_res.get_interface("shop_list_window")
 
+        if self.shop.size == 0:
+            self.dialogue = "It seems you bought everything! Sorry, come back another time!"
+
     def on_tick(self, time, frame_time):
         self.cd -= time - self.time
         self.time = time
@@ -46,6 +49,8 @@ class GameStateShop(BaseGameState):
         return False
 
     def on_exit(self):
+        self.game.m_sav.save("money", self.game.inventory.money)
+        self.shop.save_items()
         pass
 
     def redraw(self, time, frame_time):
@@ -56,68 +61,66 @@ class GameStateShop(BaseGameState):
             self.prev_dialogue = self.dialogue
             self.need_to_redraw = False
 
-    def set_locked(self, bool):
-        self.lock = bool
+    def set_locked(self, b):
+        self.lock = b
 
     def event_keypress(self, key, modifiers):
+        if self.cd > 0:
+            return
+        self.cd = 0.1
         if self.lock == False:
             self.need_to_redraw = True
             if key == "down":
-                if self.item_amount is not None:
+                if self.shop.size > 0:
+                    if self.item_amount is not None:
+                        self.game.r_aud.effect("select")
+                        self.item_amount -= 1
+                        if self.item_amount < 1:
+                            q = self.shop.get_quantity(self.selection)
+                            self.item_amount = q or 99
+                        return
+                    self.selection = (self.selection + 1) % self.max_selection
+                    self.top_item = max(self.selection - 6, 0)
                     self.game.r_aud.effect("select")
-                    self.item_amount -= 1
-                    if self.item_amount < 1:
-                        q = self.shop.get_quantity(self.selection)
-                        self.item_amount = q or 99
-                    return
-                self.selection = (self.selection + 1) % self.max_selection
-                self.game.r_aud.effect("select")
             elif key == "up":
-                if self.item_amount is not None:
+                if self.shop.size > 0:
+                    if self.item_amount is not None:
+                        self.game.r_aud.effect("select")
+                        self.item_amount += 1
+                        q = self.shop.get_quantity(self.selection)
+                        q = q or 99
+                        if self.item_amount > q:
+                            self.item_amount = 1
+                        return
+                    self.selection = (self.selection - 1) % self.max_selection
                     self.game.r_aud.effect("select")
-                    self.item_amount += 1
-                    q = self.shop.get_quantity(self.selection)
-                    q = q or 99
-                    if self.item_amount > q:
-                        self.item_amount = 1
-                    return
-                self.selection = (self.selection - 1) % self.max_selection
-                self.game.r_aud.effect("select")
             elif key == "interact":
+                if self.shop.size == 0:
+                    self.game.m_gst.switch_state("cinematic")
+                    return
                 if self.item_amount is not None:
-                    if self.item_amount < 1:
-                        self.game.r_aud.effect("cancel")
+                    self.game.r_aud.effect("buy")
+                    if self.shop.buy_item(self.selection, self.item_amount):
                         self.item_amount = None
-                    else:
-                        self.game.r_aud.effect("buy")
-                        self.game.inventory.add_item(
-                            self.shop.get_item_data(self.selection).identifier,
-                            self.item_amount,
-                        )
-                        self.item_amount = None
-                        self.dialogue = (
-                            "Thank you for your purchase! Anything else?"
-                        )
-                else:
-                    self.game.r_aud.effect("select")
-                    self.item_amount = 1
+                        self.dialogue = "Thank you for your purchase! Anything else?"
+                        self.selection = 0
+                        return
+                    self.dialogue = "Uh-oh, you don't seem to have enough money!"
+                    self.item_amount = None
+                    return
+                self.game.r_aud.effect("select")
+                self.item_amount = 1
                 return
             elif key == "backspace" or key == "menu":
                 self.game.r_aud.effect("cancel")
-                print(self.cd)
                 if self.item_amount is not None:
                     self.item_amount = None
-                    self.cd = 0.1
-                elif self.cd <= 0:
-                    self.game.m_gst.switch_state("cinematic")
+                    return
+                self.game.m_gst.switch_state("cinematic")
 
     @property
     def max_selection(self):
-        return len(self.shop.items)
-
-    def exit_battle(self):
-        print("DEPRECATED EXIT BATTLE GAMESTATEINTERACT")
-        self.game.m_gst.switch_state("overworld")
+        return self.shop.size
 
     def draw_interface(self, time, frame_time):
         # TODO: move this away from here
@@ -130,19 +133,19 @@ class GameStateShop(BaseGameState):
                 .replace("{player.chis}", self.game.m_ent.player.chis)
             )
 
-        self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.45), centre=True)
+        self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.44), centre=True)
         self.game.r_int.draw_image(
             self.spr_shop_item_background, (0.3, 0.465), centre=True
         )
-        self.game.r_int.draw_image(self.shop.get_item_data(self.selection).icon, (0.3, 0.41), centre=True, size=3.0)
+
+        self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.18), centre=True)
         self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.275), centre=True)
         self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
-        self.game.r_int.draw_image(
-            self.spr_shoplistwindow, (0.55, 0.23), centre=False
-        )
+        self.game.r_int.draw_image(self.spr_shoplistwindow, (0.55, 0.23), centre=False)
         if self.dialogue:
             self.game.r_int.draw_image(
-                self.spr_textbox, (0.02, 0.82),
+                self.spr_textbox,
+                (0.02, 0.82),
             )
             self.game.r_int.draw_text(
                 "How many of this article would you like?"
@@ -152,8 +155,23 @@ class GameStateShop(BaseGameState):
                 to=(0.98, 0.98),
                 bcol=None,
             )
-
+        self.game.r_int.draw_text(
+            f"Money: {self.game.inventory.money}",
+            (0.31, 0.185),
+            size=(0.14, 0.08),
+            bcol=None,
+            centre=True,
+        )
         # self.game.r_int.draw_rectangle((0.19, 0.25), size=(0.37, 0.42), col="black")
+        if self.shop.size == 0:
+            return
+
+        self.game.r_int.draw_image(
+            self.shop.get_item_data(self.selection).icon,
+            (0.3, 0.41),
+            centre=True,
+            size=3.0,
+        )
         self.game.r_int.draw_text(
             f"{self.shop.get_item(self.selection).name}",
             (0.31, 0.285),
@@ -172,7 +190,8 @@ class GameStateShop(BaseGameState):
 
         if self.item_amount is not None:
             self.game.r_int.draw_image(
-                self.spr_itemcell[1], (0.56, 0.24),
+                self.spr_itemcell[1],
+                (0.56, 0.24),
             )
             self.game.r_int.draw_text(
                 f"Quantity: {self.item_amount}",
@@ -203,3 +222,11 @@ class GameStateShop(BaseGameState):
                     centre=False,
                     bcol=None,
                 )
+                if self.shop.get_quantity(i) is not None:
+                    self.game.r_int.draw_text(
+                        f"x{self.shop.get_quantity(i)}",
+                        (0.8, 0.26 + 0.08 * i),
+                        size=(0.05, 0.06),
+                        centre=False,
+                        bcol=None,
+                    )

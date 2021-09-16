@@ -1345,13 +1345,13 @@
 						},
 						{
 							"__identifier": "config",
-							"__value": "{\n \"items\":\n {\n  \"Repel\":{\"price\": 20},\n     \"Potion\":{\"price\": 50},\n     \"Old rod\":{\"price\": 1000, \"quantity\": 1}\n    }\n}",
+							"__value": "{\n \"items\":\n    {\n        \"Potion\": {\"quantity\": 5},\n        \"Repel\": {},\n        \"Old rod\": {\"price\": 1000, \"quantity\": 1},\n    }\n}",
 							"__type": "String",
 							"defUid": 478,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"{\n \"items\":\n {\n  \"Repel\":{\"price\": 20},\n     \"Potion\":{\"price\": 50},\n     \"Old rod\":{\"price\": 1000, \"quantity\": 1}\n    }\n}"
+									"{\n \"items\":\n    {\n        \"Potion\": {\"quantity\": 5},\n        \"Repel\": {},\n        \"Old rod\": {\"price\": 1000, \"quantity\": 1},\n    }\n}"
 								]
 							}]
 						},

@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class PartyItem:
     def __init__(self, game, data, quantity=1):
         self.game = game

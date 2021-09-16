@@ -78,6 +78,8 @@ class SaveManager:
             self.game.inventory.add_item(item[0], item[1])
         # self.store["MEMORY"] = {k: {k_2: v_2.__dict__ for k_2, v_2 in v.items()} for k,v self.memory.items()}
 
+        if "money" in self.store:
+            self.game.inventory.money = self.store["money"]
         self.settables.holder_is_frozen = True
         self.switches.holder_is_frozen = True
         # print("SETTABLES:", self.settables.__dict__)
