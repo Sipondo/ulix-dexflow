@@ -36,7 +36,8 @@ class HotkeyManager:
         self.register_key("menu", game.wnd.keys.X)
         self.register_key("battle", game.wnd.keys.B)
 
-        self.register_key("fullscreen", game.wnd.keys.F11, True)
+        # self.register_key("fullscreen", game.wnd.keys.F11, True)
+        self.game.fullscreen_key = game.wnd.keys.F11
 
     def register_key(self, name, key, block=False):
         self.keys.append((key, name, block))
