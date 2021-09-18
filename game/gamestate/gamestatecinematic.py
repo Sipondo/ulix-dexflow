@@ -2,8 +2,8 @@ from .basegamestate import BaseGameState
 
 
 class GameStateCinematic(BaseGameState):
-    def on_enter(self):
-        self.game.r_int.letterbox = True
+    def on_enter(self, letterbox=True):
+        self.game.r_int.letterbox = letterbox
 
         self.selection = 0
         self.options = []

@@ -24,6 +24,7 @@ COLOR_DICT = {
     "grey": (0.7, 0.7, 0.7),
     "red": (1, 0, 0),
     "green": (0, 1, 0),
+    "darkgreen": (0, 0.7, 0),
     "blue": (0, 0, 1),
     "yellow": (1, 1, 0),
 }
@@ -54,7 +55,6 @@ class InterfaceRenderer:
         self.fade = True
 
     def on_tick(self, time, frame_time):
-        frame_time = max(0.001, min(0.06, frame_time))
         if self.letterbox:
             if self.letterbox_amount < LETTERBOX_TO:
                 self.letterbox_amount = min(
@@ -87,9 +87,11 @@ class InterfaceRenderer:
             to = self.to_screen_coords(to)
             size = (to[0] - pos[0], to[1] - pos[1])
 
-        self.shape.add_rectangle(
-            pos[0], pos[1], size[0], size[1], color=COLOR_DICT[col]
-        )
+        if isinstance(col, str):
+            col = COLOR_DICT[col]
+
+        self.ctx.enable(moderngl.BLEND)
+        self.shape.add_rectangle(pos[0], pos[1], size[0], size[1], color=col)
         self.shape.render(self.mvp)
 
     def draw_text(
@@ -134,8 +136,11 @@ class InterfaceRenderer:
             tokens.extend(line.split())
             tokens.append(FormattedTextToken.LINEBREAK)
 
+        if isinstance(col, str):
+            col = COLOR_DICT[col]
+
         formattext = FormattedText(
-            tokens=tokens, color=COLOR_DICT[col]
+            tokens=tokens, color=col
         )  # FormattedText(tokens=[FormattingData(color=COLOR_DICT[col]), x] for x in text.split())
         self.rend_text.render_multiline(
             formattext,
@@ -177,6 +182,8 @@ class InterfaceRenderer:
     def draw_interface(self):
         self.draw_rectangle((0, 0), to=(1, self.letterbox_amount), col="black")
         self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
+        if self.fade_amount:
+            self.draw_rectangle((0, 0), to=(1, 1), col=(0, 0, 0, self.fade_amount))
 
     def load_sprite(self, name, size=0.5, init=False):
         # TODO: Cl

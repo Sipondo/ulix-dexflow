@@ -29,8 +29,6 @@ class CameraManager:
         self.set_lookat()
 
     def render(self, time: float, frame_time: float):
-        frame_time = min(2, max(0.0001, frame_time))
-
         # self.angle += frame_time * 30
         # Angle
         if (self.angle_t - self.angle) > 0:

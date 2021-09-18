@@ -130,9 +130,10 @@ class GameStateBattle(BaseGameState):
                 print("PRESSING", self.time_press)
                 self.event_keypress(self.time_press, [])
                 self.time_press = None
-        if self.to_end:
-            self.end_battle()
-            return
+        else:
+            if self.to_end:
+                self.end_battle()
+                return
 
         actions = []
         if self.state != states["action"] or self.particle_test:
@@ -558,7 +559,7 @@ class GameStateBattle(BaseGameState):
             self.game.r_int.draw_rectangle(
                 (x_off + 0.028, 0.14),
                 size=(x_size * rel_hp, 0.035),
-                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
+                col=rel_hp > 0.5 and "darkgreen" or rel_hp > 0.2 and "yellow" or "red",
             )
         # EXP bar
         self.game.r_int.draw_rectangle(
@@ -616,7 +617,7 @@ class GameStateBattle(BaseGameState):
             self.game.r_int.draw_rectangle(
                 (x_off + 0.028, 0.14),
                 size=(x_size * rel_hp, 0.035),
-                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
+                col=rel_hp > 0.5 and "darkgreen" or rel_hp > 0.2 and "yellow" or "red",
             )
         # self.game.r_int.draw_rectangle(
         #     (x_off - lining, 0.05 - lining),

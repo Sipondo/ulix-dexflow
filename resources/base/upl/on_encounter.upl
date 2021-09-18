@@ -9,7 +9,7 @@ if(map.local_encounter_rate > 0){
     if(Random() > map.local_encounter_rate){
         exit
     }
-    game: Cinematic()
+    game: Cinematic(False)
     player: Jump()
     game: Encounter(map.local_encounters)
     game: Overworld()
@@ -20,7 +20,7 @@ if(map.local_encounter_rate > 0){
 if(Random() > map.encounter_rate){
     exit
 }
-game: Cinematic()
+game: Cinematic(False)
 player: Jump()
 game: Encounter(map.encounters)
 game: Overworld()

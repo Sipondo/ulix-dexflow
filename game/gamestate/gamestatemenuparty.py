@@ -200,7 +200,7 @@ class GameStateMenuParty(BaseGameState):
                     self.game.r_int.draw_rectangle(
                         (0.197 + (i % 2) * 0.138, i_v + 0.039),
                         size=(0.087 * current_hp, 0.01),
-                        col="green"
+                        col="darkgreen"
                         if current_hp > 0.5
                         else "yellow"
                         if current_hp > 0.2
