@@ -7,7 +7,6 @@ Pillow
 psutil
 python-dateutil
 pytz
-pywin32
 six
 tkfilebrowser
 pywavefront
@@ -17,5 +16,7 @@ cx-freeze
 pyqt5
 lark
 termcolor
+freetype
 qlibs
 qlibs-cyan
+pywin32
