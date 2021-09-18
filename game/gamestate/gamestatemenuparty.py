@@ -232,7 +232,7 @@ class GameStateMenuParty(BaseGameState):
                         else member.icon[0],
                         (0.135 + (i % 2) * 0.37, i_v),
                         centre=True,
-                        size=3 / 4,
+                        size=1.5,
                         safe=True,
                     )
 
@@ -254,14 +254,14 @@ class GameStateMenuParty(BaseGameState):
             elif self.state == states["inspect"]:
                 member = self.game.inventory.members[self.selectedmember]
                 self.game.r_int.draw_image(
-                    member.sprite, (0.25, 0.48), centre=True, size=2.0, safe=True
+                    member.sprite, (0.25, 0.48), centre=True, size=4.0, safe=True
                 )
                 self.game.r_int.draw_image(
                     self.spr_inspect_namecell, (0.235, 0.74), centre=True,
                 )
                 self.game.r_int.draw_text(
                     f"{member.name}",
-                    (0.25, 0.755),
+                    (0.25, 0.67),
                     size=(0.15, 0.08),
                     centre=True,
                     bcol=None,

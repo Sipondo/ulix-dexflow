@@ -140,14 +140,14 @@ class GameStateMenuBag(BaseGameState):
             self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
             self.game.r_int.draw_text(
                 f"{item.itemname}",
-                (0.31, 0.285),
+                (0.31, 0.21),
                 size=(0.14, 0.08),
                 bcol=None,
                 centre=True,
             )
             self.game.r_int.draw_text(
                 f"{item.description}",
-                (0.3, 0.622),
+                (0.31, 0.48),
                 size=(0.35, 0.15),
                 fsize=10,
                 bcol=None,

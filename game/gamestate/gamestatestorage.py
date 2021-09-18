@@ -213,11 +213,6 @@ class GameStateStorage(BaseGameState):
         return self.storage_paged[self.selection_storage]
 
     def draw_interface(self, time, frame_time):
-        # self.game.r_int.draw_text(
-        #     self.dialogue or "", (0.02, 0.82), to=(0.58, 0.98),
-        # )
-
-        # self.game.r_int.draw_rectangle((0.04, 0.25), size=(0.27, 0.52), col="black")
         self.game.r_int.draw_image(self.spr_partyback, (0.5, 0.5), centre=True)
 
         if self.focus == 0:
@@ -227,22 +222,15 @@ class GameStateStorage(BaseGameState):
 
         if not isinstance(item, str):
             self.game.r_int.draw_image(
-                item.sprite, (0.25, 0.505), centre=True, size=2.0, safe=True
+                item.sprite, (0.25, 0.505), centre=True, size=4.0, safe=True
             )
             self.game.r_int.draw_image(
                 self.spr_inspect_namecell, (0.235, 0.74), centre=True,
             )
             self.game.r_int.draw_text(
-                f"{item.name}",
-                (0.25, 0.755),
-                size=(0.15, 0.08),
-                centre=True,
-                bcol=None,
+                f"{item.name}", (0.25, 0.67), size=(0.1, 0.08), centre=True, bcol=None,
             )
 
-        # self.game.r_int.draw_rectangle(
-        #     (0.37, 0.25), size=(0.25, 0.02 + 0.08 * len(self.team)), col="black",
-        # )
         self.game.r_int.draw_image(
             self.spr_deposit_team_background, (0.5, 0.458), centre=True
         )
@@ -261,7 +249,7 @@ class GameStateStorage(BaseGameState):
                     else name.icon[0],
                     (0.405, 0.21 + 0.08 * i),
                     centre=True,
-                    size=3 / 4,
+                    size=1.5,
                     safe=True,
                 )
                 self.game.r_int.draw_text(
@@ -318,7 +306,7 @@ class GameStateStorage(BaseGameState):
                     else name.icon[0],
                     (0.685, 0.21 + 0.08 * (i - self.selection_storage_window)),
                     centre=True,
-                    size=3 / 4,
+                    size=1.5,
                     safe=True,
                 )
                 self.game.r_int.draw_text(

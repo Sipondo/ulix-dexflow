@@ -77,7 +77,7 @@ class GameStateCinematic(BaseGameState):
 
         if self.spr_talker:
             self.game.r_int.draw_image(
-                self.spr_talker, (0.8, 0.7), centre=True, size=1.5, safe=True
+                self.spr_talker, (0.8, 0.7), centre=True, size=3, safe=True
             )
 
         # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="grey")

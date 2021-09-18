@@ -146,16 +146,19 @@ class InterfaceRenderer:
             mvp=self.mvp,
         )
 
-    def draw_image(self, img, pos, centre=False, size=0.5, safe=False):
+    def draw_image(self, img, pos, centre=False, size=1.0, safe=False):
         if not isinstance(img, str):
             raise Exception("DEPRECATED IMAGE CALL")
 
         img = img.lower()
         if safe:
-            self.load_sprite(img, size, init=True)
+            self.load_sprite(img, init=True)
 
         pos = self.to_screen_coords(pos)
         w, h = self.spritesize[img]
+
+        w *= size
+        h *= size
 
         if centre:
             pos = (pos[0] - w // 2, pos[1] + h // 2)
@@ -176,7 +179,7 @@ class InterfaceRenderer:
         self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
 
     def load_sprite(self, name, size=0.5, init=False):
-        # TODO: Clean
+        # TODO: Cl
         name = name.lower()
         if "icon/" in name:
             if name not in self.spritesize:
@@ -211,3 +214,5 @@ class InterfaceRenderer:
 
     def init_sprite_drawer(self):
         self.sprite.init()
+        for drawer in self.sprite.drawers:
+            drawer.texture.filter = moderngl.NEAREST, moderngl.NEAREST
