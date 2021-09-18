@@ -102,7 +102,6 @@ class GameStateBattle(BaseGameState):
             agent.start(self.combat)
 
         self.lock_state = False
-        self.need_to_redraw = True
         self.action_choice = 0
         self.selection = 0
         self.state = states["topmenu"]
@@ -200,10 +199,7 @@ class GameStateBattle(BaseGameState):
         pass
 
     def on_render(self, time, frame_time):
-        if self.need_to_redraw or True:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+        self.draw_interface(time, frame_time)
 
     def event_keypress(self, key, modifiers):
         if self.particle_test:
@@ -214,7 +210,6 @@ class GameStateBattle(BaseGameState):
             return
 
         if self.lock == False:
-            self.need_to_redraw = True
             if self.state == states["action"]:
                 if key == "interact":
                     self.advance_board()
@@ -320,7 +315,6 @@ class GameStateBattle(BaseGameState):
             self.time_lock = 0.5
             return
         if not self.pending_boards:
-            self.need_to_redraw = True
             if self.board.new_move:
                 if len(self.actor_1.actions) > 4:
                     self.state = states["topmenu"]
@@ -368,8 +362,6 @@ class GameStateBattle(BaseGameState):
             else:
                 self.render.set_pokemon(self.board.actor_2.sprite, 1)
             self.actor_2 = self.board.actor_2
-
-        self.need_to_redraw = True
 
         if self.board.skip:
             self.advance_board()

@@ -10,8 +10,6 @@ class GameStateCinematic(BaseGameState):
 
         self.dialogue = None
         self.author = None
-        self.prev_dialogue = None
-        self.need_to_redraw = True
 
         self.spr_talker = None
 
@@ -22,7 +20,6 @@ class GameStateCinematic(BaseGameState):
     def on_tick(self, time, frame_time):
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
-        # self.redraw(time, frame_time)
         return False
 
     def on_exit(self):
@@ -30,18 +27,13 @@ class GameStateCinematic(BaseGameState):
 
     def on_render(self, time, frame_time):
         self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue) or True:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.prev_dialogue = self.dialogue
-            # self.need_to_redraw = False
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
             if key == "down":
                 if self.options:
                     self.selection = (self.selection + 1) % self.max_selection
@@ -85,10 +77,10 @@ class GameStateCinematic(BaseGameState):
 
         if self.spr_talker:
             self.game.r_int.draw_image(
-                self.spr_talker, (0.8, 0.7), centre=True, size=3.0
+                self.spr_talker, (0.8, 0.7), centre=True, size=1.5, safe=True
             )
 
-        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
+        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="grey")
 
         if self.author is not None and self.author:
             self.game.r_int.draw_image(

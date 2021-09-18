@@ -1,6 +1,6 @@
 from qlibs.gui.window import Window
 from qlibs.fonts.font_loader import FreetypeGlyphProvider, font_loader
-from qlibs.fonts.font_render import DirectFontRender, FormattedText, FormattingData
+from qlibs.fonts.font_render import DirectFontRender, FormattedText, FormattedTextToken
 from qlibs.resources.resource_loader import ImageData
 from qlibs.gui.basic_shapes import ShapeDrawer
 from qlibs.highlevel.graphics import SpriteMaster
@@ -25,6 +25,7 @@ COLOR_DICT = {
     "red": (1, 0, 0),
     "green": (0, 1, 0),
     "blue": (0, 0, 1),
+    "yellow": (1, 1, 0),
 }
 
 
@@ -33,8 +34,8 @@ class InterfaceRenderer:
         self.game = game
         self.ctx = ctx
 
-        self.font = self.game.m_res.get_font("lexend-semibold", 1)  # , self.scale)
-        self.rend = DirectFontRender(ctx)
+        self.font = self.game.m_res.get_font("lexend-semibold", 1)
+        self.rend_text = DirectFontRender(ctx)
         font_loader.get().mapping["default"] = [FreetypeGlyphProvider(self.font)]
         self.shape = ShapeDrawer(ctx)
         self.sprite = SpriteMaster(ctx)
@@ -52,22 +53,6 @@ class InterfaceRenderer:
         self.letterbox = False
         self.fade = True
 
-        self.rerender = True
-        self.need_to_redraw = False
-
-        # self.font = self.game.m_res.get_font("lexend-regular", self.scale)
-        # self.font_bold = self.game.m_res.get_font("lexend-semibold", self.scale)
-
-        self.new_canvas()
-
-        self.prog = self.game.m_res.get_program("interfacelayer")
-        self.quad_fs = geometry.quad_fs()
-
-        texture_bytes = self.canvas.tobytes()
-        self.texture = self.ctx.texture(self.canvas.size, 4, texture_bytes)
-        # self.texture.filter = moderngl.NEAREST, moderngl.NEAREST
-        self.texture.write(texture_bytes)
-
     def on_tick(self, time, frame_time):
         frame_time = max(0.001, min(0.06, frame_time))
         if self.letterbox:
@@ -75,63 +60,29 @@ class InterfaceRenderer:
                 self.letterbox_amount = min(
                     self.letterbox_amount + frame_time * 0.35, LETTERBOX_TO
                 )
-                self.game.m_gst.current_state.need_to_redraw = True
         else:
             if self.letterbox_amount > 0:
                 self.letterbox_amount = max(
                     self.letterbox_amount - frame_time * 0.35, 0
                 )
-                self.game.m_gst.current_state.need_to_redraw = True
 
         if self.fade:
             if self.fade_amount < 1:
                 self.fade_amount = min(self.fade_amount + frame_time * 3, 1)
-                self.game.m_gst.current_state.need_to_redraw = True
         else:
             if self.fade_amount > 0:
                 self.fade_amount = max(self.fade_amount - frame_time * 3, 0)
-                self.game.m_gst.current_state.need_to_redraw = True
-
-        # if self.need_to_redraw:
-        #     self.need_to_redraw = False
-        #     self.new_canvas()
 
     def update(self):
-        return
-        if self.rerender:
-            self.rerender = False
-            self.texture.write(np.array(self.canvas).tobytes())
-
-        self.prog["interface_layer"] = 0
-        self.texture.use(location=0)
-        self.ctx.enable(moderngl.BLEND)
-        self.quad_fs.render(self.prog)
-
-        self.ctx.disable(moderngl.BLEND)
-
-    def new_canvas(self):
-        self.rerender = True
-
-        if self.fade_amount == 0:
-            self.canvas = Image.new("RGBA", (self.width, self.height), "#00000000")
-        else:
-            self.canvas = Image.new(
-                "RGBA",
-                (self.width, self.height),
-                "#000000" + (str(hex(int(self.fade_amount * 255)))[2:]).zfill(2),
-            )
-        self.draw = ImageDraw.Draw(self.canvas, "RGBA")
         self.draw_interface()
 
     def draw_rectangle(self, pos, to=None, size=None, col="white", centre=False):
-        self.rerender = True
         pos = self.to_screen_coords(pos)
 
         if size:
             size = self.to_screen_coords(size, flip=False)
             if centre:
                 pos = (pos[0] - size[0] // 2, pos[1] + size[1] // 2)
-            # to = (pos[0] + size[0], pos[1] + size[1])
         else:
             to = self.to_screen_coords(to)
             size = (to[0] - pos[0], to[1] - pos[1])
@@ -140,7 +91,6 @@ class InterfaceRenderer:
             pos[0], pos[1], size[0], size[1], color=COLOR_DICT[col]
         )
         self.shape.render(self.mvp)
-        # self.draw.rectangle((pos, to), fill=col, outline=None, width=0)
 
     def draw_text(
         self,
@@ -155,49 +105,54 @@ class InterfaceRenderer:
         fsize=12,
         col="black",
     ):
-        self.rerender = True
-
         if bcol:
             self.draw_rectangle(pos, to=to, size=size, col=bcol, centre=centre)
 
-        # pos = (pos[0] + 0.004, pos[1])
+        pos = (pos[0] + 0.005, pos[1])
         pos = self.to_screen_coords(pos)
 
         pos = (pos[0], pos[1] - fsize * 2)
 
         if size:
-            # size = (size[0] - 0.008, size[1])
-            size = self.to_screen_coords(size)
+            size = self.to_screen_coords(size, flip=False)
             if centre:
-                pos = (pos[0] - size[0] // 2, pos[1] - size[1] // 2)
-            to = (pos[0] + size[0], pos[1] + size[1])
+                pos = (pos[0] - size[0] // 2, pos[1] + size[1] // 2)
         else:
             to = self.to_screen_coords(to)
+            size = (to[0] - pos[0], to[1] - pos[1])
 
-        if align == "centre":
-            pos = (pos[0] + (to[0] - pos[0] - w) // 2, pos[1])
-        elif align == "right":
-            pos = (to[0] - w, pos[1])
+        size = (size[0] - 0.01, size[1])
 
-        formattext = FormattedText(tokens=[FormattingData(color=(0, 0, 0)), text])
-        self.rend.render_multiline(
-            formattext, pos[0], pos[1], 10, scale=fsize * 2, mvp=self.mvp
+        # if align == "centre":
+        #     pos = (pos[0] + (to[0] - pos[0] - w) // 2, pos[1])
+        # elif align == "right":
+        #     pos = (to[0] - w, pos[1])
+
+        tokens = []
+
+        for line in text.splitlines():
+            tokens.extend(line.split())
+            tokens.append(FormattedTextToken.LINEBREAK)
+
+        formattext = FormattedText(
+            tokens=tokens, color=COLOR_DICT[col]
+        )  # FormattedText(tokens=[FormattingData(color=COLOR_DICT[col]), x] for x in text.split())
+        self.rend_text.render_multiline(
+            formattext,
+            pos[0],
+            pos[1],
+            max_line_len=size[0],
+            scale=fsize * 2,
+            mvp=self.mvp,
         )
 
-        # font = self.font_bold[fsize] if bold else self.font[fsize]
-        # msg = "\n".join(textwrap(text, size[0] // fsize)) if size else text
-
-        # w, _ = self.draw.textsize(msg, font=font)
-
-        # self.draw.multiline_text(
-        #     pos, msg, font=font, fill=col, align=align,
-        # )
-
-    def draw_image(self, img, pos, centre=False, size=1.0):
-        self.rerender = True
-
+    def draw_image(self, img, pos, centre=False, size=0.5, safe=False):
         if not isinstance(img, str):
-            return
+            raise Exception("DEPRECATED IMAGE CALL")
+
+        img = img.lower()
+        if safe:
+            self.load_sprite(img, size, init=True)
 
         pos = self.to_screen_coords(pos)
         w, h = self.spritesize[img]
@@ -207,21 +162,8 @@ class InterfaceRenderer:
 
         self.sprite.add_sprite_rect(img, pos[0], pos[1] - h, w, h)
         self.ctx.enable(moderngl.BLEND)
-        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
-        # self.ctx.blend_equation = moderngl.FUNC_ADD
         self.sprite.render(self.mvp)
         return
-        if size != 1.0:
-            img = img.resize(
-                (int(img.size[0] * size), int(img.size[1] * size)),
-                resample=Image.NEAREST,
-            )
-
-        if centre:
-            pos = (pos[0] - img.size[0] // 2, pos[1] - img.size[1] // 2)
-
-        self.canvas.alpha_composite(img, pos)
-        # self.canvas.paste(img, pos, img)
 
     def to_screen_coords(self, tup, flip=True):
         if flip:
@@ -233,36 +175,39 @@ class InterfaceRenderer:
         self.draw_rectangle((0, 0), to=(1, self.letterbox_amount), col="black")
         self.draw_rectangle((0, 1 - self.letterbox_amount), to=(1, 1), col="black")
 
-    def load_sprite(self, name):
+    def load_sprite(self, name, size=0.5, init=False):
+        # TODO: Clean
+        name = name.lower()
+        if "icon/" in name:
+            if name not in self.spritesize:
+                imgs = self.game.m_res.get_interface(name[:-2], size)
+
+                img = imgs[0]
+                n = f"{name[:-2]}_0"
+
+                img = img.transpose(Image.FLIP_TOP_BOTTOM)
+                self.sprite.images[n] = ImageData(img.size, img.tobytes())
+                self.spritesize[n] = img.size
+
+                img = imgs[1]
+                n = f"{name[:-2]}_1"
+
+                img = img.transpose(Image.FLIP_TOP_BOTTOM)
+                self.sprite.images[n] = ImageData(img.size, img.tobytes())
+                self.spritesize[n] = img.size
+
+                if init:
+                    self.init_sprite_drawer()
+            return
+
         if name not in self.spritesize:
-            img = self.game.m_res.get_interface(name)
+            img = self.game.m_res.get_interface(name, size)
             img = img.transpose(Image.FLIP_TOP_BOTTOM)
             self.sprite.images[name] = ImageData(img.size, img.tobytes())
             self.spritesize[name] = img.size
 
+            if init:
+                self.init_sprite_drawer()
+
     def init_sprite_drawer(self):
         self.sprite.init()
-
-
-# win = Window()
-# rend = DirectFontRender(win.ctx)
-# text = FormattedText(
-#     tokens=[
-#         FormattingData(color=(0.9, 0, 0)),
-#         "red",
-#         FormattingData(color=(0, 0.9, 0)),
-#         "green",
-#         FormattingData(color=(0, 0, 0.9)),
-#         "blue",
-#     ]
-# )
-# while not win.should_close:
-#     win.ctx.clear()
-#     mvp = Matrix4.orthogonal_projection(0, win.size[0], 0, win.size[1])
-#     # rend.render_multiline("asdf asfdf asd a d da sad df asd fdsfa asadf  fads adsf", 30, 300, 500, scale=32, mvp=mvp)
-#     rend.render_string(
-#         f"lalala {time.time()} é è åz©äééåá®ñßðßðóíé®þóö³åé", 30, 400, scale=32, mvp=mvp
-#     )
-#     rend.render_multiline(text, 30, 300, 500, scale=32, mvp=mvp)
-#     win.swap()
-#     win.poll_events()

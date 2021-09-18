@@ -15,75 +15,76 @@ class GameStateMenuParty(BaseGameState):
         self.state = states["top"]
         self.pstate = pstates["moves"]
 
-        top_menu_options = ["team", "bag"]  # , "Dex", "Career"]  # , "Save", "Options"]
-
-        self.top_menu_options = [
-            self.game.m_res.get_interface(x) for x in top_menu_options
-        ]
+        self.spr_top_menu_options = ("team", "bag")
         self.spr_mainmenucell = (
-            self.game.m_res.get_interface("cell"),
-            self.game.m_res.get_interface("cell_selected"),
+            "cell",
+            "cell_selected",
         )
-        self.spr_partyback = self.game.m_res.get_interface("partyback")
+        self.spr_partyback = "partyback"
         self.spr_partymemberback = (
-            self.game.m_res.get_interface("partymemberback"),
-            self.game.m_res.get_interface("partymemberbackmirror"),
+            "partymemberback",
+            "partymemberbackmirror",
         )
         self.spr_partymemberback_selected = (
-            self.game.m_res.get_interface("partymemberback_selected"),
-            self.game.m_res.get_interface("partymemberbackmirror_selected"),
+            "partymemberback_selected",
+            "partymemberbackmirror_selected",
         )
-        self.spr_iconback = self.game.m_res.get_interface("iconback")
+        self.spr_iconback = "iconback"
         self.spr_moveinfocell = (
-            self.game.m_res.get_interface("moveinfocell"),
-            self.game.m_res.get_interface("moveinfocell_selected"),
+            "moveinfocell",
+            "moveinfocell_selected",
         )
 
-        self.spr_inspect_statscell = self.game.m_res.get_interface("inspect_statscell")
-        self.spr_inspect_efficiencycell = self.game.m_res.get_interface(
-            "inspect_efficiencycell"
+        self.spr_inspect_statscell = "inspect_statscell"
+        self.spr_inspect_efficiencycell = "inspect_efficiencycell"
+        self.spr_inspect_namecell = "inspect_namecell"
+        self.spr_inspect_textcell = "inspect_textcell"
+        self.spr_inspectwindow = "inspectwindow"
+        self.spr_inspectwindow_tabs = tuple(
+            [f"inspectwindow_tab{x}" for x in (1, 2, 3, 4)]
         )
-        self.spr_inspect_namecell = self.game.m_res.get_interface("inspect_namecell")
-        self.spr_inspect_textcell = self.game.m_res.get_interface("inspect_textcell")
-        self.spr_inspectwindow = self.game.m_res.get_interface("inspectwindow")
-        self.spr_inspectwindow_tabs = [
-            self.game.m_res.get_interface(f"inspectwindow_tab{x}") for x in (1, 2, 3, 4)
-        ]
 
-        self.need_to_redraw = True
+        for x in (
+            self.spr_top_menu_options
+            + self.spr_mainmenucell
+            + (self.spr_partyback,)
+            + self.spr_partymemberback
+            + self.spr_partymemberback_selected
+            + (self.spr_iconback,)
+            + self.spr_moveinfocell
+            + (self.spr_inspect_statscell,)
+            + (self.spr_inspect_efficiencycell,)
+            + (self.spr_inspect_namecell,)
+            + (self.spr_inspect_textcell,)
+            + (self.spr_inspectwindow,)
+            + self.spr_inspectwindow_tabs
+        ):
+            self.game.r_int.load_sprite(x)
+
+        self.game.r_int.init_sprite_drawer()
 
     def on_tick(self, time, frame_time):
-        self.time = time
-        # self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
-        return False
-
-    def on_exit(self):
-        pass
-
-    def redraw(self, time, frame_time):
         self.frame_counter += frame_time
         if self.state == states["party"]:
             if self.icon_frame == 0 and self.frame_counter > 0.15:
                 self.icon_frame = 1
-                self.need_to_redraw = True
             elif self.frame_counter > 0.3:
                 self.icon_frame = 0
-                self.need_to_redraw = True
                 self.frame_counter = 0
 
         self.game.m_ent.render()
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+
+    def on_exit(self):
+        pass
+
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
 
             if key == "down":
                 self.selection = (self.selection + 1) % self.max_selection
@@ -143,7 +144,7 @@ class GameStateMenuParty(BaseGameState):
     @property
     def max_selection(self):
         if self.state == states["top"]:
-            return len(self.top_menu_options)
+            return len(self.spr_top_menu_options)
         elif self.state == states["party"]:
             return len(self.game.inventory.member_names)
         elif self.state == states["inspect"]:
@@ -156,7 +157,7 @@ class GameStateMenuParty(BaseGameState):
         """
         if self.state == states["top"]:
             # self.game.r_int.draw_rectangle((0.75, 0.3), size=(0.15, 0.4), col="black")
-            for i, img in enumerate(self.top_menu_options):
+            for i, img in enumerate(self.spr_top_menu_options):
                 # self.game.r_int.draw_text(
                 #     f"{self.selection == i and '' or ''}{name}",
                 #     (0.76, 0.31 + 0.08 * i),
@@ -193,7 +194,7 @@ class GameStateMenuParty(BaseGameState):
                     self.game.r_int.draw_rectangle(
                         (0.197 + (i % 2) * 0.138, i_v + 0.039),
                         size=(0.087, 0.01),
-                        col="gray",
+                        col="grey",
                     )
                     current_hp = member.current_hp / member.stats[0]
                     self.game.r_int.draw_rectangle(
@@ -208,7 +209,7 @@ class GameStateMenuParty(BaseGameState):
                     self.game.r_int.draw_rectangle(
                         (0.197 + (i % 2) * 0.138, i_v + 0.055),
                         size=(0.087, 0.01),
-                        col="gray",
+                        col="grey",
                     )
                     current_xp = (
                         member.level_xp and (member.current_xp / member.level_xp) or 0
@@ -232,7 +233,9 @@ class GameStateMenuParty(BaseGameState):
                         (0.135 + (i % 2) * 0.37, i_v),
                         centre=True,
                         size=3 / 4,
+                        safe=True,
                     )
+
                     self.game.r_int.draw_text(
                         f"Lv.{member.level}",
                         (0.18 + (i % 2) * 0.14, i_v + 0.01),
@@ -251,7 +254,7 @@ class GameStateMenuParty(BaseGameState):
             elif self.state == states["inspect"]:
                 member = self.game.inventory.members[self.selectedmember]
                 self.game.r_int.draw_image(
-                    member.sprite, (0.25, 0.48), centre=True,
+                    member.sprite, (0.25, 0.48), centre=True, size=2.0, safe=True
                 )
                 self.game.r_int.draw_image(
                     self.spr_inspect_namecell, (0.235, 0.74), centre=True,

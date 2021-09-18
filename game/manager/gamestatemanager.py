@@ -27,7 +27,6 @@ class GameStateManager:
             self.switch_state(self.previous_state_name)
 
     def switch_state(self, new_state, **kwargs):
-        self.game.r_int.new_canvas()
         if self.current_state is not None:
             self.current_state.on_exit()
             del self.current_state

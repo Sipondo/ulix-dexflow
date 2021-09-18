@@ -7,6 +7,8 @@ class GameStateStorage(BaseGameState):
     def on_enter(self):
         self.game.r_int.letterbox = False
         self.focus = 0
+        self.icon_frame = 0
+        self.frame_counter = 0
 
         self.selection_team = 0
         self.selection_storage = None
@@ -24,51 +26,59 @@ class GameStateStorage(BaseGameState):
         self.dialogue = None
         self.author = None
         self.prev_dialogue = None
-        self.need_to_redraw = True
 
-        self.spr_partyback = self.game.m_res.get_interface("partyback")
-        self.spr_deposit_team_background = self.game.m_res.get_interface(
-            "deposit_team_background"
-        )
-        self.spr_deposit_background = self.game.m_res.get_interface(
-            "deposit_background"
-        )
+        self.spr_partyback = "partyback"
+        self.spr_deposit_team_background = "deposit_team_background"
+        self.spr_deposit_background = "deposit_background"
 
         self.spr_deposit_poketile = (
-            self.game.m_res.get_interface("deposit_poketile"),
-            self.game.m_res.get_interface("deposit_poketile_selected"),
+            "deposit_poketile",
+            "deposit_poketile_selected",
         )
 
         self.spr_deposit_deposittile = (
-            self.game.m_res.get_interface("deposit_deposittile"),
-            self.game.m_res.get_interface("deposit_deposittile_selected"),
+            "deposit_deposittile",
+            "deposit_deposittile_selected",
         )
-        self.spr_inspect_namecell = self.game.m_res.get_interface("inspect_namecell")
+        self.spr_inspect_namecell = "inspect_namecell"
+
+        for x in (
+            (self.spr_partyback,)
+            + (self.spr_deposit_team_background,)
+            + (self.spr_deposit_background,)
+            + self.spr_deposit_poketile
+            + self.spr_deposit_deposittile
+            + (self.spr_inspect_namecell,)
+        ):
+            self.game.r_int.load_sprite(x)
+
+        self.game.r_int.init_sprite_drawer()
         self.update_lists()
 
     def on_tick(self, time, frame_time):
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
-        return False
+        self.game.m_ent.render()
+
+        self.frame_counter += frame_time
+        if self.icon_frame == 0 and self.frame_counter > 0.15:
+            self.icon_frame = 1
+        elif self.frame_counter > 0.3:
+            self.icon_frame = 0
+            self.frame_counter = 0
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.prev_dialogue = self.dialogue
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
+        self.prev_dialogue = self.dialogue
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
             if key == "left" and self.focus == 1:
                 self.selection_storage = 0
                 self.selection_storage_window = 0
@@ -217,7 +227,7 @@ class GameStateStorage(BaseGameState):
 
         if not isinstance(item, str):
             self.game.r_int.draw_image(
-                item.sprite, (0.25, 0.505), centre=True, size=1.0
+                item.sprite, (0.25, 0.505), centre=True, size=2.0, safe=True
             )
             self.game.r_int.draw_image(
                 self.spr_inspect_namecell, (0.235, 0.74), centre=True,
@@ -246,7 +256,13 @@ class GameStateStorage(BaseGameState):
                     centre=False,
                 )
                 self.game.r_int.draw_image(
-                    name.icon[0], (0.405, 0.21 + 0.08 * i), centre=True, size=0.5
+                    name.icon[self.icon_frame]
+                    if self.selection_team == i and (self.focus == 0 and 1 or 1)
+                    else name.icon[0],
+                    (0.405, 0.21 + 0.08 * i),
+                    centre=True,
+                    size=3 / 4,
+                    safe=True,
                 )
                 self.game.r_int.draw_text(
                     str(name.level),
@@ -297,10 +313,13 @@ class GameStateStorage(BaseGameState):
                     centre=False,
                 )
                 self.game.r_int.draw_image(
-                    name.icon[0],
+                    name.icon[self.icon_frame]
+                    if self.selection_storage == i
+                    else name.icon[0],
                     (0.685, 0.21 + 0.08 * (i - self.selection_storage_window)),
                     centre=True,
-                    size=0.5,
+                    size=3 / 4,
+                    safe=True,
                 )
                 self.game.r_int.draw_text(
                     str(name.level),

@@ -142,10 +142,7 @@ class ResourceManager:
     def get_party_icon(self, resource_name, size=1.0):
         if f"{resource_name}___{size}" not in self.fighter_icons:
             img = self.open_image_interface(
-                self.p_graphics
-                / "pokemon_icons"
-                / f"{str(resource_name).zfill(3)}.png",
-                size,
+                self.p_graphics / "pokemon_icons" / f"{resource_name}.png", size,
             )
             w, h = img.size
             self.fighter_icons[f"{resource_name}___{size}"] = (
@@ -163,7 +160,18 @@ class ResourceManager:
         )
 
     def get_interface(self, resource_name, size=0.5):
-        pth = self.p_interface / f"{str(resource_name)}.png"
+        resource_name = resource_name.lower()
+        if "trainers/" in resource_name:
+            pth = self.p_trainers / f"{str(Path(resource_name).stem)}.png"
+        elif "icon/" in resource_name:
+            return self.get_party_icon(Path(resource_name).stem, size)
+        elif "sprite/" in resource_name:
+            return self.get_sprite_from_anim(Path(resource_name).stem, size)
+        elif "item/" in resource_name:
+            return self.get_item_icon(Path(resource_name).stem, size)
+        else:
+            pth = self.p_interface / f"{str(resource_name)}.png"
+
         if self.resolve_resource_path(pth):
             return self.open_image_interface(pth, size,).convert("RGBA")
         return self.open_image_interface(self.p_items / "000.png", size,).convert(
@@ -218,9 +226,6 @@ class ResourceManager:
         if name not in self.tilesets:
             pth = self.p_graphics / Path(name).with_suffix(".png")
             pth = self.resolve_resource_path(pth)
-
-            print(pth)
-            print("_".join(pth.stem.split("_")[:-2]))
             pth_list = list(
                 pth.parent.glob("_".join(pth.stem.split("_")[:-2] + ["*.png"]))
             )
@@ -229,8 +234,6 @@ class ResourceManager:
             for image_pth in pth_list:
                 sprite_list.append(np.array(Image.open(image_pth).convert("RGBA")))
 
-            print("Normal", sprite_list[0])
-            print("Casted", sprite_list[0].astype("uint8"))
             sprite = np.stack(sprite_list).astype("uint8")
 
             spritemap = sprite.tobytes()
