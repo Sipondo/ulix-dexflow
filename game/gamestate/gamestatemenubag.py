@@ -11,57 +11,49 @@ class GameStateMenuBag(BaseGameState):
 
         self.filter = 1
 
-        self.filtericons = [
-            self.game.m_res.get_item_icon(f"bagPocket{x}", size=0.5)
-            for x in range(1, 9)
-        ]
-
-        self.spr_inventory_tabs = [
-            self.game.m_res.get_interface(f"inventory_tab{x}")
-            for x in (1, 2, 3, 4, 5, 6, 7, 8)
-        ]
-        self.spr_inventorywindow = self.game.m_res.get_interface("inventory_window")
+        self.spr_inventory_tabs = tuple(
+            [f"inventory_tab{x}" for x in (1, 2, 3, 4, 5, 6, 7, 8)]
+        )
+        self.spr_inventorywindow = "inventory_window"
 
         self.spr_cell = (
-            self.game.m_res.get_interface("inventory_itemcell"),
-            self.game.m_res.get_interface("inventory_itemcell_selected"),
+            "inventory_itemcell",
+            "inventory_itemcell_selected",
         )
 
-        self.spr_shop_item_background = self.game.m_res.get_interface(
-            "shop_item_background_window"
-        )
+        self.spr_shop_header = "shop_headertile"
+        self.spr_shop_descript = "shop_descript"
+        self.spr_partyback = "partyback"
+        self.spr_shop_item_background = "shop_item_background_window"
 
-        self.spr_shop_header = self.game.m_res.get_interface("shop_headertile")
-        self.spr_shop_descript = self.game.m_res.get_interface("shop_descript")
-        self.spr_partyback = self.game.m_res.get_interface("partyback")
-        self.spr_shop_item_background = self.game.m_res.get_interface(
-            "shop_item_background_window"
-        )
-        self.need_to_redraw = True
+        for x in (
+            self.spr_inventory_tabs
+            + (self.spr_inventorywindow,)
+            + self.spr_cell
+            + (self.spr_shop_header,)
+            + (self.spr_shop_descript,)
+            + (self.spr_partyback,)
+            + (self.spr_shop_item_background,)
+        ):
+            self.game.r_int.load_sprite(x)
+
+        self.game.r_int.init_sprite_drawer()
 
     def on_tick(self, time, frame_time):
-        self.time = time
-        # self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
-        return False
+        self.game.m_ent.render()
+        return
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        self.game.m_ent.render()
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
-
             if key == "down":
                 if (self.selection > 7) and (
                     (self.selection_window + 10) < self.max_selection
@@ -135,7 +127,7 @@ class GameStateMenuBag(BaseGameState):
             )
 
             self.game.r_int.draw_image(
-                item.icon, (0.62, 0.28 + 0.08 * i), centre=True,
+                item.icon, (0.62, 0.28 + 0.08 * i), centre=True, safe=True
             )
 
         if len(items) > self.selection:
@@ -148,14 +140,14 @@ class GameStateMenuBag(BaseGameState):
             self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
             self.game.r_int.draw_text(
                 f"{item.itemname}",
-                (0.31, 0.285),
+                (0.31, 0.21),
                 size=(0.14, 0.08),
                 bcol=None,
                 centre=True,
             )
             self.game.r_int.draw_text(
                 f"{item.description}",
-                (0.3, 0.622),
+                (0.31, 0.48),
                 size=(0.35, 0.15),
                 fsize=10,
                 bcol=None,

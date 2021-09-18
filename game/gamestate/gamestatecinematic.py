@@ -10,37 +10,30 @@ class GameStateCinematic(BaseGameState):
 
         self.dialogue = None
         self.author = None
-        self.prev_dialogue = None
-        self.need_to_redraw = True
 
         self.spr_talker = None
 
-        self.spr_textbox = self.game.m_res.get_interface("textbox")
-        self.spr_namebox = self.game.m_res.get_interface("namebox")
+        self.game.r_int.load_sprite("textbox")
+        self.game.r_int.load_sprite("namebox")
+        self.game.r_int.init_sprite_drawer()
 
     def on_tick(self, time, frame_time):
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
         return False
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
+    def on_render(self, time, frame_time):
         self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.prev_dialogue = self.dialogue
-            self.need_to_redraw = False
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
             if key == "down":
                 if self.options:
                     self.selection = (self.selection + 1) % self.max_selection
@@ -84,14 +77,14 @@ class GameStateCinematic(BaseGameState):
 
         if self.spr_talker:
             self.game.r_int.draw_image(
-                self.spr_talker, (0.8, 0.7), centre=True, size=3.0
+                self.spr_talker, (0.8, 0.7), centre=True, size=3, safe=True
             )
 
-        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="gray")
+        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="grey")
 
         if self.author is not None and self.author:
             self.game.r_int.draw_image(
-                self.spr_namebox, (0.02, 0.75),
+                "namebox", (0.02, 0.75),
             )
             self.game.r_int.draw_text(
                 self.author, (0.025, 0.755), to=(0.30, 0.80), bcol=None,
@@ -99,7 +92,7 @@ class GameStateCinematic(BaseGameState):
 
         if self.dialogue:
             self.game.r_int.draw_image(
-                self.spr_textbox, (0.02, 0.82),
+                "textbox", (0.02, 0.82),
             )
             self.game.r_int.draw_text(
                 self.dialogue if self.dialogue is not None else "",

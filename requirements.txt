@@ -17,3 +17,5 @@ cx-freeze
 pyqt5
 lark
 termcolor
+qlibs
+qlibs-cyan

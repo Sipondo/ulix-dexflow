@@ -1196,7 +1196,18 @@
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "defUid": 386, "realEditorValues": [] },
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "defUid": 410, "realEditorValues": [] },
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
-						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "defUid": 419, "realEditorValues": [] },
+						{
+							"__identifier": "encounter_text",
+							"__value": "This is a particularly long text string that is sure to wrap over multiple lines in the textbox. Ā ā Ă ă Ą ą Ć ć Ĉ ĉ Ċ ċ Č č Ď ď Đ đ Ē ē Ĕ ĕ Ė ė Ę ę Ě ě Ĝ ĝ Ğ ğ Ġ ġ Ģ ģ Ĥ ĥ Ħ ħ Ĩ ĩ Ī ī Ĭ ĭ Į į İ ı Ĳ ĳ Ĵ ĵ Ķ ķ ĸ Ĺ ĺ Ļ ļ Ľ ľ Ŀ ŀ Ł ł Ń ń Ņ ņ Ň ň ŉ Ŋ ŋ Ō ō Ŏ ŏ Ő ő Œ œ Ŕ ŕ Ŗ ŗ Ř ř",
+							"__type": "String",
+							"defUid": 419,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": [
+									"This is a particularly long text string that is sure to wrap over multiple lines in the textbox. Ā ā Ă ă Ą ą Ć ć Ĉ ĉ Ċ ċ Č č Ď ď Đ đ Ē ē Ĕ ĕ Ė ė Ę ę Ě ě Ĝ ĝ Ğ ğ Ġ ġ Ģ ģ Ĥ ĥ Ħ ħ Ĩ ĩ Ī ī Ĭ ĭ Į į İ ı Ĳ ĳ Ĵ ĵ Ķ ķ ĸ Ĺ ĺ Ļ ļ Ľ ľ Ŀ ŀ Ł ł Ń ń Ņ ņ Ň ň ŉ Ŋ ŋ Ō ō Ŏ ŏ Ő ő Œ œ Ŕ ŕ Ŗ ŗ Ř ř"
+								]
+							}]
+						},
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
 						{
 							"__identifier": "visible",

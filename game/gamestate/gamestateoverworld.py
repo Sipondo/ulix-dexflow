@@ -7,7 +7,6 @@ class GameStateOverworld(BaseGameState):
 
         self.time = None
         self.movement_type = 0
-        self.need_to_redraw = True
         self.game.r_aud.play_music("BGM/021-Field04.flac")
 
     def on_tick(self, time, frame_time):
@@ -16,17 +15,11 @@ class GameStateOverworld(BaseGameState):
         self.lock = self.game.m_ani.on_tick(time, frame_time)
         if direction and not self.lock:
             self.game.m_ent.player.start_move(direction, self.time)
-        self.redraw()
+        self.game.m_ent.render()
         return False
 
     def on_exit(self):
         pass
-
-    def redraw(self):
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.need_to_redraw = False
-        self.game.m_ent.render()
 
     def check_direction(self):
         # TODO: move to own function
@@ -50,8 +43,6 @@ class GameStateOverworld(BaseGameState):
         if not self.lock:
             if key == "interact":
                 self.game.m_act.check_interact()
-            # if key == "battle":
-            #     self.game.m_gst.switch_state("battle")
             if key == "menu":
                 self.game.m_gst.switch_state("menuparty")
             if key == "zoom_in":

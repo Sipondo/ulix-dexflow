@@ -4,10 +4,11 @@ from .basegamestate import BaseGameState
 class GameStateIntro(BaseGameState):
     def on_enter(self):
         self.game.r_int.fade = True
-        self.need_to_redraw = True
 
         # self.logo_engine = self.game.m_res.get_splash("ulix_logo_small")
-        self.logo_framework = self.game.m_res.get_splash("dexflow_logo_small")
+        self.logo_framework = "splash/dexflow_logo_small"
+        self.game.r_int.load_sprite(self.logo_framework)
+        self.game.r_int.init_sprite_drawer()
 
         self.stage = 0
 
@@ -21,9 +22,8 @@ class GameStateIntro(BaseGameState):
             self.timer += frame_time
 
         if self.stage == 1 and self.timer > 0.5:
-            self.need_to_redraw = True
             self.stage = 2
-        self.redraw(time, frame_time)
+
         if self.timer > 0.7:
             self.game.m_gst.switch_state("overworld")
         return False
@@ -32,11 +32,8 @@ class GameStateIntro(BaseGameState):
         self.game.r_int.fade = False
         pass
 
-    def redraw(self, time, frame_time):
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def event_keypress(self, key, modifiers):
         pass
