@@ -164,7 +164,7 @@ class GameStateShop(BaseGameState):
             )
         self.game.r_int.draw_text(
             f"Money: {self.game.inventory.money}",
-            (0.31, 0.185),
+            (0.27, 0.11),
             size=(0.14, 0.08),
             bcol=None,
             centre=True,
@@ -182,14 +182,14 @@ class GameStateShop(BaseGameState):
         )
         self.game.r_int.draw_text(
             f"{self.shop.get_item(self.selection).name}",
-            (0.31, 0.285),
+            (0.27, 0.21),
             size=(0.14, 0.08),
             bcol=None,
             centre=True,
         )
         self.game.r_int.draw_text(
             f"{self.shop.get_item_data(self.selection).description}",
-            (0.3, 0.622),
+            (0.3, 0.47),
             size=(0.35, 0.15),
             fsize=10,
             bcol=None,
