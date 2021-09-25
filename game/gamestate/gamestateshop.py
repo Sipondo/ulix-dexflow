@@ -19,33 +19,41 @@ class GameStateShop(BaseGameState):
         self.prev_dialogue = None
         self.need_to_redraw = True
 
-        self.spr_textbox = self.game.m_res.get_interface("textbox")
+        self.spr_textbox = "textbox"
 
-        self.spr_shop_header = self.game.m_res.get_interface("shop_headertile")
-        self.spr_shop_descript = self.game.m_res.get_interface("shop_descript")
-        self.spr_talker = None
+        self.spr_shop_header = "shop_headertile"
+        self.spr_shop_descript = "shop_descript"
 
-        self.spr_shop_item_background = self.game.m_res.get_interface(
-            "shop_item_background_window"
-        )
-        self.spr_shopwindow = self.game.m_res.get_interface("shopwindow_e")
-        self.spr_itemcell = (
-            self.game.m_res.get_interface("shop_itemcell"),
-            self.game.m_res.get_interface("shop_itemcell_selected"),
-        )
-        self.spr_shop_itemtext_cell = self.game.m_res.get_interface(
-            "shop_itemtext_cell"
-        )
-        self.spr_shoplistwindow = self.game.m_res.get_interface("shop_list_window")
+        self.spr_shop_item_background = "shop_item_background_window"
+        self.spr_shopwindow = "shopwindow_e"
+        self.spr_itemcell = "shop_itemcell"
+        self.spr_itemcell_selected = "shop_itemcell_selected"
+        self.spr_shop_itemtext_cell = "shop_itemtext_cell"
+        self.spr_shoplistwindow = "shop_list_window"
+
+        for spr in (
+            self.spr_textbox,
+            self.spr_shop_header,
+            self.spr_shop_descript,
+            self.spr_shop_item_background,
+            self.spr_shopwindow,
+            self.spr_itemcell,
+            self.spr_itemcell_selected,
+            self.spr_shop_itemtext_cell,
+            self.spr_shoplistwindow,
+        ):
+            self.game.r_int.load_sprite(spr)
 
         if self.shop.size == 0:
-            self.dialogue = "It seems you bought everything! Sorry, come back another time!"
+            self.dialogue = (
+                "It seems you bought everything! Sorry, come back another time!"
+            )
+        self.game.r_int.init_sprite_drawer()
 
     def on_tick(self, time, frame_time):
         self.cd -= time - self.time
         self.time = time
         self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
         return False
 
     def on_exit(self):
@@ -53,13 +61,10 @@ class GameStateShop(BaseGameState):
         self.shop.save_items()
         pass
 
-    def redraw(self, time, frame_time):
+    def on_render(self, time, frame_time):
         self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.prev_dialogue = self.dialogue
-            self.need_to_redraw = False
+        self.draw_interface(time, frame_time)
+        self.prev_dialogue = self.dialogue
 
     def set_locked(self, b):
         self.lock = b
@@ -123,7 +128,6 @@ class GameStateShop(BaseGameState):
         return self.shop.size
 
     def draw_interface(self, time, frame_time):
-        # TODO: move this away from here
         if self.dialogue:
             self.dialogue = (
                 self.dialogue.replace("{player.name}", self.game.m_ent.player.name)
@@ -133,20 +137,23 @@ class GameStateShop(BaseGameState):
                 .replace("{player.chis}", self.game.m_ent.player.chis)
             )
 
-        self.game.r_int.draw_image(self.spr_shopwindow, (0.5, 0.44), centre=True)
+        self.game.r_int.draw_image("shopwindow_e", (0.5, 0.44), centre=True)
         self.game.r_int.draw_image(
-            self.spr_shop_item_background, (0.3, 0.465), centre=True
+            "shop_item_background_window", (0.3, 0.465), centre=True
         )
 
-        self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.18), centre=True)
-        self.game.r_int.draw_image(self.spr_shop_header, (0.3, 0.275), centre=True)
-        self.game.r_int.draw_image(self.spr_shop_descript, (0.3, 0.6), centre=True)
-        self.game.r_int.draw_image(self.spr_shoplistwindow, (0.55, 0.23), centre=False)
+        self.game.r_int.draw_image(
+            "shop_headertile", (0.3, 0.18), centre=True
+        )
+        self.game.r_int.draw_image(
+            "shop_headertile", (0.3, 0.275), centre=True
+        )
+        self.game.r_int.draw_image("shop_descript", (0.3, 0.6), centre=True)
+        self.game.r_int.draw_image(
+            "shop_list_window", (0.55, 0.23), centre=False
+        )
         if self.dialogue:
-            self.game.r_int.draw_image(
-                self.spr_textbox,
-                (0.02, 0.82),
-            )
+            self.game.r_int.draw_image("textbox", (0.02, 0.82))
             self.game.r_int.draw_text(
                 "How many of this article would you like?"
                 if self.item_amount is not None
@@ -171,6 +178,7 @@ class GameStateShop(BaseGameState):
             (0.3, 0.41),
             centre=True,
             size=3.0,
+            safe=True
         )
         self.game.r_int.draw_text(
             f"{self.shop.get_item(self.selection).name}",
@@ -190,8 +198,7 @@ class GameStateShop(BaseGameState):
 
         if self.item_amount is not None:
             self.game.r_int.draw_image(
-                self.spr_itemcell[1],
-                (0.56, 0.24),
+                "shop_itemcell_selected", (0.56, 0.24)
             )
             self.game.r_int.draw_text(
                 f"Quantity: {self.item_amount}",
@@ -205,7 +212,9 @@ class GameStateShop(BaseGameState):
             # TODO add logic for more than 6 items
             for i, item in enumerate(self.shop.items):
                 self.game.r_int.draw_image(
-                    self.spr_itemcell[1 if self.selection == i else 0],
+                    "shop_itemcell_selected"
+                    if self.selection == i
+                    else "shop_itemcell",
                     (0.56, 0.24 + 0.08 * i),
                 )
                 self.game.r_int.draw_text(
