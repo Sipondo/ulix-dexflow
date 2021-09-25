@@ -42,9 +42,11 @@ class PartyMember:
         self.status = None
 
         self.abilities = [a for a in self.data.abilities.split(",")]
-        hidden_abilities = [a for a in self.data.hiddenability.split(",")]
+        if isinstance(self.data.hiddenability, str):
+            hidden_abilities = [a for a in self.data.hiddenability.split(",")]
+        else:
+            hidden_abilities = []
         self.abilities.extend(hidden_abilities)
-        print(self.abilities)
         self.current_ability = 0  # default ability will be first listed
 
         if isinstance(self.moves, str):

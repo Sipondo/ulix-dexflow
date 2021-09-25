@@ -16,7 +16,7 @@ effecteffect,function
 00E,"[freeze,flinch]"
 00F,"[flinch]"
 010,"[antiminimize,flinch]"
-011,"[snore]"
+011,"[sleepcheck,flinch]"
 012,"[fakeout]"
 013,"[confusion]"
 014,"[confusion]"

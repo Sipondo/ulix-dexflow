@@ -14,7 +14,7 @@ class Paralysis(BaseEffect):
 
     def on_action(self):
         if self.target == self.scene.board.user:
-            if self.scene.board.random_roll() < 0.25:
+            if self.scene.board.random_roll(0.25):
                 self.scene.board.no_skip(
                     f"{self.scene.board.get_actor(self.target).name} was fully paralyzed",
                     particle="Paralysis",

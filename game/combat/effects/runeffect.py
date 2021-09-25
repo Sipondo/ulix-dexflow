@@ -25,7 +25,7 @@ class RunEffect(BaseEffect):
             target_speed *= speed_mod
         attempt_n = self.counter
         escape_chance = user_speed * 32 // ((target_speed // 4) % 256) + 30 * attempt_n
-        if self.scene.board.random_roll() < escape_chance:
+        if self.scene.board.random_roll(escape_chance):
             self.scene.add_effect(
                 GenericEffect(
                     self.scene,

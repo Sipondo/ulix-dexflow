@@ -10,13 +10,13 @@ class Tailwind(BaseEffect):
     def __init__(self, scene, user, target):
         super().__init__(scene)
         self.apply_narration = "set up a wind blowing from behind"
-        self.target = target
+        self.target = target[0]
         self.counter = 4
 
     def before_end(self):
         if self.counter == 0:
             self.scene.add_effect(
-                GenericEffect(self.scene, f"{self.scene.board.get_actor(self.target).name}'s tailwind ended"))
+                GenericEffect(self.scene, f"The tailwind ended"))
             return True, False, False
         self.counter -= 1
         return False, False, False

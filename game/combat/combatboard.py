@@ -71,8 +71,11 @@ class CombatBoard:
     def random_int(self, a, b):
         return random.randint(a, b)
 
-    def random_roll(self):
+    def random_float(self):
         return random.random()
+
+    def random_roll(self, chance: float):
+        return random.random() <= chance
 
     def no_skip(self, narration, particle=None, battle_end=False, particle_miss=False, move_data=None):
         self.narration = narration

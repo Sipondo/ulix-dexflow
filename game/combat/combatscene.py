@@ -5,6 +5,7 @@ from .effects.switcheffect import SwitchEffect
 from .effects.balleffect import BallEffect
 from .effects.sendouteffect import SendOutEffect
 from .effects.forgetmoveeffect import ForgetMoveEffect
+from .effects.moveeffect.basemoveeffect import BaseMoveEffect
 
 import types
 import importlib
@@ -116,6 +117,11 @@ class CombatScene:
                 for x in sorted(self.effects, key=lambda x: -x.spd_before_action)
                 if not x.done and not x.skip
             ]:
+                if issubclass(type(effects[0]), BaseMoveEffect):
+                    if effects[0].move.user != self.current_action.user:
+                        print(effects[0])
+                        effects[0].done = True
+                        continue
                 skip = self.run_effect(effects[0], effects[0].before_action)
 
             self.reset_effects_done()
@@ -129,6 +135,11 @@ class CombatScene:
                 for x in sorted(self.effects, key=lambda x: -x.spd_on_action)
                 if not x.done and not x.skip
             ]:
+                if issubclass(type(effects[0]), BaseMoveEffect):
+                    if effects[0].move.user != self.current_action.user:
+                        print(effects[0])
+                        effects[0].done = True
+                        continue
                 skip = self.run_effect(effects[0], effects[0].on_action)
 
             self.reset_effects_done()
@@ -141,6 +152,11 @@ class CombatScene:
                 for x in sorted(self.effects, key=lambda x: -x.spd_after_action)
                 if not x.done and not x.skip
             ]:
+                if issubclass(type(effects[0]), BaseMoveEffect):
+                    if effects[0].move.user != self.current_action.user:
+                        print(effects[0])
+                        effects[0].done = True
+                        continue
                 self.run_effect(effects[0], effects[0].after_action)
         self.board.reset_action()
 
@@ -250,7 +266,7 @@ class CombatScene:
         return [x for x in self.effects if x.target == "Global"]
 
     def get_effects_on_target(self, target):
-        return [x for x in self.effects if x.target == target]
+        return [x for x in self.effects if x.target == target or x.target == target[0]]  # target team or target itself
 
     def get_effects_by_name(self, effect_name):
         return [x for x in self.effects if x.name == effect_name]

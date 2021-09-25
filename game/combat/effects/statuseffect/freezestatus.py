@@ -22,6 +22,12 @@ class Freeze(BaseEffect):
                     )
                     return True, False, False
                 else:
+                    if self.scene.board.random_roll(0.2):
+                        self.scene.board.no_skip(
+                            f"{self.scene.board.get_actor(self.target).name} thawed out!",
+                            particle=self.name,
+                        )
+                        return True, False, False
                     self.scene.board.no_skip(
                         f"{self.scene.board.get_actor(self.target).name} is frozen solid!",
                         particle=self.name,

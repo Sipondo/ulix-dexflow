@@ -15,7 +15,7 @@ class MainMove(BaseEffect):
         self.user = move.user
         self.target = move.target
         self.type = move.type
-        self.chance = move.chance / 100
+        self.chance = 1 if move.chance == 0 else move.chance / 100
         self.move_cat = move.damagecat
         self.power = move.power
         self.accuracy = move.accuracy
@@ -54,7 +54,7 @@ class MainMove(BaseEffect):
             ]:
                 acc /= eva_mod
             acc = 1 if self.abs_acc else acc
-            if self.scene.board.random_roll() > ((self.accuracy / 100) * acc):
+            if not self.scene.board.random_roll((self.accuracy / 100) * acc):
                 self.scene.board.particle_miss = True
                 self.scene.add_effect(GenericEffect(self.scene, "But it missed!"))
                 return False
@@ -74,7 +74,7 @@ class MainMove(BaseEffect):
                 crit_chance = 0.5
             if crit_total > 2:
                 crit_chance = 1
-            crit = self.scene.board.random_roll() < crit_chance
+            crit = self.scene.board.random_roll(crit_chance)
             # Calculate move dmg/effectiveness etc.
             return self.move_damage(crit=crit)
         return True
@@ -138,7 +138,7 @@ class MainMove(BaseEffect):
             # TODO add crit damage mods
             self.scene.add_effect(GenericEffect(self.scene, "Critical hit!"))
             damage *= 1.5
-        damage *= 1 - (self.scene.board.random_roll() * 0.15)
+        damage *= 1 - (self.scene.board.random_float() * 0.15)
         damage = int(damage)
         self.scene.add_effect(DamageEffect(self.scene, self.target, abs_dmg=damage))
         return True

@@ -8,9 +8,9 @@ from .burnstatus import Burn
 from .freezestatus import Freeze
 from .confusionstatus import Confusion
 from .infatuationstatus import Infatuation
-from .safeguardstatus import Safeguard
-from .miststatus import Mist
-from .tailwindstatus import Tailwind
+from game.combat.effects.fieldeffect.safeguardstatus import Safeguard
+from game.combat.effects.fieldeffect.miststatus import Mist
+from game.combat.effects.fieldeffect.tailwindstatus import Tailwind
 
 
 SLEEP = Sleep

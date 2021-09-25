@@ -5,6 +5,7 @@ from game.combat.effects import statuseffect
 
 class Drowsy(BaseMoveEffect):
     def after_action(self):
-        ApplyStatus(self.scene, statuseffect.DROWSY, self.move.user, self.move.target).apply()
+        if self.scene.board.random_roll(self.move.chance):
+            ApplyStatus(self.scene, statuseffect.DROWSY, self.move.user, self.move.target).apply()
         return True, False, False
 

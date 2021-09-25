@@ -8,5 +8,6 @@ class Enemyacc(BaseMoveEffect):
         self.mod = int(mod)
 
     def after_action(self):
-        StatChange(self.scene, self.move.target, "Accuracy", self.mod).apply()
+        if self.scene.board.random_roll(self.move.chance):
+            StatChange(self.scene, self.move.target, "Accuracy", self.mod).apply()
         return True, False, False

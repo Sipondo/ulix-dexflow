@@ -21,7 +21,7 @@ class Infatuation(BaseEffect):
                     f"{self.scene.board.get_actor(self.target).name} is in love with foe {self.scene.board.get_actor(self.user).name}!",
                     particle=self.name,
                 )
-                if self.scene.board.random_roll() < 0.5:
+                if self.scene.board.random_roll(0.5):
                     self.scene.add_effect(
                         GenericEffect(
                             self.scene,

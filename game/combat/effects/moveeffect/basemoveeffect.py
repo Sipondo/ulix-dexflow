@@ -18,10 +18,10 @@ class BaseMoveEffect(BaseEffect, abc.ABC):
 
     def after_action(self) -> Tuple[bool, bool, bool]:
         """Anything that needs to happen after an action. Returns a tuple containing information about the current
-        action. In order: Delete this effect, skip everything related to this action, end the battle"""
+        action. In order: Delete this effect, skip everything related to this action, end the battle."""
         return False, False, False
 
-    def before_end(self):
-        """Method to delete the move-effect in case it did not happen yet. Should never be overwritten."""
-        # always remove these effects at the end of a turn unless otherwise specified in move_effect
+    def before_end(self) -> Tuple[bool, bool, bool]:
+        """Method to delete the move-effect in case it did not happen yet."""
+        # always remove these effects at the end of a turn unless otherwise specified.
         return True, False, False
