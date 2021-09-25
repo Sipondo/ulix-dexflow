@@ -6,7 +6,7 @@ from moderngl_window import geometry
 from pathlib import Path
 
 from game.renderer.audiorenderer import AudioRenderer
-from game.renderer.interfacerenderer import InterfaceRenderer
+from game.renderer.qinterfacerenderer import InterfaceRenderer
 
 from game.renderer.entityrenderer import EntityRenderer
 from game.renderer.worldrenderer import WorldRenderer
@@ -260,6 +260,7 @@ class PokeGame(mglw.WindowConfig):
             self.quad_fs.render(self.render_prog)
 
             self.r_int.update()
+            self.m_gst.current_state.on_render(time, frame_time)
 
             self.m_sav.render(time, frame_time)
             pyglet.clock.tick()

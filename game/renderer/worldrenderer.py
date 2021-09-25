@@ -63,7 +63,6 @@ class TileLayer:
         return (tile[0] - 1, tile[1])
 
     def render(self, time, frame_time):
-        frame_time = max(0.001, min(0.06, frame_time))
         if self.terminated or not self.render_enabled or self.map is None:
             return
 

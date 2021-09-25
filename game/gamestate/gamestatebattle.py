@@ -39,47 +39,58 @@ class GameStateBattle(BaseGameState):
         self.render.set_pokemon(self.actor_1.sprite, 0)
         self.render.set_pokemon(self.actor_2.sprite, 1)
 
-        self.spr_battlecell = (
-            self.game.m_res.get_interface("battlecell"),
-            self.game.m_res.get_interface("battlecell_selected"),
-        )
+        self.spr_battlecell = ("battlecell", "battlecell_selected")
 
         self.spr_battlestatus = (
-            self.game.m_res.get_interface("battlestatus_ours"),
-            self.game.m_res.get_interface("battlestatus_theirs"),
+            "battlestatus_ours",
+            "battlestatus_theirs",
         )
 
         self.spr_teamstatus = (
-            self.game.m_res.get_picture("battle/icon_ball"),
-            self.game.m_res.get_picture("battle/icon_ball_empty"),
-            self.game.m_res.get_picture("battle/icon_ball_faint"),
-            self.game.m_res.get_picture("battle/icon_ball_status"),
+            "battle/icon_ball",
+            "battle/icon_ball_empty",
+            "battle/icon_ball_faint",
+            "battle/icon_ball_status",
         )
 
-        self.spr_own = self.game.m_res.get_picture("battle/icon_own")
+        self.spr_own = "battle/icon_own"
 
-        self.spr_statusbox = self.game.m_res.get_interface("statusbox")
+        self.spr_statusbox = "statusbox"
 
         self.spr_attackcell = (
-            self.game.m_res.get_interface("attackcell"),
-            self.game.m_res.get_interface("attackcell_selected"),
+            "attackcell",
+            "attackcell_selected",
         )
 
         self.spr_ballcell = (
-            self.game.m_res.get_interface("ballcell"),
-            self.game.m_res.get_interface("ballcell_selected"),
+            "ballcell",
+            "ballcell_selected",
         )
 
-        self.spr_attackwindow = self.game.m_res.get_interface("attackwindow")
-        self.spr_ballwindow = self.game.m_res.get_interface("ballwindow")
-        self.spr_switchwindow = self.game.m_res.get_interface("switchwindow")
+        self.spr_attackwindow = "attackwindow"
+        self.spr_ballwindow = "ballwindow"
+        self.spr_switchwindow = "switchwindow"
 
-        self.spr_actionbuttons = [
-            self.game.m_res.get_interface(x)
-            for x in ("attack", "switch", "throw_ball", "run")
-        ]
-
+        self.spr_actionbuttons = ("attack", "switch", "throw_ball", "run")
         self.spr_attacktypes = self.game.m_res.attack_types
+
+        for x in (
+            self.spr_battlecell
+            + self.spr_battlestatus
+            + self.spr_teamstatus
+            + (self.spr_own,)
+            + (self.spr_statusbox,)
+            + self.spr_attackcell
+            + self.spr_ballcell
+            + (self.spr_attackwindow,)
+            + (self.spr_ballwindow,)
+            + (self.spr_switchwindow,)
+            + self.spr_actionbuttons
+            + tuple(self.spr_attacktypes.values())
+        ):
+            self.game.r_int.load_sprite(x)
+
+        self.game.r_int.init_sprite_drawer()
 
         self.agents = []
         if agents:
@@ -91,7 +102,6 @@ class GameStateBattle(BaseGameState):
             agent.start(self.combat)
 
         self.lock_state = False
-        self.need_to_redraw = True
         self.action_choice = 0
         self.selection = 0
         self.state = states["topmenu"]
@@ -120,9 +130,10 @@ class GameStateBattle(BaseGameState):
                 print("PRESSING", self.time_press)
                 self.event_keypress(self.time_press, [])
                 self.time_press = None
-        if self.to_end:
-            self.end_battle()
-            return
+        else:
+            if self.to_end:
+                self.end_battle()
+                return
 
         actions = []
         if self.state != states["action"] or self.particle_test:
@@ -181,18 +192,15 @@ class GameStateBattle(BaseGameState):
                 self.lock_state = False
                 self.advance_board()
 
-        self.redraw(time, frame_time)
+        # self.redraw(time, frame_time)
         self.lock = self.render.render(time, frame_time)
         return True
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def event_keypress(self, key, modifiers):
         if self.particle_test:
@@ -203,7 +211,6 @@ class GameStateBattle(BaseGameState):
             return
 
         if self.lock == False:
-            self.need_to_redraw = True
             if self.state == states["action"]:
                 if key == "interact":
                     self.advance_board()
@@ -309,7 +316,6 @@ class GameStateBattle(BaseGameState):
             self.time_lock = 0.5
             return
         if not self.pending_boards:
-            self.need_to_redraw = True
             if self.board.new_move:
                 if len(self.actor_1.actions) > 4:
                     self.state = states["topmenu"]
@@ -358,8 +364,6 @@ class GameStateBattle(BaseGameState):
                 self.render.set_pokemon(self.board.actor_2.sprite, 1)
             self.actor_2 = self.board.actor_2
 
-        self.need_to_redraw = True
-
         if self.board.skip:
             self.advance_board()
             return
@@ -389,7 +393,9 @@ class GameStateBattle(BaseGameState):
     def synchronize(self):
         for i, member in enumerate(self.board.teams[0]):
             self.combat.board.sync_actor((0, i))
-            self.game.inventory.members[i].from_series(self.board.get_actor((0, i)).series)
+            self.game.inventory.members[i].from_series(
+                self.board.get_actor((0, i)).series
+            )
 
     def end_battle(self):
         self.synchronize()
@@ -553,7 +559,7 @@ class GameStateBattle(BaseGameState):
             self.game.r_int.draw_rectangle(
                 (x_off + 0.028, 0.14),
                 size=(x_size * rel_hp, 0.035),
-                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
+                col=rel_hp > 0.5 and "darkgreen" or rel_hp > 0.2 and "yellow" or "red",
             )
         # EXP bar
         self.game.r_int.draw_rectangle(
@@ -611,7 +617,7 @@ class GameStateBattle(BaseGameState):
             self.game.r_int.draw_rectangle(
                 (x_off + 0.028, 0.14),
                 size=(x_size * rel_hp, 0.035),
-                col=rel_hp > 0.5 and "green" or rel_hp > 0.2 and "yellow" or "red",
+                col=rel_hp > 0.5 and "darkgreen" or rel_hp > 0.2 and "yellow" or "red",
             )
         # self.game.r_int.draw_rectangle(
         #     (x_off - lining, 0.05 - lining),

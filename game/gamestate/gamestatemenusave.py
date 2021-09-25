@@ -6,31 +6,24 @@ class GameStateMenuSave(BaseGameState):
         self.game.r_int.letterbox = False
         self.selection = 0
 
-        self.need_to_redraw = True
         self.game.m_sav.write_to_file()
 
     def on_tick(self, time, frame_time):
         self.time = time
-        # self.lock = self.game.m_ani.on_tick(time, frame_time)
-        self.redraw(time, frame_time)
+        self.game.m_ent.render()
         return False
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        self.game.m_ent.render()
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
             if key == "menu" or key == "backspace":
                 self.game.m_gst.switch_state("menuparty")
 

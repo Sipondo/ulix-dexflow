@@ -16,14 +16,16 @@ def compile_world(pth):
     """
 
     # load editable level file
-    with open(root / "world.ldtk", "r") as infile:
+    with open(root / "world.ldtk", "r", encoding="utf-8") as infile:
         ldtk = json.load(infile)
 
     # load external levels if present
     if ldtk["externalLevels"]:
         for i, level in enumerate(ldtk["levels"]):
             if level["externalRelPath"]:
-                with open(root / level["externalRelPath"], "r") as infile:
+                with open(
+                    root / level["externalRelPath"], "r", encoding="utf-8"
+                ) as infile:
                     ldtk["levels"][i] = json.load(infile)
 
     def coldef_to_bool(coldef):

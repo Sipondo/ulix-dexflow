@@ -17,7 +17,7 @@ class PartyItem:
         self.quantity = quantity
         for k, v in data.items():
             setattr(self, k, v)
-        self.icon = self.game.m_res.get_item_icon(self.identifier, size=0.5)
+        self.icon = f"item/{self.identifier}"
 
     @property
     def series(self):

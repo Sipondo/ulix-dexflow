@@ -17,7 +17,6 @@ class ParticleManager:
         self.fast_forward = False
 
     def on_tick(self, time, frame_time, alpha_target, anti_target):
-        frame_time = min(2, max(0.0001, frame_time))
         self.alpha_target = alpha_target
         self.anti_target = anti_target
         busy = False
@@ -67,7 +66,9 @@ class ParticleManager:
 
     def spawn_system(self, brender, fname, target, miss, move_data):
         if target:
-            self.systems.append(ParticleSystem(self.game, brender, fname, target, miss, move_data))
+            self.systems.append(
+                ParticleSystem(self.game, brender, fname, target, miss, move_data)
+            )
 
     def vao_def(self, buffer, render=False):
         if render:

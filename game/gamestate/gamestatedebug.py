@@ -3,7 +3,6 @@ from .basegamestate import BaseGameState
 
 class GameStateDebug(BaseGameState):
     def on_enter(self):
-        self.need_to_redraw = True
         self.input = ""
         self.block_input = True
 
@@ -17,37 +16,31 @@ class GameStateDebug(BaseGameState):
             self.initialised = True
             self.input = ""
 
-        self.redraw(time, frame_time)
+        self.game.m_ent.render()
         return False
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        if self.need_to_redraw:
-            self.game.r_int.new_canvas()
-            self.game.r_int.draw_text(
-                """Go where? [map x y]\nOr run an UPL command.""",
-                (0.3, 0.2),
-                to=(0.7, 0.31),
-            )
-            self.game.r_int.draw_rectangle(
-                (0.28, 0.34), to=(0.72, 0.46), col="black",
-            )
-            self.game.r_int.draw_text(
-                self.input, (0.3, 0.36), to=(0.7, 0.44), col="black",
-            )
-            self.need_to_redraw = False
-        self.game.m_ent.render()
+    def on_render(self, time, frame_time):
+        self.game.r_int.draw_text(
+            """Go where? [map x y]\nOr run an UPL command.""",
+            (0.3, 0.2),
+            to=(0.7, 0.31),
+        )
+        self.game.r_int.draw_rectangle(
+            (0.28, 0.34), to=(0.72, 0.46), col="black",
+        )
+        self.game.r_int.draw_text(
+            self.input, (0.3, 0.36), to=(0.7, 0.44), col="black",
+        )
 
     def event_unicode(self, char):
-        self.need_to_redraw = True
         self.input += char
 
     def event_keypress(self, key, modifiers):
         if key == "backspace":
             if len(self.input):
-                self.need_to_redraw = True
                 self.input = self.input[:-1]
         if key == "enter":
             print("Debug:", self.input)

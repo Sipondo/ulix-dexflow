@@ -22,8 +22,8 @@ class PartyMember:
         if hasattr(self, "actions"):
             self.actions = [int(i) for i in self.actions]
 
-        self.icon = self.game.m_res.get_party_icon(self.internalname)
-        self.sprite = self.game.m_res.get_sprite_from_anim(data.name, size=2.0)
+        self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
+        self.sprite = f"sprite/{self.data.name}"
 
         self.current_xp = 0
         self.level_xp = 5
@@ -75,10 +75,13 @@ class PartyMember:
         self.set_characteristic()
 
     def evolve(self, evolution_data):
-        self.icon = self.game.m_res.get_party_icon(evolution_data.internalname)
-        self.sprite = self.game.m_res.get_sprite_from_anim(evolution_data.name, size=2.0)
         self.data = evolution_data.copy()
         self.name = str(evolution_data["name"])
+        self.internalname = self.data.internalname
+        self.type1 = self.data.type1
+        self.type2 = self.data.type2
+        self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
+        self.sprite = f"sprite/{self.data.name}"
 
     def set_new_level_xp(self):
         self.level_xp = self.game.m_pbs.get_level_exp(

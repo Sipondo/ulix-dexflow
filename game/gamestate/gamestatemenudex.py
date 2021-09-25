@@ -21,8 +21,6 @@ class GameStateMenuDex(BaseGameState):
         self.shop_confirm = None
         self.dialogue = None
         self.author = None
-        self.prev_dialogue = None
-        self.need_to_redraw = True
 
         self.spr_caught = (
             self.game.m_res.open_image_interface(
@@ -41,27 +39,19 @@ class GameStateMenuDex(BaseGameState):
         self.update_lists()
 
     def on_tick(self, time, frame_time):
-        self.time = time
-        self.redraw(time, frame_time)
-        return False
+        self.game.m_ent.render()
 
     def on_exit(self):
         pass
 
-    def redraw(self, time, frame_time):
-        self.game.m_ent.render()
-        if self.need_to_redraw or (self.dialogue != self.prev_dialogue):
-            self.game.r_int.new_canvas()
-            self.draw_interface(time, frame_time)
-            self.prev_dialogue = self.dialogue
-            self.need_to_redraw = False
+    def on_render(self, time, frame_time):
+        self.draw_interface(time, frame_time)
 
     def set_locked(self, bool):
         self.lock = bool
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.need_to_redraw = True
             if key == "left":
                 self.selection_storage = 0
                 self.selection_storage_window = 0
