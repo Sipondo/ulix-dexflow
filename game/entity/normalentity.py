@@ -76,10 +76,6 @@ class NormalEntity(BaseEntity):
                     item_dict[item] = {}
                 self.items = item_dict
             self.items = js or self.items
-            if hasattr(self.memory, "items"):
-                print("ITEMS IN MEMORY")
-                print(self.memory.items)
-                self.items = self.memory.items
 
     def when_interact(self):
         if self.active:

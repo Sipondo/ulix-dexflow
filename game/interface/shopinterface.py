@@ -18,9 +18,11 @@ class ShopInterface:
         self.owner = owner
 
         self.item_selected = False
-        print(owner.items)
         self.items = []
-        self.init_items(owner.items)
+        if hasattr(owner.memory, "items"):
+            self.init_items(owner.memory.items)
+        else:
+            self.init_items(owner.items)
 
     def init_items(self, items):
         for i in items:
@@ -47,9 +49,7 @@ class ShopInterface:
             items[item.name] = {}
             items[item.name]["price"] = item.price
             items[item.name]["quantity"] = item.quantity
-        holder = self.game.m_sav.get_memory_holder(self.game.m_map.current_level_id, self.owner.entity_uid)
-        setattr(holder, "items", items)
-        self.owner.items = items
+        self.owner.memory.items = items
 
     def get_item(self, idx: int):
         return self.items[idx]
