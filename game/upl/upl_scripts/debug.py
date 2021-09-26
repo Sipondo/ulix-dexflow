@@ -1,3 +1,14 @@
+"""function
+Display given parameter in the console.
+
+Displays a timestamp and the textual representation of the parameter.
+
+in:
+- Any: parameter to display
+
+"""
+
+
 class Debug:
     def __init__(self, act, src, user, obj):
         act.funcs.append(self)

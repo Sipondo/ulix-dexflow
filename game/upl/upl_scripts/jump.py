@@ -1,3 +1,14 @@
+"""function
+Jump up and down.
+
+The user does a small jump out of excitement, fear or surprise.
+
+in:
+None
+
+"""
+
+
 from game.animation.jumpanimation import JumpAnimation
 
 

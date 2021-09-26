@@ -1,3 +1,17 @@
+"""function
+Retrieve text input from the player.
+
+Ask a question and request text input from the player. Text inputs can be limited to a specified length and can be filtered on symbols.
+The result is stored afterwards in `game.text_input`.
+
+in:
+- String: question to ask
+- [Optional, 15] Numeric: max length of answer
+- [Optional, "letters"] String: filter to use
+
+"""
+
+
 class Prompt:
     def __init__(self, act, src, user, obj, length=15, filter="letters"):
         act.funcs.append(self)
@@ -8,13 +22,6 @@ class Prompt:
         self.user = user
         self.filter = filter
         self.length = length
-        # self.act.game.m_gst.current_state.dialogue = self.obj
-        # self.act.game.m_gst.current_state.author = (
-        #     "" if self.user == self.act.game else self.user.name
-        # )
-        # self.act.game.m_gst.current_state.options = self.options
-        # if hasattr(self.user, "splash") and self.user.splash:
-        #     self.act.game.m_gst.current_state.spr_talker = self.user.splash
         self.act.game.m_gst.switch_state(
             "prompt", length=self.length, filter=self.filter
         )

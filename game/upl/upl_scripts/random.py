@@ -1,3 +1,17 @@
+"""fobject
+Retrieves a random number between 0 and 1.
+
+Retrieves a random floating point between 0 and 1.
+
+in:
+None
+
+out:
+- Numeric: random number between 0 and 1
+
+"""
+
+
 from numpy.random import rand
 
 

@@ -1,3 +1,15 @@
+"""function
+Start a battle.
+
+Start a battle between the user of this function and the player. The enemy team is taken from the user's `team` attribute.
+This function is designed for battles against NPCs. Encounters should be handled with `Encounter()` instead.
+
+in:
+No arguments
+
+"""
+
+
 class Battle:
     def __init__(self, act, src, user):
         act.funcs.append(self)

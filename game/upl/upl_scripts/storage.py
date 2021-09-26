@@ -1,3 +1,14 @@
+"""function
+Opens the battler storage.
+
+Opens the battler storage. 
+
+in:
+None
+
+"""
+
+
 class Storage:
     def __init__(self, act, src, user):
         act.funcs.append(self)

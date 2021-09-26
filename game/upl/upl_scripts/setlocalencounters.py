@@ -1,3 +1,17 @@
+"""function
+Set local encounters, overriding level-wide settings.
+
+Set local encounters. Typically only used within the **encounter** region.
+
+in:
+- Numeric: encounter rate
+- String: encounter definition string
+- Numeric: minimum level of encounters
+- Numeric: maximum level of encounters
+
+"""
+
+
 class SetLocalEncounters:
     def __init__(self, act, src, user, rate, encounters, e_min, e_max):
         act.funcs.append(self)

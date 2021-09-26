@@ -1,3 +1,17 @@
+"""function
+Set the movement type of the user.
+
+Set the movement type fo the user. By default only the player entity has definitions for multiple movement types.
+- 0: Walk
+- 1: Run
+- 2: Bike
+
+in:
+- Numeric: movement type
+
+"""
+
+
 class SetMovement:
     def __init__(self, act, src, user, movement):
         act.funcs.append(self)

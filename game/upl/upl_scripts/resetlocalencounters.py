@@ -1,3 +1,14 @@
+"""function
+Reset local encounters, reverting back to level-wide encounters.
+
+Reverts back to level-wide encounters. Typically only used within the **encounter** region.
+
+in:
+None
+
+"""
+
+
 class ResetLocalEncounters:
     def __init__(self, act, src, user):
         act.funcs.append(self)

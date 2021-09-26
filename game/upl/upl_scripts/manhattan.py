@@ -1,3 +1,18 @@
+"""fobject
+Calculates the Manhattan distance between two points.
+
+Calculates the Manhattan distance between two points. The points have to be supplied as tuples.
+
+in:
+- Tuple of numerics of length two: point a
+- Tuple of numerics of length two: point b
+
+out:
+- Numeric: Manhattan distance between points a and b
+
+"""
+
+
 class Manhattan:
     def __init__(self, act, src, user, a, b):
         self.init_time = act.current_time

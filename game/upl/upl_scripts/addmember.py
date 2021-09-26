@@ -1,3 +1,14 @@
+"""function
+Add a battler to the party roster.
+
+Add a party member to the player's team.
+
+in:
+- String: fighter name
+
+"""
+
+
 class AddMember:
     def __init__(self, act, src, user, s, l=5):
         act.funcs.append(self)

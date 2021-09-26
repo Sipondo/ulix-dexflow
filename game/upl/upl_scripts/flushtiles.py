@@ -1,3 +1,14 @@
+"""function
+Revert all tiles in the given layer to transparent.
+
+Set all tiles in the given layer to transparent, effectively starting over with a clean slate.
+
+in:
+- Numeric: id of the layer to flush
+
+"""
+
+
 class FlushTiles:
     def __init__(self, act, src, user, layerid):
         act.funcs.append(self)

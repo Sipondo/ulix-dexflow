@@ -1,3 +1,14 @@
+"""function
+Open a shop.
+
+Open a shop. Typically only used from within a shop entity.
+
+in:
+None
+
+"""
+
+
 class Shop:
     def __init__(self, act, src, user):
         act.funcs.append(self)

@@ -1,3 +1,16 @@
+"""function
+Removes an item from the inventory.
+
+Removes an item from the inventory.
+Multiple copies of the item can be removed at once by varying the quantity parameter.
+
+in:
+- String: item name
+- [Optional, 1] Numeric: quantity
+
+"""
+
+
 class RemoveItem:
     def __init__(self, act, src, user, s, q=1):
         act.funcs.append(self)

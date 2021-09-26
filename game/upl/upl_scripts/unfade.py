@@ -1,3 +1,14 @@
+"""function
+Unfades the screen.
+
+Unfades the screen.
+
+in:
+None
+
+"""
+
+
 class Unfade:
     def __init__(self, act, src, user):
         act.funcs.append(self)

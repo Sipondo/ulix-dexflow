@@ -1,3 +1,17 @@
+"""function
+Set the tile at specified position.
+
+Set the tile at specified position. Use the internal LDTK tile id (hover over a tile) to specify what tile you want.
+
+in:
+- Numeric: id of the layer to change
+- Numeric: x position
+- Numeric: y position
+- Numeric: internal tile uid
+
+"""
+
+
 class SetTile:
     def __init__(self, act, src, user, layerid, x, y, tile):
         act.funcs.append(self)

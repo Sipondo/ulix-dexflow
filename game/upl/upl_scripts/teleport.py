@@ -1,3 +1,16 @@
+"""function
+Teleports the user to the specified location in a different map.
+
+Teleports the user to the specified location in a different map. This function should be used in all custom actions that require map travel.
+
+in:
+- String: level to teleport to
+- Tuple of numeric of length 2: position to teleport to
+- [Optional, False] Bool: whether to fade to the target map
+
+"""
+
+
 class Teleport:
     def __init__(self, act, src, user, target_level, target_location, fade=False):
         act.funcs.append(self)
