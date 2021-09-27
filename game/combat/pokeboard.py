@@ -72,13 +72,14 @@ class PokeBoard(CombatBoard):
 
             # TODO empty field, send out pokemon at start of battle
             # find first alive poke
-            self.actives.append(
-                next(
-                    idx
-                    for idx, (poke, data) in enumerate(team_formatted)
-                    if data.can_fight
-                )
-            )
+            # self.actives.append(
+            #     next(
+            #         idx
+            #         for idx, (poke, data) in enumerate(team_formatted)
+            #         if data.can_fight
+            #     )
+            # )
+            self.actives.append(-1)
             self.switch.append(False)
 
     def init_fighter(self, src):
@@ -208,14 +209,7 @@ class PokeBoard(CombatBoard):
         ]:
             actor.status = mjr_status[0].name.lower()
 
-    @property
-    def actor_1(self):
-        if self.actives[0] == -1:
+    def get_active_actor(self, team):
+        if self.actives[team] == -1:
             return -1
-        return self.teams[0][self.actives[0]][0]
-
-    @property
-    def actor_2(self):
-        if self.actives[1] == -1:
-            return -1
-        return self.teams[1][self.actives[1]][0]
+        return self.teams[team][self.actives[team]][0]

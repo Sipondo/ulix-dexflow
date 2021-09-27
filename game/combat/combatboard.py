@@ -41,7 +41,7 @@ class CombatBoard:
         self.target = board.target
 
     def copy(self):
-        newstate = CombatBoard(self.scene)
+        newstate = CombatBoard(self.game, self.scene)
         newstate.from_board(self)
         return newstate
 

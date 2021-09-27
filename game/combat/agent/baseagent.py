@@ -6,7 +6,7 @@ class BaseAgent(abc.ABC):
         self.game_state = game_state
         self.team = team
         self.action = None
-        self.sendout = None
+        self.sendout = game_state.get_first_sendout(team)
 
     @abc.abstractmethod
     def start(self, scene):

@@ -87,6 +87,13 @@ class CombatScene:
                 self.action_effects.append((action, move_effect))
         return self.next_state()
 
+    def next_state(self):
+        self.battle_state = self.battle_state + 1
+        if self.battle_state > len(CombatState):
+            self.battle_state = 0
+            return self.end_actions()
+        return self.combat_state_methods[self.battle_state]()
+
     def run_start(self):
         while effects := [
             x
@@ -186,13 +193,6 @@ class CombatScene:
         self.board_history = [self.board]
         return board_history
 
-    def next_state(self):
-        self.battle_state = self.battle_state + 1
-        if self.battle_state > len(CombatState):
-            self.battle_state = 0
-            return self.end_actions()
-        return self.combat_state_methods[self.battle_state]()
-
     def reset_effects_done(self):
         for effect in self.effects:
             effect.done = False
@@ -265,7 +265,9 @@ class CombatScene:
     def get_global_effects(self):
         return [x for x in self.effects if x.target == "Global"]
 
-    def get_effects_on_target(self, target):
+    def get_effects_on_target(self, target, exclusive=False):
+        if exclusive:
+            return [x for x in self.effects if x.target == target]  # only the target itself
         return [x for x in self.effects if x.target == target or x.target == target[0]]  # target team or target itself
 
     def get_effects_by_name(self, effect_name):
@@ -278,6 +280,9 @@ class CombatScene:
         effect.on_delete()
         self.effects.remove(effect)
         del effect
+
+    def get_actor(self, team):
+        return self.board.get_actor(self.board.get_active(team))
 
     def new_board(self):
         new_board = self.board.copy()

@@ -33,11 +33,12 @@ class GameStateBattle(BaseGameState):
         self.board = self.combat.board
         self.pending_boards = []
 
-        self.actor_1 = self.board.actor_1
-        self.actor_2 = self.board.actor_2
+        self.actors = []
+        for i in range(2):
+            self.actors.append(self.board.get_active_actor(i))
 
-        self.render.set_pokemon(self.actor_1.sprite, 0)
-        self.render.set_pokemon(self.actor_2.sprite, 1)
+        self.render.set_pokemon(None, 0)
+        self.render.set_pokemon(None, 1)
 
         self.spr_battlecell = ("battlecell", "battlecell_selected")
 
@@ -116,11 +117,32 @@ class GameStateBattle(BaseGameState):
         self.time_lock = 0.5
         self.time_press = None
 
+        self.init_battle()
+
+    def init_battle(self):
+        actions = []
+        for i, agent in enumerate(self.agents):
+            sendout = agent.get_sendout(self.combat)
+            if sendout is not None:
+                actions.append(
+                    (("sendout", (i, sendout)), None, None)
+                )
+        self.pending_boards = self.combat.prepare_scene(actions, next_round=False)
+        self.state = states["action"]
+        self.advance_board()
+
     def init_agent(self, agent, team):
         if agent == "random":
             return AgentRand(self, team)
         if agent == "user":
             return AgentUser(self, team)
+
+    def get_first_sendout(self, team):
+        return next(
+                    idx
+                    for idx, (poke, data) in enumerate(self.board.teams[team])
+                    if data.can_fight
+                )
 
     def on_tick(self, time, frame_time):
         if self.time_lock > 0:
@@ -175,7 +197,7 @@ class GameStateBattle(BaseGameState):
                             if sendout is not None:
                                 actions.append(
                                     (("sendout", (i, sendout)), None, None)
-                                )  # TODO refactor this
+                                )
                             else:
                                 skip = True
                     else:
@@ -247,10 +269,10 @@ class GameStateBattle(BaseGameState):
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
-                                ("attack", self.actor_1.actions[self.selection],)
+                                ("attack", self.actors[0].actions[self.selection],)
                             )
                     elif self.state == states["swapmenu"]:
-                        if self.board.teams[0][self.selection][1]["can_fight"]:
+                        if self.board.teams[0][self.selection][1].can_fight and self.board.get_active(0) != self.selection:
                             if self.lock_state:
                                 for agent in self.agents:
                                     if type(agent) == AgentUser:
@@ -281,7 +303,7 @@ class GameStateBattle(BaseGameState):
         if self.state == states["swapmenu"]:
             return len(self.game.inventory.members)
         if self.state == states["actionmenu"]:
-            return len(self.actor_1.actions)
+            return len(self.actors[0].actions)
         if self.state == states["ballmenu"]:
             return len(self.game.inventory.get_pocket_items(3))
         return 4
@@ -317,7 +339,7 @@ class GameStateBattle(BaseGameState):
             return
         if not self.pending_boards:
             if self.board.new_move:
-                if len(self.actor_1.actions) > 4:
+                if len(self.actors[0].actions) > 4:
                     self.state = states["topmenu"]
                     self.lock_state = True
                     for agent in self.agents:
@@ -346,23 +368,15 @@ class GameStateBattle(BaseGameState):
             return
 
         self.board = self.pending_boards.pop(0)
-
-        if self.board.actor_1 != self.actor_1:
-            if self.board.actor_1 == -1:
-                self.render.set_pokemon(
-                    None, 0
-                )  # empty spriteset for if poke is fainted
-            else:
-                self.render.set_pokemon(self.board.actor_1.sprite, 0)
-            self.actor_1 = self.board.actor_1
-        if self.board.actor_2 != self.actor_2:
-            if self.board.actor_2 == -1:
-                self.render.set_pokemon(
-                    None, 1
-                )  # empty spriteset for if poke is fainted
-            else:
-                self.render.set_pokemon(self.board.actor_2.sprite, 1)
-            self.actor_2 = self.board.actor_2
+        for i in range(len(self.agents)):
+            if self.board.get_active_actor(i) != self.actors[i]:
+                if self.board.get_active_actor(i) == -1:
+                    self.render.set_pokemon(
+                        None, 0
+                    )  # empty spriteset for if poke is fainted
+                else:
+                    self.render.set_pokemon(self.board.get_active_actor(i).sprite, i)
+                self.actors[i] = self.board.get_active_actor(i)
 
         if self.board.skip:
             self.advance_board()
@@ -425,7 +439,7 @@ class GameStateBattle(BaseGameState):
             return self.board.narration
 
         if self.state == states["actionmenu"]:
-            action = self.actor_1.actions[self.selection]
+            action = self.actors[0].actions[self.selection]
             return (
                 action.description
                 if not self.lock_state
@@ -481,7 +495,7 @@ class GameStateBattle(BaseGameState):
                 #     (0.685, 0.59), size=(0.29, 0.27), col="white"
                 # )
                 self.game.r_int.draw_image(self.spr_attackwindow, (0.685, 0.59))
-                actionlist = self.actor_1.actions
+                actionlist = self.actors[0].actions
                 for i in range(min(len(actionlist), 5)):
                     self.game.r_int.draw_image(
                         self.spr_attacktypes[actionlist[i].type],

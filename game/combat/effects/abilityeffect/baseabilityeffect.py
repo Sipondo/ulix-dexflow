@@ -10,3 +10,4 @@ class BaseAbilityEffect(BaseEffect, abc.ABC):
         print("A NEW ABILITY!")
         super().__init__(scene)
         self.holder = holder
+        self.active = False
