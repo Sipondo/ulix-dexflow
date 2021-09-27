@@ -1,3 +1,14 @@
+"""function
+Face the user towards the given direction.
+
+Face the user towards the given direction. Directions are given by single-letter capital-only strings `N` `W` `S` `E`.
+
+in:
+- String: direction
+
+"""
+
+
 class Face:
     def __init__(self, act, src, user, direction):
         act.funcs.append(self)

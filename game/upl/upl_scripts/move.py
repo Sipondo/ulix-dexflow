@@ -1,3 +1,17 @@
+"""function
+Move to the specified location
+
+Move to the specified location. The entity will automatically pathfind towards the location and stop early if anything actively blocks the entity. `Move()` will throw an error when there is no path available, including when the entity is already on the specified location.
+In most situations `Move()` should be excused to prevent unwanted errors.
+
+in:
+- Numeric: x position
+- Numeric: y position
+- [DEPRECATED] Bool: whether to move to the position or next to the position (Use `MoveTo()` instead!)
+
+"""
+
+
 from game.animation.moveanimation.pathmoveanimation import PathMoveAnimation
 
 

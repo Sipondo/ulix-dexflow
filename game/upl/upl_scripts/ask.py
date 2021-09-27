@@ -1,3 +1,16 @@
+"""function
+Ask a multiple choice question.
+
+Ask the player a multiple choice question. Game must be in cinematic mode for the question to load properly.
+Selected answer is stored afterwards in `game.selection` (id) and `game.selection_text` (option name).
+
+in:
+- String: question
+- List of strings: options
+
+"""
+
+
 class Ask:
     def __init__(self, act, src, user, obj, options):
         act.funcs.append(self)

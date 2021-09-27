@@ -1,3 +1,15 @@
+"""function
+Set the game to cinematic mode.
+
+Set the game to cinematic mode, preventing player movement. Cinematic mode is required for showing character speech.
+Make sure to revert to overworld or battle mode when your cinematic finishes.
+
+in:
+No arguments
+
+"""
+
+
 class Cinematic:
     def __init__(self, act, src, user, letterbox=True):
         act.funcs.append(self)

@@ -1,3 +1,16 @@
+"""function
+Portals the user to the specified location in a different map.
+
+Portals the user to the specified location in a different map. Closely connected to the **portal** region and should in general not be used in other situations.
+
+in:
+- String: level to portal to
+- Tuple of numeric of length 2: position to portal to
+- [Optional, True] Bool: whether to fade to the target map
+
+"""
+
+
 class Portal:
     def __init__(self, act, src, user, target_level, target_location, fade=True):
         act.funcs.append(self)

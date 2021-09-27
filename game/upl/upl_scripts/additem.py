@@ -1,3 +1,16 @@
+"""function
+Add an item to the inventory.
+
+Add an item to the inventory.
+Multiple copies of the item can be added at once by varying the quantity parameter.
+
+in:
+- String: item name
+- [Optional, 1] Numeric: quantity
+
+"""
+
+
 class AddItem:
     def __init__(self, act, src, user, s, q=1):
         act.funcs.append(self)

@@ -1,3 +1,15 @@
+"""function
+Say some lines of text.
+
+Say some lines of text. Can be accessed conveniently by supplying a string directly as a function.
+Multiline strings are supported via explicit function call but not via the shortcut.
+
+in:
+- String: dialogue to show
+
+"""
+
+
 class Say:
     def __init__(self, act, src, user, dialogue):
         act.funcs.append(self)

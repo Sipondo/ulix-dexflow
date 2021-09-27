@@ -1,3 +1,14 @@
+"""function
+Fully restores the player's party.
+
+Fully restores the player's party of all illnesses and damage.
+
+in:
+None
+
+"""
+
+
 class RestoreParty:
     def __init__(self, act, src, user):
         act.funcs.append(self)

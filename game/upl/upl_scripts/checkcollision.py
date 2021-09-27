@@ -1,3 +1,19 @@
+"""fobject
+Check collision at position.
+
+Check the collision flags at the specified position.
+
+in:
+- Numeric: x position to check
+- Numeric: y position to check
+- Numeric: height to check
+
+out:
+- Bool: whether there is collision at the specified position
+
+"""
+
+
 class CheckCollision:
     def __init__(self, act, src, user, x, y, h):
         self.init_time = act.current_time

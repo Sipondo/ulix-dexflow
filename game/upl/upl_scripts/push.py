@@ -1,4 +1,16 @@
-from game.animation.moveanimation.pathmoveanimation import PathMoveAnimation
+"""function
+Pushes a pillar, making the pillar fall down if above a gap.
+
+Pushes a pillar in the given direction. The pillar becomes uninteractable and walkable if pushed into a hole.
+Directions are given by single-letter capital-only strings `N` `W` `S` `E`.
+
+in:
+- String: direction to push to
+- [Optional, 1] Numeric: distance that the movement should cover
+
+"""
+
+
 from game.animation.moveanimation.basemoveanimation import BaseMoveAnimation
 
 

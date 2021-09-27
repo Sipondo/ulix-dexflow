@@ -1,4 +1,15 @@
-from game.animation.moveanimation.pathmoveanimation import PathMoveAnimation
+"""function
+Take a step in the specified direction.
+
+Take a step in the specified direction. Directions are given by single-letter capital-only strings `N` `W` `S` `E`.
+`Step()` will throw an error if the step is blocked. Fou should excuse `Step()` if this is a possibility.
+
+in:
+- String: direction
+
+"""
+
+
 from game.animation.moveanimation.basemoveanimation import BaseMoveAnimation
 
 

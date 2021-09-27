@@ -1,3 +1,16 @@
+"""function
+Move one tile next to the specified location
+
+Move one tile next to the specified location. The entity will automatically pathfind towards the location and stop early if anything actively blocks the entity. `Move()` will throw an error when there is no path available, including when the entity is already on the specified location.
+In most situations `Move()` should be excused to prevent unwanted errors.
+
+in:
+- Numeric: x position
+- Numeric: y position
+
+"""
+
+
 from game.animation.moveanimation.pathmoveanimation import PathMoveAnimation
 
 
@@ -18,21 +31,6 @@ class MoveTo:
 
     def on_tick(self, time=None, frame_time=None):
         if not self.init and time is not None:
-            # print(
-            #     "MOVE:",
-            #     (
-            #         self.user.game_position[0] + self.game.m_col.offset[0],
-            #         self.user.game_position[1] + self.game.m_col.offset[1],
-            #         self.user.game_position[0],
-            #         self.user.game_position[1],
-            #     ),
-            #     (
-            #         self.x,
-            #         self.y,
-            #         self.x - self.game.m_col.offset[0],
-            #         self.y - self.game.m_col.offset[1],
-            #     ),
-            # )
             if self.user.moving:
                 print("Entity is already moving!")
                 raise Exception("Entity is already moving!")

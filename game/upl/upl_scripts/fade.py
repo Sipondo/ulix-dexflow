@@ -1,3 +1,14 @@
+"""function
+Fades the screen to black.
+
+Fades the screen to black. Unfade by calling `Unfade()`.
+
+in:
+None
+
+"""
+
+
 class Fade:
     def __init__(self, act, src, user):
         act.funcs.append(self)

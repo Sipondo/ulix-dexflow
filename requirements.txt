@@ -16,7 +16,7 @@ cx-freeze
 pyqt5
 lark
 termcolor
-freetype==2.1.0
+freetype-py==2.1.0
 qlibs
 qlibs-cyan
 pywin32

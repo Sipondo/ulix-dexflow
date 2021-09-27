@@ -1,3 +1,18 @@
+"""fobject
+Concatenates parameters into a string.
+
+Concatenates the given parameters into a string. Parameters do not have to be strings.
+
+in:
+- *Any: parameter to concatenate
+- ... (repeat)
+
+out:
+- String: concatenated string
+
+"""
+
+
 class Concat:
     def __init__(self, act, src, user, *args):
         self.init_time = act.current_time

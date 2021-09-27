@@ -1,3 +1,14 @@
+"""function
+Start an encounter battle.
+
+Start an encounter battle. The enemy team always consists of one battler sampled from the given encounter table.
+
+in:
+- String: encounter table
+
+"""
+
+
 from numpy import array
 from numpy.random import choice
 

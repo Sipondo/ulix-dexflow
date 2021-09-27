@@ -1,3 +1,14 @@
+"""function
+Task the renderer to redraw given layer.
+
+Tasks the renderer to redraw the layer with given id. SHould be used after making your layer edits via e.g. `Settile()`.
+
+in:
+- Numeric: id of the layer to update
+
+"""
+
+
 class UpdateTiles:
     def __init__(self, act, src, user, layerid):
         act.funcs.append(self)

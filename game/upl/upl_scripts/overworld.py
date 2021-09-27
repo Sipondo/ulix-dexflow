@@ -1,3 +1,14 @@
+"""function
+Set the game to overworld mode.
+
+Set the game to overworld mode, resuming player movement.
+
+in:
+No arguments
+
+"""
+
+
 class Overworld:
     def __init__(self, act, src, user):
         act.funcs.append(self)

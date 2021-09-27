@@ -1,3 +1,14 @@
+"""function
+Play a sound effect.
+
+Play the sound file that corresponds to the supplied filename.
+
+in:
+- String: name of the sound file
+
+"""
+
+
 class Sound:
     def __init__(self, act, src, user, s):
         act.funcs.append(self)

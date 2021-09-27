@@ -261,13 +261,13 @@
 					"fieldInstances": [
 						{
 							"__identifier": "on_enter_action",
-							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}",
+							"__value": "if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\ne_2_kim: tired_yet = false\n  \n!?while(e_2_kim.tired_yet){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  e_2_kim: tired_yet = true\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}",
 							"__type": "String",
 							"defUid": 397,
 							"realEditorValues": [{
 								"id": "V_String",
 								"params": [
-									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\n!?while(True){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}"
+									"if(switch.obtained_coat){\n  exit\n}\n\ngame: Cinematic()\ntarget: \"Hmm, haven't I forgotten anything?\"\ntarget: SetMovement(1)\ne_2_kim: Move(24,14)\ne_2_kim: tired_yet = false\n  \n!?while(e_2_kim.tired_yet){\n  e_2_kim: Jump()\n}\n  \ngroup{\n  target: Jump()\n  target: \"I forgot my coat!\"\n  target: \"Let me go grab it quickly!\"\n  e_2_kim: tired_yet = true\n  target: Move(15, 11)\n  target: Wait(0.5)\n  target: \"Hi mom!\"\n  e_mom: Move(6, 8, True)\n  e_mom: \"Hey dear. Back already?\"\n  # target: Move(5,2)\n  target: Move(10,3)\n  target: \"Ah, there it is!\"\n  target: Move(3,7)\n  target: Move(9,3)\n  target: Move(4,4, True)\n  switch: obtained_coat = True\n  target: Wait(0.5)\n  target: Move(6,9)\n  target: Move(26,14)\n  game: Overworld()\n}"
 								]
 							}]
 						},
@@ -1138,7 +1138,16 @@
 							"defUid": 90,
 							"realEditorValues": [null]
 						},
-						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "defUid": 91, "realEditorValues": [] },
+						{
+							"__identifier": "on_interact_action",
+							"__value": "self: sprites = [\"pillar_used\"]",
+							"__type": "String",
+							"defUid": 91,
+							"realEditorValues": [{
+								"id": "V_String",
+								"params": ["self: sprites = [\"pillar_used\"]"]
+							}]
+						},
 						{
 							"__identifier": "direction",
 							"__value": "E",
@@ -1198,15 +1207,10 @@
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "defUid": 418, "realEditorValues": [] },
 						{
 							"__identifier": "encounter_text",
-							"__value": "This is a particularly long text string that is sure to wrap over multiple lines in the textbox. Ā ā Ă ă Ą ą Ć ć Ĉ ĉ Ċ ċ Č č Ď ď Đ đ Ē ē Ĕ ĕ Ė ė Ę ę Ě ě Ĝ ĝ Ğ ğ Ġ ġ Ģ ģ Ĥ ĥ Ħ ħ Ĩ ĩ Ī ī Ĭ ĭ Į į İ ı Ĳ ĳ Ĵ ĵ Ķ ķ ĸ Ĺ ĺ Ļ ļ Ľ ľ Ŀ ŀ Ł ł Ń ń Ņ ņ Ň ň ŉ Ŋ ŋ Ō ō Ŏ ŏ Ő ő Œ œ Ŕ ŕ Ŗ ŗ Ř ř",
+							"__value": "We should have a battle!",
 							"__type": "String",
 							"defUid": 419,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"This is a particularly long text string that is sure to wrap over multiple lines in the textbox. Ā ā Ă ă Ą ą Ć ć Ĉ ĉ Ċ ċ Č č Ď ď Đ đ Ē ē Ĕ ĕ Ė ė Ę ę Ě ě Ĝ ĝ Ğ ğ Ġ ġ Ģ ģ Ĥ ĥ Ħ ħ Ĩ ĩ Ī ī Ĭ ĭ Į į İ ı Ĳ ĳ Ĵ ĵ Ķ ķ ĸ Ĺ ĺ Ļ ļ Ľ ľ Ŀ ŀ Ł ł Ń ń Ņ ņ Ň ň ŉ Ŋ ŋ Ō ō Ŏ ŏ Ő ő Œ œ Ŕ ŕ Ŗ ŗ Ř ř"
-								]
-							}]
+							"realEditorValues": [null]
 						},
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "defUid": 420, "realEditorValues": [] },
 						{
@@ -1290,100 +1294,6 @@
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 423, "realEditorValues": [] },
 						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 424, "realEditorValues": [] },
 						{ "__identifier": "splash", "__value": null, "__type": "FilePath", "defUid": 438, "realEditorValues": [] }
-					]
-				},
-				{
-					"__identifier": "Shop",
-					"__grid": [20,19],
-					"__pivot": [0.5,0.5],
-					"__tile": null,
-					"width": 16,
-					"height": 16,
-					"defUid": 470,
-					"px": [328,312],
-					"fieldInstances": [
-						{
-							"__identifier": "entity_uid",
-							"__value": "3_shoppy",
-							"__type": "String",
-							"defUid": 471,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["3_shoppy"]
-							}]
-						},
-						{
-							"__identifier": "sprite",
-							"__value": "../resources/essentials/graphics/characters/trchar001.png",
-							"__type": "FilePath",
-							"defUid": 472,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/characters/trchar001.png"]
-							}]
-						},
-						{
-							"__identifier": "splash",
-							"__value": "../resources/essentials/graphics/trainers/aromalady.png",
-							"__type": "FilePath",
-							"defUid": 473,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["../resources/essentials/graphics/trainers/aromalady.png"]
-							}]
-						},
-						{
-							"__identifier": "name",
-							"__value": "shoppy",
-							"__type": "String",
-							"defUid": 474,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["shoppy"]
-							}]
-						},
-						{ "__identifier": "active", "__value": true, "__type": "Bool", "defUid": 475, "realEditorValues": [] },
-						{ "__identifier": "visible", "__value": true, "__type": "Bool", "defUid": 476, "realEditorValues": [] },
-						{
-							"__identifier": "direction",
-							"__value": "S",
-							"__type": "LocalEnum.Direction",
-							"defUid": 477,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": ["S"]
-							}]
-						},
-						{
-							"__identifier": "config",
-							"__value": "{\n \"items\":\n    {\n        \"Potion\": {\"quantity\": 5},\n        \"Repel\": {},\n        \"Old rod\": {\"price\": 1000, \"quantity\": 1},\n    }\n}",
-							"__type": "String",
-							"defUid": 478,
-							"realEditorValues": [{
-								"id": "V_String",
-								"params": [
-									"{\n \"items\":\n    {\n        \"Potion\": {\"quantity\": 5},\n        \"Repel\": {},\n        \"Old rod\": {\"price\": 1000, \"quantity\": 1},\n    }\n}"
-								]
-							}]
-						},
-						{ "__identifier": "dialogue", "__value": null, "__type": "String", "defUid": 479, "realEditorValues": [] },
-						{ "__identifier": "on_create_action", "__value": "exit", "__type": "String", "defUid": 480, "realEditorValues": [] },
-						{ "__identifier": "on_interact_action", "__value": "<<<openshop>>>", "__type": "String", "defUid": 481, "realEditorValues": [] },
-						{ "__identifier": "enter_text", "__value": "\"Hello!\"", "__type": "String", "defUid": 483, "realEditorValues": [] },
-						{ "__identifier": "leave_text", "__value": "\"Bye!\"", "__type": "String", "defUid": 484, "realEditorValues": [] },
-						{
-							"__identifier": "items",
-							"__value": [ "Potion", "Repel" ],
-							"__type": "Array<LocalEnum.Items>",
-							"defUid": 486,
-							"realEditorValues": [ {
-								"id": "V_String",
-								"params": ["Potion"]
-							}, {
-								"id": "V_String",
-								"params": ["Repel"]
-							} ]
-						}
 					]
 				}
 			]
