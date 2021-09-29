@@ -19,6 +19,23 @@ class MainMove(BaseEffect):
         self.move_cat = move.damagecat
         self.power = move.power
         self.accuracy = move.accuracy
+
+        self.contact = "a" in move["flags"]
+        self.protectable = "b" in move["flags"]
+        self.magiccoatable = "c" in move["flags"]
+        self.snatchable = "d" in move["flags"]
+        self.mirrormoveable = "e" in move["flags"]
+        self.kingsrock = "f" in move["flags"]
+        self.thaws = "g" in move["flags"]
+        self.high_crit = "h" in move["flags"]
+        self.biting = "i" in move["flags"]
+        self.punching = "j" in move["flags"]
+        self.sound = "k" in move["flags"]
+        self.powder = "l" in move["flags"]
+        self.pulse = "m" in move["flags"]
+        self.bomb = "n" in move["flags"]
+        self.dance = "o" in move["flags"]
+
         self.abs_acc = False
         self.perfect_accuracy = True if move.accuracy == 0 else False
 
@@ -76,6 +93,8 @@ class MainMove(BaseEffect):
                 crit_chance = 1
             crit = self.scene.board.random_roll(crit_chance)
             # Calculate move dmg/effectiveness etc.
+            if crit:
+                self.scene.on_crit_effects(self.target)
             return self.move_damage(crit=crit)
         return True
 
@@ -95,7 +114,9 @@ class MainMove(BaseEffect):
             if effect.on_hit(self):
                 return False
         if move_effectiveness == 0:
-            self.scene.add_effect(GenericEffect(self.scene, f"It doesn't affect foe {target_mon.name}"))
+            self.scene.add_effect(
+                GenericEffect(self.scene, f"It doesn't affect foe {target_mon.name}")
+            )
             return False
         if move_effectiveness < 1:
             self.scene.add_effect(GenericEffect(self.scene, "It's not very effective"))
@@ -144,9 +165,13 @@ class MainMove(BaseEffect):
         return True
 
     def get_move_effectiveness(self, move_type, target_type1, target_type2):
-        type_1_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type1)
+        type_1_eff = self.scene.game.m_pbs.get_type_effectiveness(
+            move_type, target_type1
+        )
         if target_type2.lower() != "nan":
-            type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
+            type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(
+                move_type, target_type2
+            )
         else:
             type_2_eff = 1
         return type_1_eff * type_2_eff
@@ -156,7 +181,8 @@ class MainMove(BaseEffect):
             return False, False, False
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.user).name} used {self.name}",
-            particle=self.name, move_data=self.move
+            particle=self.name,
+            move_data=self.move,
         )
         if self.target_fainted:
             self.scene.add_effect(
@@ -164,9 +190,7 @@ class MainMove(BaseEffect):
             )
             return True, True, False
         if self.fail:
-            self.scene.add_effect(
-                GenericEffect(self.scene, "But it failed..")
-            )
+            self.scene.add_effect(GenericEffect(self.scene, "But it failed.."))
         if self.move_hit():
             return True, False, False
         return True, True, False

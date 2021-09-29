@@ -2,6 +2,8 @@ from ..baseeffect import BaseEffect
 
 
 class BaseTerrain(BaseEffect):
+    type = "Terrain"
+
     def __init__(self, scene, terrain):
         super().__init__(scene)
         self.mods = self.scene.game.m_pbs.get_terrain_mods(terrain)

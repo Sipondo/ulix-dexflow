@@ -10,14 +10,17 @@ class BaseEffect(abc.ABC):
         self.done = False
         self.skip = False
         self.target = "Global"
-        self.spd_on_faint = 0
         self.spd_before_start = 0
         self.spd_before_action = 0
         self.spd_on_action = 0
         self.spd_after_action = 0
         self.spd_before_end = 0
+        self.spd_switch_phase = 0
         self.spd_on_switch = 0
         self.spd_on_send_out = 0
+        self.spd_on_faint = 0
+        self.spd_on_crit = 0
+        self.spd_grounded = 0
         self.priority = 0
 
     # def after_select(self):
@@ -58,6 +61,10 @@ class BaseEffect(abc.ABC):
         """All effects that happen before a turn ends."""
         return False, False, False
 
+    def switch_phase(self):
+        """All effects that happen during the switch phase in between turns"""
+        return False, False, False
+
     def on_hit(self, move):
         """All effects that happen when an actor gets hit by an action"""
         return False
@@ -82,6 +89,14 @@ class BaseEffect(abc.ABC):
     def on_delete(self):
         """Effects that happen when the effect gets deleted."""
         pass
+
+    def on_crit(self, target):
+        """Effects that happen when the target is crit."""
+        return False, False, False
+
+    def grounded(self, target):
+        """Effects that influence whether the target is grounded"""
+        return None
 
     @property
     def stat_mod(self):

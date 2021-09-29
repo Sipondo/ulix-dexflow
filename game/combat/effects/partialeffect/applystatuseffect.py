@@ -1,5 +1,4 @@
 from .basepartialeffect import BasePartialEffect
-from game.combat.effects.genericeffect import GenericEffect
 
 
 class ApplyStatus(BasePartialEffect):
@@ -8,7 +7,6 @@ class ApplyStatus(BasePartialEffect):
         self.status = status
         self.user = user
         self.target = target
-        print(self.user, self.target)
 
     def apply(self):
         target_effects = self.scene.get_effects_on_target(self.target)

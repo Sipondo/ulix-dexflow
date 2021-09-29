@@ -124,10 +124,8 @@ class GameStateBattle(BaseGameState):
         for i, agent in enumerate(self.agents):
             sendout = agent.get_sendout(self.combat)
             if sendout is not None:
-                actions.append(
-                    (("sendout", (i, sendout)), None, None)
-                )
-        self.pending_boards = self.combat.prepare_scene(actions, next_round=False)
+                actions.append((("sendout", (i, sendout)), None, None))
+        self.pending_boards = self.combat.prepare_scene(actions)
         self.state = states["action"]
         self.advance_board()
 
@@ -139,10 +137,10 @@ class GameStateBattle(BaseGameState):
 
     def get_first_sendout(self, team):
         return next(
-                    idx
-                    for idx, (poke, data) in enumerate(self.board.teams[team])
-                    if data.can_fight
-                )
+            idx
+            for idx, (poke, data) in enumerate(self.board.teams[team])
+            if data.can_fight
+        )
 
     def on_tick(self, time, frame_time):
         if self.time_lock > 0:
@@ -195,9 +193,7 @@ class GameStateBattle(BaseGameState):
                         elif self.board.switch[i]:
                             sendout = agent.get_sendout(self.combat)
                             if sendout is not None:
-                                actions.append(
-                                    (("sendout", (i, sendout)), None, None)
-                                )
+                                actions.append((("sendout", (i, sendout)), None, None))
                             else:
                                 skip = True
                     else:
@@ -208,9 +204,7 @@ class GameStateBattle(BaseGameState):
                             skip = True
             if not skip:
                 self.state = states["action"]
-                self.pending_boards = self.combat.prepare_scene(
-                    actions, next_round=self.lock_state
-                )
+                self.pending_boards = self.combat.prepare_scene(actions)
                 self.lock_state = False
                 self.advance_board()
 
@@ -269,16 +263,27 @@ class GameStateBattle(BaseGameState):
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
-                                ("attack", self.actors[0].actions[self.selection],)
+                                (
+                                    "attack",
+                                    self.actors[0].actions[self.selection],
+                                )
                             )
                     elif self.state == states["swapmenu"]:
-                        if self.board.teams[0][self.selection][1].can_fight and self.board.get_active(0) != self.selection:
+                        if (
+                            self.board.teams[0][self.selection][1].can_fight
+                            and self.board.get_active(0) != self.selection
+                        ):
                             if self.lock_state:
                                 for agent in self.agents:
                                     if type(agent) == AgentUser:
                                         agent.set_sendout(self.combat, self.selection)
                             else:
-                                self.reg_action(("swap", self.selection,),)
+                                self.reg_action(
+                                    (
+                                        "swap",
+                                        self.selection,
+                                    ),
+                                )
                     elif self.state == states["ballmenu"]:
                         if self.game.inventory.get_pocket_items(3):
                             self.reg_action(("catch", self.selection))
@@ -427,7 +432,11 @@ class GameStateBattle(BaseGameState):
             self.game.r_wld.offset = (0.5, 13 / 16)
             self.game.m_col.offset = (0.5, 13 / 16)
             self.game.r_wld.set_map_via_manager(
-                (0, 0,), fade=False,
+                (
+                    0,
+                    0,
+                ),
+                fade=False,
             )
             self.game.m_gst.switch_state("overworld")
             return
@@ -530,7 +539,10 @@ class GameStateBattle(BaseGameState):
                         (0.69, 0.5 + 0.063 * i),
                     )
                     self.game.r_int.draw_text(
-                        name, (0.725, 0.507 + 0.063 * i), size=(0.20, 0.06), bcol=None,
+                        name,
+                        (0.725, 0.507 + 0.063 * i),
+                        size=(0.20, 0.06),
+                        bcol=None,
                     )
 
             elif self.state == states["ballmenu"]:
@@ -551,10 +563,14 @@ class GameStateBattle(BaseGameState):
                         )
                 else:
                     self.game.r_int.draw_image(
-                        self.spr_ballcell[1], (0.69, 0.626),
+                        self.spr_ballcell[1],
+                        (0.69, 0.626),
                     )
                     self.game.r_int.draw_text(
-                        f"No balls!", (0.725, 0.633), size=(0.20, 0.06), bcol=None,
+                        f"No balls!",
+                        (0.725, 0.633),
+                        size=(0.20, 0.06),
+                        bcol=None,
                     )
         # HP Bars & EXP bar
         # Ally
@@ -567,7 +583,9 @@ class GameStateBattle(BaseGameState):
 
         # HP bar
         self.game.r_int.draw_rectangle(
-            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+            (x_off + 0.028, 0.14),
+            size=(x_size, 0.035),
+            col="grey",
         )
         if rel_hp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
@@ -577,16 +595,22 @@ class GameStateBattle(BaseGameState):
             )
         # EXP bar
         self.game.r_int.draw_rectangle(
-            (x_off + 0.029, 0.19), size=(0.223, 0.014), col="grey",
+            (x_off + 0.029, 0.19),
+            size=(0.223, 0.014),
+            col="grey",
         )
         rel_xp = self.board.get_relative_xp((0, self.board.get_active(0)))
         if rel_xp > 0 and self.lock_state != "user_switch":
             self.game.r_int.draw_rectangle(
-                (x_off + 0.029, 0.19), size=(0.223 * rel_xp, 0.014), col="blue",
+                (x_off + 0.029, 0.19),
+                size=(0.223 * rel_xp, 0.014),
+                col="blue",
             )
 
         self.game.r_int.draw_image(
-            self.spr_battlestatus[0], (x_off, 0.08), centre=False,
+            self.spr_battlestatus[0],
+            (x_off, 0.08),
+            centre=False,
         )
 
         if self.lock_state != "user_switch":
@@ -625,7 +649,9 @@ class GameStateBattle(BaseGameState):
         x_size = 0.28
         # HP bar
         self.game.r_int.draw_rectangle(
-            (x_off + 0.028, 0.14), size=(x_size, 0.035), col="grey",
+            (x_off + 0.028, 0.14),
+            size=(x_size, 0.035),
+            col="grey",
         )
         if rel_hp > 0:
             self.game.r_int.draw_rectangle(
@@ -644,7 +670,9 @@ class GameStateBattle(BaseGameState):
         #     col="black",
         # )
         self.game.r_int.draw_image(
-            self.spr_battlestatus[1], (x_off, 0.08), centre=False,
+            self.spr_battlestatus[1],
+            (x_off, 0.08),
+            centre=False,
         )
         self.game.r_int.draw_text(
             f"Lv.{level}",
@@ -661,7 +689,9 @@ class GameStateBattle(BaseGameState):
             fsize=10,
         )
         self.game.r_int.draw_image(
-            self.spr_own, (x_off + 0.172, 0.11), centre=True,
+            self.spr_own,
+            (x_off + 0.172, 0.11),
+            centre=True,
         )
         for i in range(6):
             self.game.r_int.draw_image(
@@ -677,7 +707,8 @@ class GameStateBattle(BaseGameState):
         # Narrator
         # self.game.r_int.draw_rectangle((0, 0.9), to=(1, 1), col="black")
         self.game.r_int.draw_image(
-            self.spr_statusbox, (0.0035, 0.9),
+            self.spr_statusbox,
+            (0.0035, 0.9),
         )
         self.game.r_int.draw_text(
             self.narrate, (0.01, 0.91), to=(0.99, 0.99), bcol=None

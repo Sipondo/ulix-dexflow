@@ -25,5 +25,25 @@ class StatChange(BasePartialEffect):
             self.scene.add_effect(effect)
             effect.update(self.name, self.modifier, self.absolute_modifier)
 
+    def before_start(self):
+        self.apply()
+        return True, False, False
+
+    def before_action(self):
+        self.apply()
+        return True, False, False
+
+    def on_action(self):
+        self.apply()
+        return True, False, False
+
+    def after_action(self):
+        self.apply()
+        return True, False, False
+
+    def before_end(self):
+        self.apply()
+        return True, False, False
+
     def on_faint(self, target):
         return self.target == target, False, False

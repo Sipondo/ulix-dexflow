@@ -8,7 +8,8 @@ class ReturnEffect(BaseEffect):
         self.target = target
 
     def on_action(self):
-        print(f"{self.scene.board.get_actor(self.target).name}, come back!")
+        for ability in self.scene.get_target_abilities(self.target):
+            ability.deactivate()
         self.scene.board.set_active((self.target[0], -1))
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.target).name}, come back!", particle=""

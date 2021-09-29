@@ -6,6 +6,7 @@ from .effects.balleffect import BallEffect
 from .effects.sendouteffect import SendOutEffect
 from .effects.forgetmoveeffect import ForgetMoveEffect
 from .effects.moveeffect.basemoveeffect import BaseMoveEffect
+from .effects.abilityeffect.baseabilityeffect import BaseAbilityEffect
 
 import types
 import importlib
@@ -16,10 +17,12 @@ EFFECTS_PATH = Path("game/combat/effects/")
 
 
 class CombatState(IntEnum):
-    IDLE = 1
-    BEFORE_START = 2
-    ACTION = 3
-    BEFORE_END = 4
+    IDLE = 0
+    BEFORE_START = 1
+    ACTION = 2
+    BEFORE_END = 3
+    SWITCH_IDLE = 4
+    SWITCH = 5
 
 
 class CombatScene:
@@ -43,12 +46,14 @@ class CombatScene:
         self.round = 0
         self.end = False
 
-        self.battle_state = CombatState.IDLE
+        self.battle_state = CombatState.SWITCH_IDLE
         self.combat_state_methods = {
             CombatState.IDLE: self.prepare_scene,
             CombatState.BEFORE_START: self.run_start,
             CombatState.ACTION: self.run_actions,
             CombatState.BEFORE_END: self.run_end,
+            CombatState.SWITCH_IDLE: self.prepare_scene,
+            CombatState.SWITCH: self.run_switches,
         }
 
         self.action_effects = []
@@ -73,11 +78,11 @@ class CombatScene:
             )
             self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
 
-    def prepare_scene(self, action_descriptions=None, next_round=True):
+    def prepare_scene(self, action_descriptions=None):
         self.end = False
-        if next_round:
+        if self.battle_state == CombatState.IDLE:
             self.round += 1
-        if action_descriptions:
+        if action_descriptions is not None:
             actions = self.format_actions(action_descriptions)
 
             # Spawn all action effects
@@ -88,19 +93,23 @@ class CombatScene:
         return self.next_state()
 
     def next_state(self):
-        self.battle_state = self.battle_state + 1
-        if self.battle_state > len(CombatState):
-            self.battle_state = 0
+        self.reset_effects_done()
+        self.battle_state = CombatState((self.battle_state + 1) % len(CombatState))
+        if self.battle_state == CombatState.SWITCH_IDLE:
+            if any(self.board.switch):
+                return self.end_actions()
+        if self.battle_state == CombatState.IDLE:
             return self.end_actions()
         return self.combat_state_methods[self.battle_state]()
 
     def run_start(self):
+        print("BEFORE START")
         while effects := [
             x
             for x in sorted(self.effects, key=lambda x: -x.spd_before_start)
             if not x.done and not x.skip
         ]:
-            self.run_effect(effects[0], effects[0].before_action)
+            self.run_effect(effects[0], effects[0].before_start)
 
         self.reset_effects_done()
         if self.end:
@@ -108,6 +117,7 @@ class CombatScene:
         return self.next_state()
 
     def run_actions(self):
+        print("BEFORE ACTIONS")
         while self.action_effects and not self.end:
             self.current_action, self.current_action_effect = self.action_effects.pop()
             self.board.action = self.current_action
@@ -126,7 +136,6 @@ class CombatScene:
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
                     if effects[0].move.user != self.current_action.user:
-                        print(effects[0])
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].before_action)
@@ -144,7 +153,6 @@ class CombatScene:
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
                     if effects[0].move.user != self.current_action.user:
-                        print(effects[0])
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].on_action)
@@ -161,7 +169,6 @@ class CombatScene:
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
                     if effects[0].move.user != self.current_action.user:
-                        print(effects[0])
                         effects[0].done = True
                         continue
                 self.run_effect(effects[0], effects[0].after_action)
@@ -172,12 +179,26 @@ class CombatScene:
         return self.next_state()
 
     def run_end(self):
+        print("BEFORE END")
         while effects := [
             x
             for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
             if not x.done and not x.skip
         ]:
             self.run_effect(effects[0], effects[0].before_end)
+
+        if self.end:
+            return self.end_actions()
+        return self.next_state()
+
+    def run_switches(self):
+        print("BEFORE SWITCHES")
+        while effects := [
+            x
+            for x in sorted(self.effects, key=lambda x: -x.spd_switch_phase)
+            if not x.done and not x.skip
+        ]:
+            self.run_effect(effects[0], effects[0].switch_phase)
 
         if self.end:
             return self.end_actions()
@@ -244,6 +265,7 @@ class CombatScene:
             delete = self.run_effect(effect, effect.on_switch, old, new)
             if delete:
                 self.delete_effect(effect)
+        self.reset_effects_done()
 
     def on_send_out_effects(self, target):
         for effect in [
@@ -252,12 +274,36 @@ class CombatScene:
             delete = self.run_effect(effect, effect.on_send_out, target)
             if delete:
                 self.delete_effect(effect)
+        self.reset_effects_done()
 
     def on_faint_effects(self, target):
         for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_faint)]:
             delete = self.run_effect(effect, effect.on_faint, target)
             if delete:
                 self.delete_effect(effect)
+        self.reset_effects_done()
+
+    def on_crit_effects(self, target):
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_on_crit)]:
+            delete = self.run_effect(effect, effect.on_crit, target)
+            if delete:
+                self.delete_effect(effect)
+        self.reset_effects_done()
+
+    def is_grounded(self, target):
+        actor = self.board.get_actor(target)
+        grounded = not(actor.type1 == "FLYING" or actor.type2 == "FLYING")
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_grounded)]:
+            g = self.run_effect(effect, effect.grounded, target)
+            if g is not None:
+                grounded = g
+        return grounded
+
+    def get_action_effect(self, target):
+        for action, effect in self.action_effects:
+            if action.user == target:
+                return action, effect
+        return None, None
 
     def get_effects(self):
         return self.effects
@@ -267,8 +313,19 @@ class CombatScene:
 
     def get_effects_on_target(self, target, exclusive=False):
         if exclusive:
-            return [x for x in self.effects if x.target == target]  # only the target itself
-        return [x for x in self.effects if x.target == target or x.target == target[0]]  # target team or target itself
+            return [
+                x for x in self.effects if x.target == target
+            ]  # only the target itself
+        return [
+            x for x in self.effects if x.target == target or x.target == target[0]
+        ]  # target team or target itself
+
+    def get_target_abilities(self, target):
+        return [
+            x
+            for x in self.effects
+            if x.target == target and issubclass(type(x), BaseAbilityEffect)
+        ]
 
     def get_effects_by_name(self, effect_name):
         return [x for x in self.effects if x.name == effect_name]
