@@ -1,12 +1,16 @@
+import traceback
+
+import time as ti
+
 from .basegamestate import BaseGameState
 
 from game.particle.battlerender import BattleRender
 from game.combat.combatscene import CombatScene
 from game.combat.agent.agentrand import AgentRand
 from game.combat.agent.agentuser import AgentUser
-import traceback
 
-import time as ti
+from ..combat.action import ActionType, Action
+
 
 states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu": 4}
 
@@ -100,7 +104,8 @@ class GameStateBattle(BaseGameState):
             self.agents.append(self.init_agent("user", 0))
             self.agents.append(self.init_agent("random", 1))
         for agent in self.agents:
-            agent.start(self.combat)
+            agent.start()
+            agent.force_sendout()
 
         self.lock_state = False
         self.action_choice = 0
@@ -122,25 +127,18 @@ class GameStateBattle(BaseGameState):
     def init_battle(self):
         actions = []
         for i, agent in enumerate(self.agents):
-            sendout = agent.get_sendout(self.combat)
-            if sendout is not None:
-                actions.append((("sendout", (i, sendout)), None, None))
+            action = agent.get_first_sendout()
+            if action is not None:
+                actions.append(action)
         self.pending_boards = self.combat.prepare_scene(actions)
         self.state = states["action"]
         self.advance_board()
 
     def init_agent(self, agent, team):
         if agent == "random":
-            return AgentRand(self, team)
+            return AgentRand(self.game, self.combat, team)
         if agent == "user":
-            return AgentUser(self, team)
-
-    def get_first_sendout(self, team):
-        return next(
-            idx
-            for idx, (poke, data) in enumerate(self.board.teams[team])
-            if data.can_fight
-        )
+            return AgentUser(self.game, self.combat, team)
 
     def on_tick(self, time, frame_time):
         if self.time_lock > 0:
@@ -167,37 +165,40 @@ class GameStateBattle(BaseGameState):
                     tackle = self.game.m_pbs.get_move(399).copy()
                     tackle.power = 0
                     actions.append(
-                        (
-                            ("attack", tackle),
-                            (1, self.board.get_active(1)),
-                            (0, self.board.get_active(0)),
+                        Action(
+                            ActionType.ATTACK,
+                            a_data=tackle,
+                            user=(1, self.board.get_active(1)),
+                            target=(0, self.board.get_active(0)),
                         )
                     )
                     actions.append(
-                        (
-                            ("attack", tackle),
-                            (1, self.board.get_active(1)),
-                            (0, self.board.get_active(0)),
+                        Action(
+                            ActionType.ATTACK,
+                            a_data=tackle,
+                            user=(1, self.board.get_active(1)),
+                            target=(0, self.board.get_active(0)),
                         )
                     )
+
             else:
                 for i, agent in enumerate(self.agents):
                     if self.lock_state:
                         if self.board.new_move:
                             if type(agent) == AgentUser:
-                                action = agent.get_action(self.combat)
+                                action = agent.get_action()
                                 if action is not None:
                                     actions.append(action)
                                 else:
                                     skip = True
                         elif self.board.switch[i]:
-                            sendout = agent.get_sendout(self.combat)
+                            sendout = agent.get_action()
                             if sendout is not None:
-                                actions.append((("sendout", (i, sendout)), None, None))
+                                actions.append(sendout)
                             else:
                                 skip = True
                     else:
-                        action = agent.get_action(self.combat)
+                        action = agent.get_action()
                         if action is not None:
                             actions.append(action)
                         else:
@@ -256,16 +257,18 @@ class GameStateBattle(BaseGameState):
                         elif self.selection == 2 and self.battle_type != "trainer":
                             self.state = states["ballmenu"]
                         elif self.selection == 3 and self.battle_type != "trainer":
-                            self.reg_action(("flee", None))
+                            self.reg_action(Action(ActionType.RUN))
                     elif self.state == states["actionmenu"]:
                         if self.lock_state:
-                            self.reg_action(("forget_move", self.selection))
+                            self.reg_action(
+                                Action(ActionType.FORGET_MOVE, a_index=self.selection)
+                            )
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
-                                (
-                                    "attack",
-                                    self.actors[0].actions[self.selection],
+                                Action(
+                                    ActionType.ATTACK,
+                                    a_index=self.selection,
                                 )
                             )
                     elif self.state == states["swapmenu"]:
@@ -276,17 +279,24 @@ class GameStateBattle(BaseGameState):
                             if self.lock_state:
                                 for agent in self.agents:
                                     if type(agent) == AgentUser:
-                                        agent.set_sendout(self.combat, self.selection)
+                                        agent.set_action(
+                                            Action(
+                                                ActionType.SENDOUT,
+                                                a_index=self.selection,
+                                            )
+                                        )
                             else:
                                 self.reg_action(
-                                    (
-                                        "swap",
-                                        self.selection,
-                                    ),
+                                    Action(
+                                        ActionType.SWITCH,
+                                        a_index=self.selection,
+                                    )
                                 )
                     elif self.state == states["ballmenu"]:
                         if self.game.inventory.get_pocket_items(3):
-                            self.reg_action(("catch", self.selection))
+                            self.reg_action(
+                                Action(ActionType.CATCH, a_index=self.selection)
+                            )
                     if self.state != states["actionmenu"]:
                         self.selection = 0
                 elif key == "backspace" or key == "menu":
@@ -313,27 +323,34 @@ class GameStateBattle(BaseGameState):
             return len(self.game.inventory.get_pocket_items(3))
         return 4
 
-    def reg_action(self, action):
+    def reg_action(self, action: Action):
         self.selection = 0
 
         user = (0, self.board.get_active(0))
         target = (1, self.board.get_active(1))
-        if action[0] == "swap":
+        if action.a_type == ActionType.SWITCH:
             user = (0, self.board.get_active(0))
-            target = (0, action[1])
-        if action[0] == "attack":
-            user = (0, self.board.get_active(0))
-            target = (1, self.board.get_active(1))
-        if action[0] == "catch":
+            target = (0, action.a_index)
+        if action.a_type == ActionType.ATTACK:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
-        if action[0] == "forget_move":
+        if action.a_type == ActionType.CATCH:
+            user = (0, self.board.get_active(0))
+            target = (1, self.board.get_active(1))
+        if action.a_type == ActionType.FORGET_MOVE:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
             user = (0, self.board.get_active(0))
             target = (0, self.board.get_active(0))
-        action_desc = (action, user, target)
-        for agent in self.agents:
-            if type(agent) == AgentUser:
-                self.agents[0].set_action(action_desc)
+        if action.a_type == ActionType.SENDOUT:
+            user = (0, self.board.get_active(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.RUN:
+            user = (0, self.board.get_active(0))
+            target = (0, self.board.get_active(0))
+        action.user = user
+        action.target = target
+        self.agents[0].set_action(action)
 
     def advance_board(self):
         self.lock_state = False
@@ -343,13 +360,15 @@ class GameStateBattle(BaseGameState):
             self.time_lock = 0.5
             return
         if not self.pending_boards:
+            for agent in self.agents:
+                agent.reset_actions()
+                agent.start()
             if self.board.new_move:
                 if len(self.actors[0].actions) > 4:
                     self.state = states["topmenu"]
                     self.lock_state = True
                     for agent in self.agents:
                         if type(agent) == AgentUser:
-                            agent.set_action(None)
                             self.state = states["actionmenu"]
                             self.lock_state = "user_forget_move"
                     return
@@ -361,13 +380,8 @@ class GameStateBattle(BaseGameState):
                         if type(self.agents[i]) == AgentUser:
                             self.state = states["swapmenu"]
                             self.lock_state = "user_switch"
-                            self.agents[i].set_sendout(self.combat, None)
                 return
             self.state = states["topmenu"]
-            for agent in self.agents:
-                if type(agent) == AgentUser:
-                    agent.set_action(None)
-                agent.start(self.combat)
             self.render.camera.reset()
             print("--- RESET STATES")
             return

@@ -2,10 +2,10 @@ from .baseeffect import BaseEffect
 
 
 class SendOutEffect(BaseEffect):
-    def __init__(self, scene, target):
+    def __init__(self, scene, action):
         super().__init__(scene)
         self.spd_on_action = 10
-        self.target = target
+        self.target = action.user
 
     def on_action(self):
         self.scene.board.set_active(self.target)

@@ -17,6 +17,7 @@ class CombatFighter:
         # self.starting_hp = fighter.current_hp
 
         self.data = fighter.copy()
+        self.actions = []
         self.sprite = self.game.m_res.prepare_battle_animset(f"{str(self.id).zfill(3)}")
 
     @property

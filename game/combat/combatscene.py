@@ -7,8 +7,8 @@ from .effects.sendouteffect import SendOutEffect
 from .effects.forgetmoveeffect import ForgetMoveEffect
 from .effects.moveeffect.basemoveeffect import BaseMoveEffect
 from .effects.abilityeffect.baseabilityeffect import BaseAbilityEffect
+from .action import ActionType
 
-import types
 import importlib
 from pathlib import Path
 from enum import IntEnum
@@ -56,6 +56,15 @@ class CombatScene:
             CombatState.SWITCH: self.run_switches,
         }
 
+        self.action_type_effects = {
+            ActionType.ATTACK: MainMove,
+            ActionType.CATCH: BallEffect,
+            ActionType.RUN: RunEffect,
+            ActionType.SWITCH: SwitchEffect,
+            ActionType.SENDOUT: SendOutEffect,
+            ActionType.FORGET_MOVE: ForgetMoveEffect,
+        }
+
         self.action_effects = []
         self.current_action = None
         self.current_action_effect = None
@@ -78,13 +87,14 @@ class CombatScene:
             )
             self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
 
-    def prepare_scene(self, action_descriptions=None):
+    def prepare_scene(self, actions=None):
         self.end = False
         if self.battle_state == CombatState.IDLE:
             self.round += 1
-        if action_descriptions is not None:
-            actions = self.format_actions(action_descriptions)
-
+        if actions is not None:
+            for action in actions:
+                if action.a_type == ActionType.ATTACK:
+                    action.priority = action.a_data.priority
             # Spawn all action effects
             actions.sort(key=lambda x: self.board.get_action_priority(x))
             for action in actions:
@@ -244,19 +254,7 @@ class CombatScene:
                 self.action_effects.remove((move_effect, action))
 
     def spawn_action_effect(self, action):
-        effect = None
-        if action.action_name == "attack":
-            effect = MainMove(self, action)
-        elif action.action_name == "flee":
-            effect = RunEffect(self, action)
-        elif action.action_name == "swap":
-            effect = SwitchEffect(self, action)
-        elif action.action_name == "catch":
-            effect = BallEffect(self, action)
-        elif action.action_name == "sendout":
-            effect = SendOutEffect(self, action.action_data)
-        elif action.action_name == "forget_move":
-            effect = ForgetMoveEffect(self, action)
+        effect = self.action_type_effects[action.a_type](self, action)
         self.effects.append(effect)
         return effect
 
@@ -292,7 +290,7 @@ class CombatScene:
 
     def is_grounded(self, target):
         actor = self.board.get_actor(target)
-        grounded = not(actor.type1 == "FLYING" or actor.type2 == "FLYING")
+        grounded = not (actor.type1 == "FLYING" or actor.type2 == "FLYING")
         for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_grounded)]:
             g = self.run_effect(effect, effect.grounded, target)
             if g is not None:
@@ -344,27 +342,6 @@ class CombatScene:
     def new_board(self):
         new_board = self.board.copy()
         self.board_history.append(new_board)
-
-    def format_actions(self, action_descriptions):
-        actions = []
-        for (name, action), user, target in action_descriptions:
-            if name == "attack":
-                action = action.copy()
-                action.action_name = name
-                action["user"] = user
-                action["target"] = target
-                actions.append(action)
-            else:
-                # FLEE, CATCH, SWITCH, SEND OUT, FORGET MOVE
-                action_data = action
-                action = types.SimpleNamespace()
-                action.action_data = action_data
-                action.action_name = name
-                action.user = user
-                action.target = target
-                action.priority = 6
-                actions.append(action)
-        return actions
 
     @property
     def board(self):

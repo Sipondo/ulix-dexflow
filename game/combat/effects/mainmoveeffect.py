@@ -6,14 +6,16 @@ from .damageeffect import DamageEffect
 class MainMove(BaseEffect):
     type = "Move"
 
-    def __init__(self, scene, move):
+    def __init__(self, scene, action):
         super().__init__(scene)
+        move = action.a_data
+        print(move)
         self.move = move
 
         # move attributes
         self.name = move["name"]
-        self.user = move.user
-        self.target = move.target
+        self.user = action.user
+        self.target = action.target
         self.type = move.type
         self.chance = 1 if move.chance == 0 else move.chance / 100
         self.move_cat = move.damagecat

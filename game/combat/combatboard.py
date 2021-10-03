@@ -50,6 +50,13 @@ class CombatBoard:
         self.user = None
         self.target = None
 
+    def get_first_sendout(self, team):
+        return next(
+            idx
+            for idx, (poke, data) in enumerate(self.teams[team])
+            if data.can_fight
+        )
+
     def set_direction(self, action):
         # Mostly for particles
         # TODO: possibly move into particle attribute
