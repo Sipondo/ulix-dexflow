@@ -19,7 +19,10 @@ class LevelEffect(BaseEffect):
         self.scene.board.set_hp(self.target, current_hp + (new_max_hp - old_max_hp))
         self.scene.board.set_exp(self.target, 0)
 
-        actor.set_new_level_xp()
+        new_level_exp = actor.get_level_exp()
+        self.scene.board.get_data(self.target).exp_to_level = new_level_exp
+        self.scene.board.get_data(self.target).current_exp = 0
+        actor.level_xp = new_level_exp
         for level, move_name in actor.data["learnset"]:
             if actor.level == int(level):
                 self.scene.add_effect(LearnMoveEffect(self.scene, self.target, move_name))

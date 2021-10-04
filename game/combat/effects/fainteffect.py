@@ -2,6 +2,7 @@ from .baseeffect import BaseEffect
 from .returneffect import ReturnEffect
 from .endbattleeffect import EndBattleEffect
 from .experienceeffect import ExperienceEffect
+from ..action import ActionType
 
 
 class FaintEffect(BaseEffect):
@@ -15,7 +16,7 @@ class FaintEffect(BaseEffect):
             f"{self.scene.board.get_actor(self.target).name} fainted",
             particle="",
         )
-        end = True
+        end = False
         self.scene.on_faint_effects(self.target)
         for effect in self.scene.get_effects_on_target(self.target, exclusive=True):
             if effect in self.scene.effects:
@@ -24,7 +25,7 @@ class FaintEffect(BaseEffect):
         self.scene.add_effect(ReturnEffect(self.scene, self.target))
         self.scene.remove_action_effects(self.target)
         self.scene.board.set_can_fight(self.target, False)
-        if self.scene.board.has_fighter(self.target[0]):
+        if not self.scene.board.has_fighter(self.target[0]):
             end = True
         if self.target[0] == 1:
             # experience if enemy fainted
@@ -37,5 +38,6 @@ class FaintEffect(BaseEffect):
             )
         if end:
             self.scene.add_effect(EndBattleEffect(self.scene))
-        self.scene.board.switch[self.target[0]] = True
+        self.scene.board.fainted = True
+        self.scene.force_action(self.target[0], ActionType.SENDOUT)
         return True, False, False

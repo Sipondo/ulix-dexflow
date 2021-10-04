@@ -20,12 +20,16 @@ class BaseAgent(abc.ABC):
     def get_action(self):
         return None
 
+    def set_action(self, action: Action):
+        if self.action_handler.is_legal(action):
+            self.action = action
+
     def get_first_sendout(self):
         sendout_i = self.scene.board.get_first_sendout(self.team)
         return Action(ActionType.SENDOUT, user=(self.team, sendout_i), target=(self.team, sendout_i))
 
-    def force_sendout(self):
-        self.action_handler.force_action(Action(ActionType.SENDOUT))
+    def force_action(self, action_type: ActionType):
+        self.action_handler.force_action(Action(action_type))
 
     def reset_actions(self):
         self.action = None

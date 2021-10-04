@@ -9,7 +9,6 @@ class MainMove(BaseEffect):
     def __init__(self, scene, action):
         super().__init__(scene)
         move = action.a_data
-        print(move)
         self.move = move
 
         # move attributes

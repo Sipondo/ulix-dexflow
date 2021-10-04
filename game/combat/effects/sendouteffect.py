@@ -9,7 +9,7 @@ class SendOutEffect(BaseEffect):
 
     def on_action(self):
         self.scene.board.set_active(self.target)
-        self.scene.board.switch[self.target[0]] = False
+        self.scene.board.fainted = False
         for ability in self.scene.get_target_abilities(self.target):
             ability.activate()
         self.scene.on_send_out_effects(self.target)
@@ -20,7 +20,7 @@ class SendOutEffect(BaseEffect):
 
     def switch_phase(self):
         self.scene.board.set_active(self.target)
-        self.scene.board.switch[self.target[0]] = False
+        self.scene.board.fainted = False
         for ability in self.scene.get_target_abilities(self.target):
             ability.activate()
         self.scene.on_send_out_effects(self.target)

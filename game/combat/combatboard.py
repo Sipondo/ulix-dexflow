@@ -20,7 +20,7 @@ class CombatBoard:
         self.particle_miss = False
         self.battle_end = False
 
-    def first_init(self, *teams):
+    def first_init(self, teams):
         for team in teams:
             self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append(0)
