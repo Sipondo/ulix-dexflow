@@ -20,7 +20,7 @@ class CombatBoard:
         self.particle_miss = False
         self.battle_end = False
 
-    def first_init(self, *teams):
+    def first_init(self, teams):
         for team in teams:
             self.teams.append([(x, x.current_hp) for x in team])
             self.actives.append(0)
@@ -49,6 +49,13 @@ class CombatBoard:
         self.action = None
         self.user = None
         self.target = None
+
+    def get_first_sendout(self, team):
+        return next(
+            idx
+            for idx, (poke, data) in enumerate(self.teams[team])
+            if data.can_fight
+        )
 
     def set_direction(self, action):
         # Mostly for particles

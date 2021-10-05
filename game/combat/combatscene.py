@@ -1,4 +1,11 @@
+import importlib
+from pathlib import Path
+from enum import IntEnum
+import typing
+
+from .combatboard import CombatBoard
 from .pokeboard import PokeBoard
+from .combatfighter import CombatFighter
 from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
 from .effects.switcheffect import SwitchEffect
@@ -7,26 +14,22 @@ from .effects.sendouteffect import SendOutEffect
 from .effects.forgetmoveeffect import ForgetMoveEffect
 from .effects.moveeffect.basemoveeffect import BaseMoveEffect
 from .effects.abilityeffect.baseabilityeffect import BaseAbilityEffect
+from .action import ActionType, Action
+from .agentmanager import AgentManager
 
-import types
-import importlib
-from pathlib import Path
-from enum import IntEnum
 
 EFFECTS_PATH = Path("game/combat/effects/")
 
 
 class CombatState(IntEnum):
-    IDLE = 0
-    BEFORE_START = 1
-    ACTION = 2
-    BEFORE_END = 3
-    SWITCH_IDLE = 4
-    SWITCH = 5
+    BEFORE_START = 0
+    ACTION = 1
+    BEFORE_END = 2
+    SWITCH = 3
 
 
 class CombatScene:
-    def __init__(self, game, team_1, team_2, battle_type="trainer"):
+    def __init__(self, game, teams, battle_type="trainer"):
 
         self.game = game
 
@@ -37,23 +40,32 @@ class CombatScene:
         self.init_move_effects()
         self.init_abilities()
 
+        self.mgr_agent = AgentManager(self.game, self)
+
         # prepare first board
         self.board_history = [PokeBoard(self.game, self)]
         self.effects = []
-        self.board.first_init(team_1, team_2)
+        self.board.first_init(teams)
         self.board_graveyard = []
         self.battle_type = battle_type
         self.round = 0
         self.end = False
 
-        self.battle_state = CombatState.SWITCH_IDLE
+        self.battle_state = CombatState.SWITCH
         self.combat_state_methods = {
-            CombatState.IDLE: self.prepare_scene,
             CombatState.BEFORE_START: self.run_start,
             CombatState.ACTION: self.run_actions,
             CombatState.BEFORE_END: self.run_end,
-            CombatState.SWITCH_IDLE: self.prepare_scene,
             CombatState.SWITCH: self.run_switches,
+        }
+
+        self.action_type_effects = {
+            ActionType.ATTACK: MainMove,
+            ActionType.CATCH: BallEffect,
+            ActionType.RUN: RunEffect,
+            ActionType.SWITCH: SwitchEffect,
+            ActionType.SENDOUT: SendOutEffect,
+            ActionType.FORGET_MOVE: ForgetMoveEffect,
         }
 
         self.action_effects = []
@@ -78,31 +90,40 @@ class CombatScene:
             )
             self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
 
-    def prepare_scene(self, action_descriptions=None):
-        self.end = False
-        if self.battle_state == CombatState.IDLE:
-            self.round += 1
-        if action_descriptions is not None:
-            actions = self.format_actions(action_descriptions)
+    def init_battle(self, agents) -> typing.List[Action]:
+        actions = []
+        for agent in agents:
+            self.mgr_agent.add_agent(agent)
+            action = agent.get_first_sendout()
+            actions.append(action)
+        return actions
 
+    def prepare_scene(self, actions: typing.List[Action] = None) -> typing.List[CombatBoard]:
+        self.end = False
+        if self.battle_state == CombatState.BEFORE_START:
+            self.round += 1
+        if actions is not None:
+            for action in actions:
+                if action.a_type == ActionType.ATTACK:
+                    action.priority = action.a_data.priority
             # Spawn all action effects
             actions.sort(key=lambda x: self.board.get_action_priority(x))
             for action in actions:
                 move_effect = self.spawn_action_effect(action)
                 self.action_effects.append((action, move_effect))
-        return self.next_state()
+        return self.combat_state_methods[self.battle_state]()
 
-    def next_state(self):
+    def next_state(self) -> typing.List[CombatBoard]:
         self.reset_effects_done()
         self.battle_state = CombatState((self.battle_state + 1) % len(CombatState))
-        if self.battle_state == CombatState.SWITCH_IDLE:
-            if any(self.board.switch):
+        if self.battle_state == CombatState.SWITCH:
+            if self.board.fainted:
                 return self.end_actions()
-        if self.battle_state == CombatState.IDLE:
+        if self.battle_state == CombatState.BEFORE_START:
             return self.end_actions()
         return self.combat_state_methods[self.battle_state]()
 
-    def run_start(self):
+    def run_start(self) -> typing.List[CombatBoard]:
         print("BEFORE START")
         while effects := [
             x
@@ -116,7 +137,7 @@ class CombatScene:
             return self.end_actions()
         return self.next_state()
 
-    def run_actions(self):
+    def run_actions(self) -> typing.List[CombatBoard]:
         print("BEFORE ACTIONS")
         while self.action_effects and not self.end:
             self.current_action, self.current_action_effect = self.action_effects.pop()
@@ -139,6 +160,8 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].before_action)
+                if skip:
+                    break
 
             self.reset_effects_done()
 
@@ -156,6 +179,8 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].on_action)
+                if skip:
+                    break
 
             self.reset_effects_done()
 
@@ -172,13 +197,15 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 self.run_effect(effects[0], effects[0].after_action)
+                if skip:
+                    break
         self.board.reset_action()
 
         if self.end:
             return self.end_actions()
         return self.next_state()
 
-    def run_end(self):
+    def run_end(self) -> typing.List[CombatBoard]:
         print("BEFORE END")
         while effects := [
             x
@@ -191,7 +218,7 @@ class CombatScene:
             return self.end_actions()
         return self.next_state()
 
-    def run_switches(self):
+    def run_switches(self) -> typing.List[CombatBoard]:
         print("BEFORE SWITCHES")
         while effects := [
             x
@@ -204,9 +231,10 @@ class CombatScene:
             return self.end_actions()
         return self.next_state()
 
-    def end_actions(self):
+    def end_actions(self) -> typing.List[CombatBoard]:
         self.reset_effects_done()
         self.reset_effects_skip()
+        self.mgr_agent.start_agents()
         self.board_graveyard.extend(self.board_history)
         board_history = self.board_history
 
@@ -244,19 +272,7 @@ class CombatScene:
                 self.action_effects.remove((move_effect, action))
 
     def spawn_action_effect(self, action):
-        effect = None
-        if action.action_name == "attack":
-            effect = MainMove(self, action)
-        elif action.action_name == "flee":
-            effect = RunEffect(self, action)
-        elif action.action_name == "swap":
-            effect = SwitchEffect(self, action)
-        elif action.action_name == "catch":
-            effect = BallEffect(self, action)
-        elif action.action_name == "sendout":
-            effect = SendOutEffect(self, action.action_data)
-        elif action.action_name == "forget_move":
-            effect = ForgetMoveEffect(self, action)
+        effect = self.action_type_effects[action.a_type](self, action)
         self.effects.append(effect)
         return effect
 
@@ -290,15 +306,6 @@ class CombatScene:
                 self.delete_effect(effect)
         self.reset_effects_done()
 
-    def is_grounded(self, target):
-        actor = self.board.get_actor(target)
-        grounded = not(actor.type1 == "FLYING" or actor.type2 == "FLYING")
-        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_grounded)]:
-            g = self.run_effect(effect, effect.grounded, target)
-            if g is not None:
-                grounded = g
-        return grounded
-
     def get_action_effect(self, target):
         for action, effect in self.action_effects:
             if action.user == target:
@@ -313,12 +320,14 @@ class CombatScene:
 
     def get_effects_on_target(self, target, exclusive=False):
         if exclusive:
+            # only the target itself
             return [
                 x for x in self.effects if x.target == target
-            ]  # only the target itself
+            ]
+        # target team or target itself
         return [
             x for x in self.effects if x.target == target or x.target == target[0]
-        ]  # target team or target itself
+        ]
 
     def get_target_abilities(self, target):
         return [
@@ -333,39 +342,49 @@ class CombatScene:
     def get_effects_by_type(self, effect_type):
         return [x for x in self.effects if x.type == effect_type]
 
+    def is_grounded(self, target):
+        actor = self.get_actor(target)
+        grounded = not (actor.type1 == "FLYING" or actor.type2 == "FLYING")
+        for effect in [x for x in sorted(self.effects, key=lambda x: -x.spd_grounded)]:
+            g = self.run_effect(effect, effect.grounded, target)
+            if g is not None:
+                grounded = g
+        return grounded
+
     def delete_effect(self, effect):
         effect.on_delete()
         self.effects.remove(effect)
         del effect
 
-    def get_actor(self, team):
+    def get_actions(self) -> typing.List[Action]:
+        return self.mgr_agent.get_actions()
+
+    def register_action(self, action: Action):
+        user_agents = self.mgr_agent.get_user_agents(has_action=False)
+        self.mgr_agent.register_action(user_agents[0], action)
+
+    def deregister_action(self):
+        user_agents = self.mgr_agent.get_user_agents(has_action=True)
+        if user_agents:
+            self.mgr_agent.unregister_action(user_agents[-1])
+
+    def force_action(self, team: int, action_type: ActionType):
+        self.mgr_agent.force_action(team, action_type)
+
+    def set_action_legality(self, team: int, action: Action, legality: bool):
+        self.mgr_agent.set_legality(team, action, legality)
+
+    def get_actor(self, team: int) -> CombatFighter:
         return self.board.get_actor(self.board.get_active(team))
 
     def new_board(self):
         new_board = self.board.copy()
         self.board_history.append(new_board)
 
-    def format_actions(self, action_descriptions):
-        actions = []
-        for (name, action), user, target in action_descriptions:
-            if name == "attack":
-                action = action.copy()
-                action.action_name = name
-                action["user"] = user
-                action["target"] = target
-                actions.append(action)
-            else:
-                # FLEE, CATCH, SWITCH, SEND OUT, FORGET MOVE
-                action_data = action
-                action = types.SimpleNamespace()
-                action.action_data = action_data
-                action.action_name = name
-                action.user = user
-                action.target = target
-                action.priority = 6
-                actions.append(action)
-        return actions
-
     @property
     def board(self):
         return self.board_history[-1]
+
+    @property
+    def teams_n(self):
+        return len(self.board.teams)

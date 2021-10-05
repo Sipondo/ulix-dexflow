@@ -1,11 +1,12 @@
 import dataclasses
-import copy
 
 from .combatboard import CombatBoard
 from .pokefighter import PokeFighter
 from .effects.genericeffect import GenericEffect
 from .effects.fainteffect import FaintEffect
 from .effects.statuseffect import *
+
+from .action import ActionType, Action
 
 
 STATUS_CLASSES = {
@@ -34,11 +35,10 @@ class PokeFighterData:
 class PokeBoard(CombatBoard):
     def __init__(self, game, scene):
         super().__init__(game, scene)
-        # self.legal = pd.DataFrame(columns=["Pokemon", "Team", "Action", "Legal"])
-        self.switch = []
+        self.fainted = False
         self.new_move = False
 
-    def first_init(self, *teams):
+    def first_init(self, teams):
         for i, team in enumerate(teams):
             team_formatted = []
             for j, poke in enumerate(team):
@@ -69,18 +69,7 @@ class PokeBoard(CombatBoard):
                 self.scene.add_effect(ability)
 
             self.teams.append(team_formatted)
-
-            # TODO empty field, send out pokemon at start of battle
-            # find first alive poke
-            # self.actives.append(
-            #     next(
-            #         idx
-            #         for idx, (poke, data) in enumerate(team_formatted)
-            #         if data.can_fight
-            #     )
-            # )
             self.actives.append(-1)
-            self.switch.append(False)
 
     def init_fighter(self, src):
         fighter = PokeFighter(self.game, self, src)
@@ -89,9 +78,8 @@ class PokeBoard(CombatBoard):
     def copy(self):
         newstate = PokeBoard(self.game, self.scene)
         newstate.from_board(self)
-        newstate.switch = self.switch.copy()
+        newstate.fainted = self.fainted
         newstate.new_move = self.new_move
-        # newstate.legal = self.legal.copy()
         return newstate
 
     def from_board(self, board):
@@ -105,11 +93,8 @@ class PokeBoard(CombatBoard):
         self.user = board.user
         self.target = board.target
 
-    def get_action_priority(self, action):
+    def get_action_priority(self, action: Action):
         prio = action.priority
-        if action.user is None or action.target is None:
-            # running or using balls
-            return 7_000_000
         user_actor = self.get_actor(action.user)
         user_speed = user_actor.stats[0]
         for speed_mod in [

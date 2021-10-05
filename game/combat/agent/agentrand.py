@@ -1,34 +1,35 @@
-from .baseagent import BaseAgent
 import numpy as np
+
+from .baseagent import BaseAgent
+from ..action import Action, ActionType
+from ..combatscene import CombatState
 
 
 class AgentRand(BaseAgent):
-    def start(self, scene):
-        pass
-
-    def get_action(self, scene):
+    def start(self):
+        if self.scene.battle_state != CombatState.BEFORE_START:
+            return
         action_i = np.random.randint(
             len(
-                scene.board.get_actor(
-                    (self.team, scene.board.get_active(self.team))
+                self.scene.board.get_actor(
+                    (self.team, self.scene.board.get_active(self.team))
                 ).actions
             )
         )
-        action = (
-            "attack",
-            scene.board.get_actor(
-                (self.team, scene.board.get_active(self.team))
-            ).actions[action_i],
-        )
-        user = (self.team, scene.board.get_active(self.team))
-        target_team = np.random.randint(len(scene.board.teams))
+        user = (self.team, self.scene.board.get_active(self.team))
+        target_team = np.random.randint(len(self.scene.board.teams))
         while target_team == self.team:
-            target_team = np.random.randint(len(scene.board.teams))
-        target = (target_team, scene.board.get_active(target_team))
-        return action, user, target
+            target_team = np.random.randint(len(self.scene.board.teams))
+        target = (target_team, self.scene.board.get_active(target_team))
+        action = Action(
+            ActionType.ATTACK,
+            a_index=action_i,
+            a_data=self.scene.board.get_actor(user).actions[action_i],
+            user=user,
+            target=target
+        )
+        self.action = action
 
-    def get_sendout(self, scene):
-        random_fighter = np.random.randint(len(scene.board.teams[self.team]))
-        while not scene.board.get_data((self.team, random_fighter)).can_fight:
-            random_fighter = np.random.randint(len(scene.board.teams[self.team]))
-        return random_fighter
+    def get_action(self):
+        return self.action
+

@@ -1,4 +1,5 @@
 from .baseeffect import BaseEffect
+from ..action import ActionType
 
 
 class LearnMoveEffect(BaseEffect):
@@ -16,5 +17,6 @@ class LearnMoveEffect(BaseEffect):
         )
         if len(actor.actions) > 4:
             self.scene.board.new_move = True
+            self.scene.force_action(self.target[0], ActionType.FORGET_MOVE)
             return True, True, True
         return True, False, False

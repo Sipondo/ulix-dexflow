@@ -23,9 +23,6 @@ class BaseEffect(abc.ABC):
         self.spd_grounded = 0
         self.priority = 0
 
-    # def after_select(self):
-    #     return False, False, False
-
     def on_switch(self, target_old, target_new):
         """All effects that happen before an actor is returned."""
         return False, False, False
@@ -35,8 +32,9 @@ class BaseEffect(abc.ABC):
         return False, False, False
 
     def on_faint(self, target):
-        """All effects that happen after an actor faints"""
-        return False, False, False
+        """All effects that happen after an actor faints.
+        By default deletes the effect if the fainted mon is the target of the effect."""
+        return target == self.target, False, False
 
     def before_start(self):
         """All effects that happen in a turn before the actions start.

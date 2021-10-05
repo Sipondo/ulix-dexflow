@@ -1,14 +1,24 @@
+import traceback
+
+import time as ti
+import enum
+
 from .basegamestate import BaseGameState
 
 from game.particle.battlerender import BattleRender
 from game.combat.combatscene import CombatScene
 from game.combat.agent.agentrand import AgentRand
 from game.combat.agent.agentuser import AgentUser
-import traceback
 
-import time as ti
+from ..combat.action import ActionType, Action
 
-states = {"action": 0, "topmenu": 1, "actionmenu": 2, "swapmenu": 3, "ballmenu": 4}
+
+class BattleStates(enum.Enum):
+    ACTION = enum.auto()
+    TOPMENU = enum.auto()
+    ACTIONMENU = enum.auto()
+    SWAPMENU = enum.auto()
+    BALLMENU = enum.auto()
 
 
 class GameStateBattle(BaseGameState):
@@ -17,25 +27,14 @@ class GameStateBattle(BaseGameState):
     ):
         if particle_test:
             self.game.inventory.init_random_member()
+
+        # Renderer setup
+        self.render = BattleRender(self.game)
+
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
-        if len(self.game.inventory.members) < 1:
-            self.game.inventory.add_member(self.game.inventory.init_random_member())
-        self.render = BattleRender(self.game)
-        self.combat = CombatScene(
-            self.game,
-            [x.series for x in self.game.inventory.members],
-            enemy_team or [1, 2],
-            battle_type=battle_type,
-        )
-        self.battle_type = battle_type
-        self.render.camera.reset()
-        self.board = self.combat.board
-        self.pending_boards = []
 
-        self.actors = []
-        for i in range(2):
-            self.actors.append(self.board.get_active_actor(i))
+        self.render.camera.reset()
 
         self.render.set_pokemon(None, 0)
         self.render.set_pokemon(None, 1)
@@ -93,19 +92,29 @@ class GameStateBattle(BaseGameState):
 
         self.game.r_int.init_sprite_drawer()
 
-        self.agents = []
-        if agents:
-            self.agents = agents
-        else:
-            self.agents.append(self.init_agent("user", 0))
-            self.agents.append(self.init_agent("random", 1))
-        for agent in self.agents:
-            agent.start(self.combat)
+        if len(self.game.inventory.members) < 1:
+            self.game.inventory.members.append(self.game.inventory.init_random_member())
+
+        # Combat setup
+        self.combat = CombatScene(
+            self.game,
+            ([x.series for x in self.game.inventory.members], enemy_team or [1, 2]),
+            battle_type=battle_type,
+        )
+
+        self.battle_type = battle_type
+
+        self.board = self.combat.board
+        self.pending_boards = []
+
+        self.actors = []
+        for i in range(2):
+            self.actors.append(self.board.get_active_actor(i))
 
         self.lock_state = False
         self.action_choice = 0
         self.selection = 0
-        self.state = states["topmenu"]
+        self.state = BattleStates.TOPMENU
         self.game.r_aud.play_music("BGM/battle wild.flac")
         self.particle_test = particle_test
         self.particle_test_cooldown = 0.0
@@ -117,30 +126,26 @@ class GameStateBattle(BaseGameState):
         self.time_lock = 0.5
         self.time_press = None
 
-        self.init_battle()
+        _agents = []
+        if agents:
+            _agents = agents
+        else:
+            _agents.append(self.init_agent("user", 0))
+            _agents.append(self.init_agent("random", 1))
 
-    def init_battle(self):
-        actions = []
-        for i, agent in enumerate(self.agents):
-            sendout = agent.get_sendout(self.combat)
-            if sendout is not None:
-                actions.append((("sendout", (i, sendout)), None, None))
+        self.init_battle(_agents)
+
+    def init_battle(self, agents):
+        actions = self.combat.init_battle(agents)
         self.pending_boards = self.combat.prepare_scene(actions)
-        self.state = states["action"]
+        self.state = BattleStates.ACTION
         self.advance_board()
 
-    def init_agent(self, agent, team):
-        if agent == "random":
-            return AgentRand(self, team)
-        if agent == "user":
-            return AgentUser(self, team)
-
-    def get_first_sendout(self, team):
-        return next(
-            idx
-            for idx, (poke, data) in enumerate(self.board.teams[team])
-            if data.can_fight
-        )
+    def init_agent(self, agent_str: str, team: int):
+        if agent_str == "random":
+            return AgentRand(self.game, self.combat, team)
+        if agent_str == "user":
+            return AgentUser(self.game, self.combat, team)
 
     def on_tick(self, time, frame_time):
         if self.time_lock > 0:
@@ -156,8 +161,7 @@ class GameStateBattle(BaseGameState):
                 return
 
         actions = []
-        if self.state != states["action"] or self.particle_test:
-            skip = False
+        if self.state != BattleStates.ACTION or self.particle_test:
             if self.particle_test and not self.lock:
                 if self.particle_test_cooldown:
                     self.particle_test_cooldown = max(
@@ -167,43 +171,26 @@ class GameStateBattle(BaseGameState):
                     tackle = self.game.m_pbs.get_move(399).copy()
                     tackle.power = 0
                     actions.append(
-                        (
-                            ("attack", tackle),
-                            (1, self.board.get_active(1)),
-                            (0, self.board.get_active(0)),
+                        Action(
+                            ActionType.ATTACK,
+                            a_data=tackle,
+                            user=(1, self.board.get_active(1)),
+                            target=(0, self.board.get_active(0)),
                         )
                     )
                     actions.append(
-                        (
-                            ("attack", tackle),
-                            (1, self.board.get_active(1)),
-                            (0, self.board.get_active(0)),
+                        Action(
+                            ActionType.ATTACK,
+                            a_data=tackle,
+                            user=(1, self.board.get_active(1)),
+                            target=(0, self.board.get_active(0)),
                         )
                     )
+
             else:
-                for i, agent in enumerate(self.agents):
-                    if self.lock_state:
-                        if self.board.new_move:
-                            if type(agent) == AgentUser:
-                                action = agent.get_action(self.combat)
-                                if action is not None:
-                                    actions.append(action)
-                                else:
-                                    skip = True
-                        elif self.board.switch[i]:
-                            sendout = agent.get_sendout(self.combat)
-                            if sendout is not None:
-                                actions.append((("sendout", (i, sendout)), None, None))
-                            else:
-                                skip = True
-                    else:
-                        action = agent.get_action(self.combat)
-                        if action is not None:
-                            actions.append(action)
-                        else:
-                            skip = True
-            if not skip:
-                self.state = states["action"]
+                actions = self.combat.get_actions()
+            if actions:
+                self.state = BattleStates.ACTION
                 self.pending_boards = self.combat.prepare_scene(actions)
                 self.lock_state = False
                 self.advance_board()
@@ -227,7 +214,7 @@ class GameStateBattle(BaseGameState):
             return
 
         if self.lock == False:
-            if self.state == states["action"]:
+            if self.state == BattleStates.ACTION:
                 if key == "interact":
                     self.advance_board()
             else:
@@ -238,102 +225,109 @@ class GameStateBattle(BaseGameState):
                     self.selection = (self.selection - 1) % self.max_selection
                     self.game.r_aud.effect("select")
                 elif key == "left":
-                    if self.state == states["topmenu"]:
+                    if self.state == BattleStates.TOPMENU:
                         self.selection = (self.selection - 2) % self.max_selection
                         self.game.r_aud.effect("select")
                 elif key == "right":
-                    if self.state == states["topmenu"]:
+                    if self.state == BattleStates.TOPMENU:
                         self.selection = (self.selection + 2) % self.max_selection
                         self.game.r_aud.effect("select")
                 elif key == "interact":
                     self.game.r_aud.effect("confirm")
-                    if self.state == states["topmenu"]:
+                    if self.state == BattleStates.TOPMENU:
                         if self.selection == 0:
-                            self.state = states["actionmenu"]
+                            self.state = BattleStates.ACTIONMENU
                             self.selection = self.action_choice
                         elif self.selection == 1:
-                            self.state = states["swapmenu"]
+                            self.state = BattleStates.SWAPMENU
                         elif self.selection == 2 and self.battle_type != "trainer":
-                            self.state = states["ballmenu"]
+                            self.state = BattleStates.BALLMENU
                         elif self.selection == 3 and self.battle_type != "trainer":
-                            self.reg_action(("flee", None))
-                    elif self.state == states["actionmenu"]:
+                            self.reg_action(Action(ActionType.RUN))
+                    elif self.state == BattleStates.ACTIONMENU:
                         if self.lock_state:
-                            self.reg_action(("forget_move", self.selection))
+                            self.reg_action(
+                                Action(ActionType.FORGET_MOVE, a_index=self.selection)
+                            )
                         else:
                             self.action_choice = self.selection
                             self.reg_action(
-                                (
-                                    "attack",
-                                    self.actors[0].actions[self.selection],
-                                )
+                                Action(ActionType.ATTACK, a_index=self.selection)
                             )
-                    elif self.state == states["swapmenu"]:
+                    elif self.state == BattleStates.SWAPMENU:
                         if (
                             self.board.teams[0][self.selection][1].can_fight
                             and self.board.get_active(0) != self.selection
                         ):
                             if self.lock_state:
-                                for agent in self.agents:
-                                    if type(agent) == AgentUser:
-                                        agent.set_sendout(self.combat, self.selection)
+                                self.reg_action(
+                                    Action(ActionType.SENDOUT, a_index=self.selection)
+                                )
                             else:
                                 self.reg_action(
-                                    (
-                                        "swap",
-                                        self.selection,
-                                    ),
+                                    Action(ActionType.SWITCH, a_index=self.selection)
                                 )
-                    elif self.state == states["ballmenu"]:
+                    elif self.state == BattleStates.BALLMENU:
                         if self.game.inventory.get_pocket_items(3):
-                            self.reg_action(("catch", self.selection))
-                    if self.state != states["actionmenu"]:
+                            self.reg_action(
+                                Action(ActionType.CATCH, a_index=self.selection)
+                            )
+                    if self.state != BattleStates.ACTIONMENU:
                         self.selection = 0
                 elif key == "backspace" or key == "menu":
                     self.game.r_aud.effect("cancel")
                     if not self.lock_state:
                         self.game.r_aud.effect("cancel")
-                        if self.state == states["actionmenu"]:
+                        if self.state == BattleStates.ACTIONMENU:
                             self.selection = 0
-                        elif self.state == states["swapmenu"]:
+                        elif self.state == BattleStates.SWAPMENU:
                             self.selection = 1
-                        elif self.state == states["ballmenu"]:
+                        elif self.state == BattleStates.BALLMENU:
                             self.selection = 2
-                        self.state = states["topmenu"]
+                        elif self.state == BattleStates.TOPMENU:
+                            self.combat.deregister_action()
+                        self.state = BattleStates.TOPMENU
         else:
             self.game.m_par.fast_forward = False  # True
 
     @property
     def max_selection(self):
-        if self.state == states["swapmenu"]:
+        if self.state == BattleStates.SWAPMENU:
             return len(self.game.inventory.members)
-        if self.state == states["actionmenu"]:
+        if self.state == BattleStates.ACTIONMENU:
             return len(self.actors[0].actions)
-        if self.state == states["ballmenu"]:
+        if self.state == BattleStates.BALLMENU:
             return len(self.game.inventory.get_pocket_items(3))
         return 4
 
-    def reg_action(self, action):
+    def reg_action(self, action: Action):
         self.selection = 0
 
         user = (0, self.board.get_active(0))
         target = (1, self.board.get_active(1))
-        if action[0] == "swap":
-            user = (0, self.board.get_active(0))
-            target = (0, action[1])
-        if action[0] == "attack":
+        if action.a_type == ActionType.ATTACK:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
-        if action[0] == "catch":
+        if action.a_type == ActionType.SWITCH:
+            user = (0, self.board.get_active(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.CATCH:
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
-        if action[0] == "forget_move":
+        if action.a_type == ActionType.FORGET_MOVE:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
             user = (0, self.board.get_active(0))
             target = (0, self.board.get_active(0))
-        action_desc = (action, user, target)
-        for agent in self.agents:
-            if type(agent) == AgentUser:
-                self.agents[0].set_action(action_desc)
+        if action.a_type == ActionType.SENDOUT:
+            user = (0, self.board.get_active(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.RUN:
+            user = (0, self.board.get_active(0))
+            target = (0, self.board.get_active(0))
+        action.user = user
+        action.target = target
+        self.combat.register_action(action)
 
     def advance_board(self):
         self.lock_state = False
@@ -343,41 +337,24 @@ class GameStateBattle(BaseGameState):
             self.time_lock = 0.5
             return
         if not self.pending_boards:
-            if self.board.new_move:
-                if len(self.actors[0].actions) > 4:
-                    self.state = states["topmenu"]
-                    self.lock_state = True
-                    for agent in self.agents:
-                        if type(agent) == AgentUser:
-                            agent.set_action(None)
-                            self.state = states["actionmenu"]
-                            self.lock_state = "user_forget_move"
-                    return
-            if any(self.board.switch):
-                self.lock_state = True
-                self.state = states["topmenu"]
-                for i, boo in enumerate(self.board.switch):
-                    if boo:
-                        if type(self.agents[i]) == AgentUser:
-                            self.state = states["swapmenu"]
-                            self.lock_state = "user_switch"
-                            self.agents[i].set_sendout(self.combat, None)
-                return
-            self.state = states["topmenu"]
-            for agent in self.agents:
-                if type(agent) == AgentUser:
-                    agent.set_action(None)
-                agent.start(self.combat)
+            if self.combat.board.new_move:
+                self.state = BattleStates.ACTIONMENU
+                self.lock_state = "user_forget_move"
+            elif self.combat.board.fainted:
+                self.state = BattleStates.SWAPMENU
+                self.lock_state = "user_switch"
+            else:
+                self.state = BattleStates.TOPMENU
             self.render.camera.reset()
             print("--- RESET STATES")
             return
 
         self.board = self.pending_boards.pop(0)
-        for i in range(len(self.agents)):
+        for i in range(self.combat.teams_n):
             if self.board.get_active_actor(i) != self.actors[i]:
                 if self.board.get_active_actor(i) == -1:
                     self.render.set_pokemon(
-                        None, 0
+                        None, i
                     )  # empty spriteset for if poke is fainted
                 else:
                     self.render.set_pokemon(self.board.get_active_actor(i).sprite, i)
@@ -444,10 +421,10 @@ class GameStateBattle(BaseGameState):
 
     @property
     def narrate(self):
-        if self.state == states["action"]:
+        if self.state == BattleStates.ACTION:
             return self.board.narration
 
-        if self.state == states["actionmenu"]:
+        if self.state == BattleStates.ACTIONMENU:
             action = self.actors[0].actions[self.selection]
             return (
                 action.description
@@ -455,15 +432,15 @@ class GameStateBattle(BaseGameState):
                 else f"Forget {action['name']}?"
             )
 
-        if self.state == states["swapmenu"]:
+        if self.state == BattleStates.SWAPMENU:
             name = self.game.inventory.fighter_names[self.selection]
             return f"Send out {name}."
 
-        if self.state == states["ballmenu"]:
+        if self.state == BattleStates.BALLMENU:
             # ball = self.game.inventory.get_pocket_items(3)[self.selection]
             return "Throw a ball to catch the Pokémon!"  # ball.description
 
-        if self.state == states["topmenu"]:
+        if self.state == BattleStates.TOPMENU:
             strings = [
                 "Attack the enemy!",
                 "Choose a Pokemon!",
@@ -475,7 +452,7 @@ class GameStateBattle(BaseGameState):
 
     def draw_interface(self, time, frame_time):
         if not len(self.pending_boards) or self.lock_state:
-            if self.state == states["topmenu"]:
+            if self.state == BattleStates.TOPMENU:
                 # self.game.r_int.draw_rectangle(
                 #     (0.80, 0.53), size=(0.15, 0.32), col="black"
                 # )
@@ -499,7 +476,7 @@ class GameStateBattle(BaseGameState):
                         centre=True,
                     )
 
-            elif self.state == states["actionmenu"]:
+            elif self.state == BattleStates.ACTIONMENU:
                 # self.game.r_int.draw_rectangle(
                 #     (0.685, 0.59), size=(0.29, 0.27), col="white"
                 # )
@@ -530,7 +507,7 @@ class GameStateBattle(BaseGameState):
                         col="black",
                     )
 
-            elif self.state == states["swapmenu"]:
+            elif self.state == BattleStates.SWAPMENU:
                 self.game.r_int.draw_image(self.spr_switchwindow, (0.685, 0.49))
 
                 for i, name in enumerate(self.game.inventory.fighter_names):
@@ -545,7 +522,7 @@ class GameStateBattle(BaseGameState):
                         bcol=None,
                     )
 
-            elif self.state == states["ballmenu"]:
+            elif self.state == BattleStates.BALLMENU:
                 self.game.r_int.draw_image(self.spr_ballwindow, (0.685, 0.616))
 
                 balls = self.game.inventory.get_pocket_items(3)
