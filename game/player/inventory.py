@@ -13,20 +13,22 @@ class Inventory:
 
         self.sort_items()
 
-    def init_random_member(self):
+    def init_random_member(self) -> PartyMember:
         mem = PartyMember(self.game, self.game.m_pbs.get_random_fighter())
         return mem
 
-    def add_member(self, data, l=5):
-        new_member = PartyMember(self.game, data, l)
-        if len(self.members) == 6:
-            self.storage.append(new_member)
-        else:
-            self.members.append(new_member)
+    def init_member(self, data, lvl: int = 5) -> PartyMember:
+        new_member = PartyMember(self.game, data, lvl)
+        return new_member
 
-    def add_member_to_storage(self, data, l=5):
-        new_member = PartyMember(self.game, data, l)
-        self.storage.append(new_member)
+    def add_member(self, member: PartyMember):
+        if len(self.members) == 6:
+            self.storage.append(member)
+        else:
+            self.members.append(member)
+
+    def add_member_to_storage(self, member: PartyMember):
+        self.storage.append(member)
 
     def add_item(self, id, quantity):
         quantity = int(quantity)

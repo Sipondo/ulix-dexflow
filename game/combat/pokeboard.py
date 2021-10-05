@@ -152,7 +152,8 @@ class PokeBoard(CombatBoard):
 
     def catch_member(self, actor):
         # TODO not fully heal new member
-        self.scene.game.inventory.add_member(actor.series, l=actor.level)
+        caught = self.game.inventory.init_member(actor.series, l=actor.level)
+        self.game.inventory.add_member(caught)
 
     def set_active(self, new_active):
         self.actives[new_active[0]] = new_active[1]

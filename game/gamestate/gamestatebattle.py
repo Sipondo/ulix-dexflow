@@ -20,7 +20,7 @@ class GameStateBattle(BaseGameState):
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
         if len(self.game.inventory.members) < 1:
-            self.game.inventory.members.append(self.game.inventory.init_random_member())
+            self.game.inventory.add_member(self.game.inventory.init_random_member())
         self.render = BattleRender(self.game)
         self.combat = CombatScene(
             self.game,

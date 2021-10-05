@@ -64,7 +64,8 @@ class SaveManager:
 
             for k, v in member.items():
                 raw[k] = v
-            self.game.inventory.add_member(raw, raw.level)
+            mem = self.game.inventory.init_member(raw, raw.level)
+            self.game.inventory.add_member(mem)
 
         for member in self.store["STORAGE"]:
             member = pd.Series(member)
@@ -72,7 +73,8 @@ class SaveManager:
 
             for k, v in member.items():
                 raw[k] = v
-            self.game.inventory.add_member_to_storage(raw, raw.level)
+            mem = self.game.inventory.init_member(raw, raw.level)
+            self.game.inventory.add_member_to_storage(mem)
 
         for item in self.store["ITEMS"]:
             self.game.inventory.add_item(item[0], item[1])
