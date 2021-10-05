@@ -23,6 +23,9 @@ class AgentManager:
     def force_action(self, i: int, a_t: ActionType):
         self.agents[i].force_action(a_t)
 
+    def set_legality(self, i: int, action: Action, legality: bool):
+        self.agents[i].set_legality(action, legality)
+
     def start_agents(self):
         for agent in self.agents:
             agent.reset_actions()
@@ -52,6 +55,6 @@ class AgentManager:
             action = agent.get_action()
             if action is not None:
                 actions.append(action)
-            else:
+            elif type(agent) == AgentUser:
                 return []
         return actions

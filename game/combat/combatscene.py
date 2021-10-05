@@ -5,6 +5,7 @@ import typing
 
 from .combatboard import CombatBoard
 from .pokeboard import PokeBoard
+from .combatfighter import CombatFighter
 from .effects.mainmoveeffect import MainMove
 from .effects.runeffect import RunEffect
 from .effects.switcheffect import SwitchEffect
@@ -21,12 +22,10 @@ EFFECTS_PATH = Path("game/combat/effects/")
 
 
 class CombatState(IntEnum):
-    IDLE = 0
-    BEFORE_START = 1
-    ACTION = 2
-    BEFORE_END = 3
-    SWITCH_IDLE = 4
-    SWITCH = 5
+    BEFORE_START = 0
+    ACTION = 1
+    BEFORE_END = 2
+    SWITCH = 3
 
 
 class CombatScene:
@@ -52,13 +51,11 @@ class CombatScene:
         self.round = 0
         self.end = False
 
-        self.battle_state = CombatState.SWITCH_IDLE
+        self.battle_state = CombatState.SWITCH
         self.combat_state_methods = {
-            CombatState.IDLE: self.prepare_scene,
             CombatState.BEFORE_START: self.run_start,
             CombatState.ACTION: self.run_actions,
             CombatState.BEFORE_END: self.run_end,
-            CombatState.SWITCH_IDLE: self.prepare_scene,
             CombatState.SWITCH: self.run_switches,
         }
 
@@ -101,12 +98,9 @@ class CombatScene:
             actions.append(action)
         return actions
 
-    def get_actions(self) -> typing.List[Action]:
-        return self.mgr_agent.get_actions()
-
-    def prepare_scene(self, actions=None) -> typing.List[CombatBoard]:
+    def prepare_scene(self, actions: typing.List[Action] = None) -> typing.List[CombatBoard]:
         self.end = False
-        if self.battle_state == CombatState.IDLE:
+        if self.battle_state == CombatState.BEFORE_START:
             self.round += 1
         if actions is not None:
             for action in actions:
@@ -117,15 +111,15 @@ class CombatScene:
             for action in actions:
                 move_effect = self.spawn_action_effect(action)
                 self.action_effects.append((action, move_effect))
-        return self.next_state()
+        return self.combat_state_methods[self.battle_state]()
 
     def next_state(self) -> typing.List[CombatBoard]:
         self.reset_effects_done()
         self.battle_state = CombatState((self.battle_state + 1) % len(CombatState))
-        if self.battle_state == CombatState.SWITCH_IDLE:
+        if self.battle_state == CombatState.SWITCH:
             if self.board.fainted:
                 return self.end_actions()
-        if self.battle_state == CombatState.IDLE:
+        if self.battle_state == CombatState.BEFORE_START:
             return self.end_actions()
         return self.combat_state_methods[self.battle_state]()
 
@@ -166,6 +160,8 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].before_action)
+                if skip:
+                    break
 
             self.reset_effects_done()
 
@@ -183,6 +179,8 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 skip = self.run_effect(effects[0], effects[0].on_action)
+                if skip:
+                    break
 
             self.reset_effects_done()
 
@@ -199,6 +197,8 @@ class CombatScene:
                         effects[0].done = True
                         continue
                 self.run_effect(effects[0], effects[0].after_action)
+                if skip:
+                    break
         self.board.reset_action()
 
         if self.end:
@@ -356,6 +356,9 @@ class CombatScene:
         self.effects.remove(effect)
         del effect
 
+    def get_actions(self) -> typing.List[Action]:
+        return self.mgr_agent.get_actions()
+
     def register_action(self, action: Action):
         user_agents = self.mgr_agent.get_user_agents(has_action=False)
         self.mgr_agent.register_action(user_agents[0], action)
@@ -368,7 +371,10 @@ class CombatScene:
     def force_action(self, team: int, action_type: ActionType):
         self.mgr_agent.force_action(team, action_type)
 
-    def get_actor(self, team: int):
+    def set_action_legality(self, team: int, action: Action, legality: bool):
+        self.mgr_agent.set_legality(team, action, legality)
+
+    def get_actor(self, team: int) -> CombatFighter:
         return self.board.get_actor(self.board.get_active(team))
 
     def new_board(self):

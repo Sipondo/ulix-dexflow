@@ -93,7 +93,9 @@ class GameStateBattle(BaseGameState):
         self.game.r_int.init_sprite_drawer()
 
         if len(self.game.inventory.members) < 1:
-            self.game.inventory.members.append(self.game.inventory.init_random_member())
+            # self.game.inventory.members.append(self.game.inventory.init_random_member())
+            totodile_data = self.game.m_pbs.get_fighter(101)
+            self.game.inventory.add_member(totodile_data, l=10)
 
         # Combat setup
         self.combat = CombatScene(
@@ -337,12 +339,12 @@ class GameStateBattle(BaseGameState):
             self.time_lock = 0.5
             return
         if not self.pending_boards:
-            if self.combat.board.fainted:
-                self.state = BattleStates.SWAPMENU
-                self.lock_state = "user_switch"
-            elif self.combat.board.new_move:
+            if self.combat.board.new_move:
                 self.state = BattleStates.ACTIONMENU
                 self.lock_state = "user_forget_move"
+            elif self.combat.board.fainted:
+                self.state = BattleStates.SWAPMENU
+                self.lock_state = "user_switch"
             else:
                 self.state = BattleStates.TOPMENU
             self.render.camera.reset()

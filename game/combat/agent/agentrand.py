@@ -2,13 +2,13 @@ import numpy as np
 
 from .baseagent import BaseAgent
 from ..action import Action, ActionType
+from ..combatscene import CombatState
 
 
 class AgentRand(BaseAgent):
     def start(self):
-        pass
-
-    def get_action(self):
+        if self.scene.battle_state != CombatState.BEFORE_START:
+            return
         action_i = np.random.randint(
             len(
                 self.scene.board.get_actor(
@@ -28,5 +28,8 @@ class AgentRand(BaseAgent):
             user=user,
             target=target
         )
-        return action
+        self.action = action
+
+    def get_action(self):
+        return self.action
 

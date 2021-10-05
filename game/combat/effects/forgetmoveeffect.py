@@ -6,7 +6,7 @@ class ForgetMoveEffect(BaseEffect):
         super().__init__(scene)
         self.spd_on_action = 250
         self.target = action.target
-        self.move = action.action_data
+        self.move = action.a_index
 
     def on_action(self):
         actor = self.scene.board.get_actor(self.target)

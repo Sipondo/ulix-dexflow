@@ -8,7 +8,7 @@ from ..action import ActionType
 class FaintEffect(BaseEffect):
     def __init__(self, scene, target):
         super().__init__(scene)
-        self.spd_on_action = 10000
+        self.spd_on_action = 1000
         self.target = target
 
     def on_action(self):
@@ -18,10 +18,6 @@ class FaintEffect(BaseEffect):
         )
         end = False
         self.scene.on_faint_effects(self.target)
-        for effect in self.scene.get_effects_on_target(self.target, exclusive=True):
-            if effect in self.scene.effects:
-                if effect is not self:
-                    self.scene.delete_effect(effect)
         self.scene.add_effect(ReturnEffect(self.scene, self.target))
         self.scene.remove_action_effects(self.target)
         self.scene.board.set_can_fight(self.target, False)

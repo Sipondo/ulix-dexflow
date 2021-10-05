@@ -31,6 +31,14 @@ class BaseAgent(abc.ABC):
     def force_action(self, action_type: ActionType):
         self.action_handler.force_action(Action(action_type))
 
+    def set_legality(self, action: Action, legality: bool):
+        if legality:
+            self.action_handler.set_action_illegal(action)
+        else:
+            self.action_handler.set_action_legal(action)
+
     def reset_actions(self):
         self.action = None
+
+    def reset_legal(self):
         self.action_handler.reset_legal()

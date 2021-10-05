@@ -25,3 +25,17 @@ class BaseAbilityEffect(BaseEffect, abc.ABC):
 
     def on_deactivate(self):
         """Happens when the holder of the ability is set to inactive"""
+
+    def on_send_out(self, new_target):
+        if new_target == self.holder:
+            self.activate()
+
+    def on_switch(self, target_old, target_new):
+        if target_new == self.holder:
+            self.activate()
+        if target_old == self.holder:
+            self.deactivate()
+
+    def on_faint(self, target):
+        if target == self.holder:
+            self.deactivate()
