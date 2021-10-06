@@ -37,3 +37,6 @@ class FaintEffect(BaseEffect):
         self.scene.board.fainted = True
         self.scene.force_action(self.target[0], ActionType.SENDOUT)
         return True, False, False
+
+    def on_faint(self, target):
+        return False, False, False
