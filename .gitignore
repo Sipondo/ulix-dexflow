@@ -18,5 +18,7 @@ items_ldtk_list.png
 export
 screenshot/
 util/docs
-ulivy/.buildozer
-ulivy/bin
+.buildozer
+bin
+next/resources/*
+!next/resources/base

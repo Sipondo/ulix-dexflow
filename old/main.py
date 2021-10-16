@@ -18,6 +18,11 @@ from kivy.graphics.texture import Texture
 from kivy.core.image import Image, ImageData
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.window import Window
+from kivy.resources import resource_find
+
+import numpy as np
+import lark
+import termcolor
 
 # Plasma shader
 plasma_shader = """
@@ -26,11 +31,12 @@ $HEADER$
 uniform vec2 resolution;
 uniform float time;
 uniform sampler2D texture1;
+uniform vec2 size;
 
 void main(void)
 {
    vec4 frag_coord = gl_FragCoord;
-   gl_FragColor = texture2D(texture0,tex_coord0);
+   gl_FragColor = texture2D(texture0,vec2(tex_coord0.x/size.x, tex_coord0.y/size.y));
    /*
    float x = frag_coord.x;
    float y = frag_coord.y;
@@ -47,6 +53,8 @@ void main(void)
 }
 """
 
+VIEW_WIDTH = 8
+
 
 class ShaderWidget(FloatLayout):
 
@@ -58,8 +66,12 @@ class ShaderWidget(FloatLayout):
         # and change the default shader used.
         self.canvas = RenderContext()
 
-        self.tex1 = Image.load("tex4.jpg").texture
-        self.tex2 = Image.load("tex3.jpg").texture
+        self.tex1 = Image.load(
+            resource_find("resources/essentials/graphics/tilesets/outside_tiny.png")
+        ).texture
+        self.tex2 = Image.load(resource_find("tex3.jpg")).texture
+
+        self.tex1.mag_filter = "nearest"
 
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
@@ -93,6 +105,36 @@ class ShaderWidget(FloatLayout):
 
     def update_glsl(self, *largs):
         self.rec1.size = Window.size
+        print(np.zeros(3))
+        # self.canvas["size"] = list(
+        #     map(
+        #         float,
+        #         (
+        #             2
+        #             * self.tex1.size[0]
+        #             / self.tex1.size[1]
+        #             * Window.size[1]
+        #             / Window.size[1],
+        #             2
+        #             * self.tex1.size[1]
+        #             / self.tex1.size[1]
+        #             * Window.size[0]
+        #             / Window.size[1],
+        #         ),
+        #     )
+        # )  # list(map(lambda x: float(x / 128), Window.size))
+        self.canvas["size"] = list(
+            map(
+                float,
+                (
+                    2 * self.tex1.size[0] / self.tex1.size[1] * 800 / Window.size[0],
+                    2 * self.tex1.size[1] / self.tex1.size[1] * 800 / Window.size[1],
+                ),
+            )
+        )  # list(map(lambda x: float(x / 128), Window.size))
+        # self.canvas["size"] = list(
+        #     map(float, (1, 1))
+        # )  # list(map(lambda x: float(x / 128), Window.size))
         self.canvas["time"] = Clock.get_boottime()
         self.canvas["resolution"] = list(map(float, self.size))
         # This is needed for the default vertex shader.
@@ -102,10 +144,10 @@ class ShaderWidget(FloatLayout):
         self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
-class PlasmaApp(App):
+class UlivyApp(App):
     def build(self):
         return ShaderWidget(fs=plasma_shader)
 
 
 if __name__ == "__main__":
-    PlasmaApp().run()
+    UlivyApp().run()
