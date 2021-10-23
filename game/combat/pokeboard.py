@@ -103,7 +103,6 @@ class PokeBoard(CombatBoard):
             if x.name == "Statmod"
         ]:
             user_speed *= speed_mod
-
         return 10_000_000 * prio + 10 * user_speed + self.random_float()
 
     def inflict_damage(self, target, damage):

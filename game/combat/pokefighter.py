@@ -64,7 +64,9 @@ class PokeFighter(CombatFighter):
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
             self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
         else:
-            self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
+            self.actions = [
+                self.game.m_pbs.get_move(x) for x in self.data["actions"]
+            ]
 
         try:
             self.status = fighter.status
@@ -96,8 +98,8 @@ class PokeFighter(CombatFighter):
 
     def get_level_exp(self):
         if self.level < 100:
-            self.level_xp = self.game.m_pbs.get_level_exp(
-                self.data["growthrate"], self.level
+            self.level_xp = int(
+                self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
             )
             return self.level_xp
         self.level_xp = 0
@@ -135,7 +137,7 @@ class PokeFighter(CombatFighter):
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
-        self.data["actions"] = [int(action.name) for action in self.actions]
+        self.data["actions"] = [int(action.id) for action in self.actions]
         self.data["status"] = self.status
 
         return self.data

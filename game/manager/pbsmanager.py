@@ -1,3 +1,4 @@
+from ..helpers.dataframe import read_csv
 import pandas as pd
 import re
 
@@ -7,7 +8,7 @@ class PbsManager:
         self.game = game
         self.dfs = {}
 
-        self.items = pd.read_csv(
+        self.items = read_csv(
             self.game.m_res.get_pbs_loc("items.csv"),
             header=None,
             names=[
@@ -27,7 +28,7 @@ class PbsManager:
             comment="#",
         )
 
-        self.moves = pd.read_csv(
+        self.moves = read_csv(
             self.game.m_res.get_pbs_loc("moves.csv"),
             header=None,
             names=[
@@ -49,23 +50,28 @@ class PbsManager:
             index_col=0,
             comment="#",
         )
-        move_functions = pd.read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
+        self.moves.map_attr("priority", lambda x: int(x))
+        move_functions = read_csv(
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
+            index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
-        self.moves["function"] = self.moves["function"].map(
-            lambda x: move_functions[x] if x in move_functions else ["noeffect"]
+        self.moves.map_attr(
+            "function",
+            lambda x: move_functions[x] if x in move_functions else ["noeffect"],
         )
-        self.moves["power"] = self.moves["power"].map(lambda x: int(x))
+        # self.moves.map_attr("power", lambda x: int(x))
 
-        self.abilities = pd.read_csv(self.game.m_res.get_pbs_loc("abilities.csv"), index_col=0)
+        self.abilities = read_csv(
+            self.game.m_res.get_pbs_loc("abilities.csv"), index_col=0
+        )
 
-        self.weather_changes = pd.read_csv(
+        self.weather_changes = read_csv(
             self.game.m_res.get_pbs_loc("weather_acc_moves.csv"), index_col=0
         )
 
-        self.terrain_mods = pd.read_csv(
+        self.terrain_mods = read_csv(
             self.game.m_res.get_pbs_loc("terrain_mod_moves.csv"), index_col=0
         )
         for terrain in ("Grassy", "Misty", "Electric", "Psychic"):
@@ -74,30 +80,34 @@ class PbsManager:
         self.fighters = self.read_fighters()
         # self.fighters["current_hp"] = 1.0
 
-        self.move_anim = pd.read_csv(
+        self.move_anim = read_csv(
             self.game.m_res.get_pbs_loc("move_anim_map.csv", compressed=False),
             index_col=0,
         )
 
-        self.move_anim = self.move_anim.dropna(axis=1, how="all").dropna(
-            axis=0, how="all"
+        # self.move_anim = self.move_anim.dropna(axis=1, how="all").dropna(
+        #     axis=0, how="all"
+        # )
+
+        self.level_exp = read_csv(
+            self.game.m_res.get_pbs_loc("level_exp.csv"), index_col=0
         )
 
-        self.level_exp = pd.read_csv(self.game.m_res.get_pbs_loc("level_exp.csv"), index_col=0)
-
-        self.type_effectiveness = pd.read_csv(self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0)
+        self.type_effectiveness = read_csv(
+            self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0
+        )
 
     def get_random_item(self):
-        return self.items.sample().iloc[0]
+        return self.items.sample().loc[0]
 
     def get_item(self, id):
-        s = self.items[self.items.identifier.str.lower() == id.lower().replace(" ", "")].iloc[0].copy()
+        s = self.items.str.lower().loc["identifier", id.lower()].loc[0].copy()
         return s
 
     def get_related_anim(self, type, power):
-        if power > 75:
-            return self.move_anim.loc[type, "highpower"]
-        return self.move_anim.loc[type, "lowpower"]
+        if int(power) > 75:
+            return self.move_anim.loc[type.lower().capitalize(), "highpower"]
+        return self.move_anim.loc[type.lower().capitalize(), "lowpower"]
 
     def read_text(self, filename):
         frame = []
@@ -138,13 +148,11 @@ class PbsManager:
         return self.moves.loc[id]
 
     def get_move_by_name(self, name):
-        name = name.strip()
-        return self.moves[
-            self.moves["identifier"].str.lower().str.strip() == name.lower()
-        ].iloc[0]
+        name_s = name.replace(' ', '')
+        return self.moves.loc["identifier", name_s.lower()].loc[0]
 
     def get_random_move(self):
-        return self.moves.sample().iloc[0]
+        return self.moves.sample().loc[0]
 
     def get_ability(self, ability_name):
         return self.abilities.loc[ability_name]

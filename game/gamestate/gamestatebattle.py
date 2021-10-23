@@ -484,7 +484,7 @@ class GameStateBattle(BaseGameState):
                 actionlist = self.actors[0].actions
                 for i in range(min(len(actionlist), 5)):
                     self.game.r_int.draw_image(
-                        self.spr_attacktypes[actionlist[i].type],
+                        self.spr_attacktypes[actionlist[i]["type"].lower()],
                         (0.6938, 0.607 + 0.065 * i),
                     )
                     self.game.r_int.draw_image(
@@ -499,7 +499,7 @@ class GameStateBattle(BaseGameState):
                         col="black",
                     )
                     self.game.r_int.draw_text(
-                        f"{actionlist[i].pp}/{actionlist[i].pp}",
+                        f"{actionlist[i]['pp']}/{actionlist[i]['pp']}",
                         (0.93, 0.616 + 0.065 * i),
                         size=(0.20, 0.06),
                         bcol=None,
@@ -533,7 +533,7 @@ class GameStateBattle(BaseGameState):
                             (0.69, 0.626 + 0.063 * i),
                         )
                         self.game.r_int.draw_text(
-                            balls[i].itemname,
+                            balls[i]["itemname"],
                             (0.725, 0.633 + 0.063 * i),
                             size=(0.20, 0.06),
                             bcol=None,

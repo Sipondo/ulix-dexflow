@@ -16,10 +16,10 @@ class MainMove(BaseEffect):
         self.user = action.user
         self.target = action.target
         self.type = move.type
-        self.chance = 1 if move.chance == 0 else move.chance / 100
+        self.chance = 1 if int(move.chance) == 0 else int(move.chance) / 100
         self.move_cat = move.damagecat
-        self.power = move.power
-        self.accuracy = move.accuracy
+        self.power = int(move.power)
+        self.accuracy = int(move.accuracy)
 
         self.contact = "a" in move["flags"]
         self.protectable = "b" in move["flags"]
@@ -38,7 +38,7 @@ class MainMove(BaseEffect):
         self.dance = "o" in move["flags"]
 
         self.abs_acc = False
-        self.perfect_accuracy = True if move.accuracy == 0 else False
+        self.perfect_accuracy = True if int(move.accuracy) == 0 else False
 
         self.fail = False
 
@@ -166,12 +166,12 @@ class MainMove(BaseEffect):
         return True
 
     def get_move_effectiveness(self, move_type, target_type1, target_type2):
-        type_1_eff = self.scene.game.m_pbs.get_type_effectiveness(
-            move_type, target_type1
+        type_1_eff = float(
+            self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type1)
         )
         if target_type2.lower() != "nan":
-            type_2_eff = self.scene.game.m_pbs.get_type_effectiveness(
-                move_type, target_type2
+            type_2_eff = float(
+                self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
             )
         else:
             type_2_eff = 1
