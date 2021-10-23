@@ -1,4 +1,5 @@
 from game.combat.effects.baseeffect import BaseEffect
+from game.combat.action import ActionType
 
 
 class Freeze(BaseEffect):
@@ -14,7 +15,7 @@ class Freeze(BaseEffect):
 
     def on_action(self):
         if self.scene.board.user == self.target:
-            if self.scene.board.action.action_name == "attack":
+            if self.scene.board.action.a_type == ActionType.ATTACK:
                 if self.scene.board.action.type == "Fire" and self.scene.board.action.power > 0:
                     self.scene.board.no_skip(
                         f"{self.scene.board.get_actor(self.target).name} thawed out!",
