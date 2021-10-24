@@ -1,1 +1,0 @@
-player: Teleport(game.debug_input[0], (game.debug_input[1], game.debug_input[2]))

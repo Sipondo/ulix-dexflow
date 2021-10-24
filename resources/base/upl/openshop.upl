@@ -1,6 +1,0 @@
-game: Cinematic()
-self: Say(enter_text)
-self: Shop()
-game: Cinematic()
-self: Say(leave_text)
-game: Overworld()
