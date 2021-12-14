@@ -217,6 +217,7 @@ class SaveManager:
         self.game.inventory.members = []
 
     def write_to_file(self, fname="save1.usave"):
+        return
         if self.game.m_map.allow_save:
             self.get_lazy_data()
 

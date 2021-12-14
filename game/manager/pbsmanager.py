@@ -52,8 +52,7 @@ class PbsManager:
         )
         self.moves.map_attr("priority", lambda x: int(x))
         move_functions = read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
-            index_col=0,
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
@@ -105,25 +104,26 @@ class PbsManager:
         return s
 
     def get_related_anim(self, type, power):
+        print(self.move_anim)
         if int(power) > 75:
-            return self.move_anim.loc[type.lower().capitalize(), "highpower"]
-        return self.move_anim.loc[type.lower().capitalize(), "lowpower"]
+            return self.move_anim.loc[type.upper(), "highpower"]
+        return self.move_anim.loc[type.upper(), "lowpower"]
 
     def read_text(self, filename):
         frame = []
 
         with open(filename, "r", encoding="utf-8-sig") as file:
-            serie = pd.Series()
+            series = pd.Series()
             for line in file.readlines():
                 if not len(line) or line.strip()[0] == "#":
                     continue
                 if line.strip()[0] == "[":
-                    frame.append(serie)
-                    serie = pd.Series()
+                    frame.append(series)
+                    series = pd.Series()
                     continue
                 split = line.split("=")
-                serie[split[0].strip().lower()] = "=".join(split[1:]).strip()
-            frame.append(serie)
+                series[split[0].strip().lower()] = "=".join(split[1:]).strip()
+            frame.append(series)
         return pd.DataFrame(frame)
 
     def read_fighters(self):
@@ -148,8 +148,9 @@ class PbsManager:
         return self.moves.loc[id]
 
     def get_move_by_name(self, name):
-        name_s = name.replace(' ', '')
-        return self.moves.loc["identifier", name_s.lower()].loc[0]
+        name_s = name.replace(" ", "").upper()
+        s = self.moves["identifier"]
+        return self.moves[(s == name_s)].iloc[0]
 
     def get_random_move(self):
         return self.moves.sample().loc[0]

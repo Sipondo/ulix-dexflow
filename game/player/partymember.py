@@ -3,7 +3,7 @@ import random
 
 
 class PartyMember:
-    def __init__(self, game, data, l=5):
+    def __init__(self, game, data, l=50):
         self.game = game
         self.data = data.copy()
         self.name = str(data["name"])
@@ -57,7 +57,9 @@ class PartyMember:
             l = [(x, y) for x, y in reversed(self.learnset) if int(x) <= self.level]
             k = [y for x, y in l]
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
-            self.actions = [int(self.game.m_pbs.get_move_by_name(y).id) for x, y in l][:4]
+            self.actions = [int(self.game.m_pbs.get_move_by_name(y).id) for x, y in l][
+                :4
+            ]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -86,9 +88,9 @@ class PartyMember:
         self.sprite = f"sprite/{self.data.name}"
 
     def set_new_level_xp(self):
-        self.level_xp = int(self.game.m_pbs.get_level_exp(
-            self.data["growthrate"], self.level
-        ))
+        self.level_xp = int(
+            self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
+        )
 
     def set_characteristic(self):
         best_id = np.argmax(self.stats_IV)
