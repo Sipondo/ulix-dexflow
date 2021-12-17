@@ -1,4 +1,4 @@
-from ..helpers.dataframe import read_csv
+from game.helpers.dataframe import read_csv
 import pandas as pd
 import re
 

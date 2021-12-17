@@ -301,7 +301,7 @@ class DataFrame:
         return self
 
     def sample(self):
-        return random.choice(self.data)
+        return random.choice(list(self.data.values()))
 
     @property
     def loc(self):
