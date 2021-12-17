@@ -100,7 +100,7 @@ class PbsManager:
         return self.items.sample().loc[0]
 
     def get_item(self, id):
-        s = self.items.str.lower().loc["identifier", id.lower()].loc[0].copy()
+        s = self.items[self.items["identifier"] == id.upper()].iloc[0].copy()
         return s
 
     def get_related_anim(self, type, power):
@@ -149,8 +149,11 @@ class PbsManager:
 
     def get_move_by_name(self, name):
         name_s = name.replace(" ", "").upper()
+        # print(self.moves)
         s = self.moves["identifier"]
-        return self.moves[(s == name_s)].iloc[0]
+        t = s == name_s
+        # print(t)
+        return self.moves[t].iloc[0]
 
     def get_random_move(self):
         return self.moves.sample().loc[0]

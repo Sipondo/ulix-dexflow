@@ -2,7 +2,7 @@ class PartyItem:
     def __init__(self, game, data, quantity=1):
         self.game = game
         self.data = data.copy()
-        self.id = data.name
+        self.id = data.itemname
         # self.identifier = data.identifier
         # self.name = data.itemname
         # self.names = data.itemplural

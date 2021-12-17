@@ -25,7 +25,7 @@ class SLoc:
         #     return ans
         if type(key) == str:
             return self.series[key]
-        "KEY:", key, type(key)
+        print("KEY:", key, type(key))
         raise KeyError("Unexpected key type")
 
     def __setitem__(self, key, value):
@@ -60,7 +60,7 @@ class SILoc:
             return ans
         if type(key) == str:
             return self.series[key]
-        "KEY:", key, type(key)
+        print("KEY:", key, type(key))
         raise KeyError("Unexpected key type")
 
     def __setitem__(self, key, value):
@@ -84,8 +84,9 @@ class Series:
         if isinstance(obj, Series):
             return self.data == obj.data
         result = Series()
-        for k in self.data.keys():
-            result.add(k, k == obj)
+        for k, v in self.data.items():
+            # print(str(k), str(obj))
+            result.add(k, str(v) == str(obj))
         return result
 
     def __str__(self):
@@ -105,6 +106,7 @@ class Series:
 
     def __getitem__(self, item):
         try:
+            # print(self.data[item], "-", self.data)
             return self.data[item]
         except Exception as e:
             print(f"could not find key {item}")
@@ -130,6 +132,13 @@ class Series:
     def items(self):
         return self.data.items()
 
+    def copy(self):
+        result = Series()
+
+        for k, v in self.items():
+            result.add(k, v)
+        return result
+
     @property
     def loc(self):
         return SLoc(self.data)
@@ -145,7 +154,7 @@ class DFLoc:
 
     def __getitem__(self, key):
         if issubclass(type(key), numbers.Number):
-            return self.dataframe[key]
+            return self.dataframe[str(key)]
             # return list(self.dataframe.values())[key]
         # if type(key) == slice:
         #     return self.dataframe[key]
@@ -154,14 +163,14 @@ class DFLoc:
         #     return self.dataframe[key]
         #     # return [list(self.dataframe.values())[i] for i, x in enumerate(key) if x]
         if type(key) == tuple:
-            return self.dataframe[key[0]]
+            return self.dataframe[str(key[0])]
             # ans = DataFrame()
             # for i, s in self.dataframe.items():
             # if s[key[0]] == key[1]:
             #     ans.add(i, s)
             # return ans
         if type(key) == str:
-            return self.dataframe[key]
+            return self.dataframe[str(key)]
         raise KeyError("Unexpected key type")
 
     def __setitem__(self, key, value):
@@ -249,19 +258,29 @@ class DataFrame:
         return len(self.data)
 
     def __contains__(self, item):
-        return item in self.data
+        return str(item) in self.data
 
     def __getattr__(self, item):
         return DFAttrMethods(self.data, item)
 
     def __getitem__(self, item):
+        if isinstance(item, Series):
+            result = DataFrame()
+            for k, v in item.items():
+                if (k in self.data) and v:
+                    result[k] = self.loc[k]
+            return result
+        item = str(item)
         ans = Series()
-        for i, s in self.data.items():
-            ans.add(i, s[item])
+        for k, v in self.data.items():
+            ans.add(k, v[item])
         return ans
 
+    def __setitem__(self, key, value):
+        self.data[str(key)] = value
+
     def add(self, index: str, s: Series):
-        self.data[index] = s
+        self.data[str(index)] = s
 
     def apply(self, f: typing.Callable[[str], str]) -> "DataFrame":
         for i, s in self.data.items():
@@ -290,7 +309,7 @@ class DataFrame:
 
     @property
     def iloc(self):
-        return DFLoc(self.data)
+        return DFILoc(self.data)
 
 
 def read_csv(
