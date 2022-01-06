@@ -12,7 +12,7 @@ class CombatFighter:
             fighter = self.game.m_pbs.get_fighter(fighter)
 
         self.name = str(fighter["name"])
-        self.id = fighter.name
+        self.id = fighter.id
 
         # self.starting_hp = fighter.current_hp
 

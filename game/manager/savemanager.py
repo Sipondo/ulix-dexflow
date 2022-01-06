@@ -2,10 +2,24 @@ import json
 import types
 import numpy as np
 from io import BytesIO
-import pandas as pd
+from game.helpers.dataframe import Series
 
-ENTITY_SERIALIZE = (int, str, bool, tuple, list, pd.Series)
+ENTITY_SERIALIZE = (int, str, bool, tuple, list, Series)
 ENTITY_SERIALIZE_BLACKLIST = "moving"
+
+
+"""
+
+
+
+
+Disabled, this stuff will see an overhaul soon anyway.
+
+
+
+
+
+"""
 
 
 class SaveManager:
@@ -59,7 +73,8 @@ class SaveManager:
                         setattr(self.memory[k][k_2], k_3, v_3)
 
         for member in self.store["TEAM"]:
-            member = pd.Series(member)
+            member = member.copy()
+
             raw = self.game.m_pbs.get_fighter_by_name(member["name"])
 
             for k, v in member.items():
@@ -68,7 +83,7 @@ class SaveManager:
             self.game.inventory.add_member(mem)
 
         for member in self.store["STORAGE"]:
-            member = pd.Series(member)
+            member = member.copy()
             raw = self.game.m_pbs.get_fighter_by_name(member["name"])
 
             for k, v in member.items():
@@ -217,6 +232,7 @@ class SaveManager:
         self.game.inventory.members = []
 
     def write_to_file(self, fname="save1.usave"):
+        return
         if self.game.m_map.allow_save:
             self.get_lazy_data()
 

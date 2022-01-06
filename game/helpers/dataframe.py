@@ -90,10 +90,7 @@ class Series:
         return result
 
     def __str__(self):
-        ans = ""
-        for i, d in self.data.items():
-            ans += i + str(d) + "\n"
-        return ans
+        return " ".join([f"{k}: {v}" for k, v in self.data.items()])
 
     def __len__(self):
         return len(self.data)
@@ -108,8 +105,8 @@ class Series:
         try:
             # print(self.data[item], "-", self.data)
             return self.data[item]
-        except Exception as e:
-            print(f"could not find key {item}")
+        except KeyError as e:
+            print(f"could not find key '{item}'")
             print(self.data.keys())
             raise e
 
@@ -139,6 +136,13 @@ class Series:
             result.add(k, v)
         return result
 
+    def lower(self):
+        result = Series()
+
+        for k, v in self.items():
+            result.add(k, str(v).lower())
+        return result
+
     @property
     def loc(self):
         return SLoc(self.data)
@@ -163,7 +167,7 @@ class DFLoc:
         #     return self.dataframe[key]
         #     # return [list(self.dataframe.values())[i] for i, x in enumerate(key) if x]
         if type(key) == tuple:
-            return self.dataframe[str(key[0])]
+            return self.dataframe[str(key[0])][str(key[1])]
             # ans = DataFrame()
             # for i, s in self.dataframe.items():
             # if s[key[0]] == key[1]:
@@ -197,8 +201,12 @@ class DFILoc:
     def __getitem__(self, key):
         if issubclass(type(key), numbers.Number):
             return list(self.dataframe.values())[key]
-        # if type(key) == slice:
-        #     return self.dataframe[key]
+        if type(key) == slice:
+            result = DataFrame()
+
+            for k, v in list(self.dataframe.items())[key]:
+                result.add(k, v.copy())
+            return result
         #     # return list(self.dataframe.values())[key]
         # if type(key) == typing.List[bool]:
         #     return self.dataframe[key]
@@ -249,10 +257,7 @@ class DataFrame:
         self.data: typing.Dict[str, Series] = {}
 
     def __str__(self):
-        ans = "Dataframe: \n"
-        for i, d in self.data.items():
-            ans += i + ": " + str(d) + "\n"
-        return ans
+        return "\n".join([f"{k}: {v}" for k, v in self.data.items()])
 
     def __len__(self):
         return len(self.data)
@@ -318,6 +323,7 @@ def read_csv(
     names: typing.List[str] = None,
     index_col: int = None,
     comment: str = None,
+    verbose=False,
 ) -> DataFrame:
 
     try:
@@ -331,19 +337,23 @@ def read_csv(
             else:
                 col_names = list(range(len(first_row)))
             df = DataFrame()
-            for i, line in enumerate(reader):
+            for line in reader:
                 if comment is not None:
                     if line[0][0 : len(comment)] == comment:
                         continue
+
                 s = Series()
 
                 if index_col is not None:
                     index = line[index_col]
                 else:
                     index = len(df)
+
                 for j, value in enumerate(line):
-                    s.add(col_names[j], value)
+                    s.add(col_names[j] if j != index_col else "id", value)
                 df.add(index, s)
+        if verbose:
+            print(df)
         return df
     except OSError as e:
         print(f"Could not find csv file at {path}")

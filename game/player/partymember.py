@@ -6,7 +6,7 @@ class PartyMember:
     def __init__(self, game, data, l=50):
         self.game = game
         self.data = data.copy()
-        self.name = str(data["name"])
+        # self.name = str(data["id"])
         # self.species = self.name
         # self.id = data.name
         self.internalname = data.internalname
@@ -23,7 +23,8 @@ class PartyMember:
             self.actions = [int(i) for i in self.actions]
 
         self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
-        self.sprite = f"sprite/{self.data.name}"
+        self.sprite = f"sprite/{self.data.id}"
+        print("SELF SPRITE:", self.sprite)
 
         self.current_xp = 0
         self.level_xp = 5

@@ -25,7 +25,7 @@ class PokeFighter(CombatFighter):
 
         try:
             self.level = fighter.level
-        except AttributeError:
+        except KeyError:
             self.level = 5
 
         try:
@@ -34,22 +34,22 @@ class PokeFighter(CombatFighter):
             self.stats_IV = fighter.stats_IV
             self.stats_EV = fighter.stats_EV
             self.nature = fighter.nature
-        except AttributeError:
+        except KeyError:
             self.init_stats(fighter)
 
         try:
             self.current_hp = fighter.current_hp
-        except AttributeError:
+        except KeyError:
             self.current_hp = self.stats[0]
 
         try:
             self.ability = self.data.ability
-        except AttributeError:
+        except KeyError:
             self.ability = self.data.abilities[0]
         try:
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
-        except AttributeError:
+        except KeyError:
             self.current_xp = 0
             self.level_xp = 0
             self.get_level_exp()
@@ -64,13 +64,11 @@ class PokeFighter(CombatFighter):
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
             self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
         else:
-            self.actions = [
-                self.game.m_pbs.get_move(x) for x in self.data["actions"]
-            ]
+            self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
 
         try:
             self.status = fighter.status
-        except AttributeError:
+        except KeyError:
             self.status = None
 
         self.starting_hp = self.current_hp

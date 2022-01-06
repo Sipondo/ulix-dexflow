@@ -1,5 +1,4 @@
-from game.helpers.dataframe import read_csv
-import pandas as pd
+from game.helpers.dataframe import read_csv, Series, DataFrame
 import re
 
 
@@ -93,7 +92,7 @@ class PbsManager:
         )
 
         self.type_effectiveness = read_csv(
-            self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0
+            self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0,
         )
 
     def get_random_item(self):
@@ -104,7 +103,6 @@ class PbsManager:
         return s
 
     def get_related_anim(self, type, power):
-        print(self.move_anim)
         if int(power) > 75:
             return self.move_anim.loc[type.upper(), "highpower"]
         return self.move_anim.loc[type.upper(), "lowpower"]
@@ -113,18 +111,18 @@ class PbsManager:
         frame = []
 
         with open(filename, "r", encoding="utf-8-sig") as file:
-            series = pd.Series()
+            series = Series()
             for line in file.readlines():
                 if not len(line) or line.strip()[0] == "#":
                     continue
                 if line.strip()[0] == "[":
                     frame.append(series)
-                    series = pd.Series()
+                    series = Series()
                     continue
                 split = line.split("=")
                 series[split[0].strip().lower()] = "=".join(split[1:]).strip()
             frame.append(series)
-        return pd.DataFrame(frame)
+        return DataFrame(frame)
 
     def read_fighters(self):
         # TODO: fix
@@ -133,16 +131,18 @@ class PbsManager:
             self.read_text(self.game.m_res.get_pbs_loc("pokemon.txt")).to_csv(pth)
             pth = self.game.m_res.get_pbs_loc("pokemon.csv", compressed=True)
 
-        return pd.read_csv(pth, index_col=0)
+        return read_csv(pth, index_col=0)
 
     def get_random_fighter(self):
-        return self.fighters.iloc[1:600].sample().iloc[0]
+        return self.fighters.iloc[1:600].sample()
 
     def get_fighter(self, id):
         return self.fighters.loc[id]
 
     def get_fighter_by_name(self, name):
-        return self.fighters[self.fighters["name"].str.lower() == name.lower()].iloc[0]
+        return (
+            self.fighters[self.fighters["name"].lower() == name.lower()].iloc[0].copy()
+        )
 
     def get_move(self, id):
         return self.moves.loc[id]
@@ -171,6 +171,6 @@ class PbsManager:
         return self.level_exp[growth_type].loc[level]
 
     def get_type_effectiveness(self, atk_type, def_type):
-        atk_type = atk_type.lower().capitalize()
-        def_type = def_type.lower().capitalize()
+        atk_type = atk_type.capitalize()
+        def_type = def_type.capitalize()
         return self.type_effectiveness[def_type].loc[atk_type]

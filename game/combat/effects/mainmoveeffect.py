@@ -169,7 +169,7 @@ class MainMove(BaseEffect):
         type_1_eff = float(
             self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type1)
         )
-        if target_type2.lower() != "nan":
+        if target_type2.lower() != "":
             type_2_eff = float(
                 self.scene.game.m_pbs.get_type_effectiveness(move_type, target_type2)
             )
