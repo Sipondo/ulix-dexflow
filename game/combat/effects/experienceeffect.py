@@ -9,7 +9,7 @@ class ExperienceEffect(BaseEffect):
         super().__init__(scene)
         self.target = target
         self.fainted = fainted
-        if self.scene.board.get_actor(self.target).level == 100:
+        if self.scene.board.get_actor(self.target).level > 99:
             self.amount = 0
         else:
             if cont is None:
@@ -22,7 +22,7 @@ class ExperienceEffect(BaseEffect):
         b_type = 1
         if self.scene.battle_type == "trainer":
             b_type = 1.5
-        base_exp = self.fainted.data["baseexp"]
+        base_exp = float(self.fainted.data["baseexp"])
         # if mon is holding lucky egg
         lucky_egg = 1
         # affection mod

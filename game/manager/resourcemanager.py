@@ -95,7 +95,9 @@ class ResourceManager:
         # self.attack_types = {
         #     x: self.get_interface(f"attack_types/attack_{x.lower()}") for x in TYPES
         # }
-        self.attack_types = {x: f"attack_types/attack_{x.lower()}" for x in TYPES}
+        self.attack_types = {
+            x.lower(): f"attack_types/attack_{x.lower()}" for x in TYPES
+        }
 
     def get_font(self, name, scale):
         pth = (self.p_fonts / Path(name).stem).with_suffix(".ttf")
@@ -324,6 +326,7 @@ class ResourceManager:
         )
 
     def prepare_battle_sprite(self, pth, mirror=False):
+        print("SPRITE:", pth)
         a = self.open_image(pth)
         a = np.flip(a, axis=0)
 
@@ -399,21 +402,24 @@ class ResourceManager:
 
         try:
             if move_data is not None:
-                if move_data.power < 5:
+                if int(move_data.power) < 5:
                     pth = self.resolve_resource_path(
                         self.p_particle / ("generic-powerless.json")
                     )
                 else:
+                    print("Search path")
                     pth = self.resolve_resource_path(
                         self.p_particle
                         / (
                             f"{self.game.m_pbs.get_related_anim(move_data.type, move_data.power)}.json"
                         )
                     )
+                    print(pth)
                 if pth:
                     with open(pth) as f:
                         return json.load(f)
         except Exception as e:
+            raise e
             pass
             # traceback.print_exc()
 

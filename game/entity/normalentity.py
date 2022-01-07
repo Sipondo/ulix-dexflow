@@ -57,7 +57,7 @@ class NormalEntity(BaseEntity):
                 local_random.seed(charsum(f"{self.entity_uid}{self.name}") % 429496729)
                 try:
                     member["level"] = member.level
-                except AttributeError:
+                except KeyError:
                     member["level"] = local_random.randint(
                         int(self.level) - 1, int(self.level) + 1
                     )

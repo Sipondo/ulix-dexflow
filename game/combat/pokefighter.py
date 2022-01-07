@@ -25,7 +25,7 @@ class PokeFighter(CombatFighter):
 
         try:
             self.level = fighter.level
-        except AttributeError:
+        except KeyError:
             self.level = 5
 
         try:
@@ -34,22 +34,22 @@ class PokeFighter(CombatFighter):
             self.stats_IV = fighter.stats_IV
             self.stats_EV = fighter.stats_EV
             self.nature = fighter.nature
-        except AttributeError:
+        except KeyError:
             self.init_stats(fighter)
 
         try:
             self.current_hp = fighter.current_hp
-        except AttributeError:
+        except KeyError:
             self.current_hp = self.stats[0]
 
         try:
             self.ability = self.data.ability
-        except AttributeError:
+        except KeyError:
             self.ability = self.data.abilities[0]
         try:
             self.current_xp = fighter.current_xp
             self.level_xp = fighter.level_xp
-        except AttributeError:
+        except KeyError:
             self.current_xp = 0
             self.level_xp = 0
             self.get_level_exp()
@@ -68,7 +68,7 @@ class PokeFighter(CombatFighter):
 
         try:
             self.status = fighter.status
-        except AttributeError:
+        except KeyError:
             self.status = None
 
         self.starting_hp = self.current_hp
@@ -96,8 +96,8 @@ class PokeFighter(CombatFighter):
 
     def get_level_exp(self):
         if self.level < 100:
-            self.level_xp = self.game.m_pbs.get_level_exp(
-                self.data["growthrate"], self.level
+            self.level_xp = int(
+                self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
             )
             return self.level_xp
         self.level_xp = 0
@@ -135,7 +135,7 @@ class PokeFighter(CombatFighter):
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
-        self.data["actions"] = [int(action.name) for action in self.actions]
+        self.data["actions"] = [int(action.id) for action in self.actions]
         self.data["status"] = self.status
 
         return self.data

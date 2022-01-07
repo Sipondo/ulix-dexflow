@@ -9,9 +9,11 @@ class GameStateEvolve(BaseGameState):
         self.evolve = False
         for member in self.game.inventory.members:
             evolution_data = member.data["evolutions"]
-            if evolution_data != evolution_data:
+            if not evolution_data:
                 continue
-            evolve_target, cond, cond_req = evolution_data.split(",")
+            evd = evolution_data.split(",")
+            evolve_target, cond, cond_req = evd[0], evd[1], evd[2]
+
             if cond == "Level":
                 if member.level >= int(cond_req):
                     self.to_evolve.append(
@@ -49,7 +51,7 @@ class GameStateEvolve(BaseGameState):
     def get_evo_data(self):
         self.small_splash = self.evo.sprite
         self.big_splash = self.game.m_res.get_sprite_from_anim(
-            self.evo_target.name, size=2.0
+            self.evo_target.id, size=2.0
         )
 
     def on_exit(self):

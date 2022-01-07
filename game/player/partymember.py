@@ -3,10 +3,10 @@ import random
 
 
 class PartyMember:
-    def __init__(self, game, data, l=5):
+    def __init__(self, game, data, l=50):
         self.game = game
         self.data = data.copy()
-        self.name = str(data["name"])
+        # self.name = str(data["id"])
         # self.species = self.name
         # self.id = data.name
         self.internalname = data.internalname
@@ -23,7 +23,8 @@ class PartyMember:
             self.actions = [int(i) for i in self.actions]
 
         self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
-        self.sprite = f"sprite/{self.data.name}"
+        self.sprite = f"sprite/{self.data.id}"
+        print("SELF SPRITE:", self.sprite)
 
         self.current_xp = 0
         self.level_xp = 5
@@ -57,7 +58,9 @@ class PartyMember:
             l = [(x, y) for x, y in reversed(self.learnset) if int(x) <= self.level]
             k = [y for x, y in l]
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
-            self.actions = [self.game.m_pbs.get_move_by_name(y).name for x, y in l][:4]
+            self.actions = [int(self.game.m_pbs.get_move_by_name(y).id) for x, y in l][
+                :4
+            ]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
@@ -86,8 +89,8 @@ class PartyMember:
         self.sprite = f"sprite/{self.data.name}"
 
     def set_new_level_xp(self):
-        self.level_xp = self.game.m_pbs.get_level_exp(
-            self.data["growthrate"], self.level
+        self.level_xp = int(
+            self.game.m_pbs.get_level_exp(self.data["growthrate"], self.level)
         )
 
     def set_characteristic(self):

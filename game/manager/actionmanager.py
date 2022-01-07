@@ -1,7 +1,5 @@
 from collections import deque
 
-from pandas.core import frame
-
 
 class ActionManager:
     def __init__(self, game):
