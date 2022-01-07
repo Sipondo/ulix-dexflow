@@ -1,0 +1,162 @@
+# Check configuration tokens
+# Ensure build layout
+# Check configuration tokens
+# Read available permissions from api-versions.xml
+# Preparing build
+# Check requirements for android
+# Run 'dpkg --version'
+# Cwd None
+Debian 'dpkg' package management program version 1.19.7 (amd64).
+This is free software; see the GNU General Public License version 2 or
+later for copying conditions. There is NO warranty.
+# Search for Git (git)
+#  -> found at /usr/bin/git
+# Search for Cython (cython)
+#  -> found at /home/sipondo/kivy_venv/bin/cython
+# Search for Java compiler (javac)
+#  -> found at /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
+# Search for Java keytool (keytool)
+#  -> found at /usr/lib/jvm/java-11-openjdk-amd64/bin/keytool
+# Install platform
+# Run 'git config --get remote.origin.url'
+# Cwd /mnt/c/dev/projects/pokejets/ulivy_3.2test/.buildozer/android/platform/python-for-android
+https://github.com/Sipondo/python-for-android.git
+# Run 'git branch -vv'
+# Cwd /mnt/c/dev/projects/pokejets/ulivy_3.2test/.buildozer/android/platform/python-for-android
+* master d7cfecd0 [origin/master] glES version 3.2
+# Run '/usr/bin/python -m pip install -q  \'appdirs\' \'colorama>=0.3.3\' \'jinja2\' \'six\' \'enum34; python_version<"3.4"\' \'sh>=1.10; sys_platform!="nt"\' \'pep517<0.7.0\' \'toml\''
+# Cwd None
+WARNING: You are using pip version 21.2.4; however, version 21.3.1 is available.
+You should consider upgrading via the '/usr/bin/python -m pip install --upgrade pip' command.
+# Apache ANT found at /home/sipondo/.buildozer/android/platform/apache-ant-1.9.4
+# Android SDK found at /home/sipondo/.buildozer/android/platform/android-sdk
+# Recommended android's NDK version by p4a is: 19c
+# Android NDK found at /home/sipondo/.buildozer/android/platform/android-ndk-r19c
+# Read available permissions from api-versions.xml
+# Check application requirements
+# Compile platform
+# Using custom source dirs:
+    P4A_kivy_DIR = /mnt/c/dev/projects/pokejets/kivy_ubuntu
+# Run '/usr/bin/python -m pythonforandroid.toolchain create --dist_name=ulixdexflow --bootstrap=sdl2 --requirements=python3,kivy==2.0.0,numpy,lark,termcolor --arch arm64-v8a --copy-libs --color=always --storage-dir="/mnt/c/dev/projects/pokejets/ulivy_3.2test/.buildozer/android/platform/build-arm64-v8a" --ndk-api=21 --ignore-setup-py --debug'
+# Cwd /mnt/c/dev/projects/pokejets/ulivy_3.2test/.buildozer/android/platform/python-for-android
+[1m[INFO][0m:    Recipe kivy: version "2.0.0" requested
+[1m[INFO][0m:    Will compile for the following archs: arm64-v8a
+[1m[INFO][0m:    Found Android API target in $ANDROIDAPI: 30
+[1m[INFO][0m:    Available Android APIs are (27, 30)
+[1m[INFO][0m:    Requested API target 30 is available, continuing.
+[1m[INFO][0m:    Found NDK dir in $ANDROIDNDK: /home/sipondo/.buildozer/android/platform/android-ndk-r19c
+[1m[INFO][0m:    Found NDK version 19c
+[1m[INFO][0m:    Getting NDK API version (i.e. minimum supported API) from user argument
+[1m[INFO][0m:    ccache is missing, the build will not be optimized in the future.
+[1m[INFO][0m:    Found the following toolchain versions: ['4.9']
+[1m[INFO][0m:    Picking the latest gcc toolchain, here 4.9
+[1m[INFO][0m:    Of the existing distributions, the following meet the given requirements:
+[1m[INFO][0m:    	[32m[1mulixdexflow[0m: min API 21, includes recipes ([32mhostpython3, libffi, openssl, sdl2_image, sdl2_mixer, sdl2_ttf, sqlite3, python3, sdl2, setuptools, cython, six, numpy, pyjnius, android, kivy, termcolor, lark, certifi[0m), built for archs ([34marm64-v8a[0m)
+[1m[INFO][0m:    [1m[94mulixdexflow has compatible recipes, using this one[0m
+# Run '/home/sipondo/.buildozer/android/platform/android-sdk/platform-tools/adb devices'
+# Cwd None
+List of devices attached
+357994100433427	device
+
+# Run on 357994100433427
+# Run '/home/sipondo/.buildozer/android/platform/android-sdk/platform-tools/adb shell am start -n org.ulix.dexflow.ulixdexflow/org.kivy.android.PythonActivity -a org.kivy.android.PythonActivity'
+# Cwd /home/sipondo/.buildozer/android/platform
+Starting: Intent { act=org.kivy.android.PythonActivity cmp=org.ulix.dexflow.ulixdexflow/org.kivy.android.PythonActivity }
+# Waiting for application to start.
+# Application started.
+# Run 'dpkg --version'
+# Cwd None
+Debian 'dpkg' package management program version 1.19.7 (amd64).
+This is free software; see the GNU General Public License version 2 or
+later for copying conditions. There is NO warranty.
+# Search for Git (git)
+#  -> found at /usr/bin/git
+# Search for Cython (cython)
+#  -> found at /home/sipondo/kivy_venv/bin/cython
+# Search for Java compiler (javac)
+#  -> found at /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
+# Search for Java keytool (keytool)
+#  -> found at /usr/lib/jvm/java-11-openjdk-amd64/bin/keytool
+# Run '/home/sipondo/.buildozer/android/platform/android-sdk/platform-tools/adb logcat *:S python:D '
+# Cwd /home/sipondo/.buildozer/android/platform
+--------- beginning of crash
+--------- beginning of system
+--------- beginning of main
+12-11 23:19:42.526 29657 29707 I python  : Initializing Python for Android
+12-11 23:19:42.526 29657 29707 I python  : Setting additional env vars from p4a_env_vars.txt
+12-11 23:19:42.526 29657 29707 I python  : Changing directory to the one provided by ANDROID_ARGUMENT
+12-11 23:19:42.526 29657 29707 I python  : /data/user/0/org.ulix.dexflow.ulixdexflow/files/app
+12-11 23:19:42.526 29657 29707 I python  : Preparing to initialize python
+12-11 23:19:42.526 29657 29707 I python  : _python_bundle dir exists
+12-11 23:19:42.526 29657 29707 I python  : calculated paths to be...
+12-11 23:19:42.526 29657 29707 I python  : /data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/stdlib.zip:/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/modules
+12-11 23:19:42.528 29657 29707 I python  : set wchar paths...
+12-11 23:19:42.557 29657 29707 I python  : Initialized python
+12-11 23:19:42.557 29657 29707 I python  : AND: Init threads
+12-11 23:19:42.557 29657 29707 I python  : testing python print redirection
+12-11 23:19:42.558 29657 29707 I python  : Android path ['.', '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/stdlib.zip', '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/modules', '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/site-packages']
+12-11 23:19:42.558 29657 29707 I python  : os.environ is environ({'PATH': '/product/bin:/apex/com.android.runtime/bin:/apex/com.android.art/bin:/system_ext/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin', 'ANDROID_BOOTLOGO': '1', 'ANDROID_ROOT': '/system', 'ANDROID_ASSETS': '/system/app', 'ANDROID_DATA': '/data', 'ANDROID_STORAGE': '/storage', 'ANDROID_ART_ROOT': '/apex/com.android.art', 'ANDROID_I18N_ROOT': '/apex/com.android.i18n', 'ANDROID_TZDATA_ROOT': '/apex/com.android.tzdata', 'EXTERNAL_STORAGE': '/sdcard', 'ASEC_MOUNTPOINT': '/mnt/asec', 'BOOTCLASSPATH': '/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/core-icu4j.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/framework-atb-backward-compatibility.jar:/system/framework/tcmiface.jar:/system/framework/telephony-ext.jar:/system/framework/qcom.fmradio.jar:/system/framework/QPerformance.jar:/system/framework/UxPerformance.jar:/system/framework/WfdCommon.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.media/javalib/updatable-media.jar:/apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar:/apex/com.android.os.statsd/javalib/framework-statsd.jar:/apex/com.android.permission/javalib/framework-permission.jar:/apex/com.android.sdkext/javalib/framework-sdkextensions.jar:/apex/com.android.wifi/javalib/framework-wifi.jar:/apex/com.android.tethering/javalib/framework-tethering.jar', 'DEX2OATBOOTCLASSPATH': '/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/core-icu4j.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/framework-atb-backward-compatibility.jar:/system/framework/tcmiface.jar:/system/framework/telephony-ext.jar:/system/framework/qcom.fmradio.jar:/system/framework/QPerformance.jar:/system/framework/UxPerformance.jar:/system/framework/WfdCommon.jar', 'SYSTEMSERVERCLASSPATH': '/system/framework/com.android.location.provider.jar:/system/framework/services.jar:/system/framework/ethernet-service.jar:/apex/com.android.permission/javalib/service-permission.jar:/apex/com.android.wifi/javalib/service-wifi.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar', 'DOWNLOAD_CACHE': '/data/cache', 'ANDROID_SOCKET_zygote': '17', 'ANDROID_SOCKET_usap_pool_primary': '20', 'ANDROID_ENTRYPOINT': 'main.pyc', 'ANDROID_ARGUMENT': '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app', 'ANDROID_APP_PATH': '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app', 'ANDROID_PRIVATE': '/data/user/0/org.ulix.dexflow.ulixdexflow/files', 'ANDROID_UNPACK': '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app', 'PYTHONHOME': '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app', 'PYTHONPATH': '/data/user/0/org.ulix.dexflow.ulixdexflow/files/app:/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/lib', 'PYTHONOPTIMIZE': '2', 'P4A_BOOTSTRAP': 'SDL2', 'PYTHON_NAME': 'python', 'P4A_IS_WINDOWED': 'False', 'P4A_ORIENTATION': 'landscape', 'P4A_NUMERIC_VERSION': 'None', 'P4A_MINSDK': '21', 'LC_CTYPE': 'C.UTF-8'})
+12-11 23:19:42.558 29657 29707 I python  : Android kivy bootstrap done. __name__ is __main__
+12-11 23:19:42.558 29657 29707 I python  : AND: Ran string
+12-11 23:19:42.558 29657 29707 I python  : Run user program, change dir and execute entrypoint
+12-11 23:19:42.620 29657 29707 I python  : [WARNING] [Config      ] Older configuration version detected (0 instead of 24)
+12-11 23:19:42.620 29657 29707 I python  : [WARNING] [Config      ] Upgrading configuration in progress.
+12-11 23:19:42.622 29657 29707 I python  : [INFO   ] [Logger      ] Record log in /data/user/0/org.ulix.dexflow.ulixdexflow/files/app/.kivy/logs/kivy_21-12-11_0.txt
+12-11 23:19:42.622 29657 29707 I python  : [INFO   ] [Kivy        ] v2.1.0.dev0
+12-11 23:19:42.622 29657 29707 I python  : [INFO   ] [Kivy        ] Installed at "/data/user/0/org.ulix.dexflow.ulixdexflow/files/app/_python_bundle/site-packages/kivy/__init__.pyc"
+12-11 23:19:42.622 29657 29707 I python  : [INFO   ] [Python      ] v3.8.9 (default, Dec 10 2021, 17:52:35) 
+12-11 23:19:42.622 29657 29707 I python  : [Clang 8.0.2 (https://android.googlesource.com/toolchain/clang 40173bab62ec7462
+12-11 23:19:42.623 29657 29707 I python  : [INFO   ] [Python      ] Interpreter at ""
+12-11 23:19:42.623 29657 29707 I python  : [INFO   ] [Logger      ] Purge log fired. Processing...
+12-11 23:19:42.623 29657 29707 I python  : [INFO   ] [Logger      ] Purge finished!
+12-11 23:19:43.010 29657 29707 I python  : [INFO   ] [Factory     ] 189 symbols loaded
+12-11 23:19:43.136 29657 29707 I python  : [INFO   ] [Image       ] Providers: img_tex, img_dds, img_sdl2 (img_pil, img_ffpyplayer ignored)
+12-11 23:19:43.159 29657 29707 I python  : [INFO   ] [Window      ] Provider: sdl2
+12-11 23:19:43.213 29657 29707 I python  : [INFO   ] [GL          ] Using the "OpenGL ES 2" graphics system
+12-11 23:19:43.213 29657 29707 I python  : [INFO   ] [GL          ] Backend used <sdl2>
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] OpenGL version <b'OpenGL ES 3.2 V@0502.0 (GIT@559e78c, Ib9d997268a, 1602617665) (Date:10/13/20)'>
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] OpenGL vendor <b'Qualcomm'>
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] OpenGL renderer <b'Adreno (TM) 640'>
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] OpenGL parsed version: 3, 2
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] Texture max size <16384>
+12-11 23:19:43.214 29657 29707 I python  : [INFO   ] [GL          ] Texture max units <16>
+12-11 23:19:43.237 29657 29707 I python  : [INFO   ] [Window      ] auto add sdl2 input provider
+12-11 23:19:43.238 29657 29707 I python  : [INFO   ] [Window      ] virtual keyboard not allowed, single mode, not docked
+12-11 23:19:43.244 29657 29707 I python  : [INFO   ] [Text        ] Provider: sdl2
+12-11 23:19:43.350 29657 29707 I python  : Initialised Map Manager
+12-11 23:19:43.350 29657 29707 I python  : ID: 1000
+12-11 23:19:43.351 29657 29707 I python  : ['levels', 'world']
+12-11 23:19:43.418 29657 29707 I python  : LAYER! 0 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.427 29657 29707 I python  : outside.png
+12-11 23:19:43.500 29657 29707 I python  : [INFO   ] [GL          ] NPOT texture support is available
+12-11 23:19:43.504 29657 29707 I python  : LAYER! 0 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.505 29657 29707 I python  : outside.png
+12-11 23:19:43.505 29657 29707 I python  : LAYER! 0 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.506 29657 29707 I python  : outside.png
+12-11 23:19:43.506 29657 29707 I python  : LAYER! 1 still_water (1, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.507 29657 29707 I python  : still_water.png
+12-11 23:19:43.509 29657 29707 I python  : LAYER! 3 dirt (1, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.510 29657 29707 I python  : dirt.png
+12-11 23:19:43.512 29657 29707 I python  : LAYER! 4 brick_path (1, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.512 29657 29707 I python  : brick_path.png
+12-11 23:19:43.514 29657 29707 I python  : LAYER! 5 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.515 29657 29707 I python  : outside.png
+12-11 23:19:43.516 29657 29707 I python  : LAYER! 5 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.517 29657 29707 I python  : outside.png
+12-11 23:19:43.517 29657 29707 I python  : LAYER! 5 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.518 29657 29707 I python  : outside.png
+12-11 23:19:43.519 29657 29707 I python  : LAYER! 8 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.519 29657 29707 I python  : outside.png
+12-11 23:19:43.520 29657 29707 I python  : LAYER! 8 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.520 29657 29707 I python  : outside.png
+12-11 23:19:43.522 29657 29707 I python  : LAYER! 8 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.523 29657 29707 I python  : outside.png
+12-11 23:19:43.523 29657 29707 I python  : LAYER! 11 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.524 29657 29707 I python  : outside.png
+12-11 23:19:43.525 29657 29707 I python  : LAYER! 11 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.526 29657 29707 I python  : outside.png
+12-11 23:19:43.526 29657 29707 I python  : LAYER! 11 outside (3, 64, 64, 2) -> (64, 64, 4)
+12-11 23:19:43.527 29657 29707 I python  : outside.png
+12-11 23:19:43.531 29657 29707 I python  : [WARNING] [Base        ] Unknown <android> provider
+12-11 23:19:43.531 29657 29707 I python  : [INFO   ] [Base        ] Start application main loop
+# org.ulix.dexflow.ulixdexflow terminated

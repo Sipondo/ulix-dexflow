@@ -40,7 +40,7 @@ requirements = python3,kivy==2.0.0,numpy,lark,termcolor
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
-# requirements.source.kivy = ../../kivy
+requirements.source.kivy = ../kivy_ubuntu
 
 # (list) Garden requirements
 #garden_requirements =
@@ -75,7 +75,7 @@ osx.kivy_version = 2.0.0
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 0
+fullscreen = 1
 
 # (string) Presplash background color (for new android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
@@ -88,7 +88,8 @@ fullscreen = 0
 #android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 27
+android.api = 30
+android.enable_androidx = True
 
 # (int) Minimum API your APK will support.
 #android.minapi = 21
@@ -219,7 +220,7 @@ android.logcat_filters = *:S python:D
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.arch = armeabi-v7a
+android.arch = arm64-v8a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
@@ -230,13 +231,13 @@ android.arch = armeabi-v7a
 #
 
 # (str) python-for-android fork to use, defaults to upstream (kivy)
-#p4a.fork = kivy
+p4a.fork = Sipondo
 
 # (str) python-for-android branch to use, defaults to master
 #p4a.branch = master
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-#p4a.source_dir =
+#p4a.source_dir = 
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
