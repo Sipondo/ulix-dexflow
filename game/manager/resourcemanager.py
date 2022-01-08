@@ -1,18 +1,10 @@
 import json
-import moderngl
-import pyglet
-import traceback
 
 import numpy as np
 
 from io import BytesIO
-from moderngl import Texture
-from moderngl_window import resources
 from pathlib import Path
 from PIL import Image, ImageFont
-
-
-pyglet.options["audio"] = ("openal", "pulse", "directsound", "silent")
 
 
 TYPES = [
@@ -210,7 +202,7 @@ class ResourceManager:
                 )
         return np.array(sprite_list)
 
-    def get_tileset(self, name: str) -> Texture:
+    def get_tileset(self, name: str):
         if name not in self.tilesets:
             pth = self.p_graphics / Path(name).with_suffix(".png")
             pth = self.resolve_resource_path(pth)

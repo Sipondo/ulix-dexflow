@@ -2,9 +2,6 @@ from game.particle.battlemovement import BattleMovement
 import numpy as np
 from array import array
 
-import moderngl
-from moderngl_window import geometry
-
 from .battlemovement import BattleMovement
 
 

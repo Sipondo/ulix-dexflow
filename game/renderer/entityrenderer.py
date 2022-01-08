@@ -1,4 +1,3 @@
-import moderngl
 from PIL import Image
 from array import array
 import numpy as np

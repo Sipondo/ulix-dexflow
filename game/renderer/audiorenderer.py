@@ -1,8 +1,8 @@
-import pyglet
+# import pyglet
 
-pyglet.options["audio"] = ("openal", "pulse", "directsound", "silent")
-from pyglet.media import Player, StaticSource, load
-from pathlib import Path
+# pyglet.options["audio"] = ("openal", "pulse", "directsound", "silent")
+# from pyglet.media import Player, StaticSource, load
+# from pathlib import Path
 
 # TODO prebuffered audio
 
@@ -36,6 +36,7 @@ class AudioRenderer:
         self.cache_se = {}
 
     def on_tick(self, time, frame_time):
+        return
         pyglet.clock.tick()
 
     def preload_effect(self, name):
@@ -47,6 +48,7 @@ class AudioRenderer:
         return
 
     def play_effect(self, name):
+        return
         if name in emap:
             name = emap[name]
         if self.silent:
@@ -66,9 +68,11 @@ class AudioRenderer:
             print("Music exception:", e)
 
     def effect(self, name):
+        return
         self.play_effect(name)
 
     def cache_effect(self, name):
+        return
         if self.silent:
             return
         try:
@@ -78,6 +82,7 @@ class AudioRenderer:
             print("Music exception:", e)
 
     def play_music(self, name):
+        return
         if self.silent:
             return
         if self.current_music != name:

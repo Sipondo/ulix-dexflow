@@ -1,10 +1,3 @@
-import moderngl
-import numpy as np
-
-from array import array
-from moderngl_window import geometry
-from PIL import Image
-
 
 class TileLayer:
     def __init__(self, r_wld, offset, height, spritemap, map=None, fade=True):
@@ -257,7 +250,7 @@ class WorldRenderer:
                             h, tiles, level, offset=conn_offset, fade=fade,
                         )
 
-        self.game.m_act.flush_regions()
-        self.game.m_ent.flush_entities()
-        self.game.m_ent.load_regions(offset)
-        self.game.m_ent.load_entities(offset)
+        # self.game.m_act.flush_regions()
+        # self.game.m_ent.flush_entities()
+        # self.game.m_ent.load_regions(offset)
+        # self.game.m_ent.load_entities(offset)
