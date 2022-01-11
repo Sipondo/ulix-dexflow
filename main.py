@@ -41,6 +41,18 @@ import os
 
 from termcolor import colored
 
+
+
+# ULIVY
+
+from kivy.app import App
+from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
+
+from game.renderer.ulivy_tilerenderer import TileRenderer
+from osc.JoystickDemo import JoystickDemo
+###
+
 os.system("color")
 
 import sys
@@ -69,18 +81,16 @@ if SIZE_X % 16:
 SIZE_Y = int(SIZE_X / 16 * 9)
 print(f"SIZE: {SIZE_X}x{SIZE_Y}, {SIZE_X/16}x{SIZE_Y/16}")
 
-from kivy.app import App
-from kivy.core.window import Window
-from kivy.uix.screenmanager import Screen
 
 class PokeGame(Screen):
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
         self.size = Window.size
-        # self.add_widget(TileRenderer())
+        self.m_map = MapManager(self, False)
+        self.add_widget(TileRenderer(self))
 
-        # self.joysticks = JoystickDemo()
-        # self.add_widget(self.joysticks)
+        self.joysticks = JoystickDemo()
+        self.add_widget(self.joysticks)
         # self.add_widget(FPSCounter())
 
 class NotPokeGame():

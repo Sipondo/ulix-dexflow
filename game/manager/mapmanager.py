@@ -10,35 +10,47 @@ class MapManager:
         self.game = game
         self.levels = None
 
-        if level_override:
-            print(level_override)
-            self.current_level_id = self.convert_mapstring_to_key(level_override)
-        else:
-            self.current_level_id = self.game.m_sav.load("current_level_id") or 1000
+        # if level_override:
+        #     print(level_override)
+        #     self.current_level_id = self.convert_mapstring_to_key(level_override)
+        # else:
+        #     self.current_level_id = self.game.m_sav.load("current_level_id") or 1000
+
+        self.current_level_id = 1000
 
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
         self.allow_save = False
         self.allow_cycle = False
         self.environment = "forest"
-        self.hospital = self.game.m_sav.load("current_hospital") or "L1"
+        # self.hospital = self.game.m_sav.load("current_hospital") or "L1"
+
+    def get_world_data(self):
+        # TEMP!!!!!!! ULIVY
+        pth = Path("world.ldtkc")
+        with open(pth, "rb") as file:
+            return np.load(BytesIO(file.read()), allow_pickle=True)
 
     def load_world_data(self):
-        print(self.game.m_res.get_world_data().files)
-        data = self.game.m_res.get_world_data()
+        # print(self.game.m_res.get_world_data().files)
+        # data = self.game.m_res.get_world_data()
+
+        data = self.get_world_data()
+        print(data.files)
+        
         level_data, self.world_data = [data[key][()] for key in data.files]
         self.levels = {int(key): level_data[key] for key in level_data.keys()}
 
-        self.game.m_sav.settables.holder_is_frozen = False
-        self.game.m_sav.switches.holder_is_frozen = False
-        for value in self.world_data["settables"]:
-            self.game.m_sav.set_new_settable(value, 0)
+        # self.game.m_sav.settables.holder_is_frozen = False
+        # self.game.m_sav.switches.holder_is_frozen = False
+        # for value in self.world_data["settables"]:
+        #     self.game.m_sav.set_new_settable(value, 0)
 
-        for value in self.world_data["switches"]:
-            self.game.m_sav.set_new_switch(value, False)
+        # for value in self.world_data["switches"]:
+        #     self.game.m_sav.set_new_switch(value, False)
 
-        self.game.m_sav.settables.holder_is_frozen = True
-        self.game.m_sav.switches.holder_is_frozen = True
+        # self.game.m_sav.settables.holder_is_frozen = True
+        # self.game.m_sav.switches.holder_is_frozen = True
 
     def convert_mapstring_to_key(self, mapstr):
         # Now also accepts integers
