@@ -34,35 +34,49 @@ class TileLayerWidget(FloatLayout):
         # if they are any graphics object, they will be added on our new canvas
         super(TileLayerWidget, self).__init__(**kwargs)
 
-        print(f"{texture_file}.png")
+        print(f"{texture_file}")
+        self.texture_file = texture_file
         self.tex1 = texture_file.texture
-
         self.tex1.mag_filter = "nearest"
 
-        self.canvas["texture0"] = 0
-        self.canvas["texture1"] = 1
+        self.canvas["texture0"] = 1
+        self.canvas["texture1"] = 2
 
-        self.rec1 = Rectangle(size=Window.size, texture=self.tex1)
+        self.rec1 = Rectangle(size=Window.size)#, texture=self.tex1)
         self.canvas.add(self.rec1)
 
-        self.temp_map = tiles
+        self.tiles = tiles
 
-        blittex = Texture.create(size=self.temp_map.shape[:2])
+        self.blittex = Texture.create(size=self.tiles.shape[:2])
+        if True:#"water" in self.level:
+            print(self.level, texture_file)
+            # self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
+            self.blittex.add_reload_observer(self.populate_texture)
+            self.populate_texture(self.blittex)
 
-        buf = self.temp_map.flatten().tobytes()
-        blittex.blit_buffer(buf, colorfmt="rgba", bufferfmt="ubyte")
-        blittex.mag_filter = "nearest"
+        self.blittex.mag_filter = "nearest"
 
-        self.blittex = blittex
-        self.canvas.add(BindTexture(texture=blittex, index=1))
+        self.canvas.add(BindTexture(texture=self.tex1, index=1))
+        self.canvas.add(BindTexture(texture=self.blittex, index=2))
 
         self.camera_position = 0
 
-        self.float_x = 0
-        self.float_y = 0
+        self.float_x = 55.0
+        self.float_y = 55.0
         self.t = 0
         # We'll update our glsl variables in a clock
         Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
+
+    def populate_texture(self, texture):
+        self.buf = self.tiles.flatten().tobytes()
+        self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
+
+        orig_w, orig_h = Window.size
+        w = min(orig_h // 9 * 16, orig_w)
+        h = min(w // 16 * 9, orig_h)
+
+        self.rec1.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
+        self.rec1.size = (w, h)
 
     def on_fs(self, instance, value):
         # set the fragment shader to our source code
@@ -84,17 +98,7 @@ class TileLayerWidget(FloatLayout):
         #     raise Exception("failed")
 
     def update_glsl(self, dt):
-        print(self.h, self.level)
-        self.canvas["texture0"] = 0
-        self.canvas["texture1"] = 1
         self.t += dt
-
-        orig_w, orig_h = Window.size
-        w = min(orig_h // 9 * 16, orig_w)
-        h = min(w // 16 * 9, orig_h)
-
-        self.rec1.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
-        self.rec1.size = (w, h)
 
         texture_size = (
             self.tex1.size[0] / 16 * 1.004,
@@ -109,9 +113,6 @@ class TileLayerWidget(FloatLayout):
             self.float_y / 100,
         )
 
-        if "water" not in self.level:
-            # print(self.h, self.level)
-            self.camera_position = (10, 10)
         # viewport = (Window.size[0] / 32, Window.size[1] / 32)
 
         viewport = (float(21), float(12))
@@ -124,7 +125,7 @@ class TileLayerWidget(FloatLayout):
         self.canvas["time"] = Clock.get_boottime()
         self.canvas["resolution"] = list(map(float, self.size))
         self.canvas["texture_size"] = texture_size
-        self.canvas["map_size"] = list(map(float, self.temp_map.shape[:2]))
+        self.canvas["map_size"] = list(map(float, self.tiles.shape[:2]))
         self.canvas["camera_position"] = self.camera_position
         # This is needed for the default vertex shader.
         win_rc = Window.render_context
@@ -164,15 +165,16 @@ class TileRenderer(Screen):
                 continue
 
             if level not in texmap:
-                texmap[level] = Image.load(resource_find(f"{level}.png"))
+                texmap[level] = Image(resource_find(f"{level}.png"))
+                # texmap[level].reload()
 
 
         for h, mapdef in enumerate(self.m_map.current_tilesets):
             if mapdef[0] != "TILES":
                 continue
             
-            if h not in (1, 3, 4):
-                continue
+            # if h not in (1, 3, 4):
+            #     continue
             ltype, level, tiles, collision = mapdef
 
             if "collision" in level:
@@ -180,10 +182,16 @@ class TileRenderer(Screen):
             if "cliff" in level:
                 continue
 
-            # if "water" not in level:
+            # if "brick" not in level:
+            #     continue
+
+            # if "water" in level:
             #     continue
 
             tiles = tiles.copy()
+            # if not np.amax(tiles):
+            #     continue
+
             for tile in tiles:
                 temp_map = np.pad(
                     tile,
@@ -193,7 +201,7 @@ class TileRenderer(Screen):
                 ).astype(np.ubyte) # < --- broken
 
                 level = level.split("/")[-1]
-
+                
                 print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_widget(
                     TileLayerWidget(

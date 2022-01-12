@@ -51,6 +51,7 @@ from kivy.uix.screenmanager import Screen
 
 from game.renderer.ulivy_tilerenderer import TileRenderer
 from osc.JoystickDemo import JoystickDemo
+from osc.fpscounter import FPSCounter
 ###
 
 os.system("color")
@@ -91,7 +92,7 @@ class PokeGame(Screen):
 
         self.joysticks = JoystickDemo()
         self.add_widget(self.joysticks)
-        # self.add_widget(FPSCounter())
+        self.add_widget(FPSCounter())
 
 class NotPokeGame():
     title = "Ulix Dexflow"

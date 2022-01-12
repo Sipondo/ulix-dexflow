@@ -10,15 +10,16 @@ in vec2 tex_coord0;
 
 /* uniform texture samplers */
 uniform sampler2D texture0;
+uniform sampler2D texture1;
 
 uniform mat4 frag_modelview_mat;
 
-uniform vec2 resolution;
-uniform float time;
-uniform sampler2D texture1;
-uniform vec2 viewport;
-uniform vec2 texture_size;
 uniform vec2 map_size;
+uniform vec2 resolution;
+uniform vec2 texture_size;
+uniform vec2 viewport;
+
+uniform float time;
 
 uniform vec2 camera_position;
 
