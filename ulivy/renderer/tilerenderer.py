@@ -98,11 +98,6 @@ class TileLayerWidget(FloatLayout):
     def update_glsl(self, dt):
         self.t += dt
 
-        texture_size = (
-            self.tex1.size[0] / 16 * 1.004,
-            self.tex1.size[1] / 16 * 1.004,
-        )
-
         self.float_x += self.parent.parent.joysticks.val_x / 1.2 / 2
         self.float_y += self.parent.parent.joysticks.val_y / 2.1 / 2
 
@@ -110,22 +105,15 @@ class TileLayerWidget(FloatLayout):
             self.float_x / 21,
             self.float_y / 12,
         )
-        # print(self.camera_position)
-
-        # viewport = (Window.size[0] / 32, Window.size[1] / 32)
 
         viewport = (float(21), float(12))
-        # viewport = (float(38), float(16))
 
         # Invert for modulo
         viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
 
         self.canvas["viewport"] = viewport
         self.canvas["time"] = Clock.get_boottime()
-        # print(self.tiles.shape[:2])
-        # self.canvas["resolution"] = list(map(float, self.size))
-        # self.canvas["texture_size"] = texture_size
-        # self.canvas["map_size"] = list(map(float, self.tiles.shape[:2]))
+
         self.canvas["camera_position"] = self.camera_position
         self.canvas["offset"] = self.offset
         # This is needed for the default vertex shader.
@@ -188,14 +176,6 @@ class TileRenderer(Screen):
                 )
 
                 self.spawn_tile_layers(tiles, offset=conn_offset)
-                # for h, mapdef in enumerate(tiles):
-                #     if mapdef[0] != "TILES":
-                #         continue
-                #     ltype, level, tiles, collision = mapdef
-                #     self.spawn_tile_layer(
-                #         h, tiles, level, offset=conn_offset, fade=fade,
-                #     )
-
 
     def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
         print("Spawn layers! Offset:", offset)

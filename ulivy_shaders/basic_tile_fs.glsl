@@ -14,9 +14,6 @@ uniform sampler2D texture1;
 
 uniform mat4 frag_modelview_mat;
 
-// uniform vec2 map_size;
-// uniform vec2 resolution;
-// uniform vec2 texture_size;
 uniform vec2 viewport;
 uniform vec2 offset;
 
