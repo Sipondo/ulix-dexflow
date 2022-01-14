@@ -13,7 +13,7 @@ package.domain = org.ulix.dexflow
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts =
+source.include_exts = py,kv,jpg,png,glsl,ldtkc
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = 
@@ -22,10 +22,10 @@ source.include_exts =
 #source.exclude_exts =
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = bin,.buildozer,old,.vscode,world,__pycache__
+source.exclude_dirs = .git,bin,.buildozer,old,.vscode,.github,world,__pycache__
 
 # (list) List of exclusions using pattern matching
-#source.exclude_patterns = __pycache__
+source.exclude_patterns = __pycache__
 
 # (str) Application versioning (method 1)
 version = 0.1

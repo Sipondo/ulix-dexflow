@@ -14,10 +14,11 @@ uniform sampler2D texture1;
 
 uniform mat4 frag_modelview_mat;
 
-uniform vec2 map_size;
-uniform vec2 resolution;
-uniform vec2 texture_size;
+// uniform vec2 map_size;
+// uniform vec2 resolution;
+// uniform vec2 texture_size;
 uniform vec2 viewport;
+uniform vec2 offset;
 
 uniform float time;
 
@@ -32,11 +33,11 @@ void main(void)
 {
     vec4 frag_coord=gl_FragCoord;
     
-    vec2 view_pos=tex_coord0.xy+camera_position;
+    vec2 view_pos=tex_coord0.xy+camera_position+offset;// position of camera pixel
     
     if((view_pos.x>=0.)&&(view_pos.y>=0.))
     {
-        // What location does this tile have in the world
+        // What location does this camera pixel position have in the world
         int world_locX=int(view_pos.x/viewport.x);
         int world_locY=int(view_pos.y/viewport.y);
         

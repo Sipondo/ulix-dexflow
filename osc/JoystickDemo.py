@@ -41,5 +41,3 @@ class JoystickDemo(FloatLayout):
 
         self.val_x = x
         self.val_y = -y
-
-        print(instance.radians)

@@ -23,18 +23,18 @@ class TileLayerWidget(FloatLayout):
     fs = StringProperty(None)
     vs = StringProperty(None)
 
-    def __init__(self, tiles, texture_file, level, h, **kwargs):
+    def __init__(self, tiles, texture_file, level, h, offset, **kwargs):
         # Instead of using Canvas, we will use a RenderContext,
         # and change the default shader used.
         self.canvas = RenderContext()
 
         self.level = level
         self.h = h
+        self.offset = (float(offset[0])/21, float(offset[1])/12)
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(TileLayerWidget, self).__init__(**kwargs)
 
-        print(f"{texture_file}")
         self.texture_file = texture_file
         self.tex1 = texture_file.texture
         self.tex1.mag_filter = "nearest"
@@ -48,11 +48,8 @@ class TileLayerWidget(FloatLayout):
         self.tiles = tiles
 
         self.blittex = Texture.create(size=self.tiles.shape[:2])
-        if True:#"water" in self.level:
-            print(self.level, texture_file)
-            # self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
-            self.blittex.add_reload_observer(self.populate_texture)
-            self.populate_texture(self.blittex)
+        self.blittex.add_reload_observer(self.populate_texture)
+        self.populate_texture(self.blittex)
 
         self.blittex.mag_filter = "nearest"
 
@@ -61,8 +58,9 @@ class TileLayerWidget(FloatLayout):
 
         self.camera_position = 0
 
-        self.float_x = 55.0
-        self.float_y = 55.0
+        self.float_x = 0 # TODO: move
+        self.float_y = 0
+
         self.t = 0
         # We'll update our glsl variables in a clock
         Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
@@ -105,13 +103,14 @@ class TileLayerWidget(FloatLayout):
             self.tex1.size[1] / 16 * 1.004,
         )
 
-        self.float_x += self.parent.parent.joysticks.val_x
-        self.float_y += self.parent.parent.joysticks.val_y
+        self.float_x += self.parent.parent.joysticks.val_x / 1.2 / 2
+        self.float_y += self.parent.parent.joysticks.val_y / 2.1 / 2
 
         self.camera_position = (
-            self.float_x / 100,
-            self.float_y / 100,
+            self.float_x / 21,
+            self.float_y / 12,
         )
+        # print(self.camera_position)
 
         # viewport = (Window.size[0] / 32, Window.size[1] / 32)
 
@@ -123,10 +122,12 @@ class TileLayerWidget(FloatLayout):
 
         self.canvas["viewport"] = viewport
         self.canvas["time"] = Clock.get_boottime()
-        self.canvas["resolution"] = list(map(float, self.size))
-        self.canvas["texture_size"] = texture_size
-        self.canvas["map_size"] = list(map(float, self.tiles.shape[:2]))
+        # print(self.tiles.shape[:2])
+        # self.canvas["resolution"] = list(map(float, self.size))
+        # self.canvas["texture_size"] = texture_size
+        # self.canvas["map_size"] = list(map(float, self.tiles.shape[:2]))
         self.canvas["camera_position"] = self.camera_position
+        self.canvas["offset"] = self.offset
         # This is needed for the default vertex shader.
         win_rc = Window.render_context
         self.canvas["projection_mat"] = win_rc["projection_mat"]
@@ -150,7 +151,7 @@ class TileRenderer(Screen):
         pth = os.path.join("resources", "essentials", "graphics", "autocliffs")
         resource_add_path(pth)
 
-        texmap = {}
+        self.texmap = {}
         for h, mapdef in enumerate(self.m_map.current_tilesets):
             if mapdef[0] != "TILES":
                 continue
@@ -161,50 +162,72 @@ class TileRenderer(Screen):
             
             if "collision" in level:
                 continue
-            if "cliff" in level:
-                continue
-
-            if level not in texmap:
-                texmap[level] = Image(resource_find(f"{level}.png"))
-                # texmap[level].reload()
 
 
-        for h, mapdef in enumerate(self.m_map.current_tilesets):
+            if level not in self.texmap:
+                self.texmap[level] = Image(resource_find(f"{level}.png"))
+
+
+        self.spawn_tile_layers(self.m_map.current_tilesets)
+
+        offset = (0, 0) #TODO: TEMP
+
+        if conns := self.m_map.current_connected_tilesets:
+            for (tiles, portal_pos, target_pos, direction,) in conns:
+                if direction == "E":
+                    direction = (1, 0)
+                elif direction == "S":
+                    direction = (0, 1)
+                elif direction == "W":
+                    direction = (-1, 0)
+                elif direction == "N":
+                    direction = (0, -1)
+                conn_offset = (
+                    offset[0] - portal_pos[0] - direction[0] + target_pos[0],
+                    offset[1] - portal_pos[1] - direction[1] + target_pos[1],
+                )
+
+                self.spawn_tile_layers(tiles, offset=conn_offset)
+                # for h, mapdef in enumerate(tiles):
+                #     if mapdef[0] != "TILES":
+                #         continue
+                #     ltype, level, tiles, collision = mapdef
+                #     self.spawn_tile_layer(
+                #         h, tiles, level, offset=conn_offset, fade=fade,
+                #     )
+
+
+    def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
+        print("Spawn layers! Offset:", offset)
+        for h, mapdef in enumerate(tileset_defs):
             if mapdef[0] != "TILES":
                 continue
-            
-            # if h not in (1, 3, 4):
-            #     continue
+
             ltype, level, tiles, collision = mapdef
 
             if "collision" in level:
                 continue
-            if "cliff" in level:
-                continue
-
-            # if "brick" not in level:
-            #     continue
-
-            # if "water" in level:
-            #     continue
 
             tiles = tiles.copy()
-            # if not np.amax(tiles):
-            #     continue
 
             for tile in tiles:
+                m = max(tile.shape[:2])
+                new = np.zeros((m, m, 2)) # TODO: VERY DIRTY FIX, refactor!
+                # height of renderer doesn't work properly when input map isn't square.
+                new[:tile.shape[0], :tile.shape[1], :] = tile
+
                 temp_map = np.pad(
-                    tile,
+                    new,
                     [(0, 0), (0, 0), (0, 2)],
                     mode="constant",
                     constant_values=0,
-                ).astype(np.ubyte) # < --- broken
+                ).astype(np.ubyte)
 
                 level = level.split("/")[-1]
                 
                 print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_widget(
                     TileLayerWidget(
-                        fs=shader_fs, vs=shader_vs, tiles=temp_map, texture_file=texmap[level], level=level, h=h
+                        fs=shader_fs, vs=shader_vs, tiles=temp_map, texture_file=self.texmap[level], level=level, h=h, offset=offset
                     )
                 )
