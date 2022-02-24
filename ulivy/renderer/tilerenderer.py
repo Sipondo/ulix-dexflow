@@ -1,10 +1,9 @@
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
-from kivy.graphics import RenderContext, BindTexture, Rectangle
+from kivy.graphics import Mesh, RenderContext, BindTexture, Rectangle
 from kivy.graphics.texture import Texture
 from kivy.core.image import Image
-from kivy.properties import StringProperty
 from kivy.resources import resource_find, resource_add_path
 from kivy.uix.screenmanager import Screen
 
@@ -28,36 +27,16 @@ with open(resource_find("ulivy_shaders/basic_entity_vs.glsl")) as file:
 
 
 class EntityLayerWidget(FloatLayout):
-    def __init__(self, tiles, texture_file, level, h, offset, **kwargs):
-        self.canvas = RenderContext(fs=self.fs, vs=self.vs)
+    def __init__(self, h, offset, **kwargs):
+        self.canvas = RenderContext(
+            fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
+        )
 
-        self.level = level
         self.h = h
         self.offset = (float(offset[0]) / 21, float(offset[1]) / 12)
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(EntityLayerWidget, self).__init__(**kwargs)
-
-        self.texture_file = texture_file
-        self.tex1 = texture_file.texture
-        self.tex1.mag_filter = "nearest"
-
-        self.canvas["texture0"] = 1
-        self.canvas["texture1"] = 2
-
-        self.rec1 = Rectangle(size=Window.size)
-        self.canvas.add(self.rec1)
-
-        self.tiles = tiles
-
-        self.blittex = Texture.create(size=self.tiles.shape[:2])
-        self.blittex.add_reload_observer(self.populate_texture)
-        self.populate_texture(self.blittex)
-
-        self.blittex.mag_filter = "nearest"
-
-        self.canvas.add(BindTexture(texture=self.tex1, index=1))
-        self.canvas.add(BindTexture(texture=self.blittex, index=2))
 
         self.camera_position = 0
 
@@ -65,38 +44,29 @@ class EntityLayerWidget(FloatLayout):
         self.float_y = 0
 
         self.t = 0
-        # We'll update our glsl variables in a clock
-        Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
 
-    def populate_texture(self, texture):
-        self.buf = self.tiles.flatten().tobytes()
-        self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
+        with self.canvas:
+            self.mesh = Mesh(
+                vertices=[0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
+                + [0.2, 0.5, 1, 1, 0, 0, 1, 1, 0, 0],
+                indices=[0, 1],
+                fmt=[
+                    (b"aPos", 2, "float"),
+                    (b"aSize", 2, "float"),
+                    (b"aTexPos", 2, "float"),  # TODO: should be int
+                    (b"aTexSize", 2, "float"),
+                    (b"aTexFrame", 2, "float"),
+                ],
+            )
+
+        Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
 
         orig_w, orig_h = Window.size
         w = min(orig_h // 9 * 16, orig_w)
         h = min(w // 16 * 9, orig_h)
 
-        self.rec1.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
-        self.rec1.size = (w, h)
-
-    def on_fs(self, instance, value):
-        # set the fragment shader to our source code
-        shader = self.canvas.shader
-        old_value = shader.fs
-        shader.fs = value
-        if not shader.success:
-            shader.fs = old_value
-            raise Exception("failed")
-
-    def on_vs(self, instance, value):
-        # set the vertex shader to our source code
-        pass
-        # shader = self.canvas.shader
-        # old_value = shader.vs
-        # shader.vs = value
-        # if not shader.success:
-        #     shader.vs = old_value
-        #     raise Exception("failed")
+        self.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
+        self.size = (w, h)
 
     def update_glsl(self, dt):
         self.t += dt
@@ -115,24 +85,15 @@ class EntityLayerWidget(FloatLayout):
         viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
 
         self.canvas["viewport"] = viewport
-        self.canvas["time"] = Clock.get_boottime()
+        # self.canvas["time"] = Clock.get_boottime()
 
         self.canvas["camera_position"] = self.camera_position
         self.canvas["offset"] = self.offset
-        # This is needed for the default vertex shader.
-        win_rc = Window.render_context
-        self.canvas["projection_mat"] = win_rc["projection_mat"]
-        self.canvas["modelview_mat"] = win_rc["modelview_mat"]
-        self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
 class TileLayerWidget(FloatLayout):
-    # property to set the source code for fragment shader
-    fs = StringProperty(None)
-    vs = StringProperty(None)
-
     def __init__(self, tiles, texture_file, level, h, offset, **kwargs):
-        self.canvas = RenderContext(fs=self.fs, vs=self.vs)
+        self.canvas = RenderContext(fs=tile_shader_fs, vs=tile_shader_vs)
 
         self.level = level
         self.h = h
@@ -181,25 +142,6 @@ class TileLayerWidget(FloatLayout):
 
         self.rec1.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
         self.rec1.size = (w, h)
-
-    def on_fs(self, instance, value):
-        # set the fragment shader to our source code
-        shader = self.canvas.shader
-        old_value = shader.fs
-        shader.fs = value
-        if not shader.success:
-            shader.fs = old_value
-            raise Exception("failed")
-
-    def on_vs(self, instance, value):
-        # set the vertex shader to our source code
-        pass
-        # shader = self.canvas.shader
-        # old_value = shader.vs
-        # shader.vs = value
-        # if not shader.success:
-        #     shader.vs = old_value
-        #     raise Exception("failed")
 
     def update_glsl(self, dt):
         self.t += dt
@@ -281,17 +223,6 @@ class TileRenderer(Screen):
                 self.spawn_tile_layers(tiles, offset=conn_offset)
 
     def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
-        self.add_widget(
-            EntityLayerWidget(
-                fs=tile_shader_fs,
-                vs=tile_shader_vs,
-                tiles=temp_map,
-                texture_file=self.texmap[level],
-                level=level,
-                h=h,
-                offset=offset,
-            )
-        )
         print("Spawn layers! Offset:", offset)
         for h, mapdef in enumerate(tileset_defs):
             if mapdef[0] != "TILES":
@@ -316,11 +247,9 @@ class TileRenderer(Screen):
 
                 level = level.split("/")[-1]
 
-                print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
+                # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_widget(
                     TileLayerWidget(
-                        fs=tile_shader_fs,
-                        vs=tile_shader_vs,
                         tiles=temp_map,
                         texture_file=self.texmap[level],
                         level=level,
@@ -328,3 +257,5 @@ class TileRenderer(Screen):
                         offset=offset,
                     )
                 )
+
+        self.add_widget(EntityLayerWidget(h=0, offset=offset))

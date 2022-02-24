@@ -9,15 +9,17 @@ layout(triangle_strip,max_vertices=4)out;
 
 in VS_OUT{
     vec2 size;
-    ivec2 texPos;
-    ivec2 texSize;
-    ivec2 texFrame;
+    vec2 texPos;
+    vec2 texSize;
+    vec2 texFrame;
 }gs_in[];
 
 out vec2 fSize;
-out ivec2 fTexPos;
-out ivec2 fTexSize;
-out ivec2 fTexFrame;
+out vec2 fTexPos;
+out vec2 fTexSize;
+out vec2 fTexFrame;
+
+uniform vec2 viewport;
 
 void construct_entity(vec4 position)
 {
@@ -26,13 +28,15 @@ void construct_entity(vec4 position)
     fTexSize=gs_in[0].texSize;
     fTexFrame=gs_in[0].texFrame;
     
-    gl_Position=position+vec4(-.2,-.2,0.,0.);// 1:bottom-left
+    vec2 stepSize=2.*viewport;
+    
+    gl_Position=position+vec4(0.,-stepSize.y,0.,0.);// 1:bottom-left
     EmitVertex();
-    gl_Position=position+vec4(.2,-.2,0.,0.);// 2:bottom-right
+    gl_Position=position+vec4(stepSize.x,-stepSize.y,0.,0.);// 2:bottom-right
     EmitVertex();
-    gl_Position=position+vec4(-.2,.2,0.,0.);// 3:top-left
+    gl_Position=position+vec4(0.,0.,0.,0.);// 3:top-left
     EmitVertex();
-    gl_Position=position+vec4(.2,.2,0.,0.);// 4:top-right
+    gl_Position=position+vec4(stepSize.x,0.,0.,0.);// 4:top-right
     EmitVertex();
     EndPrimitive();
 }

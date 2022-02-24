@@ -31,7 +31,6 @@ from pathlib import Path
 # # from game.manager.particlemanager import ParticleManager
 
 
-
 # from game.manager.savemanager import SaveManager
 
 # # from game.player.inventory import Inventory
@@ -40,7 +39,6 @@ import logging
 import os
 
 # from termcolor import colored
-
 
 
 # ULIVY
@@ -54,6 +52,7 @@ from ulivy.renderer.tilerenderer import TileRenderer
 
 from osc.JoystickDemo import JoystickDemo
 from osc.fpscounter import FPSCounter
+
 ###
 
 os.system("color")
@@ -88,6 +87,7 @@ print(f"SIZE: {SIZE_X}x{SIZE_Y}, {SIZE_X/16}x{SIZE_Y/16}")
 class PokeGame(Screen):
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
+        Window.size = (1280, 720)
         self.size = Window.size
         self.m_map = MapManager(self, False)
         self.add_widget(TileRenderer(self))
@@ -96,7 +96,8 @@ class PokeGame(Screen):
         self.add_widget(self.joysticks)
         self.add_widget(FPSCounter())
 
-class NotPokeGame():
+
+class NotPokeGame:
     title = "Ulix Dexflow"
     fullscreen = False
     vsync = False

@@ -1,4 +1,3 @@
-
 class TileLayer:
     def __init__(self, r_wld, offset, height, spritemap, map=None, fade=True):
         self.game = r_wld.game
