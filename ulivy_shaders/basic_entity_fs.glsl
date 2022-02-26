@@ -19,6 +19,9 @@ void main()
     vec2 start=fTexPos/4096.;
     vec2 size=fTexSize/4096./4.;
     
+    start.x+=size.x*fTexFrame.x;
+    start.y+=size.y*fTexFrame.y;
+    
     frag_color=texture(texture0,start+uv*size);
     // frag_color=texture(texture0,uv);
 }

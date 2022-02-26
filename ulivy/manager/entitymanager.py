@@ -133,8 +133,8 @@ class EntityManager:
                     float(text_id[1]),
                     float(text_id[2]),
                     float(text_id[3]),
-                    float(cf),
-                    0.0,
+                    float(cf % 4),
+                    float(cf // 4),
                 ]
             )
             indices.append(len(indices))
