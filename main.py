@@ -47,7 +47,11 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 
+from ulivy.manager.actionmanager import ActionManager
+from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.mapmanager import MapManager
+from ulivy.manager.savemanager import SaveManager
+
 from ulivy.renderer.tilerenderer import TileRenderer
 
 from osc.JoystickDemo import JoystickDemo
@@ -94,8 +98,28 @@ class PokeGame(Screen):
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
         # Window.size = (1280, 720)
+
+        ############## TODO: this should go to some resource manager
+
+        from ulivy.util.fatlas import Fatlas
+
+        atlas = Fatlas("resources/essentials/graphics/characteratlas.atlas")
+
+        print("ATLASSSSSSSSSSSSSSSSSSSS", atlas.ids.keys())
+
+        print(atlas.ids["boy_walk"])
+
+        self.atlas = atlas
+
+        ############
+
         self.size = Window.size
+        self.m_sav = SaveManager(self)
         self.m_map = MapManager(self, False)
+
+        self.m_ent = EntityManager(self)
+        self.m_act = ActionManager(self)
+
         self.add_widget(TileRenderer(self))
 
         self.joysticks = JoystickDemo()

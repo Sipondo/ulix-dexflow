@@ -17,6 +17,9 @@ from kivy.properties import (
 import os
 import numpy as np
 
+
+############## TODO: move this to some resource manager thing
+
 with open(resource_find("ulivy_shaders/basic_tile_fs.glsl")) as file:
     tile_shader_fs = file.read()
 
@@ -32,9 +35,12 @@ with open(resource_find("ulivy_shaders/basic_entity_gs.glsl")) as file:
 with open(resource_find("ulivy_shaders/basic_entity_vs.glsl")) as file:
     enti_shader_vs = file.read()
 
+#####################
+
 
 class EntityLayerWidget(FloatLayout):
-    def __init__(self, h, offset, **kwargs):
+    def __init__(self, game, h, offset, **kwargs):
+        self.game = game
         self.canvas = RenderContext(
             fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
         )
@@ -54,9 +60,8 @@ class EntityLayerWidget(FloatLayout):
 
         with self.canvas:
             self.mesh = Mesh(
-                vertices=[0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
-                + [5, 5, 1, 1, 0, 0, 1, 1, 0, 0],
-                indices=[0, 1],
+                vertices=[],
+                indices=[],
                 fmt=[
                     (b"aPos", 2, "float"),
                     (b"aSize", 2, "float"),
@@ -66,13 +71,25 @@ class EntityLayerWidget(FloatLayout):
                 ],
             )
 
+        self.canvas["texture0"] = 3
+        self.canvas.add(
+            BindTexture(texture=self.game.atlas.original_textures[0], index=3,)
+        )
+
         Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
 
     def update_glsl(self, dt):
+        self.canvas["texture0"] = 3
         self.game_position = (
             self.size[0] / Window.size[0],
             self.size[1] / Window.size[1],
         )
+
+        vertices, indices = self.parent.parent.parent.parent.m_ent.vertices()
+
+        self.mesh.vertices = vertices
+        self.mesh.indices = indices
+
         self.t += dt
 
         self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
@@ -185,6 +202,8 @@ class TileRenderer(FloatLayout):
     def __init__(self, game, **kwargs):
         super(TileRenderer, self).__init__(**kwargs)
 
+        self.game = game
+
         self.gamecanvas = getattr(self.ids, "GameCanvas")
 
         self.size = Window.size
@@ -271,6 +290,6 @@ class TileRenderer(FloatLayout):
                     )
                 )
 
-        self.entitylayer = EntityLayerWidget(h=0, offset=offset)
+        self.entitylayer = EntityLayerWidget(game=self.game, h=0, offset=offset)
         self.gamecanvas.add_widget(self.entitylayer)
-
+        self.game.m_ent.load_entities(offset)
