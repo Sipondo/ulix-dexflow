@@ -19,6 +19,7 @@ out VS_OUT{
 
 uniform vec2 offset;
 uniform vec2 camera_position;
+uniform vec2 viewport;
 
 void main()
 {
@@ -26,5 +27,12 @@ void main()
     vs_out.texPos=aTexPos;
     vs_out.texSize=aTexSize;
     vs_out.texFrame=aTexFrame;
-    gl_Position=vec4(aPos.x+offset.x-camera_position.x*2.,aPos.y+offset.y+camera_position.y*2.,0.,1.);
+    
+    float x=2.*aPos.x*viewport.x-1.;
+    float y=1.-2.*aPos.y*viewport.y;
+    
+    x=x+offset.x-camera_position.x*2.;
+    y=y+offset.y+camera_position.y*2.;
+    
+    gl_Position=vec4(x,y,0.,1.);
 }

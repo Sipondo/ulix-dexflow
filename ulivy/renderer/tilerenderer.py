@@ -1,4 +1,5 @@
 from kivy.clock import Clock
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.graphics import Mesh, RenderContext, BindTexture, Rectangle
@@ -6,6 +7,12 @@ from kivy.graphics.texture import Texture
 from kivy.core.image import Image
 from kivy.resources import resource_find, resource_add_path
 from kivy.uix.screenmanager import Screen
+from kivy.properties import (
+    ObjectProperty,
+    NumericProperty,
+    ReferenceListProperty,
+    ListProperty,
+)
 
 import os
 import numpy as np
@@ -48,7 +55,7 @@ class EntityLayerWidget(FloatLayout):
         with self.canvas:
             self.mesh = Mesh(
                 vertices=[0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
-                + [0.2, 0.5, 1, 1, 0, 0, 1, 1, 0, 0],
+                + [5, 5, 1, 1, 0, 0, 1, 1, 0, 0],
                 indices=[0, 1],
                 fmt=[
                     (b"aPos", 2, "float"),
@@ -61,18 +68,15 @@ class EntityLayerWidget(FloatLayout):
 
         Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
 
-        orig_w, orig_h = Window.size
-        w = min(orig_h // 9 * 16, orig_w)
-        h = min(w // 16 * 9, orig_h)
-
-        self.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
-        self.size = (w, h)
-
     def update_glsl(self, dt):
+        self.game_position = (
+            self.size[0] / Window.size[0],
+            self.size[1] / Window.size[1],
+        )
         self.t += dt
 
-        self.float_x += self.parent.parent.joysticks.val_x / 1.2 / 2
-        self.float_y += self.parent.parent.joysticks.val_y / 2.1 / 2
+        self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
+        self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
 
         self.camera_position = (
             self.float_x / 21,
@@ -88,6 +92,7 @@ class EntityLayerWidget(FloatLayout):
         # self.canvas["time"] = Clock.get_boottime()
 
         self.canvas["camera_position"] = self.camera_position
+        self.canvas["game_position"] = self.game_position
         self.canvas["offset"] = self.offset
 
 
@@ -109,7 +114,7 @@ class TileLayerWidget(FloatLayout):
         self.canvas["texture0"] = 1
         self.canvas["texture1"] = 2
 
-        self.rec1 = Rectangle(size=Window.size)
+        self.rec1 = Rectangle(size=self.size, pos=self.pos)
         self.canvas.add(self.rec1)
 
         self.tiles = tiles
@@ -136,18 +141,14 @@ class TileLayerWidget(FloatLayout):
         self.buf = self.tiles.flatten().tobytes()
         self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
 
-        orig_w, orig_h = Window.size
-        w = min(orig_h // 9 * 16, orig_w)
-        h = min(w // 16 * 9, orig_h)
-
-        self.rec1.pos = ((orig_w - w) / 2, (orig_h - h) / 2)
-        self.rec1.size = (w, h)
-
     def update_glsl(self, dt):
+        self.rec1.pos = self.pos
+        self.rec1.size = self.size
+
         self.t += dt
 
-        self.float_x += self.parent.parent.joysticks.val_x / 1.2 / 2
-        self.float_y += self.parent.parent.joysticks.val_y / 2.1 / 2
+        self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
+        self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
 
         self.camera_position = (
             self.float_x / 21,
@@ -171,9 +172,21 @@ class TileLayerWidget(FloatLayout):
         self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
-class TileRenderer(Screen):
+class Background(Image):
+    offset = ListProperty()
+    magnification = NumericProperty(0)
+
+
+class Bounds(AnchorLayout):
+    pass
+
+
+class TileRenderer(FloatLayout):
     def __init__(self, game, **kwargs):
         super(TileRenderer, self).__init__(**kwargs)
+
+        self.gamecanvas = getattr(self.ids, "GameCanvas")
+
         self.size = Window.size
         # self.add_widget(TileLayerWidget(fs=shader, height=7))
 
@@ -205,22 +218,22 @@ class TileRenderer(Screen):
 
         offset = (0, 0)  # TODO: TEMP
 
-        if conns := self.m_map.current_connected_tilesets:
-            for (tiles, portal_pos, target_pos, direction,) in conns:
-                if direction == "E":
-                    direction = (1, 0)
-                elif direction == "S":
-                    direction = (0, 1)
-                elif direction == "W":
-                    direction = (-1, 0)
-                elif direction == "N":
-                    direction = (0, -1)
-                conn_offset = (
-                    offset[0] - portal_pos[0] - direction[0] + target_pos[0],
-                    offset[1] - portal_pos[1] - direction[1] + target_pos[1],
-                )
+        # if conns := self.m_map.current_connected_tilesets:
+        #     for (tiles, portal_pos, target_pos, direction,) in conns:
+        #         if direction == "E":
+        #             direction = (1, 0)
+        #         elif direction == "S":
+        #             direction = (0, 1)
+        #         elif direction == "W":
+        #             direction = (-1, 0)
+        #         elif direction == "N":
+        #             direction = (0, -1)
+        #         conn_offset = (
+        #             offset[0] - portal_pos[0] - direction[0] + target_pos[0],
+        #             offset[1] - portal_pos[1] - direction[1] + target_pos[1],
+        #         )
 
-                self.spawn_tile_layers(tiles, offset=conn_offset)
+        #         self.spawn_tile_layers(tiles, offset=conn_offset)
 
     def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
         print("Spawn layers! Offset:", offset)
@@ -248,7 +261,7 @@ class TileRenderer(Screen):
                 level = level.split("/")[-1]
 
                 # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
-                self.add_widget(
+                self.gamecanvas.add_widget(
                     TileLayerWidget(
                         tiles=temp_map,
                         texture_file=self.texmap[level],
@@ -258,4 +271,6 @@ class TileRenderer(Screen):
                     )
                 )
 
-        self.add_widget(EntityLayerWidget(h=0, offset=offset))
+        self.entitylayer = EntityLayerWidget(h=0, offset=offset)
+        self.gamecanvas.add_widget(self.entitylayer)
+

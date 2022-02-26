@@ -16,7 +16,7 @@ class MapManager:
         # else:
         #     self.current_level_id = self.game.m_sav.load("current_level_id") or 1000
 
-        self.current_level_id = 2000
+        self.current_level_id = 1000
 
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
@@ -37,7 +37,7 @@ class MapManager:
 
         data = self.get_world_data()
         print(data.files)
-        
+
         level_data, self.world_data = [data[key][()] for key in data.files]
         self.levels = {int(key): level_data[key] for key in level_data.keys()}
 

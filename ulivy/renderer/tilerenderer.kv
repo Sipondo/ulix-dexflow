@@ -1,0 +1,36 @@
+#: import TileRenderer ulivy.renderer.tilerenderer.TileRenderer
+#: import Background ulivy.renderer.tilerenderer.Background
+#: import Bounds ulivy.renderer.tilerenderer.Bounds
+
+<TileRenderer>:
+    Image:
+        id: BackgroundId
+        #Provide the image that will form the aspect-locked bounds of the
+        #game.  Image widgets have aspect_lock set to True by default.
+        source: 'ulivy/renderer/gamebounds.png'
+        #All the image to stretch to fill the available window space.
+        allow_stretch: True
+        size: self.parent.size
+        #Find the coordinates of the bottom-left corner of the image from
+        #the bottom-left corner of the window.  Call this the 'offset'.
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        #Find out the factor by which the image is magnified/shrunk from
+        #its 'default' value:
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+
+        Bounds:
+            id: GameCanvas
+            #The canvas below isn't needed, it's just used to show the 
+            #position of the RelativeLayout
+            # canvas:
+            #     Color:
+            #         rgba: 1, 0, 0, 0.5
+            #     Rectangle:
+            #         size: self.size
+            #         pos: (0, 0)
+            #Set the position of the RelativeLayout so it starts at the
+            #bottom left of the image
+            pos: self.parent.offset
+            #Set the size of the RelativeLayout to be equal to the size of
+            #the image in Background
+            size: self.parent.norm_image_size

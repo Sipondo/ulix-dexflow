@@ -53,6 +53,12 @@ from ulivy.renderer.tilerenderer import TileRenderer
 from osc.JoystickDemo import JoystickDemo
 from osc.fpscounter import FPSCounter
 
+
+from kivy.lang import Builder
+
+Builder.load_file("ulivy/renderer/tilerenderer.kv")
+
+
 ###
 
 os.system("color")
@@ -87,7 +93,7 @@ print(f"SIZE: {SIZE_X}x{SIZE_Y}, {SIZE_X/16}x{SIZE_Y/16}")
 class PokeGame(Screen):
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
-        Window.size = (1280, 720)
+        # Window.size = (1280, 720)
         self.size = Window.size
         self.m_map = MapManager(self, False)
         self.add_widget(TileRenderer(self))

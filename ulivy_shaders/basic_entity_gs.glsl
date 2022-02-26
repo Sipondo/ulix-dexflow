@@ -20,6 +20,7 @@ out vec2 fTexSize;
 out vec2 fTexFrame;
 
 uniform vec2 viewport;
+uniform vec2 game_position;
 
 void construct_entity(vec4 position)
 {
@@ -28,7 +29,9 @@ void construct_entity(vec4 position)
     fTexSize=gs_in[0].texSize;
     fTexFrame=gs_in[0].texFrame;
     
-    vec2 stepSize=2.*viewport;
+    vec2 stepSize=2.*viewport*game_position;
+    
+    // position=vec4(position.xy*game_position,0,0);
     
     gl_Position=position+vec4(0.,-stepSize.y,0.,0.);// 1:bottom-left
     EmitVertex();
@@ -42,5 +45,5 @@ void construct_entity(vec4 position)
 }
 
 void main(){
-    construct_entity(gl_in[0].gl_Position);
+    construct_entity(vec4(gl_in[0].gl_Position.xy*game_position,0.,1.));
 }
