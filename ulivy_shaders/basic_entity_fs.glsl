@@ -23,5 +23,4 @@ void main()
     start.y+=size.y*fTexFrame.y;
     
     frag_color=texture(texture0,start+uv*size);
-    // frag_color=texture(texture0,uv);
 }

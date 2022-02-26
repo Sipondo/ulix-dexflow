@@ -90,6 +90,7 @@ class Fatlas(EventDispatcher):
             # load the image
             ci = CoreImage(subfilename)
             atlas_texture = ci.texture
+            atlas_texture.mag_filter = "nearest"
             self.original_textures.append(atlas_texture)
 
             self.ids.update(ids)
