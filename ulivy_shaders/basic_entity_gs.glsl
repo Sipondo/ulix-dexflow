@@ -30,21 +30,24 @@ void construct_entity(vec4 position)
     fTexSize=gs_in[0].texSize;
     fTexFrame=gs_in[0].texFrame;
     
-    vec2 stepSize=2.*viewport*game_position;
+    vec2 stepSize=viewport*game_position;
     
-    // position=vec4(position.xy*game_position,0,0);
+    position=position+vec4(stepSize.x,-2.*stepSize.y,0.,0.);
+    
+    stepSize.x=stepSize.x*fSize.x;
+    stepSize.y=stepSize.y*fSize.y;
     
     uv=vec2(0.,1.);
-    gl_Position=position+vec4(0.,-stepSize.y,0.,0.);// 1:bottom-left
+    gl_Position=position+vec4(-stepSize.x,0.,0.,0.);// 1:bottom-left
     EmitVertex();
     uv=vec2(1.,1.);
-    gl_Position=position+vec4(stepSize.x,-stepSize.y,0.,0.);// 2:bottom-right
+    gl_Position=position+vec4(stepSize.x,0.,0.,0.);// 2:bottom-right
     EmitVertex();
     uv=vec2(0.,0.);
-    gl_Position=position+vec4(0.,0.,0.,0.);// 3:top-left
+    gl_Position=position+vec4(-stepSize.x,2.*stepSize.y,0.,0.);// 3:top-left
     EmitVertex();
     uv=vec2(1.,0.);
-    gl_Position=position+vec4(stepSize.x,0.,0.,0.);// 4:top-right
+    gl_Position=position+vec4(stepSize.x,2.*stepSize.y,0.,0.);// 4:top-right
     EmitVertex();
     EndPrimitive();
 }

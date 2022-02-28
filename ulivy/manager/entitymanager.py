@@ -127,8 +127,8 @@ class EntityManager:
                 [
                     x,
                     y,
-                    1,
-                    1,
+                    float(text_id[2]) / 32 / 4,  # TODO: make dynamic
+                    float(text_id[3]) / 32 / 4,  # TODO: make dynamic
                     float(text_id[0]),
                     float(text_id[1]),
                     float(text_id[2]),
