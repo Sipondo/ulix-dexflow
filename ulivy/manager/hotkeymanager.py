@@ -10,6 +10,10 @@ class HotkeyManager(Widget):
         self.keys = []
         self.pressed_keys = set()
 
+        self.register_key("ctrl", "ctrl")
+        self.register_key("alt", "alt")
+        self.register_key("shift", "shift")
+
         self.register_key("up", "w")
         self.register_key("down", "s")
         self.register_key("left", "a")

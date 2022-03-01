@@ -61,6 +61,9 @@ from ulivy.manager.collisionmanager import CollisionManager
 
 from ulivy.renderer.tilerenderer import TileRenderer
 
+
+from ulivy.player.inventory import Inventory
+
 from osc.JoystickDemo import JoystickDemo
 from osc.fpscounter import FPSCounter
 
@@ -117,6 +120,9 @@ class PokeGame(Screen):
         ############
 
         self.size = Window.size
+
+        self.inventory = Inventory(self)
+
         self.m_sav = SaveManager(self)
         self.m_map = MapManager(self, False)
 

@@ -21,7 +21,7 @@ class MapManager:
         print("Initialised Map Manager")
         print("ID:", self.current_level_id)
         self.allow_save = False
-        self.allow_cycle = False
+        self.allow_cycle = True
         self.environment = "forest"
         # self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 

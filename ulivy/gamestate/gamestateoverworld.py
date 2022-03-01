@@ -34,11 +34,11 @@ class GameStateOverworld(BaseGameState):
         return None
 
     def event_keypress(self, key, modifiers):
-        if "alt" in modifiers:
+        if key == "alt":
             self.game.m_ent.player.set_movement_type(0)
-        elif "shift" in modifiers:
+        elif key == "shift":
             self.game.m_ent.player.set_movement_type(1)
-        elif "ctrl" in modifiers and self.game.m_map.allow_cycle:
+        elif key == "ctrl" and self.game.m_map.allow_cycle:
             self.game.m_ent.player.set_movement_type(2)
         if not self.lock:
             if key == "interact":
