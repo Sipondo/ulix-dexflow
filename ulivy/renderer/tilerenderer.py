@@ -52,10 +52,8 @@ class EntityLayerWidget(FloatLayout):
 
         self.camera_position = 0
 
-        self.float_x = 0  # TODO: move
+        self.float_x = 0
         self.float_y = 0
-
-        self.t = 0
 
         with self.canvas:
             self.mesh = Mesh(
@@ -87,17 +85,9 @@ class EntityLayerWidget(FloatLayout):
         self.mesh.vertices = vertices
         self.mesh.indices = indices
 
-        self.t += dt
-
-        # self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
-        # self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
-
-        self.float_x = self.game.m_pan.total_x
-        self.float_y = self.game.m_pan.total_y
-
         self.camera_position = (
-            self.float_x / 21,
-            self.float_y / 12,
+            self.game.m_pan.total_x / 21,
+            self.game.m_pan.total_y / 12,
         )
 
         viewport = (float(21), float(12))
@@ -147,11 +137,6 @@ class TileLayerWidget(FloatLayout):
 
         self.camera_position = 0
 
-        self.float_x = 0  # TODO: move
-        self.float_y = 0
-
-        self.t = 0
-
     def populate_texture(self, texture):
         self.buf = self.tiles.flatten().tobytes()
         self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
@@ -160,17 +145,9 @@ class TileLayerWidget(FloatLayout):
         self.rec1.pos = self.pos
         self.rec1.size = self.size
 
-        self.t += dt
-
-        # self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
-        # self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
-
-        self.float_x = self.game.m_pan.total_x
-        self.float_y = self.game.m_pan.total_y
-
         self.camera_position = (
-            self.float_x / 21,
-            self.float_y / 12,
+            self.game.m_pan.total_x / 21,
+            self.game.m_pan.total_y / 12,
         )
 
         viewport = (float(21), float(12))
