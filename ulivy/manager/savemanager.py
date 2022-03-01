@@ -2,7 +2,7 @@ import json
 import types
 import numpy as np
 from io import BytesIO
-from game.helpers.dataframe import Series
+from ulivy.helpers.dataframe import Series
 
 ENTITY_SERIALIZE = (int, str, bool, tuple, list, Series)
 ENTITY_SERIALIZE_BLACKLIST = "moving"

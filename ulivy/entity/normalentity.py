@@ -35,13 +35,12 @@ class NormalEntity(BaseEntity):
         self.orig_pos = self.game_position
         self.memory = self.game.m_sav.get_memory_holder(self.level, self.entity_uid)
 
-        return  # TODO: remove
         if hasattr(self, "aggro_range"):
             self.aggro_region = self.game.m_act.create_aggro_region(self, {})
 
             self.team = []
-            for battler in self.battlers:
-                self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
+            # for battler in self.battlers: #TODO: re-enable
+            #     self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
 
             js = []
             try:

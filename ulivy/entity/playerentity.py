@@ -1,6 +1,5 @@
 from .baseentity import BaseEntity
-from game.animation.moveanimation.playermoveanimation import PlayerMoveAnimation
-from game.animation.encounteranimation import EncounterAnimation
+from ulivy.animation.moveanimation.playermoveanimation import PlayerMoveAnimation
 import random
 
 

@@ -11,7 +11,7 @@ class ActionManager:
 
         self.prefab_actions = {}
 
-    def on_tick(self, time, frame_time):
+    def update(self, time, frame_time):
         self.last_time = time
         self.last_frame_time = frame_time
 

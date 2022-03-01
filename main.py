@@ -51,6 +51,7 @@ from kivy.uix.screenmanager import Screen
 from ulivy.manager.actionmanager import ActionManager
 from ulivy.manager.hotkeymanager import HotkeyManager
 from ulivy.manager.entitymanager import EntityManager
+from ulivy.upl.uplmanager import UplManager
 from ulivy.manager.mapmanager import MapManager
 from ulivy.manager.savemanager import SaveManager
 from ulivy.manager.gamestatemanager import GameStateManager
@@ -62,6 +63,8 @@ from ulivy.manager.panmanager import PanManager
 from ulivy.renderer.tilerenderer import TileRenderer
 
 from ulivy.player.inventory import Inventory
+from ulivy.util.compile_world import compile_world
+
 
 from kivy.utils import platform
 from kivy.lang import Builder
@@ -131,6 +134,7 @@ class PokeGame(Screen):
         self.m_act = ActionManager(self)
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
+        self.m_upl = UplManager(self)
 
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
@@ -154,6 +158,10 @@ class PokeGame(Screen):
         time = self.time
 
         lock = self.m_gst.current_state.update(time, dt)
+
+        if self.m_gst.current_state_name in ("cinematic", "overworld"):
+            self.m_act.update(time, dt)
+
         self.r_til.update(time, dt)
 
 
