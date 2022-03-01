@@ -160,6 +160,13 @@ class Joystick(Widget):
         self.pad_x = td.x_offset * radius_offset
         self.pad_y = td.y_offset * radius_offset
         self._magnitude = 1.0
+
+        # D-Pad
+        if abs(x - self.center[0]) > abs(y - self.center[1]):
+            y = self.center[1]
+        else:
+            x = self.center[0]
+
         self.ids.pad.center = (x, y)
 
     def _update_coordinates_from_internal_touch(self, touch, touchdata):
@@ -169,7 +176,17 @@ class Joystick(Widget):
         self._magnitude = td.relative_distance / (
             self._total_radius - self.ids.pad._radius
         )
-        self.ids.pad.center = (touch.x, touch.y)
+
+        x = touch.x
+        y = touch.y
+
+        # D-Pad
+        if abs(x - self.center[0]) > abs(y - self.center[1]):
+            y = self.center[1]
+        else:
+            x = self.center[0]
+
+        self.ids.pad.center = (x, y)
 
     """####################################################################"""
     """#####   >   Layout Events   ########################################"""
