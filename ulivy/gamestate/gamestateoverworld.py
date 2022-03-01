@@ -16,6 +16,9 @@ class GameStateOverworld(BaseGameState):
         if direction and not self.lock:
             self.game.m_ent.player.start_move(direction, self.time)
         # self.game.m_ent.render()
+
+        self.game.m_pan.set_pan(self.game.m_ent.player.get_pos())
+
         return False
 
     def on_exit(self):

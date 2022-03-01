@@ -58,7 +58,7 @@ from ulivy.manager.animationmanager import AnimationManager
 from ulivy.manager.collisionmanager import CollisionManager
 from ulivy.manager.oscmanager import OscManager, FPSCounter
 
-from ulivy.renderer.pantool import PanTool
+from ulivy.manager.panmanager import PanManager
 from ulivy.renderer.tilerenderer import TileRenderer
 
 from ulivy.player.inventory import Inventory
@@ -123,7 +123,7 @@ class PokeGame(Screen):
         self.m_sav = SaveManager(self)
         self.m_map = MapManager(self, False)
 
-        self.pan_tool = PanTool(self.size)
+        self.m_pan = PanManager(self, self.size)
 
         self.m_ani = AnimationManager(self)
         self.m_col = CollisionManager(self)

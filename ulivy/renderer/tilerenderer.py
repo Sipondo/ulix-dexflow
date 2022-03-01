@@ -89,8 +89,11 @@ class EntityLayerWidget(FloatLayout):
 
         self.t += dt
 
-        self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
-        self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
+        # self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
+        # self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
+
+        self.float_x = self.game.m_pan.total_x
+        self.float_y = self.game.m_pan.total_y
 
         self.camera_position = (
             self.float_x / 21,
@@ -110,7 +113,8 @@ class EntityLayerWidget(FloatLayout):
 
 
 class TileLayerWidget(FloatLayout):
-    def __init__(self, tiles, texture_file, level, h, offset, **kwargs):
+    def __init__(self, game, tiles, texture_file, level, h, offset, **kwargs):
+        self.game = game
         self.canvas = RenderContext(fs=tile_shader_fs, vs=tile_shader_vs)
 
         self.level = level
@@ -158,8 +162,11 @@ class TileLayerWidget(FloatLayout):
 
         self.t += dt
 
-        self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
-        self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
+        # self.float_x += self.parent.parent.parent.parent.joysticks.val_x / 1.2 / 2
+        # self.float_y += self.parent.parent.parent.parent.joysticks.val_y / 2.1 / 2
+
+        self.float_x = self.game.m_pan.total_x
+        self.float_y = self.game.m_pan.total_y
 
         self.camera_position = (
             self.float_x / 21,
@@ -294,6 +301,7 @@ class TileRenderer(FloatLayout):
                 # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_layer(
                     TileLayerWidget(
+                        game=self.game,
                         tiles=temp_map,
                         texture_file=self.texmap[level],
                         level=level,
