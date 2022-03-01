@@ -210,23 +210,23 @@ class UPLToPython(Transformer):
         elif name == "self":
             ret = self.src
         elif name == "player":
-            ret = self.act.ulivy.m_ent.player
+            ret = self.act.game.m_ent.player
         elif name == "switch":
-            ret = self.act.ulivy.m_sav.switches
+            ret = self.act.game.m_sav.switches
         elif name == "set":
-            ret = self.act.ulivy.m_sav.settables
+            ret = self.act.game.m_sav.settables
         elif name == "local":
-            ret = self.act.ulivy.m_sav.locals
+            ret = self.act.game.m_sav.locals
         elif name == "global":
-            ret = self.act.ulivy.m_sav.globals
+            ret = self.act.game.m_sav.globals
         elif name == "game":
             ret = self.act.game
         elif name == "col":
-            ret = self.act.ulivy.m_col
+            ret = self.act.game.m_col
         elif name == "map":
-            ret = self.act.ulivy.m_map
-        elif name[:2].lower() == "e_" and name[2:] in self.act.ulivy.m_ent.entities:
-            ret = self.act.ulivy.m_ent.entities[name[2:]]
+            ret = self.act.game.m_map
+        elif name[:2].lower() == "e_" and name[2:] in self.act.game.m_ent.entities:
+            ret = self.act.game.m_ent.entities[name[2:]]
 
         if ret is None:
             return
