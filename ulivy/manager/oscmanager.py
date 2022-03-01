@@ -1,4 +1,3 @@
-from sqlalchemy import true
 from ulivy.manager.joystick import Joystick
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.anchorlayout import AnchorLayout

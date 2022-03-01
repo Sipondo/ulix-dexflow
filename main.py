@@ -63,7 +63,7 @@ from ulivy.renderer.tilerenderer import TileRenderer
 
 from ulivy.player.inventory import Inventory
 
-
+from kivy.utils import platform
 from kivy.lang import Builder
 
 Builder.load_file("ulivy/renderer/tilerenderer.kv")
@@ -135,8 +135,12 @@ class PokeGame(Screen):
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
 
-        self.joysticks = OscManager(self)
-        self.add_widget(self.joysticks)
+        if platform == "android":
+            self.m_osc = OscManager(self)
+            self.add_widget(self.m_osc)
+        else:
+            self.m_osc = None
+
         self.add_widget(FPSCounter())
 
         self.maphack = False
