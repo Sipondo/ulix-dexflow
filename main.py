@@ -53,24 +53,21 @@ from ulivy.manager.hotkeymanager import HotkeyManager
 from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.mapmanager import MapManager
 from ulivy.manager.savemanager import SaveManager
-from ulivy.renderer.pantool import PanTool
-
 from ulivy.manager.gamestatemanager import GameStateManager
 from ulivy.manager.animationmanager import AnimationManager
 from ulivy.manager.collisionmanager import CollisionManager
+from ulivy.manager.oscmanager import OscManager, FPSCounter
 
+from ulivy.renderer.pantool import PanTool
 from ulivy.renderer.tilerenderer import TileRenderer
 
-
 from ulivy.player.inventory import Inventory
-
-from osc.JoystickDemo import JoystickDemo
-from osc.fpscounter import FPSCounter
 
 
 from kivy.lang import Builder
 
 Builder.load_file("ulivy/renderer/tilerenderer.kv")
+Builder.load_file("ulivy/manager/oscmanager.kv")
 
 
 ###
@@ -138,7 +135,7 @@ class PokeGame(Screen):
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
 
-        self.joysticks = JoystickDemo()
+        self.joysticks = OscManager(self)
         self.add_widget(self.joysticks)
         self.add_widget(FPSCounter())
 

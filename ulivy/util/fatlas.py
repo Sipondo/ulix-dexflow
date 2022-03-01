@@ -98,4 +98,3 @@ class Fatlas(EventDispatcher):
         for k, v in self.ids.items():
             self.ids[k] = [float(v[0]), 4096.0 - v[1] - v[3], float(v[2]), float(v[3])]
 
-        print(self.ids)

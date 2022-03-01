@@ -46,7 +46,7 @@ class HotkeyManager(Widget):
         self.register_key("battle", "b")
 
         # self.register_key("fullscreen", game.wnd.keys.F11, True)
-        self.game.fullscreen_key = "f11"
+        self.register_key("fullscreen", "f11")
 
         self.bind_keyboard()
 
@@ -98,8 +98,7 @@ class HotkeyManager(Widget):
                 # print(request)
                 if action == "down":
                     if request == "fullscreen":
-                        # TODO: fullscreen!
-                        pass
+                        Window.fullscreen = not Window.fullscreen
 
                     if request not in self.pressed_keys:
                         self.game.m_gst.current_state.event_keypress(
