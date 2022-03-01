@@ -49,6 +49,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 
 from ulivy.manager.actionmanager import ActionManager
+from ulivy.manager.hotkeymanager import HotkeyManager
 from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.mapmanager import MapManager
 from ulivy.manager.savemanager import SaveManager
@@ -111,10 +112,6 @@ class PokeGame(Screen):
 
         atlas = Fatlas("resources/essentials/graphics/characteratlas.atlas")
 
-        print("ATLASSSSSSSSSSSSSSSSSSSS", atlas.ids.keys())
-
-        print(atlas.ids["boy_walk"])
-
         self.atlas = atlas
 
         ############
@@ -130,6 +127,7 @@ class PokeGame(Screen):
         self.m_ent = EntityManager(self)
         self.m_act = ActionManager(self)
         self.m_gst = GameStateManager(self)
+        self.m_key = HotkeyManager(self)
 
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
@@ -138,11 +136,18 @@ class PokeGame(Screen):
         self.add_widget(self.joysticks)
         self.add_widget(FPSCounter())
 
-        # self.m_gst.switch_state("overworld")
+        self.maphack = False
+
+        self.m_gst.switch_state("overworld")
+        self.time = 0
         Clock.schedule_interval(self.update, 0)
 
     def update(self, dt):
-        self.r_til.update(dt)
+        self.time += dt
+        time = self.time
+
+        lock = self.m_gst.current_state.update(time, dt)
+        self.r_til.update(time, dt)
 
 
 class NotPokeGame:

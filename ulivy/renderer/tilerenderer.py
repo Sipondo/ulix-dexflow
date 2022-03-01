@@ -75,7 +75,7 @@ class EntityLayerWidget(FloatLayout):
             BindTexture(texture=self.game.atlas.original_textures[0], index=3,)
         )
 
-    def update(self, dt):
+    def update(self, time, dt):
         self.canvas["texture0"] = 3
         self.game_position = (
             self.size[0] / Window.size[0],
@@ -152,7 +152,7 @@ class TileLayerWidget(FloatLayout):
         self.buf = self.tiles.flatten().tobytes()
         self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
 
-    def update(self, dt):
+    def update(self, time, dt):
         self.rec1.pos = self.pos
         self.rec1.size = self.size
 
@@ -214,6 +214,7 @@ class TileRenderer(FloatLayout):
         resource_add_path(pth)
 
         self.texmap = {}
+
         for h, mapdef in enumerate(self.m_map.current_tilesets):
             if mapdef[0] != "TILES":
                 continue
@@ -248,16 +249,21 @@ class TileRenderer(FloatLayout):
 
         #         self.spawn_tile_layers(tiles, offset=conn_offset)
 
-    def update(self, dt):
+    def update(self, time, dt):
         for layer in self.layers:
-            layer.update(dt)
+            layer.update(time, dt)
 
     def add_layer(self, widget):
         self.layers.append(widget)
         self.gamecanvas.add_widget(widget)
 
     def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
+
+        self.game.m_col.clear_collision()
+        self.game.m_col.set_offset(offset)
+
         print("Spawn layers! Offset:", offset)
+        entity_h = 0  # TODO fix
         for h, mapdef in enumerate(tileset_defs):
             if mapdef[0] != "TILES":
                 continue
@@ -268,6 +274,10 @@ class TileRenderer(FloatLayout):
                 continue
 
             tiles = tiles.copy()
+
+            self.game.m_col.add_collision_layer(
+                collision, entity_h, tiles if "collision" in level.lower() else None
+            )
 
             for tile in tiles:
                 m = max(tile.shape[:2])

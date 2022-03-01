@@ -7,7 +7,8 @@
 # from ..gamestate.gamestatemenuoptions import GameStateMenuOptions
 # from ..gamestate.gamestatemenuparty import GameStateMenuParty
 # from ..gamestate.gamestatemenusave import GameStateMenuSave
-# from ..gamestate.gamestateoverworld import GameStateOverworld
+from ..gamestate.gamestateoverworld import GameStateOverworld
+
 # from ..gamestate.gamestateprompt import GameStatePrompt
 # from ..gamestate.gamestatestorage import GameStateStorage
 # from ..gamestate.gamestateevolve import GameStateEvolve
