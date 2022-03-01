@@ -43,6 +43,7 @@ import os
 
 # ULIVY
 
+from kivy.clock import Clock
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
@@ -51,6 +52,11 @@ from ulivy.manager.actionmanager import ActionManager
 from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.mapmanager import MapManager
 from ulivy.manager.savemanager import SaveManager
+from ulivy.renderer.pantool import PanTool
+
+from ulivy.manager.gamestatemanager import GameStateManager
+from ulivy.manager.animationmanager import AnimationManager
+from ulivy.manager.collisionmanager import CollisionManager
 
 from ulivy.renderer.tilerenderer import TileRenderer
 
@@ -117,14 +123,26 @@ class PokeGame(Screen):
         self.m_sav = SaveManager(self)
         self.m_map = MapManager(self, False)
 
+        self.pan_tool = PanTool(self.size)
+
+        self.m_ani = AnimationManager(self)
+        self.m_col = CollisionManager(self)
         self.m_ent = EntityManager(self)
         self.m_act = ActionManager(self)
+        self.m_gst = GameStateManager(self)
 
-        self.add_widget(TileRenderer(self))
+        self.r_til = TileRenderer(self)
+        self.add_widget(self.r_til)
 
         self.joysticks = JoystickDemo()
         self.add_widget(self.joysticks)
         self.add_widget(FPSCounter())
+
+        # self.m_gst.switch_state("overworld")
+        Clock.schedule_interval(self.update, 0)
+
+    def update(self, dt):
+        self.r_til.update(dt)
 
 
 class NotPokeGame:

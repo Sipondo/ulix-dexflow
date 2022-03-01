@@ -1,4 +1,3 @@
-from kivy.clock import Clock
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
@@ -76,9 +75,7 @@ class EntityLayerWidget(FloatLayout):
             BindTexture(texture=self.game.atlas.original_textures[0], index=3,)
         )
 
-        Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
-
-    def update_glsl(self, dt):
+    def update(self, dt):
         self.canvas["texture0"] = 3
         self.game_position = (
             self.size[0] / Window.size[0],
@@ -106,7 +103,6 @@ class EntityLayerWidget(FloatLayout):
         viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
 
         self.canvas["viewport"] = viewport
-        # self.canvas["time"] = Clock.get_boottime()
 
         self.canvas["camera_position"] = self.camera_position
         self.canvas["game_position"] = self.game_position
@@ -151,14 +147,12 @@ class TileLayerWidget(FloatLayout):
         self.float_y = 0
 
         self.t = 0
-        # We'll update our glsl variables in a clock
-        Clock.schedule_interval(self.update_glsl, 0)  # 1 / 60.0)
 
     def populate_texture(self, texture):
         self.buf = self.tiles.flatten().tobytes()
         self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
 
-    def update_glsl(self, dt):
+    def update(self, dt):
         self.rec1.pos = self.pos
         self.rec1.size = self.size
 
@@ -178,7 +172,6 @@ class TileLayerWidget(FloatLayout):
         viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
 
         self.canvas["viewport"] = viewport
-        self.canvas["time"] = Clock.get_boottime()
 
         self.canvas["camera_position"] = self.camera_position
         self.canvas["offset"] = self.offset
@@ -211,6 +204,7 @@ class TileRenderer(FloatLayout):
 
         self.m_map = game.m_map
         self.m_map.load_world_data()
+        self.layers = []
 
         pth = os.path.join("resources", "essentials", "graphics", "tilesets")
         resource_add_path(pth)
@@ -254,6 +248,14 @@ class TileRenderer(FloatLayout):
 
         #         self.spawn_tile_layers(tiles, offset=conn_offset)
 
+    def update(self, dt):
+        for layer in self.layers:
+            layer.update(dt)
+
+    def add_layer(self, widget):
+        self.layers.append(widget)
+        self.gamecanvas.add_widget(widget)
+
     def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
         print("Spawn layers! Offset:", offset)
         for h, mapdef in enumerate(tileset_defs):
@@ -280,7 +282,7 @@ class TileRenderer(FloatLayout):
                 level = level.split("/")[-1]
 
                 # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
-                self.gamecanvas.add_widget(
+                self.add_layer(
                     TileLayerWidget(
                         tiles=temp_map,
                         texture_file=self.texmap[level],
@@ -291,5 +293,5 @@ class TileRenderer(FloatLayout):
                 )
 
         self.entitylayer = EntityLayerWidget(game=self.game, h=0, offset=offset)
-        self.gamecanvas.add_widget(self.entitylayer)
+        self.add_layer(self.entitylayer)
         self.game.m_ent.load_entities(offset)
