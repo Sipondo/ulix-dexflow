@@ -22,6 +22,13 @@ class OscManager(FloatLayout):
         self.up = False
         self.down = False
 
+        self.buttons = {
+            "interact": False,
+            "backspace": False,
+            "walk": False,
+            "run": False,
+        }
+
     def _bind_joysticks(self):
         joysticks = self._get_joysticks(self)
         for joystick in joysticks:
@@ -37,6 +44,31 @@ class OscManager(FloatLayout):
         return joysticks
 
     def _update_pad_display(self, instance, pad):
+        if instance.parent == self.ids.movement:
+            self.event_movement(instance, pad)
+        elif instance.parent == self.ids.interact:
+            self.event_button(instance, pad, "interact")
+        elif instance.parent == self.ids.backspace:
+            self.event_button(instance, pad, "backspace")
+        elif instance.parent == self.ids.walk:
+            self.event_button(instance, pad, "walk")
+        elif instance.parent == self.ids.run:
+            self.event_button(instance, pad, "run")
+
+    def event_button(self, instance, pad, key):
+        x, y = pad
+
+        if x == 0 and y == 0 and self.buttons[key]:
+            self.buttons[key] = False
+            self.game.m_key.key_event(key, "up", [])
+            return
+
+        if (x != 0 or y != 0) and not self.buttons[key]:
+            self.buttons[key] = True
+            self.game.m_key.key_event(key, "down", [])
+            return
+
+    def event_movement(self, instance, pad):
         x, y = pad
         # x, y = (("x: " + x), ("\ny: " + y))
         r = "radians: " + str(instance.radians)[0:5]

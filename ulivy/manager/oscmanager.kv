@@ -1,27 +1,17 @@
 #: import Joystick ulivy.manager.joystick.Joystick
 
 
-########################################################################################################################################################################################################################################################################################################~{#
-#//////|   StickGroup Template   |//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////g2#
-########################################################################################################################################################################################################################################################################################################~}#
-
-<StickGroup_Inner@AnchorLayout>:
-  anchor_x: 'left'
-  anchor_y: 'bottom'
-  # padding: 250
 
 ########################################################################################################################################################################################################################################################################################################~{#
-#//////|   DemoStick Template   |///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////g2#
+#//////|   Definitions   |///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////g2#
 ########################################################################################################################################################################################################################################################################################################~}#
 
-<DemoStick@AnchorLayout>:
-  anchor_x: 'left'
-  anchor_y: 'bottom'
+<OscMoveStick@AnchorLayout>:
   padding: 10
   sticky: False
-  outer_size: 0.9
-  inner_size: 0.73
-  pad_size:   0.68
+  outer_size: 1
+  inner_size: 0.75
+  pad_size:   0.5
   outer_line_width: 0.01
   inner_line_width: 0.01
   pad_line_width:   0.01
@@ -48,17 +38,155 @@
     pad_background_color:   root.pad_background_color
     pad_line_color:         root.pad_line_color
 
+<OscButtonLarge@AnchorLayout>:
+  name: ""
+  padding: 3
+  sticky: False
+  outer_size: 1
+  inner_size: 1
+  pad_size:   0.99
+  outer_line_width: 0.01
+  inner_line_width: 0.01
+  pad_line_width:   0.01
+  outer_background_color: (0.75, 0.75, 0.75, 0.4)
+  outer_line_color:       (0.25, 0.25, 0.25, 0.6)
+  inner_background_color: (0.75, 0.75, 0.75, 0.4)
+  inner_line_color:       (0.7,  0.7,  0.7,  0.6)
+  pad_background_color:   (0.4,  0.4,  0.4,  0.8)
+  pad_line_color:         (0.35, 0.35, 0.35, 0.9)
+
+  Joystick:
+    size_hint: (0.21, 0.15)
+    sticky: root.sticky
+    outer_size: root.outer_size
+    inner_size: root.inner_size
+    pad_size:   root.pad_size
+    outer_line_width:       root.outer_line_width
+    inner_line_width:       root.inner_line_width
+    pad_line_width:         root.pad_line_width
+    outer_background_color: root.outer_background_color
+    outer_line_color:       root.outer_line_color
+    inner_background_color: root.inner_background_color
+    inner_line_color:       root.inner_line_color
+    pad_background_color:   root.pad_background_color
+    pad_line_color:         root.pad_line_color
+
+  Label:
+    text: root.name
+    font_size: 60
+    color: 1, 1, 1, 1
+
+
+
+<OscButton@AnchorLayout>:
+  name: ""
+  padding: 3
+  sticky: False
+  outer_size: 1
+  inner_size: 1
+  pad_size:   0.99
+  outer_line_width: 0.01
+  inner_line_width: 0.01
+  pad_line_width:   0.01
+  outer_background_color: (0.75, 0.75, 0.75, 0.4)
+  outer_line_color:       (0.25, 0.25, 0.25, 0.6)
+  inner_background_color: (0.75, 0.75, 0.75, 0.4)
+  inner_line_color:       (0.7,  0.7,  0.7,  0.6)
+  pad_background_color:   (0.4,  0.4,  0.4,  0.8)
+  pad_line_color:         (0.35, 0.35, 0.35, 0.9)
+
+  Joystick:
+    size_hint: (0.14, 0.10)
+    sticky: root.sticky
+    outer_size: root.outer_size
+    inner_size: root.inner_size
+    pad_size:   root.pad_size
+    outer_line_width:       root.outer_line_width
+    inner_line_width:       root.inner_line_width
+    pad_line_width:         root.pad_line_width
+    outer_background_color: root.outer_background_color
+    outer_line_color:       root.outer_line_color
+    inner_background_color: root.inner_background_color
+    inner_line_color:       root.inner_line_color
+    pad_background_color:   root.pad_background_color
+    pad_line_color:         root.pad_line_color
+
+  Label:
+    text: root.name
+    font_size: 45
+    color: 1, 1, 1, 1
+
+
+  
+<OscButtonTiny@AnchorLayout>:
+  name: ""
+  padding: 3
+  sticky: False
+  outer_size: 1
+  inner_size: 1
+  pad_size:   0.99
+  outer_line_width: 0.01
+  inner_line_width: 0.01
+  pad_line_width:   0.01
+  outer_background_color: (0.75, 0.75, 0.75, 0.4)
+  outer_line_color:       (0.25, 0.25, 0.25, 0.6)
+  inner_background_color: (0.75, 0.75, 0.75, 0.4)
+  inner_line_color:       (0.7,  0.7,  0.7,  0.6)
+  pad_background_color:   (0.4,  0.4,  0.4,  0.8)
+  pad_line_color:         (0.35, 0.35, 0.35, 0.9)
+
+  Joystick:
+    size_hint: (0.112, 0.08)
+    sticky: root.sticky
+    outer_size: root.outer_size
+    inner_size: root.inner_size
+    pad_size:   root.pad_size
+    outer_line_width:       root.outer_line_width
+    inner_line_width:       root.inner_line_width
+    pad_line_width:         root.pad_line_width
+    outer_background_color: root.outer_background_color
+    outer_line_color:       root.outer_line_color
+    inner_background_color: root.inner_background_color
+    inner_line_color:       root.inner_line_color
+    pad_background_color:   root.pad_background_color
+    pad_line_color:         root.pad_line_color
+  
+  Label:
+    text: root.name
+    font_size: 30
+    color: 1, 1, 1, 1
+
+
+    
+
 ########################################################################################################################################################################################################################################################################################################~{#
 #//////|   Osc_Manager   |////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////g2#
 ########################################################################################################################################################################################################################################################################################################~}#
 
 <OscManager>:
-  StickGroup_Inner:
 
-    DemoStick:
-      outer_size: 1
-      inner_size: 0.75
-      pad_size:   0.5
-      outer_line_width: 0.01
-      inner_line_width: 0.01
-      pad_line_width:   0.01
+  FloatLayout:
+    OscMoveStick:
+      id: movement
+      pos_hint: {'x': -0.35, 'y': -0.3}
+    
+    OscButtonLarge:
+      id: interact
+      name: "A"
+      pos_hint: {'x': 0.3, 'y': -0.38}
+    
+    OscButton:
+      id: backspace
+      name: "B"
+      pos_hint: {'x': 0.4, 'y': -0.25}
+    
+    OscButtonTiny:
+      id: run
+      name: "Run"
+      pos_hint: {'x': -0.45, 'y': -0.11}
+
+    OscButtonTiny:
+      id: walk
+      name: "Walk"
+      pos_hint: {'x': -0.45, 'y': 0.03}
+

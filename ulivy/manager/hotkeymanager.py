@@ -15,6 +15,9 @@ class HotkeyManager(Widget):
         self.register_key("alt", "alt")
         self.register_key("shift", "shift")
 
+        self.register_key("alt", "walk")
+        self.register_key("shift", "run")
+
         self.register_key("up", "w")
         self.register_key("down", "s")
         self.register_key("left", "a")
@@ -27,6 +30,7 @@ class HotkeyManager(Widget):
 
         self.register_key("backspace", "x")
         self.register_key("backspace", "backspace", True)
+        self.register_key("interact", "interact")
         self.register_key("interact", "c")
         self.register_key("interact", "enter")
         self.register_key("interact", "z")
