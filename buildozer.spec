@@ -13,7 +13,7 @@ package.domain = org.ulix.dexflow
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,kv,jpg,png,glsl,ldtkc,atlas
+source.include_exts = py,kv,jpg,png,glsl,ldtkc,atlas,lark
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = 
