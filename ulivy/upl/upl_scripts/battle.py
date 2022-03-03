@@ -17,7 +17,7 @@ class Battle:
         self.act = act
         self.src = src
         self.user = user
-        self.act.game.r_int.fade = True
+        # self.act.game.r_int.fade = True # TODO: ulivy
 
         self.encounter_init = False
 

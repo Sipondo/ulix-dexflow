@@ -49,17 +49,20 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 
 from ulivy.manager.actionmanager import ActionManager
-from ulivy.manager.hotkeymanager import HotkeyManager
-from ulivy.manager.entitymanager import EntityManager
-from ulivy.upl.uplmanager import UplManager
-from ulivy.manager.mapmanager import MapManager
-from ulivy.manager.savemanager import SaveManager
-from ulivy.manager.gamestatemanager import GameStateManager
 from ulivy.manager.animationmanager import AnimationManager
 from ulivy.manager.collisionmanager import CollisionManager
+from ulivy.manager.entitymanager import EntityManager
+from ulivy.manager.gamestatemanager import GameStateManager
+from ulivy.manager.hotkeymanager import HotkeyManager
+from ulivy.manager.pbsmanager import PbsManager
+from ulivy.manager.mapmanager import MapManager
+from ulivy.manager.savemanager import SaveManager
 from ulivy.manager.oscmanager import OscManager, FPSCounter
-
 from ulivy.manager.panmanager import PanManager
+from ulivy.manager.resourcemanager import ResourceManager
+from ulivy.upl.uplmanager import UplManager
+
+from ulivy.renderer.audiorenderer import AudioRenderer
 from ulivy.renderer.tilerenderer import TileRenderer
 
 from ulivy.player.inventory import Inventory
@@ -113,6 +116,7 @@ class PokeGame(Screen):
 
         self.size = Window.size
 
+        self.m_res = ResourceManager(self)
         self.inventory = Inventory(self)
 
         self.m_sav = SaveManager(self)
@@ -126,8 +130,10 @@ class PokeGame(Screen):
         self.m_act = ActionManager(self)
         self.m_gst = GameStateManager(self)
         self.m_key = HotkeyManager(self)
+        self.m_pbs = PbsManager(self)
         self.m_upl = UplManager(self)
 
+        self.r_aud = AudioRenderer(self)
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
 

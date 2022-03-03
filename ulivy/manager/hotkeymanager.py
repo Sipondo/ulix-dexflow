@@ -15,6 +15,10 @@ class HotkeyManager(Widget):
         self.register_key("alt", "alt")
         self.register_key("shift", "shift")
 
+        self.register_key("ctrl", "rctrl")
+        self.register_key("alt", "ralt")
+        self.register_key("shift", "rshift")
+
         self.register_key("alt", "walk")
         self.register_key("shift", "run")
 

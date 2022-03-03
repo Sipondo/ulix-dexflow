@@ -38,7 +38,7 @@ class Encounter:
         self.fighter = self.act.game.m_pbs.get_fighter_by_name(res).copy()
 
         self.fighter.level = self.act.game.m_map.get_encounter_level()
-        self.act.game.r_int.fade = True
+        # self.act.game.r_int.fade = True # TODO: ulivy
 
         self.encounter_init = False
 

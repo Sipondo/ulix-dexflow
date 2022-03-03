@@ -1,5 +1,6 @@
 # from ..gamestate.gamestatebattle import GameStateBattle
-# from ..gamestate.gamestatecinematic import GameStateCinematic
+from ..gamestate.gamestatecinematic import GameStateCinematic
+
 # from ..gamestate.gamestateintro import GameStateIntro
 # from ..gamestate.gamestatemenubag import GameStateMenuBag
 # from ..gamestate.gamestatemenucareer import GameStateMenuCareer
