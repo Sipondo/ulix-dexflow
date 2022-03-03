@@ -96,14 +96,6 @@ if "pretty_errors" in sys.modules:
     )
 
 
-SIZE_X = 320
-if SIZE_X % 16:
-    SIZE_X -= SIZE_X % 16
-    print(f"SIZE_X not divisible by 16, reverting to: {SIZE_X}")
-SIZE_Y = int(SIZE_X / 16 * 9)
-print(f"SIZE: {SIZE_X}x{SIZE_Y}, {SIZE_X/16}x{SIZE_Y/16}")
-
-
 class PokeGame(Screen):
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
