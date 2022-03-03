@@ -150,6 +150,7 @@ class PokeGame(Screen):
         self.maphack = False
 
         self.m_gst.switch_state("overworld")
+        self.m_map.set_level(self.m_map.current_level_id)
         self.time = 0
         Clock.schedule_interval(self.update, 0)
 
