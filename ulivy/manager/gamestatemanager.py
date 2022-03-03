@@ -1,4 +1,4 @@
-# from ..gamestate.gamestatebattle import GameStateBattle
+from ..gamestate.gamestatebattle import GameStateBattle
 from ..gamestate.gamestatecinematic import GameStateCinematic
 
 # from ..gamestate.gamestateintro import GameStateIntro
