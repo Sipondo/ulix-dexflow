@@ -83,6 +83,11 @@ class OscManager(FloatLayout):
         self.val_x = x
         self.val_y = y
 
+        if abs(x) > abs(y):
+            y = 0
+        else:
+            x = 0
+
         if x < -DEADZONE and not self.left:
             self.left = True
             self.game.m_key.key_event("left", "down", [])

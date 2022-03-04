@@ -137,7 +137,7 @@ class PokeGame(Screen):
         self.r_til = TileRenderer(self)
         self.add_widget(self.r_til)
 
-        if platform != "android":
+        if platform == "android":
             self.m_osc = OscManager(self)
             self.add_widget(self.m_osc)
         else:
