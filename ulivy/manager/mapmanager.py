@@ -23,7 +23,7 @@ class MapManager:
         self.allow_save = False
         self.allow_cycle = True
         self.environment = "forest"
-        # self.hospital = self.game.m_sav.load("current_hospital") or "L1"
+        self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 
     def get_world_data(self):
         # TEMP!!!!!!! ULIVY
@@ -33,24 +33,24 @@ class MapManager:
 
     def load_world_data(self):
         # print(self.game.m_res.get_world_data().files)
-        # data = self.game.m_res.get_world_data()
+        data = self.game.m_res.get_world_data()
 
         data = self.get_world_data()
-        print(data.files)
+        # print(data.files)
 
         level_data, self.world_data = [data[key][()] for key in data.files]
         self.levels = {int(key): level_data[key] for key in level_data.keys()}
 
-        # self.game.m_sav.settables.holder_is_frozen = False
-        # self.game.m_sav.switches.holder_is_frozen = False
-        # for value in self.world_data["settables"]:
-        #     self.game.m_sav.set_new_settable(value, 0)
+        self.game.m_sav.settables.holder_is_frozen = False
+        self.game.m_sav.switches.holder_is_frozen = False
+        for value in self.world_data["settables"]:
+            self.game.m_sav.set_new_settable(value, 0)
 
-        # for value in self.world_data["switches"]:
-        #     self.game.m_sav.set_new_switch(value, False)
+        for value in self.world_data["switches"]:
+            self.game.m_sav.set_new_switch(value, False)
 
-        # self.game.m_sav.settables.holder_is_frozen = True
-        # self.game.m_sav.switches.holder_is_frozen = True
+        self.game.m_sav.settables.holder_is_frozen = True
+        self.game.m_sav.switches.holder_is_frozen = True
 
     def convert_mapstring_to_key(self, mapstr):
         # Now also accepts integers

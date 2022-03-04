@@ -13,6 +13,7 @@ from kivy.properties import (
     ListProperty,
 )
 
+
 import os
 import numpy as np
 
@@ -38,13 +39,14 @@ with open(resource_find("ulivy_shaders/basic_entity_vs.glsl")) as file:
 
 
 class EntityLayerWidget(FloatLayout):
-    def __init__(self, game, h, offset, **kwargs):
+    def __init__(self, game, h, entity_h, offset, **kwargs):
         self.game = game
         self.canvas = RenderContext(
             fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
         )
 
         self.h = h
+        self.entity_h = entity_h
         self.offset = (float(offset[0]) / 21, float(offset[1]) / 12)
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
@@ -80,10 +82,14 @@ class EntityLayerWidget(FloatLayout):
             self.size[1] / Window.size[1],
         )
 
-        vertices, indices = self.parent.parent.parent.parent.m_ent.vertices()
+        vertices, indices = self.parent.parent.parent.parent.m_ent.vertices(
+            entity_h=self.entity_h
+        )
 
         self.mesh.vertices = vertices
         self.mesh.indices = indices
+
+        # print(self.h, self.mesh.indices)
 
         self.camera_position = (
             self.game.m_pan.total_x / 21,
@@ -121,9 +127,6 @@ class TileLayerWidget(FloatLayout):
         self.canvas["texture0"] = 1
         self.canvas["texture1"] = 2
 
-        self.rec1 = Rectangle(size=self.size, pos=self.pos)
-        self.canvas.add(self.rec1)
-
         self.tiles = tiles
 
         self.blittex = Texture.create(size=self.tiles.shape[:2])
@@ -134,6 +137,9 @@ class TileLayerWidget(FloatLayout):
 
         self.canvas.add(BindTexture(texture=self.tex1, index=1))
         self.canvas.add(BindTexture(texture=self.blittex, index=2))
+
+        self.rec1 = Rectangle(size=self.size, pos=self.pos)
+        self.canvas.add(self.rec1)
 
         self.camera_position = 0
 
@@ -184,11 +190,42 @@ class TileRenderer(FloatLayout):
         self.gamecanvas = getattr(self.ids, "GameCanvas")
 
         self.size = Window.size
-        # self.add_widget(TileLayerWidget(fs=shader, height=7))
 
         self.m_map = game.m_map
         self.m_map.load_world_data()
         self.layers = []
+        self.entitylayers = []
+
+        self.set_map_via_manager()
+
+    def clear_layers(self):
+        self.gamecanvas.clear_widgets()
+        for layer in self.layers:
+            del layer
+
+        self.layers = []
+        self.entitylayers = []
+
+    def add_layers_to_canvas(self):
+        print("UNSORTED", [(x.h, x.offset) for x in self.layers])
+        print(
+            "SORTED", [(x.h, x.offset) for x in sorted(self.layers, key=lambda x: x.h)]
+        )
+        self.gamecanvas.clear_widgets()
+        for layer in sorted(self.layers, key=lambda x: x.h):
+            self.gamecanvas.add_widget(layer)
+
+    def update(self, time, dt):
+        for layer in sorted(self.layers, key=lambda x: x.h):
+            layer.update(time, dt)
+
+    def add_layer(self, widget):
+        self.gamecanvas.add_widget(widget)
+        self.layers.append(widget)
+
+    def set_map_via_manager(self, offset=(0, 0), fade=True):
+
+        self.clear_layers()
 
         pth = os.path.join("resources", "essentials", "graphics", "tilesets")
         resource_add_path(pth)
@@ -212,44 +249,46 @@ class TileRenderer(FloatLayout):
             if level not in self.texmap:
                 self.texmap[level] = Image(resource_find(f"{level}.png"))
 
-        self.spawn_tile_layers(self.m_map.current_tilesets)
+        self.spawn_tile_layers(self.m_map.current_tilesets, offset=offset, primary=True)
 
-        offset = (0, 0)  # TODO: TEMP
+        if conns := self.m_map.current_connected_tilesets:
+            for (tiles, portal_pos, target_pos, direction,) in conns:
+                if direction == "E":
+                    direction = (1, 0)
+                elif direction == "S":
+                    direction = (0, 1)
+                elif direction == "W":
+                    direction = (-1, 0)
+                elif direction == "N":
+                    direction = (0, -1)
+                conn_offset = (
+                    offset[0] - portal_pos[0] - direction[0] + target_pos[0],
+                    offset[1] - portal_pos[1] - direction[1] + target_pos[1],
+                )
 
-        # if conns := self.m_map.current_connected_tilesets:
-        #     for (tiles, portal_pos, target_pos, direction,) in conns:
-        #         if direction == "E":
-        #             direction = (1, 0)
-        #         elif direction == "S":
-        #             direction = (0, 1)
-        #         elif direction == "W":
-        #             direction = (-1, 0)
-        #         elif direction == "N":
-        #             direction = (0, -1)
-        #         conn_offset = (
-        #             offset[0] - portal_pos[0] - direction[0] + target_pos[0],
-        #             offset[1] - portal_pos[1] - direction[1] + target_pos[1],
-        #         )
+                self.spawn_tile_layers(tiles, offset=conn_offset)
 
-        #         self.spawn_tile_layers(tiles, offset=conn_offset)
+        self.add_layers_to_canvas()
+        self.game.m_act.flush_regions()
+        self.game.m_ent.flush_entities()
+        self.game.m_ent.load_regions(offset)
+        self.game.m_ent.load_entities(offset)
 
-    def update(self, time, dt):
-        for layer in self.layers:
-            layer.update(time, dt)
+    def spawn_tile_layers(self, tileset_defs, offset=(0, 0), primary=False):
+        # print("Spawn layers! Offset:", offset)
+        if primary:
+            self.game.m_col.clear_collision()
+            self.game.m_col.set_offset(offset)
 
-    def add_layer(self, widget):
-        self.layers.append(widget)
-        self.gamecanvas.add_widget(widget)
-
-    def spawn_tile_layers(self, tileset_defs, offset=(0, 0)):
-
-        self.game.m_col.clear_collision()
-        self.game.m_col.set_offset(offset)
-
-        print("Spawn layers! Offset:", offset)
         entity_h = 0  # TODO fix
-        for h, mapdef in enumerate(tileset_defs):
+        h = 0.1 if primary else 0.2
+        for mapdef in tileset_defs:
+            h += 1
             if mapdef[0] != "TILES":
+                if mapdef[0] == "ENTITIES":
+                    print("ENTITYLAYER!", h)
+                    self.spawn_entity_layer(h, entity_h)
+                    entity_h += 1
                 continue
 
             ltype, level, tiles, collision = mapdef
@@ -259,11 +298,13 @@ class TileRenderer(FloatLayout):
 
             tiles = tiles.copy()
 
-            self.game.m_col.add_collision_layer(
-                collision, entity_h, tiles if "collision" in level.lower() else None
-            )
+            if primary:
+                self.game.m_col.add_collision_layer(
+                    collision, entity_h, tiles if "collision" in level.lower() else None
+                )
 
             for tile in tiles:
+                h += 1
                 m = max(tile.shape[:2])
                 new = np.zeros((m, m, 2))  # TODO: VERY DIRTY FIX, refactor!
                 # height of renderer doesn't work properly when input map isn't square.
@@ -287,6 +328,15 @@ class TileRenderer(FloatLayout):
                     )
                 )
 
-        self.entitylayer = EntityLayerWidget(game=self.game, h=0, offset=offset)
-        self.add_layer(self.entitylayer)
-        self.game.m_ent.load_entities(offset)
+    def spawn_entity_layer(self, h, entity_h, offset=(0, 0)):
+        if len(self.entitylayers) < 1:  # TODO: fix double mesh bug
+            self.entitylayers.append(
+                EntityLayerWidget(
+                    game=self.game,
+                    h=h,
+                    entity_h=entity_h,
+                    offset=(len(self.entitylayers), 0),
+                )
+            )
+            self.add_layer(self.entitylayers[-1])
+

@@ -30,9 +30,9 @@ class Teleport:
                 int(target_location[0]),
                 int(target_location[1]),
             )
-            self.game.r_wld.offset = (0.5, 13 / 16)
+            self.game.r_til.offset = (0.5, 13 / 16)
             self.game.m_col.offset = (0.5, 13 / 16)
-            self.game.r_wld.set_map_via_manager(
+            self.game.r_til.set_map_via_manager(  # TODO: this shouldn't be called directly
                 (0, 0,), fade=False,
             )
         else:

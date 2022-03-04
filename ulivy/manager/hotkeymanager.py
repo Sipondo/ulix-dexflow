@@ -21,6 +21,7 @@ class HotkeyManager(Widget):
 
         self.register_key("alt", "walk")
         self.register_key("shift", "run")
+        self.register_key("ctrl", "bike")
 
         self.register_key("up", "w")
         self.register_key("down", "s")

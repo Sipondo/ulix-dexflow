@@ -104,7 +104,7 @@ class EntityManager:
             x for x in list(self.entities.values()) if x.height == height
         ]
 
-    def vertices(self):
+    def vertices(self, entity_h):
         draw_entities = sorted(
             list(self.entities.values()) + [self.player],
             key=lambda x: (x.render_priority, x.y_g),
@@ -114,6 +114,9 @@ class EntityManager:
         indices = []
         for entity in draw_entities:
             if not entity.visible or not entity.sprites:
+                continue
+
+            if not entity.height == entity_h:
                 continue
             # entity.on_render()
             mt, cf = entity.get_draw()  # movement type and current frame

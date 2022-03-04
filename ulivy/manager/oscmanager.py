@@ -27,6 +27,7 @@ class OscManager(FloatLayout):
             "backspace": False,
             "walk": False,
             "run": False,
+            "bike": False,
         }
 
     def _bind_joysticks(self):
@@ -54,6 +55,8 @@ class OscManager(FloatLayout):
             self.event_button(instance, pad, "walk")
         elif instance.parent == self.ids.run:
             self.event_button(instance, pad, "run")
+        elif instance.parent == self.ids.bike:
+            self.event_button(instance, pad, "bike")
 
     def event_button(self, instance, pad, key):
         x, y = pad
