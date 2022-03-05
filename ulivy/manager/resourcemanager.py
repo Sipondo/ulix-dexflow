@@ -4,7 +4,10 @@ import numpy as np
 
 from io import BytesIO
 from pathlib import Path
-from PIL import Image, ImageFont
+
+from kivy.resources import resource_find, resource_add_path
+
+# from PIL import Image, ImageFont
 
 
 TYPES = [
@@ -75,8 +78,10 @@ class ResourceManager:
 
     def resolve_resource_path(self, pth):
         for dir in self.resource_dirs:
-            if (dir / pth).is_file():
-                return dir / pth
+            # if (dir / pth).is_file():
+            #     return dir / pth
+            if d := resource_find(str(dir / pth)):
+                return d
         return None
 
     #############################

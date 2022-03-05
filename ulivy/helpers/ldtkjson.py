@@ -236,7 +236,12 @@ class FieldDefinition:
         identifier = from_str(obj.get("identifier"))
         is_array = from_bool(obj.get("isArray"))
         symmetrical_ref = from_bool(obj.get("symmetricalRef"))
-        field_definition_type = LevelFieldType(obj.get("type"))
+
+        try:
+            field_definition_type = LevelFieldType(obj.get("type"))
+        except ValueError as e:
+            field_definition_type = LevelFieldType(obj.get("type")["id"])
+
         uid = from_int(obj.get("uid"))
         use_for_smart_color = from_bool(obj.get("useForSmartColor"))
         accept_file_types = from_union(
