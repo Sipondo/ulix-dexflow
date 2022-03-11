@@ -53,7 +53,7 @@ def compile_world(pth):
     coldefs = {
         t.uid: {
             n: [
-                x["enumValueId"] for x in t.enum_tags if n in x["tileIds"]
+                x.enum_value_id for x in t.enum_tags if n in x.tile_ids
             ]  # .replace("X", "ESWN")
             for n in range(t.px_hei * t.px_wid // 256)
         }
@@ -65,7 +65,7 @@ def compile_world(pth):
     enumValues = list(
         dict.fromkeys(
             ["E", "S", "W", "N", "X"]
-            + [x["enumValueId"] for t in a.defs.tilesets for x in t.enum_tags]
+            + [x.enum_value_id for t in a.defs.tilesets for x in t.enum_tags]
         )
     )[5:]
 
