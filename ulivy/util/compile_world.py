@@ -109,9 +109,6 @@ def compile_world(pth):
         width = math.ceil(level.px_wid / 256 + 1) * 16
         height = math.ceil(level.px_hei / 256 + 1) * 16
 
-        # width = math.ceil(level.px_wid / 16 + 1)
-        # height = math.ceil(level.px_hei / 16 + 1)
-
         # TODO: get rid of this hack as well (2^ maps)
         width = 2 ** math.ceil(math.log2(width))
         height = 2 ** math.ceil(math.log2(height))
@@ -130,16 +127,7 @@ def compile_world(pth):
         for index, depth_block in enumerate(reversed(layer_depths)):
             print("Depth Block:", depth_block)
             curinst = reversed_instances[current_layer]
-            # if curinst.tileset_rel_path:
-            #     print(
-            #         "\n\nParents:",
-            #         [
-            #             x.stem
-            #             for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
-            #             if "graphics" in str(x)
-            #         ],
-            #         "\n\n",
-            #     )
+
             tileset = (
                 curinst.tileset_rel_path
                 and "/".join(
@@ -150,7 +138,6 @@ def compile_world(pth):
                     ][1:]
                     + [Path(curinst.tileset_rel_path).stem]
                 )
-                # f"{Path(curinst.tileset_rel_path).parent.stem}/{Path(curinst.tileset_rel_path).stem}"
             )
 
             if tileset != None:
@@ -168,9 +155,6 @@ def compile_world(pth):
 
                     if layer.type == "Tiles":
                         for tile in layer.grid_tiles:
-                            # if coldefs[layer.tileset_def_uid][tile.t]:
-                            #     print(vars(tile), layer.identifier, coldefs[layer.tileset_def_uid][tile.t])
-
                             loc = (tile.px[0] // 16, tile.px[1] // 16)
                             tile_array[current_depth, loc[1], loc[0]] = (
                                 tile.src[0] // 16 + 1,
@@ -197,24 +181,11 @@ def compile_world(pth):
                 for individual in col_array[1:]:
                     colmap = colmap | individual
 
-                # # Collision out of bounds
-                # colmap = (
-                #     colmap
-                #     | np.repeat(
-                #         np.expand_dims(np.sum(np.sum(tile_array, axis=3), axis=0), axis=2),
-                #         4,
-                #         axis=2,
-                #     )
-                #     < 1
-                # )
-
                 output_layers.append(["TILES", tileset, tile_array, colmap])
             else:
                 print(
                     "IDENTIFIER", reversed_instances[current_layer].identifier.lower()
                 )
-                # if reversed_instances[current_layer].identifier == "Entities_A":  # Type
-                #     player_height = index
                 if "Regions" in curinst.identifier:
                     output_layers.append(["REGIONS"])
                 else:
