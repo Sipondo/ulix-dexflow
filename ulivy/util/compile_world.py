@@ -52,9 +52,7 @@ def compile_world(pth):
 
     coldefs = {
         t.uid: {
-            n: [
-                x.enum_value_id for x in t.enum_tags if n in x.tile_ids
-            ]  # .replace("X", "ESWN")
+            n: [x.enum_value_id for x in t.enum_tags if n in x.tile_ids]
             for n in range(t.px_hei * t.px_wid // 256)
         }
         for t in a.defs.tilesets
@@ -93,8 +91,6 @@ def compile_world(pth):
         for layer in level.layer_instances:
             if "Boundaries" in layer.identifier:
                 continue
-            # if layer.type == "IntGrid":
-            #     continue
             if last_layer != "init" and last_layer != layer.tileset_rel_path:
                 layer_depths.append(depth)
                 depth = 0
@@ -113,7 +109,6 @@ def compile_world(pth):
         width = 2 ** math.ceil(math.log2(width))
         height = 2 ** math.ceil(math.log2(height))
 
-        entity_array = None
         reversed_instances = [
             x
             for x in reversed(level.layer_instances)
@@ -124,28 +119,30 @@ def compile_world(pth):
         entity_height = 0
         output_layers = []
 
+        ################################################################################
+        ##################################### TILES ####################################
+        ################################################################################
+
         for index, depth_block in enumerate(reversed(layer_depths)):
             print("Depth Block:", depth_block)
             curinst = reversed_instances[current_layer]
 
-            tileset = (
-                curinst.tileset_rel_path
-                and "/".join(
-                    [
-                        x.stem
-                        for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
-                        if "graphics" in str(x)
-                    ][1:]
-                    + [Path(curinst.tileset_rel_path).stem]
-                )
+            tileset = curinst.tileset_rel_path and "/".join(
+                [
+                    x.stem
+                    for x in list(Path(curinst.tileset_rel_path).parents)[::-1]
+                    if "graphics" in str(x)
+                ][1:]
+                + [Path(curinst.tileset_rel_path).stem]
             )
 
+            STACK = 10
             if tileset != None:
                 tile_array = np.zeros(
-                    (depth_block, height, width, 2), dtype=np.dtype("uint16")
+                    (depth_block, STACK, height, width, 2), dtype=np.dtype("uint16")
                 )
                 col_array = np.zeros(
-                    (depth_block, height, width, 9), dtype=np.dtype("bool")
+                    (depth_block, STACK, height, width, 9), dtype=np.dtype("bool")
                 )
                 for current_depth in range(depth_block):
                     layer = reversed_instances[current_layer]
@@ -156,26 +153,42 @@ def compile_world(pth):
                     if layer.type == "Tiles":
                         for tile in layer.grid_tiles:
                             loc = (tile.px[0] // 16, tile.px[1] // 16)
-                            tile_array[current_depth, loc[1], loc[0]] = (
+
+                            stack = 0
+                            while (
+                                sum(tile_array[current_depth, stack, loc[1], loc[0]])
+                                > 0
+                            ):
+                                stack += 1
+
+                            tile_array[current_depth, stack, loc[1], loc[0]] = (
                                 tile.src[0] // 16 + 1,
                                 tile.src[1] // 16,
                             )
-                            col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
-                                coldefs[layer.tileset_def_uid][tile.t]
-                            )
+                            col_array[
+                                current_depth, stack, loc[1], loc[0]
+                            ] = coldef_to_bool(coldefs[layer.tileset_def_uid][tile.t])
                     if layer.type == "IntGrid":
                         for tile in layer.auto_layer_tiles:
                             loc = (
                                 tile.px[0] // 16,
                                 tile.px[1] // 16,
                             )
-                            tile_array[current_depth, loc[1], loc[0]] = (
+
+                            stack = 0
+                            while (
+                                sum(tile_array[current_depth, stack, loc[1], loc[0]])
+                                > 0
+                            ):
+                                stack += 1
+
+                            tile_array[current_depth, stack, loc[1], loc[0]] = (
                                 tile.src[0] // 16 + (tile.f % 2) + 1,
                                 tile.src[1] // 16 + (tile.f // 2),
                             )
-                            col_array[current_depth, loc[1], loc[0]] = coldef_to_bool(
-                                coldefs[layer.tileset_def_uid][tile.t]
-                            )
+                            col_array[
+                                current_depth, stack, loc[1], loc[0]
+                            ] = coldef_to_bool(coldefs[layer.tileset_def_uid][tile.t])
                     current_layer += 1
                 colmap = col_array[0]
                 for individual in col_array[1:]:
@@ -193,9 +206,14 @@ def compile_world(pth):
                     entity_height += 1
                 current_layer += 1
 
+        atlas_layers = convert_to_atlas_layers(output_layers)
+
         entities = []
         regions = []
 
+        ################################################################################
+        ################################### ENTITIES ###################################
+        ################################################################################
         entity_height = 0
         for instance in reversed_instances:
             if instance.type == "Entities":
@@ -241,7 +259,7 @@ def compile_world(pth):
                     entity_height += 1
 
         all_level_data[id] = {
-            "layers": output_layers,
+            "layers": atlas_layers,
             "p_height": 0,
             "entities": entities,
             "regions": regions,
@@ -277,3 +295,86 @@ def compile_world(pth):
 
     with open("world.ldtkc", "wb") as file:
         file.write(out)
+
+
+from PIL import Image
+
+
+def convert_to_atlas_layers(layers):
+    print("\n" * 5, "-" * 30, "STARTING ATLAS CONVERSION", "-" * 30, "\n" * 3)
+    # Identify atlas blocks
+    atlas_blocks = []
+    atlas_block = []
+    for i, layer in enumerate(layers):
+        print(layer[0])
+
+        if layer[0] == "TILES":
+            atlas_block.append(i)
+        if layer[0] == "ENTITIES":
+            atlas_blocks.append(atlas_block)
+            atlas_block = []
+    else:
+        if atlas_block:
+            atlas_blocks.append(atlas_block)
+            atlas_block = []
+
+    n = -1
+    tiledict = {
+        x: (n := n + 1)
+        for x in set([layer[1] for layer in layers if layer[0] == "TILES"])
+    }
+
+    tilesets = [0] * len(tiledict)
+    for k, v in tiledict.items():
+        tilesets[v] = Image.open(resolve_resource_path(f"{k}.png"))
+
+    atlas_image = Image.new("RGBA", (4096, 4096))
+    atlas_stills = []
+    atlas = {}
+
+    for block in atlas_blocks:
+        for layer_i in block:
+            layer = layers[layer_i]
+            tileset_index = tiledict[layer[1]]
+            tileset = tilesets[tileset_index]
+
+            tile_array = layer[2]
+
+            for depth in range(tile_array.shape[0]):
+                for stack in range(tile_array.shape[1]):
+                    for y in range(tile_array.shape[2]):
+                        for x in range(tile_array.shape[3]):
+                            tile_index = tile_array[depth, stack, y, x]
+                            if tile_index[0] == 0 and tile_index[1] == 0:
+                                continue
+
+                            tile = tileset.crop(
+                                (
+                                    tile_index[0] * 16,
+                                    tile_index[1] * 16,
+                                    (tile_index[0] + 1) * 16,
+                                    (tile_index[1] + 1) * 16,
+                                )
+                            )
+                            # tile.save(f"data/tile{tile_index[0]}-{tile_index[1]}.png")
+
+                            origin = f"{tile_index}"
+                            dat = tile.getdata()
+                            if origin not in atlas.keys():
+                                if dat not in atlas_stills:
+                                    atlas_stills.append(dat)
+                                    atlas[origin] = len(atlas_stills)
+                                    # tile.save(
+                                    #     f"data/tile{tile_index[0]}-{tile_index[1]}.png"
+                                    # )
+
+    # atlas_image.save("data/testatlas.png")
+    # exit()
+
+
+def resolve_resource_path(pth):
+    resource_dirs = list(Path("").glob("resources/*/graphics"))
+    for dir in resource_dirs:
+        if (dir / pth).is_file():
+            return dir / pth
+    raise FileNotFoundError(pth)
