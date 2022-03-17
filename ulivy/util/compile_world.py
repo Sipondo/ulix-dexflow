@@ -288,6 +288,19 @@ def compile_world(pth):
         "switches": switches,
     }
 
+    for i, image in enumerate(atlas_images):
+        atlas_image.paste(
+            image,
+            (
+                (16 * i) % 4096,
+                ((16 * i) // 4096) * 16,
+                (16 * i) % 4096 + 16,
+                ((16 * i) // 4096) * 16 + 16,
+            ),
+            image,
+        )
+    atlas_image.save("data/testatlas.png")
+
     f = BytesIO()
     np.savez_compressed(f, **world_data)
     f.seek(0)
@@ -298,6 +311,11 @@ def compile_world(pth):
 
 
 from PIL import Image
+
+atlas_image = Image.new("RGBA", (4096, 4096))
+atlas_stills = []
+atlas_images = []
+atlas = {}
 
 
 def convert_to_atlas_layers(layers):
@@ -328,10 +346,6 @@ def convert_to_atlas_layers(layers):
     for k, v in tiledict.items():
         tilesets[v] = Image.open(resolve_resource_path(f"{k}.png"))
 
-    atlas_image = Image.new("RGBA", (4096, 4096))
-    atlas_stills = []
-    atlas = {}
-
     for block in atlas_blocks:
         for layer_i in block:
             layer = layers[layer_i]
@@ -340,15 +354,28 @@ def convert_to_atlas_layers(layers):
 
             tile_array = layer[2]
 
-            for depth in range(tile_array.shape[0]):
-                for stack in range(tile_array.shape[1]):
-                    for y in range(tile_array.shape[2]):
-                        for x in range(tile_array.shape[3]):
+            for y in range(tile_array.shape[2]):
+                for x in range(tile_array.shape[3]):
+                    tile_indices = []
+                    for depth in range(tile_array.shape[0]):
+                        for stack in range(tile_array.shape[1]):
                             tile_index = tile_array[depth, stack, y, x]
                             if tile_index[0] == 0 and tile_index[1] == 0:
                                 continue
+                            tile_indices.append(tile_index)
 
-                            tile = tileset.crop(
+                    if not tile_indices:
+                        continue
+
+                    origin = str(tileset_index) + "".join(
+                        [str(tile_index.tolist()) for tile_index in tile_indices]
+                    )
+
+                    if origin not in atlas.keys():
+                        tile = Image.new("RGBA", (16, 16))
+
+                        for tile_index in tile_indices:
+                            overlay = tileset.crop(
                                 (
                                     tile_index[0] * 16,
                                     tile_index[1] * 16,
@@ -356,17 +383,15 @@ def convert_to_atlas_layers(layers):
                                     (tile_index[1] + 1) * 16,
                                 )
                             )
+                            tile.paste(overlay, (0, 0), overlay)
                             # tile.save(f"data/tile{tile_index[0]}-{tile_index[1]}.png")
 
-                            origin = f"{tile_index}"
-                            dat = tile.getdata()
-                            if origin not in atlas.keys():
-                                if dat not in atlas_stills:
-                                    atlas_stills.append(dat)
-                                    atlas[origin] = len(atlas_stills)
-                                    # tile.save(
-                                    #     f"data/tile{tile_index[0]}-{tile_index[1]}.png"
-                                    # )
+                        dat = tile.getdata()
+                        if dat not in atlas_stills:
+                            atlas_stills.append(dat)
+                            atlas_images.append(tile)
+                            atlas[origin] = len(atlas_stills)
+                            # tile.save(f"data/{origin}.png")
 
     # atlas_image.save("data/testatlas.png")
     # exit()
