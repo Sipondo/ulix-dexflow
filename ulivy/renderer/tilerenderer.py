@@ -233,6 +233,8 @@ class TileRenderer(FloatLayout):
         resource_add_path(pth)
         pth = os.path.join("resources", "essentials", "graphics", "autocliffs")
         resource_add_path(pth)
+        pth = os.path.join("data")
+        resource_add_path(pth)
 
         self.texmap = {}
 
@@ -247,7 +249,8 @@ class TileRenderer(FloatLayout):
                 continue
 
             if level not in self.texmap:
-                self.texmap[level] = Image(resource_find(f"{level}.png"))
+                # self.texmap[level] = Image(resource_find(f"{level}.png"))
+                self.texmap[level] = Image(resource_find(f"testatlas.png"))
 
         self.spawn_tile_layers(self.m_map.current_tilesets, offset=offset, primary=True)
 

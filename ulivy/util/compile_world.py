@@ -79,6 +79,8 @@ def compile_world(pth):
     print("SWITCHES:", switches)
 
     for level in a.levels:
+        # if not "l1_happyhouse" in level.identifier.lower():
+        #     continue
         print("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)
         # print({field.identifier: field.value for field in level.field_instances})
 
@@ -331,6 +333,7 @@ def convert_to_atlas_layers(layers):
         if layer[0] == "ENTITIES":
             atlas_blocks.append(atlas_block)
             atlas_block = []
+            atlas_blocks.append([i])
     else:
         if atlas_block:
             atlas_blocks.append(atlas_block)
@@ -346,55 +349,77 @@ def convert_to_atlas_layers(layers):
     for k, v in tiledict.items():
         tilesets[v] = Image.open(resolve_resource_path(f"{k}.png"))
 
+    output = []
     for block in atlas_blocks:
-        for layer_i in block:
-            layer = layers[layer_i]
-            tileset_index = tiledict[layer[1]]
-            tileset = tilesets[tileset_index]
+        layer = layers[block[0]]
+        if layer[0] == "ENTITIES":
+            output.append(layer)
+            continue
 
-            tile_array = layer[2]
+        tile_array = layer[2]
+        y_range = tile_array.shape[2]
+        x_range = tile_array.shape[3]
 
-            for y in range(tile_array.shape[2]):
-                for x in range(tile_array.shape[3]):
-                    tile_indices = []
+        output_tile_array = np.zeros((1, y_range, x_range, 2), dtype=np.dtype("uint16"))
+
+        for y in range(y_range):
+            for x in range(x_range):
+                tile_indices = []
+                for layer_i in block:
+                    layer = layers[layer_i]
+                    tileset_index = tiledict[layer[1]]
+                    # tileset = tilesets[tileset_index]
+
+                    tile_array = layer[2]
                     for depth in range(tile_array.shape[0]):
                         for stack in range(tile_array.shape[1]):
                             tile_index = tile_array[depth, stack, y, x]
                             if tile_index[0] == 0 and tile_index[1] == 0:
                                 continue
-                            tile_indices.append(tile_index)
+                            tile_indices.append(
+                                (tile_index[0], tile_index[1], tileset_index)
+                            )
 
                     if not tile_indices:
                         continue
 
-                    origin = str(tileset_index) + "".join(
-                        [str(tile_index.tolist()) for tile_index in tile_indices]
-                    )
+                origin = "".join([str(tile_index) for tile_index in tile_indices])
 
-                    if origin not in atlas.keys():
-                        tile = Image.new("RGBA", (16, 16))
+                if origin not in atlas.keys():
+                    tile = Image.new("RGBA", (16, 16))
 
-                        for tile_index in tile_indices:
-                            overlay = tileset.crop(
-                                (
-                                    tile_index[0] * 16,
-                                    tile_index[1] * 16,
-                                    (tile_index[0] + 1) * 16,
-                                    (tile_index[1] + 1) * 16,
-                                )
+                    for tile_index in tile_indices:
+                        tile_index = (tile_index[0] - 1, tile_index[1], tile_index[2])
+                        overlay = tilesets[tile_index[2]].crop(
+                            (
+                                tile_index[0] * 16,
+                                tile_index[1] * 16,
+                                (tile_index[0] + 1) * 16,
+                                (tile_index[1] + 1) * 16,
                             )
-                            tile.paste(overlay, (0, 0), overlay)
-                            # tile.save(f"data/tile{tile_index[0]}-{tile_index[1]}.png")
+                        )
+                        tile.paste(overlay, (0, 0), overlay)
+                        # tile.save(f"data/tile{tile_index[0]}-{tile_index[1]}.png")
 
-                        dat = tile.getdata()
-                        if dat not in atlas_stills:
-                            atlas_stills.append(dat)
-                            atlas_images.append(tile)
-                            atlas[origin] = len(atlas_stills)
-                            # tile.save(f"data/{origin}.png")
+                    dat = list(tile.getdata())
+                    # for example in atlas_stills:
+                    #     if dat == example:
+                    #         break
+                    if dat not in atlas_stills:
+                        atlas_stills.append(dat)
+                        atlas_images.append(tile)
+                        # tile.save(f"data/{origin}.png")
 
-    # atlas_image.save("data/testatlas.png")
-    # exit()
+                    atlas[origin] = atlas_stills.index(dat)
+
+                # Set tile index
+                index = atlas[origin]
+                output_tile_array[0, y, x] = np.array((index % 128 + 1, index // 128))
+
+        layer[2] = output_tile_array
+        output.append(layer)
+
+    return output
 
 
 def resolve_resource_path(pth):
