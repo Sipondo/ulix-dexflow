@@ -38,10 +38,10 @@ class CollisionManager:
 
         # Mapcheck
         try:
-            col_fr = self.colmap[height][
+            col_fr = self.colmap[height][0][
                 pos[1], pos[0], self.get_direction_num(direction)
             ]
-            col_to = self.colmap[height][
+            col_to = self.colmap[height][0][
                 new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
             ]
         except IndexError as e:
@@ -101,7 +101,8 @@ class CollisionManager:
         try:
             return dict(
                 zip(
-                    self.game.m_map.enum_values, self.colmap[height][pos[1], pos[0], 4:]
+                    self.game.m_map.enum_values,
+                    self.colmap[height][0][pos[1], pos[0], 4:],
                 )
             )
         except IndexError:
@@ -129,7 +130,7 @@ class CollisionManager:
                 x2, y2 = pos
                 if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
                     return not entity.col_override
-        return np.all(self.colmap[height][pos[1], pos[0], :4])
+        return np.all(self.colmap[height][0][pos[1], pos[0], :4])
 
     def a_star(self, fr, to, height=0, next_to=False, src_entity=None):
         fr = (fr[0] + self.offset[0], fr[1] + self.offset[1])

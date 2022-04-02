@@ -250,7 +250,7 @@ class TileRenderer(FloatLayout):
 
             if level not in self.texmap:
                 # self.texmap[level] = Image(resource_find(f"{level}.png"))
-                self.texmap[level] = Image(resource_find(f"testatlas.png"))
+                self.texmap[level] = Image(resource_find(f"atlas_tiles.png"))
 
         self.spawn_tile_layers(self.m_map.current_tilesets, offset=offset, primary=True)
 

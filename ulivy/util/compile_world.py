@@ -1,8 +1,11 @@
 import json
+import logging
 import math
 import numpy as np
+
 from io import BytesIO
 from pathlib import Path
+from tqdm import tqdm
 
 from ulivy.helpers.ldtkjson import ldtk_json_from_dict
 from ulivy.upl.uplmanager import UplParser
@@ -73,16 +76,16 @@ def compile_world(pth):
     for enum in [x for x in a.defs.enums if x.identifier in ("Switches")]:
         switches = [x.id.lower() for x in enum.values]
 
-    print("ENUMVALUES:", enumValues)
-    print("CUSTOMDATA:", customData)
-    print("SETTABLES:", settables)
-    print("SWITCHES:", switches)
+    logging.info("ENUMVALUES:", enumValues)
+    logging.info("CUSTOMDATA:", customData)
+    logging.info("SETTABLES:", settables)
+    logging.info("SWITCHES:", switches)
 
-    for level in a.levels:
+    for level in tqdm(a.levels):
         # if not "l1_happyhouse" in level.identifier.lower():
         #     continue
-        print("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)
-        # print({field.identifier: field.value for field in level.field_instances})
+        logging.info("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)
+        # logging.info({field.identifier: field.value for field in level.field_instances})
 
         id_e = [int(x[1:]) for x in level.identifier.lower().split("_")[:-1]]
         id = str(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
@@ -99,7 +102,7 @@ def compile_world(pth):
             depth += 1
             last_layer = layer.tileset_rel_path
         layer_depths.append(depth)
-        print(layer_depths)
+        logging.info(layer_depths)
 
         # TODO: fix renderer so it doesn't require 16x16 worlds
         orig_width = level.px_wid // 16
@@ -126,7 +129,7 @@ def compile_world(pth):
         ################################################################################
 
         for index, depth_block in enumerate(reversed(layer_depths)):
-            print("Depth Block:", depth_block)
+            logging.info("Depth Block:", depth_block)
             curinst = reversed_instances[current_layer]
 
             tileset = curinst.tileset_rel_path and "/".join(
@@ -148,7 +151,7 @@ def compile_world(pth):
                 )
                 for current_depth in range(depth_block):
                     layer = reversed_instances[current_layer]
-                    print(
+                    logging.info(
                         f"{layer.identifier: <20} - {layer.type: <10} - {layer.tileset_rel_path}"
                     )
 
@@ -198,7 +201,7 @@ def compile_world(pth):
 
                 output_layers.append(["TILES", tileset, tile_array, colmap])
             else:
-                print(
+                logging.info(
                     "IDENTIFIER", reversed_instances[current_layer].identifier.lower()
                 )
                 if "Regions" in curinst.identifier:
@@ -220,7 +223,7 @@ def compile_world(pth):
         for instance in reversed_instances:
             if instance.type == "Entities":
                 if "Regions" in instance.identifier:
-                    print(f"Regions: {instance.identifier}")
+                    logging.info(f"Regions: {instance.identifier}")
                     for raw_ent in instance.entity_instances:
                         entity = {}
                         entity["identifier"] = raw_ent.identifier
@@ -230,14 +233,14 @@ def compile_world(pth):
                                 entity[f"f_{field.identifier}"] = parser.parse(
                                     field.value
                                 )
-                                # print(entity[f"f_{field.identifier}"].pretty())
+                                # logging.info(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
                         entity["height"] = raw_ent.height
                         regions.append(entity)
                 else:
-                    print(f"Entities: {instance.identifier}")
+                    logging.info(f"Entities: {instance.identifier}")
                     for raw_ent in instance.entity_instances:
                         entity = {}
                         entity["identifier"] = raw_ent.identifier
@@ -251,7 +254,7 @@ def compile_world(pth):
                                     entity[f"f_{field.identifier}"] = parser.parse(
                                         entity[f"f_{field.identifier}"]
                                     )
-                                    # print(entity[f"f_{field.identifier}"].pretty())
+                                    # logging.info(entity[f"f_{field.identifier}"].pretty())
                             else:
                                 entity[f"f_{field.identifier}"] = field.value
                         entity["width"] = raw_ent.width
@@ -271,15 +274,15 @@ def compile_world(pth):
             "orig_dimensions": (orig_width, orig_height),
         }
 
-        # print("Total tilesets:", [x[0] for x in output_layers])
-        # print(
+        # logging.info("Total tilesets:", [x[0] for x in output_layers])
+        # logging.info(
         #     "Total shapes:",
         #     [x[2].shape if x[0] == "TILES" else x for x in output_layers],
         # )
-        # print("Player height:", 0)
-        # print("Entities", entities)
-        # print("Regions:", "\n\n".join([str(x) for x in regions]))
-        # print("\n\n\n")
+        # logging.info("Player height:", 0)
+        # logging.info("Entities", entities)
+        # logging.info("Regions:", "\n\n".join([str(x) for x in regions]))
+        # logging.info("\n\n\n")
 
     world_data = {}
 
@@ -294,14 +297,14 @@ def compile_world(pth):
         atlas_image.paste(
             image,
             (
-                (16 * i) % 4096,
                 ((16 * i) // 4096) * 16,
-                (16 * i) % 4096 + 16,
+                ((16 * i) % 4096),
                 ((16 * i) // 4096) * 16 + 16,
+                ((16 * i) % 4096) + 16,
             ),
             image,
         )
-    atlas_image.save("data/testatlas.png")
+    atlas_image.save("data/atlas_tiles.png")
 
     f = BytesIO()
     np.savez_compressed(f, **world_data)
@@ -321,12 +324,12 @@ atlas = {}
 
 
 def convert_to_atlas_layers(layers):
-    print("\n" * 5, "-" * 30, "STARTING ATLAS CONVERSION", "-" * 30, "\n" * 3)
+    logging.info("\n" * 5, "-" * 30, "STARTING ATLAS CONVERSION", "-" * 30, "\n" * 3)
     # Identify atlas blocks
     atlas_blocks = []
     atlas_block = []
     for i, layer in enumerate(layers):
-        print(layer[0])
+        logging.info(layer[0])
 
         if layer[0] == "TILES":
             atlas_block.append(i)
@@ -414,7 +417,7 @@ def convert_to_atlas_layers(layers):
 
                 # Set tile index
                 index = atlas[origin]
-                output_tile_array[0, y, x] = np.array((index % 128 + 1, index // 128))
+                output_tile_array[0, y, x] = np.array((index // 256 + 1, index % 256))
 
         layer[2] = output_tile_array
         output.append(layer)
