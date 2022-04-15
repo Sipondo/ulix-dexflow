@@ -13,7 +13,7 @@
 	"uid": 181,
 	"worldX": 176,
 	"worldY": -160,
-	"worldDepth": 1,
+	"worldDepth": 0,
 	"pxWid": 208,
 	"pxHei": 160,
 	"__bgColor": "#7F8093",
@@ -526,5 +526,9 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" }, { "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "e" } ]
+	"__neighbours": [
+		{ "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "s" },
+		{ "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" },
+		{ "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "e" }
+	]
 }

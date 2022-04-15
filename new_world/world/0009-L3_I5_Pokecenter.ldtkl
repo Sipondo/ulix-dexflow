@@ -5,7 +5,7 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "0.10.0-beta3",
+		"appVersion": "1.1.2",
 		"url": "https://ldtk.io"
 	},
 	"identifier": "L3_I5_Pokecenter",
@@ -13,7 +13,7 @@
 	"uid": 461,
 	"worldX": 2208,
 	"worldY": 752,
-	"worldDepth": 0,
+	"worldDepth": 1,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",

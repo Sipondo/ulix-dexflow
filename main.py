@@ -64,6 +64,7 @@ from ulivy.upl.uplmanager import UplManager
 
 from ulivy.renderer.audiorenderer import AudioRenderer
 from ulivy.renderer.tilerenderer import TileRenderer
+from ulivy.renderer.uirenderer import UIRenderer
 
 from ulivy.player.inventory import Inventory
 from ulivy.util.compile_world import compile_world
@@ -135,6 +136,7 @@ class PokeGame(Screen):
 
         self.r_aud = AudioRenderer(self)
         self.r_til = TileRenderer(self)
+
         self.add_widget(self.r_til)
 
         if platform == "android":
@@ -144,6 +146,8 @@ class PokeGame(Screen):
             self.m_osc = None
 
         self.add_widget(FPSCounter())
+
+        self.r_uin = UIRenderer(self)
 
         self.maphack = False
 

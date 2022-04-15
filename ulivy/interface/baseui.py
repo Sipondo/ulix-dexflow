@@ -1,4 +1,4 @@
-import abc
+# import abc
 
 from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
@@ -20,18 +20,19 @@ class PixelImage(Image):
         texture.mag_filter = "nearest"
 
 
-class BaseUI(FloatLayout, abc.ABC):
-    def __init__(self, game):
+class BaseUI(FloatLayout):
+    def __init__(self, game, **kwargs):
         self.game = game
+        super().__init__(**kwargs)
 
-    @abc.abstractmethod
-    def on_enter(self, **kwargs):
-        pass
+    # @abc.abstractmethod
+    # def on_enter(self, **kwargs):
+    #     pass
 
-    @abc.abstractmethod
-    def update(self, time, frame_time):
-        return self.lock
+    # @abc.abstractmethod
+    # def update(self, time, frame_time):
+    #     return False
 
-    @abc.abstractmethod
-    def on_exit(self):
-        pass
+    # @abc.abstractmethod
+    # def on_exit(self):
+    #     pass

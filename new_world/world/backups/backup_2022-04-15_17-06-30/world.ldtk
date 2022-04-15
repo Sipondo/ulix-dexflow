@@ -6263,7 +6263,7 @@
 			"uid": 179,
 			"worldX": -32,
 			"worldY": -176,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 208,
 			"pxHei": 176,
 			"__bgColor": "#7F8093",
@@ -6296,7 +6296,7 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "e" }]
+			"__neighbours": [ { "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "s" }, { "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "e" } ]
 		},
 		{
 			"identifier": "L1_I3_StarterHouseLightPuzzle",
@@ -6304,7 +6304,7 @@
 			"uid": 435,
 			"worldX": 384,
 			"worldY": -320,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 400,
 			"pxHei": 320,
 			"__bgColor": "#7F8093",
@@ -6340,7 +6340,11 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "w" }]
+			"__neighbours": [
+				{ "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "s" },
+				{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "w" },
+				{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "s" }
+			]
 		},
 		{
 			"identifier": "L1_I2_StarterHouseFloor2",
@@ -6348,7 +6352,7 @@
 			"uid": 181,
 			"worldX": 176,
 			"worldY": -160,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 208,
 			"pxHei": 160,
 			"__bgColor": "#7F8093",
@@ -6381,7 +6385,11 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" }, { "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "e" } ]
+			"__neighbours": [
+				{ "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "s" },
+				{ "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" },
+				{ "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "e" }
+			]
 		},
 		{
 			"identifier": "L2_SquigglySwerve",
@@ -6557,7 +6565,7 @@
 			"uid": 455,
 			"worldX": 1296,
 			"worldY": 752,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6590,7 +6598,11 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [{ "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "e" }]
+			"__neighbours": [
+				{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "w" },
+				{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
+				{ "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "e" }
+			]
 		},
 		{
 			"identifier": "L3_I5_Pokecenter",
@@ -6598,7 +6610,7 @@
 			"uid": 461,
 			"worldX": 2208,
 			"worldY": 752,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6639,7 +6651,7 @@
 			"uid": 462,
 			"worldX": 2512,
 			"worldY": 752,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6680,7 +6692,7 @@
 			"uid": 456,
 			"worldX": 1600,
 			"worldY": 752,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6714,6 +6726,7 @@
 			],
 			"layerInstances": null,
 			"__neighbours": [
+				{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
 				{ "levelIid": "92ee5b40-8dc0-11ec-9a7d-977fe9faaf68", "levelUid": 455, "dir": "w" },
 				{ "levelIid": "92f0f350-8dc0-11ec-9a7d-5bd9a11c5fdb", "levelUid": 459, "dir": "n" },
 				{ "levelIid": "92f18f90-8dc0-11ec-9a7d-8ff77ea59005", "levelUid": 457, "dir": "e" }
@@ -6725,7 +6738,7 @@
 			"uid": 459,
 			"worldX": 1600,
 			"worldY": 560,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 240,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6766,7 +6779,7 @@
 			"uid": 457,
 			"worldX": 1904,
 			"worldY": 752,
-			"worldDepth": 1,
+			"worldDepth": 0,
 			"pxWid": 304,
 			"pxHei": 192,
 			"__bgColor": "#7F8093",
@@ -6799,7 +6812,11 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "92ef45a0-8dc0-11ec-9a7d-992f2c6461db", "levelUid": 461, "dir": "e" }, { "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "w" } ]
+			"__neighbours": [
+				{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
+				{ "levelIid": "92ef45a0-8dc0-11ec-9a7d-992f2c6461db", "levelUid": 461, "dir": "e" },
+				{ "levelIid": "92f07e20-8dc0-11ec-9a7d-1d8dfa3769a9", "levelUid": 456, "dir": "w" }
+			]
 		},
 		{
 			"identifier": "L6_SeaSideShore",

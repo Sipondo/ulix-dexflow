@@ -69,3 +69,5 @@ class GameStateManager:
 
         print(f"GAMESTATE SWITCHED: {new_state}")
         self.current_state.on_enter(**kwargs)
+
+        self.game.r_uin.switch_ui(new_state)

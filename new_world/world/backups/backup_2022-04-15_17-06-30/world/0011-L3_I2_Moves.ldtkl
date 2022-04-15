@@ -13,7 +13,7 @@
 	"uid": 456,
 	"worldX": 1600,
 	"worldY": 752,
-	"worldDepth": 1,
+	"worldDepth": 0,
 	"pxWid": 304,
 	"pxHei": 192,
 	"__bgColor": "#7F8093",
@@ -751,6 +751,7 @@
 		}
 	],
 	"__neighbours": [
+		{ "levelIid": "92e4e560-8dc0-11ec-9a7d-1302aa7905a5", "levelUid": 316, "dir": "s" },
 		{ "levelIid": "92ee5b40-8dc0-11ec-9a7d-977fe9faaf68", "levelUid": 455, "dir": "w" },
 		{ "levelIid": "92f0f350-8dc0-11ec-9a7d-5bd9a11c5fdb", "levelUid": 459, "dir": "n" },
 		{ "levelIid": "92f18f90-8dc0-11ec-9a7d-8ff77ea59005", "levelUid": 457, "dir": "e" }
