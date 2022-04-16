@@ -11,13 +11,23 @@ class UIDebug(BaseUI):
         self.block_input = True
         self.initialised = False
 
+        self.cursor = "|"
+        self.cursor_timer = 0
+
     def update(self, time=None, frame_time=None):
+        if time is not None and time - self.cursor_timer > 0.4:
+            self.cursor_timer = time
+            self.cursor = "" if self.cursor else "|"
 
         if not self.initialised:
             self.initialised = True
             self.input = ""
 
-        self.ids.DebugText.text = self.input or ""
+        self.ids.DebugText.text = (
+            """Go where? [map x y]. Or run an UPL command.\n"""
+            + (self.input or "")
+            + self.cursor
+        )
 
         return False
 
