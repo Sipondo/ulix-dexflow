@@ -24,16 +24,20 @@ class BaseUI(FloatLayout):
     def __init__(self, game, gstate, **kwargs):
         self.game = game
         self.gstate = gstate
+        self.block_input = False
         super().__init__(**kwargs)
 
-    # @abc.abstractmethod
-    # def on_enter(self, **kwargs):
-    #     pass
+    def on_enter(self, **kwargs):
+        pass
 
-    # @abc.abstractmethod
-    # def update(self, time, frame_time):
-    #     return False
+    def update(self, time=None, frame_time=None):
+        pass
 
-    # @abc.abstractmethod
-    # def on_exit(self):
-    #     pass
+    def on_exit(self):
+        pass
+
+    def event_keypress(self, key, modifiers):
+        return
+
+    def event_unicode(self, char):
+        return

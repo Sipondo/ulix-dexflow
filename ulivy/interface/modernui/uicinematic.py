@@ -8,17 +8,16 @@ class UICinematic(BaseUI):
     def on_enter(self, **kwargs):
         self.selection = 0
         self.lock = False
-        pass
+        self.block_input = False
 
     def update(self, time=None, frame_time=None):
         self.ids.DialogueText.text = self.gstate.dialogue or ""
 
+        if self.gstate.dialogue:
+            self.gstate.dialogue = self.clean_dialogue(self.gstate.dialogue)
         self.set_choice_window(self.gstate.options)
         self.highlight_selection()
         return False
-
-    def on_exit(self):
-        pass
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
@@ -79,17 +78,17 @@ class UICinematic(BaseUI):
             f'ulivy/interface/modernui/dialogue_choice{"_high" if s==3 else ""}.png'
         )
 
+    def clean_dialogue(self, dialogue):
+        return (
+            dialogue.replace("{player.name}", self.game.m_ent.player.name)
+            .replace("{player.he}", self.game.m_ent.player.he)
+            .replace("{player.his}", self.game.m_ent.player.his)
+            .replace("{player.che}", self.game.m_ent.player.che)
+            .replace("{player.chis}", self.game.m_ent.player.chis)
+        )
+
     def draw_interface(self, time, frame_time):
         return
-        # TODO: move this away from here
-        if self.dialogue:
-            self.dialogue = (
-                self.dialogue.replace("{player.name}", self.game.m_ent.player.name)
-                .replace("{player.he}", self.game.m_ent.player.he)
-                .replace("{player.his}", self.game.m_ent.player.his)
-                .replace("{player.che}", self.game.m_ent.player.che)
-                .replace("{player.chis}", self.game.m_ent.player.chis)
-            )
 
         if self.spr_talker:
             self.game.r_int.draw_image(

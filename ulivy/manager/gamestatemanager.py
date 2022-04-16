@@ -10,11 +10,12 @@ from ..gamestate.gamestatecinematic import GameStateCinematic
 # from ..gamestate.gamestatemenusave import GameStateMenuSave
 from ..gamestate.gamestateoverworld import GameStateOverworld
 
-# from ..gamestate.gamestateprompt import GameStatePrompt
+from ..gamestate.gamestateprompt import GameStatePrompt
+
 # from ..gamestate.gamestatestorage import GameStateStorage
 # from ..gamestate.gamestateevolve import GameStateEvolve
 # from ..gamestate.gamestateshop import GameStateShop
-# from ..gamestate.gamestatedebug import GameStateDebug
+from ..gamestate.gamestatedebug import GameStateDebug
 
 
 class GameStateManager:
@@ -35,6 +36,10 @@ class GameStateManager:
     def event_keypress(self, request, modifiers):
         if self.current_state:
             return self.current_state.event_keypress(request, modifiers)
+
+    def event_unicode(self, char):
+        if self.current_state:
+            return self.current_state.event_unicode(char)
 
     def switch_state(self, new_state, **kwargs):
         if self.current_state is not None:

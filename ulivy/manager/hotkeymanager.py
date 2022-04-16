@@ -86,16 +86,23 @@ class HotkeyManager(Widget):
         # print("The key", keycode, "has been pressed")
         # print(" - text is %r" % text)
         # print(" - modifiers are %r" % modifiers)
-        self.key_event(keycode[1], "down", modifiers)
+        print("text:", text)
+        self.key_event(keycode[1], "down", modifiers, unicode=text)
         return True
 
     def _on_keyboard_up(self, keyboard, keycode):
         self.key_event(keycode[1], "up", None)
         return True
 
-    def key_event(self, key, action, modifiers):
+    def key_event(self, key, action, modifiers, unicode=None):
         request_list = self.lookup_key(key)
         print(f"keypress {key}\t{action}\t{modifiers}")
+
+        if key == "backspace":
+            unicode = "backspace"
+
+        if action == "down" and unicode is not None:
+            self.unicode_char_entered(unicode)
 
         for request in request_list:
             # print(f"--- REQUEST {key}\t{request}\t{action}\t{modifiers}")
@@ -129,15 +136,17 @@ class HotkeyManager(Widget):
                         pass
 
     def unicode_char_entered(self, char):
-        # TODO: generalise
-        self.game.m_gst.current_state.event_unicode(char)
+        self.game.m_gst.event_unicode(char)
+        self.game.r_uin.event_unicode(char)
 
     def lookup_key(self, key):
-        # TODO: generalise
         r = []
         for t in self.keys:
             if key == t[0]:
-                if not self.game.m_gst.current_state.block_input or t[2]:
+                if (
+                    self.game.r_uin.current_ui is None
+                    or not self.game.r_uin.current_ui.block_input
+                ) or t[2]:
                     r.append(t[1])
         if r:
             return r

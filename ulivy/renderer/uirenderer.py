@@ -3,6 +3,8 @@ import importlib
 UI = "modernui"
 
 UI_CINEMATIC = importlib.import_module(f"ulivy.interface.{UI}.uicinematic").UICinematic
+UI_DEBUG = importlib.import_module(f"ulivy.interface.{UI}.uidebug").UIDebug
+UI_PROMPT = importlib.import_module(f"ulivy.interface.{UI}.uiprompt").UIPrompt
 
 
 class UIRenderer:
@@ -18,6 +20,10 @@ class UIRenderer:
         if self.current_ui:
             return self.current_ui.event_keypress(request, modifiers)
 
+    def event_unicode(self, char):
+        if self.current_ui:
+            return self.current_ui.event_unicode(char)
+
     def switch_ui(self, new_ui, gstate, **kwargs):
         if self.current_ui is not None:
             self.current_ui.on_exit()
@@ -29,6 +35,10 @@ class UIRenderer:
             return None
         elif new_ui == "cinematic":
             self.current_ui = UI_CINEMATIC(self.game, gstate)
+        elif new_ui == "debug":
+            self.current_ui = UI_DEBUG(self.game, gstate)
+        elif new_ui == "prompt":
+            self.current_ui = UI_PROMPT(self.game, gstate)
         else:
             return
 
