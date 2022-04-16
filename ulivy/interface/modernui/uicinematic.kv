@@ -10,6 +10,7 @@
         size: self.parent.size
         offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
         magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
 
         FloatLayout:
             pos: self.parent.offset
@@ -39,9 +40,11 @@
                     text: "Hello World!"
                     color: (0, 0, 0, 1)
                     allow_stretch: True
-                    pos_hint: {'center_x': 0.5}
-                    size_hint: 0.95, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.95, 0.6
                     text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
                     halign: 'left'
                     valign: 'top'
 
@@ -65,9 +68,11 @@
                     text: "Hello World!"
                     color: (0, 0, 0, 1)
                     allow_stretch: True
-                    pos_hint: {'center_x': 0.5}
-                    size_hint: 0.92, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
                     text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
                     halign: 'left'
                     valign: 'top'
 
@@ -91,9 +96,11 @@
                     text: "Hello World!"
                     color: (0, 0, 0, 1)
                     allow_stretch: True
-                    pos_hint: {'center_x': 0.5}
-                    size_hint: 0.92, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
                     text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
                     halign: 'left'
                     valign: 'top'
 
@@ -117,9 +124,11 @@
                     text: "Hello World!"
                     color: (0, 0, 0, 1)
                     allow_stretch: True
-                    pos_hint: {'center_x': 0.5}
-                    size_hint: 0.92, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
                     text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
                     halign: 'left'
                     valign: 'top'
 
@@ -143,9 +152,11 @@
                     text: "Hello World!"
                     color: (0, 0, 0, 1)
                     allow_stretch: True
-                    pos_hint: {'center_x': 0.5}
-                    size_hint: 0.92, 0.8
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
                     text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
                     halign: 'left'
                     valign: 'top'
 
