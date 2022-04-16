@@ -187,8 +187,6 @@ class TileRenderer(FloatLayout):
 
         self.game = game
 
-        self.gamecanvas = getattr(self.ids, "GameCanvas")
-
         self.size = Window.size
 
         self.m_map = game.m_map
@@ -199,7 +197,7 @@ class TileRenderer(FloatLayout):
         self.set_map_via_manager()
 
     def clear_layers(self):
-        self.gamecanvas.clear_widgets()
+        self.ids.GameCanvas.clear_widgets()
         for layer in self.layers:
             del layer
 
@@ -211,16 +209,16 @@ class TileRenderer(FloatLayout):
         print(
             "SORTED", [(x.h, x.offset) for x in sorted(self.layers, key=lambda x: x.h)]
         )
-        self.gamecanvas.clear_widgets()
+        self.ids.GameCanvas.clear_widgets()
         for layer in sorted(self.layers, key=lambda x: x.h):
-            self.gamecanvas.add_widget(layer)
+            self.ids.GameCanvas.add_widget(layer)
 
     def update(self, time, dt):
         for layer in sorted(self.layers, key=lambda x: x.h):
             layer.update(time, dt)
 
     def add_layer(self, widget):
-        self.gamecanvas.add_widget(widget)
+        self.ids.GameCanvas.add_widget(widget)
         self.layers.append(widget)
 
     def set_map_via_manager(self, offset=(0, 0), fade=True):

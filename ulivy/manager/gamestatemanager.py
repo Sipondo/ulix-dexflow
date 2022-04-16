@@ -18,8 +18,8 @@ from ..gamestate.gamestateoverworld import GameStateOverworld
 
 
 class GameStateManager:
-    def __init__(self, gamegui):
-        self.game = gamegui
+    def __init__(self, game):
+        self.game = game
         self.current_state = None
         self.current_state_name = None
         self.previous_state_name = None
@@ -27,6 +27,14 @@ class GameStateManager:
     def switch_to_previous_state(self):
         if self.previous_state_name is not None:
             self.switch_state(self.previous_state_name)
+
+    def update(self, time, frame_time):
+        if self.current_state:
+            return self.current_state.update(time, frame_time)
+
+    def event_keypress(self, request, modifiers):
+        if self.current_state:
+            return self.current_state.event_keypress(request, modifiers)
 
     def switch_state(self, new_state, **kwargs):
         if self.current_state is not None:
@@ -70,4 +78,4 @@ class GameStateManager:
         print(f"GAMESTATE SWITCHED: {new_state}")
         self.current_state.on_enter(**kwargs)
 
-        self.game.r_uin.switch_ui(new_state)
+        self.game.r_uin.switch_ui(new_state, self.current_state)

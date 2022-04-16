@@ -21,8 +21,9 @@ class PixelImage(Image):
 
 
 class BaseUI(FloatLayout):
-    def __init__(self, game, **kwargs):
+    def __init__(self, game, gstate, **kwargs):
         self.game = game
+        self.gstate = gstate
         super().__init__(**kwargs)
 
     # @abc.abstractmethod

@@ -160,7 +160,8 @@ class PokeGame(Screen):
         self.time += dt
         time = self.time
 
-        lock = self.m_gst.current_state.update(time, dt)
+        lock = self.m_gst.update(time, dt)
+        self.r_uin.update(time, dt)
 
         if self.m_gst.current_state_name in ("cinematic", "overworld"):
             self.m_act.update(time, dt)

@@ -114,7 +114,10 @@ class HotkeyManager(Widget):
                         Window.fullscreen = not Window.fullscreen
 
                     if request not in self.pressed_keys:
-                        self.game.m_gst.current_state.event_keypress(
+                        self.game.m_gst.event_keypress(
+                            request, modifiers,
+                        )
+                        self.game.r_uin.event_keypress(
                             request, modifiers,
                         )
                         self.pressed_keys.add(request)
@@ -126,9 +129,11 @@ class HotkeyManager(Widget):
                         pass
 
     def unicode_char_entered(self, char):
+        # TODO: generalise
         self.game.m_gst.current_state.event_unicode(char)
 
     def lookup_key(self, key):
+        # TODO: generalise
         r = []
         for t in self.keys:
             if key == t[0]:
