@@ -21,7 +21,7 @@ class CollisionManager:
             if force is not None:
                 force = force[0].sum(axis=2) > 0
                 # print("\n\n\nCOL LAYER!!!!!!", colmap.shape, force[0].sum(axis=2) > 0)
-                self.colmap[height][force] = colmap[force]
+                self.colmap[height][0][force] = colmap[force]
             else:
                 self.colmap[height] = self.colmap[height] | colmap
 
@@ -138,18 +138,18 @@ class CollisionManager:
 
         if (
             not (
-                0 < fr[0] < self.colmap[0].shape[1]
-                and 0 < fr[1] < self.colmap[0].shape[0]
+                0 < fr[0] < self.colmap[0][0].shape[1]
+                and 0 < fr[1] < self.colmap[0][0].shape[0]
             )
         ) or (
             not (
-                0 < to[0] < self.colmap[0].shape[1]
-                and 0 < to[1] < self.colmap[0].shape[0]
+                0 < to[0] < self.colmap[0][0].shape[1]
+                and 0 < to[1] < self.colmap[0][0].shape[0]
             )
         ):
             return None
 
-        map = np.ones(self.colmap[0].shape[:2]) * 9999
+        map = np.ones(self.colmap[0][0].shape[:2]) * 9999
 
         map[fr[0], fr[1]] = 0
 
@@ -171,8 +171,8 @@ class CollisionManager:
                     return pth
 
                 if (
-                    0 < x < self.colmap[0].shape[0]
-                    and 0 < y < self.colmap[0].shape[1]
+                    0 < x < self.colmap[0][0].shape[0]
+                    and 0 < y < self.colmap[0][0].shape[1]
                     and map[x, y] >= 9999
                 ):
                     res = self.check_collision_hop(

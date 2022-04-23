@@ -86,7 +86,6 @@ class HotkeyManager(Widget):
         # print("The key", keycode, "has been pressed")
         # print(" - text is %r" % text)
         # print(" - modifiers are %r" % modifiers)
-        print("text:", text)
         self.key_event(keycode[1], "down", modifiers, unicode=text)
         return True
 
@@ -96,7 +95,7 @@ class HotkeyManager(Widget):
 
     def key_event(self, key, action, modifiers, unicode=None):
         request_list = self.lookup_key(key)
-        print(f"keypress {key}\t{action}\t{modifiers}")
+        # print(f"keypress {key}\t{action}\t{modifiers}")
 
         if key == "backspace":
             unicode = "backspace"
@@ -107,8 +106,8 @@ class HotkeyManager(Widget):
         for request in request_list:
             # print(f"--- REQUEST {key}\t{request}\t{action}\t{modifiers}")
 
-            if key == "p" and action == "down":
-                print(self.game.m_ent.player.get_pos())
+            # if key == "p" and action == "down":
+            #     print(self.game.m_ent.player.get_pos())
 
             if request == "maphack" and action == "down":
                 self.game.maphack = not self.game.maphack

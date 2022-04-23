@@ -11,8 +11,8 @@
 	"identifier": "L1_I3_StarterHouseLightPuzzle",
 	"iid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3",
 	"uid": 435,
-	"worldX": -96,
-	"worldY": 176,
+	"worldX": 384,
+	"worldY": -320,
 	"worldDepth": 1,
 	"pxWid": 400,
 	"pxHei": 320,
@@ -1353,5 +1353,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "n" }, { "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "n" } ]
+	"__neighbours": [{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "w" }]
 }

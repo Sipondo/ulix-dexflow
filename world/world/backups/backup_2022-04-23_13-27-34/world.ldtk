@@ -6256,8 +6256,8 @@
 			"identifier": "L1_I1_StarterHouse",
 			"iid": "92d86240-8dc0-11ec-9a7d-7174738a3a58",
 			"uid": 179,
-			"worldX": -96,
-			"worldY": 0,
+			"worldX": -32,
+			"worldY": -176,
 			"worldDepth": 1,
 			"pxWid": 208,
 			"pxHei": 176,
@@ -6291,14 +6291,14 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "s" }, { "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "e" } ]
+			"__neighbours": [{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "e" }]
 		},
 		{
 			"identifier": "L1_I3_StarterHouseLightPuzzle",
 			"iid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3",
 			"uid": 435,
-			"worldX": -96,
-			"worldY": 176,
+			"worldX": 384,
+			"worldY": -320,
 			"worldDepth": 1,
 			"pxWid": 400,
 			"pxHei": 320,
@@ -6335,14 +6335,14 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "n" }, { "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "n" } ]
+			"__neighbours": [{ "levelIid": "92db4870-8dc0-11ec-9a7d-59b022a70206", "levelUid": 181, "dir": "w" }]
 		},
 		{
 			"identifier": "L1_I2_StarterHouseFloor2",
 			"iid": "92db4870-8dc0-11ec-9a7d-59b022a70206",
 			"uid": 181,
-			"worldX": 112,
-			"worldY": 16,
+			"worldX": 176,
+			"worldY": -160,
 			"worldDepth": 1,
 			"pxWid": 208,
 			"pxHei": 160,
@@ -6376,7 +6376,7 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" }, { "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "s" } ]
+			"__neighbours": [ { "levelIid": "92d86240-8dc0-11ec-9a7d-7174738a3a58", "levelUid": 179, "dir": "w" }, { "levelIid": "92d9c1d0-8dc0-11ec-9a7d-9b3f92d1c9a3", "levelUid": 435, "dir": "e" } ]
 		},
 		{
 			"identifier": "L2_SquigglySwerve",
