@@ -5,7 +5,8 @@ import enum
 
 from .basegamestate import BaseGameState
 
-# from game.particle.battlerender import BattleRender
+from ulivy.particle.battlescene import BattleScene
+
 # from game.combat.combatscene import CombatScene
 # from game.combat.agent.agentrand import AgentRand
 # from game.combat.agent.agentuser import AgentUser
@@ -25,12 +26,13 @@ class GameStateBattle(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
-        return  # TODO: ulivy
-        if particle_test:
-            self.game.inventory.init_random_member()
+        # if particle_test:
+        #     self.game.inventory.init_random_member()
 
         # Renderer setup
-        self.render = BattleRender(self.game)
+        self.scene = BattleScene(self.game)
+        self.game.add_widget(self.scene)
+        return  # TODO: ulivy
 
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
@@ -208,7 +210,6 @@ class GameStateBattle(BaseGameState):
         self.draw_interface(time, frame_time)
 
     def event_keypress(self, key, modifiers):
-        self.game.m_gst.switch_state("overworld")
         return  # TODO: ulivy
         if self.particle_test:
             return

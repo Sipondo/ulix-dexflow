@@ -5,6 +5,7 @@ UI = "modernui"
 UI_CINEMATIC = importlib.import_module(f"ulivy.interface.{UI}.uicinematic").UICinematic
 UI_DEBUG = importlib.import_module(f"ulivy.interface.{UI}.uidebug").UIDebug
 UI_PROMPT = importlib.import_module(f"ulivy.interface.{UI}.uiprompt").UIPrompt
+UI_BATTLE = importlib.import_module(f"ulivy.interface.{UI}.uibattle").UIBattle
 
 
 class UIRenderer:
@@ -39,6 +40,8 @@ class UIRenderer:
             self.current_ui = UI_DEBUG(self.game, gstate)
         elif new_ui == "prompt":
             self.current_ui = UI_PROMPT(self.game, gstate)
+        elif new_ui == "battle":
+            self.current_ui = UI_BATTLE(self.game, gstate)
         else:
             return
 

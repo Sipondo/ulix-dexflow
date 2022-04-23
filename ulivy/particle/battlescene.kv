@@ -1,0 +1,64 @@
+#:kivy 2.0.0
+
+<BattleScene>
+    PixelImage:
+        # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
+        # Got this from the guys over at Kivy.
+        id: SceneBackgroundId
+        source: 'ulivy/particle/battlescene.png'
+        allow_stretch: True
+        size: self.parent.size
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
+
+        BattleEnvironment:
+            pos: self.parent.offset
+            size: self.parent.norm_image_size
+
+            # UI START
+
+            PixelImage:
+                id: EnvironmentBackgroundId4
+                # source: 'ulivy/particle/battleenvironment.png'
+                allow_stretch: True
+                keep_ratio: False
+                source: 'resources/base/graphics/environments/forest_4.png'
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
+
+            PixelImage:
+                id: EnvironmentBackgroundId3
+                # source: 'ulivy/particle/battleenvironment.png'
+                allow_stretch: True
+                keep_ratio: False
+                source: 'resources/base/graphics/environments/forest_3.png'
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
+
+            PixelImage:
+                id: EnvironmentBackgroundId2
+                # source: 'ulivy/particle/battleenvironment.png'
+                allow_stretch: True
+                keep_ratio: False
+                source: 'resources/base/graphics/environments/forest_2.png'
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
+
+            PixelImage:
+                id: EnvironmentBackgroundId1
+                # source: 'ulivy/particle/battleenvironment.png'
+                allow_stretch: True
+                keep_ratio: False
+                source: 'resources/base/graphics/environments/forest_1.png'
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
+
+            PixelImage:
+                id: EnvironmentBackgroundId0
+                # source: 'ulivy/particle/battleenvironment.png'
+                allow_stretch: True
+                keep_ratio: False
+                source: 'resources/base/graphics/environments/forest_0.png'
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
