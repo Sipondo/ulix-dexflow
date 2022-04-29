@@ -21,7 +21,6 @@ class UICinematic(BaseUI):
 
     def event_keypress(self, key, modifiers):
         if self.lock == False:
-            self.highlight_selection()
             if key == "down":
                 if self.gstate.options:
                     self.selection = (self.selection + 1) % self.max_selection
@@ -45,6 +44,7 @@ class UICinematic(BaseUI):
                 self.gstate.dialogue = None
                 self.gstate.author = None
                 self.gstate.spr_talker = None
+        self.highlight_selection()
 
     def set_choice_window(self, options):
         l = len(options)

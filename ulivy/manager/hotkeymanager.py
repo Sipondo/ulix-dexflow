@@ -51,8 +51,8 @@ class HotkeyManager(Widget):
         self.register_key("zoom_in", "-")
         self.register_key("zoom_in", "2")
 
-        self.register_key("menu", "m")
-        self.register_key("menu", "x")
+        # self.register_key("menu", "m")
+        # self.register_key("menu", "x")
         self.register_key("battle", "b")
 
         # self.register_key("fullscreen", game.wnd.keys.F11, True)

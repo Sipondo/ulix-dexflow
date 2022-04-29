@@ -2,10 +2,12 @@ import importlib
 
 UI = "modernui"
 
+UI_OVERWORLD = importlib.import_module(f"ulivy.interface.{UI}.uioverworld").UIOverworld
 UI_CINEMATIC = importlib.import_module(f"ulivy.interface.{UI}.uicinematic").UICinematic
 UI_DEBUG = importlib.import_module(f"ulivy.interface.{UI}.uidebug").UIDebug
 UI_PROMPT = importlib.import_module(f"ulivy.interface.{UI}.uiprompt").UIPrompt
 UI_BATTLE = importlib.import_module(f"ulivy.interface.{UI}.uibattle").UIBattle
+UI_MENU_MAIN = importlib.import_module(f"ulivy.interface.{UI}.uimenumain").UIMenuMain
 
 
 class UIRenderer:
@@ -33,7 +35,7 @@ class UIRenderer:
             self.current_ui = None
 
         if new_ui == "overworld":
-            return None
+            self.current_ui = UI_OVERWORLD(self.game, gstate)
         elif new_ui == "cinematic":
             self.current_ui = UI_CINEMATIC(self.game, gstate)
         elif new_ui == "debug":
@@ -42,6 +44,8 @@ class UIRenderer:
             self.current_ui = UI_PROMPT(self.game, gstate)
         elif new_ui == "battle":
             self.current_ui = UI_BATTLE(self.game, gstate)
+        elif new_ui == "menumain":
+            self.current_ui = UI_MENU_MAIN(self.game, gstate)
         else:
             return
 

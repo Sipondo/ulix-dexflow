@@ -1,0 +1,282 @@
+#:kivy 2.0.0
+
+<UIMenuMain>
+    PixelImage:
+        # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
+        # Got this from the guys over at Kivy.
+        id: BackgroundId
+        source: 'ulivy/interface/modernui/gamebounds.png'
+        allow_stretch: True
+        size: self.parent.size
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
+
+        FloatLayout:
+            pos: self.parent.offset
+            size: self.parent.norm_image_size
+
+            # UI START
+
+  # PAUSE MENU
+            RelativeLayout:
+                id: MenuWindow
+                pos_hint: {'center_y': 0.5, 'center_x': 0.85}
+                size_hint: 1, 1
+
+                PixelImage:
+                    id: MenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_background.png'
+
+# POKEDEX
+            RelativeLayout:
+                id: PokedexMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.75}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: PokedexMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_pokedex.png'
+                
+                BoxLayout:
+                    id: MenuScreen_1
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_1
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# POKEMON
+            RelativeLayout:
+                id: PokemonMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.6725}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: PokemonMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_pokemon.png'
+                
+                BoxLayout:
+                    id: MenuScreen_2
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_2
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# BAG
+            RelativeLayout:
+                id: BagMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.595}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: BagMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_bag.png'
+                
+                BoxLayout:
+                    id: MenuScreen_3
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_3
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# POKEGEAR
+            RelativeLayout:
+                id: PokegearMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.5175}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: PokegearMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_pokegear.png'
+                
+                BoxLayout:
+                    id: MenuScreen_4
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_4
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# CARD
+            RelativeLayout:
+                id: CardMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.44}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: CardMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_card.png'
+                
+                BoxLayout:
+                    id: MenuScreen_5
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_5
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# SAVE
+            RelativeLayout:
+                id: SaveMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.3625}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: SaveMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_save.png'
+                
+                BoxLayout:
+                    id: MenuScreen_6
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_6
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# OPTIONS
+            RelativeLayout:
+                id: OptionsMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.285}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: OptionsMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_options.png'
+                
+                BoxLayout:
+                    id: MenuScreen_7
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_7
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# EXIT
+            RelativeLayout:
+                id: ExitMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.2075}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: ExitMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_exit.png'
+                
+                BoxLayout:
+                    id: MenuScreen_8
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_8
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# RETURN
+            RelativeLayout:
+                id: ReturnMenu
+                pos_hint: {'center_x': 0.85, 'y': 0.13}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: ReturnMenuBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menumain_return.png'
+                
+                BoxLayout:
+                    id: MenuScreen_9
+                    orientation: 'vertical'
+
+                Label:
+                    id: MenuText_9
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'

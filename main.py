@@ -67,7 +67,8 @@ from ulivy.renderer.tilerenderer import TileRenderer
 from ulivy.renderer.uirenderer import UIRenderer
 
 from ulivy.player.inventory import Inventory
-from ulivy.util.compile_world import compile_world
+
+# from ulivy.util.compile_world import compile_world
 
 
 from kivy.utils import platform

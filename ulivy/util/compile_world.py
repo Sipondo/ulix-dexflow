@@ -5,7 +5,6 @@ import numpy as np
 
 from io import BytesIO
 from pathlib import Path
-from tqdm import tqdm
 
 from ulivy.helpers.ldtkjson import ldtk_json_from_dict
 from ulivy.upl.uplmanager import UplParser
@@ -81,7 +80,8 @@ def compile_world(pth):
     logging.info("SETTABLES:", settables)
     logging.info("SWITCHES:", switches)
 
-    for level in tqdm(a.levels):
+    for level in a.levels:
+        print(level.identifier.lower())
         # if not "l1_happyhouse" in level.identifier.lower():
         #     continue
         logging.info("\n", "-" * 50, f"LEVEL: {level.identifier}", "-" * 50)

@@ -6,7 +6,8 @@ from ..gamestate.gamestatecinematic import GameStateCinematic
 # from ..gamestate.gamestatemenucareer import GameStateMenuCareer
 # from ..gamestate.gamestatemenudex import GameStateMenuDex
 # from ..gamestate.gamestatemenuoptions import GameStateMenuOptions
-# from ..gamestate.gamestatemenuparty import GameStateMenuParty
+from ..gamestate.gamestatemenumain import GameStateMenuMain
+
 # from ..gamestate.gamestatemenusave import GameStateMenuSave
 from ..gamestate.gamestateoverworld import GameStateOverworld
 
@@ -61,8 +62,8 @@ class GameStateManager:
             self.current_state = GameStateMenuDex(self.game)
         elif new_state == "menuoptions":
             self.current_state = GameStateMenuOptions(self.game)
-        elif new_state == "menuparty":
-            self.current_state = GameStateMenuParty(self.game)
+        elif new_state == "menumain":
+            self.current_state = GameStateMenuMain(self.game)
         elif new_state == "menusave":
             self.current_state = GameStateMenuSave(self.game)
         elif new_state == "cinematic":
