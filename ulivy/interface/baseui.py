@@ -19,6 +19,10 @@ class PixelImage(Image):
     def _update_texture_filters(self, image, texture):
         texture.mag_filter = "nearest"
 
+    def update(self, time, frame_time):
+        for child in self.children:
+            child.update(time, frame_time)
+
 
 class BaseUI(FloatLayout):
     def __init__(self, game, gstate, **kwargs):
@@ -26,6 +30,8 @@ class BaseUI(FloatLayout):
         self.gstate = gstate
         self.block_input = False
         super().__init__(**kwargs)
+
+        print("BASEUI", self.pos, self.size)
 
     def on_enter(self, **kwargs):
         pass

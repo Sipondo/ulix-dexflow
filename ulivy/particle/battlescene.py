@@ -15,6 +15,8 @@ class BattleScene(FloatLayout):
         self.game = game
         super().__init__(**kwargs)
 
+        print("BATTLESCENE", self.pos, self.size)
+
         self.bmove = BattleMovement(game, self)
 
         self.poke1_set = None
@@ -22,17 +24,16 @@ class BattleScene(FloatLayout):
 
         # self.prog = self.game.m_res.get_program("flattened_battle_entity")
         # self.prog["Texture"] = 0
-        # self.prog_bg = self.game.m_res.get_program("battle_parallax")
 
-        # self.dark = 1.0
-        # self.dark_to = None
-        # self.dark_speed = 1.0
-        # self.dark_recover = True
-        # self.dark_direction = 1
+        self.dark = 1.0
+        self.dark_to = None
+        self.dark_speed = 1.0
+        self.dark_recover = True
+        self.dark_direction = 1
 
-        # self.battle_shake = 1.0
-        # self.prog_bg["Brightness"] = self.dark
-        # self.camera = self.game.m_cam
+        self.battle_shake = 1.0
+        self.camera = self.game.m_cam
+        self.camera.reset()
 
         # self.brightness = [1.0, 1.0]
         # self.prog["Brightness"] = 1.0
@@ -97,64 +98,69 @@ class BattleScene(FloatLayout):
         #     color_attachments=[self.final_diffuse,], depth_attachment=self.final_depth,
         # )
 
-    def get_loc_fighter(self, team, base):
-        if team == 1:
-            l = self.location_team1
-        else:
-            l = self.location_team0
+    def update(self, time, frame_time):
+        for child in self.children:
+            child.update(time, frame_time)
 
-        return (l[0] * base[0], l[1] * base[1], l[2] * base[2])
+    # def get_loc_fighter(self, team, base):
+    #     if team == 1:
+    #         l = self.location_team1
+    #     else:
+    #         l = self.location_team0
 
-    @property
-    def location_team0(self):
-        return self.bmove.t0
+    #     return (l[0] * base[0], l[1] * base[1], l[2] * base[2])
 
-    @property
-    def location_team1(self):
-        return self.bmove.t1
+    # @property
+    # def location_team0(self):
+    #     return self.bmove.t0
 
-    def set_pokemon(self, spriteset, team):
-        if team == 0:
-            self.poke1_set = spriteset
-            # self.poke1_set = self.game.m_res.prepare_battle_animset(
-            #     f"{str(id).zfill(3)}"
-            # )
-        else:
-            self.poke2_set = spriteset
-            # self.poke2_set = self.game.m_res.prepare_battle_animset(
-            #     f"{str(id).zfill(3)}"
-            # )
+    # @property
+    # def location_team1(self):
+    #     return self.bmove.t1
 
-    def set_dark(self, dark, speed, recover):
-        self.dark_recover = recover
-        if speed is not None:
-            self.dark_to = dark
-            self.dark_speed = speed
-            if self.dark_to > self.dark:
-                self.dark_direction = 1
-            else:
-                self.dark_direction = -1
-        else:
-            self.dark_to = None
-            self.dark_speed = None
-            self.dark = dark
+    # def set_pokemon(self, spriteset, team):
+    #     if team == 0:
+    #         self.poke1_set = spriteset
+    #         # self.poke1_set = self.game.m_res.prepare_battle_animset(
+    #         #     f"{str(id).zfill(3)}"
+    #         # )
+    #     else:
+    #         self.poke2_set = spriteset
+    #         # self.poke2_set = self.game.m_res.prepare_battle_animset(
+    #         #     f"{str(id).zfill(3)}"
+    #         # )
 
-    def set_movement(self, team, position, speed, recover):
-        self.bmove.set_movement(team, position, speed, recover)
+    # def set_dark(self, dark, speed, recover):
+    #     self.dark_recover = recover
+    #     if speed is not None:
+    #         self.dark_to = dark
+    #         self.dark_speed = speed
+    #         if self.dark_to > self.dark:
+    #             self.dark_direction = 1
+    #         else:
+    #             self.dark_direction = -1
+    #     else:
+    #         self.dark_to = None
+    #         self.dark_speed = None
+    #         self.dark = dark
 
-    def do_particle(self, name, user, target, miss=False, move_data=None):
-        if name:
-            name = name.replace(" ", "-")
-            if miss:
-                # TODO Particles miss to left/right
-                pass
-            self.game.m_par.spawn_system(
-                self, name, target, miss, move_data=move_data
-            )  # name)
-        else:
-            print("Empty particle!")
+    # def set_movement(self, team, position, speed, recover):
+    #     self.bmove.set_movement(team, position, speed, recover)
+
+    # def do_particle(self, name, user, target, miss=False, move_data=None):
+    #     if name:
+    #         name = name.replace(" ", "-")
+    #         if miss:
+    #             # TODO Particles miss to left/right
+    #             pass
+    #         self.game.m_par.spawn_system(
+    #             self, name, target, miss, move_data=move_data
+    #         )  # name)
+    #     else:
+    #         print("Empty particle!")
 
     def render(self, time: float, frame_time: float):
+        self.camera.render(time, frame_time)
         return
         self.bmove.render(time, frame_time)
         if self.dark_to is not None:
@@ -261,131 +267,120 @@ class BattleScene(FloatLayout):
         self.ctx.blend_equation = moderngl.FUNC_ADD
         return locking
 
-    def render_background(self):
-        self.ctx.enable(moderngl.BLEND)
+    # def render_pokemon(self, time, frame_time, cutout=False, shadow=False):
+    #     if not cutout:
+    #         for i in range(len(self.brightness)):
+    #             self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
 
-        for tex in self.environment:
-            self.prog_bg["Texture"] = 0
-            tex.use(0)
-            speed = tex.size[0] / tex.size[1] / 16 * 9
-            self.prog_bg["Speed"] = speed
-            self.prog_bg["Offset"].value = self.camera.parallax_rotation * speed
-            self.quad_fs.render(self.prog_bg)
+    #     self.prog["CameraPosition"] = self.game.m_cam.pos
+    #     self.prog["Cutout"] = cutout
+    #     self.prog["IsShadow"] = shadow
+    #     self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
-    def render_pokemon(self, time, frame_time, cutout=False, shadow=False):
-        if not cutout:
-            for i in range(len(self.brightness)):
-                self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
+    #     self.prog["BillboardFace"].write((self.camera.bill_rot).astype("f4").tobytes())
 
-        self.prog["CameraPosition"] = self.game.m_cam.pos
-        self.prog["Cutout"] = cutout
-        self.prog["IsShadow"] = shadow
-        self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+    #     self.prog["Mvp"].write((self.camera.mvp).astype("f4").tobytes())
 
-        self.prog["BillboardFace"].write((self.camera.bill_rot).astype("f4").tobytes())
+    #     enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
+    #     if self.poke2_set and enemy_first:
+    #         # TODO: support >2 chars
+    #         self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
+    #         self.vbo_pkm.write(
+    #             np.asarray(
+    #                 [
+    #                     self.camera.pos[0]
+    #                     + self.location_team1[0] * self.character_offset,
+    #                     self.camera.pos[1]
+    #                     + self.location_team1[1] * self.character_offset,
+    #                     self.camera.pos[2]
+    #                     + self.location_team1[2] * self.character_offset,
+    #                 ],
+    #                 dtype="f4",
+    #             ),
+    #             offset=0,
+    #         )
+    #         self.prog["Texture"] = 0
+    #         face = int((self.camera.rotation_value + 2) % 4)
+    #         l = (
+    #             self.poke2_set[0 if face % 3 else 1][0].size[0]
+    #             // self.poke2_set[0 if face % 3 else 1][0].size[1]
+    #         )
+    #         self.prog["Size"] = (
+    #             self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
+    #         ) ** 0.5
+    #         self.prog["AnimationFrame"] = int(time * 8) % l
+    #         self.prog["AnimationLength"] = l
+    #         self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
+    #         self.prog["Mirror"] = -1 if face % 2 else 1
 
-        self.prog["Mvp"].write((self.camera.mvp).astype("f4").tobytes())
+    #         self.poke2_set[0 if face % 3 else 1][0].use(location=0)
+    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
-        enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
-        if self.poke2_set and enemy_first:
-            # TODO: support >2 chars
-            self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
-            self.vbo_pkm.write(
-                np.asarray(
-                    [
-                        self.camera.pos[0]
-                        + self.location_team1[0] * self.character_offset,
-                        self.camera.pos[1]
-                        + self.location_team1[1] * self.character_offset,
-                        self.camera.pos[2]
-                        + self.location_team1[2] * self.character_offset,
-                    ],
-                    dtype="f4",
-                ),
-                offset=0,
-            )
-            self.prog["Texture"] = 0
-            face = int((self.camera.rotation_value + 2) % 4)
-            l = (
-                self.poke2_set[0 if face % 3 else 1][0].size[0]
-                // self.poke2_set[0 if face % 3 else 1][0].size[1]
-            )
-            self.prog["Size"] = (
-                self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
-            ) ** 0.5
-            self.prog["AnimationFrame"] = int(time * 8) % l
-            self.prog["AnimationLength"] = l
-            self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
-            self.prog["Mirror"] = -1 if face % 2 else 1
+    #     if self.poke1_set:
+    #         self.prog["Brightness"] = self.brightness[0]
+    #         self.vbo_pkm.write(
+    #             np.asarray(
+    #                 [
+    #                     self.camera.pos[0]
+    #                     + self.location_team0[0] * self.character_offset,
+    #                     self.camera.pos[1]
+    #                     + self.location_team0[1] * self.character_offset,
+    #                     self.camera.pos[2]
+    #                     + self.location_team0[2] * self.character_offset,
+    #                 ],
+    #                 dtype="f4",
+    #             ),
+    #             offset=0,
+    #         )
+    #         face = int((self.camera.rotation_value) % 4)
+    #         l = (
+    #             self.poke1_set[0 if face % 3 else 1][0].size[0]
+    #             // self.poke1_set[0 if face % 3 else 1][0].size[1]
+    #         )
+    #         self.prog["Size"] = (
+    #             self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
+    #         ) ** 0.5
+    #         self.prog["AnimationFrame"] = int(time * 8) % l
+    #         self.prog["AnimationLength"] = l
+    #         self.prog["HeightShare"] = self.poke1_set[0 if face % 3 else 1][1]
+    #         self.prog["Mirror"] = -1 if face % 2 else 1
 
-            self.poke2_set[0 if face % 3 else 1][0].use(location=0)
-            self.vao_pkm.render(moderngl.POINTS, vertices=1)
+    #         self.poke1_set[0 if face % 3 else 1][0].use(location=0)
+    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
-        if self.poke1_set:
-            self.prog["Brightness"] = self.brightness[0]
-            self.vbo_pkm.write(
-                np.asarray(
-                    [
-                        self.camera.pos[0]
-                        + self.location_team0[0] * self.character_offset,
-                        self.camera.pos[1]
-                        + self.location_team0[1] * self.character_offset,
-                        self.camera.pos[2]
-                        + self.location_team0[2] * self.character_offset,
-                    ],
-                    dtype="f4",
-                ),
-                offset=0,
-            )
-            face = int((self.camera.rotation_value) % 4)
-            l = (
-                self.poke1_set[0 if face % 3 else 1][0].size[0]
-                // self.poke1_set[0 if face % 3 else 1][0].size[1]
-            )
-            self.prog["Size"] = (
-                self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
-            ) ** 0.5
-            self.prog["AnimationFrame"] = int(time * 8) % l
-            self.prog["AnimationLength"] = l
-            self.prog["HeightShare"] = self.poke1_set[0 if face % 3 else 1][1]
-            self.prog["Mirror"] = -1 if face % 2 else 1
+    #     # TODO: remove duplicate
+    #     if self.poke2_set and not enemy_first:
+    #         # TODO: support >2 chars
+    #         self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
+    #         self.vbo_pkm.write(
+    #             np.asarray(
+    #                 [
+    #                     self.camera.pos[0]
+    #                     + self.location_team1[0] * self.character_offset,
+    #                     self.camera.pos[1]
+    #                     + self.location_team1[1] * self.character_offset,
+    #                     self.camera.pos[2]
+    #                     + self.location_team1[2] * self.character_offset,
+    #                 ],
+    #                 dtype="f4",
+    #             ),
+    #             offset=0,
+    #         )
+    #         self.prog["Texture"] = 0
+    #         face = int((self.camera.rotation_value + 2) % 4)
+    #         l = (
+    #             self.poke2_set[0 if face % 3 else 1][0].size[0]
+    #             // self.poke2_set[0 if face % 3 else 1][0].size[1]
+    #         )
+    #         self.prog["Size"] = (
+    #             self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
+    #         ) ** 0.5
+    #         self.prog["AnimationFrame"] = int(time * 8) % l
+    #         self.prog["AnimationLength"] = l
+    #         self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
+    #         self.prog["Mirror"] = -1 if face % 2 else 1
 
-            self.poke1_set[0 if face % 3 else 1][0].use(location=0)
-            self.vao_pkm.render(moderngl.POINTS, vertices=1)
+    #         self.poke2_set[0 if face % 3 else 1][0].use(location=0)
+    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
-        # TODO: remove duplicate
-        if self.poke2_set and not enemy_first:
-            # TODO: support >2 chars
-            self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
-            self.vbo_pkm.write(
-                np.asarray(
-                    [
-                        self.camera.pos[0]
-                        + self.location_team1[0] * self.character_offset,
-                        self.camera.pos[1]
-                        + self.location_team1[1] * self.character_offset,
-                        self.camera.pos[2]
-                        + self.location_team1[2] * self.character_offset,
-                    ],
-                    dtype="f4",
-                ),
-                offset=0,
-            )
-            self.prog["Texture"] = 0
-            face = int((self.camera.rotation_value + 2) % 4)
-            l = (
-                self.poke2_set[0 if face % 3 else 1][0].size[0]
-                // self.poke2_set[0 if face % 3 else 1][0].size[1]
-            )
-            self.prog["Size"] = (
-                self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
-            ) ** 0.5
-            self.prog["AnimationFrame"] = int(time * 8) % l
-            self.prog["AnimationLength"] = l
-            self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
-            self.prog["Mirror"] = -1 if face % 2 else 1
-
-            self.poke2_set[0 if face % 3 else 1][0].use(location=0)
-            self.vao_pkm.render(moderngl.POINTS, vertices=1)
-
-        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+    #     self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)

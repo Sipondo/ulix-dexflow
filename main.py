@@ -50,6 +50,7 @@ from kivy.uix.screenmanager import Screen
 
 from ulivy.manager.actionmanager import ActionManager
 from ulivy.manager.animationmanager import AnimationManager
+from ulivy.manager.cameramanager import CameraManager
 from ulivy.manager.collisionmanager import CollisionManager
 from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.gamestatemanager import GameStateManager
@@ -134,6 +135,8 @@ class PokeGame(Screen):
         self.m_key = HotkeyManager(self)
         self.m_pbs = PbsManager(self)
         self.m_upl = UplManager(self)
+
+        self.m_cam = CameraManager(self)
 
         self.r_aud = AudioRenderer(self)
         self.r_til = TileRenderer(self)

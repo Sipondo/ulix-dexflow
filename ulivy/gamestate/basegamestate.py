@@ -15,10 +15,6 @@ class BaseGameState(abc.ABC):
     def update(self, time, frame_time):
         return self.lock
 
-    # @abc.abstractmethod
-    def on_render(self, time, frame_time):
-        return self.lock
-
     @abc.abstractmethod
     def on_exit(self):
         pass

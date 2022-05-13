@@ -18,9 +18,6 @@ class GameStateCinematic(BaseGameState):
     def on_exit(self):
         pass
 
-    def on_render(self, time, frame_time):
-        self.game.m_ent.render()
-
     def set_locked(self, bool):
         self.lock = bool
 

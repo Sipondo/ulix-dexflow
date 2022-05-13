@@ -37,7 +37,6 @@ class GameStateBattle(BaseGameState):
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
 
-        self.render.camera.reset()
 
         self.render.set_pokemon(None, 0)
         self.render.set_pokemon(None, 1)
@@ -151,6 +150,8 @@ class GameStateBattle(BaseGameState):
             return AgentUser(self.game, self.combat, team)
 
     def update(self, time, frame_time):
+        self.scene.update(time, frame_time)
+        self.scene.render(time, frame_time)
         return  # TODO: ulivy
         if self.time_lock > 0:
             self.time_lock = max(0, self.time_lock - frame_time)
@@ -205,9 +206,6 @@ class GameStateBattle(BaseGameState):
 
     def on_exit(self):
         pass
-
-    def on_render(self, time, frame_time):
-        self.draw_interface(time, frame_time)
 
     def event_keypress(self, key, modifiers):
         return  # TODO: ulivy
