@@ -356,7 +356,7 @@ class BattleScene(FloatLayout):
             #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
             # ) ** 0.5
             l = 4
-            self.img_battler.canvas["Size"] = 1.0
+            self.img_battler.canvas["Size"] = 5.0
             self.img_battler.canvas["AnimationFrame"] = int(time * 8) % l
             self.img_battler.canvas["AnimationLength"] = l
             # self.img_battler.canvas["HeightShare"] = self.poke1_set[
