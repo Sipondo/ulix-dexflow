@@ -7,6 +7,8 @@ from kivy.uix.floatlayout import FloatLayout
 from .battlemovement import BattleMovement
 from kivy.lang import Builder
 
+from kivy.graphics.transformation import Matrix
+
 Builder.load_file("ulivy/particle/battlescene.kv")
 
 
@@ -35,11 +37,9 @@ class BattleScene(FloatLayout):
         self.camera = self.game.m_cam
         self.camera.reset()
 
-        # self.brightness = [1.0, 1.0]
-        # self.prog["Brightness"] = 1.0
-        # self.prog["Size"].value = 5.0
+        self.brightness = [1.0, 1.0]
 
-        # self.character_offset = 20
+        self.character_offset = 20
 
         # self.vbo_pkm = self.ctx.buffer(array("f", [0.0, 0.0, 0.0]))
         # self.vao_pkm = self.ctx.vertex_array(
@@ -110,13 +110,13 @@ class BattleScene(FloatLayout):
 
     #     return (l[0] * base[0], l[1] * base[1], l[2] * base[2])
 
-    # @property
-    # def location_team0(self):
-    #     return self.bmove.t0
+    @property
+    def location_team0(self):
+        return self.bmove.t0
 
-    # @property
-    # def location_team1(self):
-    #     return self.bmove.t1
+    @property
+    def location_team1(self):
+        return self.bmove.t1
 
     # def set_pokemon(self, spriteset, team):
     #     if team == 0:
@@ -161,6 +161,7 @@ class BattleScene(FloatLayout):
 
     def render(self, time: float, frame_time: float):
         self.camera.render(time, frame_time)
+        self.render_pokemon(time, frame_time)
         return
         self.bmove.render(time, frame_time)
         if self.dark_to is not None:
@@ -267,120 +268,139 @@ class BattleScene(FloatLayout):
         self.ctx.blend_equation = moderngl.FUNC_ADD
         return locking
 
-    # def render_pokemon(self, time, frame_time, cutout=False, shadow=False):
-    #     if not cutout:
-    #         for i in range(len(self.brightness)):
-    #             self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
+    def render_pokemon(self, time, frame_time, cutout=False, shadow=False):
+        if not cutout:
+            for i in range(len(self.brightness)):
+                self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
 
-    #     self.prog["CameraPosition"] = self.game.m_cam.pos
-    #     self.prog["Cutout"] = cutout
-    #     self.prog["IsShadow"] = shadow
-    #     self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+        self.img_battler.canvas["CameraPosition"] = self.game.m_cam.pos
+        self.img_battler.canvas["Cutout"] = 1 if cutout else 0
+        self.img_battler.canvas["IsShadow"] = 1 if shadow else 0
+        # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
-    #     self.prog["BillboardFace"].write((self.camera.bill_rot).astype("f4").tobytes())
+        m = Matrix()
+        m.set(array=(self.camera.bill_rot).astype("f4").tolist())
+        self.img_battler.canvas["BillboardFace"] = m
 
-    #     self.prog["Mvp"].write((self.camera.mvp).astype("f4").tobytes())
+        m2 = Matrix()
+        m2.set(array=(self.camera.mvp).astype("f4").tolist())
+        self.img_battler.canvas["Mvp"] = m2
+        # print(np.dot(self.img_battler.canvas["Mvp"], np.array([0.1, 0.1, 0.1, 1])))
 
-    #     enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
-    #     if self.poke2_set and enemy_first:
-    #         # TODO: support >2 chars
-    #         self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
-    #         self.vbo_pkm.write(
-    #             np.asarray(
-    #                 [
-    #                     self.camera.pos[0]
-    #                     + self.location_team1[0] * self.character_offset,
-    #                     self.camera.pos[1]
-    #                     + self.location_team1[1] * self.character_offset,
-    #                     self.camera.pos[2]
-    #                     + self.location_team1[2] * self.character_offset,
-    #                 ],
-    #                 dtype="f4",
-    #             ),
-    #             offset=0,
-    #         )
-    #         self.prog["Texture"] = 0
-    #         face = int((self.camera.rotation_value + 2) % 4)
-    #         l = (
-    #             self.poke2_set[0 if face % 3 else 1][0].size[0]
-    #             // self.poke2_set[0 if face % 3 else 1][0].size[1]
-    #         )
-    #         self.prog["Size"] = (
-    #             self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
-    #         ) ** 0.5
-    #         self.prog["AnimationFrame"] = int(time * 8) % l
-    #         self.prog["AnimationLength"] = l
-    #         self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
-    #         self.prog["Mirror"] = -1 if face % 2 else 1
+        enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
+        # if self.poke2_set and enemy_first:
+        #     # TODO: support >2 chars
+        #     self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
+        #     self.vbo_pkm.write(
+        #         np.asarray(
+        #             [
+        #                 self.camera.pos[0]
+        #                 + self.location_team1[0] * self.character_offset,
+        #                 self.camera.pos[1]
+        #                 + self.location_team1[1] * self.character_offset,
+        #                 self.camera.pos[2]
+        #                 + self.location_team1[2] * self.character_offset,
+        #             ],
+        #             dtype="f4",
+        #         ),
+        #         offset=0,
+        #     )
+        #     self.prog["Texture"] = 0
+        #     face = int((self.camera.rotation_value + 2) % 4)
+        #     l = (
+        #         self.poke2_set[0 if face % 3 else 1][0].size[0]
+        #         // self.poke2_set[0 if face % 3 else 1][0].size[1]
+        #     )
+        #     self.prog["Size"] = (
+        #         self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
+        #     ) ** 0.5
+        #     self.prog["AnimationFrame"] = int(time * 8) % l
+        #     self.prog["AnimationLength"] = l
+        #     self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
+        #     self.prog["Mirror"] = -1 if face % 2 else 1
 
-    #         self.poke2_set[0 if face % 3 else 1][0].use(location=0)
-    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
+        #     self.poke2_set[0 if face % 3 else 1][0].use(location=0)
+        #     self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
-    #     if self.poke1_set:
-    #         self.prog["Brightness"] = self.brightness[0]
-    #         self.vbo_pkm.write(
-    #             np.asarray(
-    #                 [
-    #                     self.camera.pos[0]
-    #                     + self.location_team0[0] * self.character_offset,
-    #                     self.camera.pos[1]
-    #                     + self.location_team0[1] * self.character_offset,
-    #                     self.camera.pos[2]
-    #                     + self.location_team0[2] * self.character_offset,
-    #                 ],
-    #                 dtype="f4",
-    #             ),
-    #             offset=0,
-    #         )
-    #         face = int((self.camera.rotation_value) % 4)
-    #         l = (
-    #             self.poke1_set[0 if face % 3 else 1][0].size[0]
-    #             // self.poke1_set[0 if face % 3 else 1][0].size[1]
-    #         )
-    #         self.prog["Size"] = (
-    #             self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
-    #         ) ** 0.5
-    #         self.prog["AnimationFrame"] = int(time * 8) % l
-    #         self.prog["AnimationLength"] = l
-    #         self.prog["HeightShare"] = self.poke1_set[0 if face % 3 else 1][1]
-    #         self.prog["Mirror"] = -1 if face % 2 else 1
+        if True or self.poke1_set:
+            self.img_battler.canvas["Brightness"] = self.brightness[0]
 
-    #         self.poke1_set[0 if face % 3 else 1][0].use(location=0)
-    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
+            self.img_battler.mesh.vertices = [
+                self.camera.pos[0] + self.location_team0[0] * self.character_offset,
+                self.camera.pos[1] + self.location_team0[1] * self.character_offset,
+                self.camera.pos[2] + self.location_team0[2] * self.character_offset,
+            ]
+            self.img_battler.mesh.indices = [0]
 
-    #     # TODO: remove duplicate
-    #     if self.poke2_set and not enemy_first:
-    #         # TODO: support >2 chars
-    #         self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
-    #         self.vbo_pkm.write(
-    #             np.asarray(
-    #                 [
-    #                     self.camera.pos[0]
-    #                     + self.location_team1[0] * self.character_offset,
-    #                     self.camera.pos[1]
-    #                     + self.location_team1[1] * self.character_offset,
-    #                     self.camera.pos[2]
-    #                     + self.location_team1[2] * self.character_offset,
-    #                 ],
-    #                 dtype="f4",
-    #             ),
-    #             offset=0,
-    #         )
-    #         self.prog["Texture"] = 0
-    #         face = int((self.camera.rotation_value + 2) % 4)
-    #         l = (
-    #             self.poke2_set[0 if face % 3 else 1][0].size[0]
-    #             // self.poke2_set[0 if face % 3 else 1][0].size[1]
-    #         )
-    #         self.prog["Size"] = (
-    #             self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
-    #         ) ** 0.5
-    #         self.prog["AnimationFrame"] = int(time * 8) % l
-    #         self.prog["AnimationLength"] = l
-    #         self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
-    #         self.prog["Mirror"] = -1 if face % 2 else 1
+            # print(self.img_battler.mesh.vertices)
 
-    #         self.poke2_set[0 if face % 3 else 1][0].use(location=0)
-    #         self.vao_pkm.render(moderngl.POINTS, vertices=1)
+            a = []
+            b = []
 
-    #     self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+            # for i in range(10):
+            #     a.extend([i / 10, -i / 10, i / 10])
+            #     b.append(i)
+
+            # self.img_battler.mesh.vertices = a
+            # self.img_battler.mesh.indices = b
+
+            # self.img_battler.mesh.vertices = [0.1, 0.1, 0.1, 0.2, 0.2, 0.2]
+            # self.img_battler.mesh.indices = [0, 1]
+
+            face = int((self.camera.rotation_value) % 4)
+            # l = (
+            #     self.poke1_set[0 if face % 3 else 1][0].size[0]
+            #     // self.poke1_set[0 if face % 3 else 1][0].size[1]
+            # )
+            # self.img_battler.canvas["Size"] = (
+            #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
+            # ) ** 0.5
+            l = 4
+            self.img_battler.canvas["Size"] = 1.0
+            self.img_battler.canvas["AnimationFrame"] = int(time * 8) % l
+            self.img_battler.canvas["AnimationLength"] = l
+            # self.img_battler.canvas["HeightShare"] = self.poke1_set[
+            #     0 if face % 3 else 1
+            # ][1]
+            self.img_battler.canvas["HeightShare"] = 1.0
+            self.img_battler.canvas["Mirror"] = -1 if face % 2 else 1
+
+            # self.poke1_set[0 if face % 3 else 1][0].use(location=0)
+            # self.vao_pkm.render(moderngl.POINTS, vertices=1)
+
+        # # TODO: remove duplicate
+        # if self.poke2_set and not enemy_first:
+        #     # TODO: support >2 chars
+        #     self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
+        #     self.vbo_pkm.write(
+        #         np.asarray(
+        #             [
+        #                 self.camera.pos[0]
+        #                 + self.location_team1[0] * self.character_offset,
+        #                 self.camera.pos[1]
+        #                 + self.location_team1[1] * self.character_offset,
+        #                 self.camera.pos[2]
+        #                 + self.location_team1[2] * self.character_offset,
+        #             ],
+        #             dtype="f4",
+        #         ),
+        #         offset=0,
+        #     )
+        #     self.prog["Texture"] = 0
+        #     face = int((self.camera.rotation_value + 2) % 4)
+        #     l = (
+        #         self.poke2_set[0 if face % 3 else 1][0].size[0]
+        #         // self.poke2_set[0 if face % 3 else 1][0].size[1]
+        #     )
+        #     self.prog["Size"] = (
+        #         self.poke2_set[0 if face % 3 else 1][0].size[1] / 4
+        #     ) ** 0.5
+        #     self.prog["AnimationFrame"] = int(time * 8) % l
+        #     self.prog["AnimationLength"] = l
+        #     self.prog["HeightShare"] = self.poke2_set[0 if face % 3 else 1][1]
+        #     self.prog["Mirror"] = -1 if face % 2 else 1
+
+        #     self.poke2_set[0 if face % 3 else 1][0].use(location=0)
+        #     self.vao_pkm.render(moderngl.POINTS, vertices=1)
+
+        # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
