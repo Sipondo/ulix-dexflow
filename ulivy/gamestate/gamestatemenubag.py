@@ -1,7 +1,7 @@
 from .basegamestate import BaseGameState
 
 
-class GameStateMenuMain(BaseGameState):
+class GameStateMenuBag(BaseGameState):
     def on_enter(self):
         pass
 

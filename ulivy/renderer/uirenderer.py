@@ -8,6 +8,7 @@ UI_DEBUG = importlib.import_module(f"ulivy.interface.{UI}.uidebug").UIDebug
 UI_PROMPT = importlib.import_module(f"ulivy.interface.{UI}.uiprompt").UIPrompt
 UI_BATTLE = importlib.import_module(f"ulivy.interface.{UI}.uibattle").UIBattle
 UI_MENU_MAIN = importlib.import_module(f"ulivy.interface.{UI}.uimenumain").UIMenuMain
+UI_MENU_BAG = importlib.import_module(f"ulivy.interface.{UI}.uimenubag").UIMenuBag
 
 
 class UIRenderer:
@@ -46,6 +47,8 @@ class UIRenderer:
             self.current_ui = UI_BATTLE(self.game, gstate)
         elif new_ui == "menumain":
             self.current_ui = UI_MENU_MAIN(self.game, gstate)
+        elif new_ui == "menubag":
+            self.current_ui = UI_MENU_BAG(self.game, gstate)
         else:
             return
 

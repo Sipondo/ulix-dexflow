@@ -24,6 +24,8 @@ class UIMenuMain(BaseUI):
             self.selection = (self.selection - 1) % self.max_selection
             self.game.r_aud.effect("select")
         elif key == "interact":
+            if self.selection == 2:
+                self.game.m_gst.switch_state("menubag")
             pass
 
         self.highlight_selection()
