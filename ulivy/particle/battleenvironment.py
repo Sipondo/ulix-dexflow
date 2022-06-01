@@ -93,7 +93,7 @@ class BattleEnvironmentImage(FloatLayout):
         # TODO remove
         if not hasattr(self, "game"):
             if hasattr(self, "parent"):
-                self.scene = self.parent.parent.parent
+                self.scene = self.parent.parent
                 self.game = self.scene.game
             else:
                 return
@@ -147,7 +147,7 @@ class BattleBattlerImage(FloatLayout):
         # TODO remove
         if not hasattr(self, "game"):
             if hasattr(self, "parent"):
-                self.scene = self.parent.parent.parent
+                self.scene = self.parent.parent
                 self.scene.img_battler = self
                 self.game = self.scene.game
             else:

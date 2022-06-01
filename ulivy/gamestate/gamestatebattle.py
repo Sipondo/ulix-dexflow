@@ -31,12 +31,11 @@ class GameStateBattle(BaseGameState):
 
         # Renderer setup
         self.scene = BattleScene(self.game)
-        self.game.add_widget(self.scene)
+        self.game.r_fbo.fbo_add_widget(self.scene)
         return  # TODO: ulivy
 
         self.game.r_int.fade = False
         self.game.r_int.letterbox = False
-
 
         self.render.set_pokemon(None, 0)
         self.render.set_pokemon(None, 1)

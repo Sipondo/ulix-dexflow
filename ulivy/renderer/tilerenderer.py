@@ -82,9 +82,7 @@ class EntityLayerWidget(FloatLayout):
             self.size[1] / Window.size[1],
         )
 
-        vertices, indices = self.parent.parent.parent.parent.m_ent.vertices(
-            entity_h=self.entity_h
-        )
+        vertices, indices = self.game.m_ent.vertices(entity_h=self.entity_h)
 
         self.mesh.vertices = vertices
         self.mesh.indices = indices
@@ -138,7 +136,7 @@ class TileLayerWidget(FloatLayout):
         self.canvas.add(BindTexture(texture=self.tex1, index=1))
         self.canvas.add(BindTexture(texture=self.blittex, index=2))
 
-        self.rec1 = Rectangle(size=self.size, pos=self.pos)
+        self.rec1 = Rectangle(size=(self.size), pos=self.pos)
         self.canvas.add(self.rec1)
 
         self.camera_position = 0
@@ -150,6 +148,9 @@ class TileLayerWidget(FloatLayout):
     def update(self, time, dt):
         self.rec1.pos = self.pos
         self.rec1.size = self.size
+
+        # self.rec1.pos = (0, 0)  # self.pos
+        # self.rec1.size = (1280, 720)  # self.size
 
         self.camera_position = (
             self.game.m_pan.total_x / 21,
@@ -182,12 +183,12 @@ class Bounds(AnchorLayout):
 
 
 class TileRenderer(FloatLayout):
-    def __init__(self, game, **kwargs):
+    def __init__(self, game, size, **kwargs):
         super(TileRenderer, self).__init__(**kwargs)
 
         self.game = game
 
-        self.size = Window.size
+        self.size = size
 
         self.m_map = game.m_map
         self.m_map.load_world_data()
@@ -197,7 +198,7 @@ class TileRenderer(FloatLayout):
         self.set_map_via_manager()
 
     def clear_layers(self):
-        self.ids.GameCanvas.clear_widgets()
+        self.clear_widgets()
         for layer in self.layers:
             del layer
 
@@ -209,16 +210,16 @@ class TileRenderer(FloatLayout):
         print(
             "SORTED", [(x.h, x.offset) for x in sorted(self.layers, key=lambda x: x.h)]
         )
-        self.ids.GameCanvas.clear_widgets()
+        self.clear_widgets()
         for layer in sorted(self.layers, key=lambda x: x.h):
-            self.ids.GameCanvas.add_widget(layer)
+            self.add_widget(layer)
 
     def update(self, time, dt):
         for layer in sorted(self.layers, key=lambda x: x.h):
             layer.update(time, dt)
 
     def add_layer(self, widget):
-        self.ids.GameCanvas.add_widget(widget)
+        self.add_widget(widget)
         self.layers.append(widget)
 
     def set_map_via_manager(self, offset=(0, 0), fade=True):
@@ -317,7 +318,7 @@ class TileRenderer(FloatLayout):
 
                 level = level.split("/")[-1]
 
-                # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
+                print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_layer(
                     TileLayerWidget(
                         game=self.game,

@@ -5,17 +5,18 @@ from array import array
 from kivy.uix.floatlayout import FloatLayout
 
 from .battlemovement import BattleMovement
-from kivy.lang import Builder
 
 from kivy.graphics.transformation import Matrix
 
-Builder.load_file("ulivy/particle/battlescene.kv")
+
 
 
 class BattleScene(FloatLayout):
     def __init__(self, game, **kwargs):
         self.game = game
         super().__init__(**kwargs)
+
+        self.add_widget(BattleEnvironment())
 
         print("BATTLESCENE", self.pos, self.size)
 

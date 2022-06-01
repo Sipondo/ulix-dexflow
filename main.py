@@ -64,7 +64,8 @@ from ulivy.manager.resourcemanager import ResourceManager
 from ulivy.upl.uplmanager import UplManager
 
 from ulivy.renderer.audiorenderer import AudioRenderer
-from ulivy.renderer.tilerenderer import TileRenderer
+from ulivy.renderer.bufferrenderer import BufferRenderer
+
 from ulivy.renderer.uirenderer import UIRenderer
 
 from ulivy.player.inventory import Inventory
@@ -75,7 +76,7 @@ from ulivy.player.inventory import Inventory
 from kivy.utils import platform
 from kivy.lang import Builder
 
-Builder.load_file("ulivy/renderer/tilerenderer.kv")
+# Builder.load_file("ulivy/renderer/tilerenderer.kv")
 Builder.load_file("ulivy/manager/oscmanager.kv")
 
 
@@ -103,6 +104,11 @@ if "pretty_errors" in sys.modules:
 
 
 class PokeGame(Screen):
+
+    # RENDER_SIZE = (160, 90)
+    # RENDER_SIZE = (1280, 720)
+    RENDER_SIZE = (1920, 1080)
+
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)
         # Window.size = (1280, 720)
@@ -139,9 +145,10 @@ class PokeGame(Screen):
         self.m_cam = CameraManager(self)
 
         self.r_aud = AudioRenderer(self)
-        self.r_til = TileRenderer(self)
 
-        self.add_widget(self.r_til)
+        self.r_fbo = BufferRenderer(self)
+
+        self.add_widget(self.r_fbo)
 
         if platform == "android":
             self.m_osc = OscManager(self)
@@ -170,7 +177,7 @@ class PokeGame(Screen):
         if self.m_gst.current_state_name in ("cinematic", "overworld"):
             self.m_act.update(time, dt)
 
-        self.r_til.update(time, dt)
+        self.r_fbo.update(time, dt)
 
 
 class UlivyApp(App):
