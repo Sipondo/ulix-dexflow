@@ -76,7 +76,6 @@ from ulivy.player.inventory import Inventory
 from kivy.utils import platform
 from kivy.lang import Builder
 
-# Builder.load_file("ulivy/renderer/tilerenderer.kv")
 Builder.load_file("ulivy/manager/oscmanager.kv")
 
 

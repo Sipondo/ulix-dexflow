@@ -9,8 +9,6 @@ from .battlemovement import BattleMovement
 from kivy.graphics.transformation import Matrix
 
 
-
-
 class BattleScene(FloatLayout):
     def __init__(self, game, **kwargs):
         self.game = game
