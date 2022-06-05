@@ -32,7 +32,7 @@ class Teleport:
             )
             self.game.r_til.offset = (0.5, 13 / 16)
             self.game.m_col.offset = (0.5, 13 / 16)
-            self.game.r_til.set_map_via_manager(  # TODO: this shouldn't be called directly
+            self.game.r_fbo.r_til.set_map_via_manager(  # TODO: this shouldn't be called directly
                 (0, 0,), fade=False,
             )
         else:

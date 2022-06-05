@@ -107,11 +107,12 @@ class EntityLayerWidget(FloatLayout):
 
 
 class TileLayerWidget(FloatLayout):
-    def __init__(self, game, tiles, texture_file, level, h, offset, **kwargs):
+    def __init__(self, game, tiles, texture_file, level, size, h, offset, **kwargs):
         self.game = game
         self.canvas = RenderContext(fs=tile_shader_fs, vs=tile_shader_vs)
 
         self.level = level
+        self.map_size = size
         self.h = h
         self.offset = (float(offset[0]) / 21, float(offset[1]) / 12)
         # call the constructor of parent
@@ -144,6 +145,8 @@ class TileLayerWidget(FloatLayout):
     def populate_texture(self, texture):
         self.buf = self.tiles.flatten().tobytes()
         self.blittex.blit_buffer(self.buf, colorfmt="rgba", bufferfmt="ubyte")
+
+        self.canvas["map_size"] = float(self.map_size[0]), float(self.map_size[1])
 
     def update(self, time, dt):
         self.rec1.pos = self.pos
@@ -237,7 +240,7 @@ class TileRenderer(FloatLayout):
 
         self.texmap = {}
 
-        for h, mapdef in enumerate(self.m_map.current_tilesets):
+        for mapdef in self.m_map.current_tilesets[-1]:
             if mapdef[0] != "TILES":
                 continue
 
@@ -254,7 +257,7 @@ class TileRenderer(FloatLayout):
         self.spawn_tile_layers(self.m_map.current_tilesets, offset=offset, primary=True)
 
         if conns := self.m_map.current_connected_tilesets:
-            for (tiles, portal_pos, target_pos, direction,) in conns:
+            for (size, tiles, portal_pos, target_pos, direction,) in conns:
                 if direction == "E":
                     direction = (1, 0)
                 elif direction == "S":
@@ -268,7 +271,7 @@ class TileRenderer(FloatLayout):
                     offset[1] - portal_pos[1] - direction[1] + target_pos[1],
                 )
 
-                self.spawn_tile_layers(tiles, offset=conn_offset)
+                self.spawn_tile_layers((size, tiles), offset=conn_offset)
 
         self.add_layers_to_canvas()
         self.game.m_act.flush_regions()
@@ -281,6 +284,9 @@ class TileRenderer(FloatLayout):
         if primary:
             self.game.m_col.clear_collision()
             self.game.m_col.set_offset(offset)
+
+        size = tileset_defs[0]
+        tileset_defs = tileset_defs[1]
 
         entity_h = 0  # TODO fix
         h = 0.1 if primary else 0.2
@@ -325,6 +331,7 @@ class TileRenderer(FloatLayout):
                         tiles=temp_map,
                         texture_file=self.texmap[level],
                         level=level,
+                        size=size,
                         h=h,
                         offset=offset,
                     )

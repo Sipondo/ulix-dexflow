@@ -139,15 +139,18 @@ class MapManager:
 
     @property
     def current_tilesets(self):
-        return self.current_level["layers"]
+        return (self.current_level["orig_dimensions"], self.current_level["layers"])
 
     @property
     def current_connected_tilesets(self):
         return [
             (
-                self.levels[self.convert_mapstring_to_key(x["f_target_level"])][
-                    "layers"
-                ],
+                (
+                    level := self.levels[
+                        self.convert_mapstring_to_key(x["f_target_level"])
+                    ]
+                )["orig_dimensions"],
+                level["layers"],
                 (floor(x["location"][0] / 16), ceil(x["location"][1] // 16)),
                 x["f_target_location"],
                 x["f_target_direction"],

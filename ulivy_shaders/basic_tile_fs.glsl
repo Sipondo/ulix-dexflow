@@ -21,6 +21,8 @@ uniform float time;
 
 uniform vec2 camera_position;
 
+uniform vec2 map_size;
+
 out vec4 fragColor;
 
 // texelFetch is not supported by android under OpenGLES 2.0
@@ -32,14 +34,14 @@ void main(void)
     
     vec2 view_pos=tex_coord0.xy+camera_position+offset;// position of camera pixel
     
-    if((view_pos.x>=0.)&&(view_pos.y>=0.))
-    {
-        // What location does this camera pixel position have in the world
-        int world_locX=int(view_pos.x/viewport.x);
-        int world_locY=int(view_pos.y/viewport.y);
-        
+    // What location does this camera pixel position have in the world
+    float world_locX=view_pos.x/viewport.x;
+    float world_locY=view_pos.y/viewport.y;
+    
+    // Check if inside map bounds
+    if((world_locX>=0.)&&(world_locX<=map_size.x)&&(world_locY>0.)&&(world_locY<=map_size.y)){
         // What tile is at that location
-        vec2 tile=texelFetch(texture1,ivec2(world_locX,world_locY),0).xy*256.;
+        vec2 tile=texelFetch(texture1,ivec2(int(world_locX),int(world_locY)),0).xy*256.;
         
         tile.x-=1.;
         
@@ -56,5 +58,7 @@ void main(void)
                 )+int(tile.y)*16
             ),0
         );
+    }else{
+        discard;
     }
 }
