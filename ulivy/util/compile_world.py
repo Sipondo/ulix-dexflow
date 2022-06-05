@@ -325,6 +325,7 @@ atlas = {}
 
 def convert_to_atlas_layers(layers):
     logging.info("\n" * 5, "-" * 30, "STARTING ATLAS CONVERSION", "-" * 30, "\n" * 3)
+
     # Identify atlas blocks
     atlas_blocks = []
     atlas_block = []
@@ -341,6 +342,13 @@ def convert_to_atlas_layers(layers):
         if atlas_block:
             atlas_blocks.append(atlas_block)
             atlas_block = []
+
+    # Add the empty tile as 0,0
+    tile = Image.new("RGBA", (16, 16))
+    dat = list(tile.getdata())
+    if dat not in atlas_stills:
+        atlas_stills.append(dat)
+        atlas_images.append(tile)
 
     n = -1
     tiledict = {
@@ -417,7 +425,13 @@ def convert_to_atlas_layers(layers):
 
                 # Set tile index
                 index = atlas[origin]
-                output_tile_array[0, y, x] = np.array((index // 256 + 1, index % 256))
+
+                if index == 0:
+                    output_tile_array[0, y, x] = np.array((0, 0))
+                else:
+                    output_tile_array[0, y, x] = np.array(
+                        (index // 256 + 1, index % 256)
+                    )
 
         layer[2] = output_tile_array
         output.append(layer)

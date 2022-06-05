@@ -39,25 +39,29 @@ void main(void)
     float world_locY=view_pos.y/viewport.y;
     
     // Check if inside map bounds
-    if((world_locX>=0.)&&(world_locX<=map_size.x)&&(world_locY>0.)&&(world_locY<=map_size.y)){
+    if((world_locX>=0.)&&(world_locX<=map_size.x)&&(world_locY>=0.)&&(world_locY<=map_size.y)){
         // What tile is at that location
         vec2 tile=texelFetch(texture1,ivec2(int(world_locX),int(world_locY)),0).xy*256.;
         
-        tile.x-=1.;
-        
-        fragColor=texelFetch(texture0,
-            ivec2(
-                int(
-                    mod(view_pos.x,viewport.x)
-                    /viewport.x*16.
-                )+int(tile.x)*16
-                ,
-                int(
-                    mod(view_pos.y,viewport.y)
-                    /viewport.y*16.
-                )+int(tile.y)*16
-            ),0
-        );
+        if((tile.x<1.)&&(tile.y<1.)){
+            discard;
+        }else{
+            tile.x-=1.;
+            
+            fragColor=texelFetch(texture0,
+                ivec2(
+                    int(
+                        mod(view_pos.x,viewport.x)
+                        /viewport.x*16.
+                    )+int(tile.x)*16
+                    ,
+                    int(
+                        mod(view_pos.y,viewport.y)
+                        /viewport.y*16.
+                    )+int(tile.y)*16
+                ),0
+            );
+        }
     }else{
         discard;
     }

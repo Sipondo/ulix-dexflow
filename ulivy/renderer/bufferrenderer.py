@@ -2,6 +2,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.graphics import Mesh, RenderContext, BindTexture, Rectangle
+from kivy.graphics.context_instructions import Color
 from kivy.graphics.texture import Texture
 from kivy.core.image import Image
 from kivy.resources import resource_find, resource_add_path

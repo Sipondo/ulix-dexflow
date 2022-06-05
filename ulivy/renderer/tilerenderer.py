@@ -240,6 +240,7 @@ class TileRenderer(FloatLayout):
 
         self.texmap = {}
 
+        print(self.m_map.current_tilesets)
         for mapdef in self.m_map.current_tilesets[-1]:
             if mapdef[0] != "TILES":
                 continue
