@@ -14,7 +14,14 @@ class BattleScene(FloatLayout):
         self.game = game
         super().__init__(**kwargs)
 
-        self.add_widget(BattleEnvironment())
+        # Add the widget with backgrounds and battlers
+        self.add_widget(b := BattleEnvironment())
+
+        # Init battler list (size: 2)
+        self.img_battler = []
+
+        # Load backkground and add both battlers to the list
+        b.init_back(self)
 
         print("BATTLESCENE", self.pos, self.size)
 
@@ -272,18 +279,18 @@ class BattleScene(FloatLayout):
             for i in range(len(self.brightness)):
                 self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
 
-        self.img_battler.canvas["CameraPosition"] = self.game.m_cam.pos
-        self.img_battler.canvas["Cutout"] = 1 if cutout else 0
-        self.img_battler.canvas["IsShadow"] = 1 if shadow else 0
-        # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+        # self.img_battler.canvas["CameraPosition"] = self.game.m_cam.pos
+        # self.img_battler.canvas["Cutout"] = 1 if cutout else 0
+        # self.img_battler.canvas["IsShadow"] = 1 if shadow else 0
+        # # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
-        m = Matrix()
-        m.set(array=(self.camera.bill_rot).astype("f4").tolist())
-        self.img_battler.canvas["BillboardFace"] = m
+        # m = Matrix()
+        # m.set(array=(self.camera.bill_rot).astype("f4").tolist())
+        # self.img_battler.canvas["BillboardFace"] = m
 
-        m2 = Matrix()
-        m2.set(array=(self.camera.mvp).astype("f4").tolist())
-        self.img_battler.canvas["Mvp"] = m2
+        # m2 = Matrix()
+        # m2.set(array=(self.camera.mvp).astype("f4").tolist())
+        # self.img_battler.canvas["Mvp"] = m2
         # print(np.dot(self.img_battler.canvas["Mvp"], np.array([0.1, 0.1, 0.1, 1])))
 
         enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
@@ -322,50 +329,46 @@ class BattleScene(FloatLayout):
         #     self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
         if True or self.poke1_set:
-            self.img_battler.canvas["Brightness"] = self.brightness[0]
+            self.render_battler(0, time, cutout, shadow)
+            self.render_battler(1, time, cutout, shadow)
+            # self.img_battler.canvas["Brightness"] = self.brightness[0]
 
-            self.img_battler.mesh.vertices = [
-                self.camera.pos[0] + self.location_team0[0] * self.character_offset,
-                self.camera.pos[1] + self.location_team0[1] * self.character_offset,
-                self.camera.pos[2] + self.location_team0[2] * self.character_offset,
-            ]
-            self.img_battler.mesh.indices = [0]
+            # self.img_battler.mesh.vertices = [
+            #     self.camera.pos[0] + self.location_team0[0] * self.character_offset,
+            #     self.camera.pos[1] + self.location_team0[1] * self.character_offset,
+            #     self.camera.pos[2] + self.location_team0[2] * self.character_offset,
+            # ]
+            # self.img_battler.mesh.indices = [0]
 
-            # print(self.img_battler.mesh.vertices)
+            # # print(self.img_battler.mesh.vertices)
 
-            a = []
-            b = []
+            # a = []
+            # b = []
 
-            # for i in range(10):
-            #     a.extend([i / 10, -i / 10, i / 10])
-            #     b.append(i)
+            # # for i in range(10):
+            # #     a.extend([i / 10, -i / 10, i / 10])
+            # #     b.append(i)
 
-            # self.img_battler.mesh.vertices = a
-            # self.img_battler.mesh.indices = b
+            # face = int((self.camera.rotation_value) % 4)
+            # # l = (
+            # #     self.poke1_set[0 if face % 3 else 1][0].size[0]
+            # #     // self.poke1_set[0 if face % 3 else 1][0].size[1]
+            # # )
+            # # self.img_battler.canvas["Size"] = (
+            # #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
+            # # ) ** 0.5
+            # l = 4
+            # self.img_battler.canvas["Size"] = 5.0
+            # self.img_battler.canvas["AnimationFrame"] = int(time * 8) % l
+            # self.img_battler.canvas["AnimationLength"] = l
+            # # self.img_battler.canvas["HeightShare"] = self.poke1_set[
+            # #     0 if face % 3 else 1
+            # # ][1]
+            # self.img_battler.canvas["HeightShare"] = 1.0
+            # self.img_battler.canvas["Mirror"] = -1 if face % 2 else 1
 
-            # self.img_battler.mesh.vertices = [0.1, 0.1, 0.1, 0.2, 0.2, 0.2]
-            # self.img_battler.mesh.indices = [0, 1]
-
-            face = int((self.camera.rotation_value) % 4)
-            # l = (
-            #     self.poke1_set[0 if face % 3 else 1][0].size[0]
-            #     // self.poke1_set[0 if face % 3 else 1][0].size[1]
-            # )
-            # self.img_battler.canvas["Size"] = (
-            #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
-            # ) ** 0.5
-            l = 4
-            self.img_battler.canvas["Size"] = 5.0
-            self.img_battler.canvas["AnimationFrame"] = int(time * 8) % l
-            self.img_battler.canvas["AnimationLength"] = l
-            # self.img_battler.canvas["HeightShare"] = self.poke1_set[
-            #     0 if face % 3 else 1
-            # ][1]
-            self.img_battler.canvas["HeightShare"] = 1.0
-            self.img_battler.canvas["Mirror"] = -1 if face % 2 else 1
-
-            # self.poke1_set[0 if face % 3 else 1][0].use(location=0)
-            # self.vao_pkm.render(moderngl.POINTS, vertices=1)
+            # # self.poke1_set[0 if face % 3 else 1][0].use(location=0)
+            # # self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
         # # TODO: remove duplicate
         # if self.poke2_set and not enemy_first:
@@ -403,3 +406,56 @@ class BattleScene(FloatLayout):
         #     self.vao_pkm.render(moderngl.POINTS, vertices=1)
 
         # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+
+    def render_battler(self, i, time, cutout=False, shadow=False):
+        battler = self.img_battler[i]
+        location = self.location_team0 if i == 0 else self.location_team1
+
+        battler.canvas["CameraPosition"] = self.game.m_cam.pos
+        battler.canvas["Cutout"] = 1 if cutout else 0
+        battler.canvas["IsShadow"] = 1 if shadow else 0
+        # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
+
+        m = Matrix()
+        m.set(array=(self.camera.bill_rot).astype("f4").tolist())
+        battler.canvas["BillboardFace"] = m
+
+        m2 = Matrix()
+        m2.set(array=(self.camera.mvp).astype("f4").tolist())
+        battler.canvas["Mvp"] = m2
+
+        battler.canvas["Brightness"] = self.brightness[0]
+
+        battler.mesh.vertices = [
+            self.camera.pos[0] + location[0] * self.character_offset,
+            self.camera.pos[1] + location[1] * self.character_offset,
+            self.camera.pos[2] + location[2] * self.character_offset,
+        ]
+        battler.mesh.indices = [0]
+
+        # print(battler.mesh.vertices)
+
+        a = []
+        b = []
+
+        # for i in range(10):
+        #     a.extend([i / 10, -i / 10, i / 10])
+        #     b.append(i)
+
+        face = int((self.camera.rotation_value) % 4)
+        # l = (
+        #     self.poke1_set[0 if face % 3 else 1][0].size[0]
+        #     // self.poke1_set[0 if face % 3 else 1][0].size[1]
+        # )
+        # battler.canvas["Size"] = (
+        #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
+        # ) ** 0.5
+        l = 4
+        battler.canvas["Size"] = 5.0
+        battler.canvas["AnimationFrame"] = int(time * 8) % l
+        battler.canvas["AnimationLength"] = l
+        # battler.canvas["HeightShare"] = self.poke1_set[
+        #     0 if face % 3 else 1
+        # ][1]
+        battler.canvas["HeightShare"] = 1.0
+        battler.canvas["Mirror"] = -1 if face % 2 else 1

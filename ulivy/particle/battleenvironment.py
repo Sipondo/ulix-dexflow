@@ -30,9 +30,9 @@ with open(resource_find("ulivy_shaders/battle_battler_vs.glsl")) as file:
 class BattleEnvironment(FloatLayout):
     def __init__(self, **kwargs):
         super(BattleEnvironment, self).__init__(**kwargs)
-        self.init_back()
+        # self.init_back()
 
-    def init_back(self):
+    def init_back(self, scene):
         pth = os.path.join("resources", "base", "graphics", "environments")
         resource_add_path(pth)
 
@@ -52,13 +52,28 @@ class BattleEnvironment(FloatLayout):
         )
         resource_add_path(pth)
         self.add_widget(
-            BattleBattlerImage(
+            b := BattleBattlerImage(
                 texture_file=Image(resource_find(f"substitute.png")),
                 # texture_file=Image(resource_find(f"001.png")),
                 # size_hint=(1, 1),
                 # pos_hint={"center_y": 0.5, "center_x": 0.5},
             )
         )
+        b.scene = scene
+        b.game = scene.game
+        scene.img_battler.append(b)
+
+        self.add_widget(
+            b := BattleBattlerImage(
+                texture_file=Image(resource_find(f"substitute.png")),
+                # texture_file=Image(resource_find(f"001.png")),
+                # size_hint=(1, 1),
+                # pos_hint={"center_y": 0.5, "center_x": 0.5},
+            )
+        )
+        b.scene = scene
+        b.game = scene.game
+        scene.img_battler.append(b)
 
     def update(self, time, frame_time):
         for child in self.children:
@@ -144,16 +159,6 @@ class BattleBattlerImage(FloatLayout):
 
     def redraw(self):
         self.canvas["Texture"] = 4
-        # TODO remove
-        if not hasattr(self, "game"):
-            if hasattr(self, "parent"):
-                self.scene = self.parent.parent
-                self.scene.img_battler = self
-                self.game = self.scene.game
-            else:
-                return
-
-        # self.canvas["Texture"] = 2
 
     def update(self, time, dt):
         self.redraw()
