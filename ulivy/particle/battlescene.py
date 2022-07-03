@@ -47,74 +47,9 @@ class BattleScene(FloatLayout):
 
         self.character_offset = 20
 
-        # self.vbo_pkm = self.ctx.buffer(array("f", [0.0, 0.0, 0.0]))
-        # self.vao_pkm = self.ctx.vertex_array(
-        #     self.prog, [(self.vbo_pkm, "3f", "in_pos")],
-        # )
-
-        # self.environment = self.game.m_res.get_environment(self.game.m_map.environment)
-
-        # # self.tex_p_cls = self.game.m_res.get_texture("splash", "parallax_close_shift_d")
-        # # self.tex_p_far = self.game.m_res.get_texture("splash", "parallax_far_shift_d")
-
-        # # Rendering
-        # self.render_prog = self.game.m_res.get_program("texture")
-        # self.render_prog["texture0"].value = 0
-
-        # self.render_prog_neg = self.game.m_res.get_program("negative_blend")
-        # self.render_prog_neg["texture0"].value = 0
-        # self.render_prog_neg["texture1"].value = 1
-        # self.quad_fs = geometry.quad_fs()
-
-        # # RGBA color/diffuse layer for alpha
-        # self.alpha_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
-        # self.alpha_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
-
-        # # RGBA color/diffuse layer for anti
-        # self.anti_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
-        # self.anti_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
-
-        # # RGBA color/diffuse layer for solid
-        # self.solid_diffuse = self.ctx.texture(self.game.resolution_combat_particles, 4)
-        # self.solid_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
-
-        # # RGBA color/diffuse layer for solid
-        # self.final_diffuse = self.ctx.texture(self.game.resolution_render, 4)
-        # self.final_diffuse.filter = moderngl.NEAREST, moderngl.NEAREST
-
-        # # Textures for storing depth values
-        # self.alpha_depth = self.ctx.depth_texture(self.game.resolution_combat_particles)
-        # self.final_depth = self.ctx.depth_texture(self.game.resolution_render)
-        # # self.solid_depth = self.ctx.depth_texture(self.game.resolution_combat_particles)
-        # # Create a framebuffer we can render to
-        # self.alpha_offscreen = self.ctx.framebuffer(
-        #     color_attachments=[self.alpha_diffuse,], depth_attachment=self.alpha_depth,
-        # )
-        # # Create a framebuffer we can render to
-        # self.anti_offscreen = self.ctx.framebuffer(
-        #     color_attachments=[self.anti_diffuse,], depth_attachment=self.alpha_depth,
-        # )
-        # # Create a framebuffer we can render to
-        # self.solid_offscreen = self.ctx.framebuffer(
-        #     color_attachments=[self.solid_diffuse,], depth_attachment=self.alpha_depth,
-        # )
-
-        # # Create a framebuffer we can render to
-        # self.final_offscreen = self.ctx.framebuffer(
-        #     color_attachments=[self.final_diffuse,], depth_attachment=self.final_depth,
-        # )
-
     def update(self, time, frame_time):
         for child in self.children:
             child.update(time, frame_time)
-
-    # def get_loc_fighter(self, team, base):
-    #     if team == 1:
-    #         l = self.location_team1
-    #     else:
-    #         l = self.location_team0
-
-    #     return (l[0] * base[0], l[1] * base[1], l[2] * base[2])
 
     @property
     def location_team0(self):
@@ -136,40 +71,40 @@ class BattleScene(FloatLayout):
     #         #     f"{str(id).zfill(3)}"
     #         # )
 
-    # def set_dark(self, dark, speed, recover):
-    #     self.dark_recover = recover
-    #     if speed is not None:
-    #         self.dark_to = dark
-    #         self.dark_speed = speed
-    #         if self.dark_to > self.dark:
-    #             self.dark_direction = 1
-    #         else:
-    #             self.dark_direction = -1
-    #     else:
-    #         self.dark_to = None
-    #         self.dark_speed = None
-    #         self.dark = dark
+    def set_dark(self, dark, speed, recover):
+        self.dark_recover = recover
+        if speed is not None:
+            self.dark_to = dark
+            self.dark_speed = speed
+            if self.dark_to > self.dark:
+                self.dark_direction = 1
+            else:
+                self.dark_direction = -1
+        else:
+            self.dark_to = None
+            self.dark_speed = None
+            self.dark = dark
 
-    # def set_movement(self, team, position, speed, recover):
-    #     self.bmove.set_movement(team, position, speed, recover)
+    def set_movement(self, team, position, speed, recover):
+        self.bmove.set_movement(team, position, speed, recover)
 
-    # def do_particle(self, name, user, target, miss=False, move_data=None):
-    #     if name:
-    #         name = name.replace(" ", "-")
-    #         if miss:
-    #             # TODO Particles miss to left/right
-    #             pass
-    #         self.game.m_par.spawn_system(
-    #             self, name, target, miss, move_data=move_data
-    #         )  # name)
-    #     else:
-    #         print("Empty particle!")
+    def do_particle(self, name, user, target, miss=False, move_data=None):
+        if name:
+            name = name.replace(" ", "-")
+            if miss:
+                # TODO Particles miss to left/right
+                pass
+            self.game.m_par.spawn_system(
+                self, name, target, miss, move_data=move_data
+            )  # name)
+        else:
+            print("Empty particle!")
 
     def render(self, time: float, frame_time: float):
         self.camera.render(time, frame_time)
         self.render_pokemon(time, frame_time)
-        return
         self.bmove.render(time, frame_time)
+
         if self.dark_to is not None:
             self.dark = max(
                 self.dark + frame_time / 2 * self.dark_speed * self.dark_direction, 0
@@ -183,6 +118,8 @@ class BattleScene(FloatLayout):
             self.dark = min(self.dark + frame_time / 2.5, 1)
 
         self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
+
+        return
         self.prog_bg["Brightness"] = self.dark
         self.render_prog["Contrast"] = 3.0 - 2 * self.dark
         self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
