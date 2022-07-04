@@ -209,10 +209,10 @@ class TileRenderer(FloatLayout):
         self.entitylayers = []
 
     def add_layers_to_canvas(self):
-        print("UNSORTED", [(x.h, x.offset) for x in self.layers])
-        print(
-            "SORTED", [(x.h, x.offset) for x in sorted(self.layers, key=lambda x: x.h)]
-        )
+        # print("UNSORTED", [(x.h, x.offset) for x in self.layers])
+        # print(
+        #     "SORTED", [(x.h, x.offset) for x in sorted(self.layers, key=lambda x: x.h)]
+        # )
         self.clear_widgets()
         for layer in sorted(self.layers, key=lambda x: x.h):
             self.add_widget(layer)
@@ -240,7 +240,7 @@ class TileRenderer(FloatLayout):
 
         self.texmap = {}
 
-        print(self.m_map.current_tilesets)
+        # print(self.m_map.current_tilesets)
         for mapdef in self.m_map.current_tilesets[-1]:
             if mapdef[0] != "TILES":
                 continue
@@ -295,7 +295,7 @@ class TileRenderer(FloatLayout):
             h += 1
             if mapdef[0] != "TILES":
                 if mapdef[0] == "ENTITIES":
-                    print("ENTITYLAYER!", h)
+                    # print("ENTITYLAYER!", h)
                     self.spawn_entity_layer(h, entity_h)
                     entity_h += 1
                 continue
@@ -325,7 +325,7 @@ class TileRenderer(FloatLayout):
 
                 level = level.split("/")[-1]
 
-                print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
+                # print("LAYER!", h, level, tiles.shape, "->", temp_map.shape)
                 self.add_layer(
                     TileLayerWidget(
                         game=self.game,

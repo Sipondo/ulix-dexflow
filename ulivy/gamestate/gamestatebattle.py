@@ -1,7 +1,6 @@
 import traceback
 
 import time as ti
-import enum
 
 from .basegamestate import BaseGameState
 
@@ -13,13 +12,6 @@ from ulivy.particle.battlescene import BattleScene
 
 # from ..combat.action import ActionType, Action
 
-
-class BattleStates(enum.Enum):
-    ACTION = enum.auto()
-    TOPMENU = enum.auto()
-    ACTIONMENU = enum.auto()
-    SWAPMENU = enum.auto()
-    BALLMENU = enum.auto()
 
 
 class GameStateBattle(BaseGameState):
