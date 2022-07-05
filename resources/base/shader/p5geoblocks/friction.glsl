@@ -1,0 +1,8 @@
+// CONSTANTS
+// -- Friction
+vec3%FRICTION%=vec3(.995,.995,.995);
+// CONSTANTS_END
+// DECLARATIONS
+// DECLARATIONS_END
+
+vel=vel*%FRICTION%;

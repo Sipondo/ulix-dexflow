@@ -410,7 +410,7 @@ class Renderer:
 
         self.prog["texture0"] = 0
         self.prog["texturearray1"] = 10
-        self.prog["Usenoise"] = self.equation != 1
+        self.prog["Usenoise"] = float(self.equation != 1)
 
         self.rotvel = bool(self.system.r(self, "rotvel"))
         self.noise_speed = 0
@@ -458,7 +458,7 @@ class Renderer:
 
     def emit_gpu(self, time, frame_time):
         self.prog["opacity"] = self.opacity
-        self.prog["Usenoise"] = (self.equation != 1) and (self.noise_speed != 0)
+        self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
         self.prog["Rotvel"] = self.rotvel
         self.texture.use(0)
         self.texture_noise.use(10)

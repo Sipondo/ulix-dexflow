@@ -274,8 +274,7 @@ class ResourceManager:
 
     def get_shader(self, program_name):
         with open(resource_find(f"resources/base/shader/{program_name}.glsl")) as file:
-            shader = file.read()
-        return shader
+            return file.read()
 
     def get_program_varyings(
         self, vertex_name, geo_name=None, geoblocks=None, uniforms=None, varyings=[]
@@ -316,9 +315,7 @@ class ResourceManager:
 
     def get_geoblock(self, geoblock_name):
         with open(
-            self.resolve_resource_path(
-                self.p_shaders / "p4geoblocks" / f"{geoblock_name}.glsl"
-            )
+            resource_find(f"resources/base/shader/p5geoblocks/{geoblock_name}.glsl")
         ) as geoblock:
             return geoblock.read()
 

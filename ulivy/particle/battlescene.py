@@ -71,6 +71,14 @@ class BattleScene(FloatLayout):
     #         #     f"{str(id).zfill(3)}"
     #         # )
 
+    def get_loc_fighter(self, team, base):
+        if team == 1:
+            l = self.location_team1
+        else:
+            l = self.location_team0
+
+        return (l[0] * base[0], l[1] * base[1], l[2] * base[2])
+
     def set_dark(self, dark, speed, recover):
         self.dark_recover = recover
         if speed is not None:
@@ -170,7 +178,7 @@ class BattleScene(FloatLayout):
 
         # Render
         locking = self.game.m_par.on_tick(
-            time, frame_time#, self.alpha_offscreen, self.anti_offscreen
+            time, frame_time  # , self.alpha_offscreen, self.anti_offscreen
         )
 
         # # ### Aggregate picture
