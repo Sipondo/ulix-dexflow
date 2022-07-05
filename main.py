@@ -25,12 +25,6 @@ from pathlib import Path
 
 # # from game.upl.uplmanager import UplManager
 
-# # # Swap these to get new/old particles
-# # from game.manager.p4 import ParticleManager
-
-# # from game.manager.particlemanager import ParticleManager
-
-
 # from game.manager.savemanager import SaveManager
 
 # # from game.player.inventory import Inventory
@@ -52,6 +46,7 @@ from ulivy.manager.actionmanager import ActionManager
 from ulivy.manager.animationmanager import AnimationManager
 from ulivy.manager.cameramanager import CameraManager
 from ulivy.manager.collisionmanager import CollisionManager
+from ulivy.manager.dbmanager import DbManager
 from ulivy.manager.entitymanager import EntityManager
 from ulivy.manager.gamestatemanager import GameStateManager
 from ulivy.manager.hotkeymanager import HotkeyManager
@@ -61,6 +56,7 @@ from ulivy.manager.savemanager import SaveManager
 from ulivy.manager.oscmanager import OscManager, FPSCounter
 from ulivy.manager.panmanager import PanManager
 from ulivy.manager.resourcemanager import ResourceManager
+from ulivy.manager.p5 import ParticleManager
 from ulivy.upl.uplmanager import UplManager
 
 from ulivy.renderer.audiorenderer import AudioRenderer
@@ -140,6 +136,8 @@ class PokeGame(Screen):
         self.m_key = HotkeyManager(self)
         self.m_pbs = PbsManager(self)
         self.m_upl = UplManager(self)
+        self.m_dat = DbManager(self)
+        self.m_par = ParticleManager(self)
 
         self.m_cam = CameraManager(self)
 

@@ -1,5 +1,5 @@
 import moderngl
-from .p4dyna.equation import Equation
+from .p5dyna.equation import Equation
 from numpy.random import random
 
 
@@ -57,11 +57,11 @@ class ParticleSystem:
             steps = int(self.step_count // self.step_size)
             self.step_count = self.step_count % self.step_size
 
-            for _ in range(steps):
-                self.transformer.render(time, self.step_size)
-                for emitter in self.emitters:
-                    emitter.render(time, self.step_size)
-                self.switch_buffers()
+            # for _ in range(steps):
+            #     self.transformer.render(time, self.step_size)
+            #     for emitter in self.emitters:
+            #         emitter.render(time, self.step_size)
+            #     self.switch_buffers()
 
         for misc in self.miscs:
             misc.render(time)
@@ -73,6 +73,7 @@ class ParticleSystem:
         return True
 
     def render(self, time, frame_time):
+        return
         # Solid
         self.game.m_par.set_render(1)
         for renderer in (x for x in self.renderers if x.equation == 1):
@@ -116,6 +117,7 @@ class ParticleSystem:
             print(err)
 
     def load_context_objects(self):
+        return
         self.vbo1 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
         self.vbo2 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
 
@@ -221,8 +223,8 @@ class ParticleSystem:
                 )
                 self.transformer.add_geoblock(node, None, stage_in, stage_out)
 
-        self.transformer.load_programs()
-        self.transformer.load_context_objects()
+        # self.transformer.load_programs()
+        # self.transformer.load_context_objects()
 
     def add_equation(self, params):
         self.params = params["content"]  # meh

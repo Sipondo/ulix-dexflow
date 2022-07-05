@@ -119,96 +119,95 @@ class BattleScene(FloatLayout):
 
         self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
 
-        return
-        self.prog_bg["Brightness"] = self.dark
-        self.render_prog["Contrast"] = 3.0 - 2 * self.dark
-        self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
-        self.camera.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
-        self.prog_bg["Shake"] = 0  # self.camera.shake
-        self.render_prog["Shake"] = 0  # self.camera.shake
-        self.render_prog_neg["Shake"] = self.camera.shake
-        self.prog["Shake"] = 0  # self.camera.shake * 6  # TODO: this is a temporary fix
+        # self.prog_bg["Brightness"] = self.dark
+        # self.render_prog["Contrast"] = 3.0 - 2 * self.dark
+        # self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
+        # self.camera.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
+        # self.prog_bg["Shake"] = 0  # self.camera.shake
+        # self.render_prog["Shake"] = 0  # self.camera.shake
+        # self.render_prog_neg["Shake"] = self.camera.shake
+        # self.prog["Shake"] = 0  # self.camera.shake * 6  # TODO: this is a temporary fix
 
-        # TODO
-        """redo:
-        1. draw background and char on screen
-        2. draw trans char on offscreen
-        3. draw solids on offscreen
-        4. draw offscreen (solids) on screen
-        5. lock depth
-        6. reset offscreen (not resetting depth)
-        7. draw alphas on offscreen
-        8. draw offscreen (alphas) on screen
-        """
-        self.game.m_par.battle = self  # TODO: this is stupid
+        # # TODO
+        # """redo:
+        # 1. draw background and char on screen
+        # 2. draw trans char on offscreen
+        # 3. draw solids on offscreen
+        # 4. draw offscreen (solids) on screen
+        # 5. lock depth
+        # 6. reset offscreen (not resetting depth)
+        # 7. draw alphas on offscreen
+        # 8. draw offscreen (alphas) on screen
+        # """
+        # self.game.m_par.battle = self  # TODO: this is stupid
 
-        # Init perspective
-        self.camera.render(time, frame_time)
+        # # Init perspective
+        # self.camera.render(time, frame_time)
 
-        # Clear
-        self.ctx.clear()
-        self.alpha_offscreen.clear(0.0, 0.0, 0.0, 0.0)
-        self.anti_offscreen.clear(0.0, 0.0, 0.0, 0.0)
-        self.solid_offscreen.clear(0.0, 0.0, 0.0, 0.0)
-        self.final_offscreen.clear(0.0, 0.0, 0.0, 0.0)
-        self.final_offscreen.use()
+        # # Clear
+        # self.ctx.clear()
+        # self.alpha_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        # self.anti_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        # self.solid_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        # self.final_offscreen.clear(0.0, 0.0, 0.0, 0.0)
+        # self.final_offscreen.use()
 
-        # Render main screen base
-        self.render_background()
-        self.ctx.depth_func = "1"
-        self.render_pokemon(time, frame_time, cutout=False, shadow=True)
-        self.render_pokemon(time, frame_time, cutout=False)
-        self.ctx.depth_func = "<="
+        # # Render main screen base
+        # self.render_background()
+        # self.ctx.depth_func = "1"
+        # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
+        # self.render_pokemon(time, frame_time, cutout=False)
+        # self.ctx.depth_func = "<="
 
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
-        self.ctx.blend_equation = moderngl.FUNC_ADD
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
+        # self.ctx.blend_equation = moderngl.FUNC_ADD
 
-        # Render black cutout
-        # self.solid_offscreen.use()
-        # self.render_pokemon(cutout=True)
-        self.alpha_offscreen.use()
-        self.render_pokemon(time, frame_time, cutout=True)
+        # # Render black cutout
+        # # self.solid_offscreen.use()
+        # # self.render_pokemon(cutout=True)
+        # self.alpha_offscreen.use()
+        # self.render_pokemon(time, frame_time, cutout=True)
 
         # Render
         locking = self.game.m_par.on_tick(
-            time, frame_time, self.alpha_offscreen, self.anti_offscreen
+            time, frame_time#, self.alpha_offscreen, self.anti_offscreen
         )
 
-        # ### Aggregate picture
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
-        self.ctx.blend_equation = moderngl.FUNC_ADD
-        self.final_offscreen.use()
+        # # ### Aggregate picture
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
+        # self.ctx.blend_equation = moderngl.FUNC_ADD
+        # self.final_offscreen.use()
 
-        # Solid
-        self.ctx.disable(moderngl.BLEND)
-        self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
-        self.solid_diffuse.use(location=0)
-        self.quad_fs.render(self.render_prog)
-
-        # Alpha
-        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
-        self.ctx.enable(moderngl.BLEND)
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
-        # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
-        self.alpha_diffuse.use(location=0)
-        self.quad_fs.render(self.render_prog)
-
-        # Anti
-        self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
-        self.ctx.enable(moderngl.BLEND)
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
-        # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
-        self.anti_diffuse.use(location=1)
+        # # Solid
+        # self.ctx.disable(moderngl.BLEND)
+        # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
+        # self.solid_diffuse.use(location=0)
         # self.quad_fs.render(self.render_prog)
 
-        self.game.offscreen.use()
-        self.final_diffuse.use(location=0)
-        self.render_prog_neg["Contrast"] = 1.0
-        # self.ctx.disable(moderngl.BLEND)
-        # self.ctx.blend_func = moderngl.ONE, moderngl.ONE
-        self.quad_fs.render(self.render_prog_neg)
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
-        self.ctx.blend_equation = moderngl.FUNC_ADD
+        # # Alpha
+        # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
+        # self.ctx.enable(moderngl.BLEND)
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
+        # # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
+        # self.alpha_diffuse.use(location=0)
+        # self.quad_fs.render(self.render_prog)
+
+        # # Anti
+        # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
+        # self.ctx.enable(moderngl.BLEND)
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE
+        # # self.ctx.blend_equation = moderngl.FUNC_SUBTRACT
+        # self.anti_diffuse.use(location=1)
+        # # self.quad_fs.render(self.render_prog)
+
+        # self.game.offscreen.use()
+        # self.final_diffuse.use(location=0)
+        # self.render_prog_neg["Contrast"] = 1.0
+        # # self.ctx.disable(moderngl.BLEND)
+        # # self.ctx.blend_func = moderngl.ONE, moderngl.ONE
+        # self.quad_fs.render(self.render_prog_neg)
+        # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
+        # self.ctx.blend_equation = moderngl.FUNC_ADD
         return locking
 
     def render_pokemon(self, time, frame_time, cutout=False, shadow=False):

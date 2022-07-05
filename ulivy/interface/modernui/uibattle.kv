@@ -36,10 +36,18 @@
                         size_hint: 0.5, 1
 
                         PixelImage:
+                            id: BattleStatusOursHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greybar.png'
+
+                        PixelImage:
                             id: BattleStatusOursHP
                             allow_stretch: True
                             keep_ratio: False
-                            pos_hint: {'center_x': 0.53, 'center_y': 0.45}
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
                             size_hint: 0.9, 0.15
                             source: 'ulivy/interface/modernui/battle/greenbar.png'
 
@@ -67,14 +75,22 @@
                         pos_hint: {'center_x': 0.78, 'center_y': 0.5}
                         size_hint: 0.5, 1
 
+
+                        PixelImage:
+                            id: BattleStatusTheirsHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greybar.png'
+
                         PixelImage:
                             id: BattleStatusTheirsHP
                             allow_stretch: True
                             keep_ratio: False
-                            pos_hint: {'center_x': 0.53, 'center_y': 0.45}
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
                             size_hint: 0.9, 0.15
                             source: 'ulivy/interface/modernui/battle/greenbar.png'
-
 
                         PixelImage:
                             id: BattleStatusTheirsCell
@@ -234,7 +250,7 @@
                             source: 'ulivy/interface/modernui/battle/attackcell.png'
 
                         Label:
-                            id: BattleAttackAName
+                            id: BattleAttackBName
                             text: "Test Name! Yes!"
                             color: (0, 0, 0, 1)
                             allow_stretch: True
@@ -247,7 +263,7 @@
                             valign: 'top'
 
                         Label:
-                            id: BattleAttackACharges
+                            id: BattleAttackBCharges
                             text: "40"
                             color: (0, 0, 0, 1)
                             allow_stretch: True
@@ -278,7 +294,7 @@
                             source: 'ulivy/interface/modernui/battle/attackcell.png'
 
                         Label:
-                            id: BattleAttackAName
+                            id: BattleAttackCName
                             text: "Test Name! Yes!"
                             color: (0, 0, 0, 1)
                             allow_stretch: True
@@ -291,7 +307,7 @@
                             valign: 'top'
 
                         Label:
-                            id: BattleAttackACharges
+                            id: BattleAttackCCharges
                             text: "40"
                             color: (0, 0, 0, 1)
                             allow_stretch: True
