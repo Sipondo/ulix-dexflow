@@ -1,6 +1,8 @@
-from ulivy.particle.p5system import ParticleSystem
+from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import Mesh, RenderContext
+from kivy.clock import Clock
 
-# import moderngl
+from ulivy.particle.p5system import ParticleSystem
 
 
 class ParticleManager:
@@ -15,6 +17,18 @@ class ParticleManager:
         self.stride = self.floats * 4
 
         self.fast_forward = False
+
+        self.vbo_objectA = ParticleVBO(self.game)
+        self.game.add_widget(self.vbo_objectA)
+        self.mesh1 = self.vbo_objectA.mesh
+
+        self.vbo_objectB = ParticleVBO(self.game)
+        self.game.add_widget(self.vbo_objectB)
+        self.mesh2 = self.vbo_objectB.mesh
+
+        self.vbo_emit = EmitVBO(self.game)
+        self.game.add_widget(self.vbo_emit)
+        self.mesh_emit = self.vbo_emit.mesh
 
     def on_tick(self, time, frame_time):  # , alpha_target, anti_target):
         # self.alpha_target = alpha_target
@@ -109,3 +123,46 @@ class ParticleManager:
             "out_noise",
             "out_key",
         ]
+
+
+class ParticleVBO(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.canvas = RenderContext()
+        self.game = game
+
+        super(ParticleVBO, self).__init__(**kwargs)
+
+        with self.canvas:
+            self.mesh = Mesh(
+                vertices=[1.0] * 10 * 1024 * 12,
+                indices=[],
+                fmt=[(b"aPos", 2, "float"), (b"aSize", 2, "float"),],
+            )
+
+        Clock.schedule_once(self.de_register, 10)
+
+    def de_register(self, *largs):
+        # filthy hack... TODO: remove, not sure if this is even required
+        self.game.remove_widget(self)
+
+
+class EmitVBO(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.canvas = RenderContext()
+        self.game = game
+
+        super(EmitVBO, self).__init__(**kwargs)
+
+        with self.canvas:
+            self.mesh = Mesh(
+                vertices=[1.0] * 10 * 1024,
+                indices=[],
+                fmt=[(b"aPos", 2, "float"), (b"aSize", 2, "float"),],
+            )
+
+        Clock.schedule_once(self.de_register, 10)
+
+    def de_register(self, *largs):
+        # filthy hack... TODO: remove, not sure if this is even required
+        self.game.remove_widget(self)
+

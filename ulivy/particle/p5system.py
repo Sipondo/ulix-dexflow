@@ -1,6 +1,10 @@
-import moderngl
+# import moderngl
 from .p5dyna.equation import Equation
 from numpy.random import random
+from kivy.graphics.instructions import TransformFeedback
+from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import Mesh, MeshView, RenderContext, BindTexture, Rectangle
+from kivy.core.image import Image, ImageData
 
 
 class ParticleSystem:
@@ -335,12 +339,14 @@ class Emitter:
         pass
 
     def load_programs(self):
-        self.prog_emit = self.game.m_res.get_program_varyings(
-            "p4_emit_ver", varyings=self.game.m_par.get_varyings(),
-        )
+        self.prog_emit = TransformFeedback()
+        # self.prog_emit = self.game.m_res.get_program_varyings(
+        #     "p4_emit_ver", varyings=self.game.m_par.get_varyings(),
+        # )
 
     def load_context_objects(self):
-        self.vao_emit = self.game.ctx._vertex_array(self.prog_emit, [])
+        self.widget = self.game.m_par.vbo_emit
+        self.vao_emit = self.widget.mesh
 
     def render(self, time, frame_time):
         self.set_fields()
@@ -381,9 +387,10 @@ class Renderer:
         self.equation = 1 if eqname == "solid" else 3 if eqname == "anti" else 2
 
         # TODO: temp
-        self.texture = self.game.m_res.get_texture(
-            "particle", self.system.r(self, "file")
-        )
+        # self.texture = self.game.m_res.get_texture(
+        #     "particle", self.system.r(self, "file")
+        # )
+        self.texture = self.system.r(self, "file")
 
         self.load_programs()
         self.load_context_objects()
@@ -415,16 +422,18 @@ class Renderer:
 
     def load_programs(self):
         # Renders particle to the screen
-        self.prog = self.game.m_res.get_program("p4_render")
+        self.widget = RenderWidget(self.game)
+        self.prog = self.widget.canvas  # self.game.m_res.get_program("p4_render")
 
     def load_context_objects(self):
+        return
         # Render vaos. The render to screen version of the tranform vaos above
-        self.vao1_rend = self.game.ctx.vertex_array(
-            self.prog, [self.game.m_par.vao_def(self.system.vbo1, render=True)],
-        )
-        self.vao2_rend = self.game.ctx.vertex_array(
-            self.prog, [self.game.m_par.vao_def(self.system.vbo2, render=True)],
-        )
+        # self.vao1_rend = self.game.ctx.vertex_array(
+        #     self.prog, [self.game.m_par.vao_def(self.system.vbo1, render=True)],
+        # )
+        # self.vao2_rend = self.game.ctx.vertex_array(
+        #     self.prog, [self.game.m_par.vao_def(self.system.vbo2, render=True)],
+        # )
 
     def render(self, time, frame_time):
         self.set_fields()
@@ -449,6 +458,41 @@ class Renderer:
         self.texture.use(0)
         self.texture_noise.use(10)
         self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
+
+
+class RenderWidget(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.game = game
+        self.canvas = RenderContext(
+            # fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
+        )
+
+        # self.tex1 = Image.load(resource_find("tex4.jpg")).texture
+        # self.tex2 = Image.load(resource_find("tex4.jpg")).texture
+
+        # self.tex1.mag_filter = "nearest"
+
+        # call the constructor of parent
+        # if they are any graphics object, they will be added on our new canvas
+        super(RenderWidget, self).__init__(**kwargs)
+
+        # self.poffset = poffset
+        # self.camera_position = 0
+
+        # self.float_x = 0
+        # self.float_y = 0
+
+        with self.canvas:
+            self.mesh = MeshView(host_mesh=self.game.m_par.mesh1)
+
+    #     self.canvas.add(BindTexture(texture=self.tex2, index=2,))
+    #     Clock.schedule_interval(self.update, 1 / 60.0)
+
+    # def update(self, *largs):
+    #     self.canvas["texture0"] = 2
+    #     self.canvas["poffset"] = float(self.poffset)
+    #     # print(self.mesh.vertices)
+    #     # print("clone", dir(self.mesh_clone))
 
 
 class Transformer:
