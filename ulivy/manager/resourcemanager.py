@@ -5,7 +5,7 @@ import numpy as np
 from io import BytesIO
 from pathlib import Path
 
-from kivy.resources import resource_find, resource_add_path
+from kivy.resources import resource_find, resource_add_path, resource_remove_path
 
 # from PIL import Image, ImageFont
 
@@ -272,8 +272,10 @@ class ResourceManager:
             self.tilesets[name] = texture_spritemap
         return self.tilesets[name]
 
-    def get_program(self, program_name):
-        return self.game.load_program(self.p_shaders / f"{program_name}.glsl")
+    def get_shader(self, program_name):
+        with open(resource_find(f"resources/base/shader/{program_name}.glsl")) as file:
+            shader = file.read()
+        return shader
 
     def get_program_varyings(
         self, vertex_name, geo_name=None, geoblocks=None, uniforms=None, varyings=[]

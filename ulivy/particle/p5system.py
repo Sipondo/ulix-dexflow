@@ -400,7 +400,7 @@ class Renderer:
 
         # TODO TEMP
         self.texture_noise = self.game.m_res.get_noise()
-        self.prog["Size"].value = 1.0
+        self.prog["Size"] = 1.0
         self.prog["Stage"] = stage
         self.prog["Basis"] = self.system.basis
 
@@ -422,8 +422,13 @@ class Renderer:
 
     def load_programs(self):
         # Renders particle to the screen
-        self.widget = RenderWidget(self.game)
-        self.prog = self.widget.canvas  # self.game.m_res.get_program("p4_render")
+        vs = self.game.m_res.get_shader("p5_render_vs")
+        gs = self.game.m_res.get_shader("p5_render_gs")
+        fs = self.game.m_res.get_shader("p5_render_fs")
+        self.widget = RenderWidget(self.game, vs=vs, gs=gs, fs=fs)
+        self.prog = self.widget.canvas
+        # TODO: move
+        self.game.add_widget(self.widget)
 
     def load_context_objects(self):
         return
@@ -461,11 +466,9 @@ class Renderer:
 
 
 class RenderWidget(FloatLayout):
-    def __init__(self, game, **kwargs):
+    def __init__(self, game, vs, gs, fs, **kwargs):
         self.game = game
-        self.canvas = RenderContext(
-            # fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
-        )
+        self.canvas = RenderContext(fs=fs, gs=gs, vs=vs)
 
         # self.tex1 = Image.load(resource_find("tex4.jpg")).texture
         # self.tex2 = Image.load(resource_find("tex4.jpg")).texture
