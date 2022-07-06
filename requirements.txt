@@ -4,4 +4,3 @@ cython
 lark
 termcolor
 pretty_errors
-pygame==1.9.6
