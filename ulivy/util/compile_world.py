@@ -30,6 +30,7 @@ def compile_world(pth):
                 ) as infile:
                     ldtk["levels"][i] = json.load(infile)
 
+    # Sets tile enums
     def coldef_to_bool(coldef):
         all = "X" in coldef
         if all:
