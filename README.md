@@ -41,3 +41,7 @@ Run `compile_world.bat` to generate the compressed world file, after which your 
 # Building your world
 
 Editing the world is done via the editor program [LDTK](https://ldtk.io/). We heavily advise you to use the `world.ldtk` file supplied with this repo (in the [world](https://github.com/Sipondo/ulix-dexflow/tree/main/world) folder) as a base for your own world as it has been correctly configured for use.
+
+# Building
+
+See: https://github.com/kivy/kivy/wiki/Using-Visual-C---Build-Tools-instead-of-Visual-Studio-on-Windows

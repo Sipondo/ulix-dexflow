@@ -13,8 +13,14 @@ fluidsynth
 resources/*
 !resources/base
 battler_ldtk_list.png
-items_ldtk_list.png
+item_ldtk_list.png
 .exportvenv
 export
 screenshot/
 util/docs
+.buildozer
+compile.txt
+logcat.txt
+bin
+uitest
+data

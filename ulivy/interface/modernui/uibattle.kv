@@ -1,0 +1,364 @@
+#:kivy 2.0.0
+
+<UIBattle>
+    PixelImage:
+        # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
+        # Got this from the guys over at Kivy.
+        id: BackgroundId
+        source: 'ulivy/interface/modernui/gamebounds.png'
+        allow_stretch: True
+        size: self.parent.size
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
+
+        FloatLayout:
+            pos: self.parent.offset
+            size: self.parent.norm_image_size
+
+            # UI START
+
+  # DIALOGUE BOX
+            RelativeLayout:
+                id: PromptWindow
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                size_hint: 1, 1
+
+                # STATUS
+                RelativeLayout:
+                    id: BattleStatus
+                    pos_hint: {'center_x': 0.5, 'y': 0.7}
+                    size_hint: 0.9, 0.35
+
+                    RelativeLayout:
+                        id: BattleStatusOurs
+                        pos_hint: {'center_x': 0.22, 'center_y': 0.5}
+                        size_hint: 0.5, 1
+
+                        PixelImage:
+                            id: BattleStatusOursHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greybar.png'
+
+                        PixelImage:
+                            id: BattleStatusOursHP
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greenbar.png'
+
+                        PixelImage:
+                            id: BattleStatusOursCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlestatus_ours.png'
+                        
+                        Label:
+                            id: BattleStatusOursName
+                            text: "Battlerman Ours"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.51, 'center_y': 0.34}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                    
+                    RelativeLayout:
+                        id: BattleStatusTheirs
+                        pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                        size_hint: 0.5, 1
+
+
+                        PixelImage:
+                            id: BattleStatusTheirsHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greybar.png'
+
+                        PixelImage:
+                            id: BattleStatusTheirsHP
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.45}
+                            size_hint: 0.9, 0.15
+                            source: 'ulivy/interface/modernui/battle/greenbar.png'
+
+                        PixelImage:
+                            id: BattleStatusTheirsCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlestatus_theirs.png'
+
+                        Label:
+                            id: BattleStatusTheirsName
+                            text: "Battlerman Theirs"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 1.01, 'center_y': 0.34}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                # TOP MENU
+                RelativeLayout:
+                    id: BattleTop
+                    pos_hint: {'x': 0.65, 'y': 0.05}
+                    size_hint: 0.3, 0.3
+
+                    RelativeLayout:
+                        id: BattleTopAttack
+                        pos_hint: {'center_x': 0.37, 'center_y': 0.75}
+                        size_hint: 0.5, 0.5
+
+                        PixelImage:
+                            id: BattleTopAttackCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlecell.png'
+
+                        PixelImage:
+                            id: BattleTopAttackIcon
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/attack.png'
+                    
+                    RelativeLayout:
+                        id: BattleTopSwitch
+                        pos_hint: {'center_x': 0.37, 'center_y': 0.25}
+                        size_hint: 0.5, 0.5
+
+                        PixelImage:
+                            id: BattleTopSwitchCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlecell.png'
+
+                        PixelImage:
+                            id: BattleTopSwitchIcon
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/switch.png'
+                    
+                    RelativeLayout:
+                        id: BattleTopThrowball
+                        pos_hint: {'center_x': 0.65, 'center_y': 0.75}
+                        size_hint: 0.5, 0.5
+
+                        PixelImage:
+                            id: BattleTopThrowballCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlecell.png'
+
+                        PixelImage:
+                            id: BattleTopThrowballIcon
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/throw_ball.png'
+
+
+                    RelativeLayout:
+                        id: BattleTopRun
+                        pos_hint: {'center_x': 0.65, 'center_y': 0.25}
+                        size_hint: 0.5, 0.5
+
+                        PixelImage:
+                            id: BattleTopRunCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/battlecell.png'
+
+                        PixelImage:
+                            id: BattleTopRunIcon
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/run.png'
+
+                # ATTACK MENU
+                RelativeLayout:
+                    id: BattleAttack
+                    pos_hint: {'center_x': 0.82, 'y': 0.05}
+                    size_hint: 0.57, 0.3
+
+                    PixelImage:
+                        id: BattleAttackCell
+                        allow_stretch: True
+                        source: 'ulivy/interface/modernui/battle/attackwindow.png'
+
+                    RelativeLayout:
+                        id: BattleAttackA
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+                        size_hint: 1, 0.213                        
+
+                        PixelImage:
+                            id: BattleAttackAType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'ulivy/interface/modernui/battle/attack_types/attack_normal.png'
+
+                        PixelImage:
+                            id: BattleAttackACell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/attackcell.png'
+
+                        Label:
+                            id: BattleAttackAName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        Label:
+                            id: BattleAttackACharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        
+                    RelativeLayout:
+                        id: BattleAttackB
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.6175}
+                        size_hint: 1, 0.213
+
+                        PixelImage:
+                            id: BattleAttackBType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'ulivy/interface/modernui/battle/attack_types/attack_normal.png'
+
+                        PixelImage:
+                            id: BattleAttackBCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/attackcell.png'
+
+                        Label:
+                            id: BattleAttackBName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        Label:
+                            id: BattleAttackBCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+
+                    RelativeLayout:
+                        id: BattleAttackC
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.385}
+                        size_hint: 1, 0.213
+
+                        PixelImage:
+                            id: BattleAttackCType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'ulivy/interface/modernui/battle/attack_types/attack_normal.png'
+
+                        PixelImage:
+                            id: BattleAttackCCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/attackcell.png'
+
+                        Label:
+                            id: BattleAttackCName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        Label:
+                            id: BattleAttackCCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+
+                    RelativeLayout:
+                        id: BattleAttackD
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        size_hint: 1, 0.213
+
+                        PixelImage:
+                            id: BattleAttackDType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'ulivy/interface/modernui/battle/attack_types/attack_normal.png'
+
+                        PixelImage:
+                            id: BattleAttackDCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/attackcell.png'
+
+                        Label:
+                            id: BattleAttackDName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        Label:
+                            id: BattleAttackDCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'

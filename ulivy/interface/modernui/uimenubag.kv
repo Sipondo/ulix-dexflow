@@ -1,0 +1,170 @@
+#:kivy 2.0.0
+
+<UIMenuBag>
+    PixelImage:
+        # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
+        # Got this from the guys over at Kivy.
+        id: BackgroundId
+        source: 'ulivy/interface/modernui/gamebounds.png'
+        allow_stretch: True
+        size: self.parent.size
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
+
+        FloatLayout:
+            pos: self.parent.offset
+            size: self.parent.norm_image_size
+
+            # UI START
+
+  # BAG MENU
+            RelativeLayout:
+                id: BagWindow
+                pos_hint: {'y': 0.0, 'x': 0.0}
+                size_hint: 1.0, 1.0
+
+                PixelImage:
+                    id: BagBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_items.png'
+
+# BUTTON_1
+            RelativeLayout:
+                id: Button_1
+                pos_hint: {'center_x': 0.9016, 'y': 0.7562}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: Button_1bg
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_button_sel.png'
+                
+                BoxLayout:
+                    id: Button_1b
+                    orientation: 'vertical'
+
+                Label:
+                    id: Button1_text
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# BUTTON_2
+            RelativeLayout:
+                id: Button_2
+                pos_hint: {'center_x': 0.9016, 'y': 0.6786}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: Button_2bg
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_button_sel.png'
+                
+                BoxLayout:
+                    id: Button_2b
+                    orientation: 'vertical'
+
+                Label:
+                    id: Button_2text
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# BUTTON_3
+            RelativeLayout:
+                id: Button_3
+                pos_hint: {'center_x': 0.9016, 'y': 0.6010}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: Button_3bg
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_button_sel.png'
+                
+                BoxLayout:
+                    id: Button_3b
+                    orientation: 'vertical'
+
+                Label:
+                    id: Button_3text
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# BUTTON_4
+            RelativeLayout:
+                id: Button_4
+                pos_hint: {'center_x': 0.9016, 'y': 0.5234}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: Button_4bg
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_button_sel.png'
+                
+                BoxLayout:
+                    id: Button_4b
+                    orientation: 'vertical'
+
+                Label:
+                    id: Button_4text
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# BUTTON_5
+            RelativeLayout:
+                id: Button_5
+                pos_hint: {'center_x': 0.9016, 'y': 0.4462}
+                size_hint: 0.165, 0.165
+
+                PixelImage:
+                    id: Button_5bg
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/menubag_button_sel.png'
+                
+                BoxLayout:
+                    id: Button_5b
+                    orientation: 'vertical'
+
+                Label:
+                    id: Button_5text
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'

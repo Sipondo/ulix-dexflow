@@ -1,0 +1,157 @@
+#:kivy 2.0.0
+
+<UICinematic>
+    PixelImage:
+        # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
+        # Got this from the guys over at Kivy.
+        id: BackgroundId
+        source: 'ulivy/interface/modernui/gamebounds.png'
+        allow_stretch: True
+        size: self.parent.size
+        offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
+        magnification: self.norm_image_size[0] / self.texture_size[0]
+        fsize: 24 * self.magnification
+
+        FloatLayout:
+            pos: self.parent.offset
+            size: self.parent.norm_image_size
+
+            # UI START
+
+  # DIALOGUE BOX
+            RelativeLayout:
+                id: DialogueWindow
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                pos_hint: {'x': 0.18, 'y': 0.01}
+                size_hint: 0.6, 0.2
+
+                PixelImage:
+                    id: DialogueBackground
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/dialogue_window.png'
+                
+                Label:
+                    id: DialogueText
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.95, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# CHOICE 1
+            RelativeLayout:
+                id: ChoiceWindow_1
+                pos_hint: {'x': 0.49, 'y': 0.33}
+                size_hint: 0.3, 0.1
+
+                PixelImage:
+                    id: ChoiceBackground_1
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/dialogue_choice.png'
+                
+                BoxLayout:
+                    id: ChoiceScreen_1
+                    orientation: 'vertical'
+
+                Label:
+                    id: ChoiceText_1
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# CHOICE 2
+            RelativeLayout:
+                id: ChoiceWindow_2
+                pos_hint: {'x': 0.49, 'y': 0.22}
+                size_hint: 0.3, 0.1
+
+                PixelImage:
+                    id: ChoiceBackground_2
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/dialogue_choice.png'
+                
+                BoxLayout:
+                    id: ChoiceScreen_2
+                    orientation: 'vertical'
+                
+                Label:
+                    id: ChoiceText_2
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# CHOICE 3
+            RelativeLayout:
+                id: ChoiceWindow_3
+                pos_hint: {'x': 0.17, 'y': 0.22}
+                size_hint: 0.3, 0.1
+
+                PixelImage:
+                    id: ChoiceBackground_3
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/dialogue_choice.png'
+                
+                BoxLayout:
+                    id: ChoiceScreen_3
+                    orientation: 'vertical'
+
+                Label:
+                    id: ChoiceText_3
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+
+# CHOICE 4
+            RelativeLayout:
+                id: ChoiceWindow_4
+                pos_hint: {'x': 0.17, 'y': 0.33}
+                size_hint: 0.3, 0.1
+
+                PixelImage:
+                    id: ChoiceBackground_4
+                    allow_stretch: True
+                    source: 'ulivy/interface/modernui/dialogue_choice.png'
+                
+                BoxLayout:
+                    id: ChoiceScreen_4
+                    orientation: 'vertical'
+
+                Label:
+                    id: ChoiceText_4
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.9, 0.6
+                    text_size: self.size
+                    font_size: self.parent.parent.parent.fsize
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
+

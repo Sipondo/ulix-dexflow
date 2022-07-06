@@ -1,0 +1,11 @@
+from .basemoveeffect import BaseMoveEffect
+from ulivy.combat.effects.statuseffect.curleffect import CurlEffect
+
+
+class Curl(BaseMoveEffect):
+    def after_action(self):
+        if self.scene.board.random_roll(self.move.chance):
+            target_effects = self.scene.get_effects_on_target(self.move.target)
+            if "Curl" not in [x.name for x in target_effects]:
+                self.scene.add_effect(CurlEffect(self.scene, self.target))
+        return True, False, False
