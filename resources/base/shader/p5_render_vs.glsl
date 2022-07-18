@@ -1,4 +1,8 @@
-#version 330
+#version 320 es
+
+#ifdef GL_ES
+precision highp float;
+#endif
 
 in vec4 in_pos;
 in vec3 in_vel;

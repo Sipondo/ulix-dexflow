@@ -1,4 +1,9 @@
-#version 330
+#version 320 es
+
+#ifdef GL_ES
+precision highp float;
+precision highp sampler2DArray;
+#endif
 
 uniform sampler2D texture0;
 uniform sampler2DArray texturearray1;
@@ -19,7 +24,7 @@ void main(){
             discard;
         }
         col=col*col.a;
-        col=col*texture(texturearray1,vec3(uv,mod(noise_id+int(out_noise),710)));
+        col=col*texture(texturearray1,vec3(uv,int(mod(float(noise_id+int(out_noise)),710.))));
         f_color=col*vec4(out_color*opacity,col.a);
     }else{
         if(col.a<1.){

@@ -7,7 +7,7 @@ float%LIFE_DAMPEN%=1.;
 // DECLARATIONS
 // DECLARATIONS_END
 
-if((pos.z<0)&&(vel.z<0))
+if((pos.z<0.)&&(vel.z<0.))
 {
     vel.z=-vel.z/%VERTICAL_DAMPEN%;
     vel=vel/%DAMPEN%;

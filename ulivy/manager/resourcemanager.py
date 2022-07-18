@@ -276,6 +276,17 @@ class ResourceManager:
         with open(resource_find(f"resources/base/shader/{program_name}.glsl")) as file:
             return file.read()
 
+    def get_shader_geoblocks(self, vertex_name, geo_name, geoblocks, uniforms):
+        # print(vertex_name, geoblocks)
+        vs = self.get_shader(vertex_name)
+        gs = (
+            self.get_shader(geo_name)
+            .replace(r"%GEOBLOCKS%", geoblocks)
+            .replace(r"%UNIFORMS%", uniforms)
+        )
+
+        return vs, gs
+
     def get_program_varyings(
         self, vertex_name, geo_name=None, geoblocks=None, uniforms=None, varyings=[]
     ):

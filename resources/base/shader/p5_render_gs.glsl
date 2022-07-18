@@ -1,4 +1,8 @@
-#version 330
+#version 320 es
+
+#ifdef GL_ES
+precision highp float;
+#endif
 
 #define M_DEGPI.01745329251
 #define PI 3.1415926538
@@ -10,7 +14,7 @@ uniform mat4 BillboardFace;
 uniform float Size;
 uniform vec3 CameraPosition;
 uniform float Stage;
-uniform bool Rotvel=true;
+uniform int Rotvel;
 
 in vec3 vs_vel[1];
 in vec3 vs_color[1];
@@ -31,16 +35,16 @@ float atan2(in float y,in float x)
 void main(){
     if(gl_in[0].gl_Position.a!=Stage){return;}
     
-    vec3 pos=gl_in[0].gl_Position.xyz*20;
+    vec3 pos=gl_in[0].gl_Position.xyz*20.;
     float new_rot=vs_rot[0];
     
-    if(Rotvel){
-        vec2 pos_dir=(projection*vec4(pos,1.)).xy-(projection*vec4((gl_in[0].gl_Position.xyz+vs_vel[0])*20,1.)).xy;
+    if(Rotvel>0){
+        vec2 pos_dir=(projection*vec4(pos,1.)).xy-(projection*vec4((gl_in[0].gl_Position.xyz+vs_vel[0])*20.,1.)).xy;
         new_rot=new_rot-(atan2(pos_dir.y,pos_dir.x)/M_DEGPI);
     }
     
-    vec3 right=(BillboardFace*vec4(0,sin((new_rot+90)*M_DEGPI),cos((new_rot+90)*M_DEGPI),1)).xyz;
-    vec3 up=(BillboardFace*vec4(0,sin(new_rot*M_DEGPI),cos(new_rot*M_DEGPI),1)).xyz;
+    vec3 right=(BillboardFace*vec4(0.,sin((new_rot+90.)*M_DEGPI),cos((new_rot+90.)*M_DEGPI),1.)).xyz;
+    vec3 up=(BillboardFace*vec4(0.,sin(new_rot*M_DEGPI),cos(new_rot*M_DEGPI),1.)).xyz;
     
     if(pos.z>-.1){
         vec4 proj_pos=projection*vec4(pos,1.);

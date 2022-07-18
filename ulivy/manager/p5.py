@@ -85,31 +85,34 @@ class ParticleManager:
                 ParticleSystem(self.game, brender, fname, target, miss, move_data)
             )
 
-    def vao_def(self, buffer, render=False):
-        if render:
-            return (
-                buffer,
-                "4f 3f 1f 3f 1f 1x4 1x4 1f 1x4",
-                "in_pos",
-                "in_vel",
-                "in_size",
-                "in_color",
-                "in_rot",
-                "in_noise",
-            )
-        return (
-            buffer,
-            "4f 3f 1f 3f 1f 1f 1f 1f 1f",
-            "in_pos",
-            "in_vel",
-            "in_size",
-            "in_color",
-            "in_rot",
-            "in_rot_vel",
-            "in_lifespan",
-            "in_noise",
-            "in_key",
-        )
+    def vao_def(self, buffer=None, render=False):
+        # if render:
+        #     return (
+        #         buffer,
+        #         "4f 3f 1f 3f 1f 1x4 1x4 1f 1x4",
+        #         "in_pos",
+        #         "in_vel",
+        #         "in_size",
+        #         "in_color",
+        #         "in_rot",
+        #         "in_noise",
+        #     )
+        return [
+            (b"in_pos", 4, "float"),
+            (b"in_vel", 3, "float"),
+            (b"in_size", 1, "float"),
+            (b"in_color", 3, "float"),
+            (b"in_rot", 1, "float"),
+            (b"in_rot_vel", 1, "float"),
+            (b"in_lifespan", 1, "float"),
+            (b"in_noise", 1, "float"),
+            (b"in_key", 1, "float"),
+        ]
+
+    def vao_emit_def(self, buffer=None, render=False):
+        return [
+            (b"in_index", 1, "float"),
+        ]
 
     def get_varyings(render=False):
         return [
@@ -123,6 +126,18 @@ class ParticleManager:
             "out_noise",
             "out_key",
         ]
+
+        #         return [
+        #     ("out_pos", 4, "float"),
+        #     ("out_vel", 3, "float"),
+        #     ("out_size", 1, "float"),
+        #     ("out_color", 3, "float"),
+        #     ("out_rot", 1, "float"),
+        #     ("out_rot_vel", 1, "float"),
+        #     ("out_lifespan", 1, "float"),
+        #     ("out_noise", 1, "float"),
+        #     ("out_key", 1, "float"),
+        # ]
 
 
 class ParticleVBO(FloatLayout):

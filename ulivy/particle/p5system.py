@@ -39,8 +39,10 @@ class ParticleSystem:
         self.spawn_elements()
 
     def on_tick(self, time, frame_time):
+        print("PARTICLE TICK A")
         if (not self.particles) and self.time_alive > 1:
             return False
+        print("PARTICLE TICK B")
 
         for eq in self.equations.values():
             eq.reset_eval()
@@ -61,11 +63,11 @@ class ParticleSystem:
             steps = int(self.step_count // self.step_size)
             self.step_count = self.step_count % self.step_size
 
-            # for _ in range(steps):
-            #     self.transformer.render(time, self.step_size)
-            #     for emitter in self.emitters:
-            #         emitter.render(time, self.step_size)
-            #     self.switch_buffers()
+            for _ in range(steps):
+                self.transformer.render(time, self.step_size)
+                for emitter in self.emitters:
+                    emitter.render(time, self.step_size)
+                self.switch_buffers()
 
         for misc in self.miscs:
             misc.render(time)
@@ -111,19 +113,19 @@ class ParticleSystem:
     def switch_buffers(self):
         self.vbo1, self.vbo2 = self.vbo2, self.vbo1
 
-        for renderer in self.renderers:
-            renderer.switch_buffers()
+        # for renderer in self.renderers:
+        #     renderer.switch_buffers()
 
-        self.transformer.switch_buffers()
+        # self.transformer.switch_buffers()
 
-        err = self.game.ctx.error
-        if err != "GL_NO_ERROR":
-            print(err)
+        # err = self.game.ctx.error
+        # if err != "GL_NO_ERROR":
+        #     print(err)
 
     def load_context_objects(self):
-        return
-        self.vbo1 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
-        self.vbo2 = self.game.ctx.buffer(reserve=self.N * self.game.m_par.stride)
+        self.vbo1 = self.game.m_par.vbo_objectA.mesh
+        self.vbo2 = self.game.m_par.vbo_objectB.mesh
+        self.vbo_emit = self.game.m_par.vbo_emit.mesh
 
     def spawn_elements(self):
         js = self.game.m_res.get_particle(self.fname, self.move_data)
@@ -227,7 +229,7 @@ class ParticleSystem:
                 )
                 self.transformer.add_geoblock(node, None, stage_in, stage_out)
 
-        # self.transformer.load_programs()
+        self.transformer.load_programs()
         # self.transformer.load_context_objects()
 
     def add_equation(self, params):
@@ -271,7 +273,7 @@ class Emitter:
         self.emit_count = float(self.system.r(self, "count"))
         self.duration = float(self.system.r(self, "duration"))
 
-        self.prog_emit["Stage"] = self.stage
+        self.prog_emit["Stage"] = float(self.stage)
         self.prog_emit["Position"] = (
             float(self.system.r(self, "pos_x"))
             + float(self.system.r(self, "vel_x")) / 45,
@@ -290,7 +292,7 @@ class Emitter:
             + float(self.system.r(self, "vel_z")) / 45,
         )
 
-        self.prog_emit["Position_radial"] = False
+        self.prog_emit["Position_radial"] = 0
 
         self.prog_emit["Velocity"] = (
             float(self.system.r(self, "vel_x")),
@@ -304,7 +306,7 @@ class Emitter:
             float(self.system.r(self, "vel_range_z")),
         )
 
-        self.prog_emit["Velocity_radial"] = False
+        self.prog_emit["Velocity_radial"] = 0
 
         self.prog_emit["Size"] = float(self.system.r(self, "size"))
         self.prog_emit["Size_sway"] = float(self.system.r(self, "size_range"))
@@ -339,7 +341,16 @@ class Emitter:
         pass
 
     def load_programs(self):
-        self.prog_emit = TransformFeedback()
+        print("Program Emit!")
+        vs = self.game.m_res.get_shader("p5_emit_vs")
+        # print(vs)
+        self.prog_emit = TransformFeedback(
+            vs=vs,
+            gs=None,
+            max_primitives=1,
+            in_format=self.game.m_par.vao_emit_def(),
+            out_varyings=self.game.m_par.get_varyings(),
+        )
         # self.prog_emit = self.game.m_res.get_program_varyings(
         #     "p4_emit_ver", varyings=self.game.m_par.get_varyings(),
         # )
@@ -358,15 +369,23 @@ class Emitter:
             emit_count = int(min(self.N - self.system.particles, self.emit_want))
             if emit_count > 0:  # and not int(time * 6) % 10:
                 self.emit_want -= emit_count
-                self.prog_emit["time"].value = max(time, 0) + random() / 50
-                with self.game.query:
-                    self.vao_emit.transform(
-                        self.system.vbo2,
-                        vertices=emit_count,
-                        buffer_offset=self.system.particles * self.game.m_par.stride,
-                    )
-                # print(self.system.particles, emit_count, self.game.query.primitives)
-                self.system.particles += self.game.query.primitives
+                self.prog_emit["time"] = max(time, 0) + random() / 50
+
+                print("EMITTING:", emit_count)
+                # TODO: make additive
+                self.system.particles = self.prog_emit.transform(
+                    self.system.vbo_emit, self.system.vbo2, emit_count, debug=True
+                )
+
+                exit()
+                # with self.game.query:
+                #     self.vao_emit.transform(
+                #         self.system.vbo2,
+                #         vertices=emit_count,
+                #         buffer_offset=self.system.particles * self.game.m_par.stride,
+                #     )
+                # # print(self.system.particles, emit_count, self.game.query.primitives)
+                # self.system.particles += self.game.query.primitives
                 # print(self.system.particles)
             # print(
             #     f"Emitting on {self.counters} for {frame_time}, {emit_count} particles {self.active_particles}."
@@ -401,7 +420,7 @@ class Renderer:
         # TODO TEMP
         self.texture_noise = self.game.m_res.get_noise()
         self.prog["Size"] = 1.0
-        self.prog["Stage"] = stage
+        self.prog["Stage"] = float(stage)
         self.prog["Basis"] = self.system.basis
 
         self.vao_receive_dict = {}
@@ -412,7 +431,7 @@ class Renderer:
         self.prog["texturearray1"] = 10
         self.prog["Usenoise"] = float(self.equation != 1)
 
-        self.rotvel = bool(self.system.r(self, "rotvel"))
+        self.rotvel = int(bool(self.system.r(self, "rotvel")))
         self.noise_speed = 0
         self.noise_id = 0
 
@@ -421,10 +440,12 @@ class Renderer:
         self.noise_speed = float(self.system.r(self, "noise"))
 
     def load_programs(self):
+        print("Program Renderer!")
         # Renders particle to the screen
         vs = self.game.m_res.get_shader("p5_render_vs")
         gs = self.game.m_res.get_shader("p5_render_gs")
         fs = self.game.m_res.get_shader("p5_render_fs")
+        # print(vs, gs, fs)
         self.widget = RenderWidget(self.game, vs=vs, gs=gs, fs=fs)
         self.prog = self.widget.canvas
         # TODO: move
@@ -459,7 +480,7 @@ class Renderer:
     def emit_gpu(self, time, frame_time):
         self.prog["opacity"] = self.opacity
         self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
-        self.prog["Rotvel"] = self.rotvel
+        self.prog["Rotvel"] = int(self.rotvel)
         self.texture.use(0)
         self.texture_noise.use(10)
         self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
@@ -521,7 +542,7 @@ class Transformer:
         dict_block = {}
 
         if stage_out is not None:
-            dict_block["%TARGET_STAGE%"] = str(stage_out)
+            dict_block["%TARGET_STAGE%"] = f"{stage_out}."  # str(stage_out)
 
         for line in constants.split("\n"):
             if line[:5] == "// --":
@@ -531,7 +552,11 @@ class Transformer:
             typ = perc_parts[0]
             varn = perc_parts[1]
 
-            if typ in ("float", "int",):
+            if typ in ("float",):
+                typ_val = str(self.r(varn))
+                # typ_val = typ_val if "." in typ_val else f"{typ_val}."
+                dict_block[f"%{varn}%"] = typ_val
+            if typ in ("int",):
                 dict_block[f"%{varn}%"] = str(self.r(varn))
             if typ in ("bool",):
                 dict_block[f"%{varn}%"] = "true" if self.r(varn, t="b") else "false"
@@ -543,7 +568,7 @@ class Transformer:
         geo_declarations, geo_code = block.split("// DECLARATIONS_END")
 
         if stage_in is not None:
-            geo_code = "\n".join([f"if(pos.a=={stage_in})", "{", geo_code, "}"])
+            geo_code = "\n".join([f"if(pos.a=={stage_in}.)", "{", geo_code, "}"])
 
         geo_declarations = set(
             [
@@ -587,11 +612,18 @@ class Transformer:
 
             # key = f"UNI_{len(self.uniforms)}"
             # self.uniforms[key] = unparsed
+            # if t == "f":
+            #     if not "." in str(unparsed):
+            #         return f"({unparsed}.)"
             return f"({unparsed})"
 
         if t == "b":
             result = self.system.r(self, query)
             return bool(result)
+
+        if t == "f":
+            if not "." in str(unparsed):
+                return f"({unparsed}.)"
         return f"({unparsed})"
 
     def on_tick(self, time, frame_time):
@@ -599,15 +631,42 @@ class Transformer:
 
     def load_programs(self):
         # print("\n".join(self.geo_declarations) + self.geo_code)
-        self.prog_trans = self.game.m_res.get_program_varyings(
-            "p4_transform_ver",
-            "p4_transform_geo",
+
+        vs, gs = self.game.m_res.get_shader_geoblocks(
+            "p5_transform_vs",
+            "p5_transform_gs",
             geoblocks="\n".join(self.geo_declarations) + self.geo_code,
             uniforms="\n".join(
                 [f"uniform float UNI_{x};" for x in self.system.equations.keys()]
             ),
-            varyings=self.game.m_par.get_varyings(),
         )
+
+        print("Program Transform!")
+        # print(vs, gs)
+
+        with open("interpreted_transform_vs.glsl", "w") as file:
+            file.write(vs)
+
+        with open("interpreted_transform_gs.glsl", "w") as file:
+            file.write(gs)
+
+        self.prog_trans = TransformFeedback(
+            vs=vs,
+            gs=gs,
+            max_primitives=10,
+            in_format=self.game.m_par.vao_def(),
+            out_varyings=self.game.m_par.get_varyings(),
+        )
+
+        # self.prog_trans = self.game.m_res.get_program_varyings(
+        #     "p4_transform_ver",
+        #     "p4_transform_geo",
+        #     geoblocks="\n".join(self.geo_declarations) + self.geo_code,
+        #     uniforms="\n".join(
+        #         [f"uniform float UNI_{x};" for x in self.system.equations.keys()]
+        #     ),
+        #     varyings=self.game.m_par.get_varyings(),
+        # )
 
     def load_context_objects(self):
         # Transform vaos. We transform data back and forth to avoid buffer copy
@@ -630,18 +689,24 @@ class Transformer:
         )
 
     def emit_gpu(self, time, frame_time):
+        return
         for key in self.uniforms:
             self.prog_trans[f"UNI_{key}"] = self.system.p(f"!{key}!")
 
         self.prog_trans["StepSize"] = self.system.step_size
         self.prog_trans["time"] = max(time, 0)
         # Transform all particle recoding how many elements were emitted by geometry shader
-        with self.game.query:
-            self.vao1_trans.transform(
-                self.system.vbo2, moderngl.POINTS, vertices=self.system.particles
-            )
+        self.system.particles = self.prog_trans.transform(
+            self.system.vbo1, self.system.vbo2, int(self.system.particles)
+        )
 
-        self.system.particles = self.game.query.primitives
+        # Transform all particle recoding how many elements were emitted by geometry shader
+        # with self.game.query:
+        #     self.vao1_trans.transform(
+        #         self.system.vbo2, moderngl.POINTS, vertices=self.system.particles
+        #     )
+
+        # self.system.particles = self.game.query.primitives
 
 
 class Trigger:
