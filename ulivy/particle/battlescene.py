@@ -360,6 +360,7 @@ class BattleScene(FloatLayout):
         battler.canvas["IsShadow"] = 1 if shadow else 0
         # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
+        # TODO: make native
         m = Matrix()
         m.set(array=(self.camera.bill_rot).astype("f4").tolist())
         battler.canvas["BillboardFace"] = m

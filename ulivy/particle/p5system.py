@@ -6,6 +6,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Mesh, MeshView, RenderContext, BindTexture, Rectangle
 from kivy.core.image import Image, ImageData
 
+from kivy.graphics.transformation import Matrix
+
 
 class ParticleSystem:
     def __init__(self, game, brender, fname, target, miss, move_data):
@@ -39,10 +41,10 @@ class ParticleSystem:
         self.spawn_elements()
 
     def on_tick(self, time, frame_time):
-        print("PARTICLE TICK A")
+        # print("PARTICLE TICK A")
         if (not self.particles) and self.time_alive > 1:
             return False
-        print("PARTICLE TICK B")
+        # print("PARTICLE TICK B")
 
         for eq in self.equations.values():
             eq.reset_eval()
@@ -79,12 +81,13 @@ class ParticleSystem:
         return True
 
     def render(self, time, frame_time):
-        return
+        # return
         # Solid
         self.game.m_par.set_render(1)
         for renderer in (x for x in self.renderers if x.equation == 1):
             renderer.render(time, frame_time)
 
+        # return
         # Alpha
         self.game.m_par.set_render(2)
         for renderer in (x for x in self.renderers if x.equation == 2):
@@ -111,6 +114,7 @@ class ParticleSystem:
         return "0"
 
     def switch_buffers(self):
+        return
         self.vbo1, self.vbo2 = self.vbo2, self.vbo1
 
         # for renderer in self.renderers:
@@ -343,10 +347,13 @@ class Emitter:
     def load_programs(self):
         print("Program Emit!")
         vs = self.game.m_res.get_shader("p5_emit_vs")
+        gs = self.game.m_res.get_shader("p5_emit_gs")
         # print(vs)
+        print(self.game.m_par.vao_emit_def())
+
         self.prog_emit = TransformFeedback(
             vs=vs,
-            gs=None,
+            gs=gs,
             max_primitives=1,
             in_format=self.game.m_par.vao_emit_def(),
             out_varyings=self.game.m_par.get_varyings(),
@@ -373,11 +380,18 @@ class Emitter:
 
                 print("EMITTING:", emit_count)
                 # TODO: make additive
-                self.system.particles = self.prog_emit.transform(
-                    self.system.vbo_emit, self.system.vbo2, emit_count, debug=True
+                testvalue = self.prog_emit.transform(
+                    self.system.vbo_emit,
+                    self.system.vbo2,
+                    emit_count,
+                    offset=self.system.particles * self.game.m_par.stride,
+                    # debug=1,
                 )
+                self.system.particles += testvalue
+                print(testvalue, "|", self.system.particles, "in play")
+                # exit()
 
-                exit()
+                # exit()
                 # with self.game.query:
                 #     self.vao_emit.transform(
                 #         self.system.vbo2,
@@ -446,7 +460,9 @@ class Renderer:
         gs = self.game.m_res.get_shader("p5_render_gs")
         fs = self.game.m_res.get_shader("p5_render_fs")
         # print(vs, gs, fs)
-        self.widget = RenderWidget(self.game, vs=vs, gs=gs, fs=fs)
+        self.widget = RenderWidget(
+            self.game, self.system, vs=vs, gs=gs, fs=fs, fmt=self.game.m_par.vao_def()
+        )
         self.prog = self.widget.canvas
         # TODO: move
         self.game.add_widget(self.widget)
@@ -467,30 +483,40 @@ class Renderer:
         self.noise_id = (
             time * self.step_quantity * 2 * self.noise_speed
         ) % 5680  # 710 * 8
-        self.prog["noise_id"] = self.noise_id // 8
-        self.prog["projection"].write(self.game.m_cam.mvp)
-        self.prog["BillboardFace"].write(
-            self.game.m_cam.bill_rot.astype("f4").tobytes()
-        )
+        self.prog["noise_id"] = float(self.noise_id // 8)
+
+        # TODO: make native
+        m = Matrix()
+        m.set(array=(self.game.m_cam.bill_rot).astype("f4").tolist())
+        self.prog["BillboardFace"] = m
+
+        m2 = Matrix()
+        m2.set(array=(self.game.m_cam.mvp).astype("f4").tolist())
+        self.prog["projection"] = m2
+
         self.emit_gpu(time, frame_time)
 
     def switch_buffers(self):
+        return
         self.vao1_rend, self.vao2_rend = self.vao2_rend, self.vao1_rend
 
     def emit_gpu(self, time, frame_time):
         self.prog["opacity"] = self.opacity
         self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
         self.prog["Rotvel"] = int(self.rotvel)
-        self.texture.use(0)
-        self.texture_noise.use(10)
-        self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
+
+        # self.texture.use(0)
+        # self.texture_noise.use(10)
+        # self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
 
 
 class RenderWidget(FloatLayout):
-    def __init__(self, game, vs, gs, fs, **kwargs):
+    def __init__(self, game, system, vs, gs, fs, fmt, **kwargs):
         self.game = game
+        self.system = system
         self.canvas = RenderContext(fs=fs, gs=gs, vs=vs)
 
+        print("RENDERER CREATED!")
         # self.tex1 = Image.load(resource_find("tex4.jpg")).texture
         # self.tex2 = Image.load(resource_find("tex4.jpg")).texture
 
@@ -507,7 +533,7 @@ class RenderWidget(FloatLayout):
         # self.float_y = 0
 
         with self.canvas:
-            self.mesh = MeshView(host_mesh=self.game.m_par.mesh1)
+            self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
     #     self.canvas.add(BindTexture(texture=self.tex2, index=2,))
     #     Clock.schedule_interval(self.update, 1 / 60.0)
