@@ -9,6 +9,8 @@ in vec3 in_vel;
 in float in_size;
 in vec3 in_color;
 in float in_rot;
+in float in_rot_vel;
+in float in_lifespan;
 in float in_noise;
 in float in_key;
 

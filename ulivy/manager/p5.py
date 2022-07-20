@@ -245,7 +245,7 @@ class ShaderWidget(FloatLayout):
             )
             # self.mesh_clone = MeshView(host_mesh=self.mesh)
 
-        self.canvas.add(BindTexture(texture=self.tex2, index=3,))
+        self.canvas.add(BindTexture(texture=self.tex2, index=15,))
 
         # if poffset != -0.25:
         #     Clock.schedule_interval(self.update, 10 / 60.0)
@@ -260,7 +260,7 @@ class ShaderWidget(FloatLayout):
 
         # self.mesh.indices = self.mesh.indices
 
-        self.canvas["texture0"] = 3
+        self.canvas["texture0"] = 15
         self.canvas["poffset"] = float(self.poffset)
         # print("mesh", dir(self.mesh))
         # print(self.mesh_clone)
