@@ -1,6 +1,6 @@
 // CONSTANTS
 // -- General
-float%TARGET_VEL%=2;
+float%TARGET_VEL%=2.;
 // CONSTANTS_END
 // DECLARATIONS
 // DECLARATIONS_END

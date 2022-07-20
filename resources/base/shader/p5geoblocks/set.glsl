@@ -13,20 +13,20 @@ float%LIFE%=0;
 float%LIFE_SWAY%=0;
 bool%LIFE_ABS%=false;
 // -- Alter Position
-vec3%POS%=vec3(0,0,0);
-vec3%POS_SWAY%=vec3(0,0,0);
+vec3%POS%=vec3(0.,0.,0.);
+vec3%POS_SWAY%=vec3(0.,0.,0.);
 bool%POS_ABS_X%=false;
 bool%POS_ABS_Y%=false;
 bool%POS_ABS_Z%=false;
 // -- Alter Velocity
-vec3%VEL%=vec3(0,0,0);
-vec3%VEL_SWAY%=vec3(0,0,0);
+vec3%VEL%=vec3(0.,0.,0.);
+vec3%VEL_SWAY%=vec3(0.,0.,0.);
 bool%VEL_ABS_X%=false;
 bool%VEL_ABS_Y%=false;
 bool%VEL_ABS_Z%=false;
 // -- Alter Colour
-vec3%COL%=vec3(0,0,0);
-vec3%COL_SWAY%=vec3(0,0,0);
+vec3%COL%=vec3(0.,0.,0.);
+vec3%COL_SWAY%=vec3(0.,0.,0.);
 bool%COL_ABS_X%=false;
 bool%COL_ABS_Y%=false;
 bool%COL_ABS_Z%=false;

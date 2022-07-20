@@ -121,7 +121,7 @@ class BattleEnvironmentImage(FloatLayout):
         self.canvas["texture0"] = 1
         self.canvas["offset"] = self.game.m_cam.parallax_rotation * speed
         self.canvas["speed"] = speed
-        self.canvas["brightness"] = self.scene.dark
+        self.canvas["brightness"] = float(self.scene.dark)
         self.canvas["shake"] = self.game.m_cam.shake
         # This is needed for the default vertex shader.
         win_rc = Window.render_context
