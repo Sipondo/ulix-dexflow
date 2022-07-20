@@ -35,9 +35,12 @@ def compile_world(pth):
         all = "X" in coldef
         if all:
             return [True, True, True, True] + [x in coldef for x in enumValues]
-        return ["E" in coldef, "S" in coldef, "W" in coldef, "N" in coldef,] + [
-            x in coldef for x in enumValues
-        ]
+        return [
+            "E" in coldef,
+            "S" in coldef,
+            "W" in coldef,
+            "N" in coldef,
+        ] + [x in coldef for x in enumValues]
 
     a = ldtk_json_from_dict(ldtk)
 
@@ -249,7 +252,8 @@ def compile_world(pth):
                         for field in raw_ent.field_instances:
                             if isinstance(field.value, str):
                                 entity[f"f_{field.identifier}"] = field.value.replace(
-                                    "../sprites/characters/", "",
+                                    "../sprites/characters/",
+                                    "",
                                 ).replace(".png", "")
                                 if ent_field_upl[raw_ent.def_uid][field.def_uid]:
                                     entity[f"f_{field.identifier}"] = parser.parse(
@@ -298,10 +302,10 @@ def compile_world(pth):
         atlas_image.paste(
             image,
             (
-                ((16 * i) // 4096) * 16,
-                ((16 * i) % 4096),
-                ((16 * i) // 4096) * 16 + 16,
-                ((16 * i) % 4096) + 16,
+                ((16 * i) // 2048) * 16,
+                ((16 * i) % 2048),
+                ((16 * i) // 2048) * 16 + 16,
+                ((16 * i) % 2048) + 16,
             ),
             image,
         )
@@ -318,7 +322,7 @@ def compile_world(pth):
 
 from PIL import Image
 
-atlas_image = Image.new("RGBA", (4096, 4096))
+atlas_image = Image.new("RGBA", (2048, 2048))
 atlas_stills = []
 atlas_images = []
 atlas = {}
@@ -431,7 +435,7 @@ def convert_to_atlas_layers(layers):
                     output_tile_array[0, y, x] = np.array((0, 0))
                 else:
                     output_tile_array[0, y, x] = np.array(
-                        (index // 256 + 1, index % 256)
+                        (index // 128 + 1, index % 128)
                     )
 
         layer[2] = output_tile_array
