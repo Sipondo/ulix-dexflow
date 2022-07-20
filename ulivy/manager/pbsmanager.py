@@ -127,7 +127,7 @@ class PbsManager:
     def read_fighters(self):
         # TODO: fix
         pth = self.game.m_res.get_pbs_loc("pokemon.csv", compressed=True)
-        if pth is None or not pth.is_file():
+        if pth is None:  # or not pth.is_file():
             self.read_text(self.game.m_res.get_pbs_loc("pokemon.txt")).to_csv(pth)
             pth = self.game.m_res.get_pbs_loc("pokemon.csv", compressed=True)
 
@@ -145,9 +145,11 @@ class PbsManager:
         )
 
     def get_move(self, id):
+        id = 201  # TODO: temp only tackle
         return self.moves.loc[id]
 
     def get_move_by_name(self, name):
+        name = "tackle"  # TODO: temp only tackle
         name_s = name.replace(" ", "").upper()
         # print(self.moves)
         s = self.moves["identifier"]

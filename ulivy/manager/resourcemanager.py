@@ -6,6 +6,7 @@ from io import BytesIO
 from pathlib import Path
 
 from kivy.resources import resource_find, resource_add_path, resource_remove_path
+from kivy.core.image import Image
 
 # from PIL import Image, ImageFont
 
@@ -83,6 +84,69 @@ class ResourceManager:
             if d := resource_find(str(dir / pth)):
                 return d
         return None
+
+    def get_shader(self, program_name):
+        with open(resource_find(f"resources/base/shader/{program_name}.glsl")) as file:
+            return file.read()
+
+    def get_shader_geoblocks(self, vertex_name, geo_name, geoblocks, uniforms):
+        # print(vertex_name, geoblocks)
+        vs = self.get_shader(vertex_name)
+        gs = (
+            self.get_shader(geo_name)
+            .replace(r"%GEOBLOCKS%", geoblocks)
+            .replace(r"%UNIFORMS%", uniforms)
+        )
+
+        return vs, gs
+
+    def get_particle(self, pth, move_data=None):
+        try:
+            pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
+            if pth:
+                with open(pth) as f:
+                    return json.load(f)
+        except Exception as e:
+            pass
+            # traceback.print_exc()
+
+        try:
+            if move_data is not None:
+                if int(move_data.power) < 5:
+                    pth = self.resolve_resource_path(
+                        self.p_particle / ("generic-powerless.json")
+                    )
+                else:
+                    print("Search path")
+                    pth = self.resolve_resource_path(
+                        self.p_particle
+                        / (
+                            f"{self.game.m_pbs.get_related_anim(move_data.type, move_data.power)}.json"
+                        )
+                    )
+                    print(pth)
+                if pth:
+                    with open(pth) as f:
+                        return json.load(f)
+        except Exception as e:
+            raise e
+            pass
+            # traceback.print_exc()
+
+        pth = self.resolve_resource_path(self.p_particle / ("generic-powerless.json"))
+        with open(pth) as f:
+            return json.load(f)
+
+    def get_geoblock(self, geoblock_name):
+        with open(
+            resource_find(f"resources/base/shader/p5geoblocks/{geoblock_name}.glsl")
+        ) as geoblock:
+            return geoblock.read()
+
+    def get_texture(self, category, name):
+        pth = self.p_graphics / category / (Path(name).stem + ".png")
+        pth = self.resolve_resource_path(pth)
+        return Image.load(pth).texture
 
     #############################
     #############################
@@ -272,21 +336,6 @@ class ResourceManager:
             self.tilesets[name] = texture_spritemap
         return self.tilesets[name]
 
-    def get_shader(self, program_name):
-        with open(resource_find(f"resources/base/shader/{program_name}.glsl")) as file:
-            return file.read()
-
-    def get_shader_geoblocks(self, vertex_name, geo_name, geoblocks, uniforms):
-        # print(vertex_name, geoblocks)
-        vs = self.get_shader(vertex_name)
-        gs = (
-            self.get_shader(geo_name)
-            .replace(r"%GEOBLOCKS%", geoblocks)
-            .replace(r"%UNIFORMS%", uniforms)
-        )
-
-        return vs, gs
-
     def get_program_varyings(
         self, vertex_name, geo_name=None, geoblocks=None, uniforms=None, varyings=[]
     ):
@@ -323,17 +372,6 @@ class ResourceManager:
                     geometry_shader=geo,
                     varyings=varyings,
                 )
-
-    def get_geoblock(self, geoblock_name):
-        with open(
-            resource_find(f"resources/base/shader/p5geoblocks/{geoblock_name}.glsl")
-        ) as geoblock:
-            return geoblock.read()
-
-    def get_texture(self, category, name):
-        pth = self.p_graphics / category / (Path(name).stem + ".png")
-        pth = self.resolve_resource_path(pth)
-        return self.game.load_texture_2d(pth)
 
     def get_environment(self, name):
         pth = self.p_graphics / "environments"
@@ -409,46 +447,3 @@ class ResourceManager:
         pth = Path("world.ldtkc")
         with open(pth, "rb") as file:
             return np.load(BytesIO(file.read()), allow_pickle=True)
-
-    def resolve_resource_path(self, pth):
-        for dir in self.resource_dirs:
-            if (dir / pth).is_file():
-                return dir / pth
-        return None
-
-    def get_particle(self, pth, move_data=None):
-        try:
-            pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
-            if pth:
-                with open(pth) as f:
-                    return json.load(f)
-        except Exception as e:
-            pass
-            # traceback.print_exc()
-
-        try:
-            if move_data is not None:
-                if int(move_data.power) < 5:
-                    pth = self.resolve_resource_path(
-                        self.p_particle / ("generic-powerless.json")
-                    )
-                else:
-                    print("Search path")
-                    pth = self.resolve_resource_path(
-                        self.p_particle
-                        / (
-                            f"{self.game.m_pbs.get_related_anim(move_data.type, move_data.power)}.json"
-                        )
-                    )
-                    print(pth)
-                if pth:
-                    with open(pth) as f:
-                        return json.load(f)
-        except Exception as e:
-            raise e
-            pass
-            # traceback.print_exc()
-
-        pth = self.resolve_resource_path(self.p_particle / ("generic-powerless.json"))
-        with open(pth) as f:
-            return json.load(f)

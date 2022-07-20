@@ -24,7 +24,7 @@ void main(){
             discard;
         }
         col=col*col.a;
-        col=col;//*texture(texturearray1,vec3(uv,int(mod(float(noise_id+out_noise),710.))));
+        col=col;//*texture(texturearray1,vec3(uv,int(mod(float(noise_id+out_noise),710.)))); TODO: re-enable noise
         frag_color=col*vec4(out_color*opacity,col.a);
     }else{
         if(col.a<1.){

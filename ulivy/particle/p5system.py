@@ -379,7 +379,6 @@ class Emitter:
                 self.prog_emit["time"] = max(time, 0) + random() / 50
 
                 print("EMITTING:", emit_count)
-                # TODO: make additive
                 testvalue = self.prog_emit.transform(
                     self.system.vbo_emit,
                     self.system.vbo2,
@@ -388,7 +387,15 @@ class Emitter:
                     # debug=1,
                 )
                 self.system.particles += testvalue
-                print(testvalue, "|", self.system.particles, "in play")
+                print(
+                    testvalue,
+                    "|",
+                    self.system.particles,
+                    len(self.system.vbo2.indices),
+                    "in play",
+                    "with stride",
+                    self.game.m_par.stride,
+                )
                 # exit()
 
                 # exit()
@@ -420,10 +427,9 @@ class Renderer:
         self.equation = 1 if eqname == "solid" else 3 if eqname == "anti" else 2
 
         # TODO: temp
-        # self.texture = self.game.m_res.get_texture(
-        #     "particle", self.system.r(self, "file")
-        # )
-        self.texture = self.system.r(self, "file")
+        self.texture = self.game.m_res.get_texture(
+            "particle", self.system.r(self, "file")
+        )
 
         self.load_programs()
         self.load_context_objects()
@@ -441,7 +447,7 @@ class Renderer:
         self.buffer_requests = []
         self.current_active_buffer = 1
 
-        self.prog["texture0"] = 0
+        # self.prog["texture0"] = 0
         self.prog["texturearray1"] = 10
         self.prog["Usenoise"] = float(self.equation != 1)
 
@@ -450,7 +456,7 @@ class Renderer:
         self.noise_id = 0
 
     def set_fields(self):
-        self.opacity = float(self.system.r(self, "opacity"))
+        self.opacity = 0.001  # float(self.system.r(self, "opacity"))
         self.noise_speed = float(self.system.r(self, "noise"))
 
     def load_programs(self):
@@ -463,6 +469,8 @@ class Renderer:
         self.widget = RenderWidget(
             self.game, self.system, vs=vs, gs=gs, fs=fs, fmt=self.game.m_par.vao_def()
         )
+        self.widget.canvas.add(BindTexture(texture=self.texture, index=7,))
+
         self.prog = self.widget.canvas
         # TODO: move
         self.game.add_widget(self.widget)
@@ -493,6 +501,7 @@ class Renderer:
         m2 = Matrix()
         m2.set(array=(self.game.m_cam.mvp).astype("f4").tolist())
         self.prog["projection"] = m2
+        self.prog["texture0"] = 7
 
         self.emit_gpu(time, frame_time)
 
