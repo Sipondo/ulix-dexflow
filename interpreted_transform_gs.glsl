@@ -16,6 +16,9 @@ uniform float UNI_user_y;
 uniform float UNI_target_y;
 uniform float UNI_user_z;
 uniform float UNI_target_z;
+uniform float UNI_eq_z;
+uniform float UNI_eq_b;
+uniform float UNI_eq_x;
 
 in vec3 vs_vel[1];
 in float vs_size[1];
@@ -63,32 +66,21 @@ if(vs_lifespan[0]>=0.)
   
   lifespan=lifespan-stp;
   
-  vec4 prev_pos;
-float prev_stp;
-
-
+  float prev_size;
 vec3 prev_color;
-vec3 prev_vel;
-float prev_size;
+vec4 prev_pos;
+float prev_rot;
 float prev_key;
 float prev_lifespan;
-float prev_rot;
+vec3 prev_vel;
+
+
+float prev_stp;
 float prev_rot_vel;if(pos.a==8725064.)
 {
 
 
-if((pos.z<0.)&&(vel.z<0.))
-{
-    vel.z=-vel.z/(1.4);
-    vel=vel/(1.);
-    lifespan=lifespan/(3.);
-}
-
-}if(pos.a==8725064.)
-{
-
-
-vel=vel*vec3((.985), (.985), (.985));
+vel=vel*vec3((.992), (.992), (.992));
 
 }if(pos.a==8725064.)
 {
@@ -99,10 +91,10 @@ pos.x=(false?vec3((0.), (0.), (0.)).x:pos.x)+vec3((0.), (0.), (0.)).x*rnd(vec2(g
 pos.y=(false?vec3((0.), (0.), (0.)).y:pos.y)+vec3((0.), (0.), (0.)).y*rnd(vec2(gl_PrimitiveIDIn+2,time*1.1))*stp;
 pos.z=(false?vec3((0.), (0.), (0.)).z:pos.z)+vec3((0.), (0.), (0.)).z*rnd(vec2(gl_PrimitiveIDIn+73,time*1.7))*stp;
 
-vel=vel+vec3((0.), (0.), (1.5))*stp;
-vel.x=(false?vec3((0.), (0.), (1.5)).x:vel.x)+vec3((0.), (0.), (0.)).x*rnd(vec2(gl_PrimitiveIDIn+179,time*2.3))*stp;
-vel.y=(false?vec3((0.), (0.), (1.5)).y:vel.y)+vec3((0.), (0.), (0.)).y*rnd(vec2(gl_PrimitiveIDIn+283,time*3.7))*stp;
-vel.z=(false?vec3((0.), (0.), (1.5)).z:vel.z)+vec3((0.), (0.), (0.)).z*rnd(vec2(gl_PrimitiveIDIn+419,time*4.3))*stp;
+vel=vel+vec3((0.), (0.), (-1.))*stp;
+vel.x=(false?vec3((0.), (0.), (-1.)).x:vel.x)+vec3((0.), (0.), (0.)).x*rnd(vec2(gl_PrimitiveIDIn+179,time*2.3))*stp;
+vel.y=(false?vec3((0.), (0.), (-1.)).y:vel.y)+vec3((0.), (0.), (0.)).y*rnd(vec2(gl_PrimitiveIDIn+283,time*3.7))*stp;
+vel.z=(false?vec3((0.), (0.), (-1.)).z:vel.z)+vec3((0.), (0.), (0.)).z*rnd(vec2(gl_PrimitiveIDIn+419,time*4.3))*stp;
 
 size=size+(0.)*stp;
 size=(false?(0.):size)+(0.)*rnd(vec2(gl_PrimitiveIDIn+547,time*5.9))*stp;

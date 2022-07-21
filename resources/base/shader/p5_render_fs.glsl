@@ -19,18 +19,22 @@ out vec4 frag_color;
 
 void main(){
     vec4 col=texture(texture0,uv);
+    col.a=1.;
     if(Usenoise){
         if(col.a<=0.){
             discard;
         }
         col=col*col.a;
         col=col;//*texture(texturearray1,vec3(uv,int(mod(float(noise_id+out_noise),710.)))); TODO: re-enable noise
-        frag_color=col*vec4(out_color*opacity,col.a);
+        col.a=1.;
+        // frag_color=col*vec4(out_color*opacity,col.a);
+        frag_color=col*vec4(out_color,col.a);
     }else{
         if(col.a<1.){
             discard;
         }
         frag_color=col*vec4(out_color*opacity,1.);
+        frag_color=col*vec4(out_color,1.);
     }
 }
 

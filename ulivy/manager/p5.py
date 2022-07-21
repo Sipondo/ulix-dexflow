@@ -251,7 +251,7 @@ class ShaderWidget(FloatLayout):
         #     Clock.schedule_interval(self.update, 10 / 60.0)
         # else:
         Clock.schedule_once(self.update)
-        Clock.schedule_once(self.de_register, 3)  # TODO: remove this terrible hack
+        Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
 
     def update(self, *largs):
 

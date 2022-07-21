@@ -114,7 +114,6 @@ class ParticleSystem:
         return "0"
 
     def switch_buffers(self):
-        return
         self.vbo1, self.vbo2 = self.vbo2, self.vbo1
 
         # for renderer in self.renderers:
@@ -383,8 +382,9 @@ class Emitter:
                     self.system.vbo_emit,
                     self.system.vbo2,
                     emit_count,
+                    out_size=self.game.m_par.floats,
                     offset=self.system.particles * self.game.m_par.stride,
-                    # debug=1,
+                    debug=0,
                 )
                 self.system.particles += testvalue
                 print(
@@ -703,28 +703,12 @@ class Transformer:
         #     varyings=self.game.m_par.get_varyings(),
         # )
 
-    def load_context_objects(self):
-        # Transform vaos. We transform data back and forth to avoid buffer copy
-        self.vao1_trans = self.game.ctx.vertex_array(
-            self.prog_trans, [self.game.m_par.vao_def(self.system.vbo1, render=False)],
-        )
-        self.vao2_trans = self.game.ctx.vertex_array(
-            self.prog_trans, [self.game.m_par.vao_def(self.system.vbo2, render=False)],
-        )
-
     def render(self, time, frame_time):
         self.emit_gpu(time, frame_time)
         return
 
-    def switch_buffers(self):
-        # Swap around objects for next frame
-        self.vao1_trans, self.vao2_trans = (
-            self.vao2_trans,
-            self.vao1_trans,
-        )
-
     def emit_gpu(self, time, frame_time):
-        return
+        # return
         for key in self.uniforms:
             self.prog_trans[f"UNI_{key}"] = self.system.p(f"!{key}!")
 
@@ -733,6 +717,14 @@ class Transformer:
         # Transform all particle recoding how many elements were emitted by geometry shader
         self.system.particles = self.prog_trans.transform(
             self.system.vbo1, self.system.vbo2, int(self.system.particles)
+        )
+
+        print(
+            self.system.particles,
+            len(self.system.vbo2.indices),
+            "transformed",
+            "with stride",
+            self.game.m_par.stride,
         )
 
         # Transform all particle recoding how many elements were emitted by geometry shader

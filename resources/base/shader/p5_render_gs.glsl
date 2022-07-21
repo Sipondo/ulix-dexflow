@@ -56,7 +56,7 @@ void main(){
     
     if(pos.z>-.1){
         vec4 proj_pos=projection*vec4(pos,1.);
-        float size_modifier=Size*gs_in[0].size*.0000001;//TODO: this is interesting to say the least
+        float size_modifier=Size*gs_in[0].size;//TODO: this is interesting to say the least
         pos=pos+CameraPosition;
         uv=vec2(1.,1.);
         out_color=gs_in[0].color;
