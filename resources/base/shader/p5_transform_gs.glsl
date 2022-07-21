@@ -54,8 +54,8 @@ float rnd(vec2 x)
 void main(){
 if(gs_in[0].lifespan>=0.)
 {
-  if(gs_in[0].lifespan<100.)// TODO: temp fix
-  {
+  // if(gs_in[0].lifespan<100.)// TODO: temp fix
+  // {
     float stp=StepSize;
     
     vec4 pos=gs_in[0].pos;
@@ -72,7 +72,11 @@ if(gs_in[0].lifespan>=0.)
     
     lifespan=lifespan-stp;
     
+    // GEOBLOCKS start here
+    
     %GEOBLOCKS%
+    
+    // GEOBLOCKS end here
     
     pos=pos+vec4(vel*stp,0.);
     rot=rot+rot_vel*stp;
@@ -90,6 +94,6 @@ if(gs_in[0].lifespan>=0.)
     
     EmitVertex();
     EndPrimitive();
-  }
+  // }
 }
 }

@@ -10,7 +10,7 @@ class ParticleManager:
         self.battle = None
         self.game = game
         self.systems = []
-        self.step_quantity = 240
+        self.step_quantity = 240  # TODO: 240
         self.step_size = 1 / self.step_quantity
 
         self.floats = 16

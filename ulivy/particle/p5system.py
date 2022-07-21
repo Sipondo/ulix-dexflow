@@ -66,10 +66,10 @@ class ParticleSystem:
             self.step_count = self.step_count % self.step_size
 
             for _ in range(steps):
-                # self.transformer.render(time, self.step_size)
+                self.transformer.render(time, self.step_size)
                 for emitter in self.emitters:
                     emitter.render(time, self.step_size)
-                # self.switch_buffers()
+                self.switch_buffers()
 
         for misc in self.miscs:
             misc.render(time)
@@ -377,25 +377,26 @@ class Emitter:
                 self.emit_want -= emit_count
                 self.prog_emit["time"] = max(time, 0) + random() / 50
 
-                print("EMITTING:", emit_count)
-                testvalue = self.prog_emit.transform(
-                    self.system.vbo_emit,
-                    self.system.vbo2,
-                    emit_count,
-                    out_size=self.game.m_par.floats,
-                    offset=self.system.particles * self.game.m_par.stride,
-                    # debug=2,
-                )
-                self.system.particles += testvalue
-                print(
-                    testvalue,
-                    "|",
-                    self.system.particles,
-                    len(self.system.vbo2.indices),
-                    "in play",
-                    "with stride",
-                    self.game.m_par.stride,
-                )
+                print("EMITTING:", emit_count, self.system.vbo2)
+                if self.system.particles < 1:
+                    testvalue = self.prog_emit.transform(
+                        self.system.vbo_emit,
+                        self.system.vbo2,
+                        emit_count,
+                        out_size=self.game.m_par.floats,
+                        offset=self.system.particles * self.game.m_par.stride,
+                        # debug=2,
+                    )
+                    self.system.particles += testvalue
+                    print(
+                        testvalue,
+                        "|",
+                        self.system.particles,
+                        len(self.system.vbo2.indices),
+                        "in play",
+                        "with stride",
+                        self.game.m_par.stride,
+                    )
                 # exit()
 
                 # exit()
@@ -685,6 +686,7 @@ class Transformer:
             ),
         )
 
+        # gs = self.game.m_res.get_shader("p5_transform_fake_gs")
         print("Program Transform!")
         # print(vs, gs)
 
@@ -727,11 +729,16 @@ class Transformer:
         if int(self.system.particles) < 1:
             return
 
+        print("TRANSFORMING!", self.system.vbo2)
         self.system.particles = self.prog_trans.transform(
-            self.system.vbo1, self.system.vbo2, int(self.system.particles)
+            self.system.vbo1,
+            self.system.vbo2,
+            int(self.system.particles),
+            out_size=self.game.m_par.floats,
+            # debug=2,
         )
-
         print(
+            # self.system.step_size,
             self.system.particles,
             len(self.system.vbo2.indices),
             "transformed",
