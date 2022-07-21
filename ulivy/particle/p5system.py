@@ -66,10 +66,10 @@ class ParticleSystem:
             self.step_count = self.step_count % self.step_size
 
             for _ in range(steps):
-                self.transformer.render(time, self.step_size)
+                # self.transformer.render(time, self.step_size)
                 for emitter in self.emitters:
                     emitter.render(time, self.step_size)
-                self.switch_buffers()
+                # self.switch_buffers()
 
         for misc in self.miscs:
             misc.render(time)
@@ -384,7 +384,7 @@ class Emitter:
                     emit_count,
                     out_size=self.game.m_par.floats,
                     offset=self.system.particles * self.game.m_par.stride,
-                    debug=0,
+                    # debug=2,
                 )
                 self.system.particles += testvalue
                 print(
@@ -514,6 +514,7 @@ class Renderer:
         self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
         self.prog["Rotvel"] = int(self.rotvel)
 
+        # print(self.widget.mesh.indices)
         # self.texture.use(0)
         # self.texture_noise.use(10)
         # self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
@@ -603,7 +604,15 @@ class Transformer:
         geo_declarations, geo_code = block.split("// DECLARATIONS_END")
 
         if stage_in is not None:
-            geo_code = "\n".join([f"if(pos.a=={stage_in}.)", "{", geo_code, "}"])
+            # geo_code = "\n".join([f"\nif(pos.a=={stage_in}.)", "{", geo_code, "}"])
+            geo_code = "\n".join(
+                [
+                    f"\n\n\nif((pos.a>={stage_in-1}.)&&(pos.a<={stage_in+1}.))",
+                    "{",
+                    geo_code,
+                    "}",
+                ]
+            )
 
         geo_declarations = set(
             [
@@ -708,13 +717,16 @@ class Transformer:
         return
 
     def emit_gpu(self, time, frame_time):
-        # return
         for key in self.uniforms:
             self.prog_trans[f"UNI_{key}"] = self.system.p(f"!{key}!")
 
         self.prog_trans["StepSize"] = self.system.step_size
         self.prog_trans["time"] = max(time, 0)
         # Transform all particle recoding how many elements were emitted by geometry shader
+
+        if int(self.system.particles) < 1:
+            return
+
         self.system.particles = self.prog_trans.transform(
             self.system.vbo1, self.system.vbo2, int(self.system.particles)
         )

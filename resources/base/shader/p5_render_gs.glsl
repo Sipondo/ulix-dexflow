@@ -23,11 +23,15 @@ uniform int Rotvel;
 // in float vs_noise[1];
 
 in VS_OUT{
+    vec4 pos;
     vec3 vel;
-    vec3 color;
     float size;
+    vec3 color;
     float rot;
+    float rot_vel;
+    float lifespan;
     float noise;
+    float key;
 }gs_in[];
 
 out vec3 out_color;
@@ -41,9 +45,12 @@ float atan2(in float y,in float x)
 }
 
 void main(){
-    if(gl_in[0].gl_Position.a!=Stage){return;}
+    // if(gl_in[0].gl_Position.a!=Stage){return;}
+    if((gl_in[0].gl_Position.a<=(Stage-1.))||(gl_in[0].gl_Position.a>=(Stage+1.))){return;}
     
+    // vec3 pos=vec3(gs_in[0].vel.x,0.,0.);//gl_in[0].gl_Position.xyz*20.; TODO: revert
     vec3 pos=gl_in[0].gl_Position.xyz*20.;
+    // vec3 pos=gs_in[0].pos.xyz*20.;
     float new_rot=gs_in[0].rot;
     
     if(Rotvel>0){
@@ -55,8 +62,8 @@ void main(){
     vec3 up=(BillboardFace*vec4(0.,sin(new_rot*M_DEGPI),cos(new_rot*M_DEGPI),1.)).xyz;
     
     if(pos.z>-.1){
-        vec4 proj_pos=projection*vec4(pos,1.);
-        float size_modifier=Size*gs_in[0].size;//TODO: this is interesting to say the least
+        // vec4 proj_pos=projection*vec4(pos,1.);
+        float size_modifier=1.;//Size*gs_in[0].size; TODO: revert
         pos=pos+CameraPosition;
         uv=vec2(1.,1.);
         out_color=gs_in[0].color;

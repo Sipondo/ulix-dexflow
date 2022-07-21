@@ -202,6 +202,8 @@ with open(resource_find("ulivy_shaders/tfeed_gs.glsl")) as file:
 with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
     enti_shader_fs = file.read()
 
+MAX_PARTICLES = 4096
+
 
 class ShaderWidget(FloatLayout):
     def __init__(self, game, poffset, **kwargs):
@@ -211,7 +213,7 @@ class ShaderWidget(FloatLayout):
         )
 
         # self.tex1 = Image.load(resource_find("tex4.jpg")).texture
-        self.tex2 = Image.load(resource_find("tex2.jpg")).texture
+        # self.tex2 = Image.load(resource_find("tex2.jpg")).texture
 
         # self.tex1.mag_filter = "nearest"
 
@@ -239,31 +241,31 @@ class ShaderWidget(FloatLayout):
 
         with self.canvas:
             self.mesh = Mesh(
-                vertices=[1.0, 1.0, 1.0, 1.0] * 1024 * 3 * 12,
-                indices=[0],  # , 1, 2, 3],
+                vertices=[1.0, 1.0, 1.0, 1.0] * 4 * MAX_PARTICLES,
+                indices=list(range(MAX_PARTICLES)),
                 fmt=fmt,  # [(b"aPos", 2, "float"), (b"aSize", 2, "float"),],
             )
             # self.mesh_clone = MeshView(host_mesh=self.mesh)
 
-        self.canvas.add(BindTexture(texture=self.tex2, index=15,))
+        # self.canvas.add(BindTexture(texture=self.tex2, index=15,))
 
         # if poffset != -0.25:
         #     Clock.schedule_interval(self.update, 10 / 60.0)
         # else:
-        Clock.schedule_once(self.update)
+        # Clock.schedule_once(self.update)
         Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
 
-    def update(self, *largs):
+    # def update(self, *largs):
 
-        self.float_x += 0.001
-        # self.mesh.vertices = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+    # self.float_x += 0.001
+    # self.mesh.vertices = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
-        # self.mesh.indices = self.mesh.indices
+    # self.mesh.indices = self.mesh.indices
 
-        self.canvas["texture0"] = 15
-        self.canvas["poffset"] = float(self.poffset)
-        # print("mesh", dir(self.mesh))
-        # print(self.mesh_clone)
+    # self.canvas["texture0"] = 15
+    # self.canvas["poffset"] = float(self.poffset)
+    # print("mesh", dir(self.mesh))
+    # print(self.mesh_clone)
 
     def de_register(self, *largs):
         # filthy hack... TODO: remove, not sure if this is even required

@@ -4,7 +4,7 @@
 precision highp float;
 #endif
 
-in float in_index;
+layout(location=0)in float in_index;
 // in vec4 inVec;
 
 out VS_OUT{

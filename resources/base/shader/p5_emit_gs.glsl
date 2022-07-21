@@ -99,7 +99,7 @@ out_lifespan+=Life_sway*rnd(vec2(gs_in[0].index+1229.,time*11.3));
 
 out_noise=710.*rnd(vec2(gs_in[0].index+1381.,time*12.7));
 
-out_key=time;
+out_key=123456789.;//time; TODO: remove
 EmitVertex();
 EndPrimitive();
 }
