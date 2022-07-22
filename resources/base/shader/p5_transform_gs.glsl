@@ -47,53 +47,52 @@ float rnd(vec2 x)
 {
   int n=int(x.x*40.+x.y*6400.);
   n=(n<<13)^n;
-  return 1.-float((n*(n*n*15731+789221)+\
-1376312589)&0x7fffffff)/1073741824.;
+  return 1.-float((n*(n*n*15731+789221)+1376312589)&0x7fffffff)/1073741824.;
 }
 
 void main(){
-if(gs_in[0].lifespan>=0.)
-{
-  // if(gs_in[0].lifespan<100.)// TODO: temp fix
-  // {
-    float stp=StepSize;
-    
-    vec4 pos=gs_in[0].pos;
-    vec3 vel=gs_in[0].vel;
-    float size=gs_in[0].size;
-    vec3 color=gs_in[0].color;
-    float rot=gs_in[0].rot;
-    float rot_vel=gs_in[0].rot_vel;
-    float lifespan=gs_in[0].lifespan;
-    float noise=gs_in[0].noise;
-    float key=gs_in[0].key;
-    
-    bool keep_alive=true;
-    
-    lifespan=lifespan-stp;
-    
-    // GEOBLOCKS start here
-    
-    %GEOBLOCKS%
-    
-    // GEOBLOCKS end here
-    
-    pos=pos+vec4(vel*stp,0.);
-    rot=rot+rot_vel*stp;
-    if(!keep_alive){return;}
-    if(time<0.){return;}
-    out_pos=pos;
-    out_vel=vel;
-    out_size=size;
-    out_color=color;
-    out_rot=rot;
-    out_rot_vel=rot_vel;
-    out_lifespan=lifespan;
-    out_noise=noise;
-    out_key=key;
-    
-    EmitVertex();
-    EndPrimitive();
-  // }
-}
+  if(gs_in[0].lifespan>=0.)
+  {
+    // if(gs_in[0].lifespan<100.)// TODO: temp fix
+    // {
+      float stp=StepSize;
+      
+      vec4 pos=gs_in[0].pos;
+      vec3 vel=gs_in[0].vel;
+      float size=gs_in[0].size;
+      vec3 color=gs_in[0].color;
+      float rot=gs_in[0].rot;
+      float rot_vel=gs_in[0].rot_vel;
+      float lifespan=gs_in[0].lifespan;
+      float noise=gs_in[0].noise;
+      float key=gs_in[0].key;
+      
+      bool keep_alive=true;
+      
+      lifespan=lifespan-stp;
+      
+      // GEOBLOCKS start here
+      
+      %GEOBLOCKS%
+      
+      // GEOBLOCKS end here
+      
+      pos=pos+vec4(vel*stp,0.);
+      rot=rot+rot_vel*stp;
+      if(!keep_alive){return;}
+      if(time<0.){return;}
+      out_pos=pos;
+      out_vel=vel;
+      out_size=size;
+      out_color=color;
+      out_rot=rot;
+      out_rot_vel=rot_vel;
+      out_lifespan=lifespan;
+      out_noise=noise;
+      out_key=key;
+      
+      EmitVertex();
+      EndPrimitive();
+    // }
+  }
 }

@@ -122,8 +122,8 @@ class ParticleSystem(FloatLayout):
     def switch_buffers(self):
         self.vbo1, self.vbo2 = self.vbo2, self.vbo1
 
-        # for renderer in self.renderers:
-        #     renderer.switch_buffers()
+        for renderer in self.renderers:
+            renderer.switch_buffers()
 
         # self.transformer.switch_buffers()
 
@@ -445,7 +445,7 @@ class Emitter:
                 self.emit_want -= emit_count
                 self.prog_emit["time"] = max(time, 0) + random() / 50
 
-                print("EMITTING:", emit_count, self.system.vbo2)
+                # print("EMITTING:", emit_count, self.system.vbo2)
                 testvalue = self.prog_emit.transform(
                     self.system.vbo_emit,
                     self.system.vbo2,
@@ -455,15 +455,15 @@ class Emitter:
                     # debug=2,
                 )
                 self.system.particles += testvalue
-                print(
-                    testvalue,
-                    "|",
-                    self.system.particles,
-                    len(self.system.vbo2.indices),
-                    "in play",
-                    "with stride",
-                    self.game.m_par.stride,
-                )
+                # print(
+                #     testvalue,
+                #     "|",
+                #     self.system.particles,
+                #     len(self.system.vbo2.indices),
+                #     "in play",
+                #     "with stride",
+                #     self.game.m_par.stride,
+                # )
                 # exit()
 
                 # exit()
@@ -574,6 +574,7 @@ class Renderer:
         self.emit_gpu(time, frame_time)
 
     def switch_buffers(self):
+        self.widget.mesh.gbatch = self.system.vbo2.gbatch
         return
         self.vao1_rend, self.vao2_rend = self.vao2_rend, self.vao1_rend
 
@@ -825,7 +826,7 @@ class Transformer:
         if int(self.system.particles) < 1:
             return
 
-        print("TRANSFORMING!", self.system.vbo2)
+        # print("TRANSFORMING!", self.system.vbo2)
         self.system.particles = self.prog_trans.transform(
             self.system.vbo1,
             self.system.vbo2,

@@ -17,8 +17,9 @@ from .effects.abilityeffect.baseabilityeffect import BaseAbilityEffect
 from .action import ActionType, Action
 from .agentmanager import AgentManager
 
+from kivy.resources import resource_find
 
-EFFECTS_PATH = Path("ulivy/combat/effects/")
+# EFFECTS_PATH = Path("ulivy/combat/effects/")
 
 
 class CombatState(IntEnum):
@@ -73,22 +74,28 @@ class CombatScene:
         self.current_action_effect = None
 
     def init_move_effects(self):
-        for x in (EFFECTS_PATH / "moveeffect").glob("*.py"):
-            if "basemoveeffect" in x.stem or "init" in x.stem:
+        with open(resource_find("ulivy/combat/move.txt"), "r") as file:
+            effects = file.read().split()
+
+        for x in effects:
+            if "basemoveeffect" in x or "init" in x:
                 continue
             lib = importlib.import_module(
-                f".{x.stem}", package="ulivy.combat.effects.moveeffect"
+                f".{x}", package="ulivy.combat.effects.moveeffect"
             )
-            self.effect_lib[x.stem] = getattr(lib, x.stem.capitalize())
+            self.effect_lib[x] = getattr(lib, x.capitalize())
 
     def init_abilities(self):
-        for x in (EFFECTS_PATH / "abilityeffect").glob("*.py"):
-            if "baseabilityeffect" in x.stem or "init" in x.stem:
+        with open(resource_find("ulivy/combat/ability.txt"), "r") as file:
+            effects = file.read().split()
+
+        for x in effects:
+            if "baseabilityeffect" in x or "init" in x:
                 continue
             lib = importlib.import_module(
-                f".{x.stem}", package="ulivy.combat.effects.abilityeffect"
+                f".{x}", package="ulivy.combat.effects.abilityeffect"
             )
-            self.ability_lib[x.stem] = getattr(lib, x.stem.capitalize())
+            self.ability_lib[x] = getattr(lib, x.capitalize())
 
     def init_battle(self, agents) -> typing.List[Action]:
         actions = []
