@@ -690,11 +690,11 @@ class Transformer:
         print("Program Transform!")
         # print(vs, gs)
 
-        with open("interpreted_transform_vs.glsl", "w") as file:
-            file.write(vs)
+        # with open("interpreted_transform_vs.glsl", "w") as file:
+        #     file.write(vs)
 
-        with open("interpreted_transform_gs.glsl", "w") as file:
-            file.write(gs)
+        # with open("interpreted_transform_gs.glsl", "w") as file:
+        #     file.write(gs)
 
         self.prog_trans = TransformFeedback(
             vs=vs,
