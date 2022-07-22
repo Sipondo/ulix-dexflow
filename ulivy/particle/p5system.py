@@ -281,7 +281,7 @@ with open(resource_find("ulivy_shaders/tfeed_vs.glsl")) as file:
 with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
     placeholder_shader_fs = file.read()
 
-MAX_PARTICLES = 4096
+MAX_PARTICLES = 4096 * 4
 
 
 class ParticleHolder(FloatLayout):
@@ -446,25 +446,24 @@ class Emitter:
                 self.prog_emit["time"] = max(time, 0) + random() / 50
 
                 print("EMITTING:", emit_count, self.system.vbo2)
-                if self.system.particles < 1:
-                    testvalue = self.prog_emit.transform(
-                        self.system.vbo_emit,
-                        self.system.vbo2,
-                        emit_count,
-                        out_size=self.game.m_par.floats,
-                        offset=self.system.particles * self.game.m_par.stride,
-                        # debug=2,
-                    )
-                    self.system.particles += testvalue
-                    print(
-                        testvalue,
-                        "|",
-                        self.system.particles,
-                        len(self.system.vbo2.indices),
-                        "in play",
-                        "with stride",
-                        self.game.m_par.stride,
-                    )
+                testvalue = self.prog_emit.transform(
+                    self.system.vbo_emit,
+                    self.system.vbo2,
+                    emit_count,
+                    out_size=self.game.m_par.floats,
+                    offset=self.system.particles * self.game.m_par.stride,
+                    # debug=2,
+                )
+                self.system.particles += testvalue
+                print(
+                    testvalue,
+                    "|",
+                    self.system.particles,
+                    len(self.system.vbo2.indices),
+                    "in play",
+                    "with stride",
+                    self.game.m_par.stride,
+                )
                 # exit()
 
                 # exit()
@@ -589,6 +588,35 @@ class Renderer:
         # self.vao1_rend.render(moderngl.POINTS, vertices=self.system.particles)
 
 
+from kivy.graphics.instructions import Callback
+
+
+# let's just import a bunch of these to give you ideas
+from kivy.graphics.opengl import (
+    glBlendFunc,
+    glBlendFuncSeparate,
+    glBlendEquation,
+    glEnable,
+    glDisable,
+    GL_DEPTH_TEST,
+    GL_BLEND,
+    GL_CULL_FACE,
+    GL_SRC_ALPHA,
+    GL_ONE,
+    GL_ZERO,
+    GL_SRC_COLOR,
+    GL_ONE_MINUS_SRC_COLOR,
+    GL_ONE_MINUS_SRC_ALPHA,
+    GL_DST_ALPHA,
+    GL_ONE_MINUS_DST_ALPHA,
+    GL_DST_COLOR,
+    GL_ONE_MINUS_DST_COLOR,
+    GL_FUNC_ADD,
+    GL_FUNC_SUBTRACT,
+    GL_FUNC_REVERSE_SUBTRACT,
+)
+
+
 class RenderWidget(FloatLayout):
     def __init__(self, game, system, vs, gs, fs, fmt, **kwargs):
         self.game = game
@@ -599,6 +627,26 @@ class RenderWidget(FloatLayout):
 
         with self.canvas:
             self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
+
+        with self.canvas.before:
+            Callback(self._set_blend_func)
+
+        with self.canvas.after:
+            Callback(self._reset_blend_func)
+
+    def _set_blend_func(self, instruction):
+        glEnable(GL_DEPTH_TEST)
+        glEnable(GL_BLEND)
+        glEnable(GL_CULL_FACE)
+        glBlendFunc(GL_ONE, GL_ONE)
+        glBlendEquation(GL_FUNC_ADD)
+
+    def _reset_blend_func(self, instruction):
+        glDisable(GL_DEPTH_TEST)
+        glEnable(GL_BLEND)
+        glDisable(GL_CULL_FACE)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glBlendEquation(GL_FUNC_ADD)
 
     def update(self, time=None, dt=None):
         return

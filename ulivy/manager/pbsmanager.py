@@ -146,7 +146,8 @@ class PbsManager:
 
     def get_move(self, id):
         # id = 201  # TODO: temp only tackle
-        id = 142  # 399  # TODO: temp only tackle #xcissor 8
+        id = 201  # 399  # TODO: temp only tackle #xcissor 8
+        # 142, 188, 663
         return self.moves.loc[id]
 
     def get_move_by_name(self, name):
