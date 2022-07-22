@@ -15,7 +15,7 @@ in float in_noise;
 in float in_key;
 
 out VS_OUT{
-    vec2 size;
+    float size;
 }vs_out;
 
 uniform float poffset;
