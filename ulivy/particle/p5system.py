@@ -9,9 +9,12 @@ from kivy.core.image import Image, ImageData
 from kivy.graphics.transformation import Matrix
 
 
-class ParticleSystem:
-    def __init__(self, game, brender, fname, target, miss, move_data):
+class ParticleSystem(FloatLayout):
+    def __init__(self, game, brender, fname, target, miss, move_data, **kwargs):
         self.game = game
+
+        super(ParticleSystem, self).__init__(**kwargs)
+
         self.brender = brender  # meh
         self.N = 500000
         self.particles = 0
@@ -39,6 +42,9 @@ class ParticleSystem:
         self.transformer = None
         self.load_context_objects()
         self.spawn_elements()
+
+    def update(self, time=None, dt=None):
+        return
 
     def on_tick(self, time, frame_time):
         # print("PARTICLE TICK A")
@@ -126,9 +132,21 @@ class ParticleSystem:
         #     print(err)
 
     def load_context_objects(self):
-        self.vbo1 = self.game.m_par.vbo_objectA.mesh
-        self.vbo2 = self.game.m_par.vbo_objectB.mesh
-        self.vbo_emit = self.game.m_par.vbo_emit.mesh
+        self.vbo_objectA = ParticleHolder(self.game)
+        self.add_widget(self.vbo_objectA)
+        self.vbo1 = self.vbo_objectA.mesh
+
+        self.vbo_objectB = ParticleHolder(self.game)
+        self.add_widget(self.vbo_objectB)
+        self.vbo2 = self.vbo_objectB.mesh
+
+        self.vbo_object_emit = ParticleHolder(self.game)
+        self.add_widget(self.vbo_object_emit)
+        self.vbo_emit = self.vbo_object_emit.mesh
+
+        # self.vbo1 = self.game.m_par.vbo_objectA.mesh
+        # self.vbo2 = self.game.m_par.vbo_objectB.mesh
+        # self.vbo_emit = self.game.m_par.vbo_emit.mesh
 
     def spawn_elements(self):
         js = self.game.m_res.get_particle(self.fname, self.move_data)
@@ -253,6 +271,55 @@ class ParticleSystem:
         return q
 
 
+from kivy.core.image import Image, ImageData
+from kivy.resources import resource_find
+from kivy.graphics import Mesh, MeshView, RenderContext, BindTexture, Rectangle
+
+with open(resource_find("ulivy_shaders/tfeed_vs.glsl")) as file:
+    placeholder_shader_vs = file.read()
+
+with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
+    placeholder_shader_fs = file.read()
+
+MAX_PARTICLES = 4096
+
+
+class ParticleHolder(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.game = game
+        self.canvas = RenderContext(fs=placeholder_shader_fs, vs=placeholder_shader_vs)
+
+        super(ParticleHolder, self).__init__(**kwargs)
+
+        fmt = [
+            (b"in_pos", 4, "float"),
+            (b"in_vel", 3, "float"),
+            (b"in_size", 1, "float"),
+            (b"in_color", 3, "float"),
+            (b"in_rot", 1, "float"),
+            (b"in_rot_vel", 1, "float"),
+            (b"in_lifespan", 1, "float"),
+            (b"in_noise", 1, "float"),
+            (b"in_key", 1, "float"),
+        ]
+
+        with self.canvas:
+            self.mesh = Mesh(
+                vertices=[1.0, 1.0, 1.0, 1.0] * 4 * MAX_PARTICLES,
+                indices=list(range(MAX_PARTICLES)),
+                fmt=fmt,
+            )
+
+    def update(self, time=None, dt=None):
+        return
+
+    #     Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
+
+    # def de_register(self, *largs):
+    #     # filthy hack... TODO: remove, not sure if this is even required
+    #     self.game.remove_widget(self)
+
+
 class Emitter:
     def __init__(self, game, system, params, stage):
         self.game = game
@@ -362,8 +429,9 @@ class Emitter:
         # )
 
     def load_context_objects(self):
-        self.widget = self.game.m_par.vbo_emit
-        self.vao_emit = self.widget.mesh
+        return
+        # self.widget = self.system.vbo_emit
+        # self.vao_emit = self.widget.mesh
 
     def render(self, time, frame_time):
         self.set_fields()
@@ -474,7 +542,7 @@ class Renderer:
 
         self.prog = self.widget.canvas
         # TODO: move
-        self.game.add_widget(self.widget)
+        self.system.add_widget(self.widget)
 
     def load_context_objects(self):
         return
@@ -527,33 +595,13 @@ class RenderWidget(FloatLayout):
         self.system = system
         self.canvas = RenderContext(fs=fs, gs=gs, vs=vs)
 
-        print("RENDERER CREATED!")
-        # self.tex1 = Image.load(resource_find("tex4.jpg")).texture
-        # self.tex2 = Image.load(resource_find("tex4.jpg")).texture
-
-        # self.tex1.mag_filter = "nearest"
-
-        # call the constructor of parent
-        # if they are any graphics object, they will be added on our new canvas
         super(RenderWidget, self).__init__(**kwargs)
-
-        # self.poffset = poffset
-        # self.camera_position = 0
-
-        # self.float_x = 0
-        # self.float_y = 0
 
         with self.canvas:
             self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
-    #     self.canvas.add(BindTexture(texture=self.tex2, index=2,))
-    #     Clock.schedule_interval(self.update, 1 / 60.0)
-
-    # def update(self, *largs):
-    #     self.canvas["texture0"] = 2
-    #     self.canvas["poffset"] = float(self.poffset)
-    #     # print(self.mesh.vertices)
-    #     # print("clone", dir(self.mesh_clone))
+    def update(self, time=None, dt=None):
+        return
 
 
 class Transformer:

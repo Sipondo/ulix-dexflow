@@ -4,8 +4,6 @@
 precision highp float;
 #endif
 
-// layout(location=0)in vec2 aPos;
-// layout(location=1)in vec2 aSize;
 in vec4 in_pos;
 in vec3 in_vel;
 in float in_size;
@@ -26,8 +24,5 @@ void main()
 {
     vs_out.size=in_size;
     
-    float x=in_pos.x+poffset;
-    float y=in_pos.y;
-    
-    gl_Position=vec4(x-1.,y-1.,0.,1.);
+    gl_Position=vec4(0.,0.,0.,0.);
 }

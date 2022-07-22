@@ -36,6 +36,7 @@ class BufferRenderer(FloatLayout):
 
         self.size = self.game.RENDER_SIZE
         self.r_til = TileRenderer(self.game, Window.size)
+        self.fbo_layout = FloatLayout()
 
         self.fbo = Fbo(size=self.size)
 
@@ -47,13 +48,15 @@ class BufferRenderer(FloatLayout):
 
         # self.fbo.add_reload_observer(self.populate_fbo)
 
-        self.fbo_add_widget(self.r_til)
-
-    def fbo_add_widget(self, widget):
         canvas = self.canvas
         self.canvas = self.fbo
-        self.add_widget(widget)
+        self.add_widget(self.fbo_layout)
         self.canvas = canvas
+
+        self.enable_overworld()
+
+    def fbo_add_widget(self, widget):
+        self.fbo_layout.add_widget(widget)
 
     def populate_fbo(self, fbo):
         pass
@@ -61,3 +64,9 @@ class BufferRenderer(FloatLayout):
     def update(self, time, dt):
         self.r_til.update(time, dt)
         pass
+
+    def enable_overworld(self):
+        self.fbo_add_widget(self.r_til)
+
+    def disable_overworld(self):
+        self.fbo_layout.clear_widgets()

@@ -31,6 +31,7 @@ class GameStateBattle(BaseGameState):
         if particle_test:
             self.game.inventory.init_random_member()
 
+        self.game.r_fbo.disable_overworld()
         # Renderer setup
         self.scene = BattleScene(self.game)
         self.game.r_fbo.fbo_add_widget(self.scene)
@@ -189,7 +190,7 @@ class GameStateBattle(BaseGameState):
         self.lock_state = False
         if self.board.battle_end:
             self.to_end = True
-            self.game.r_int.fade = True
+            # self.game.r_int.fade = True
             self.time_lock = 0.5
             return
         if not self.pending_boards:
@@ -255,7 +256,7 @@ class GameStateBattle(BaseGameState):
     def end_battle(self):
         self.synchronize()
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
-        self.game.r_int.fade = False
+        # self.game.r_int.fade = False
         if self.game.battle_result == 1:
             for member in self.game.inventory.members:
                 member.current_hp = member.stats[0]

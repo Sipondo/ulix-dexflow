@@ -17,6 +17,8 @@ class BattleScene(FloatLayout):
         # Add the widget with backgrounds and battlers
         self.add_widget(b := BattleEnvironment())
 
+        self.environment = b
+
         # Init battler list (size: 2)
         self.img_battler = []
 
