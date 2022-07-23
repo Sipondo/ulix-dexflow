@@ -100,8 +100,8 @@ if "pretty_errors" in sys.modules:
 
 class PokeGame(Screen):
 
-    RENDER_SIZE = (640, 360)
-    # RENDER_SIZE = (1280, 720)
+    # RENDER_SIZE = (640, 360)
+    RENDER_SIZE = (1280, 720)
     # RENDER_SIZE = (1920, 1080)
 
     def __init__(self, **kwargs):

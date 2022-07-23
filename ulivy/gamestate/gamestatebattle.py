@@ -212,12 +212,14 @@ class GameStateBattle(BaseGameState):
         self.board = self.pending_boards.pop(0)
         for i in range(self.combat.teams_n):
             if self.board.get_active_actor(i) != self.actors[i]:
-                # if self.board.get_active_actor(i) == -1:
-                #     self.scene.set_pokemon(
-                #         None, i
-                #     )  # empty spriteset for if poke is fainted
-                # else:
-                #     self.scene.set_pokemon(self.board.get_active_actor(i).sprite, i)
+                if self.board.get_active_actor(i) == -1:
+                    self.scene.set_fighter_image(
+                        None, i
+                    )  # empty spriteset for if poke is fainted
+                else:
+                    self.scene.set_fighter_image(
+                        self.board.get_active_actor(i).sprite, i
+                    )
                 self.actors[i] = self.board.get_active_actor(i)
 
         if self.board.skip:

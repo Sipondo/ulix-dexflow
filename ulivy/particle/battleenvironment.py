@@ -53,7 +53,7 @@ class BattleEnvironment(FloatLayout):
         resource_add_path(pth)
         self.add_widget(
             b := BattleBattlerImage(
-                texture_file=Image(resource_find(f"substitute.png")),
+                # texture_file=Image(resource_find(f"substitute.png")),
                 # texture_file=Image(resource_find(f"001.png")),
                 # size_hint=(1, 1),
                 # pos_hint={"center_y": 0.5, "center_x": 0.5},
@@ -65,7 +65,7 @@ class BattleEnvironment(FloatLayout):
 
         self.add_widget(
             b := BattleBattlerImage(
-                texture_file=Image(resource_find(f"substitute.png")),
+                # texture_file=Image(resource_find(f"substitute.png")),
                 # texture_file=Image(resource_find(f"001.png")),
                 # size_hint=(1, 1),
                 # pos_hint={"center_y": 0.5, "center_x": 0.5},
@@ -134,28 +134,52 @@ class BattleEnvironmentImage(FloatLayout):
 
 
 class BattleBattlerImage(FloatLayout):
-    def __init__(self, texture_file, **kwargs):
+    def __init__(self, **kwargs):
         self.canvas = RenderContext(
             fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
         )
 
-        self.texture_file = texture_file
+        self.texture_file = None
+        self.face = 0
+        self.ratio = 0.0
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(BattleBattlerImage, self).__init__(**kwargs)
-        self.tex1 = self.texture_file.texture
-        self.tex1.mag_filter = "nearest"
 
         self.camera_position = 0
 
         self.float_x = 0
         self.float_y = 0
 
-        with self.canvas:
-            BindTexture(texture=self.tex1, index=4)
-            self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
+        self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
 
         self.canvas["Texture"] = 4
+
+    def set_texture(self, texture_file):
+        self.texture_file = texture_file
+        self.bind_texture()
+
+    def set_face(self, face):
+        if self.face == face:
+            return
+        self.face = face
+        self.bind_texture()
+
+    def bind_texture(self):
+        if self.texture_file is not None:
+            back = 0 if self.face % 3 else 1
+            self.ratio = self.texture_file[back].width / self.texture_file[back].height
+            self.canvas["Size"] = (self.texture_file[1].height / 4) ** 0.5
+            self.canvas["AnimationLength"] = self.ratio
+            self.canvas["HeightShare"] = 1.0
+            self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)
+
+            self.tex1 = self.texture_file[back].texture
+            self.tex1.mag_filter = "nearest"
+
+            self.canvas.clear()
+            self.canvas.add(BindTexture(texture=self.tex1, index=4))
+            self.canvas.add(self.mesh)
 
     def redraw(self):
         self.canvas["Texture"] = 4

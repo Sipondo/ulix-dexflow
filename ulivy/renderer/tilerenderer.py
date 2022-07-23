@@ -58,6 +58,9 @@ class EntityLayerWidget(FloatLayout):
         self.float_y = 0
 
         with self.canvas:
+            BindTexture(
+                texture=self.game.atlas.original_textures[0], index=3,
+            )
             self.mesh = Mesh(
                 vertices=[],
                 indices=[],
@@ -71,9 +74,6 @@ class EntityLayerWidget(FloatLayout):
             )
 
         self.canvas["texture0"] = 3
-        self.canvas.add(
-            BindTexture(texture=self.game.atlas.original_textures[0], index=3,)
-        )
 
     def update(self, time, dt):
         self.canvas["texture0"] = 3

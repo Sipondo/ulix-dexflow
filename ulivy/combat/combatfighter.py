@@ -18,7 +18,7 @@ class CombatFighter:
 
         self.data = fighter.copy()
         self.actions = []
-        self.sprite = None  # TODO: self.game.m_res.prepare_battle_animset(f"{str(self.id).zfill(3)}")
+        self.sprite = self.game.m_res.prepare_battle_animset(f"{str(self.id).zfill(3)}")
 
     @property
     def series(self):

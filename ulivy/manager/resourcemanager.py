@@ -399,6 +399,9 @@ class ResourceManager:
     def prepare_battle_sprite(self, pth, mirror=False):
         print("SPRITE:", pth)
         a = self.open_image(pth)
+
+        return a
+
         a = np.flip(a, axis=0)
 
         b = a[:, : a.shape[0], 3]
@@ -422,10 +425,10 @@ class ResourceManager:
 
     def open_image(self, pth, size=1):
         pth = self.resolve_resource_path(pth)
-        img = Image.open(pth).convert("RGBA")
-        img = img.resize(
-            (int(img.size[0] * size), int(img.size[1] * size)), resample=Image.NEAREST
-        )
+        img = Image(pth)  # .convert("RGBA")
+        # img = img.resize(
+        #     (int(img.size[0] * size), int(img.size[1] * size)), resample=Image.NEAREST
+        # )
         return img
 
     def open_image_interface(self, pth, size=1):

@@ -29,8 +29,8 @@ class BattleScene(FloatLayout):
 
         self.bmove = BattleMovement(game, self)
 
-        self.poke1_set = None
-        self.poke2_set = None
+        self.set_fighter_image(None, 0)
+        self.set_fighter_image(None, 1)
 
         # self.prog = self.game.m_res.get_program("flattened_battle_entity")
         # self.prog["Texture"] = 0
@@ -61,17 +61,19 @@ class BattleScene(FloatLayout):
     def location_team1(self):
         return self.bmove.t1
 
-    # def set_pokemon(self, spriteset, team):
-    #     if team == 0:
-    #         self.poke1_set = spriteset
-    #         # self.poke1_set = self.game.m_res.prepare_battle_animset(
-    #         #     f"{str(id).zfill(3)}"
-    #         # )
-    #     else:
-    #         self.poke2_set = spriteset
-    #         # self.poke2_set = self.game.m_res.prepare_battle_animset(
-    #         #     f"{str(id).zfill(3)}"
-    #         # )
+    def set_fighter_image(self, spriteset, team):
+        if team == 0:
+            self.poke1_set = spriteset
+            self.img_battler[0].set_texture(self.poke1_set)
+            # self.poke1_set = self.game.m_res.prepare_battle_animset(
+            #     f"{str(id).zfill(3)}"
+            # )
+        else:
+            self.poke2_set = spriteset
+            self.img_battler[1].set_texture(self.poke2_set)
+            # self.poke2_set = self.game.m_res.prepare_battle_animset(
+            #     f"{str(id).zfill(3)}"
+            # )
 
     def get_loc_fighter(self, team, base):
         if team == 1:
@@ -389,7 +391,10 @@ class BattleScene(FloatLayout):
         #     a.extend([i / 10, -i / 10, i / 10])
         #     b.append(i)
 
-        face = int((self.camera.rotation_value) % 4)
+        if i == 0:
+            face = int((self.camera.rotation_value) % 4)
+        else:
+            face = int((self.camera.rotation_value + 2) % 4)
         # l = (
         #     self.poke1_set[0 if face % 3 else 1][0].size[0]
         #     // self.poke1_set[0 if face % 3 else 1][0].size[1]
@@ -397,12 +402,7 @@ class BattleScene(FloatLayout):
         # battler.canvas["Size"] = (
         #     self.poke1_set[0 if face % 3 else 1][0].size[1] / 4
         # ) ** 0.5
-        l = 4
-        battler.canvas["Size"] = 5.0
-        battler.canvas["AnimationFrame"] = int(time * 8) % l
-        battler.canvas["AnimationLength"] = l
-        # battler.canvas["HeightShare"] = self.poke1_set[
-        #     0 if face % 3 else 1
-        # ][1]
-        battler.canvas["HeightShare"] = 1.0
-        battler.canvas["Mirror"] = -1 if face % 2 else 1
+
+        if battler.texture_file is not None:
+            battler.set_face(face)
+            battler.canvas["AnimationFrame"] = float(int(time * 8) % battler.ratio)

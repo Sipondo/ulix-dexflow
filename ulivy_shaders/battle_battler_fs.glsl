@@ -16,9 +16,10 @@ in vec2 uv;
 out vec4 frag_color;
 
 void main(){
-    // vec2 subframe=vec2((Mirror*uv.x+AnimationFrame)/AnimationLength,uv.y);
+    vec2 subframe=vec2((Mirror*uv.x+AnimationFrame)/AnimationLength,uv.y);
     // vec4 col=texture(Texture,subframe);
-    frag_color=texture(Texture,uv);
+    // frag_color=texture(Texture,uv);
+    frag_color=texture(Texture,subframe);
     // frag_color=vec4(.5294,.0745,.1216,1.);
     // if(col.a<.9){
         //     discard;
