@@ -152,10 +152,10 @@ class BattleBattlerImage(FloatLayout):
         self.float_y = 0
 
         with self.canvas:
+            BindTexture(texture=self.tex1, index=4)
             self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
 
         self.canvas["Texture"] = 4
-        self.canvas.add(BindTexture(texture=self.tex1, index=4))
 
     def redraw(self):
         self.canvas["Texture"] = 4

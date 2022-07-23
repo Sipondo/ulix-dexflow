@@ -565,9 +565,15 @@ class Renderer:
         fs = self.game.m_res.get_shader("p5_render_fs")
         # print(vs, gs, fs)
         self.widget = RenderWidget(
-            self.game, self.system, vs=vs, gs=gs, fs=fs, fmt=self.game.m_par.vao_def()
+            self.game,
+            self.system,
+            texture=self.texture,
+            vs=vs,
+            gs=gs,
+            fs=fs,
+            fmt=self.game.m_par.vao_def(),
         )
-        self.widget.canvas.add(BindTexture(texture=self.texture, index=7,))
+        # self.widget.canvas.add(BindTexture(texture=self.texture, index=7,))
 
         self.prog = self.widget.canvas
         # TODO: move
@@ -651,10 +657,11 @@ from kivy.graphics.opengl import (
 
 
 class RenderWidget(FloatLayout):
-    def __init__(self, game, system, vs, gs, fs, fmt, **kwargs):
+    def __init__(self, game, system, texture, vs, gs, fs, fmt, **kwargs):
         self.game = game
         self.system = system
         self.canvas = RenderContext(fs=fs, gs=gs, vs=vs)
+        self.texture = texture
 
         super(RenderWidget, self).__init__(**kwargs)
 
@@ -662,6 +669,9 @@ class RenderWidget(FloatLayout):
         #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
         with self.canvas:
+            BindTexture(
+                texture=self.texture, index=7,
+            )
             for v in self.system.vbos:
                 self.mesh = MeshView(host_mesh=v, fmt=fmt)
 
