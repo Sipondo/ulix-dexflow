@@ -7,6 +7,7 @@ import os
 # from kivy.lang import Builder
 from kivy.resources import resource_find, resource_add_path
 
+from kivy.graphics import Fbo
 
 ############## TODO: move this to some resource manager thing
 
@@ -186,3 +187,64 @@ class BattleBattlerImage(FloatLayout):
 
     def update(self, time, dt):
         self.redraw()
+
+
+class BattleOffscreen(FloatLayout):
+    def __init__(self, game, size, **kwargs):
+        super(BattleOffscreen, self).__init__(**kwargs)
+
+        self.game = game
+
+        self.size = size
+        self.fbo_layout = FloatLayout()
+
+        self.fbo = Fbo(size=self.size, with_depthbuffer=True)
+
+        with self.canvas:
+            self.fbo = Fbo(size=self.size)
+            # create the fbo
+
+            self.ids.GameImage.texture = self.fbo.texture
+
+        # self.fbo.add_reload_observer(self.populate_fbo)
+
+        canvas = self.canvas
+        self.canvas = self.fbo
+        self.add_widget(self.fbo_layout)
+        self.canvas = canvas
+
+    def fbo_add_widget(self, widget):
+        self.fbo_layout.add_widget(widget)
+
+    def fbo_clear_widgets(self):
+        self.fbo_layout.clear_widgets()
+
+    def populate_fbo(self, fbo):
+        pass
+
+    def update(self, time, dt):
+        pass
+
+    def temp(self):
+
+        # TODO: depth buffer should be shared by these first 3
+        self.alpha_offscreen = BattleOffscreen(
+            self.game, self.game.RENDER_SIZE_PARTICLES
+        )
+        self.anti_offscreen = BattleOffscreen(
+            self.game, self.game.RENDER_SIZE_PARTICLES
+        )
+        self.solid_offscreen = BattleOffscreen(
+            self.game, self.game.RENDER_SIZE_PARTICLES
+        )
+
+        self.final_offscreen = BattleOffscreen(self.game, self.game.RENDER_SIZE)
+
+        # TODO: move to meshes
+        self.final_offscreen.fbo_add_widget(
+            self.solid_offscreen
+        )  # render via texture program
+        self.final_offscreen.fbo_add_widget(
+            self.alpha_offscreen
+        )  # render via texture program
+        # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
