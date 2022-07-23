@@ -35,6 +35,8 @@ class ParticleSystem(FloatLayout):
         self.step_warp = 1
         self.step_size = self.game.m_par.step_size * self.step_warp
 
+        self.detonate = 10
+
         self.emitters = []
         self.renderers = []
         self.miscs = []
@@ -48,15 +50,21 @@ class ParticleSystem(FloatLayout):
 
     def on_tick(self, time, frame_time):
         # print("PARTICLE TICK A")
+
+        frame_time *= self.warp * (3 if self.game.m_par.fast_forward else 1)
+        self.step_size = self.game.m_par.step_size * self.step_warp
+
         if (not self.particles) and self.time_alive > 1:
-            return False
+            if self.detonate > 9:
+                self.detonate = 0.3
+            else:
+                self.detonate -= frame_time
+            if self.detonate < 0:
+                return False
         # print("PARTICLE TICK B")
 
         for eq in self.equations.values():
             eq.reset_eval()
-
-        frame_time *= self.warp * (3 if self.game.m_par.fast_forward else 1)
-        self.step_size = self.game.m_par.step_size * self.step_warp
 
         self.time_alive += frame_time
         time = self.time_alive
@@ -120,6 +128,9 @@ class ParticleSystem(FloatLayout):
         return "0"
 
     def switch_buffers(self):
+        self.vboa_index = self.vbob_index
+        self.vbob_index = (self.vbob_index + 1) % len(self.vbos)
+        return
         self.vbo1, self.vbo2 = self.vbo2, self.vbo1
 
         for renderer in self.renderers:
@@ -132,21 +143,39 @@ class ParticleSystem(FloatLayout):
         #     print(err)
 
     def load_context_objects(self):
-        self.vbo_objectA = ParticleHolder(self.game)
-        self.add_widget(self.vbo_objectA)
-        self.vbo1 = self.vbo_objectA.mesh
-
-        self.vbo_objectB = ParticleHolder(self.game)
-        self.add_widget(self.vbo_objectB)
-        self.vbo2 = self.vbo_objectB.mesh
-
         self.vbo_object_emit = ParticleHolder(self.game)
         self.add_widget(self.vbo_object_emit)
         self.vbo_emit = self.vbo_object_emit.mesh
 
+        self.vbo_objects = []
+        self.vbos = []
+        self.vboa_index = 0
+        self.vbob_index = 1
+        for _ in range(8):
+            vbo_object = ParticleHolder(self.game)
+            self.vbo_objects.append(vbo_object)
+            self.add_widget(vbo_object)
+            self.vbos.append(vbo_object.mesh)
+
+        # self.vbo_objectA = ParticleHolder(self.game)
+        # self.add_widget(self.vbo_objectA)
+        # self.vbo1 = self.vbo_objectA.mesh
+
+        # self.vbo_objectB = ParticleHolder(self.game)
+        # self.add_widget(self.vbo_objectB)
+        # self.vbo2 = self.vbo_objectB.mesh
+
         # self.vbo1 = self.game.m_par.vbo_objectA.mesh
         # self.vbo2 = self.game.m_par.vbo_objectB.mesh
         # self.vbo_emit = self.game.m_par.vbo_emit.mesh
+
+    @property
+    def vbo1(self):
+        return self.vbos[self.vboa_index]
+
+    @property
+    def vbo2(self):
+        return self.vbos[self.vbob_index]
 
     def spawn_elements(self):
         js = self.game.m_res.get_particle(self.fname, self.move_data)
@@ -281,7 +310,7 @@ with open(resource_find("ulivy_shaders/tfeed_vs.glsl")) as file:
 with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
     placeholder_shader_fs = file.read()
 
-MAX_PARTICLES = 4096 * 4
+MAX_PARTICLES = 2048
 
 
 class ParticleHolder(FloatLayout):
@@ -518,6 +547,7 @@ class Renderer:
         # self.prog["texture0"] = 0
         self.prog["texturearray1"] = 10
         self.prog["Usenoise"] = float(self.equation != 1)
+        self.prog["step_count"] = self.system.step_count
 
         self.rotvel = int(bool(self.system.r(self, "rotvel")))
         self.noise_speed = 0
@@ -574,11 +604,13 @@ class Renderer:
         self.emit_gpu(time, frame_time)
 
     def switch_buffers(self):
+        return
         self.widget.mesh.gbatch = self.system.vbo2.gbatch
         return
         self.vao1_rend, self.vao2_rend = self.vao2_rend, self.vao1_rend
 
     def emit_gpu(self, time, frame_time):
+        self.prog["step_count"] = self.system.step_count
         self.prog["opacity"] = self.opacity
         self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
         self.prog["Rotvel"] = int(self.rotvel)
@@ -626,8 +658,12 @@ class RenderWidget(FloatLayout):
 
         super(RenderWidget, self).__init__(**kwargs)
 
+        # with self.canvas:
+        #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
+
         with self.canvas:
-            self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
+            for v in self.system.vbos:
+                self.mesh = MeshView(host_mesh=v, fmt=fmt)
 
         with self.canvas.before:
             Callback(self._set_blend_func)
@@ -796,7 +832,7 @@ class Transformer:
         self.prog_trans = TransformFeedback(
             vs=vs,
             gs=gs,
-            max_primitives=10,
+            max_primitives=4,
             in_format=self.game.m_par.vao_def(),
             out_varyings=self.game.m_par.get_varyings(),
         )
@@ -823,8 +859,9 @@ class Transformer:
         self.prog_trans["time"] = max(time, 0)
         # Transform all particle recoding how many elements were emitted by geometry shader
 
-        if int(self.system.particles) < 1:
-            return
+        # TODO: removes errors but breaks rendering
+        # if int(self.system.particles) < 1:
+        #     return
 
         # print("TRANSFORMING!", self.system.vbo2)
         self.system.particles = self.prog_trans.transform(
@@ -834,14 +871,14 @@ class Transformer:
             out_size=self.game.m_par.floats,
             # debug=2,
         )
-        print(
-            # self.system.step_size,
-            self.system.particles,
-            len(self.system.vbo2.indices),
-            "transformed",
-            "with stride",
-            self.game.m_par.stride,
-        )
+        # print(
+        #     # self.system.step_size,
+        #     self.system.particles,
+        #     len(self.system.vbo2.indices),
+        #     "transformed",
+        #     "with stride",
+        #     self.game.m_par.stride,
+        # )
 
         # Transform all particle recoding how many elements were emitted by geometry shader
         # with self.game.query:

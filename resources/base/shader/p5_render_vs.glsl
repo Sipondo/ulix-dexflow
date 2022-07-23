@@ -32,9 +32,10 @@ out VS_OUT{
 }vs_out;
 
 uniform vec3 Basis;
+uniform float step_count;
 
 void main(){
-    vs_out.pos=vec4(in_pos.xyz*Basis,in_pos.a);
+    vs_out.pos=vec4((in_pos.xyz+in_vel*step_count)*Basis,in_pos.a);
     vs_out.vel=in_vel*Basis;
     vs_out.size=in_size;
     vs_out.color=in_color;
@@ -43,5 +44,5 @@ void main(){
     vs_out.lifespan=in_lifespan;
     vs_out.noise=in_noise;
     vs_out.key=in_key;
-    gl_Position=vec4(in_pos.xyz*Basis,in_pos.a);
+    gl_Position=vec4((in_pos.xyz+in_vel*step_count)*Basis,in_pos.a);
 }

@@ -129,77 +129,9 @@
             "op_code": -2035472726
         },
         {
-            "id": 2336750646800,
-            "title": "Stage",
-            "pos_x": -305.46875,
-            "pos_y": -218.46874999999974,
-            "inputs": [],
-            "outputs": [
-                {
-                    "id": 2336750645696,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 0
-                },
-                {
-                    "id": 2336750645408,
-                    "index": 1,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                },
-                {
-                    "id": 2336750645456,
-                    "index": 2,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 2
-                },
-                {
-                    "id": 2336750645312,
-                    "index": 3,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 3
-                }
-            ],
-            "content": {
-                "field_stage": 10159782
-            },
-            "op_code": 8
-        },
-        {
-            "id": 2336750645648,
-            "title": "Render",
-            "pos_x": 142.0937500000001,
-            "pos_y": -85.15624999999983,
-            "inputs": [
-                {
-                    "id": 2336750646560,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 2
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_file": "square_01",
-                "field_equation": "Add",
-                "field_depth": 0,
-                "field_opacity": "0.1",
-                "field_blur_count": 3,
-                "field_blur_delay": "0.2",
-                "field_noise": 1.0,
-                "field_rotvel": ""
-            },
-            "op_code": 4
-        },
-        {
             "id": 2336750647088,
             "title": "Render",
-            "pos_x": 553.5937500000002,
+            "pos_x": 554.5937500000002,
             "pos_y": -459.4062499999999,
             "inputs": [
                 {
@@ -219,15 +151,15 @@
                 "field_blur_count": 3,
                 "field_blur_delay": "0.4",
                 "field_noise": 1.0,
-                "field_rotvel": ""
+                "field_rotvel": true
             },
             "op_code": 4
         },
         {
             "id": 2336750646512,
             "title": "Emit",
-            "pos_x": 222.0937500000001,
-            "pos_y": -509.9062499999999,
+            "pos_x": 224.0937500000001,
+            "pos_y": -510.9062499999999,
             "inputs": [
                 {
                     "id": 2336750646944,
@@ -240,11 +172,11 @@
             "outputs": [],
             "content": {
                 "field_life": "0.15",
-                "field_life_range": "0.1",
+                "field_life_range": "0.03",
                 "field_size": "0.5",
                 "field_size_range": "0.2",
                 "field_delay": "0.20",
-                "field_duration": ".03",
+                "field_duration": ".01",
                 "field_count": "3000",
                 "field_pos_x": "!target_x!-0.02",
                 "field_pos_range_x": 0,
@@ -259,9 +191,9 @@
                 "field_vel_z": "0.1",
                 "field_vel_range_z": "2",
                 "field_rot": 0,
-                "field_rot_range": "0",
+                "field_rot_range": "360",
                 "field_rot_vel": 0,
-                "field_rot_vel_range": 0,
+                "field_rot_vel_range": "0",
                 "field_col_r": "0.95",
                 "field_col_range_r": "0.05",
                 "field_col_g": "0.35",
@@ -270,41 +202,6 @@
                 "field_col_range_b": 0
             },
             "op_code": 9
-        },
-        {
-            "id": 2336750647184,
-            "title": "Filter Blur",
-            "pos_x": 102.09375000000011,
-            "pos_y": -237.15624999999986,
-            "inputs": [
-                {
-                    "id": 2336750648048,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 3
-                },
-                {
-                    "id": 2336750645504,
-                    "index": 1,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 2336750645744,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "field_LIFE": "0.1"
-            },
-            "op_code": 1417848045
         },
         {
             "id": 2336750646992,
@@ -461,18 +358,6 @@
     ],
     "edges": [
         {
-            "id": 2336750664672,
-            "edge_type": 2,
-            "start": 2336750646560,
-            "end": 2336750645456
-        },
-        {
-            "id": 2336750663184,
-            "edge_type": 2,
-            "start": 2336754729888,
-            "end": 2336750648048
-        },
-        {
             "id": 2336750664912,
             "edge_type": 2,
             "start": 2336750646704,
@@ -483,12 +368,6 @@
             "edge_type": 2,
             "start": 2336754732336,
             "end": 2336754730176
-        },
-        {
-            "id": 2336750648288,
-            "edge_type": 2,
-            "start": 2336750645696,
-            "end": 2336750645504
         },
         {
             "id": 2336750648000,
