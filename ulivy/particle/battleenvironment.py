@@ -82,23 +82,49 @@ class BattleEnvironment(FloatLayout):
 
         self.visuals = BattleVisuals(self.game)
 
-        self.add_widget(a := BattleBattlerImage(scene, self.game))
-        self.visuals.alpha_offscreen.fbo_add_widget(
-            b := BattleBattlerImage(scene, self.game)
-        )
-        scene.img_battler.append((a, b))
+        self.battler_float = BattlerContainer()
+        self.alpha_float = BattlerContainer()
 
-        self.add_widget(a := BattleBattlerImage(scene, self.game))
-        self.visuals.alpha_offscreen.fbo_add_widget(
-            b := BattleBattlerImage(scene, self.game)
+        self.add_widget(self.battler_float)
+        self.visuals.alpha_offscreen.fbo_add_widget(self.alpha_float)
+        self.scene = scene
+        self.enemy_first = True
+
+        scene.img_battler.append(
+            (BattleBattlerImage(scene, self.game), BattleBattlerImage(scene, self.game))
         )
-        scene.img_battler.append((a, b))
+        scene.img_battler.append(
+            (BattleBattlerImage(scene, self.game), BattleBattlerImage(scene, self.game))
+        )
+        self.set_battlers()
 
         self.add_widget(self.visuals)
 
     def update(self, time, frame_time):
         for child in self.children:
             child.update(time, frame_time)
+
+    def set_battlers(self, enemy_first=False):
+        if self.enemy_first == enemy_first:
+            return
+        self.battler_float.clear_widgets()
+        self.alpha_float.clear_widgets()
+
+        if enemy_first:
+            self.battler_float.add_widget(self.scene.img_battler[1][0])
+            self.alpha_float.add_widget(self.scene.img_battler[1][1])
+
+        self.battler_float.add_widget(self.scene.img_battler[0][0])
+        self.alpha_float.add_widget(self.scene.img_battler[0][1])
+
+        if not enemy_first:
+            self.battler_float.add_widget(self.scene.img_battler[1][0])
+            self.alpha_float.add_widget(self.scene.img_battler[1][1])
+
+
+class BattlerContainer(FloatLayout):
+    def update(self, time, frame_time):
+        pass
 
 
 class BattleEnvironmentImage(FloatLayout):
@@ -366,7 +392,7 @@ def set_blend_final(instruction):
 def set_blend_battler(instruction):
     glEnable(GL_DEPTH_TEST)
     # glDisable(GL_DEPTH_TEST)
-    glDisable(GL_CULL_FACE)
+    glEnable(GL_CULL_FACE)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBlendEquation(GL_FUNC_ADD)

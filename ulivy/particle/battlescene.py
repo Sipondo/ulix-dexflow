@@ -245,6 +245,7 @@ class BattleScene(FloatLayout):
         # print(np.dot(self.img_battler.canvas["Mvp"], np.array([0.1, 0.1, 0.1, 1])))
 
         enemy_first = not (int((self.camera.rotation_value + 2) % 4) % 3)
+        self.environment.set_battlers(enemy_first)
         # if self.poke2_set and enemy_first:
         #     # TODO: support >2 chars
         #     self.prog["Brightness"] = ((1.5 - self.brightness[1]) * 2) ** 1.2
@@ -386,9 +387,6 @@ class BattleScene(FloatLayout):
         battler.mesh.indices = [0]
 
         # print(battler.mesh.vertices)
-
-        a = []
-        b = []
 
         # for i in range(10):
         #     a.extend([i / 10, -i / 10, i / 10])
