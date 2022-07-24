@@ -192,7 +192,7 @@ class BattleBattlerImage(FloatLayout):
         if self.texture_file is not None:
             back = 0 if self.face % 3 else 1
             self.ratio = self.texture_file[back].width / self.texture_file[back].height
-            self.canvas["Size"] = (self.texture_file[1].height / 4) ** 0.5
+            self.canvas["Size"] = (self.texture_file[back].height / 4) ** 0.5
             self.canvas["AnimationLength"] = self.ratio
             self.canvas["HeightShare"] = 1.0
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)

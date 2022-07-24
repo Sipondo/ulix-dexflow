@@ -408,4 +408,7 @@ class BattleScene(FloatLayout):
 
         if battler.texture_file is not None:
             battler.set_face(face)
-            battler.canvas["AnimationFrame"] = float(int(time * 8) % battler.ratio)
+            # TODO: remove hack
+            a = float(int(time * 8) % battler.ratio)
+            battler.canvas["AnimationFrame"] = 1.0 if a < 1.0 else a
+            # print(float(int(time * 8) % battler.ratio))
