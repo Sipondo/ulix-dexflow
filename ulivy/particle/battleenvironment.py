@@ -229,7 +229,7 @@ class BattleVisuals(FloatLayout):
         # )
 
         self.final_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE, self, set_blend_alpha
+            self.game, self.game.RENDER_SIZE, self, set_blend_final
         )
 
         # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
@@ -288,7 +288,7 @@ class BattleOffscreen(FloatLayout):
         # with self.canvas.before:
         #     Callback(blend)
         with self.canvas:
-            self.fbo = Fbo(size=self.size)  # , with_depthbuffer=True)
+            self.fbo = Fbo(size=self.size, with_depthbuffer=True)
             Callback(blend)
             # create the fbo
             Callback(self.redraw)
@@ -302,14 +302,12 @@ class BattleOffscreen(FloatLayout):
 
         with self.fbo:
             ClearColor(0, 0, 0, 0)
-            ClearBuffers()
+            ClearBuffers(clear_color=True, clear_depth=True)
 
         canvas = self.canvas
         self.canvas = self.fbo
         self.add_widget(self.fbo_layout)
         self.canvas = canvas
-
-        # self.fbo_layout.add_widget(Button(text="Hello world", font_size=14))
 
     def fbo_add_widget(self, widget):
         self.fbo_layout.add_widget(widget)
@@ -354,6 +352,12 @@ def set_blend_anti(instruction):
     glDisable(GL_CULL_FACE)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+    glBlendEquation(GL_FUNC_ADD)
+
+
+def set_blend_final(instruction):
+    reset_blend(None)
+    glBlendFunc(GL_ONE, GL_ONE)
     glBlendEquation(GL_FUNC_ADD)
 
 
