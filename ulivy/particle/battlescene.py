@@ -64,13 +64,15 @@ class BattleScene(FloatLayout):
     def set_fighter_image(self, spriteset, team):
         if team == 0:
             self.poke1_set = spriteset
-            self.img_battler[0].set_texture(self.poke1_set)
+            for b in self.img_battler[0]:
+                b.set_texture(self.poke1_set)
             # self.poke1_set = self.game.m_res.prepare_battle_animset(
             #     f"{str(id).zfill(3)}"
             # )
         else:
             self.poke2_set = spriteset
-            self.img_battler[1].set_texture(self.poke2_set)
+            for b in self.img_battler[1]:
+                b.set_texture(self.poke2_set)
             # self.poke2_set = self.game.m_res.prepare_battle_animset(
             #     f"{str(id).zfill(3)}"
             # )
@@ -115,6 +117,7 @@ class BattleScene(FloatLayout):
     def render(self, time: float, frame_time: float):
         self.camera.render(time, frame_time)
         self.render_pokemon(time, frame_time)
+        self.render_pokemon(time, frame_time, cutout=True)
         self.bmove.render(time, frame_time)
 
         if self.dark_to is not None:
@@ -356,7 +359,7 @@ class BattleScene(FloatLayout):
         # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
     def render_battler(self, i, time, cutout=False, shadow=False):
-        battler = self.img_battler[i]
+        battler = self.img_battler[i][1 if cutout else 0]
         location = self.location_team0 if i == 0 else self.location_team1
 
         battler.canvas["CameraPosition"] = self.game.m_cam.pos

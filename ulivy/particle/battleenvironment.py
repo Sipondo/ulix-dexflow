@@ -80,21 +80,19 @@ class BattleEnvironment(FloatLayout):
                 )
             )
 
-        pth = os.path.join(
-            "resources", "essentials", "graphics", "pokemon_anim"  # , "back"
-        )
-        resource_add_path(pth)
-        self.add_widget(b := BattleBattlerImage())
-        b.scene = scene
-        b.game = scene.game
-        scene.img_battler.append(b)
-
-        self.add_widget(b := BattleBattlerImage())
-        b.scene = scene
-        b.game = scene.game
-        scene.img_battler.append(b)
-
         self.visuals = BattleVisuals(self.game)
+
+        self.add_widget(a := BattleBattlerImage(scene, self.game))
+        self.visuals.alpha_offscreen.fbo_add_widget(
+            b := BattleBattlerImage(scene, self.game)
+        )
+        scene.img_battler.append((a, b))
+
+        self.add_widget(a := BattleBattlerImage(scene, self.game))
+        self.visuals.alpha_offscreen.fbo_add_widget(
+            b := BattleBattlerImage(scene, self.game)
+        )
+        scene.img_battler.append((a, b))
 
         self.add_widget(self.visuals)
 
@@ -120,10 +118,10 @@ class BattleEnvironmentImage(FloatLayout):
         self.tex1.mag_filter = "nearest"
         self.tex1.wrap = "repeat"
         self.canvas["texture0"] = 1
-        self.canvas.add(BindTexture(texture=self.tex1, index=1))
 
-        self.rec1 = Rectangle(size=self.size, pos=self.pos)
-        self.canvas.add(self.rec1)
+        with self.canvas:
+            BindTexture(texture=self.tex1, index=1)
+            self.rec1 = Rectangle(size=self.size, pos=self.pos)
 
         self.camera_position = 0
 
@@ -157,7 +155,9 @@ class BattleEnvironmentImage(FloatLayout):
 
 
 class BattleBattlerImage(FloatLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, game, scene, **kwargs):
+        self.game = game
+        self.scene = scene
         self.canvas = RenderContext(
             fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
         )
@@ -201,8 +201,10 @@ class BattleBattlerImage(FloatLayout):
             self.tex1.mag_filter = "nearest"
 
             self.canvas.clear()
+            self.canvas.add(Callback(set_blend_battler))
             self.canvas.add(BindTexture(texture=self.tex1, index=4))
             self.canvas.add(self.mesh)
+            self.canvas.add(Callback(reset_blend))
 
     def redraw(self):
         self.canvas["Texture"] = 4
@@ -358,6 +360,15 @@ def set_blend_anti(instruction):
 def set_blend_final(instruction):
     reset_blend(None)
     glBlendFunc(GL_ONE, GL_ONE)
+    glBlendEquation(GL_FUNC_ADD)
+
+
+def set_blend_battler(instruction):
+    glEnable(GL_DEPTH_TEST)
+    # glDisable(GL_DEPTH_TEST)
+    glDisable(GL_CULL_FACE)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBlendEquation(GL_FUNC_ADD)
 
 
