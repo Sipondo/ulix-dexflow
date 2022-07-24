@@ -105,6 +105,7 @@ class PokeGame(Screen):
     # RENDER_SIZE = (1920, 1080)
 
     RENDER_SIZE_PARTICLES = (320, 180)
+    # RENDER_SIZE_PARTICLES = (160, 90)
 
     def __init__(self, **kwargs):
         super(PokeGame, self).__init__(**kwargs)

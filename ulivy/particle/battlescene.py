@@ -15,7 +15,7 @@ class BattleScene(FloatLayout):
         super().__init__(**kwargs)
 
         # Add the widget with backgrounds and battlers
-        self.add_widget(b := BattleEnvironment())
+        self.add_widget(b := BattleEnvironment(self.game))
 
         self.environment = b
 

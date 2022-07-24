@@ -576,8 +576,22 @@ class Renderer:
         # self.widget.canvas.add(BindTexture(texture=self.texture, index=7,))
 
         self.prog = self.widget.canvas
+
         # TODO: move
-        self.system.add_widget(self.widget)
+        # self.system.add_widget(self.widget)
+
+        # TODO: change
+        vis = self.game.m_gst.current_state.scene.environment.visuals
+
+        # Solid
+        if self.equation == 1:
+            vis.solid_offscreen.fbo_add_widget(self.widget)
+        # Alpha
+        if self.equation == 2:
+            vis.alpha_offscreen.fbo_add_widget(self.widget)
+        # # Anti
+        # if self.equation == 3:
+        #     vis.anti_offscreen.add_widget(self.widget)
 
     def load_context_objects(self):
         return
@@ -629,8 +643,6 @@ class Renderer:
 
 from kivy.graphics.instructions import Callback
 
-
-# let's just import a bunch of these to give you ideas
 from kivy.graphics.opengl import (
     glBlendFunc,
     glBlendFuncSeparate,
@@ -690,8 +702,8 @@ class RenderWidget(FloatLayout):
 
     def _reset_blend_func(self, instruction):
         glDisable(GL_DEPTH_TEST)
-        glEnable(GL_BLEND)
         glDisable(GL_CULL_FACE)
+        glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glBlendEquation(GL_FUNC_ADD)
 
