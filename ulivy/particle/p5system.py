@@ -649,6 +649,7 @@ from kivy.graphics.opengl import (
     glBlendEquation,
     glEnable,
     glDisable,
+    glDepthMask,
     GL_DEPTH_TEST,
     GL_BLEND,
     GL_CULL_FACE,
@@ -681,29 +682,27 @@ class RenderWidget(FloatLayout):
         #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
         with self.canvas:
+            Callback(self._set_blend_func)
             BindTexture(
                 texture=self.texture, index=7,
             )
             for v in self.system.vbos:
                 self.mesh = MeshView(host_mesh=v, fmt=fmt)
-
-        with self.canvas.before:
-            Callback(self._set_blend_func)
-
-        with self.canvas.after:
             Callback(self._reset_blend_func)
 
     def _set_blend_func(self, instruction):
-        glEnable(GL_DEPTH_TEST)
         glEnable(GL_BLEND)
+        glEnable(GL_DEPTH_TEST)
         glEnable(GL_CULL_FACE)
         glBlendFunc(GL_ONE, GL_ONE)
         glBlendEquation(GL_FUNC_ADD)
+        glDepthMask(False)
 
     def _reset_blend_func(self, instruction):
         glDisable(GL_DEPTH_TEST)
         glDisable(GL_CULL_FACE)
         glEnable(GL_BLEND)
+        glDepthMask(True)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glBlendEquation(GL_FUNC_ADD)
 

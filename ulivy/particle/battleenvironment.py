@@ -36,9 +36,9 @@ from kivy.graphics.opengl import (
     GL_FUNC_REVERSE_SUBTRACT,
 )
 
-from kivy.lang import Builder
+# from kivy.lang import Builder
 
-Builder.load_file("ulivy/particle/battleoffscreen.kv")
+# Builder.load_file("ulivy/particle/battleoffscreen.kv")
 
 ############## TODO: move this to some resource manager thing
 
@@ -84,26 +84,12 @@ class BattleEnvironment(FloatLayout):
             "resources", "essentials", "graphics", "pokemon_anim"  # , "back"
         )
         resource_add_path(pth)
-        self.add_widget(
-            b := BattleBattlerImage(
-                # texture_file=Image(resource_find(f"substitute.png")),
-                # texture_file=Image(resource_find(f"001.png")),
-                # size_hint=(1, 1),
-                # pos_hint={"center_y": 0.5, "center_x": 0.5},
-            )
-        )
+        self.add_widget(b := BattleBattlerImage())
         b.scene = scene
         b.game = scene.game
         scene.img_battler.append(b)
 
-        self.add_widget(
-            b := BattleBattlerImage(
-                # texture_file=Image(resource_find(f"substitute.png")),
-                # texture_file=Image(resource_find(f"001.png")),
-                # size_hint=(1, 1),
-                # pos_hint={"center_y": 0.5, "center_x": 0.5},
-            )
-        )
+        self.add_widget(b := BattleBattlerImage())
         b.scene = scene
         b.game = scene.game
         scene.img_battler.append(b)
@@ -232,17 +218,19 @@ class BattleVisuals(FloatLayout):
         self.game = game
 
         # TODO: depth buffer should be shared by these first 3
-        self.solid_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE_PARTICLES
-        )
+        # self.solid_offscreen = BattleOffscreen(
+        #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
+        # )
         self.alpha_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE_PARTICLES
+            self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
         )
         # self.anti_offscreen = BattleOffscreen(
         #     self.game, self.game.RENDER_SIZE_PARTICLES
         # )
 
-        self.final_offscreen = BattleOffscreen(self.game, self.game.RENDER_SIZE)
+        self.final_offscreen = BattleOffscreen(
+            self.game, self.game.RENDER_SIZE, self, set_blend_alpha
+        )
 
         # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
 
@@ -255,46 +243,73 @@ class BattleVisuals(FloatLayout):
         # self.render_pokemon(time, frame_time, cutout=False)
         # self.ctx.depth_func = "<="
 
-        self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
-        self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
+        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
+        # self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
 
-        self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
+        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
         self.final_offscreen.fbo_add_widget(self.alpha_offscreen)  # should be mesh
 
-        self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
-        self.canvas.add(Callback(set_blend_anti))
+        # self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
+        # self.canvas.add(Callback(set_blend_anti))
         # self.final_offscreen.add_widget(self.anti_offscreen) this works differently!!!
 
         self.add_widget(self.final_offscreen)
-        self.canvas.add(Callback(reset_blend))
+        # self.canvas.add(Callback(reset_blend))
 
     def update(self, time=None, dt=None):
         return
 
 
-class BattleOffscreen(FloatLayout):
-    def __init__(self, game, size, **kwargs):
-        super(BattleOffscreen, self).__init__(**kwargs)
+with open(resource_find("ulivy_shaders/offscreen_vs.glsl")) as file:
+    offscreen_shader_vs = file.read()
 
+with open(resource_find("ulivy_shaders/offscreen_fs.glsl")) as file:
+    offscreen_shader_fs = file.read()
+
+from kivy.graphics.gl_instructions import ClearColor, ClearBuffers
+
+# from kivy.uix.button import Button
+
+
+class BattleOffscreen(FloatLayout):
+    def __init__(self, game, size, parent, blend, **kwargs):
         self.game = game
+
+        self.canvas = RenderContext(fs=offscreen_shader_fs, vs=offscreen_shader_vs)
+
+        super(BattleOffscreen, self).__init__(**kwargs)
 
         self.size = size
         self.fbo_layout = FloatLayout()
 
-        self.fbo = Fbo(size=self.size, with_depthbuffer=True)
+        # self.fbo = Fbo(size=self.size)  # , with_depthbuffer=True)
+        # parent.canvas.add(self.fbo)  # ???
 
+        # with self.canvas.before:
+        #     Callback(blend)
         with self.canvas:
-            self.fbo = Fbo(size=self.size)
+            self.fbo = Fbo(size=self.size)  # , with_depthbuffer=True)
+            Callback(blend)
             # create the fbo
+            Callback(self.redraw)
+            BindTexture(texture=self.fbo.texture, index=1)
+            self.rec1 = Rectangle(size=(self.size), pos=self.pos)
+            Callback(reset_blend)
 
-            self.ids.GameImage.texture = self.fbo.texture
-
+        self.fbo.texture.mag_filter = "nearest"
+        self.redraw(None)
         # self.fbo.add_reload_observer(self.populate_fbo)
+
+        with self.fbo:
+            ClearColor(0, 0, 0, 0)
+            ClearBuffers()
 
         canvas = self.canvas
         self.canvas = self.fbo
         self.add_widget(self.fbo_layout)
         self.canvas = canvas
+
+        # self.fbo_layout.add_widget(Button(text="Hello world", font_size=14))
 
     def fbo_add_widget(self, widget):
         self.fbo_layout.add_widget(widget)
@@ -305,8 +320,17 @@ class BattleOffscreen(FloatLayout):
     def populate_fbo(self, fbo):
         pass
 
-    def update(self, time, dt):
-        pass
+    def redraw(self, instruction):
+        self.rec1.pos = self.pos
+        self.rec1.size = self.size
+
+        self.canvas["texture0"] = 1
+
+        # This is needed for the default vertex shader.
+        win_rc = Window.render_context
+        self.canvas["projection_mat"] = win_rc["projection_mat"]
+        self.canvas["modelview_mat"] = win_rc["modelview_mat"]
+        # self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
 def set_blend_solid(instruction):
@@ -314,13 +338,15 @@ def set_blend_solid(instruction):
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glBlendEquation(GL_FUNC_ADD)
 
 
 def set_blend_alpha(instruction):
-    glDisable(GL_DEPTH_TEST)
-    glDisable(GL_CULL_FACE)
+    glEnable(GL_DEPTH_TEST)
     glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+    glEnable(GL_CULL_FACE)
+    glBlendFunc(GL_ONE, GL_ONE)
+    glBlendEquation(GL_FUNC_ADD)
 
 
 def set_blend_anti(instruction):
@@ -328,6 +354,7 @@ def set_blend_anti(instruction):
     glDisable(GL_CULL_FACE)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+    glBlendEquation(GL_FUNC_ADD)
 
 
 def reset_blend(instruction):

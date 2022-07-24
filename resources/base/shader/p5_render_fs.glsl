@@ -33,7 +33,7 @@ void main(){
         if(col.a<1.){
             discard;
         }
-        frag_color=col*vec4(out_color*opacity,1.);
+        // frag_color=col*vec4(out_color*opacity,1.);
         frag_color=col*vec4(out_color,1.);
     }
 }

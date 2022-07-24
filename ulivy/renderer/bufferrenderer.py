@@ -38,8 +38,6 @@ class BufferRenderer(FloatLayout):
         self.r_til = TileRenderer(self.game, Window.size)
         self.fbo_layout = FloatLayout()
 
-        self.fbo = Fbo(size=self.size)
-
         with self.canvas:
             self.fbo = Fbo(size=self.size)
             # create the fbo
