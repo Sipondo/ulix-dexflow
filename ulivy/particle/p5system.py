@@ -554,7 +554,7 @@ class Renderer:
         self.noise_id = 0
 
     def set_fields(self):
-        self.opacity = 0.001  # float(self.system.r(self, "opacity"))
+        self.opacity = float(self.system.r(self, "opacity"))
         self.noise_speed = float(self.system.r(self, "noise"))
 
     def load_programs(self):
