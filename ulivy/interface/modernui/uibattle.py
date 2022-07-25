@@ -10,17 +10,19 @@ Builder.load_file("ulivy/interface/modernui/uibattle.kv")
 class UIBattle(BaseUI):
     def on_enter(self, **kwargs):
         self.block_input = False
-        self.lock_state = False
 
         self.sel_top = 0
         self.sel_max_top = 4
         self.sel_action = 0
         self.sel_max_action = 4
+        self.sel_swap = 0
+        self.sel_max_swap = 4
 
         self.update_ui()
 
     def update(self, time=None, frame_time=None):
         self.update_status()
+        self.update_ui()
         return False
 
     def event_keypress(self, key, modifiers):
@@ -65,10 +67,6 @@ class UIBattle(BaseUI):
                     self.gamestate.reg_action(
                         Action(ActionType.ATTACK, a_index=self.sel_action)
                     )
-                    # TODO: remove
-                    self.gamestate.set_to_action()
-                    self.gamestate.state = BattleStates.ACTION
-                    pass
 
             elif self.gamestate.state == BattleStates.ACTION:
                 if key == "interact":
@@ -76,7 +74,7 @@ class UIBattle(BaseUI):
 
             if key == "backspace" or key == "menu":
                 self.game.r_aud.effect("cancel")
-                if not self.lock_state:
+                if not self.gamestate.lock_state:
                     self.game.r_aud.effect("cancel")
                     # if self.gamestate.state == BattleStates.TOPMENU:
                     #     self.combat.deregister_action()
@@ -103,10 +101,6 @@ class UIBattle(BaseUI):
 
         self.ids.BattleStatusTheirsName.text = fighter.name
         self.ids.BattleStatusTheirsHP.size_hint = (float(0.9 * rel_hp), 0.15)
-
-    def reset_state(self):
-        # TODO: remove
-        self.gamestate.state = BattleStates.TOPMENU
 
     def highlight_top(self):
         self.ids.BattleTop.opacity = (
@@ -184,12 +178,12 @@ class UIBattle(BaseUI):
             action = self.gamestate.actors[0].actions[self.sel_action]
             return (
                 action.description
-                if not self.lock_state
+                if not self.gamestate.lock_state
                 else f"Forget {action['name']}?"
             )
 
         if self.gamestate.state == BattleStates.SWAPMENU:
-            name = self.game.inventory.fighter_names[self.selection]
+            name = self.game.inventory.fighter_names[self.sel_swap]
             return f"Send out {name}."
 
         if self.gamestate.state == BattleStates.BALLMENU:

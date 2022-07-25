@@ -93,8 +93,6 @@ class GameStateBattle(BaseGameState):
             return AgentUser(self.game, self.combat, team)
 
     def update(self, time, frame_time):
-        # self.scene.render(time, frame_time)
-        # return  # TODO: ulivy
         if self.time_lock > 0:
             self.time_lock = max(0, self.time_lock - frame_time)
 
@@ -146,10 +144,6 @@ class GameStateBattle(BaseGameState):
         self.scene.update(time, frame_time)
         self.lock = self.scene.render(time, frame_time)
         return True
-
-    def set_to_action(self):
-        # TODO: remove
-        self.state = BattleStates.ACTION
 
     def on_exit(self):
         pass
@@ -205,8 +199,6 @@ class GameStateBattle(BaseGameState):
                 self.state = BattleStates.TOPMENU
             self.game.m_cam.reset()
             print("--- RESET STATES")
-            # TODO: remove
-            self.game.r_uin.current_ui.reset_state()
             return
 
         self.board = self.pending_boards.pop(0)
