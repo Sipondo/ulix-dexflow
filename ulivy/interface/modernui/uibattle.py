@@ -2,24 +2,15 @@ from ..baseui import BaseUI
 from kivy.lang import Builder
 import enum
 from ulivy.combat.action import ActionType, Action
+from ulivy.gamestate.gamestatebattle import BattleStates
 
 Builder.load_file("ulivy/interface/modernui/uibattle.kv")
-
-
-class BattleStates(enum.Enum):
-    ACTION = enum.auto()
-    TOPMENU = enum.auto()
-    ACTIONMENU = enum.auto()
-    SWAPMENU = enum.auto()
-    BALLMENU = enum.auto()
 
 
 class UIBattle(BaseUI):
     def on_enter(self, **kwargs):
         self.block_input = False
         self.lock_state = False
-
-        self.state = BattleStates.ACTION
 
         self.sel_top = 0
         self.sel_max_top = 4
@@ -34,8 +25,8 @@ class UIBattle(BaseUI):
 
     def event_keypress(self, key, modifiers):
         # print(key, modifiers)
-        if self.game.m_gst.current_state.lock == False:
-            if self.state == BattleStates.TOPMENU:
+        if self.gamestate.lock == False:
+            if self.gamestate.state == BattleStates.TOPMENU:
                 if key == "down":
                     self.sel_top = (self.sel_top + 2) % self.sel_max_top
                     self.game.r_aud.effect("select")
@@ -50,18 +41,18 @@ class UIBattle(BaseUI):
                     self.game.r_aud.effect("select")
                 elif key == "interact":
                     if self.sel_top == 0:
-                        self.state = BattleStates.ACTIONMENU
+                        self.gamestate.state = BattleStates.ACTIONMENU
                         # self.selection = self.action_choice
                     elif self.sel_top == 1:
-                        self.state = BattleStates.BALLMENU
+                        self.gamestate.state = BattleStates.BALLMENU
                     elif self.sel_top == 2:  # and self.battle_type != "trainer":
-                        self.state = BattleStates.SWAPMENU
+                        self.gamestate.state = BattleStates.SWAPMENU
                     elif self.sel_top == 3:  # and self.battle_type != "trainer":
                         pass
                         # self.reg_action(Action(ActionType.RUN))
                     pass
 
-            elif self.state == BattleStates.ACTIONMENU:
+            elif self.gamestate.state == BattleStates.ACTIONMENU:
                 if key == "down":
                     self.sel_action = (self.sel_action + 1) % self.sel_max_action
                     self.game.r_aud.effect("select")
@@ -71,25 +62,25 @@ class UIBattle(BaseUI):
                 elif key == "interact":
                     self.action_choice = self.sel_action
                     print("UIBATTLE Register Action!")
-                    self.game.m_gst.current_state.reg_action(
+                    self.gamestate.reg_action(
                         Action(ActionType.ATTACK, a_index=self.sel_action)
                     )
                     # TODO: remove
-                    self.game.m_gst.current_state.set_to_action()
-                    self.state = BattleStates.ACTION
+                    self.gamestate.set_to_action()
+                    self.gamestate.state = BattleStates.ACTION
                     pass
 
-            elif self.state == BattleStates.ACTION:
+            elif self.gamestate.state == BattleStates.ACTION:
                 if key == "interact":
-                    self.game.m_gst.current_state.advance_board()
+                    self.gamestate.advance_board()
 
             if key == "backspace" or key == "menu":
                 self.game.r_aud.effect("cancel")
                 if not self.lock_state:
                     self.game.r_aud.effect("cancel")
-                    # if self.state == BattleStates.TOPMENU:
+                    # if self.gamestate.state == BattleStates.TOPMENU:
                     #     self.combat.deregister_action()
-                    self.state = BattleStates.TOPMENU
+                    self.gamestate.state = BattleStates.TOPMENU
 
         self.update_ui()
 
@@ -97,8 +88,10 @@ class UIBattle(BaseUI):
         self.highlight_top()
         self.highlight_attack()
 
+        self.ids.DialogueText.text = self.narrate
+
     def update_status(self):
-        gst = self.game.m_gst.current_state
+        gst = self.gamestate
         fighter = gst.board.get_actor((0, gst.board.get_active(0)))
         rel_hp = gst.board.get_relative_hp((0, gst.board.get_active(0)))
 
@@ -113,10 +106,12 @@ class UIBattle(BaseUI):
 
     def reset_state(self):
         # TODO: remove
-        self.state = BattleStates.TOPMENU
+        self.gamestate.state = BattleStates.TOPMENU
 
     def highlight_top(self):
-        self.ids.BattleTop.opacity = 1 if self.state == BattleStates.TOPMENU else 0
+        self.ids.BattleTop.opacity = (
+            1 if self.gamestate.state == BattleStates.TOPMENU else 0
+        )
         s = self.sel_top
         self.ids.BattleTopAttackCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==0 else ""}.png'
         self.ids.BattleTopThrowballCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==1 else ""}.png'
@@ -125,7 +120,7 @@ class UIBattle(BaseUI):
 
     def highlight_attack(self):
         self.ids.BattleAttack.opacity = (
-            1 if self.state == BattleStates.ACTIONMENU else 0
+            1 if self.gamestate.state == BattleStates.ACTIONMENU else 0
         )
         s = self.sel_action
         self.ids.BattleAttackACell.source = f'ulivy/interface/modernui/battle/attackcell{"_selected" if s==0 else ""}.png'
@@ -138,10 +133,10 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackC.opacity = 0
         self.ids.BattleAttackD.opacity = 0
 
-        if self.state != BattleStates.ACTIONMENU:
+        if self.gamestate.state != BattleStates.ACTIONMENU:
             return
 
-        actors = self.game.m_gst.current_state.actors
+        actors = self.gamestate.actors
         actionlist = actors[0].actions
 
         if len(actionlist) < 1:
@@ -176,3 +171,37 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackDType.source = f'ulivy/interface/modernui/battle/attack_types/attack_{actionlist[3]["type"].lower()}.png'
         self.ids.BattleAttackDCharges.text = str(actionlist[3]["pp"])
 
+    @property
+    def gamestate(self):
+        return self.game.m_gst.current_state
+
+    @property
+    def narrate(self):
+        if self.gamestate.state == BattleStates.ACTION:
+            return self.gamestate.board.narration
+
+        if self.gamestate.state == BattleStates.ACTIONMENU:
+            action = self.gamestate.actors[0].actions[self.sel_action]
+            return (
+                action.description
+                if not self.lock_state
+                else f"Forget {action['name']}?"
+            )
+
+        if self.gamestate.state == BattleStates.SWAPMENU:
+            name = self.game.inventory.fighter_names[self.selection]
+            return f"Send out {name}."
+
+        if self.gamestate.state == BattleStates.BALLMENU:
+            # ball = self.game.inventory.get_pocket_items(3)[self.selection]
+            return "Throw a ball to catch the Pokémon!"  # ball.description
+
+        if self.gamestate.state == BattleStates.TOPMENU:
+            strings = [
+                "Attack the enemy!",
+                "Choose a Pokemon!",
+                "Throw a Poke Ball!",
+                "Run away!",
+            ]
+            return strings[self.sel_top]
+        return "ERROR: Missing String"

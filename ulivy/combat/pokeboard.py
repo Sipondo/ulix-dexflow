@@ -63,7 +63,9 @@ class PokeBoard(CombatBoard):
 
                 # ability load
                 try:
-                    ability = self.scene.ability_lib[poke_fighter.ability.lower()](self.scene, (i, j))
+                    ability = self.scene.ability_lib[poke_fighter.ability.lower()](
+                        self.scene, (i, j)
+                    )
                 except KeyError:
                     ability = self.scene.ability_lib["noability"](self.scene, (i, j))
                 self.scene.add_effect(ability)
