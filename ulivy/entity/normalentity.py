@@ -39,8 +39,8 @@ class NormalEntity(BaseEntity):
             self.aggro_region = self.game.m_act.create_aggro_region(self, {})
 
             self.team = []
-            # for battler in self.battlers: #TODO: re-enable
-            #     self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
+            for battler in self.battlers:  # TODO: re-enable
+                self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
 
             js = []
             try:

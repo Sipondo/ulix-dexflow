@@ -42,7 +42,7 @@ class GameStateBattle(BaseGameState):
         # Combat setup
         self.combat = CombatScene(
             self.game,
-            ([x.series for x in self.game.inventory.members], enemy_team or [1, 2]),
+            ([x.series for x in self.game.inventory.members], enemy_team or [2, 1]),
             battle_type=battle_type,
         )
 

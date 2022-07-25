@@ -62,6 +62,7 @@ class BattleScene(FloatLayout):
         return self.bmove.t1
 
     def set_fighter_image(self, spriteset, team):
+        print("set_fighter_image", spriteset, team)
         if team == 0:
             self.poke1_set = spriteset
             for b in self.img_battler[0]:
@@ -116,8 +117,8 @@ class BattleScene(FloatLayout):
 
     def render(self, time: float, frame_time: float):
         self.camera.render(time, frame_time)
-        self.render_pokemon(time, frame_time)
-        self.render_pokemon(time, frame_time, cutout=True)
+        self.prep_battler(time, frame_time)
+        self.prep_battler(time, frame_time, cutout=True)
         self.bmove.render(time, frame_time)
 
         if self.dark_to is not None:
@@ -170,8 +171,8 @@ class BattleScene(FloatLayout):
         # # Render main screen base
         # self.render_background()
         # self.ctx.depth_func = "1"
-        # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
-        # self.render_pokemon(time, frame_time, cutout=False)
+        # self.prep_battler(time, frame_time, cutout=False, shadow=True)
+        # self.prep_battler(time, frame_time, cutout=False)
         # self.ctx.depth_func = "<="
 
         # self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
@@ -179,9 +180,9 @@ class BattleScene(FloatLayout):
 
         # # Render black cutout
         # # self.solid_offscreen.use()
-        # # self.render_pokemon(cutout=True)
+        # # self.prep_battler(cutout=True)
         # self.alpha_offscreen.use()
-        # self.render_pokemon(time, frame_time, cutout=True)
+        # self.prep_battler(time, frame_time, cutout=True)
 
         # Render
         locking = self.game.m_par.on_tick(
@@ -225,7 +226,7 @@ class BattleScene(FloatLayout):
         # self.ctx.blend_equation = moderngl.FUNC_ADD
         return locking
 
-    def render_pokemon(self, time, frame_time, cutout=False, shadow=False):
+    def prep_battler(self, time, frame_time, cutout=False, shadow=False):
         if not cutout:
             for i in range(len(self.brightness)):
                 self.brightness[i] += 10 * frame_time * (1.0 - self.brightness[i])
