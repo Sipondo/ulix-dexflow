@@ -152,6 +152,8 @@ class PokeGame(Screen):
 
         self.add_widget(self.r_fbo)
 
+        self.r_uin = UIRenderer(self)
+        self.add_widget(self.r_uin)
         if platform == "android":
             self.m_osc = OscManager(self)
             self.add_widget(self.m_osc)
@@ -159,8 +161,6 @@ class PokeGame(Screen):
             self.m_osc = None
 
         self.add_widget(FPSCounter())
-
-        self.r_uin = UIRenderer(self)
 
         self.maphack = False
 

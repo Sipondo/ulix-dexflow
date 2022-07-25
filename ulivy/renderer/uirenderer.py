@@ -1,4 +1,5 @@
 import importlib
+from kivy.uix.floatlayout import FloatLayout
 
 UI = "modernui"
 
@@ -11,10 +12,11 @@ UI_MENU_MAIN = importlib.import_module(f"ulivy.interface.{UI}.uimenumain").UIMen
 UI_MENU_BAG = importlib.import_module(f"ulivy.interface.{UI}.uimenubag").UIMenuBag
 
 
-class UIRenderer:
-    def __init__(self, game):
+class UIRenderer(FloatLayout):
+    def __init__(self, game, **kwargs):
         self.game = game
         self.current_ui = None
+        super(UIRenderer, self).__init__(**kwargs)
 
     def update(self, time, frame_time):
         if self.current_ui:
@@ -31,7 +33,7 @@ class UIRenderer:
     def switch_ui(self, new_ui, gstate, **kwargs):
         if self.current_ui is not None:
             self.current_ui.on_exit()
-            self.game.remove_widget(self.current_ui)
+            self.remove_widget(self.current_ui)
             del self.current_ui
             self.current_ui = None
 
@@ -53,6 +55,6 @@ class UIRenderer:
             return
 
         self.current_ui.on_enter(**kwargs)
-        self.game.add_widget(self.current_ui)
+        self.add_widget(self.current_ui)
         self.current_ui.update()
 
