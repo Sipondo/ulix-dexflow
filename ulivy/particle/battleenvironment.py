@@ -107,6 +107,7 @@ class BattleEnvironment(FloatLayout):
     def set_battlers(self, enemy_first=False):
         if self.enemy_first == enemy_first:
             return
+        self.enemy_first = enemy_first
         self.battler_float.clear_widgets()
         self.alpha_float.clear_widgets()
 
@@ -391,7 +392,6 @@ def set_blend_final(instruction):
 
 def set_blend_battler(instruction):
     glEnable(GL_DEPTH_TEST)
-    # glDisable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
