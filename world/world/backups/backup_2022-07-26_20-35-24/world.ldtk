@@ -4933,7 +4933,7 @@
 				{ "enumValueId": "E", "tileIds": [1242,1243,1246,1247] },
 				{ "enumValueId": "S", "tileIds": [1267,1271,1275,1279] },
 				{ "enumValueId": "Encounter", "tileIds": [14,1304,1305,1306,1307] },
-				{ "enumValueId": "Hop_W", "tileIds": [826,827,834] },
+				{ "enumValueId": "Hop_W", "tileIds": [826,827,834,1280,1281,1288,1289,1296,1297] },
 				{ "enumValueId": "Hop_N", "tileIds": [] },
 				{ "enumValueId": "Hop_E", "tileIds": [829,830,838] },
 				{ "enumValueId": "Hop_S", "tileIds": [818,822,836] }

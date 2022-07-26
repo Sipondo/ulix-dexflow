@@ -442,7 +442,6 @@ def convert_to_atlas_layers(layers):
             colmaps.append(layers[layer_i][3])
 
         layer[3] = np.any(np.concatenate(colmaps, axis=0), axis=0)
-        print(layer[3].shape)
         output.append(layer)
 
     return output

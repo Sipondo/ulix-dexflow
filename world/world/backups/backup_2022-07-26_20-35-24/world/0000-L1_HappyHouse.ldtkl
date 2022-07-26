@@ -826,10 +826,7 @@
 						{ "__identifier": "encounter_text", "__value": "We should have a battle!", "__type": "String", "__tile": null, "defUid": 419, "realEditorValues": [null] },
 						{ "__identifier": "defeat_text", "__value": "Damn the... luck.", "__type": "String", "__tile": null, "defUid": 420, "realEditorValues": [] },
 						{ "__identifier": "on_create_action", "__value": "", "__type": "String", "__tile": null, "defUid": 410, "realEditorValues": [] },
-						{ "__identifier": "on_interact_action", "__value": "player: AddMember(\"Charizard\", 95)", "__type": "String", "__tile": null, "defUid": 91, "realEditorValues": [{
-							"id": "V_String",
-							"params": ["player: AddMember(\"Charizard\", 95)"]
-						}] },
+						{ "__identifier": "on_interact_action", "__value": "<<<opponent_on_interact>>>", "__type": "String", "__tile": null, "defUid": 91, "realEditorValues": [null] },
 						{ "__identifier": "on_aggro_action", "__value": "<<<opponent_on_aggro>>>", "__type": "String", "__tile": null, "defUid": 90, "realEditorValues": [null] },
 						{ "__identifier": "aggro_range", "__value": 5, "__type": "Int", "__tile": null, "defUid": 386, "realEditorValues": [] },
 						{ "__identifier": "visible", "__value": true, "__type": "Bool", "__tile": null, "defUid": 421, "realEditorValues": [null] },
