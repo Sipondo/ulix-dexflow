@@ -13,17 +13,7 @@ class CollisionManager:
         self.offset = offset
 
     def add_collision_layer(self, colmap, height, force):
-        if not len(self.colmap) > height:
-            # TODO Rewrite
-            # UNSAFE
-            self.colmap.append(colmap)
-        else:
-            if force is not None:
-                force = force[0].sum(axis=2) > 0
-                # print("\n\n\nCOL LAYER!!!!!!", colmap.shape, force[0].sum(axis=2) > 0)
-                self.colmap[height][0][force] = colmap[force]
-            else:
-                self.colmap[height] = self.colmap[height] | colmap
+        self.colmap.append(colmap)
 
     def check_collision(self, pos, direction, height=0, off=True, src_entity=None):
         height = int(height)
@@ -38,10 +28,10 @@ class CollisionManager:
 
         # Mapcheck
         try:
-            col_fr = self.colmap[height][0][
+            col_fr = self.colmap[height][
                 pos[1], pos[0], self.get_direction_num(direction)
             ]
-            col_to = self.colmap[height][0][
+            col_to = self.colmap[height][
                 new_pos[1], new_pos[0], self.get_rec_direction_num(direction)
             ]
         except IndexError as e:
@@ -102,7 +92,7 @@ class CollisionManager:
             return dict(
                 zip(
                     self.game.m_map.enum_values,
-                    self.colmap[height][0][pos[1], pos[0], 4:],
+                    self.colmap[height][pos[1], pos[0], 4:],
                 )
             )
         except IndexError:
@@ -130,7 +120,7 @@ class CollisionManager:
                 x2, y2 = pos
                 if entity.solid and abs(x1 - x2) < 1 and abs(y1 - y2) < 1:
                     return not entity.col_override
-        return np.all(self.colmap[height][0][pos[1], pos[0], :4])
+        return np.all(self.colmap[height][pos[1], pos[0], :4])
 
     def a_star(self, fr, to, height=0, next_to=False, src_entity=None):
         fr = (fr[0] + self.offset[0], fr[1] + self.offset[1])
@@ -138,18 +128,18 @@ class CollisionManager:
 
         if (
             not (
-                0 < fr[0] < self.colmap[0][0].shape[1]
-                and 0 < fr[1] < self.colmap[0][0].shape[0]
+                0 < fr[0] < self.colmap[0].shape[1]
+                and 0 < fr[1] < self.colmap[0].shape[0]
             )
         ) or (
             not (
-                0 < to[0] < self.colmap[0][0].shape[1]
-                and 0 < to[1] < self.colmap[0][0].shape[0]
+                0 < to[0] < self.colmap[0].shape[1]
+                and 0 < to[1] < self.colmap[0].shape[0]
             )
         ):
             return None
 
-        map = np.ones(self.colmap[0][0].shape[:2]) * 9999
+        map = np.ones(self.colmap[0].shape[:2]) * 9999
 
         map[fr[0], fr[1]] = 0
 
@@ -171,8 +161,8 @@ class CollisionManager:
                     return pth
 
                 if (
-                    0 < x < self.colmap[0][0].shape[0]
-                    and 0 < y < self.colmap[0][0].shape[1]
+                    0 < x < self.colmap[0].shape[0]
+                    and 0 < y < self.colmap[0].shape[1]
                     and map[x, y] >= 9999
                 ):
                     res = self.check_collision_hop(

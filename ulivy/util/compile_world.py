@@ -35,12 +35,9 @@ def compile_world(pth):
         all = "X" in coldef
         if all:
             return [True, True, True, True] + [x in coldef for x in enumValues]
-        return [
-            "E" in coldef,
-            "S" in coldef,
-            "W" in coldef,
-            "N" in coldef,
-        ] + [x in coldef for x in enumValues]
+        return ["E" in coldef, "S" in coldef, "W" in coldef, "N" in coldef,] + [
+            x in coldef for x in enumValues
+        ]
 
     a = ldtk_json_from_dict(ldtk)
 
@@ -252,8 +249,7 @@ def compile_world(pth):
                         for field in raw_ent.field_instances:
                             if isinstance(field.value, str):
                                 entity[f"f_{field.identifier}"] = field.value.replace(
-                                    "../sprites/characters/",
-                                    "",
+                                    "../sprites/characters/", "",
                                 ).replace(".png", "")
                                 if ent_field_upl[raw_ent.def_uid][field.def_uid]:
                                     entity[f"f_{field.identifier}"] = parser.parse(
@@ -382,11 +378,11 @@ def convert_to_atlas_layers(layers):
             for x in range(x_range):
                 tile_indices = []
                 for layer_i in block:
-                    layer = layers[layer_i]
-                    tileset_index = tiledict[layer[1]]
+                    layer_2 = layers[layer_i]
+                    tileset_index = tiledict[layer_2[1]]
                     # tileset = tilesets[tileset_index]
 
-                    tile_array = layer[2]
+                    tile_array = layer_2[2]
                     for depth in range(tile_array.shape[0]):
                         for stack in range(tile_array.shape[1]):
                             tile_index = tile_array[depth, stack, y, x]
@@ -439,6 +435,14 @@ def convert_to_atlas_layers(layers):
                     )
 
         layer[2] = output_tile_array
+
+        # Collision
+        colmaps = []
+        for layer_i in block:
+            colmaps.append(layers[layer_i][3])
+
+        layer[3] = np.any(np.concatenate(colmaps, axis=0), axis=0)
+        print(layer[3].shape)
         output.append(layer)
 
     return output

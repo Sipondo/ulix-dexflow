@@ -309,8 +309,9 @@ class TileRenderer(FloatLayout):
 
             if primary:
                 self.game.m_col.add_collision_layer(
-                    collision, entity_h, tiles if "collision" in level.lower() else None
-                )
+                    collision, entity_h, False
+                )  # tiles if "collision" in level.lower() else None
+                # )
 
             for tile in tiles:
                 h += 1
