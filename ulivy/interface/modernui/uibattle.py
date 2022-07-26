@@ -62,11 +62,31 @@ class UIBattle(BaseUI):
                     self.sel_action = (self.sel_action - 1) % self.sel_max_action
                     self.game.r_aud.effect("select")
                 elif key == "interact":
-                    self.action_choice = self.sel_action
-                    print("UIBATTLE Register Action!")
+                    self.action_choice = self.sel_swap
                     self.gamestate.reg_action(
-                        Action(ActionType.ATTACK, a_index=self.sel_action)
+                        Action(ActionType.ATTACK, a_index=self.sel_swap)
                     )
+
+            elif self.gamestate.state == BattleStates.SWAPMENU:
+                if key == "down":
+                    self.sel_swap = (self.sel_swap + 1) % self.sel_max_swap
+                    self.game.r_aud.effect("select")
+                elif key == "up":
+                    self.sel_swap = (self.sel_action - 1) % self.sel_max_swap
+                    self.game.r_aud.effect("select")
+                elif key == "interact":
+                    if (
+                        self.gamestate.board.teams[0][self.sel_swap][1].can_fight
+                        and self.gamestate.board.get_active(0) != self.sel_swap
+                    ):
+                        if self.gamestate.lock_state:
+                            self.gamestate.reg_action(
+                                Action(ActionType.SENDOUT, a_index=self.sel_swap)
+                            )
+                        else:
+                            self.gamestate.reg_action(
+                                Action(ActionType.SWITCH, a_index=self.sel_swap)
+                            )
 
             elif self.gamestate.state == BattleStates.ACTION:
                 if key == "interact":

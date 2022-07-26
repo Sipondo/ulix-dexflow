@@ -266,7 +266,6 @@ class GameStateBattle(BaseGameState):
             self.game.r_fbo.r_til.set_map_via_manager(
                 (0, 0,), fade=False,
             )
-            self.game.r_fbo.enable_overworld()
-            self.game.m_gst.switch_state("overworld")
-            return
-        self.game.m_gst.switch_state("evolve")
+        self.game.r_fbo.enable_overworld()
+        self.game.m_gst.switch_state("overworld")
+
