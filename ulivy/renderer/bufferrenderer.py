@@ -24,6 +24,7 @@ from ulivy.renderer.tilerenderer import TileRenderer
 from kivy.graphics import Fbo, Color, Rectangle
 
 from kivy.lang import Builder
+from kivy.graphics.gl_instructions import ClearColor, ClearBuffers
 
 Builder.load_file("ulivy/renderer/bufferrenderer.kv")
 
@@ -44,6 +45,10 @@ class BufferRenderer(FloatLayout):
 
             self.ids.GameImage.texture = self.fbo.texture
 
+        with self.fbo:
+            ClearColor(0, 0, 0, 0)
+            ClearBuffers(clear_color=True, clear_depth=True)
+
         # self.fbo.add_reload_observer(self.populate_fbo)
 
         canvas = self.canvas
@@ -55,6 +60,9 @@ class BufferRenderer(FloatLayout):
 
     def fbo_add_widget(self, widget):
         self.fbo_layout.add_widget(widget)
+
+    def fbo_remove_widget(self, widget):
+        self.fbo_layout.remove_widget(widget)
 
     def populate_fbo(self, fbo):
         pass

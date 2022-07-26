@@ -146,7 +146,8 @@ class GameStateBattle(BaseGameState):
         return True
 
     def on_exit(self):
-        pass
+        self.game.r_fbo.fbo_remove_widget(self.scene)
+        del self.scene
 
     def event_keypress(self, key, modifiers):
         return
@@ -265,6 +266,7 @@ class GameStateBattle(BaseGameState):
             self.game.r_fbo.r_til.set_map_via_manager(
                 (0, 0,), fade=False,
             )
+            self.game.r_fbo.enable_overworld()
             self.game.m_gst.switch_state("overworld")
             return
         self.game.m_gst.switch_state("evolve")
