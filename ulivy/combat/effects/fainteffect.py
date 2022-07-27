@@ -3,6 +3,7 @@ from .returneffect import ReturnEffect
 from .endbattleeffect import EndBattleEffect
 from .experienceeffect import ExperienceEffect
 from ..action import ActionType
+from .sendouteffect import SendOutEffect
 
 
 class FaintEffect(BaseEffect):
@@ -13,8 +14,7 @@ class FaintEffect(BaseEffect):
 
     def on_action(self):
         self.scene.board.no_skip(
-            f"{self.scene.board.get_actor(self.target).name} fainted",
-            particle="",
+            f"{self.scene.board.get_actor(self.target).name} fainted", particle="",
         )
         end = False
         self.scene.on_faint_effects(self.target)
@@ -36,6 +36,7 @@ class FaintEffect(BaseEffect):
             self.scene.add_effect(EndBattleEffect(self.scene))
         self.scene.board.fainted = True
         self.scene.force_action(self.target[0], ActionType.SENDOUT)
+        # self.scene.add_effect(SendOutEffect(self.scene, self.target))
         return True, False, False
 
     def on_faint(self, target):

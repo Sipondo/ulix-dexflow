@@ -13,5 +13,6 @@ class AgentUser(BaseAgent):
             self.action = action
             return True
         # action impossible
+        print("Action IMPOSSIBLE!!!", action)
         return False
 

@@ -134,6 +134,7 @@ class GameStateBattle(BaseGameState):
 
             else:
                 actions = self.combat.get_actions()
+                print(actions)
             if actions:
                 self.state = BattleStates.ACTION
                 self.pending_boards = self.combat.prepare_scene(actions)

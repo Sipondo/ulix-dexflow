@@ -15,6 +15,7 @@ class AgentManager:
         self.agents.append(agent)
 
     def register_action(self, i: int, action: Action):
+        print("Register action!", action)
         self.agents[i].set_action(action)
 
     def unregister_action(self, i: int):
@@ -25,6 +26,9 @@ class AgentManager:
 
     def set_legality(self, i: int, action: Action, legality: bool):
         self.agents[i].set_legality(action, legality)
+
+    def reset_legal(self, i):
+        self.agents[i].reset_legal()
 
     def start_agents(self):
         for agent in self.agents:

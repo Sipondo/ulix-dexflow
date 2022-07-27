@@ -10,6 +10,7 @@ class ReturnEffect(BaseEffect):
     def on_action(self):
         self.scene.board.set_active((self.target[0], -1))
         self.scene.board.no_skip(
-            f"{self.scene.board.get_actor(self.target).name}, come back!", particle=""
+            f"{self.scene.board.get_actor(self.target).name}, come back!",
+            particle="Ember",
         )
         return True, False, False

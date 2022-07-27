@@ -52,9 +52,7 @@ class CombatBoard:
 
     def get_first_sendout(self, team):
         return next(
-            idx
-            for idx, (poke, data) in enumerate(self.teams[team])
-            if data.can_fight
+            idx for idx, (poke, data) in enumerate(self.teams[team]) if data.can_fight
         )
 
     def set_direction(self, action):
@@ -84,7 +82,14 @@ class CombatBoard:
     def random_roll(self, chance: float):
         return random.random() <= chance
 
-    def no_skip(self, narration, particle=None, battle_end=False, particle_miss=False, move_data=None):
+    def no_skip(
+        self,
+        narration,
+        particle=None,
+        battle_end=False,
+        particle_miss=False,
+        move_data=None,
+    ):
         self.narration = narration
         self.skip = False
         self.particle = particle
@@ -95,8 +100,8 @@ class CombatBoard:
     def set_hp(self, target, hp):
         self.teams[target[0]][target[1]][1] = hp
 
-    def set_active(self, new_active):
-        self.actives[new_active[0]] = new_active[1]
+    # def set_active(self, new_active):
+    #     self.actives[new_active[0]] = new_active[1]
 
     def set_particle(self, particle):
         self.particle = particle

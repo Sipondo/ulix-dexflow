@@ -61,6 +61,8 @@ class UIBattle(BaseUI):
                 elif key == "up":
                     self.sel_action = (self.sel_action - 1) % self.sel_max_action
                     self.game.r_aud.effect("select")
+                    print(self.gamestate.lock_state)
+                    print(self.gamestate.pending_boards)
                 elif key == "interact":
                     self.action_choice = self.sel_swap
                     self.gamestate.reg_action(
@@ -80,11 +82,16 @@ class UIBattle(BaseUI):
                         and self.gamestate.board.get_active(0) != self.sel_swap
                     ):
                         print("Lock state?", self.gamestate.lock_state)
-                        if self.gamestate.lock_state:
+                        if self.gamestate.lock_state == "user_switch":
                             self.gamestate.reg_action(
-                                Action(ActionType.SENDOUT, a_index=self.sel_swap)
+                                Action(
+                                    ActionType.SENDOUT, a_index=self.sel_swap
+                                )  # SENDOUT
                             )
-                            self.gamestate.lock_state = False
+                            print("PENDING BOARDS:", self.gamestate.pending_boards)
+                            self.gamestate.combat.mgr_agent.reset_legal(
+                                0
+                            )  # TODO: resolve this properly
                         else:
                             self.gamestate.reg_action(
                                 Action(ActionType.SWITCH, a_index=self.sel_swap)
@@ -105,6 +112,10 @@ class UIBattle(BaseUI):
         self.update_ui()
 
     def update_ui(self):
+        # print(self.gamestate.board.actives)
+        # print(self.gamestate.actors)
+        # for i in range(self.gamestate.combat.teams_n):
+        #     print(self.gamestate.board.get_active_actor(i))
         self.highlight_top()
         self.highlight_attack()
         self.highlight_swap()
@@ -268,8 +279,8 @@ class UIBattle(BaseUI):
         if self.gamestate.state == BattleStates.TOPMENU:
             strings = [
                 "Attack the enemy!",
-                "Choose a Pokemon!",
                 "Throw a Poke Ball!",
+                "Choose a Pokemon!",
                 "Run away!",
             ]
             return strings[self.sel_top]
