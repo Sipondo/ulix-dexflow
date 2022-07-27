@@ -16,7 +16,7 @@ class UIBattle(BaseUI):
         self.sel_action = 0
         self.sel_max_action = 4
         self.sel_swap = 0
-        self.sel_max_swap = 4
+        self.sel_max_swap = len(self.game.inventory.fighter_names)
 
         self.update_ui()
 
@@ -72,17 +72,19 @@ class UIBattle(BaseUI):
                     self.sel_swap = (self.sel_swap + 1) % self.sel_max_swap
                     self.game.r_aud.effect("select")
                 elif key == "up":
-                    self.sel_swap = (self.sel_action - 1) % self.sel_max_swap
+                    self.sel_swap = (self.sel_swap - 1) % self.sel_max_swap
                     self.game.r_aud.effect("select")
                 elif key == "interact":
                     if (
                         self.gamestate.board.teams[0][self.sel_swap][1].can_fight
                         and self.gamestate.board.get_active(0) != self.sel_swap
                     ):
+                        print("Lock state?", self.gamestate.lock_state)
                         if self.gamestate.lock_state:
                             self.gamestate.reg_action(
                                 Action(ActionType.SENDOUT, a_index=self.sel_swap)
                             )
+                            self.gamestate.lock_state = False
                         else:
                             self.gamestate.reg_action(
                                 Action(ActionType.SWITCH, a_index=self.sel_swap)
@@ -105,6 +107,7 @@ class UIBattle(BaseUI):
     def update_ui(self):
         self.highlight_top()
         self.highlight_attack()
+        self.highlight_swap()
 
         self.ids.DialogueText.text = self.narrate
 
@@ -184,6 +187,58 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackDName.text = actionlist[3]["name"]
         self.ids.BattleAttackDType.source = f'ulivy/interface/modernui/battle/attack_types/attack_{actionlist[3]["type"].lower()}.png'
         self.ids.BattleAttackDCharges.text = str(actionlist[3]["pp"])
+
+    def highlight_swap(self):
+        self.ids.BattleSwap.opacity = (
+            1 if self.gamestate.state == BattleStates.SWAPMENU else 0
+        )
+        s = self.sel_swap
+        self.ids.BattleSwapACell.source = (
+            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==0 else ""}.png'
+        )
+        self.ids.BattleSwapBCell.source = (
+            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==1 else ""}.png'
+        )
+        self.ids.BattleSwapCCell.source = (
+            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==2 else ""}.png'
+        )
+        self.ids.BattleSwapDCell.source = (
+            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==3 else ""}.png'
+        )
+
+        self.ids.BattleSwapA.opacity = 0
+        self.ids.BattleSwapB.opacity = 0
+        self.ids.BattleSwapC.opacity = 0
+        self.ids.BattleSwapD.opacity = 0
+
+        if self.gamestate.state != BattleStates.SWAPMENU:
+            return
+
+        swaplist = self.game.inventory.fighter_names
+
+        if len(swaplist) < 1:
+            return
+
+        self.ids.BattleSwapA.opacity = 1
+        self.ids.BattleSwapAName.text = swaplist[0]
+
+        if len(swaplist) < 2:
+            return
+
+        self.ids.BattleSwapB.opacity = 1
+        self.ids.BattleSwapBName.text = swaplist[1]
+
+        if len(swaplist) < 3:
+            return
+
+        self.ids.BattleSwapC.opacity = 1
+        self.ids.BattleSwapCName.text = swaplist[2]
+
+        if len(swaplist) < 4:
+            return
+
+        self.ids.BattleSwapD.opacity = 1
+        self.ids.BattleSwapDName.text = swaplist[3]
 
     @property
     def gamestate(self):

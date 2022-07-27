@@ -202,6 +202,110 @@
                             allow_stretch: True
                             source: 'ulivy/interface/modernui/battle/run.png'
 
+                # SWAP MENU
+                RelativeLayout:
+                    id: BattleSwap
+                    pos_hint: {'center_x': 0.82, 'y': 0.05}
+                    size_hint: 0.57, 0.3
+
+                    PixelImage:
+                        id: BattleSwapCell
+                        allow_stretch: True
+                        source: 'ulivy/interface/modernui/battle/ballwindow.png'
+
+                    RelativeLayout:
+                        id: BattleSwapA
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+                        size_hint: 1, 0.213                        
+
+                        PixelImage:
+                            id: BattleSwapACell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/ballcell.png'
+
+                        Label:
+                            id: BattleSwapAName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                    RelativeLayout:
+                        id: BattleSwapB
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.6175}
+                        size_hint: 1, 0.213                        
+
+                        PixelImage:
+                            id: BattleSwapBCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/ballcell.png'
+
+                        Label:
+                            id: BattleSwapBName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+                    
+                    RelativeLayout:
+                        id: BattleSwapC
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.385}
+                        size_hint: 1, 0.213                        
+
+                        PixelImage:
+                            id: BattleSwapCCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/ballcell.png'
+
+                        Label:
+                            id: BattleSwapCName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                    RelativeLayout:
+                        id: BattleSwapD
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        size_hint: 1, 0.213                        
+
+                        PixelImage:
+                            id: BattleSwapDCell
+                            allow_stretch: True
+                            source: 'ulivy/interface/modernui/battle/ballcell.png'
+
+                        Label:
+                            id: BattleSwapDName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+
                 # ATTACK MENU
                 RelativeLayout:
                     id: BattleAttack

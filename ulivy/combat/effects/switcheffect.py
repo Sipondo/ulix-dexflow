@@ -7,6 +7,7 @@ class SwitchEffect(BaseEffect):
     def __init__(self, scene, action):
         super().__init__(scene)
         self.user = action.user
+        print("Switch!!!", action)
         self.target = action.target
 
     def on_action(self):
