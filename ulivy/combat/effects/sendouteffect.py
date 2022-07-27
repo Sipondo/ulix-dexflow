@@ -1,4 +1,3 @@
-from attr import Attribute
 from .baseeffect import BaseEffect
 
 
