@@ -106,35 +106,36 @@ class GameStateBattle(BaseGameState):
                 return
 
         actions = []
-        if self.state != BattleStates.ACTION or self.particle_test:
-            if self.particle_test and not self.lock:
-                if self.particle_test_cooldown:
-                    self.particle_test_cooldown = max(
-                        0, self.particle_test_cooldown - frame_time
-                    )
-                else:
-                    tackle = self.game.m_pbs.get_move(399).copy()
-                    tackle.power = 0
-                    actions.append(
-                        Action(
-                            ActionType.ATTACK,
-                            a_data=tackle,
-                            user=(1, self.board.get_active(1)),
-                            target=(0, self.board.get_active(0)),
-                        )
-                    )
-                    actions.append(
-                        Action(
-                            ActionType.ATTACK,
-                            a_data=tackle,
-                            user=(1, self.board.get_active(1)),
-                            target=(0, self.board.get_active(0)),
-                        )
-                    )
+        if self.state != BattleStates.ACTION:  # or self.particle_test:
+            # if self.particle_test and not self.lock:
+            #     pass
+            #     # if self.particle_test_cooldown:
+            #     #     self.particle_test_cooldown = max(
+            #     #         0, self.particle_test_cooldown - frame_time
+            #     #     )
+            #     # else:
+            #     #     tackle = self.game.m_pbs.get_move(399).copy()
+            #     #     tackle.power = 0
+            #     #     actions.append(
+            #     #         Action(
+            #     #             ActionType.ATTACK,
+            #     #             a_data=tackle,
+            #     #             user=(1, self.board.get_active(1)),
+            #     #             target=(0, self.board.get_active(0)),
+            #     #         )
+            #     #     )
+            #     #     actions.append(
+            #     #         Action(
+            #     #             ActionType.ATTACK,
+            #     #             a_data=tackle,
+            #     #             user=(1, self.board.get_active(1)),
+            #     #             target=(0, self.board.get_active(0)),
+            #     #         )
+            #     #     )
 
-            else:
-                actions = self.combat.get_actions()
-                print(actions)
+            # else:
+            actions = self.combat.get_actions()
+            # print("--- ACTIONS: ", actions, self.pending_boards)
             if actions:
                 self.state = BattleStates.ACTION
                 self.pending_boards = self.combat.prepare_scene(actions)
@@ -200,10 +201,18 @@ class GameStateBattle(BaseGameState):
                 pass
                 self.state = BattleStates.TOPMENU
             self.game.m_cam.reset()
-            print("--- RESET STATES")
+            print(
+                "--- RESET STATES",
+                len(self.combat.get_actions()),
+                len(self.pending_boards),
+                self.state,
+                self.lock_state,
+            )
             return
 
+        # print("PENDING BOARDS:", len(self.pending_boards))
         self.board = self.pending_boards.pop(0)
+        self.combat.board.new_move = False  # TODO: temp
         for i in range(self.combat.teams_n):
             if self.board.get_active_actor(i) != self.actors[i]:
                 if self.board.get_active_actor(i) == -1:

@@ -24,19 +24,28 @@ class FaintEffect(BaseEffect):
         if not self.scene.board.has_fighter(self.target[0]):
             end = True
         if self.target[0] == 1:
+            pass
             # experience if enemy fainted
-            self.scene.add_effect(
-                ExperienceEffect(
-                    self.scene,
-                    (0, self.scene.board.get_active(0)),
-                    self.scene.board.get_actor(self.target),
-                )
-            )
+            # self.scene.add_effect(
+            #     ExperienceEffect(
+            #         self.scene,
+            #         (0, self.scene.board.get_active(0)),
+            #         self.scene.board.get_actor(self.target),
+            #     )
+            # ) TODO: re-enable
         if end:
             self.scene.add_effect(EndBattleEffect(self.scene))
         self.scene.board.fainted = True
-        self.scene.force_action(self.target[0], ActionType.SENDOUT)
-        # self.scene.add_effect(SendOutEffect(self.scene, self.target))
+        # if self.target[0]
+
+        if self.target[0] == 0:
+            self.scene.force_action(self.target[0], ActionType.SENDOUT)
+        else:
+            if not end:
+                # pass
+                self.scene.add_effect(
+                    SendOutEffect(self.scene, (self.target[0], self.target[1] + 1))
+                )
         return True, False, False
 
     def on_faint(self, target):

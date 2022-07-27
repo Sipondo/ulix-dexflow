@@ -1,3 +1,5 @@
+from ulivy.combat.effects.sendouteffect import SendOutEffect
+from ulivy.combat.effects.switcheffect import SwitchEffect
 from ..baseui import BaseUI
 from kivy.lang import Builder
 import enum
@@ -77,25 +79,47 @@ class UIBattle(BaseUI):
                     self.sel_swap = (self.sel_swap - 1) % self.sel_max_swap
                     self.game.r_aud.effect("select")
                 elif key == "interact":
-                    if (
-                        self.gamestate.board.teams[0][self.sel_swap][1].can_fight
-                        and self.gamestate.board.get_active(0) != self.sel_swap
-                    ):
+                    if self.gamestate.board.teams[0][self.sel_swap][1].can_fight:
                         print("Lock state?", self.gamestate.lock_state)
                         if self.gamestate.lock_state == "user_switch":
-                            self.gamestate.reg_action(
-                                Action(
-                                    ActionType.SENDOUT, a_index=self.sel_swap
-                                )  # SENDOUT
-                            )
-                            print("PENDING BOARDS:", self.gamestate.pending_boards)
+                            sendout_act = Action(
+                                ActionType.SENDOUT, a_index=self.sel_swap
+                            )  # SENDOUT
+
+                            if self.gamestate.combat.mgr_agent.agents[
+                                0
+                            ].action_handler.is_legal(sendout_act):
+                                self.gamestate.reg_action(sendout_act)
+                            else:
+                                if self.gamestate.board.get_active(0) != self.sel_swap:
+                                    self.gamestate.reg_action(
+                                        Action(ActionType.SWITCH, a_index=self.sel_swap)
+                                    )
+                                else:
+                                    self.gamestate.state = BattleStates.TOPMENU
+                                self.gamestate.combat.board.fainted = False
+
+                                # switch_act = Action(
+                                #     ActionType.SWITCH, a_index=self.sel_swap
+                                # )  # SENDOUT
+                                # self.gamestate.combat.add_effect(
+                                #     SwitchEffect(
+                                #         self.gamestate.combat, switch_act,
+                                #     )
+                                # )
+                                # self.gamestate.combat.add_effect(
+                                #     SendOutEffect(self.gamestate.combat, (1, 1),)
+                                # )
+                            # print("PENDING BOARDS:", self.gamestate.pending_boards)
                             self.gamestate.combat.mgr_agent.reset_legal(
                                 0
                             )  # TODO: resolve this properly
+                            self.gamestate.lock_state = False
                         else:
-                            self.gamestate.reg_action(
-                                Action(ActionType.SWITCH, a_index=self.sel_swap)
-                            )
+                            if self.gamestate.board.get_active(0) != self.sel_swap:
+                                self.gamestate.reg_action(
+                                    Action(ActionType.SWITCH, a_index=self.sel_swap)
+                                )
 
             elif self.gamestate.state == BattleStates.ACTION:
                 if key == "interact":

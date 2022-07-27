@@ -142,6 +142,10 @@ class ParticleSystem(FloatLayout):
         # if err != "GL_NO_ERROR":
         #     print(err)
 
+    def delete_parts(self):
+        for r in self.renderers:
+            r.delete_parts()
+
     def load_context_objects(self):
         self.vbo_object_emit = ParticleHolder(self.game)
         self.add_widget(self.vbo_object_emit)
@@ -556,6 +560,18 @@ class Renderer:
     def set_fields(self):
         self.opacity = float(self.system.r(self, "opacity"))
         self.noise_speed = float(self.system.r(self, "noise"))
+
+    def delete_parts(self):
+        vis = self.game.m_gst.current_state.scene.environment.visuals
+
+        # Solid
+        if self.equation == 1:
+            vis.solid_offscreen.fbo_remove_widget(self.widget)
+        # Alpha
+        if self.equation == 2:
+            vis.alpha_offscreen.fbo_remove_widget(self.widget)
+
+        del self.widget
 
     def load_programs(self):
         print("Program Renderer!")

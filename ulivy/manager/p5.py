@@ -45,6 +45,7 @@ class ParticleManager:
         for system in marked:
             self.systems.remove(system)
             self.game.m_gst.current_state.scene.environment.remove_widget(system)
+            system.delete_parts()
             del system
         return busy
 

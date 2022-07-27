@@ -341,6 +341,9 @@ class BattleOffscreen(FloatLayout):
     def fbo_add_widget(self, widget):
         self.fbo_layout.add_widget(widget)
 
+    def fbo_remove_widget(self, widget):
+        self.fbo_layout.remove_widget(widget)
+
     def fbo_clear_widgets(self):
         self.fbo_layout.clear_widgets()
 

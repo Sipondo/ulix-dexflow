@@ -11,7 +11,8 @@ in:
 
 class AddMember:
     def __init__(self, act, src, user, s, l=5):
-        l = 1
+        self.game = act.game
+        l = 70  # len(self.game.inventory.members) * 80 + 5
         act.funcs.append(self)
         self.init_time = act.current_time
         self.act = act

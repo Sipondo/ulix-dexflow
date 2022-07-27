@@ -6247,7 +6247,7 @@
 				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "e" }]
+			"__neighbours": [ { "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "e" }, { "levelIid": "2e8535b0-02f0-11ed-97c3-e3b2817fa6ef", "levelUid": 488, "dir": "s" } ]
 		},
 		{
 			"identifier": "L1_I1_StarterHouse",
@@ -6860,6 +6860,44 @@
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "92f22bd0-8dc0-11ec-9a7d-9de67f05ba3d", "levelUid": 465, "dir": "s" }]
+		},
+		{
+			"identifier": "World_Level_16",
+			"iid": "2e8535b0-02f0-11ed-97c3-e3b2817fa6ef",
+			"uid": 488,
+			"worldX": -240,
+			"worldY": 576,
+			"worldDepth": 0,
+			"pxWid": 256,
+			"pxHei": 256,
+			"__bgColor": "#7F8093",
+			"bgColor": null,
+			"useAutoIdentifier": true,
+			"bgRelPath": null,
+			"bgPos": null,
+			"bgPivotX": 0.5,
+			"bgPivotY": 0.5,
+			"__smartColor": "#B9B9C4",
+			"__bgPos": null,
+			"externalRelPath": "world/0016-World_Level_16.ldtkl",
+			"fieldInstances": [
+				{ "__identifier": "hospital", "__value": null, "__type": "String", "__tile": null, "defUid": 454, "realEditorValues": [] },
+				{ "__identifier": "allow_save", "__value": true, "__type": "Bool", "__tile": null, "defUid": 452, "realEditorValues": [] },
+				{ "__identifier": "allow_cycle", "__value": true, "__type": "Bool", "__tile": null, "defUid": 467, "realEditorValues": [] },
+				{ "__identifier": "environment", "__value": "forest", "__type": "String", "__tile": null, "defUid": 453, "realEditorValues": [] },
+				{ "__identifier": "encounter_rate", "__value": 0.05, "__type": "Float", "__tile": null, "defUid": 440, "realEditorValues": [] },
+				{ "__identifier": "encounters", "__value": "100x RATTATA", "__type": "String", "__tile": null, "defUid": 439, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_min", "__value": 5, "__type": "Int", "__tile": null, "defUid": 447, "realEditorValues": [] },
+				{ "__identifier": "encounter_level_max", "__value": 10, "__type": "Int", "__tile": null, "defUid": 448, "realEditorValues": [] },
+				{ "__identifier": "filter_red", "__value": 1, "__type": "Float", "__tile": null, "defUid": 402, "realEditorValues": [] },
+				{ "__identifier": "filter_green", "__value": 1, "__type": "Float", "__tile": null, "defUid": 403, "realEditorValues": [] },
+				{ "__identifier": "filter_blue", "__value": 1, "__type": "Float", "__tile": null, "defUid": 404, "realEditorValues": [] },
+				{ "__identifier": "on_enter", "__value": null, "__type": "String", "__tile": null, "defUid": 361, "realEditorValues": [] },
+				{ "__identifier": "step", "__value": null, "__type": "String", "__tile": null, "defUid": 362, "realEditorValues": [] },
+				{ "__identifier": "on_exit", "__value": null, "__type": "String", "__tile": null, "defUid": 363, "realEditorValues": [] }
+			],
+			"layerInstances": null,
+			"__neighbours": [{ "levelIid": "92d220b0-8dc0-11ec-9a7d-b9b326e2e39a", "levelUid": 95, "dir": "n" }]
 		}
 	],
 	"worlds": []

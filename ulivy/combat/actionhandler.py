@@ -10,6 +10,8 @@ class ActionHandler:
         self.init_actions()
 
     def init_actions(self):
+        self.legal_actions = []
+        self.illegal_actions = []
         for i in range(4):
             self.legal_actions.append(Action(ActionType.ATTACK, a_index=i))
         self.legal_actions.append(Action(ActionType.SWITCH))

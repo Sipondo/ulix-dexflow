@@ -813,13 +813,13 @@
 							"id": "V_String",
 							"params": ["{\"team\": [{\"level\": 50}]}"]
 						}] },
-						{ "__identifier": "level", "__value": 50, "__type": "Int", "__tile": null, "defUid": 451, "realEditorValues": [{ "id": "V_Int", "params": [50] }] },
-						{ "__identifier": "battlers", "__value": [ "Meganium", "Skarmory" ], "__type": "Array<LocalEnum.Battlers>", "__tile": null, "defUid": 379, "realEditorValues": [ {
+						{ "__identifier": "level", "__value": 25, "__type": "Int", "__tile": null, "defUid": 451, "realEditorValues": [{ "id": "V_Int", "params": [25] }] },
+						{ "__identifier": "battlers", "__value": [ "Meganium", "Rattata" ], "__type": "Array<LocalEnum.Battlers>", "__tile": null, "defUid": 379, "realEditorValues": [ {
 							"id": "V_String",
 							"params": ["Meganium"]
 						}, {
 							"id": "V_String",
-							"params": ["Skarmory"]
+							"params": ["Rattata"]
 						} ] },
 						{ "__identifier": "patrol", "__value": [], "__type": "Array<Point>", "__tile": null, "defUid": 381, "realEditorValues": [] },
 						{ "__identifier": "spot_text", "__value": "Stop!", "__type": "String", "__tile": null, "defUid": 418, "realEditorValues": [] },
@@ -3714,5 +3714,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "e" }]
+	"__neighbours": [ { "levelIid": "92dc59e0-8dc0-11ec-9a7d-af9f92844cbd", "levelUid": 311, "dir": "e" }, { "levelIid": "2e8535b0-02f0-11ed-97c3-e3b2817fa6ef", "levelUid": 488, "dir": "s" } ]
 }
