@@ -18,7 +18,7 @@ class SendOutEffect(BaseEffect):
         self.scene.board.fainted = False
         self.scene.on_send_out_effects(self.target)
         self.scene.board.no_skip(
-            f"{self.scene.board.get_actor(self.target).name}, go!", particle="Burn"
+            f"{self.scene.board.get_actor(self.target).name}, go!", particle="summon"
         )
         return True, False, False
 
@@ -27,6 +27,6 @@ class SendOutEffect(BaseEffect):
         self.scene.board.fainted = False
         self.scene.on_send_out_effects(self.target)
         self.scene.board.no_skip(
-            f"{self.scene.board.get_actor(self.target).name}, go!", particle="Burn"
+            f"{self.scene.board.get_actor(self.target).name}, go!", particle="summon"
         )
         return True, False, False

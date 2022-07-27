@@ -11,6 +11,6 @@ class ReturnEffect(BaseEffect):
         self.scene.board.set_active((self.target[0], -1))
         self.scene.board.no_skip(
             f"{self.scene.board.get_actor(self.target).name}, come back!",
-            particle="Ember",
+            particle="summon",
         )
         return True, False, False

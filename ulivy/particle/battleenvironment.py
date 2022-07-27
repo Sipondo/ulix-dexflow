@@ -104,6 +104,10 @@ class BattleEnvironment(FloatLayout):
         for child in self.children:
             child.update(time, frame_time)
 
+        for a in self.scene.img_battler:
+            for b in a:
+                b.update(time, frame_time)
+
     def set_battlers(self, enemy_first=False):
         if self.enemy_first == enemy_first:
             return
@@ -192,6 +196,9 @@ class BattleBattlerImage(FloatLayout):
         self.texture_file = None
         self.face = 0
         self.ratio = 0.0
+        self.summon_size = 0.0
+        self.summon_size_to = 1.0
+        self.theight = 0.0
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(BattleBattlerImage, self).__init__(**kwargs)
@@ -207,6 +214,10 @@ class BattleBattlerImage(FloatLayout):
 
     def set_texture(self, texture_file):
         self.texture_file = texture_file
+        if texture_file is None:
+            self.summon_size_to = 0.0
+        else:
+            self.summon_size_to = 1.0
         self.bind_texture()
 
     def set_face(self, face):
@@ -218,8 +229,9 @@ class BattleBattlerImage(FloatLayout):
     def bind_texture(self):
         if self.texture_file is not None:
             back = 0 if self.face % 3 else 1
+            self.theight = self.texture_file[back].height
             self.ratio = self.texture_file[back].width / self.texture_file[back].height
-            self.canvas["Size"] = (self.texture_file[back].height / 4) ** 0.5
+            self.canvas["Size"] = ((self.theight / 4) ** 0.7) * (self.summon_size ** 3)
             self.canvas["AnimationLength"] = self.ratio
             self.canvas["HeightShare"] = 1.0
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)
@@ -237,6 +249,17 @@ class BattleBattlerImage(FloatLayout):
         self.canvas["Texture"] = 4
 
     def update(self, time, dt):
+        if self.summon_size > self.summon_size_to:
+            self.summon_size -= dt * 1.8
+            if self.summon_size <= self.summon_size_to:
+                self.summon_size = self.summon_size_to
+
+        if self.summon_size < self.summon_size_to:
+            self.summon_size += dt * 1.8
+            if self.summon_size >= self.summon_size_to:
+                self.summon_size = self.summon_size_to
+
+        self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
         self.redraw()
 
 
