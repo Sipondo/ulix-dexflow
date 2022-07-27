@@ -42,10 +42,10 @@ class FaintEffect(BaseEffect):
             self.scene.force_action(self.target[0], ActionType.SENDOUT)
         else:
             if not end:
-                # pass
                 self.scene.add_effect(
                     SendOutEffect(self.scene, (self.target[0], self.target[1] + 1))
                 )
+                self.scene.force_action(0, ActionType.SWITCH)
         return True, False, False
 
     def on_faint(self, target):

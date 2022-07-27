@@ -11,6 +11,7 @@ class BaseAgent(abc.ABC):
         self.team = team
         self.action_handler = ActionHandler(self.game, self.scene)
         self.action = None
+        self.nothing = False
 
     @abc.abstractmethod
     def start(self):
@@ -26,7 +27,11 @@ class BaseAgent(abc.ABC):
 
     def get_first_sendout(self):
         sendout_i = self.scene.board.get_first_sendout(self.team)
-        return Action(ActionType.SENDOUT, user=(self.team, sendout_i), target=(self.team, sendout_i))
+        return Action(
+            ActionType.SENDOUT,
+            user=(self.team, sendout_i),
+            target=(self.team, sendout_i),
+        )
 
     def force_action(self, action_type: ActionType):
         self.action_handler.force_action(Action(action_type))

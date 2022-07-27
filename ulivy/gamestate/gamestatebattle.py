@@ -154,6 +154,9 @@ class GameStateBattle(BaseGameState):
     def event_keypress(self, key, modifiers):
         return
 
+    def reg_opponent_skip(self):
+        self.combat.mgr_agent.agents[1].nothing = True
+
     def reg_action(self, action):
         self.selection = 0
 
@@ -179,6 +182,9 @@ class GameStateBattle(BaseGameState):
         if action.a_type == ActionType.RUN:
             user = (0, self.board.get_active(0))
             target = (0, self.board.get_active(0))
+        # if action.a_type == ActionType.NOTHING:
+        #     user = (0, self.board.get_active(0))
+        #     target = (0, self.board.get_active(0))
         action.user = user
         action.target = target
         self.combat.register_action(action)
@@ -197,6 +203,9 @@ class GameStateBattle(BaseGameState):
             elif self.combat.board.fainted:
                 self.state = BattleStates.SWAPMENU
                 self.lock_state = "user_switch"
+            elif self.combat.mgr_agent.agents[0].action_handler.only_legal("SWITCH"):
+                self.state = BattleStates.SWAPMENU
+                self.lock_state = "user_switch" # TODO: rewrite hacky solution
             else:
                 pass
                 self.state = BattleStates.TOPMENU

@@ -80,7 +80,18 @@ class UIBattle(BaseUI):
                     self.game.r_aud.effect("select")
                 elif key == "interact":
                     if self.gamestate.board.teams[0][self.sel_swap][1].can_fight:
-                        print("Lock state?", self.gamestate.lock_state)
+                        print(
+                            "Lock state?",
+                            self.gamestate.lock_state,
+                            self.gamestate.combat.mgr_agent.agents[
+                                0
+                            ].action_handler.only_legal("SWITCH"),
+                        )
+                        # if self.gamestate.combat.mgr_agent.agents[
+                        #     0
+                        # ].action_handler.only_legal(
+                        #     "SWITCH"
+                        # ):  # TODO: remove this hacky solution (not UI)
                         if self.gamestate.lock_state == "user_switch":
                             sendout_act = Action(
                                 ActionType.SENDOUT, a_index=self.sel_swap
@@ -95,6 +106,7 @@ class UIBattle(BaseUI):
                                     self.gamestate.reg_action(
                                         Action(ActionType.SWITCH, a_index=self.sel_swap)
                                     )
+                                    self.gamestate.reg_opponent_skip()
                                 else:
                                     self.gamestate.state = BattleStates.TOPMENU
                                 self.gamestate.combat.board.fainted = False

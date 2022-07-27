@@ -26,10 +26,15 @@ class AgentRand(BaseAgent):
             a_index=action_i,
             a_data=self.scene.board.get_actor(user).actions[action_i],
             user=user,
-            target=target
+            target=target,
         )
         self.action = action
 
     def get_action(self):
+        if self.nothing:
+            self.nothing = False
+            self.action = Action(
+                ActionType.NOTHING, user=self.action.user, target=self.action.target
+            )
         return self.action
 

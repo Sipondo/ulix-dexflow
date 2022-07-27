@@ -67,6 +67,7 @@ class CombatScene:
             ActionType.SWITCH: SwitchEffect,
             ActionType.SENDOUT: SendOutEffect,
             ActionType.FORGET_MOVE: ForgetMoveEffect,
+            ActionType.NOTHING: None,
         }
 
         self.action_effects = []
@@ -119,7 +120,8 @@ class CombatScene:
             actions.sort(key=lambda x: self.board.get_action_priority(x))
             for action in actions:
                 move_effect = self.spawn_action_effect(action)
-                self.action_effects.append((action, move_effect))
+                if move_effect:
+                    self.action_effects.append((action, move_effect))
         return self.combat_state_methods[self.battle_state]()
 
     def next_state(self) -> typing.List[CombatBoard]:
@@ -281,8 +283,10 @@ class CombatScene:
                 self.action_effects.remove((move_effect, action))
 
     def spawn_action_effect(self, action):
-        effect = self.action_type_effects[action.a_type](self, action)
-        self.effects.append(effect)
+        effect = self.action_type_effects[action.a_type]
+        if effect:
+            effect = effect(self, action)
+            self.effects.append(effect)
         return effect
 
     def on_switch_effects(self, old, new):

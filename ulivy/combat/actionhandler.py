@@ -29,6 +29,16 @@ class ActionHandler:
             ]
         return action.a_type in [_action.a_type for _action in self.legal_actions]
 
+    def describe_legal(self):
+        return [str(a.a_type) for a in self.legal_actions]
+
+    def only_legal(self, name):
+        legals = self.describe_legal()
+        for l in legals:
+            if name not in l:
+                return False
+        return True
+
     def set_action_legal(self, action: Action):
         if action.a_type == ActionType.ATTACK:
             for a in self.legal_actions:

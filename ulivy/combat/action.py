@@ -11,7 +11,7 @@ class ActionType(enum.Enum):
     ITEM = enum.auto()
     CATCH = enum.auto()
     FORGET_MOVE = enum.auto()
-    # NOTHING = enum.auto()
+    NOTHING = enum.auto()
 
 
 @dataclasses.dataclass
