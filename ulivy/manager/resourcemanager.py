@@ -400,9 +400,8 @@ class ResourceManager:
         print("SPRITE:", pth)
         in_image = self.open_image(pth)
 
-        data = in_image.image._data[0]
-
-        if data.data is not None:
+        if in_image.image is not None and in_image.image._data[0].data is not None:
+            data = in_image.image._data[0]
             d = data.data
             w = data.width
             h = data.height

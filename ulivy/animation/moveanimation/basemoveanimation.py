@@ -123,7 +123,6 @@ class BaseMoveAnimation(BaseAnimation):
             self.anim_speed = 11
 
     def on_end(self, time, frame_time):
-        self.entity.set_current_sprite((self.movement_type, self.frame))
         self.entity.after_move(time, frame_time)
         self.game.m_ani.remove_anim(self)
         self.ended = True
