@@ -15,6 +15,9 @@ class UICinematic(BaseUI):
 
         if self.gstate.dialogue:
             self.gstate.dialogue = self.clean_dialogue(self.gstate.dialogue)
+            self.ids.DialogueWindow.opacity = 1
+        else:
+            self.ids.DialogueWindow.opacity = 0
         self.set_choice_window(self.gstate.options)
         self.highlight_selection()
         return False
