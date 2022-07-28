@@ -121,4 +121,3 @@ class LetterboxRenderer(FloatLayout):
         self.box_to = box
         if force:
             self.box = box
-

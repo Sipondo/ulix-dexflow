@@ -7,6 +7,7 @@ from kivy.graphics import Mesh, MeshView, RenderContext, BindTexture, Rectangle
 from kivy.core.image import Image, ImageData
 
 from kivy.graphics.transformation import Matrix
+import numpy as np
 
 
 class ParticleSystem(FloatLayout):
@@ -83,6 +84,8 @@ class ParticleSystem(FloatLayout):
                 self.transformer.render(time, self.step_size)
                 for emitter in self.emitters:
                     emitter.render(time, self.step_size)
+                for renderer in self.renderers:
+                    renderer.set_multi_opacity(0.14, self.vboa_index)
                 self.switch_buffers()
 
         for misc in self.miscs:
@@ -557,6 +560,11 @@ class Renderer:
         self.noise_speed = 0
         self.noise_id = 0
 
+    def set_multi_opacity(self, amount, fresh):
+        self.widget.multi_opacity -= amount
+        self.widget.multi_opacity[self.widget.multi_opacity < 0] = 0.0
+        self.widget.multi_opacity[fresh] = 1.0
+
     def set_fields(self):
         self.opacity = float(self.system.r(self, "opacity"))
         self.noise_speed = float(self.system.r(self, "noise"))
@@ -647,7 +655,7 @@ class Renderer:
 
     def emit_gpu(self, time, frame_time):
         self.prog["step_count"] = self.system.step_count
-        self.prog["opacity"] = self.opacity
+        self.widget.opacity = self.opacity  # self.prog["opacity"]
         self.prog["Usenoise"] = float((self.equation != 1) and (self.noise_speed != 0))
         self.prog["Rotvel"] = int(self.rotvel)
 
@@ -694,6 +702,9 @@ class RenderWidget(FloatLayout):
 
         super(RenderWidget, self).__init__(**kwargs)
 
+        self.multi_opacity = np.zeros(10, dtype=float)
+        self.opacity = 1.0
+        self.opacity_index = 0
         # with self.canvas:
         #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
@@ -702,7 +713,8 @@ class RenderWidget(FloatLayout):
             BindTexture(
                 texture=self.texture, index=7,
             )
-            for v in self.system.vbos:
+            for i, v in enumerate(self.system.vbos):
+                Callback(self._set_opacity)
                 self.mesh = MeshView(host_mesh=v, fmt=fmt)
             Callback(self._reset_blend_func)
 
@@ -713,6 +725,7 @@ class RenderWidget(FloatLayout):
         glBlendFunc(GL_ONE, GL_ONE)
         glBlendEquation(GL_FUNC_ADD)
         glDepthMask(False)
+        self.opacity_index = 0
 
     def _reset_blend_func(self, instruction):
         glDisable(GL_DEPTH_TEST)
@@ -721,6 +734,17 @@ class RenderWidget(FloatLayout):
         glDepthMask(True)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glBlendEquation(GL_FUNC_ADD)
+
+    def _set_opacity(self, instruction):
+        self.canvas["opacity"] = float(
+            self.multi_opacity[self.opacity_index] * self.opacity
+        )
+        # print(
+        #     self.multi_opacity[self.opacity_index],
+        #     self.opacity,
+        #     float(self.multi_opacity[self.opacity_index] * self.opacity),
+        # )
+        self.opacity_index += 1
 
     def update(self, time=None, dt=None):
         return
