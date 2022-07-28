@@ -27,7 +27,7 @@ class Battle:
 
         if not self.encounter_init:
             self.act.game.m_gst.switch_state(
-                "battle", battle_type="trainer", enemy_team=self.user.team
+                "battle", fade=True, battle_type="trainer", enemy_team=self.user.team
             )
             self.encounter_init = True
             return False

@@ -16,7 +16,7 @@ class EncounterAnimation(BaseAnimation):
         self.game.pan_tool.zoom_encounter()
 
     def on_end(self, time, frame_time):
-        self.game.m_gst.switch_state("battle")
+        self.game.m_gst.switch_state("battle", fade=True)
         self.game.m_ani.remove_anim(self)
 
     def conditions(self):

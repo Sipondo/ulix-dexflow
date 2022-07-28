@@ -17,7 +17,7 @@ class Shop:
         self.src = src
         self.user = user
 
-        self.act.game.m_gst.switch_state("shop", owner=self.user)
+        self.act.game.m_gst.switch_state("shop", fade=True, owner=self.user)
 
         if self.user.dialogue is not None:
             self.act.game.m_gst.current_state.dialogue = self.user.dialogue

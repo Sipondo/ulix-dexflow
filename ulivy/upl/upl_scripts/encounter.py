@@ -48,7 +48,7 @@ class Encounter:
 
         if not self.encounter_init:
             self.act.game.m_gst.switch_state(
-                "battle", battle_type="wild", enemy_team=[self.fighter]
+                "battle", fade=True, battle_type="wild", enemy_team=[self.fighter]
             )
             self.encounter_init = True
             return False

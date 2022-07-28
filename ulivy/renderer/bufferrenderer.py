@@ -51,9 +51,11 @@ class BufferRenderer(FloatLayout):
 
         # self.fbo.add_reload_observer(self.populate_fbo)
 
+        self.r_box = LetterboxRenderer(self.game)
         canvas = self.canvas
         self.canvas = self.fbo
         self.add_widget(self.fbo_layout)
+        self.add_widget(self.r_box)
         self.canvas = canvas
 
         self.enable_overworld()
@@ -69,10 +71,54 @@ class BufferRenderer(FloatLayout):
 
     def update(self, time, dt):
         self.r_til.update(time, dt)
-        pass
+        self.r_box.update(time, dt)
 
     def enable_overworld(self):
         self.fbo_add_widget(self.r_til)
 
     def disable_overworld(self):
         self.fbo_layout.clear_widgets()
+
+
+class LetterboxRenderer(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.game = game
+        # call the constructor of parent
+        # if they are any graphics object, they will be added on our new canvas
+        super(LetterboxRenderer, self).__init__(**kwargs)
+
+        with self.canvas:
+            Color(0, 0, 0)
+            self.rec1 = Rectangle(size=self.size, pos=self.pos)
+            self.rec2 = Rectangle(size=self.size, pos=self.pos)
+
+        self.box = 0.0
+        self.box_to = 0.0
+
+    def redraw(self, *args):
+        self.size = self.game.RENDER_SIZE
+        w = self.size[0]
+        h = (self.box ** 0.5) * self.size[1] * 0.15
+        self.rec1.pos = (0, 0)
+        self.rec1.size = (w, h)
+        self.rec2.pos = (0, self.size[1] - h)
+        self.rec2.size = (w, h)
+
+    def update(self, time=None, dt=None):
+        if self.box > self.box_to:
+            self.box -= dt * 2.6
+            if self.box <= self.box_to:
+                self.box = self.box_to
+
+        if self.box < self.box_to:
+            self.box += dt * 2.6
+            if self.box >= self.box_to:
+                self.box = self.box_to
+
+        self.redraw()
+
+    def go_to(self, box, force=False):
+        self.box_to = box
+        if force:
+            self.box = box
+

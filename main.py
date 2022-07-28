@@ -61,6 +61,7 @@ from ulivy.upl.uplmanager import UplManager
 
 from ulivy.renderer.audiorenderer import AudioRenderer
 from ulivy.renderer.bufferrenderer import BufferRenderer
+from ulivy.renderer.faderenderer import FadeRenderer
 
 from ulivy.renderer.uirenderer import UIRenderer
 
@@ -154,6 +155,10 @@ class PokeGame(Screen):
 
         self.r_uin = UIRenderer(self)
         self.add_widget(self.r_uin)
+
+        self.r_fad = FadeRenderer(self)
+        self.add_widget(self.r_fad)
+
         if platform == "android":
             self.m_osc = OscManager(self)
             self.add_widget(self.m_osc)
@@ -164,20 +169,24 @@ class PokeGame(Screen):
 
         self.maphack = False
 
-        self.m_gst.switch_state("overworld")
+        self.m_gst.switch_state("overworld", fade=True)
         self.m_map.set_level(self.m_map.current_level_id)
         self.time = 0
         Clock.schedule_interval(self.update, 0)
 
     def update(self, dt):
+        dt = min(dt, 0.1)  # TODO: check if this is safe
         self.time += dt
         time = self.time
 
+        self.r_fad.update(time, dt)
         lock = self.m_gst.update(time, dt)
-        self.r_uin.update(time, dt)
 
-        if self.m_gst.current_state_name in ("cinematic", "overworld"):
-            self.m_act.update(time, dt)
+        if self.r_fad.fade_done():
+            self.r_uin.update(time, dt)
+
+            if self.m_gst.current_state_name in ("cinematic", "overworld"):
+                self.m_act.update(time, dt)
 
         self.r_fbo.update(time, dt)
 

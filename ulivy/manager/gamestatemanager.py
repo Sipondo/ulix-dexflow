@@ -27,26 +27,55 @@ class GameStateManager:
         self.current_state_name = None
         self.previous_state_name = None
 
+        self.switching = False
+        self.switching_to = None
+        self.switching_kwargs = []
+
     def switch_to_previous_state(self):
         if self.previous_state_name is not None:
             self.switch_state(self.previous_state_name)
 
     def update(self, time, frame_time):
+        if self.switching:
+            if self.game.r_fad.fade_done():
+                self.switching = False
+                self._switch_state(
+                    self.switching_to, fade=True, **self.switching_kwargs
+                )
+                self.switching_to = None
+                self.switching_kwargs = []
+            return
         if self.current_state:
             return self.current_state.update(time, frame_time)
 
     def event_keypress(self, request, modifiers):
+        if not self.game.r_fad.fade_done():
+            return
         if self.current_state:
             return self.current_state.event_keypress(request, modifiers)
 
     def event_unicode(self, char):
+        if not self.game.r_fad.fade_done():
+            return
         if self.current_state:
             return self.current_state.event_unicode(char)
 
-    def switch_state(self, new_state, **kwargs):
+    def switch_state(self, new_state, fade=False, **kwargs):
+        if not fade:
+            self._switch_state(new_state, fade, **kwargs)
+            return
+        self.switching = True
+        self.switching_to = new_state
+        self.switching_kwargs = kwargs
+        self.game.r_fad.go_to(1.0)
+
+    def _switch_state(self, new_state, fade, **kwargs):
         if self.current_state is not None:
             self.current_state.on_exit()
             del self.current_state
+
+        if fade:
+            self.game.r_fad.go_to(0.0)
 
         self.previous_state_name = self.current_state_name
         self.current_state_name = new_state

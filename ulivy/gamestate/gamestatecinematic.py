@@ -8,6 +8,7 @@ class GameStateCinematic(BaseGameState):
         self.author = None
 
         self.spr_talker = None
+        self.game.r_fbo.r_box.go_to(1.0 if letterbox else 0.0)
 
     def update(self, time, frame_time):
         self.time = time

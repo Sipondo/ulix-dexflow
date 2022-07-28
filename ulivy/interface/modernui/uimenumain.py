@@ -25,7 +25,7 @@ class UIMenuMain(BaseUI):
             self.game.r_aud.effect("select")
         elif key == "interact":
             if self.selection == 2:
-                self.game.m_gst.switch_state("menubag")
+                self.game.m_gst.switch_state("menubag", fade=True)
             pass
 
         self.highlight_selection()

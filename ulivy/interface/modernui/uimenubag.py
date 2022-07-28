@@ -32,7 +32,7 @@ class UIMenuBag(BaseUI):
 
     def event_keypress(self, key, modifiers):
         if key == "backspace":
-            self.game.m_gst.switch_state("overworld")
+            self.game.m_gst.switch_state("overworld", fade=True)
         if key == "down":
             self.selection = (self.selection + 1) % self.max_selection
             self.game.r_aud.effect("select")

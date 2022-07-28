@@ -27,6 +27,7 @@ class GameStateBattle(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
+        self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)
         if particle_test:
             self.game.inventory.init_random_member()
@@ -148,6 +149,7 @@ class GameStateBattle(BaseGameState):
         return True
 
     def on_exit(self):
+        self.game.r_fbo.enable_overworld()
         self.game.r_fbo.fbo_remove_widget(self.scene)
         del self.scene
 
@@ -205,7 +207,7 @@ class GameStateBattle(BaseGameState):
                 self.lock_state = "user_switch"
             elif self.combat.mgr_agent.agents[0].action_handler.only_legal("SWITCH"):
                 self.state = BattleStates.SWAPMENU
-                self.lock_state = "user_switch" # TODO: rewrite hacky solution
+                self.lock_state = "user_switch"  # TODO: rewrite hacky solution
             else:
                 pass
                 self.state = BattleStates.TOPMENU
@@ -285,6 +287,5 @@ class GameStateBattle(BaseGameState):
             self.game.r_fbo.r_til.set_map_via_manager(
                 (0, 0,), fade=False,
             )
-        self.game.r_fbo.enable_overworld()
-        self.game.m_gst.switch_state("overworld")
+        self.game.m_gst.switch_state("overworld", fade=True)
 

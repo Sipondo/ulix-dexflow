@@ -3,8 +3,7 @@ from .basegamestate import BaseGameState
 
 class GameStateOverworld(BaseGameState):
     def on_enter(self):
-        # self.game.r_int.letterbox = False
-
+        self.game.r_fbo.r_box.go_to(0.0)
         self.time = None
         self.movement_type = 0
         # self.game.r_aud.play_music("BGM/021-Field04.flac")

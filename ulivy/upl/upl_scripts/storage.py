@@ -16,7 +16,7 @@ class Storage:
         self.act = act
         self.src = src
         self.user = user
-        self.act.game.m_gst.switch_state("storage")
+        self.act.game.m_gst.switch_state("storage", fade=True)
 
     def on_tick(self, time=None, frame_time=None):
         return True
