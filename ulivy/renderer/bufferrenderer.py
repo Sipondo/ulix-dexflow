@@ -70,8 +70,6 @@ class BufferRenderer(FloatLayout):
         self.r_til.update(time, dt)
         self.r_box.update(time, dt)
 
-        print(self.pos, self.size, self.game.r_fbi.pos, self.game.r_fbi.size)
-
     def enable_overworld(self):
         self.fbo_add_widget(self.r_til)
 
