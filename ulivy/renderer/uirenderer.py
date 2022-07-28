@@ -17,8 +17,12 @@ class UIRenderer(FloatLayout):
         self.game = game
         self.current_ui = None
         super(UIRenderer, self).__init__(**kwargs)
+        self.size_hint_x = None
+        self.size_hint_y = None
+        self.size = self.game.RENDER_SIZE
 
     def update(self, time, frame_time):
+        self.size = self.game.RENDER_SIZE
         if self.current_ui:
             return self.current_ui.update(time, frame_time)
 
@@ -38,9 +42,9 @@ class UIRenderer(FloatLayout):
             self.current_ui = None
 
         if new_ui == "overworld":
-            self.current_ui = UI_OVERWORLD(self.game, gstate)
+            self.current_ui = UI_OVERWORLD(self.game, gstate, size=self.size)
         elif new_ui == "cinematic":
-            self.current_ui = UI_CINEMATIC(self.game, gstate)
+            self.current_ui = UI_CINEMATIC(self.game, gstate, size=self.size)
         elif new_ui == "debug":
             self.current_ui = UI_DEBUG(self.game, gstate)
         elif new_ui == "prompt":
@@ -48,7 +52,7 @@ class UIRenderer(FloatLayout):
         elif new_ui == "battle":
             self.current_ui = UI_BATTLE(self.game, gstate)
         elif new_ui == "menumain":
-            self.current_ui = UI_MENU_MAIN(self.game, gstate)
+            self.current_ui = UI_MENU_MAIN(self.game, gstate, size=self.size)
         elif new_ui == "menubag":
             self.current_ui = UI_MENU_BAG(self.game, gstate)
         else:

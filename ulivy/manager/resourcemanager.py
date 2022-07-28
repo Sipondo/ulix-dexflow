@@ -402,9 +402,15 @@ class ResourceManager:
 
         data = in_image.image._data[0]
 
-        a = np.frombuffer(data.data, dtype=np.uint8).reshape(
-            (data.width, data.height, 4)
-        )
+        if data.data is not None:
+            d = data.data
+            w = data.width
+            h = data.height
+        else:
+            d = in_image.texture.pixels
+            w, h = in_image.texture.size
+
+        a = np.frombuffer(d, dtype=np.uint8).reshape((w, h, 4))
 
         b = a[:, : a.shape[0], 3]
         s = np.amax((b > 250), axis=0)

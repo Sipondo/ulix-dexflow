@@ -27,6 +27,7 @@ class FadeRenderer(FloatLayout):
         self.rec1.size = self.size
 
     def update(self, time=None, dt=None):
+        self.size = self.game.RENDER_SIZE
         update_canvas = False
         if self.alpha > self.alpha_to:
             self.alpha -= dt * 2.6

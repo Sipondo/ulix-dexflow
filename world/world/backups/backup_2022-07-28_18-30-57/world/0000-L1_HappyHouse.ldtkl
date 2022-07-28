@@ -793,13 +793,13 @@
 							"id": "V_String",
 							"params": ["1_joey"]
 						}] },
-						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/npc_12.png", "__type": "FilePath", "__tile": null, "defUid": 66, "realEditorValues": [{
+						{ "__identifier": "sprite", "__value": "../resources/essentials/graphics/characters/trchar063.png", "__type": "FilePath", "__tile": null, "defUid": 66, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["../resources/essentials/graphics/characters/npc_12.png"]
+							"params": ["../resources/essentials/graphics/characters/trchar063.png"]
 						}] },
-						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/trainers/sailor.png", "__type": "FilePath", "__tile": null, "defUid": 437, "realEditorValues": [{
+						{ "__identifier": "splash", "__value": "../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png", "__type": "FilePath", "__tile": null, "defUid": 437, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["../resources/essentials/graphics/trainers/sailor.png"]
+							"params": ["../resources/essentials/graphics/Trainers/ELITEFOUR_Lance.png"]
 						}] },
 						{ "__identifier": "name", "__value": "Master Joey", "__type": "String", "__tile": null, "defUid": 380, "realEditorValues": [{
 							"id": "V_String",

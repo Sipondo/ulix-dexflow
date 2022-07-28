@@ -60,7 +60,7 @@ from ulivy.manager.p5 import ParticleManager
 from ulivy.upl.uplmanager import UplManager
 
 from ulivy.renderer.audiorenderer import AudioRenderer
-from ulivy.renderer.bufferrenderer import BufferRenderer
+from ulivy.renderer.bufferrenderer import BufferRenderer, InterfaceBufferRenderer
 from ulivy.renderer.faderenderer import FadeRenderer
 
 from ulivy.renderer.uirenderer import UIRenderer
@@ -150,14 +150,16 @@ class PokeGame(Screen):
         self.r_aud = AudioRenderer(self)
 
         self.r_fbo = BufferRenderer(self)
-
         self.add_widget(self.r_fbo)
 
+        self.r_fbi = InterfaceBufferRenderer(self)
+        self.add_widget(self.r_fbi)
+
         self.r_uin = UIRenderer(self)
-        self.add_widget(self.r_uin)
+        self.r_fbi.fbo_add_widget(self.r_uin)
 
         self.r_fad = FadeRenderer(self)
-        self.add_widget(self.r_fad)
+        self.r_fbi.fbo_add_widget(self.r_fad)
 
         if platform == "android":
             self.m_osc = OscManager(self)

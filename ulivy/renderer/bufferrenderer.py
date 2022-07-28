@@ -27,6 +27,7 @@ from kivy.lang import Builder
 from kivy.graphics.gl_instructions import ClearColor, ClearBuffers
 
 Builder.load_file("ulivy/renderer/bufferrenderer.kv")
+Builder.load_file("ulivy/renderer/interfacebufferrenderer.kv")
 
 
 class BufferRenderer(FloatLayout):
@@ -41,15 +42,11 @@ class BufferRenderer(FloatLayout):
 
         with self.canvas:
             self.fbo = Fbo(size=self.size)
-            # create the fbo
-
             self.ids.GameImage.texture = self.fbo.texture
 
         with self.fbo:
             ClearColor(0, 0, 0, 0)
             ClearBuffers(clear_color=True, clear_depth=True)
-
-        # self.fbo.add_reload_observer(self.populate_fbo)
 
         self.r_box = LetterboxRenderer(self.game)
         canvas = self.canvas
@@ -73,11 +70,42 @@ class BufferRenderer(FloatLayout):
         self.r_til.update(time, dt)
         self.r_box.update(time, dt)
 
+        print(self.pos, self.size, self.game.r_fbi.pos, self.game.r_fbi.size)
+
     def enable_overworld(self):
         self.fbo_add_widget(self.r_til)
 
     def disable_overworld(self):
         self.fbo_layout.clear_widgets()
+
+
+class InterfaceBufferRenderer(FloatLayout):
+    def __init__(self, game, **kwargs):
+        super(InterfaceBufferRenderer, self).__init__(**kwargs)
+
+        self.game = game
+
+        self.size = self.game.RENDER_SIZE
+        self.fbo_layout = FloatLayout()
+
+        with self.canvas:
+            self.fbo = Fbo(size=self.size)
+            self.ids.InterfaceGameImage.texture = self.fbo.texture
+
+        with self.fbo:
+            ClearColor(0, 0, 0, 0)
+            ClearBuffers(clear_color=True, clear_depth=True)
+
+        canvas = self.canvas
+        self.canvas = self.fbo
+        self.add_widget(self.fbo_layout)
+        self.canvas = canvas
+
+    def fbo_add_widget(self, widget):
+        self.fbo_layout.add_widget(widget)
+
+    def fbo_remove_widget(self, widget):
+        self.fbo_layout.remove_widget(widget)
 
 
 class LetterboxRenderer(FloatLayout):

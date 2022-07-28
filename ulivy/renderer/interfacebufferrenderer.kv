@@ -1,9 +1,8 @@
 #:kivy 2.0.0
 
-
-<BufferRenderer>:
+<InterfaceBufferRenderer>:
     Image:
-        id: BackgroundId
+        id: InterfaceBackgroundId
         #Provide the image that will form the aspect-locked bounds of the
         #game.  Image widgets have aspect_lock set to True by default.
         source: 'ulivy/renderer/gamebounds.png'
@@ -18,11 +17,12 @@
         magnification: self.norm_image_size[0] / self.texture_size[0]
 
         Bounds:
-            id: GameCanvas
+            id: InterfaceGameCanvas
             pos: self.parent.offset
             size: self.parent.norm_image_size
 
             PixelImage:
-                id: GameImage
+                id: InterfaceGameImage
                 allow_stretch: True
                 source: 'ulivy/interface/modernui/gamebounds.png'
+            

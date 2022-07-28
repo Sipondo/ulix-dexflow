@@ -9,6 +9,7 @@ class UICinematic(BaseUI):
         self.selection = 0
         self.lock = False
         self.block_input = False
+        self.talker_sprite = "init"
 
     def update(self, time=None, frame_time=None):
         self.ids.DialogueText.text = self.gstate.dialogue or ""
@@ -20,6 +21,7 @@ class UICinematic(BaseUI):
             self.ids.DialogueWindow.opacity = 0
         self.set_choice_window(self.gstate.options)
         self.highlight_selection()
+        self.set_talker_sprite()
         return False
 
     def event_keypress(self, key, modifiers):
@@ -48,6 +50,7 @@ class UICinematic(BaseUI):
                 self.gstate.author = None
                 self.gstate.spr_talker = None
         self.highlight_selection()
+        self.set_talker_sprite()
 
     def set_choice_window(self, options):
         l = len(options)
@@ -90,47 +93,14 @@ class UICinematic(BaseUI):
             .replace("{player.chis}", self.game.m_ent.player.chis)
         )
 
-    def draw_interface(self, time, frame_time):
-        return
+    def set_talker_sprite(self):
+        if self.talker_sprite != self.gstate.spr_talker:
+            self.talker_sprite = self.gstate.spr_talker
+            self.ids.TalkerSprite.opacity = 0
 
-        if self.spr_talker:
-            self.game.r_int.draw_image(
-                self.spr_talker, (0.8, 0.7), centre=True, size=3, safe=True
-            )
-
-        # self.game.r_int.draw_rectangle((0.024, 0.83), to=(0.984, 0.99), col="grey")
-
-        if self.author is not None and self.author:
-            self.game.r_int.draw_image(
-                "namebox", (0.02, 0.75),
-            )
-            self.game.r_int.draw_text(
-                self.author, (0.025, 0.755), to=(0.30, 0.80), bcol=None,
-            )
-
-        if self.dialogue:
-            self.game.r_int.draw_image(
-                "textbox", (0.02, 0.82),
-            )
-            self.game.r_int.draw_text(
-                self.dialogue if self.dialogue is not None else "",
-                (0.025, 0.825),
-                to=(0.98, 0.98),
-                bcol=None,
-            )
-
-        if self.options:
-            self.game.r_int.draw_rectangle(
-                (0.75, 0.3), size=(0.15, 0.04 + 0.1 * len(self.options)), col="black"
-            )
-            for i, name in enumerate(self.options):
-                self.game.r_int.draw_text(
-                    f"{self.selection == i and '' or ''}{name}",
-                    (0.76, 0.31 + 0.08 * i),
-                    size=(0.13, 0.06),
-                    centre=False,
-                    bcol=self.selection == i and "yellow" or "white",
-                )
+            if self.talker_sprite is not None:
+                self.ids.TalkerSprite.source = self.talker_sprite[3:] + ".png"
+                self.ids.TalkerSprite.opacity = 1
 
     @property
     def max_selection(self):
