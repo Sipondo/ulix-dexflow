@@ -73,36 +73,36 @@ void main(){
         EmitVertex();
         EndPrimitive();
     }else{
-        uv=vec2(1.,0.);
+        uv=vec2(1.,1.-HeightShare);
         gl_Position=Mvp*vec4(pos+(right+up+up),1.);
         EmitVertex();
         
-        uv=vec2(0.,0.);
+        uv=vec2(0.,1.-HeightShare);
         gl_Position=Mvp*vec4(pos+(-right+up+up),1.);
         EmitVertex();
         
-        uv=vec2(1.,1.-HeightShare);
+        uv=vec2(1.,1.);
         gl_Position=Mvp*vec4(pos+(right),1.);
         EmitVertex();
         
-        uv=vec2(0.,1.-HeightShare);
+        uv=vec2(0.,1.);
         gl_Position=Mvp*vec4(pos+(-right),1.);
         EmitVertex();
         EndPrimitive();
         
-        uv=vec2(0.,0.);
+        uv=vec2(0.,1.-HeightShare);
         gl_Position=Mvp*vec4(pos+(-right+up+up),1.);
         EmitVertex();
         
-        uv=vec2(1.,0.);
+        uv=vec2(1.,1.-HeightShare);
         gl_Position=Mvp*vec4(pos+(right+up+up),1.);
         EmitVertex();
         
-        uv=vec2(0.,1.-HeightShare);
+        uv=vec2(0.,1.);
         gl_Position=Mvp*vec4(pos+(-right),1.);
         EmitVertex();
         
-        uv=vec2(1.,1.-HeightShare);
+        uv=vec2(1.,1.);
         gl_Position=Mvp*vec4(pos+(right),1.);
         EmitVertex();
         

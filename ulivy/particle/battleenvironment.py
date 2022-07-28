@@ -91,10 +91,18 @@ class BattleEnvironment(FloatLayout):
         self.enemy_first = True
 
         scene.img_battler.append(
-            (BattleBattlerImage(scene, self.game), BattleBattlerImage(scene, self.game))
+            (
+                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(scene, self.game),
+            )
         )
         scene.img_battler.append(
-            (BattleBattlerImage(scene, self.game), BattleBattlerImage(scene, self.game))
+            (
+                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(scene, self.game),
+            )
         )
         self.set_battlers()
 
@@ -117,14 +125,17 @@ class BattleEnvironment(FloatLayout):
 
         if enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
-            self.alpha_float.add_widget(self.scene.img_battler[1][1])
+            self.battler_float.add_widget(self.scene.img_battler[1][1])
+            self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
         self.battler_float.add_widget(self.scene.img_battler[0][0])
-        self.alpha_float.add_widget(self.scene.img_battler[0][1])
+        self.battler_float.add_widget(self.scene.img_battler[0][1])
+        self.alpha_float.add_widget(self.scene.img_battler[0][2])
 
         if not enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
-            self.alpha_float.add_widget(self.scene.img_battler[1][1])
+            self.battler_float.add_widget(self.scene.img_battler[1][1])
+            self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
 
 class BattlerContainer(FloatLayout):
@@ -229,14 +240,16 @@ class BattleBattlerImage(FloatLayout):
     def bind_texture(self):
         if self.texture_file is not None:
             back = 0 if self.face % 3 else 1
-            self.theight = self.texture_file[back].height
-            self.ratio = self.texture_file[back].width / self.texture_file[back].height
+            self.theight = self.texture_file[back][0].height
+            self.ratio = (
+                self.texture_file[back][0].width / self.texture_file[back][0].height
+            )
             self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
             self.canvas["AnimationLength"] = self.ratio
-            self.canvas["HeightShare"] = 1.0
+            self.canvas["HeightShare"] = self.texture_file[back][1]
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)
 
-            self.tex1 = self.texture_file[back].texture
+            self.tex1 = self.texture_file[back][0].texture
             self.tex1.mag_filter = "nearest"
 
             self.canvas.clear()

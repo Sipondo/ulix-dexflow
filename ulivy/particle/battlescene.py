@@ -117,6 +117,7 @@ class BattleScene(FloatLayout):
 
     def render(self, time: float, frame_time: float):
         self.camera.render(time, frame_time)
+        self.prep_battler(time, frame_time, shadow=True)
         self.prep_battler(time, frame_time)
         self.prep_battler(time, frame_time, cutout=True)
         self.bmove.render(time, frame_time)
@@ -361,7 +362,7 @@ class BattleScene(FloatLayout):
         # self.ctx.disable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
     def render_battler(self, i, time, cutout=False, shadow=False):
-        battler = self.img_battler[i][1 if cutout else 0]
+        battler = self.img_battler[i][2 if cutout else (0 if shadow else 1)]
         location = self.location_team0 if i == 0 else self.location_team1
 
         battler.canvas["CameraPosition"] = self.game.m_cam.pos

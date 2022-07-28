@@ -398,23 +398,20 @@ class ResourceManager:
 
     def prepare_battle_sprite(self, pth, mirror=False):
         print("SPRITE:", pth)
-        a = self.open_image(pth)
+        in_image = self.open_image(pth)
 
-        return a
+        data = in_image.image._data[0]
 
-        a = np.flip(a, axis=0)
+        a = np.frombuffer(data.data, dtype=np.uint8).reshape(
+            (data.width, data.height, 4)
+        )
 
         b = a[:, : a.shape[0], 3]
         s = np.amax((b > 250), axis=0)
         height = np.amin((b[:, s] > 250).argmax(axis=0))
         height_share = (a.shape[0] - height) / a.shape[0]
 
-        a = self.prep_image(a)
-
-        texture = self.ctx.texture(a.shape[1:], 4, a.tobytes())
-        texture.filter = (moderngl.LINEAR, moderngl.NEAREST)
-        texture.write(a.tobytes())
-        return texture, height_share
+        return in_image, float(height_share)
 
     def prepare_battle_animset(self, id):
         root = self.p_graphics / "pokemon_anim"

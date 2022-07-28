@@ -29,7 +29,7 @@ class ParticleSystem(FloatLayout):
         print("Target:", self.target, self.basis)
 
         # TODO: temp
-        self.time_alive = -0.8
+        self.time_alive = -0.6
 
         self.step_count = self.time_alive
         self.warp = 1
@@ -55,7 +55,7 @@ class ParticleSystem(FloatLayout):
         frame_time *= self.warp * (3 if self.game.m_par.fast_forward else 1)
         self.step_size = self.game.m_par.step_size * self.step_warp
 
-        if (not self.particles) and self.time_alive > 1:
+        if (not self.particles) and self.time_alive > 0.5:
             if self.detonate > 9:
                 self.detonate = 0.3
             else:
@@ -288,6 +288,9 @@ class ParticleSystem(FloatLayout):
 
         self.transformer.load_programs()
         # self.transformer.load_context_objects()
+
+        if len(self.emitters) < 1:
+            self.time_alive = 0.4  # nothing to show, clear quickly
 
     def add_equation(self, params):
         self.params = params["content"]  # meh

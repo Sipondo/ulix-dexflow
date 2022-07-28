@@ -5,7 +5,6 @@ class SendOutEffect(BaseEffect):
     def __init__(self, scene, action):
         super().__init__(scene)
         self.spd_on_action = 10
-        print("\n\n\n\n\n\nSENDOUT!!!!!!!!!!!!!!", action, "\n\n\n\n")
         # TODO: get rid of this patch
         try:
             self.target = action.target  # .user
