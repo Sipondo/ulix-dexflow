@@ -39,7 +39,7 @@ void main(){
     vs_out.vel=in_vel*Basis;
     vs_out.size=in_size;
     vs_out.color=in_color;
-    vs_out.rot=in_rot;
+    vs_out.rot=in_rot+in_rot_vel*step_count;
     vs_out.rot_vel=in_rot_vel;
     vs_out.lifespan=in_lifespan;
     vs_out.noise=in_noise;
