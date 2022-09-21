@@ -29,7 +29,7 @@ class ParticleSystem(FloatLayout):
         print("Target:", self.target, self.basis)
 
         # TODO: temp
-        self.time_alive = -0.6
+        self.time_alive = -0.4
 
         self.step_count = self.time_alive
         self.warp = 1
@@ -57,7 +57,7 @@ class ParticleSystem(FloatLayout):
 
         if (not self.particles) and self.time_alive > 0.5:
             if self.detonate > 9:
-                self.detonate = 0.3
+                self.detonate = 0.7
             else:
                 self.detonate -= frame_time
             if self.detonate < 0:
@@ -146,23 +146,50 @@ class ParticleSystem(FloatLayout):
         #     print(err)
 
     def delete_parts(self):
+        del self.transformer.prog_trans
+        del self.transformer
+
+        for r in self.emitters:
+            del r.prog_emit
+            del r
+
         for r in self.renderers:
             r.delete_parts()
 
-    def load_context_objects(self):
-        self.vbo_object_emit = ParticleHolder(self.game)
-        self.add_widget(self.vbo_object_emit)
-        self.vbo_emit = self.vbo_object_emit.mesh
+        for r in self.renderers:
+            del r
 
-        self.vbo_objects = []
-        self.vbos = []
+        # for v in self.vbos:
+        #     v.gbatch.gvbo.set_transform_feedback(0)
+        #     v.indices = [0]
+        #     v.vertices = [0]
+        #     # del v
+
+        # for v in self.vbo_objects:
+        #     v.canvas.clear()
+        #     del v
+
+        # self.vbo_emit.gbatch.gvbo.set_transform_feedback(0)
+        # self.vbo_emit.indices = [0]
+        # self.vbo_emit.vertices = [0]
+        # # del self.vbo_emit
+        # self.vbo_object_emit.canvas.clear()
+        # del self.vbo_object_emit
+
+    def load_context_objects(self):
+        # self.vbo_object_emit = ParticleHolder(self.game)
+        # self.add_widget(self.vbo_object_emit)
+        # self.vbo_emit = self.vbo_object_emit.mesh
+
+        # self.vbo_objects = []
+        # self.vbos = []
         self.vboa_index = 0
         self.vbob_index = 1
-        for _ in range(8):
-            vbo_object = ParticleHolder(self.game)
-            self.vbo_objects.append(vbo_object)
-            self.add_widget(vbo_object)
-            self.vbos.append(vbo_object.mesh)
+        # for _ in range(8):
+        #     vbo_object = ParticleHolder(self.game)
+        #     self.vbo_objects.append(vbo_object)
+        #     self.add_widget(vbo_object)
+        #     self.vbos.append(vbo_object.mesh)
 
         # self.vbo_objectA = ParticleHolder(self.game)
         # self.add_widget(self.vbo_objectA)
@@ -175,6 +202,14 @@ class ParticleSystem(FloatLayout):
         # self.vbo1 = self.game.m_par.vbo_objectA.mesh
         # self.vbo2 = self.game.m_par.vbo_objectB.mesh
         # self.vbo_emit = self.game.m_par.vbo_emit.mesh
+
+    @property
+    def vbos(self):
+        return self.game.m_par.vbos
+
+    @property
+    def vbo_emit(self):
+        return self.game.m_par.vbo_emit
 
     @property
     def vbo1(self):
@@ -323,40 +358,40 @@ with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
 MAX_PARTICLES = 2048
 
 
-class ParticleHolder(FloatLayout):
-    def __init__(self, game, **kwargs):
-        self.game = game
-        self.canvas = RenderContext(fs=placeholder_shader_fs, vs=placeholder_shader_vs)
+# class ParticleHolder(FloatLayout):
+#     def __init__(self, game, **kwargs):
+#         self.game = game
+#         self.canvas = RenderContext(fs=placeholder_shader_fs, vs=placeholder_shader_vs)
 
-        super(ParticleHolder, self).__init__(**kwargs)
+#         super(ParticleHolder, self).__init__(**kwargs)
 
-        fmt = [
-            (b"in_pos", 4, "float"),
-            (b"in_vel", 3, "float"),
-            (b"in_size", 1, "float"),
-            (b"in_color", 3, "float"),
-            (b"in_rot", 1, "float"),
-            (b"in_rot_vel", 1, "float"),
-            (b"in_lifespan", 1, "float"),
-            (b"in_noise", 1, "float"),
-            (b"in_key", 1, "float"),
-        ]
+#         fmt = [
+#             (b"in_pos", 4, "float"),
+#             (b"in_vel", 3, "float"),
+#             (b"in_size", 1, "float"),
+#             (b"in_color", 3, "float"),
+#             (b"in_rot", 1, "float"),
+#             (b"in_rot_vel", 1, "float"),
+#             (b"in_lifespan", 1, "float"),
+#             (b"in_noise", 1, "float"),
+#             (b"in_key", 1, "float"),
+#         ]
 
-        with self.canvas:
-            self.mesh = Mesh(
-                vertices=[1.0, 1.0, 1.0, 1.0] * 4 * MAX_PARTICLES,
-                indices=list(range(MAX_PARTICLES)),
-                fmt=fmt,
-            )
+#         with self.canvas:
+#             self.mesh = Mesh(
+#                 vertices=[1.0, 1.0, 1.0, 1.0] * 4 * MAX_PARTICLES,
+#                 indices=list(range(MAX_PARTICLES)),
+#                 fmt=fmt,
+#             )
 
-    def update(self, time=None, dt=None):
-        return
+#     def update(self, time=None, dt=None):
+#         return
 
-    #     Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
+#     #     Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
 
-    # def de_register(self, *largs):
-    #     # filthy hack... TODO: remove, not sure if this is even required
-    #     self.game.remove_widget(self)
+#     # def de_register(self, *largs):
+#     #     # filthy hack... TODO: remove, not sure if this is even required
+#     #     self.game.remove_widget(self)
 
 
 class Emitter:
@@ -484,17 +519,18 @@ class Emitter:
                 self.emit_want -= emit_count
                 self.prog_emit["time"] = max(time, 0) + random() / 50
 
-                # print("EMITTING:", emit_count, self.system.vbo2)
+                # print("EMITTING:", emit_count, self.system.vbo2, "\n")
                 testvalue = self.prog_emit.transform(
                     self.system.vbo_emit,
                     self.system.vbo2,
                     emit_count,
                     out_size=self.game.m_par.floats,
                     offset=self.system.particles * self.game.m_par.stride,
-                    # debug=2,
+                    # debug=1,
                 )
                 self.system.particles += testvalue
                 # print(
+                #     "\n",
                 #     testvalue,
                 #     "|",
                 #     self.system.particles,
@@ -564,9 +600,13 @@ class Renderer:
         self.noise_id = 0
 
     def set_multi_opacity(self, amount, fresh):
-        self.widget.multi_opacity -= amount
-        self.widget.multi_opacity[self.widget.multi_opacity < 0] = 0.0
-        self.widget.multi_opacity[fresh] = 1.0
+        if self.equation == 1:
+            self.widget.multi_opacity[:] = 0.0
+            self.widget.multi_opacity[fresh] = 1.0
+        else:
+            self.widget.multi_opacity -= amount
+            self.widget.multi_opacity[self.widget.multi_opacity < 0] = 0.0
+            self.widget.multi_opacity[fresh] = 1.0
 
     def set_fields(self):
         self.opacity = float(self.system.r(self, "opacity"))
@@ -582,6 +622,10 @@ class Renderer:
         if self.equation == 2:
             vis.alpha_offscreen.fbo_remove_widget(self.widget)
 
+        for m in self.widget.mesh:
+            del m
+
+        self.widget.canvas.clear()
         del self.widget
 
     def load_programs(self):
@@ -591,15 +635,26 @@ class Renderer:
         gs = self.game.m_res.get_shader("p5_render_gs")
         fs = self.game.m_res.get_shader("p5_render_fs")
         # print(vs, gs, fs)
-        self.widget = RenderWidget(
-            self.game,
-            self.system,
-            texture=self.texture,
-            vs=vs,
-            gs=gs,
-            fs=fs,
-            fmt=self.game.m_par.vao_def(),
-        )
+        if self.equation == 1:
+            self.widget = RenderWidgetSolid(
+                self.game,
+                self.system,
+                texture=self.texture,
+                vs=vs,
+                gs=gs,
+                fs=fs,
+                fmt=self.game.m_par.vao_def(),
+            )
+        else:
+            self.widget = RenderWidget(
+                self.game,
+                self.system,
+                texture=self.texture,
+                vs=vs,
+                gs=gs,
+                fs=fs,
+                fmt=self.game.m_par.vao_def(),
+            )
         # self.widget.canvas.add(BindTexture(texture=self.texture, index=7,))
 
         self.prog = self.widget.canvas
@@ -708,6 +763,7 @@ class RenderWidget(FloatLayout):
         self.multi_opacity = np.zeros(10, dtype=float)
         self.opacity = 1.0
         self.opacity_index = 0
+        self.mesh = []
         # with self.canvas:
         #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
 
@@ -716,9 +772,9 @@ class RenderWidget(FloatLayout):
             BindTexture(
                 texture=self.texture, index=7,
             )
-            for i, v in enumerate(self.system.vbos):
+            for v in self.system.vbos:
                 Callback(self._set_opacity)
-                self.mesh = MeshView(host_mesh=v, fmt=fmt)
+                self.mesh.append(MeshView(host_mesh=v, fmt=fmt))
             Callback(self._reset_blend_func)
 
     def _set_blend_func(self, instruction):
@@ -742,6 +798,65 @@ class RenderWidget(FloatLayout):
         self.canvas["opacity"] = float(
             self.multi_opacity[self.opacity_index] * self.opacity
         )
+        # print(
+        #     self.multi_opacity[self.opacity_index],
+        #     self.opacity,
+        #     float(self.multi_opacity[self.opacity_index] * self.opacity),
+        # )
+        self.opacity_index += 1
+
+    def update(self, time=None, dt=None):
+        return
+
+
+class RenderWidgetSolid(FloatLayout):
+    def __init__(self, game, system, texture, vs, gs, fs, fmt, **kwargs):
+        self.game = game
+        self.system = system
+        self.canvas = RenderContext(fs=fs, gs=gs, vs=vs)
+        self.texture = texture
+
+        super(RenderWidgetSolid, self).__init__(**kwargs)
+
+        self.multi_opacity = np.zeros(10, dtype=float)
+        self.opacity = 1.0
+        self.opacity_index = 0
+        # with self.canvas:
+        #     self.mesh = MeshView(host_mesh=self.system.vbo2, fmt=fmt)
+
+        with self.canvas:
+            Callback(self._set_solid_blend_func)
+            BindTexture(
+                texture=self.texture, index=7,
+            )
+            for i, v in enumerate(self.system.vbos):
+                Callback(self._set_solid_opacity)
+                self.mesh = MeshView(host_mesh=v, fmt=fmt)
+            Callback(self._reset_solid_blend_func)
+
+    def _set_solid_blend_func(self, instruction):
+        glEnable(GL_BLEND)
+        glEnable(GL_DEPTH_TEST)
+        glEnable(GL_CULL_FACE)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glBlendEquation(GL_FUNC_ADD)
+        glDepthMask(True)
+        self.opacity_index = 0
+
+    def _reset_solid_blend_func(self, instruction):
+        glDisable(GL_DEPTH_TEST)
+        glDisable(GL_CULL_FACE)
+        glEnable(GL_BLEND)
+        glDepthMask(True)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glBlendEquation(GL_FUNC_ADD)
+
+    def _set_solid_opacity(self, instruction):
+        self.canvas["opacity"] = 1.0
+
+        # float(
+        #     self.multi_opacity[self.opacity_index] * self.opacity
+        # )
         # print(
         #     self.multi_opacity[self.opacity_index],
         #     self.opacity,
@@ -933,7 +1048,7 @@ class Transformer:
             self.system.vbo2,
             int(self.system.particles),
             out_size=self.game.m_par.floats,
-            # debug=2,
+            # debug=1,
         )
         # print(
         #     # self.system.step_size,
@@ -960,7 +1075,8 @@ class Trigger:
         self.N = self.system.N
         self.params = params["content"]
         self.title = "Trigger"
-        self.sound = str(self.system.r(self, "sound_path"))
+        self.sound = str(self.system.r(self, "sound_path")).lower()
+        self.sound_preload = self.game.r_aud.get_effect_preload(self.sound)
         self.game.r_aud.cache_effect(self.sound)
 
         self.emit_want = 0
@@ -1002,7 +1118,10 @@ class Trigger:
             emit_count = int(self.emit_want + 1)
             if emit_count > 0:  # and not int(time * 6) % 10:
                 self.emit_want -= emit_count
-                self.game.r_aud.play_effect(self.sound)
+                if self.sound:
+                    # self.game.r_aud.play_effect(self.sound)
+                    if self.sound_preload is not None:
+                        self.sound_preload.play()
 
                 if self.dark_enabled:
                     self.system.brender.set_dark(
@@ -1011,7 +1130,7 @@ class Trigger:
                         self.dark_recover,
                     )
                 if self.shake_enabled:
-                    self.system.brender.battle_shake = self.shake
+                    self.game.m_cam.battle_shake = self.shake
         self.last_time = time
 
 

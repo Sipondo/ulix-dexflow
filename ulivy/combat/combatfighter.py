@@ -19,6 +19,13 @@ class CombatFighter:
         self.data = fighter.copy()
         self.actions = []
         self.sprite = self.game.m_res.prepare_battle_animset(f"{str(self.id).zfill(3)}")
+        try:
+            if self.sprite[0][0].height < 10:
+                self.sprite = self.game.m_res.prepare_battle_animset(
+                    f"{str(self.id).zfill(3)}"
+                )
+        except Exception as e:
+            pass
 
     @property
     def series(self):

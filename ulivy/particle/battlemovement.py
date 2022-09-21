@@ -56,7 +56,7 @@ class BattleMovement:
                 self.t0_go = False
         elif self.t0_recover:
             self.t0_recover = self.t0_recover + frame_time * 0.01
-            f = self.t0_recover
+            f = self.t0_recover * 8.0
             f_i = 1.0 - f
             self.t0 = (
                 f * self.t0_base[0] + f_i * self.t0[0],
@@ -85,7 +85,7 @@ class BattleMovement:
                 self.t1_go = False
         elif self.t1_recover:
             self.t1_recover = self.t1_recover + frame_time * 0.01
-            f = self.t1_recover
+            f = self.t1_recover * 8.0
             f_i = 1.0 - f
             self.t1 = (
                 f * self.t1_base[0] + f_i * self.t1[0],

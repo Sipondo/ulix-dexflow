@@ -122,9 +122,9 @@
             ],
             "outputs": [],
             "content": {
-                "field_FRICTION_X": ".992",
-                "field_FRICTION_Y": ".992",
-                "field_FRICTION_Z": ".992"
+                "field_FRICTION_X": ".98",
+                "field_FRICTION_Y": ".98",
+                "field_FRICTION_Z": ".98"
             },
             "op_code": -2035472726
         },
@@ -147,7 +147,7 @@
                 "field_file": "square_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": 1.0,
+                "field_opacity": "0.8",
                 "field_blur_count": 3,
                 "field_blur_delay": "0.4",
                 "field_noise": 1.0,
@@ -158,8 +158,8 @@
         {
             "id": 2336750646512,
             "title": "Emit",
-            "pos_x": 224.0937500000001,
-            "pos_y": -510.9062499999999,
+            "pos_x": 228.0937500000001,
+            "pos_y": -514.9062499999999,
             "inputs": [
                 {
                     "id": 2336750646944,
@@ -173,11 +173,11 @@
             "content": {
                 "field_life": "0.15",
                 "field_life_range": "0.03",
-                "field_size": "0.5",
+                "field_size": "0.9",
                 "field_size_range": "0.2",
                 "field_delay": "0.20",
                 "field_duration": ".01",
-                "field_count": "3000",
+                "field_count": "1500",
                 "field_pos_x": "!target_x!-0.02",
                 "field_pos_range_x": 0,
                 "field_pos_y": 0,
@@ -354,6 +354,56 @@
                 "field_target_z": 0
             },
             "op_code": 3
+        },
+        {
+            "id": 1936339413168,
+            "title": "Trigger",
+            "pos_x": 304.99999999999994,
+            "pos_y": -10.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.15",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/blow1.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": true,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936339414416,
+            "title": "Trigger",
+            "pos_x": 330.0,
+            "pos_y": 86.24999999999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.15",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/blow6.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": true,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
         }
     ],
     "edges": [

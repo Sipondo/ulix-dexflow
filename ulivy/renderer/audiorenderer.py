@@ -14,6 +14,19 @@ VOLUME = 0.05
 VOLUME_MUSIC = 0.07
 
 
+from kivy.utils import platform
+
+if platform == "android":
+    from kivy.core.audio import SoundLoader
+
+    from kivy.core.audio.audio_android import SoundAndroidPlayer as SoundFX
+    from kivy.core.audio.audio_android import SoundAndroidPlayer as SoundMusic
+else:
+    vibrator = None
+    from kivy.core.audio.audio_sdl2 import SoundSDL2 as SoundFX
+    from kivy.core.audio.audio_sdl2 import MusicSDL2 as SoundMusic
+
+
 class AudioRenderer:
     def __init__(self, gui):
         self.game = gui
@@ -24,6 +37,20 @@ class AudioRenderer:
         self.se_id = 0
 
         self.cache_se = {}
+
+        self.music = None
+        self.music_name = ""
+
+        self.emap = {}
+        for k, v in emap.items():
+            sound_file = self.game.m_res.get_sound(v)
+            if sound_file:
+                if platform == "android":
+                    self.emap[k] = SoundLoader.load(sound_file)
+                else:
+                    emap[k] = sound_file
+                    self.emap[k] = SoundFX(source=sound_file)
+                    self.emap[k].load()
 
     def on_tick(self, time, frame_time):
         return
@@ -37,28 +64,56 @@ class AudioRenderer:
         # Deprecated
         return
 
-    def play_effect(self, name):
-        return
-        if name in emap:
-            name = emap[name]
-        if self.silent:
+    def get_effect_preload(self, name):
+        if not name:
             return
-        try:
-            self.se_player.loop = False
-            self.se_player.volume = 0.4 * VOLUME
-            if name not in self.cache_se:
-                self.cache_se[name] = self.game.m_res.get_sound(name)
-            sound = self.cache_se[name]
-            self.se_player.queue(sound)
-            if self.se_player.playing:
-                self.se_player.next_source()
-            self.se_player.play()
-            self.se_id = (self.se_id + 1) % len(self.se_players)
-        except Exception as e:
-            print("Music exception:", e)
+        # if name in self.emap:
+        #     sound = self.emap[name]
+        # else:
+        sound = None
+        sound_file = self.game.m_res.get_sound(name)
+
+        if sound_file:
+            if platform == "android":
+                sound = SoundLoader.load(sound_file)
+            else:
+                sound = SoundFX(source=sound_file)  # SoundLoader.load(sound_file)
+                sound.load()
+
+        if sound:
+            # sound.loop = False
+            return sound
+        else:
+            print("SOUND NOT FOUND: ", name)
+            return None
+
+    def play_effect(self, name):
+        if not name:
+            return
+        sound = None
+
+        if name in self.emap:
+            sound = self.emap[name]
+        else:
+            if name in emap:
+                sound_file = emap[name]
+            else:
+                sound_file = self.game.m_res.get_sound(name)
+
+            if sound_file:
+                if platform == "android":
+                    sound = SoundLoader.load(sound_file)
+                else:
+                    sound = SoundFX(source=sound_file)  # SoundLoader.load(sound_file)
+                    sound.load()
+
+        if sound:
+            # sound.loop = False
+            sound.play()
+        else:
+            print("SOUND NOT FOUND: ", name)
 
     def effect(self, name):
-        return
         self.play_effect(name)
 
     def cache_effect(self, name):
@@ -71,24 +126,33 @@ class AudioRenderer:
         except Exception as e:
             print("Music exception:", e)
 
-    def play_music(self, name):
-        return
-        if self.silent:
+    def play_music(self, name, loop=True):
+        if self.music_name == name:
             return
-        if self.current_music != name:
-            self.bgm_player.loop = True
-            self.bgm_player.eos_action = "loop"
-            self.bgm_player.volume = 0.4 * VOLUME * VOLUME_MUSIC
-            music = self.game.m_res.get_sound(name)
-            if music is not None:
-                self.bgm_player.queue(music)
-                if self.bgm_player.playing:
-                    self.bgm_player.next_source()
-                self.bgm_player.play()
-                self.current_music = name
-            else:
-                print("MUSIC NOT FOUND: ", name)
+        self.music_name = name
 
-    @property
-    def se_player(self):
-        return self.se_players[self.se_id]
+        if self.music is not None:
+            print("stopping")
+            self.music.stop()
+            print("stopped")
+
+        self.music = None
+        sound_file = self.game.m_res.get_sound(name)
+
+        if sound_file:
+            if platform == "fandroid":
+                self.music = SoundLoader.load(sound_file)
+            else:
+                self.music = SoundMusic(source=sound_file)
+                self.music.load()
+
+        if self.music:
+            self.music.loop = loop
+            self.music.play()
+        else:
+            self.music = None
+            print("MUSIC NOT FOUND: ", name)
+
+    # @property
+    # def se_player(self):
+    #     return self.se_players[self.se_id]

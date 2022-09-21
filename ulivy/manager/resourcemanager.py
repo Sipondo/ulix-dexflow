@@ -9,7 +9,10 @@ from kivy.resources import resource_find, resource_add_path, resource_remove_pat
 from kivy.core.image import Image
 
 # from PIL import Image, ImageFont
+from kivy.graphics.context import get_context
+from ulivy.util.smatlas import Smatlas
 
+# get_context().reload()
 
 TYPES = [
     "NORMAL",
@@ -33,11 +36,14 @@ TYPES = [
     "FAIRY",
 ]
 
+RESOURCE_DIRS = ["base", "essentials", "essentials_audio", "simple", "simple_music"]
+
 
 class ResourceManager:
     def __init__(self, game):
         self.game = game
-        self.resource_dirs = list(Path("").glob("resources/*/"))
+        # self.resource_dirs = list(Path("").glob("resources/*/"))
+        self.resource_dirs = [Path("resources") / r for r in RESOURCE_DIRS]
 
         # for dir in self.resource_dirs:
         #     if dir.is_dir():
@@ -70,6 +76,10 @@ class ResourceManager:
 
         self.raw_types = TYPES
 
+        self.battler_atlas = Smatlas(
+            "resources/essentials/graphics/pokemon_anim/battleratlas.atlas"
+        )
+
     def get_pbs_loc(self, name, compressed=False):
         if compressed:
             pth = self.p_pbs_c / name
@@ -100,9 +110,12 @@ class ResourceManager:
 
         return vs, gs
 
-    def get_particle(self, pth, move_data=None):
+    def get_particle(self, pname, move_data=None):
+        pname = pname.lower().strip()
         try:
-            pth = self.resolve_resource_path(self.p_particle / (pth + ".json"))
+            print("Search path")
+            pth = self.resolve_resource_path(self.p_particle / (pname + ".json"))
+            print(pname, pth)
             if pth:
                 with open(pth) as f:
                     return json.load(f)
@@ -396,33 +409,14 @@ class ResourceManager:
             self.p_graphics / "particle_mask" / "noise.png", layers=755
         )
 
-    def prepare_battle_sprite(self, pth, mirror=False):
-        print("SPRITE:", pth)
-        in_image = self.open_image(pth)
-
-        if in_image.image is not None and in_image.image._data[0].data is not None:
-            data = in_image.image._data[0]
-            d = data.data
-            w = data.width
-            h = data.height
-        else:
-            d = in_image.texture.pixels
-            w, h = in_image.texture.size
-
-        a = np.frombuffer(d, dtype=np.uint8).reshape((w, h, 4))
-
-        b = a[:, : a.shape[0], 3]
-        s = np.amax((b > 250), axis=0)
-        height = np.amin((b[:, s] > 250).argmax(axis=0))
-        height_share = (a.shape[0] - height) / a.shape[0]
-
-        return in_image, float(height_share)
+    def prepare_battle_sprite(self, id, mirror=False, double=True, back=False):
+        print("SPRITE:", id)
+        return self.battler_atlas[f"{'back' if back else 'front'}_{id}"]
 
     def prepare_battle_animset(self, id):
-        root = self.p_graphics / "pokemon_anim"
         spriteset = []
-        spriteset.append(self.prepare_battle_sprite(root / f"back/{id}.png"))
-        spriteset.append(self.prepare_battle_sprite(root / f"front/{id}.png"))
+        spriteset.append(self.prepare_battle_sprite(str(id), back=True))
+        spriteset.append(self.prepare_battle_sprite(str(id), back=False))
         return spriteset
 
     def open_image(self, pth, size=1):
@@ -442,11 +436,7 @@ class ResourceManager:
     def get_sound(self, pth):
         pth = self.p_audio / pth
         pth = self.resolve_resource_path(pth)
-        if pth is None:
-            return pth
-        if pth.stem not in self.audiocache:
-            self.audiocache[pth.stem] = pyglet.media.load(str(pth), streaming=False)
-        return self.audiocache[pth.stem]
+        return pth
 
     def get_world_data(self):
         pth = Path("world.ldtkc")

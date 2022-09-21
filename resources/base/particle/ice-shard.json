@@ -6,8 +6,8 @@
         {
             "id": 2945980117536,
             "title": "Emit",
-            "pos_x": -161.046875,
-            "pos_y": -627.203125,
+            "pos_x": -160.046875,
+            "pos_y": -626.203125,
             "inputs": [
                 {
                     "id": 2945980118448,
@@ -19,24 +19,24 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "2",
+                "field_life": "0.5",
                 "field_life_range": 0.0,
                 "field_size": "2",
                 "field_size_range": 0.0,
                 "field_delay": "0",
-                "field_duration": "0.03",
+                "field_duration": "0.1",
                 "field_count": "330",
                 "field_pos_x": "0",
                 "field_pos_range_x": "0.05",
                 "field_pos_y": "2",
                 "field_pos_range_y": "0.15",
-                "field_pos_z": "2.4",
+                "field_pos_z": "2.1",
                 "field_pos_range_z": "0.25",
                 "field_vel_x": "3",
                 "field_vel_range_x": 0,
-                "field_vel_y": "-12",
+                "field_vel_y": "-7",
                 "field_vel_range_y": 0,
-                "field_vel_z": "-12",
+                "field_vel_z": "-7",
                 "field_vel_range_z": 0,
                 "field_rot": "-30",
                 "field_rot_range": "0",
@@ -88,7 +88,7 @@
                 }
             ],
             "content": {
-                "field_stage": 85049728
+                "field_stage": "123"
             },
             "op_code": 8
         },
@@ -96,7 +96,7 @@
             "id": 2945980221568,
             "title": "Stage",
             "pos_x": -728.75,
-            "pos_y": -178.74999999999994,
+            "pos_y": -177.49999999999994,
             "inputs": [],
             "outputs": [
                 {
@@ -129,15 +129,15 @@
                 }
             ],
             "content": {
-                "field_stage": 8725064
+                "field_stage": "234"
             },
             "op_code": 8
         },
         {
             "id": 2945980219792,
             "title": "Emit",
-            "pos_x": -311.56249999999994,
-            "pos_y": -302.25,
+            "pos_x": -311.5625,
+            "pos_y": -301.25,
             "inputs": [
                 {
                     "id": 2945980220944,
@@ -149,13 +149,13 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "1.0",
-                "field_life_range": "0.6",
+                "field_life": "0.5",
+                "field_life_range": "0.2",
                 "field_size": "0.4",
                 "field_size_range": "0.2",
-                "field_delay": "0.2",
+                "field_delay": "0.26",
                 "field_duration": ".2",
-                "field_count": "2000",
+                "field_count": "200",
                 "field_pos_x": "1",
                 "field_pos_range_x": 0,
                 "field_pos_y": 0,
@@ -182,47 +182,6 @@
             "op_code": 9
         },
         {
-            "id": 2945980291104,
-            "title": "Stage",
-            "pos_x": -848.5625,
-            "pos_y": 0.6875000000000568,
-            "inputs": [],
-            "outputs": [
-                {
-                    "id": 2945980289904,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 0
-                },
-                {
-                    "id": 2945980290432,
-                    "index": 1,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                },
-                {
-                    "id": 2574247770000,
-                    "index": 2,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 2
-                },
-                {
-                    "id": 2574247770048,
-                    "index": 3,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 3
-                }
-            ],
-            "content": {
-                "field_stage": 10159782
-            },
-            "op_code": 8
-        },
-        {
             "id": 1562491510016,
             "title": "Geo Bounce",
             "pos_x": -316.74999999999983,
@@ -247,19 +206,19 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 239.00000000000006,
-            "pos_y": 150.375,
+            "pos_x": 236.0,
+            "pos_y": 153.375,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "0.12",
+                "field_delay": "0.26",
                 "field_duration": ".6",
                 "field_count": "1",
                 "field_hit_strength": 0.0,
                 "field_hit_enabled": "",
-                "field_sound_path": "SE/gs/explode_impact.wav",
-                "field_sound_enabled": true,
-                "field_shake": "0.1",
+                "field_sound_path": "",
+                "field_sound_enabled": false,
+                "field_shake": "0.6",
                 "field_shake_enabled": true,
                 "field_dark_enabled": true,
                 "field_dark_recover": true,
@@ -274,7 +233,7 @@
             "id": 1732260790336,
             "title": "Camera",
             "pos_x": 246.2499999999999,
-            "pos_y": 253.74999999999994,
+            "pos_y": 252.75,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -283,7 +242,7 @@
                 "field_target": "35",
                 "field_speed": "2.2",
                 "field_friction": 3,
-                "field_duration": 0.9,
+                "field_duration": "0.5",
                 "field_count": 1
             },
             "op_code": 5
@@ -301,45 +260,10 @@
                 "field_target": "50",
                 "field_speed": "1",
                 "field_friction": 3,
-                "field_duration": 0.9,
+                "field_duration": "0.5",
                 "field_count": 1
             },
             "op_code": 5
-        },
-        {
-            "id": 2574248078784,
-            "title": "Filter Blur",
-            "pos_x": -614.75,
-            "pos_y": -36.749999999999986,
-            "inputs": [
-                {
-                    "id": 2574249466656,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 3
-                },
-                {
-                    "id": 2574249466320,
-                    "index": 1,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 2574249466800,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "field_LIFE": "0.1"
-            },
-            "op_code": 1417848045
         },
         {
             "id": 2574248078736,
@@ -371,8 +295,8 @@
         {
             "id": 2574247769184,
             "title": "Render",
-            "pos_x": -133.75,
-            "pos_y": -487.5937500000001,
+            "pos_x": -132.75,
+            "pos_y": -488.5937500000001,
             "inputs": [
                 {
                     "id": 2574251262688,
@@ -387,38 +311,11 @@
                 "field_file": "ice_spike_01",
                 "field_equation": "Add",
                 "field_depth": 0,
-                "field_opacity": 1.0,
+                "field_opacity": "!shardmin!",
                 "field_blur_count": 3,
                 "field_blur_delay": 0.1,
                 "field_noise": "0",
                 "field_rotvel": true
-            },
-            "op_code": 4
-        },
-        {
-            "id": 2574251263456,
-            "title": "Render",
-            "pos_x": -581.8906249999998,
-            "pos_y": 69.04687500000003,
-            "inputs": [
-                {
-                    "id": 2574251101200,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 2
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_file": "square_01",
-                "field_equation": "Add",
-                "field_depth": 0,
-                "field_opacity": "0.1",
-                "field_blur_count": 3,
-                "field_blur_delay": 0.1,
-                "field_noise": 1.0,
-                "field_rotvel": ""
             },
             "op_code": 4
         },
@@ -448,7 +345,7 @@
             "id": 2379075790352,
             "title": "Geo Set",
             "pos_x": -28.99999999999983,
-            "pos_y": -119.5,
+            "pos_y": -120.5,
             "inputs": [
                 {
                     "id": 2379075790592,
@@ -505,8 +402,8 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 223.5000000000001,
-            "pos_y": 8.00000000000005,
+            "pos_x": 225.0625000000001,
+            "pos_y": 5.43750000000005,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -552,8 +449,8 @@
         {
             "id": 2754475810000,
             "title": "Emit",
-            "pos_x": -416.5624999999993,
-            "pos_y": 168.51562499999977,
+            "pos_x": -414.5624999999993,
+            "pos_y": 170.51562499999977,
             "inputs": [
                 {
                     "id": 2754475807744,
@@ -565,13 +462,13 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "1.5",
-                "field_life_range": "0.6",
+                "field_life": "0.5",
+                "field_life_range": "0.2",
                 "field_size": "1.5",
                 "field_size_range": "0.5",
-                "field_delay": "0.2",
+                "field_delay": "0.26",
                 "field_duration": ".2",
-                "field_count": "2000",
+                "field_count": "200",
                 "field_pos_x": "0.95",
                 "field_pos_range_x": "0.15",
                 "field_pos_y": "0.05",
@@ -634,7 +531,7 @@
                 }
             ],
             "content": {
-                "field_stage": "8725065"
+                "field_stage": "345"
             },
             "op_code": 8
         },
@@ -744,6 +641,44 @@
                 "field_ROT_VEL_ABS": false
             },
             "op_code": 1661913081
+        },
+        {
+            "id": 1936305656112,
+            "title": "Equation",
+            "pos_x": -470.0,
+            "pos_y": -782.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "shardmin",
+                "field_equation": "min(1.0, max(0.0, 5.0 - (15.0*t)))"
+            },
+            "op_code": 7
+        },
+        {
+            "id": 1936183465776,
+            "title": "Trigger",
+            "pos_x": -16.4375,
+            "pos_y": 111.43750000000001,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.15",
+                "field_duration": "0.5",
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/gs/explode_impact.wav",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
         }
     ],
     "edges": [
@@ -752,18 +687,6 @@
             "edge_type": 2,
             "start": 2945980118448,
             "end": 2945980094016
-        },
-        {
-            "id": 2574249465888,
-            "edge_type": 2,
-            "start": 2574247768800,
-            "end": 2574249466656
-        },
-        {
-            "id": 2574249466416,
-            "edge_type": 2,
-            "start": 2945980289904,
-            "end": 2574249466320
         },
         {
             "id": 2574251262352,
@@ -776,12 +699,6 @@
             "edge_type": 2,
             "start": 2574251262688,
             "end": 2574247768128
-        },
-        {
-            "id": 2574251265328,
-            "edge_type": 2,
-            "start": 2574251101200,
-            "end": 2574247770000
         },
         {
             "id": 2574251442240,

@@ -20,7 +20,9 @@ class BadPoison(BaseEffect):
                 particle=self.particle,
             )
             self.scene.add_effect(
-                DamageEffect(self.scene, self.target, rel_dmg=0.0625 * self.count)
+                DamageEffect(
+                    self.scene, self.target, rel_dmg=0.0625 * self.count, lethal=False
+                )
             )
             self.count += 1
         return False, False, False

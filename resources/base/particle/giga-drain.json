@@ -120,8 +120,8 @@
         {
             "id": 2445532551056,
             "title": "Stage",
-            "pos_x": -374.0,
-            "pos_y": -86.0,
+            "pos_x": -372.75000000000006,
+            "pos_y": -87.25,
             "inputs": [],
             "outputs": [
                 {
@@ -154,7 +154,7 @@
                 }
             ],
             "content": {
-                "field_stage": 70449915
+                "field_stage": "345"
             },
             "op_code": 8
         },
@@ -162,7 +162,7 @@
             "id": 2445459548864,
             "title": "Emit",
             "pos_x": -84.125,
-            "pos_y": -268.3125,
+            "pos_y": -269.3125,
             "inputs": [
                 {
                     "id": 2445471523312,
@@ -176,23 +176,23 @@
             "content": {
                 "field_life": "3",
                 "field_life_range": 0.0,
-                "field_size": 1.0,
+                "field_size": "1.5",
                 "field_size_range": "1.5",
                 "field_delay": "!start!",
                 "field_duration": "1.2",
-                "field_count": "800",
-                "field_pos_x": "0.7",
-                "field_pos_range_x": 0,
+                "field_count": "80",
+                "field_pos_x": "0.8",
+                "field_pos_range_x": "0.15",
                 "field_pos_y": 0,
-                "field_pos_range_y": 0,
+                "field_pos_range_y": "0.15",
                 "field_pos_z": "0.2",
                 "field_pos_range_z": 0,
                 "field_vel_x": "-0.5",
                 "field_vel_range_x": 0,
                 "field_vel_y": 0,
-                "field_vel_range_y": "1",
+                "field_vel_range_y": "0.7",
                 "field_vel_z": 0,
-                "field_vel_range_z": "1",
+                "field_vel_range_z": "0.7",
                 "field_rot": 0,
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
@@ -210,7 +210,7 @@
             "id": 2445471523456,
             "title": "Render",
             "pos_x": -56.4375,
-            "pos_y": 105.43750000000003,
+            "pos_y": 104.18750000000003,
             "inputs": [
                 {
                     "id": 2445471523552,
@@ -236,8 +236,8 @@
         {
             "id": 1759386252864,
             "title": "Geo Gravity",
-            "pos_x": -10.312500000000007,
-            "pos_y": -75.9375,
+            "pos_x": -9.0625,
+            "pos_y": -77.1875,
             "inputs": [
                 {
                     "id": 1759386725680,
@@ -253,7 +253,7 @@
                 "field_GRAV_POS_Y": "0",
                 "field_GRAV_POS_Z": "0.1",
                 "field_GRAV_EXPONENT": ".5",
-                "field_GRAV_FORCE": "5"
+                "field_GRAV_FORCE": "10"
             },
             "op_code": 322502851
         },
@@ -286,7 +286,7 @@
             ],
             "outputs": [],
             "content": {
-                "field_TARGET_VEL": "2"
+                "field_TARGET_VEL": "3"
             },
             "op_code": 2137682032
         },
@@ -327,7 +327,7 @@
                 }
             ],
             "content": {
-                "field_stage": 94673833
+                "field_stage": "234"
             },
             "op_code": 8
         },
@@ -335,7 +335,7 @@
             "id": 1572910820896,
             "title": "Render",
             "pos_x": -93.74999999999999,
-            "pos_y": 368.74999999999994,
+            "pos_y": 367.49999999999994,
             "inputs": [
                 {
                     "id": 1572910574896,
@@ -358,8 +358,8 @@
         {
             "id": 1572909814256,
             "title": "Geo Set",
-            "pos_x": 243.74999999999994,
-            "pos_y": 207.81249999999994,
+            "pos_x": 212.49999999999994,
+            "pos_y": 264.0624999999999,
             "inputs": [
                 {
                     "id": 1572910573312,
@@ -416,8 +416,8 @@
         {
             "id": 1572958384528,
             "title": "Filter Basic",
-            "pos_x": -78.12499999999997,
-            "pos_y": 223.43749999999991,
+            "pos_x": -76.87499999999997,
+            "pos_y": 223.43749999999994,
             "inputs": [
                 {
                     "id": 1572958387264,
@@ -446,10 +446,10 @@
             "content": {
                 "field_LIFE_MIN": "-100",
                 "field_LIFE_MAX": "100",
-                "field_MIN_POS_X": "-1",
+                "field_MIN_POS_X": "-10",
                 "field_MIN_POS_Y": "-100",
                 "field_MIN_POS_Z": "-100",
-                "field_MAX_POS_X": "-0.95",
+                "field_MAX_POS_X": "-0.85",
                 "field_MAX_POS_Y": "100",
                 "field_MAX_POS_Z": "100",
                 "field_MIN_VEL_X": "-100",
@@ -583,8 +583,8 @@
         {
             "id": 1572958386208,
             "title": "Stage",
-            "pos_x": 496.8749999999999,
-            "pos_y": 246.875,
+            "pos_x": 499.875,
+            "pos_y": 244.875,
             "inputs": [],
             "outputs": [
                 {
@@ -617,15 +617,15 @@
                 }
             ],
             "content": {
-                "field_stage": 238529
+                "field_stage": "123"
             },
             "op_code": 8
         },
         {
             "id": 1572958384816,
             "title": "Emit",
-            "pos_x": 779.6874999999999,
-            "pos_y": 146.87499999999991,
+            "pos_x": 732.6875,
+            "pos_y": 158.8749999999999,
             "inputs": [
                 {
                     "id": 1572958386640,
@@ -715,6 +715,81 @@
                 "field_dark": 0.5,
                 "field_dark_speed": 1.0,
                 "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936185791728,
+            "title": "Trigger",
+            "pos_x": 353.0,
+            "pos_y": 383.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.5",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/present_heal.ogg",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936339985408,
+            "title": "Trigger",
+            "pos_x": 258.0,
+            "pos_y": 502.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.2",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/wind5.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936341460448,
+            "title": "Trigger",
+            "pos_x": 509.0,
+            "pos_y": 505.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "1.05",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/wind8.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
             },
             "op_code": 11
         }

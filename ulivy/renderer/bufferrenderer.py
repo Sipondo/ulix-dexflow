@@ -55,7 +55,7 @@ class BufferRenderer(FloatLayout):
         self.add_widget(self.r_box)
         self.canvas = canvas
 
-        self.enable_overworld()
+        # self.enable_overworld()
 
     def fbo_add_widget(self, widget):
         self.fbo_layout.add_widget(widget)
@@ -67,11 +67,22 @@ class BufferRenderer(FloatLayout):
         pass
 
     def update(self, time, dt):
+        # self.ids.GameImage.pos_hint = {
+        #     "center_x": 0.5,
+        #     "center_y": 1.0,  # 0.5 + self.game.m_cam.shake * 100,
+        # }
+        # # self.ids.GameImage.pos = (0, self.game.m_cam.shake * 20)
+        # print(self.ids.GameImage.pos)
+        # print(self.ids.GameImage.pos_hint)
+
+        offset = self.ids.BackgroundId.offset
+        self.ids.GameCanvas.pos = (offset[0], offset[1] + self.game.m_cam.shake * 500)
         self.r_til.update(time, dt)
         self.r_box.update(time, dt)
 
     def enable_overworld(self):
-        self.fbo_add_widget(self.r_til)
+        if self.r_til not in self.fbo_layout.children:
+            self.fbo_add_widget(self.r_til)
 
     def disable_overworld(self):
         self.fbo_layout.clear_widgets()

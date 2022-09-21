@@ -40,15 +40,15 @@
                 }
             ],
             "content": {
-                "field_stage": 8725064
+                "field_stage": "234"
             },
             "op_code": 8
         },
         {
             "id": 2945980219792,
             "title": "Emit",
-            "pos_x": 24.5,
-            "pos_y": -405.12500000000006,
+            "pos_x": 26.25,
+            "pos_y": -411.12500000000006,
             "inputs": [
                 {
                     "id": 2945980220944,
@@ -60,13 +60,13 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "0.26",
+                "field_life": "0.15",
                 "field_life_range": "0",
-                "field_size": "0.8",
+                "field_size": "1.2",
                 "field_size_range": "0.4",
                 "field_delay": "0.26",
-                "field_duration": "2",
-                "field_count": "3000",
+                "field_duration": "1.4",
+                "field_count": "65",
                 "field_pos_x": "-0.9",
                 "field_pos_range_x": 0,
                 "field_pos_y": 0,
@@ -80,7 +80,7 @@
                 "field_vel_z": "0",
                 "field_vel_range_z": "0.2",
                 "field_rot": 0,
-                "field_rot_range": "0",
+                "field_rot_range": "360",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
                 "field_col_r": "0.45",
@@ -108,47 +108,11 @@
             ],
             "outputs": [],
             "content": {
-                "field_VERTICAL_DAMPEN": "1.4",
+                "field_VERTICAL_DAMPEN": "1.1",
                 "field_DAMPEN": "1.",
-                "field_LIFE_DAMPEN": "1.4"
+                "field_LIFE_DAMPEN": "1.1"
             },
             "op_code": -1515145737
-        },
-        {
-            "id": 1732260790336,
-            "title": "Camera",
-            "pos_x": 93.74999999999991,
-            "pos_y": 147.50000000000003,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_mirror": "mirrornegative",
-                "field_delay": "-0.8",
-                "field_target": "45",
-                "field_speed": "3.2",
-                "field_friction": 3,
-                "field_duration": 0.9,
-                "field_count": 1
-            },
-            "op_code": 5
-        },
-        {
-            "id": 1732260790672,
-            "title": "Camera",
-            "pos_x": 114.74999999999994,
-            "pos_y": 300.50000000000006,
-            "inputs": [],
-            "outputs": [],
-            "content": {
-                "field_mirror": "mirrornegative",
-                "field_delay": 0,
-                "field_target": "-85",
-                "field_speed": ".5",
-                "field_friction": 3,
-                "field_duration": 0.9,
-                "field_count": 1
-            },
-            "op_code": 5
         },
         {
             "id": 2574248078736,
@@ -167,7 +131,7 @@
             "outputs": [],
             "content": {
                 "field_file": "circle_solid",
-                "field_equation": "Solid",
+                "field_equation": "Add",
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": 3,
@@ -260,7 +224,7 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 385.4999999999999,
+            "pos_x": 386.4999999999999,
             "pos_y": 16.75,
             "inputs": [],
             "outputs": [],
@@ -276,8 +240,8 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.75",
-                "field_dark_speed": "0.3",
+                "field_dark": "0.25",
+                "field_dark_speed": "1.5",
                 "field_dark_speed_enabled": true
             },
             "op_code": 11
@@ -285,23 +249,23 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 433.9999999999999,
-            "pos_y": 212.125,
+            "pos_x": 388.7499999999999,
+            "pos_y": 217.125,
             "inputs": [],
             "outputs": [],
             "content": {
-                "field_delay": "2.2",
+                "field_delay": "2.0",
                 "field_duration": ".3",
                 "field_count": "1",
                 "field_hit_strength": 0.0,
                 "field_hit_enabled": "",
-                "field_sound_path": "SE/gs/explode_impact.wav",
+                "field_sound_path": "",
                 "field_sound_enabled": false,
                 "field_shake": "0.1",
                 "field_shake_enabled": false,
                 "field_dark_enabled": true,
                 "field_dark_recover": true,
-                "field_dark": "0.75",
+                "field_dark": "0.25",
                 "field_dark_speed": "1.0",
                 "field_dark_speed_enabled": false,
                 "field_hit": 0.0
@@ -311,8 +275,8 @@
         {
             "id": 2503712330800,
             "title": "Emit",
-            "pos_x": 318.37500000000006,
-            "pos_y": -430.99999999999983,
+            "pos_x": 309.37500000000006,
+            "pos_y": -401.74999999999983,
             "inputs": [
                 {
                     "id": 2503712333200,
@@ -324,17 +288,17 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "1.4",
+                "field_life": "0.8",
                 "field_life_range": "0.3",
-                "field_size": "0.8",
+                "field_size": "1.3",
                 "field_size_range": "0.4",
                 "field_delay": "0.45",
-                "field_duration": "2",
-                "field_count": "1000",
+                "field_duration": "1.4",
+                "field_count": "30",
                 "field_pos_x": "0.95",
-                "field_pos_range_x": "0.2",
+                "field_pos_range_x": "0.1",
                 "field_pos_y": 0,
-                "field_pos_range_y": "0.25",
+                "field_pos_range_y": "0.1",
                 "field_pos_z": ".12",
                 "field_pos_range_z": "0.1",
                 "field_vel_x": "-0.4",
@@ -344,7 +308,7 @@
                 "field_vel_z": "0.4",
                 "field_vel_range_z": "2",
                 "field_rot": 0,
-                "field_rot_range": "0",
+                "field_rot_range": "360",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
                 "field_col_r": "0.45",
@@ -375,7 +339,7 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": "0.75",
+                "field_dark": "0.25",
                 "field_dark_speed": "0.5",
                 "field_dark_speed_enabled": true
             },
@@ -464,8 +428,8 @@
         {
             "id": 2754434083136,
             "title": "Stage",
-            "pos_x": -881.2499999999997,
-            "pos_y": -178.4375000000002,
+            "pos_x": -881.2499999999995,
+            "pos_y": -180.39062500000017,
             "inputs": [],
             "outputs": [
                 {
@@ -498,7 +462,7 @@
                 }
             ],
             "content": {
-                "field_stage": "8725065"
+                "field_stage": "123"
             },
             "op_code": 8
         },
@@ -527,8 +491,8 @@
         {
             "id": 2754516315680,
             "title": "Emit",
-            "pos_x": -596.7499999999997,
-            "pos_y": -320.70312499999994,
+            "pos_x": -569.3085937499997,
+            "pos_y": -295.4531249999998,
             "inputs": [
                 {
                     "id": 2754516315536,
@@ -540,25 +504,25 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "1.1",
-                "field_life_range": "0.3",
-                "field_size": "0.5",
+                "field_life": "0.4",
+                "field_life_range": "0.1",
+                "field_size": "1.1",
                 "field_size_range": "0.3",
                 "field_delay": "0.45",
-                "field_duration": "2",
-                "field_count": "1000",
+                "field_duration": "1.4",
+                "field_count": "250",
                 "field_pos_x": "0.95",
-                "field_pos_range_x": "0.2",
+                "field_pos_range_x": "0.1",
                 "field_pos_y": 0,
-                "field_pos_range_y": "0.25",
+                "field_pos_range_y": "0.1",
                 "field_pos_z": ".12",
                 "field_pos_range_z": "0.1",
                 "field_vel_x": "-1",
-                "field_vel_range_x": "5",
+                "field_vel_range_x": "4",
                 "field_vel_y": 0,
-                "field_vel_range_y": "5",
+                "field_vel_range_y": "4",
                 "field_vel_z": "0.4",
-                "field_vel_range_z": "5",
+                "field_vel_range_z": "4",
                 "field_rot": 0,
                 "field_rot_range": "360",
                 "field_rot_vel": 0,
@@ -620,6 +584,94 @@
                 "field_dark_recover": false,
                 "field_dark": "0.5",
                 "field_dark_speed": "2.0",
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936178670416,
+            "title": "Camera",
+            "pos_x": -8.75,
+            "pos_y": 107.49999999999989,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_mirror": "mirrornegative",
+                "field_delay": "-0.8",
+                "field_target": "35",
+                "field_speed": "2.2",
+                "field_friction": 3,
+                "field_duration": 0.9,
+                "field_count": 1
+            },
+            "op_code": 5
+        },
+        {
+            "id": 1936230304208,
+            "title": "Camera",
+            "pos_x": 6.0,
+            "pos_y": 212.9999999999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_mirror": "mirrornegative",
+                "field_delay": 0,
+                "field_target": "50",
+                "field_speed": "1",
+                "field_friction": 3,
+                "field_duration": 0.9,
+                "field_count": 1
+            },
+            "op_code": 5
+        },
+        {
+            "id": 1936178364128,
+            "title": "Render",
+            "pos_x": 526.78125,
+            "pos_y": -339.890625,
+            "inputs": [
+                {
+                    "id": 1936183465728,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "square_01",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.5",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1936178362064,
+            "title": "Trigger",
+            "pos_x": 465.0,
+            "pos_y": 365.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": 0,
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/pump.ogg",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
                 "field_dark_speed_enabled": false
             },
             "op_code": 11
@@ -691,6 +743,12 @@
             "edge_type": 2,
             "start": 2754516315536,
             "end": 2754516404832
+        },
+        {
+            "id": 1936355831280,
+            "edge_type": 2,
+            "start": 1936183465728,
+            "end": 2574247768752
         }
     ]
 }

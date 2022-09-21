@@ -7,6 +7,8 @@ from .sendouteffect import SendOutEffect
 
 
 class FaintEffect(BaseEffect):
+    name = "Faint"
+
     def __init__(self, scene, target):
         super().__init__(scene)
         self.spd_on_action = 1000
@@ -18,7 +20,7 @@ class FaintEffect(BaseEffect):
         )
         end = False
         self.scene.on_faint_effects(self.target)
-        self.scene.add_effect(ReturnEffect(self.scene, self.target))
+        self.scene.add_effect(ReturnEffect(self.scene, self.target, faint=True))
         self.scene.remove_action_effects(self.target)
         self.scene.board.set_can_fight(self.target, False)
         if not self.scene.board.has_fighter(self.target[0]):

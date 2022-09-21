@@ -6,6 +6,13 @@ import numbers
 
 class PokeFighter(CombatFighter):
     def __init__(self, game, scene, fighter):
+
+        # TODO: fix hack
+        try:
+            self.member_source = fighter
+            fighter = self.member_source.series
+        except KeyError:
+            pass
         super().__init__(game, scene, fighter)
 
         if isinstance(fighter, str):
@@ -23,10 +30,10 @@ class PokeFighter(CombatFighter):
 
         self.data = fighter.copy()
 
-        try:
-            self.level = fighter.level
-        except KeyError:
-            self.level = 50
+        # try:
+        #     self.level = fighter.level
+        # except KeyError:
+        self.level = 75
 
         try:
             self.stats_base = fighter.stats_base
@@ -54,36 +61,55 @@ class PokeFighter(CombatFighter):
             self.level_xp = 0
             self.get_level_exp()
 
-        if "actions" not in fighter:
-            self.moves = fighter.moves
-            l = self.moves.split(",")
-            self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
+        self.starting_hp = self.current_hp
+        self.type1 = str(fighter["type1"])
+        self.type2 = str(fighter["type2"])
 
-            l = [(x, y) for x, y in reversed(self.learnset) if int(x) < self.level]
-            k = [y for x, y in l]
-            l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
-            self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
+        print(self.id, self.type1, self.type2)
+        if "actions" not in fighter:
+            # self.moves = fighter.moves
+            # l = self.moves.split(",")
+            # self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
+
+            # l = [(x, y) for x, y in reversed(self.learnset) if int(x) < self.level]
+            # k = [y for x, y in l]
+            # l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
+            # self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
+            # self.actions = [self.game.m_pbs.get_base_move(self.type1)]
+            # TODO: fix
+            self.actions = [self.game.m_pbs.get_move(201)]
+            # self.actions = self.game.m_pbs.get_moveset_by_difficulty(
+            #     self.type1, self.type2
+            # )
         else:
-            self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
+            # self.actions = [self.game.m_pbs.get_move(x) for x in self.data["actions"]]
+            self.actions = self.member_source.actions
 
         try:
             self.status = fighter.status
         except KeyError:
             self.status = None
 
-        self.starting_hp = self.current_hp
-        self.type1 = str(fighter["type1"])
-        self.type2 = str(fighter["type2"])
-
         # Init actions starting from id:
         # start_id = 580
-        # self.actions = [self.game.m_pbs.get_move(x) for x in [399, 1, 392, 462]]
+        # self.actions = [self.game.m_pbs.`get`_move(x) for x in [399, 1, 392, 462]]
 
     def init_stats(self, fighter):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
         self.nature = [1, 1, 1, 1, 1, 1]
 
         self.stats_base = np.asarray(fighter.basestats.split(","), dtype=int)
+        self.stats_base[3], self.stats_base[4], self.stats_base[5] = (
+            self.stats_base[4],
+            self.stats_base[5],
+            self.stats_base[3],
+        )  # fix stats
+
+        self.stats_base = (
+            (self.stats_base / np.sum(self.stats_base) * 600).round().astype(int)
+        )
+
+        print("--------BASE STATS!!", self.name, self.stats_base)
 
         # Reward EVs
         self.stats_reward = np.asarray(fighter.effortpoints.split(","), dtype=int)
@@ -119,14 +145,17 @@ class PokeFighter(CombatFighter):
     @property
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
-        return (
-            self.nature
-            * (
-                (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
+        s = (
+            (
+                (2 * self.stats_base)  # + self.stats_IV + self.stats_EV // 4)
                 * (self.level / 100)
                 + hp_mod
             )
-        ).astype(int)
+            .round()
+            .astype(int)
+        )
+        print(self.name, s)
+        return s
 
     @property
     def series(self):
@@ -139,3 +168,7 @@ class PokeFighter(CombatFighter):
         self.data["status"] = self.status
 
         return self.data
+
+    @property
+    def types(self):
+        return self.type1, self.type2

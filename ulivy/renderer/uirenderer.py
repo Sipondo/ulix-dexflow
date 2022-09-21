@@ -1,15 +1,16 @@
-import importlib
 from kivy.uix.floatlayout import FloatLayout
 
 UI = "modernui"
 
-UI_OVERWORLD = importlib.import_module(f"ulivy.interface.{UI}.uioverworld").UIOverworld
-UI_CINEMATIC = importlib.import_module(f"ulivy.interface.{UI}.uicinematic").UICinematic
-UI_DEBUG = importlib.import_module(f"ulivy.interface.{UI}.uidebug").UIDebug
-UI_PROMPT = importlib.import_module(f"ulivy.interface.{UI}.uiprompt").UIPrompt
-UI_BATTLE = importlib.import_module(f"ulivy.interface.{UI}.uibattle").UIBattle
-UI_MENU_MAIN = importlib.import_module(f"ulivy.interface.{UI}.uimenumain").UIMenuMain
-UI_MENU_BAG = importlib.import_module(f"ulivy.interface.{UI}.uimenubag").UIMenuBag
+from ulivy.interface.modernui.uioverworld import UIOverworld
+from ulivy.interface.modernui.uicinematic import UICinematic
+from ulivy.interface.modernui.uidebug import UIDebug
+from ulivy.interface.modernui.uiprompt import UIPrompt
+from ulivy.interface.modernui.uibattle import UIBattle
+from ulivy.interface.modernui.uimenumain import UIMenuMain
+from ulivy.interface.modernui.uimenubag import UIMenuBag
+from ulivy.interface.modernui.uimenustart import UIMenuStart
+from ulivy.interface.modernui.uistatus import UIStatus
 
 
 class UIRenderer(FloatLayout):
@@ -42,23 +43,26 @@ class UIRenderer(FloatLayout):
             self.current_ui = None
 
         if new_ui == "overworld":
-            self.current_ui = UI_OVERWORLD(self.game, gstate, size=self.size)
+            self.current_ui = UIOverworld(self.game, gstate, size=self.size)
         elif new_ui == "cinematic":
-            self.current_ui = UI_CINEMATIC(self.game, gstate, size=self.size)
+            self.current_ui = UICinematic(self.game, gstate, size=self.size)
         elif new_ui == "debug":
-            self.current_ui = UI_DEBUG(self.game, gstate)
+            self.current_ui = UIDebug(self.game, gstate)
         elif new_ui == "prompt":
-            self.current_ui = UI_PROMPT(self.game, gstate)
+            self.current_ui = UIPrompt(self.game, gstate)
         elif new_ui == "battle":
-            self.current_ui = UI_BATTLE(self.game, gstate)
+            self.current_ui = UIBattle(self.game, gstate)
         elif new_ui == "menumain":
-            self.current_ui = UI_MENU_MAIN(self.game, gstate, size=self.size)
+            self.current_ui = UIMenuMain(self.game, gstate, size=self.size)
         elif new_ui == "menubag":
-            self.current_ui = UI_MENU_BAG(self.game, gstate)
+            self.current_ui = UIMenuBag(self.game, gstate)
+        elif new_ui == "menustart":
+            self.current_ui = UIMenuStart(self.game, gstate)
+        elif new_ui == "status":
+            self.current_ui = UIStatus(self.game, gstate)
         else:
             return
 
         self.current_ui.on_enter(**kwargs)
         self.add_widget(self.current_ui)
         self.current_ui.update()
-

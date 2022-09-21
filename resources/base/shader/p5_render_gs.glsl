@@ -4,7 +4,8 @@
 precision highp float;
 #endif
 
-#define M_DEGPI.01745329251
+// next line needs space to not crash
+#define M_DEGPI .01745329251
 #define PI 3.1415926538
 layout(points)in;
 layout(triangle_strip,max_vertices=4)out;
@@ -45,16 +46,16 @@ float atan2(in float y,in float x)
 }
 
 void main(){
-    // if(gl_in[0].gl_Position.a!=Stage){return;}
-    if((gl_in[0].gl_Position.a<=(Stage-1.))||(gl_in[0].gl_Position.a>=(Stage+1.))){return;}
+    // if(gs_in[0].pos.a!=Stage){return;}
+    if((gs_in[0].pos.a<=(Stage-1.))||(gs_in[0].pos.a>=(Stage+1.))){return;}
     
-    // vec3 pos=vec3(gs_in[0].vel.x,0.,0.);//gl_in[0].gl_Position.xyz*20.; TODO: revert
-    vec3 pos=gl_in[0].gl_Position.xyz*20.;
+    // vec3 pos=vec3(gs_in[0].vel.x,0.,0.);//gs_in[0].pos.xyz*20.; TODO: revert
+    vec3 pos=gs_in[0].pos.xyz*20.;
     // vec3 pos=gs_in[0].pos.xyz*20.;
     float new_rot=gs_in[0].rot;
     
     if(Rotvel>0){
-        vec2 pos_dir=(projection*vec4(pos,1.)).xy-(projection*vec4((gl_in[0].gl_Position.xyz+gs_in[0].vel)*20.,1.)).xy;
+        vec2 pos_dir=(projection*vec4(pos,1.)).xy-(projection*vec4((gs_in[0].pos.xyz+gs_in[0].vel)*20.,1.)).xy;
         new_rot=new_rot-(atan2(pos_dir.y,pos_dir.x)/M_DEGPI);
     }
     

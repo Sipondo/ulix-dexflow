@@ -12,14 +12,14 @@ class Paralysis(BaseEffect):
         self.target = target
         self.spd_on_action = 1
 
-    def on_action(self):
-        if self.target == self.scene.board.user:
-            if self.scene.board.random_roll(0.25):
-                self.scene.board.no_skip(
-                    f"{self.scene.board.get_actor(self.target).name} was fully paralyzed",
-                    particle="Paralysis",
-                )
-                return False, True, False
+    def before_action(self):
+        # if self.target == self.scene.board.user:
+        #     if self.scene.board.random_roll(0.25):
+        #         self.scene.board.no_skip(
+        #             f"{self.scene.board.get_actor(self.target).name} was fully paralyzed",
+        #             particle="Paralysis",
+        #         )
+        #         return False, True, False
         return False, False, False
 
     @property

@@ -17,7 +17,7 @@ class Freeze(BaseEffect):
         if self.scene.board.user == self.target:
             if self.scene.board.action.a_type == ActionType.ATTACK:
                 if (
-                    self.scene.board.action.type == "Fire"
+                    self.scene.board.action.a_data.type == "FIRE"
                     and self.scene.board.action.power > 0
                 ):
                     self.scene.board.no_skip(
@@ -26,15 +26,15 @@ class Freeze(BaseEffect):
                     )
                     return True, False, False
                 else:
-                    if self.scene.board.random_roll(0.2):
+                    if self.scene.board.random_roll(0.3):
                         self.scene.board.no_skip(
                             f"{self.scene.board.get_actor(self.target).name} thawed out!",
                             particle=self.name,
                         )
                         return True, False, False
-                    self.scene.board.no_skip(
-                        f"{self.scene.board.get_actor(self.target).name} is frozen solid!",
-                        particle=self.name,
-                    )
-                    return False, True, False
+                    # self.scene.board.no_skip(
+                    #     f"{self.scene.board.get_actor(self.target).name} is frozen solid!",
+                    #     particle=self.name,
+                    # )
+                    # return False, True, False
         return False, False, False

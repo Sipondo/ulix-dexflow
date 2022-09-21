@@ -359,7 +359,7 @@ def convert_to_atlas_layers(layers):
 
     tilesets = [0] * len(tiledict)
     for k, v in tiledict.items():
-        tilesets[v] = Image.open(resolve_resource_path(f"{k}.png"))
+        tilesets[v] = (k, Image.open(resolve_resource_path(f"{k}.png")))
 
     output = []
     for block in atlas_blocks:
@@ -395,14 +395,23 @@ def convert_to_atlas_layers(layers):
                     if not tile_indices:
                         continue
 
-                origin = "".join([str(tile_index) for tile_index in tile_indices])
+                origin = "".join(
+                    [
+                        str(tile_index)  # + str(tilesets[tile_index[2]][0])
+                        for tile_index in tile_indices
+                    ]
+                )
+                # print("origin:", origin)
+                # for tile_index in tile_indices:
+                #     print(tile_index)
+                # exit()
 
-                if origin not in atlas.keys():
+                if True:  # origin not in atlas.keys():
                     tile = Image.new("RGBA", (16, 16))
 
                     for tile_index in tile_indices:
                         tile_index = (tile_index[0] - 1, tile_index[1], tile_index[2])
-                        overlay = tilesets[tile_index[2]].crop(
+                        overlay = tilesets[tile_index[2]][1].crop(
                             (
                                 tile_index[0] * 16,
                                 tile_index[1] * 16,
@@ -410,7 +419,8 @@ def convert_to_atlas_layers(layers):
                                 (tile_index[1] + 1) * 16,
                             )
                         )
-                        tile.paste(overlay, (0, 0), overlay)
+                        # tile.paste(overlay, (0, 0), overlay)
+                        tile = Image.alpha_composite(tile, overlay)
                         # tile.save(f"data/tile{tile_index[0]}-{tile_index[1]}.png")
 
                     dat = list(tile.getdata())

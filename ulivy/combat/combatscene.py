@@ -102,8 +102,18 @@ class CombatScene:
         actions = []
         for agent in agents:
             self.mgr_agent.add_agent(agent)
-            action = agent.get_first_sendout()
-            actions.append(action)
+
+        agent = agents[1]
+        action = agent.get_first_sendout()
+        actions.append(action)
+        return actions
+
+    def init_battle_us(self, id) -> typing.List[Action]:
+        actions = []
+
+        agent = self.mgr_agent.agents[0]
+        action = agent.get_first_sendout(id)
+        actions.append(action)
         return actions
 
     def prepare_scene(
@@ -262,6 +272,7 @@ class CombatScene:
             effect.skip = False
 
     def run_effect(self, effect, f, *args):
+        print("EFFECT", effect)
         effect.done = True
         self.new_board()
         if args:

@@ -13,8 +13,10 @@ from ulivy.upl.upl_scripts.concat import Concat
 from ulivy.upl.upl_scripts.countitem import CountItem
 from ulivy.upl.upl_scripts.debug import Debug
 from ulivy.upl.upl_scripts.encounter import Encounter
+from ulivy.upl.upl_scripts.endgame import EndGame
 from ulivy.upl.upl_scripts.face import Face
 from ulivy.upl.upl_scripts.fade import Fade
+from ulivy.upl.upl_scripts.fadenow import FadeNow
 from ulivy.upl.upl_scripts.flushtiles import FlushTiles
 from ulivy.upl.upl_scripts.getentities import GetEntities
 from ulivy.upl.upl_scripts.gettile import GetTile
@@ -30,6 +32,9 @@ from ulivy.upl.upl_scripts.portal import Portal
 from ulivy.upl.upl_scripts.prompt import Prompt
 from ulivy.upl.upl_scripts.push import Push
 from ulivy.upl.upl_scripts.random import Random
+from ulivy.upl.upl_scripts.rewardbattler import RewardBattler
+from ulivy.upl.upl_scripts.rewarditem import RewardItem
+from ulivy.upl.upl_scripts.rewardmove import RewardMove
 from ulivy.upl.upl_scripts.removeitem import RemoveItem
 from ulivy.upl.upl_scripts.resetlocalencounters import ResetLocalEncounters
 from ulivy.upl.upl_scripts.restoreparty import RestoreParty

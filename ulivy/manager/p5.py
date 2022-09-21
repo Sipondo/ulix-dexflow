@@ -18,6 +18,18 @@ class ParticleManager:
 
         self.fast_forward = False
 
+        self.vbo_object_emit = ParticleHolder(self.game)
+        self.game.m_vis.add_widget(self.vbo_object_emit)
+        self.vbo_emit = self.vbo_object_emit.mesh
+
+        self.vbo_objects = []
+        self.vbos = []
+
+        for _ in range(8):
+            vbo_object = ParticleHolder(self.game)
+            self.vbo_objects.append(vbo_object)
+            # self.game.m_vis.add_widget(vbo_object)
+            self.vbos.append(vbo_object.mesh)
         # self.vbo_objectA = ShaderWidget(self.game, poffset=-0.25)
         # self.game.add_widget(self.vbo_objectA)
         # self.mesh1 = self.vbo_objectA.mesh
@@ -45,6 +57,9 @@ class ParticleManager:
         for system in marked:
             self.systems.remove(system)
             self.game.m_gst.current_state.scene.environment.remove_widget(system)
+            for v in self.vbo_objects:
+                # self.game.m_vis.remove_widget(v)
+                system.remove_widget(v)
             system.delete_parts()
             del system
         return busy
@@ -86,6 +101,9 @@ class ParticleManager:
             self.systems.append(
                 n := ParticleSystem(self.game, brender, fname, target, miss, move_data)
             )
+            for v in self.vbo_objects:
+                # self.game.m_vis.remove_widget(v)
+                n.add_widget(v)
             self.game.m_gst.current_state.scene.environment.add_widget(n)
 
     def vao_def(self, buffer=None, render=False):
@@ -119,3 +137,49 @@ class ParticleManager:
             "out_key",
         ]
 
+
+from kivy.resources import resource_find
+
+with open(resource_find("ulivy_shaders/tfeed_vs.glsl")) as file:
+    placeholder_shader_vs = file.read()
+
+with open(resource_find("ulivy_shaders/tfeed_fs.glsl")) as file:
+    placeholder_shader_fs = file.read()
+
+MAX_PARTICLES = 2048
+
+
+class ParticleHolder(FloatLayout):
+    def __init__(self, game, **kwargs):
+        self.game = game
+        self.canvas = RenderContext(fs=placeholder_shader_fs, vs=placeholder_shader_vs)
+
+        super(ParticleHolder, self).__init__(**kwargs)
+
+        fmt = [
+            (b"in_pos", 4, "float"),
+            (b"in_vel", 3, "float"),
+            (b"in_size", 1, "float"),
+            (b"in_color", 3, "float"),
+            (b"in_rot", 1, "float"),
+            (b"in_rot_vel", 1, "float"),
+            (b"in_lifespan", 1, "float"),
+            (b"in_noise", 1, "float"),
+            (b"in_key", 1, "float"),
+        ]
+
+        with self.canvas:
+            self.mesh = Mesh(
+                vertices=[1.0, 1.0, 1.0, 1.0] * 4 * MAX_PARTICLES,
+                indices=list(range(MAX_PARTICLES)),
+                fmt=fmt,
+            )
+
+    def update(self, time=None, dt=None):
+        return
+
+    #     Clock.schedule_once(self.de_register, 2)  # TODO: remove this terrible hack
+
+    # def de_register(self, *largs):
+    #     # filthy hack... TODO: remove, not sure if this is even required
+    #     self.game.remove_widget(self)

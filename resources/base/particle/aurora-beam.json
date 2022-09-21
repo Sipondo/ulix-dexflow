@@ -1,0 +1,813 @@
+{
+    "id": 2945980029440,
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 2945980221568,
+            "title": "Stage",
+            "pos_x": -555.0,
+            "pos_y": -160.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 2945980222336,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 2945980221472,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 2574247768752,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 2574247768800,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": "123"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1732260790336,
+            "title": "Camera",
+            "pos_x": 20.749999999999943,
+            "pos_y": 213.50000000000003,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_mirror": "mirrornegative",
+                "field_delay": "-0.8",
+                "field_target": "35",
+                "field_speed": "2.2",
+                "field_friction": 3,
+                "field_duration": 0.9,
+                "field_count": 1
+            },
+            "op_code": 5
+        },
+        {
+            "id": 1732260790672,
+            "title": "Camera",
+            "pos_x": 35.49999999999994,
+            "pos_y": 319.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_mirror": "mirrornegative",
+                "field_delay": 0,
+                "field_target": "50",
+                "field_speed": "1",
+                "field_friction": 3,
+                "field_duration": 0.9,
+                "field_count": 1
+            },
+            "op_code": 5
+        },
+        {
+            "id": 2574248078736,
+            "title": "Render",
+            "pos_x": -192.46874999999991,
+            "pos_y": -149.14062500000003,
+            "inputs": [
+                {
+                    "id": 2574251264416,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "ice_01",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "1.0",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": "0",
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 2087587075504,
+            "title": "Trigger",
+            "pos_x": 374.7499999999999,
+            "pos_y": 107.25,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "-0.8",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": true,
+                "field_dark_recover": false,
+                "field_dark": "0.7",
+                "field_dark_speed": "2.0",
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1570490938944,
+            "title": "Trigger",
+            "pos_x": 258.24999999999983,
+            "pos_y": 277.37500000000006,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "1.4",
+                "field_duration": ".1",
+                "field_count": "1",
+                "field_hit_strength": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": false,
+                "field_shake": "0.1",
+                "field_shake_enabled": false,
+                "field_dark_enabled": true,
+                "field_dark_recover": true,
+                "field_dark": "0.45",
+                "field_dark_speed": "1.0",
+                "field_dark_speed_enabled": false,
+                "field_hit": 0.0
+            },
+            "op_code": 11
+        },
+        {
+            "id": 2503716620416,
+            "title": "Emit",
+            "pos_x": -497.56250000000006,
+            "pos_y": -301.24999999999983,
+            "inputs": [
+                {
+                    "id": 2503716620944,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_life": "1.0",
+                "field_life_range": "0.3",
+                "field_size": "2.0",
+                "field_size_range": "0.4",
+                "field_delay": "0",
+                "field_duration": "0.8",
+                "field_count": "30 * !eq!",
+                "field_pos_x": "-0.9",
+                "field_pos_range_x": "0",
+                "field_pos_y": 0,
+                "field_pos_range_y": "0",
+                "field_pos_z": "0.15",
+                "field_pos_range_z": "0",
+                "field_vel_x": "0.5",
+                "field_vel_range_x": "2",
+                "field_vel_y": 0,
+                "field_vel_range_y": "0.4",
+                "field_vel_z": "0",
+                "field_vel_range_z": "0.4",
+                "field_rot": 0,
+                "field_rot_range": "360",
+                "field_rot_vel": 0,
+                "field_rot_vel_range": "120",
+                "field_col_r": "0.5",
+                "field_col_range_r": "0.4",
+                "field_col_g": "0.5",
+                "field_col_range_g": "0.4",
+                "field_col_b": "0.6",
+                "field_col_range_b": "0.4"
+            },
+            "op_code": 9
+        },
+        {
+            "id": 2503716531360,
+            "title": "Equation",
+            "pos_x": 441.0624999999999,
+            "pos_y": 40.57812500000003,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_label": "eq",
+                "field_equation": "max(0, 3-t)**1.2"
+            },
+            "op_code": 7
+        },
+        {
+            "id": 2503717895184,
+            "title": "Trigger",
+            "pos_x": 339.2499999999999,
+            "pos_y": 179.74999999999991,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0",
+                "field_duration": "1.2",
+                "field_count": "100",
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "",
+                "field_sound_enabled": "",
+                "field_shake": "0.8",
+                "field_shake_enabled": true,
+                "field_dark_enabled": true,
+                "field_dark_recover": false,
+                "field_dark": "0.45",
+                "field_dark_speed": "2.0",
+                "field_dark_speed_enabled": true
+            },
+            "op_code": 11
+        },
+        {
+            "id": 2370480452368,
+            "title": "Geo Friction",
+            "pos_x": -193.0,
+            "pos_y": 18.0,
+            "inputs": [
+                {
+                    "id": 2370479721200,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".93",
+                "field_FRICTION_Y": ".93",
+                "field_FRICTION_Z": ".93"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 2370481907024,
+            "title": "Geo Gravity",
+            "pos_x": -199.0,
+            "pos_y": -65.0,
+            "inputs": [
+                {
+                    "id": 2370479720480,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_GRAV_POS_X": "0.95",
+                "field_GRAV_POS_Y": "0",
+                "field_GRAV_POS_Z": "0.15",
+                "field_GRAV_EXPONENT": "0.05",
+                "field_GRAV_FORCE": "25"
+            },
+            "op_code": 322502851
+        },
+        {
+            "id": 1936307856720,
+            "title": "Trigger",
+            "pos_x": 61.99999999999997,
+            "pos_y": -50.49999999999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.1",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire2.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936285138800,
+            "title": "Trigger",
+            "pos_x": 83.74999999999989,
+            "pos_y": 45.25,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.4",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire3.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936285060400,
+            "title": "Trigger",
+            "pos_x": 288.25,
+            "pos_y": -99.25,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.6",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire2.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936285137408,
+            "title": "Trigger",
+            "pos_x": 174.9999999999999,
+            "pos_y": -2.750000000000014,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.3",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire2.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936342043904,
+            "title": "Stage",
+            "pos_x": -683.0000000000001,
+            "pos_y": 187.25,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 1936342042704,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 0
+                },
+                {
+                    "id": 1936342042992,
+                    "index": 1,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                },
+                {
+                    "id": 1936342044096,
+                    "index": 2,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 2
+                },
+                {
+                    "id": 1936342044144,
+                    "index": 3,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 3
+                }
+            ],
+            "content": {
+                "field_stage": "234"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 1936342042752,
+            "title": "Filter Basic",
+            "pos_x": -654.5,
+            "pos_y": 41.75,
+            "inputs": [
+                {
+                    "id": 1936342043472,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 3
+                },
+                {
+                    "id": 1936342043712,
+                    "index": 1,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 0
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1936342042896,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "field_LIFE_MIN": "0",
+                "field_LIFE_MAX": "100",
+                "field_MIN_POS_X": "0.5",
+                "field_MIN_POS_Y": "-100",
+                "field_MIN_POS_Z": "-100",
+                "field_MAX_POS_X": "100",
+                "field_MAX_POS_Y": "100",
+                "field_MAX_POS_Z": "100",
+                "field_MIN_VEL_X": "-100",
+                "field_MIN_VEL_Y": "-100",
+                "field_MIN_VEL_Z": "-100",
+                "field_MAX_VEL_X": "100",
+                "field_MAX_VEL_Y": "100",
+                "field_MAX_VEL_Z": "100"
+            },
+            "op_code": -1077480815
+        },
+        {
+            "id": 1936342040640,
+            "title": "Geo Friction",
+            "pos_x": -210.0,
+            "pos_y": 141.0,
+            "inputs": [
+                {
+                    "id": 1936342042848,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_FRICTION_X": ".93",
+                "field_FRICTION_Y": ".93",
+                "field_FRICTION_Z": ".93"
+            },
+            "op_code": -2035472726
+        },
+        {
+            "id": 1936309538240,
+            "title": "Geo Bounce",
+            "pos_x": -203.25,
+            "pos_y": 235.75,
+            "inputs": [
+                {
+                    "id": 1936342043040,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_VERTICAL_DAMPEN": "1.1",
+                "field_DAMPEN": "1.",
+                "field_LIFE_DAMPEN": "1."
+            },
+            "op_code": -1515145737
+        },
+        {
+            "id": 1936314621040,
+            "title": "Render",
+            "pos_x": -234.00000000000003,
+            "pos_y": 327.25000000000006,
+            "inputs": [
+                {
+                    "id": 1936314621088,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "ice_01",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "1.0",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": "0",
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1936342043616,
+            "title": "Geo Set",
+            "pos_x": -179.99999999999994,
+            "pos_y": 446.2499999999999,
+            "inputs": [
+                {
+                    "id": 1936314619888,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "0",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "-1",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "0",
+                "field_VEL_SWAY_Z": "0",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1936178553280,
+            "title": "Geo Set",
+            "pos_x": -411.24999999999994,
+            "pos_y": 66.24999999999996,
+            "inputs": [
+                {
+                    "id": 1936178555824,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_SIZE": "0",
+                "field_SIZE_SWAY": "0",
+                "field_SIZE_ABS": false,
+                "field_ROT": "0",
+                "field_ROT_SWAY": "0",
+                "field_ROT_ABS": false,
+                "field_ROT_VEL": "0",
+                "field_ROT_VEL_SWAY": "0",
+                "field_ROT_VEL_ABS": false,
+                "field_LIFE": "0",
+                "field_LIFE_SWAY": "0",
+                "field_LIFE_ABS": false,
+                "field_POS_X": "0",
+                "field_POS_Y": "0",
+                "field_POS_Z": "0",
+                "field_POS_SWAY_X": "0",
+                "field_POS_SWAY_Y": "0",
+                "field_POS_SWAY_Z": "0",
+                "field_POS_ABS_X": false,
+                "field_POS_ABS_Y": false,
+                "field_POS_ABS_Z": false,
+                "field_VEL_X": "-3",
+                "field_VEL_Y": "0",
+                "field_VEL_Z": "0",
+                "field_VEL_SWAY_X": "0",
+                "field_VEL_SWAY_Y": "2",
+                "field_VEL_SWAY_Z": "2",
+                "field_VEL_ABS_X": false,
+                "field_VEL_ABS_Y": false,
+                "field_VEL_ABS_Z": false,
+                "field_COL_X": "0",
+                "field_COL_Y": "0",
+                "field_COL_Z": "0",
+                "field_COL_SWAY_X": "0",
+                "field_COL_SWAY_Y": "0",
+                "field_COL_SWAY_Z": "0",
+                "field_COL_ABS_X": false,
+                "field_COL_ABS_Y": false,
+                "field_COL_ABS_Z": false
+            },
+            "op_code": 1661913081
+        },
+        {
+            "id": 1936314619744,
+            "title": "Trigger",
+            "pos_x": 48.25,
+            "pos_y": -125.5,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.1",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/ice2.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936178554768,
+            "title": "Trigger",
+            "pos_x": 140.0,
+            "pos_y": -200.7499999999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.25",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/ice5.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936183466832,
+            "title": "Trigger",
+            "pos_x": 382.5000000000001,
+            "pos_y": -193.74999999999997,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.5",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/ice8.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        }
+    ],
+    "edges": [
+        {
+            "id": 2574251262352,
+            "edge_type": 2,
+            "start": 2574251264416,
+            "end": 2574247768752
+        },
+        {
+            "id": 2503716530736,
+            "edge_type": 2,
+            "start": 2503716620944,
+            "end": 2945980222336
+        },
+        {
+            "id": 2370581017936,
+            "edge_type": 2,
+            "start": 2370479721200,
+            "end": 2945980221472
+        },
+        {
+            "id": 2370481907696,
+            "edge_type": 2,
+            "start": 2370479720480,
+            "end": 2945980221472
+        },
+        {
+            "id": 1936285137408,
+            "edge_type": 2,
+            "start": 2574247768800,
+            "end": 1936342043472
+        },
+        {
+            "id": 1936309538384,
+            "edge_type": 2,
+            "start": 1936342043712,
+            "end": 1936342042704
+        },
+        {
+            "id": 1936285137216,
+            "edge_type": 2,
+            "start": 1936342042848,
+            "end": 1936342042992
+        },
+        {
+            "id": 1936342043424,
+            "edge_type": 2,
+            "start": 1936342043040,
+            "end": 1936342042992
+        },
+        {
+            "id": 1936342044000,
+            "edge_type": 2,
+            "start": 1936314621088,
+            "end": 1936342044096
+        },
+        {
+            "id": 1936230303056,
+            "edge_type": 2,
+            "start": 1936314619888,
+            "end": 1936342042992
+        },
+        {
+            "id": 1936314621424,
+            "edge_type": 2,
+            "start": 1936178555824,
+            "end": 1936342042896
+        }
+    ]
+}

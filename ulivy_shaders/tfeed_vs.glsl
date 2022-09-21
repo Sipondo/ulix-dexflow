@@ -16,6 +16,7 @@ in float in_key;
 
 out VS_OUT{
     float size;
+    vec4 position;
 }vs_out;
 
 uniform float poffset;
@@ -25,4 +26,5 @@ void main()
     vs_out.size=in_size;
     
     gl_Position=vec4(0.,0.,0.,0.);
+    vs_out.position=vec4(0.,0.,0.,0.);
 }

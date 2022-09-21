@@ -11,17 +11,17 @@ class HotkeyManager(Widget):
         self.keys = []
         self.pressed_keys = set()
 
-        self.register_key("ctrl", "ctrl")
+        # self.register_key("ctrl", "ctrl")
         self.register_key("alt", "alt")
         self.register_key("shift", "shift")
 
-        self.register_key("ctrl", "rctrl")
+        # self.register_key("ctrl", "rctrl")
         self.register_key("alt", "ralt")
         self.register_key("shift", "rshift")
 
         self.register_key("alt", "walk")
         self.register_key("shift", "run")
-        self.register_key("ctrl", "bike")
+        # self.register_key("ctrl", "bike")
 
         self.register_key("up", "w")
         self.register_key("down", "s")
@@ -43,17 +43,17 @@ class HotkeyManager(Widget):
 
         self.register_key("enter", "enter", True)
 
-        self.register_key("maphack", "h")
-        self.register_key("debug", "t")
+        # self.register_key("maphack", "h")
+        # self.register_key("debug", "t")
 
-        self.register_key("zoom_out", "equal")
-        self.register_key("zoom_out", "8")
-        self.register_key("zoom_in", "-")
-        self.register_key("zoom_in", "2")
+        # self.register_key("zoom_out", "equal")
+        # self.register_key("zoom_out", "8")
+        # self.register_key("zoom_in", "-")
+        # self.register_key("zoom_in", "2")
 
         # self.register_key("menu", "m")
         # self.register_key("menu", "x")
-        self.register_key("battle", "b")
+        # self.register_key("battle", "b")
 
         # self.register_key("fullscreen", game.wnd.keys.F11, True)
         self.register_key("fullscreen", "f11")

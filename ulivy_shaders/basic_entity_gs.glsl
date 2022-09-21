@@ -12,6 +12,7 @@ in VS_OUT{
     vec2 texPos;
     vec2 texSize;
     vec2 texFrame;
+    vec4 position;
 }gs_in[];
 
 out vec2 uv;
@@ -53,5 +54,6 @@ void construct_entity(vec4 position)
 }
 
 void main(){
-    construct_entity(vec4(gl_in[0].gl_Position.xy*game_position,0.,1.));
+    construct_entity(vec4(gs_in[0].position.xy*game_position,0.,1.));
+    
 }

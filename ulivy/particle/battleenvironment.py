@@ -70,11 +70,17 @@ class BattleEnvironment(FloatLayout):
         resource_add_path(pth)
 
         print("BATTLEENV", self.pos, self.size)
-        for i in range(4, -1, -1):
-
+        for i in range(3, -1, -1):
             self.add_widget(
                 BattleEnvironmentImage(
-                    texture_file=Image(resource_find(f"forest_{i}.png")),
+                    # texture_file=Image(resource_find(f"forest_{i}.png")),
+                    # texture_file=Image(resource_find(f"fire_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"swamp_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"snow_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"grass_bg_{i}.png")),
+                    texture_file=Image(
+                        resource_find(f"{self.game.m_map.environment}_bg_{i}.png")
+                    ),
                     size_hint=(1, 1),
                     pos_hint={"center_y": 0.5, "center_x": 0.5},
                 )
@@ -92,16 +98,16 @@ class BattleEnvironment(FloatLayout):
 
         scene.img_battler.append(
             (
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
             )
         )
         scene.img_battler.append(
             (
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
             )
         )
         self.set_battlers()
@@ -182,10 +188,14 @@ class BattleEnvironmentImage(FloatLayout):
         speed = self.tex1.width / self.tex1.height / 16 * 9
 
         self.canvas["texture0"] = 1
-        self.canvas["offset"] = self.game.m_cam.parallax_rotation * speed
+
+        o = 1.2 + self.game.m_cam.parallax_rotation * speed
+        # o = float(int(o * 680) / 680)
+        self.canvas["offset"] = o
         self.canvas["speed"] = speed
         self.canvas["brightness"] = float(self.scene.dark)
         self.canvas["shake"] = self.game.m_cam.shake
+
         # This is needed for the default vertex shader.
         win_rc = Window.render_context
         self.canvas["projection_mat"] = win_rc["projection_mat"]
@@ -221,6 +231,15 @@ class BattleBattlerImage(FloatLayout):
 
         self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
 
+        self.tex1 = self.game.m_res.battler_atlas.original_textures[0]
+        self.tex1.mag_filter = "nearest"
+
+        self.canvas.clear()
+        self.canvas.add(Callback(set_blend_battler))
+        self.canvas.add(BindTexture(texture=self.tex1, index=4))
+        self.canvas.add(self.mesh)
+        self.canvas.add(Callback(reset_blend))
+
         self.canvas["Texture"] = 4
 
     def set_texture(self, texture_file):
@@ -240,23 +259,22 @@ class BattleBattlerImage(FloatLayout):
     def bind_texture(self):
         if self.texture_file is not None:
             back = 0 if self.face % 3 else 1
-            self.theight = self.texture_file[back][0].height
-            self.ratio = (
-                self.texture_file[back][0].width / self.texture_file[back][0].height
-            )
+            tf = self.texture_file[back]
+
+            self.theight = tf[2]
+            self.ratio = tf[3]
+
             self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
-            self.canvas["AnimationLength"] = self.ratio
-            self.canvas["HeightShare"] = self.texture_file[back][1]
+            # self.canvas["AnimationLength"] = self.ratio
+            self.canvas["HeightShare"] = tf[5]
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)
 
-            self.tex1 = self.texture_file[back][0].texture
-            self.tex1.mag_filter = "nearest"
+            self.canvas["Xoff"] = float(tf[0])
+            self.canvas["Yoff"] = float(tf[1])
+            self.canvas["AnimationWidth"] = float(tf[4])
 
-            self.canvas.clear()
-            self.canvas.add(Callback(set_blend_battler))
-            self.canvas.add(BindTexture(texture=self.tex1, index=4))
-            self.canvas.add(self.mesh)
-            self.canvas.add(Callback(reset_blend))
+            self.canvas["FrameSize"] = float(self.theight)
+            self.canvas["Totsize"] = float(8192)
 
     def redraw(self):
         self.canvas["Texture"] = 4
@@ -283,9 +301,9 @@ class BattleVisuals(FloatLayout):
         self.game = game
 
         # TODO: depth buffer should be shared by these first 3
-        # self.solid_offscreen = BattleOffscreen(
-        #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
-        # )
+        self.solid_offscreen = BattleOffscreen(
+            self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
+        )
         self.alpha_offscreen = BattleOffscreen(
             self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
         )
@@ -354,10 +372,10 @@ class BattleOffscreen(FloatLayout):
         #     Callback(blend)
         with self.canvas:
             self.fbo = Fbo(size=self.size, with_depthbuffer=True)
-            Callback(blend)
             # create the fbo
             Callback(self.redraw)
             BindTexture(texture=self.fbo.texture, index=1)
+            Callback(blend)
             self.rec1 = Rectangle(size=(self.size), pos=self.pos)
             Callback(reset_blend)
 

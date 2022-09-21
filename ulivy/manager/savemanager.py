@@ -1,11 +1,16 @@
 import json
 import types
 import numpy as np
-from io import BytesIO
+import os
+from io import BytesIO, TextIOWrapper
 from ulivy.helpers.dataframe import Series
 
-ENTITY_SERIALIZE = (int, str, bool, tuple, list, Series)
-ENTITY_SERIALIZE_BLACKLIST = "moving"
+
+# from kivy.config import Config
+
+
+ENTITY_SERIALIZE = (int, str, bool, tuple, list)
+ENTITY_SERIALIZE_BLACKLIST = ["moving", "team"]
 
 
 """
@@ -25,36 +30,95 @@ Disabled, this stuff will see an overhaul soon anyway.
 class SaveManager:
     def __init__(self, game):
         self.game = game
+
+        # Config.read(self.game.get_application_config())
+        # Config.setdefaults("ulivy", {"savefile": "value1"})
+        # Config.write()
+
         self.streaming = True
         self.last_save = 0
         self.restored_entities = False
 
+        self.reset_store()
+        # print("\n".join([f"{k}: {v}\n" for k, v in self.store.items()]))
+
+    def reset_store(self):
+        self.store = {
+            "player_pos": (3, 5),
+            "current_level_id": 1000,
+            "current_hospital": "L1",
+            "progression": 8,
+            "winlist": set(),
+            "cinskip": 0,
+            "valid_save": 0,
+            "MEMORY": {},
+            "SETTABLES": {},
+            "SWITCHES": {},
+            "TEAM": [],
+            "MOVES": [],
+            "STORAGE": [],
+            "ITEMS": [],
+            "LEVEL_ENTITIES": {},
+        }
+
         self.settables = ValueHolder(holder_is_frozen=False)
+        self.settables.story_chapter = 0
         self.switches = ValueHolder(holder_is_frozen=False)
         self.globals = ValueHolder(holder_is_frozen=False)
         self.locals = ValueHolder(holder_is_frozen=False)
         self.memory = {}
+        self.init_valueholders()
+        self.load_save_soft()
 
+    def load_save_soft(self):
         try:
-            with open("streamingsave.usave", "rb") as infile:
+            with open(self.game.get_application_config(), "rb") as infile:
                 # self.store = json.loads(infile.read())
                 sav = np.load(BytesIO(infile.read()), allow_pickle=True)
-                self.store = {key: sav[key][()] for key in sav.files}
+                store = {key: sav[key][()] for key in sav.files}
+
+                if "progression" in store:
+                    self.store["progression"] = store["progression"]
+                if "winlist" in store:
+                    self.store["winlist"] = store["winlist"]
+                if "cinskip" in store:
+                    self.store["cinskip"] = store["cinskip"]
+                if "valid_save" in store:
+                    self.store["valid_save"] = store["valid_save"]
         except Exception as e:
-            print("Warning: No streaming save found. Defaulting...")
-            self.store = {
-                "player_pos": (15, 15),
-                "current_level_id": 1000,
-                "current_hospital": "L1",
-                "MEMORY": {},
-                "SETTABLES": {},
-                "SWITCHES": {},
-                "TEAM": [],
-                "STORAGE": [],
-                "ITEMS": [],
-                "LEVEL_ENTITIES": {},
-            }
-        # print("\n".join([f"{k}: {v}\n" for k, v in self.store.items()]))
+            pass
+
+    def load_save_file(self):
+        with open(self.game.get_application_config(), "rb") as infile:
+            # self.store = json.loads(infile.read())
+            sav = np.load(BytesIO(infile.read()), allow_pickle=True)
+            self.store = {key: sav[key][()] for key in sav.files}
+
+            self.game.inventory.reset_inventory()
+            self.init_valueholders()
+
+            self.game.m_map.levels = self.store["levels"]
+            self.game.m_gen.overwrite_progress(self.store["levelsdone"])
+
+            self.game.m_map.set_level(self.store["current_level_id"])
+
+            o = (
+                int(self.store["current_offset"][0]),
+                int(self.store["current_offset"][1]),
+            )
+            self.game.r_fbo.r_til.set_map_via_manager(
+                o, fade=False,
+            )
+
+            x, y = self.store["player_pos"]
+            self.game.m_ent.player.set_position(x, y)
+
+            # TODO: replace hack
+            from ulivy.animation.jumpanimation import JumpAnimation
+
+            self.anim = JumpAnimation(self.game, self.game.time, self.game.m_ent.player)
+            if self.game.m_ani.add_animation(self.anim):
+                self.game.m_ent.player.moving = True
 
     def init_valueholders(self):
         for k, v in self.store["SETTABLES"].items():
@@ -64,6 +128,7 @@ class SaveManager:
             if k != "holder_is_frozen":
                 self.set_switch(k, v)
 
+        # print("CHECKING MEMORY")
         for k, v in self.store["MEMORY"].items():
             self.memory[k] = {}
             for k_2, v_2 in v.items():
@@ -71,16 +136,18 @@ class SaveManager:
                 for k_3, v_3 in v_2.items():
                     if k_3 != "holder_is_frozen":
                         setattr(self.memory[k][k_2], k_3, v_3)
+                        # print("HOLDER", k, k_2, k_3, v_3)
 
         for member in self.store["TEAM"]:
-            member = member.copy()
+            hp, member = member
+            new_m = self.game.inventory.init_member(Series().from_dict(member), 75)
+            new_m.current_hp = hp
+            self.game.inventory.add_member(new_m)
 
-            raw = self.game.m_pbs.get_fighter_by_name(member["name"])
-
-            for k, v in member.items():
-                raw[k] = v
-            mem = self.game.inventory.init_member(raw, raw.level)
-            self.game.inventory.add_member(mem)
+        for i, member in enumerate(self.store["MOVES"]):
+            self.game.inventory.members[i].actions = [
+                Series().from_dict(move) for move in member
+            ]
 
         for member in self.store["STORAGE"]:
             member = member.copy()
@@ -185,7 +252,7 @@ class SaveManager:
             return
         self.last_save = time
 
-        self.write_to_file("streamingsave.usave")
+        # self.write_to_file()
 
     def get_lazy_data(self):
         # TODO: remove player name from here
@@ -193,12 +260,19 @@ class SaveManager:
         self.save("player_gender", self.game.m_ent.player.gender)
 
         # Party
-        team = [x.series.to_dict() for x in self.game.inventory.members]
+        team = [(x.current_hp, x.series.to_dict()) for x in self.game.inventory.members]
         # for member in self.game.inventory.members:
         #     team.append(
         #         {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
         #     )
         self.save("TEAM", team)
+
+        moves = [[y.to_dict() for y in x.actions] for x in self.game.inventory.members]
+        # for member in self.game.inventory.members:
+        #     team.append(
+        #         {k: getattr(v, "tolist", lambda: v)() for k, v in member.series.items()}
+        #     )
+        self.save("MOVES", moves)
 
         # Storage
         storage = [x.series.to_dict() for x in self.game.inventory.storage]
@@ -232,17 +306,29 @@ class SaveManager:
         self.game.inventory.members = []
 
     def write_to_file(self, fname="save1.usave"):
-        return
-        if self.game.m_map.allow_save:
+        if True:  # self.game.m_map.allow_save:
+            print("\n\n\nWRITING!!!!!!!!!")
             self.get_lazy_data()
+
+            self.save("player_pos", self.game.m_ent.player.game_position)
+            self.save("player_height", self.game.m_ent.player.height)
+            self.save("current_level_id", self.game.m_map.current_level_id)
 
             self.store["SETTABLES"] = self.settables.__dict__
             self.store["SWITCHES"] = self.switches.__dict__
+
+            self.store["levels"] = self.game.m_map.levels
+            self.store["levelsdone"] = self.game.m_gen.get_done_progress()
 
             self.store["MEMORY"] = {
                 str(k): {str(k_2): v_2.__dict__ for k_2, v_2 in v.items()}
                 for k, v in self.memory.items()
             }
+
+            # for k, v in self.store.items():
+            #     if k == "levels":
+            #         continue
+            #     print(k, v)
 
             # with open(fname, "w") as outfile:
             #     outfile.write(json.dumps(self.store, indent=4))
@@ -250,8 +336,12 @@ class SaveManager:
             np.savez_compressed(f, **self.store)
             f.seek(0)
             out = f.read()
-            with open(fname, "wb") as outfile:
+            with open(self.game.get_application_config(), "wb") as outfile:
                 outfile.write(out)
+
+            # buffer = TextIOWrapper(f, encoding="utf-8").read()
+            # Config.set("ulivy", "savefile", buffer.encode("ascii", errors="ignore"))
+            # Config.write()
 
 
 class ValueHolder(types.SimpleNamespace):

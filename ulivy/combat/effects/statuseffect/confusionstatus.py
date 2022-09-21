@@ -29,7 +29,9 @@ class Confusion(BaseEffect):
                         particle=self.name,
                     )
                     if self.scene.board.random_roll(0.5):
-                        self.scene.add_effect(DamageEffect(self.scene, self.target,))
+                        self.scene.add_effect(
+                            DamageEffect(self.scene, self.target, lethal=False)
+                        )
                     self.counter -= 1
                     return False, True, False
         return False, False, False

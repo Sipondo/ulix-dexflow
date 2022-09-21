@@ -102,6 +102,11 @@ class UICinematic(BaseUI):
                 self.ids.TalkerSprite.source = self.talker_sprite[3:] + ".png"
                 self.ids.TalkerSprite.opacity = 1
 
+                if "trainers/mc" in self.talker_sprite:
+                    self.ids.TalkerSprite.pos_hint = {"y": 0, "center_x": 0.3}
+                else:
+                    self.ids.TalkerSprite.pos_hint = {"y": 0, "center_x": 0.7}
+
     @property
     def max_selection(self):
         return len(self.gstate.options)

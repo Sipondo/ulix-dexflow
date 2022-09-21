@@ -17,6 +17,7 @@ class UIMenuMain(BaseUI):
     def event_keypress(self, key, modifiers):
         if key == "backspace":
             self.game.m_gst.switch_state("overworld")
+            self.game.r_aud.effect("select")
         if key == "down":
             self.selection = (self.selection + 1) % self.max_selection
             self.game.r_aud.effect("select")
@@ -26,6 +27,7 @@ class UIMenuMain(BaseUI):
         elif key == "interact":
             if self.selection == 2:
                 self.game.m_gst.switch_state("menubag", fade=True)
+                self.game.r_aud.effect("select")
             pass
 
         self.highlight_selection()

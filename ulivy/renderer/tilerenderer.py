@@ -12,7 +12,7 @@ from kivy.properties import (
     ReferenceListProperty,
     ListProperty,
 )
-
+from kivy.graphics.instructions import Callback
 
 import os
 import numpy as np
@@ -59,8 +59,9 @@ class EntityLayerWidget(FloatLayout):
 
         with self.canvas:
             BindTexture(
-                texture=self.game.atlas.original_textures[0], index=3,
+                texture=self.game.atlas.original_textures[0], index=11,
             )
+            Callback(self.redraw)
             self.mesh = Mesh(
                 vertices=[],
                 indices=[],
@@ -73,10 +74,14 @@ class EntityLayerWidget(FloatLayout):
                 ],
             )
 
-        self.canvas["texture0"] = 3
+        self.canvas["texture0"] = 11
 
     def update(self, time, dt):
-        self.canvas["texture0"] = 3
+        self.canvas["offset"] = (self.offset[0] + np.sin(dt), self.offset[1])
+        self.redraw(None)
+
+    def redraw(self, instruction):
+        self.canvas["texture0"] = 11
         self.game_position = (
             self.size[0] / Window.size[0],
             self.size[1] / Window.size[1],
@@ -87,7 +92,7 @@ class EntityLayerWidget(FloatLayout):
         self.mesh.vertices = vertices
         self.mesh.indices = indices
 
-        # print(self.h, self.mesh.indices)
+        # print(self.mesh.vertices, self.entity_h)
 
         self.camera_position = (
             self.game.m_pan.total_x / 21,
@@ -191,6 +196,9 @@ class TileRenderer(FloatLayout):
 
         self.game = game
 
+        # with self.canvas:
+        #     Callback(self.resetfunc, reset_context=True)
+
         self.size = size
 
         self.m_map = game.m_map
@@ -199,6 +207,9 @@ class TileRenderer(FloatLayout):
         self.entitylayers = []
 
         self.set_map_via_manager()
+
+    # def resetfunc(self, instruction):
+    #     pass
 
     def clear_layers(self):
         self.clear_widgets()
@@ -226,8 +237,10 @@ class TileRenderer(FloatLayout):
         self.layers.append(widget)
 
     def set_map_via_manager(self, offset=(0, 0), fade=True):
-
+        self.game.r_fad.go_to(0.0)
         self.clear_layers()
+
+        self.game.m_sav.save("current_offset", offset)
 
         pth = os.path.join("resources", "essentials", "graphics", "tilesets")
         resource_add_path(pth)
@@ -257,8 +270,11 @@ class TileRenderer(FloatLayout):
 
         self.spawn_tile_layers(self.m_map.current_tilesets, offset=offset, primary=True)
 
+        offset = tuple(offset)
+
         if conns := self.m_map.current_connected_tilesets:
             for (size, tiles, portal_pos, target_pos, direction,) in conns:
+
                 if direction == "E":
                     direction = (1, 0)
                 elif direction == "S":
@@ -267,6 +283,10 @@ class TileRenderer(FloatLayout):
                     direction = (-1, 0)
                 elif direction == "N":
                     direction = (0, -1)
+                else:
+                    raise Exception(
+                        f"Got invalid portalconnection direction '{direction}'!"
+                    )
                 conn_offset = (
                     offset[0] - portal_pos[0] - direction[0] + target_pos[0],
                     offset[1] - portal_pos[1] - direction[1] + target_pos[1],
@@ -331,7 +351,7 @@ class TileRenderer(FloatLayout):
                     TileLayerWidget(
                         game=self.game,
                         tiles=temp_map,
-                        texture_file=self.texmap[level],
+                        texture_file=Image(resource_find(f"atlas_tiles.png")),
                         level=level,
                         size=size,
                         h=h,
@@ -350,4 +370,3 @@ class TileRenderer(FloatLayout):
                 )
             )
             self.add_layer(self.entitylayers[-1])
-

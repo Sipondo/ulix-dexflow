@@ -96,8 +96,8 @@
         {
             "id": 2336750646176,
             "title": "Geo Friction",
-            "pos_x": 425.5937500000001,
-            "pos_y": -359.1562499999999,
+            "pos_x": 333.5937500000001,
+            "pos_y": -318.1562499999999,
             "inputs": [
                 {
                     "id": 2336750646608,
@@ -116,78 +116,10 @@
             "op_code": -2035472726
         },
         {
-            "id": 2336750646800,
-            "title": "Stage",
-            "pos_x": -305.46875,
-            "pos_y": -218.46874999999974,
-            "inputs": [],
-            "outputs": [
-                {
-                    "id": 2336750645696,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 0
-                },
-                {
-                    "id": 2336750645408,
-                    "index": 1,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                },
-                {
-                    "id": 2336750645456,
-                    "index": 2,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 2
-                },
-                {
-                    "id": 2336750645312,
-                    "index": 3,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 3
-                }
-            ],
-            "content": {
-                "field_stage": 10159782
-            },
-            "op_code": 8
-        },
-        {
-            "id": 2336750645648,
-            "title": "Render",
-            "pos_x": 142.0937500000001,
-            "pos_y": -85.15624999999983,
-            "inputs": [
-                {
-                    "id": 2336750646560,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 2
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "field_file": "square_01",
-                "field_equation": "Anti",
-                "field_depth": 0,
-                "field_opacity": "0.1",
-                "field_blur_count": 3,
-                "field_blur_delay": "0.2",
-                "field_noise": 1.0,
-                "field_rotvel": ""
-            },
-            "op_code": 4
-        },
-        {
             "id": 2336750647088,
             "title": "Render",
-            "pos_x": 501.0937500000001,
-            "pos_y": -446.90624999999983,
+            "pos_x": 435.0937500000001,
+            "pos_y": -428.9062499999998,
             "inputs": [
                 {
                     "id": 2336750646704,
@@ -200,7 +132,7 @@
             "outputs": [],
             "content": {
                 "field_file": "square_01",
-                "field_equation": "Anti",
+                "field_equation": "Add",
                 "field_depth": 0,
                 "field_opacity": 1.0,
                 "field_blur_count": 3,
@@ -213,8 +145,8 @@
         {
             "id": 2336750646512,
             "title": "Emit",
-            "pos_x": 215.84375000000006,
-            "pos_y": -509.9062499999999,
+            "pos_x": 161.84375000000006,
+            "pos_y": -490.9062499999999,
             "inputs": [
                 {
                     "id": 2336750646944,
@@ -226,13 +158,13 @@
             ],
             "outputs": [],
             "content": {
-                "field_life": "0.15",
-                "field_life_range": "0.1",
-                "field_size": "0.5",
+                "field_life": "0.1",
+                "field_life_range": "0.06",
+                "field_size": "0.8",
                 "field_size_range": "0.2",
                 "field_delay": "0.28",
-                "field_duration": ".03",
-                "field_count": "3000",
+                "field_duration": ".1",
+                "field_count": "900",
                 "field_pos_x": "!target_x!-0.02",
                 "field_pos_range_x": 0,
                 "field_pos_y": 0,
@@ -249,49 +181,14 @@
                 "field_rot_range": "0",
                 "field_rot_vel": 0,
                 "field_rot_vel_range": 0,
-                "field_col_r": "0.35",
+                "field_col_r": "0.85",
                 "field_col_range_r": "0.05",
-                "field_col_g": "0.85",
+                "field_col_g": "0.1",
                 "field_col_range_g": "0.15",
-                "field_col_b": "0.4",
+                "field_col_b": "0.7",
                 "field_col_range_b": 0
             },
             "op_code": 9
-        },
-        {
-            "id": 2336750647184,
-            "title": "Filter Blur",
-            "pos_x": 102.09375000000011,
-            "pos_y": -237.15624999999986,
-            "inputs": [
-                {
-                    "id": 2336750648048,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 3
-                },
-                {
-                    "id": 2336750645504,
-                    "index": 1,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 0
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 2336750645744,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "field_LIFE": "0.1"
-            },
-            "op_code": 1417848045
         },
         {
             "id": 2336750646992,
@@ -330,15 +227,15 @@
                 }
             ],
             "content": {
-                "field_stage": 8725064
+                "field_stage": "123"
             },
             "op_code": 8
         },
         {
             "id": 2336754732528,
             "title": "Geo Set",
-            "pos_x": 524.5937500000001,
-            "pos_y": -172.40625000000003,
+            "pos_x": 441.59375,
+            "pos_y": -162.40625,
             "inputs": [
                 {
                     "id": 2336754732336,
@@ -457,21 +354,59 @@
                 "field_equation": "sin(pi*min(1, max(0, 5*(t-0.25))))*0.15"
             },
             "op_code": 7
+        },
+        {
+            "id": 1936159533904,
+            "title": "Trigger",
+            "pos_x": 328.7499999999999,
+            "pos_y": -37.49999999999999,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.25",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/water2.ogg",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936307856240,
+            "title": "Trigger",
+            "pos_x": 314.9999999999999,
+            "pos_y": 54.999999999999986,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.25",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/slash1.ogg",
+                "field_sound_enabled": "",
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
         }
     ],
     "edges": [
-        {
-            "id": 2336750664672,
-            "edge_type": 2,
-            "start": 2336750646560,
-            "end": 2336750645456
-        },
-        {
-            "id": 2336750663184,
-            "edge_type": 2,
-            "start": 2336754729888,
-            "end": 2336750648048
-        },
         {
             "id": 2336750664912,
             "edge_type": 2,
@@ -483,12 +418,6 @@
             "edge_type": 2,
             "start": 2336754732336,
             "end": 2336754730176
-        },
-        {
-            "id": 2336750648288,
-            "edge_type": 2,
-            "start": 2336750645696,
-            "end": 2336750645504
         },
         {
             "id": 2336750648000,

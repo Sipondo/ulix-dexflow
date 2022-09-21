@@ -25,8 +25,11 @@ class BaseAgent(abc.ABC):
         if self.action_handler.is_legal(action):
             self.action = action
 
-    def get_first_sendout(self):
-        sendout_i = self.scene.board.get_first_sendout(self.team)
+    def get_first_sendout(self, id=-1):
+        if id == -1:
+            sendout_i = self.scene.board.get_first_sendout(self.team)
+        else:
+            sendout_i = id
         return Action(
             ActionType.SENDOUT,
             user=(self.team, sendout_i),

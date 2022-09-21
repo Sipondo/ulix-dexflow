@@ -7,6 +7,10 @@ precision highp float;
 layout(points)in;
 layout(triangle_strip,max_vertices=8)out;
 
+in VS_OUT{
+    vec4 position;
+}gs_in[];
+
 uniform mat4 Mvp;
 uniform mat4 BillboardFace;
 uniform vec3 CameraPosition;
@@ -17,7 +21,7 @@ uniform float HeightShare;
 out vec2 uv;
 
 void main(){
-    vec3 pos=gl_in[0].gl_Position.xyz;
+    vec3 pos=gs_in[0].position.xyz;
     vec3 right=(BillboardFace*vec4(0,1,0,1)).xyz*Size;
     vec3 up;
     if(IsShadow){

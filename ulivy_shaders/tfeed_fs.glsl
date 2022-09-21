@@ -13,5 +13,6 @@ out vec4 frag_color;
 
 void main()
 {
+    discard;
     return;
 }

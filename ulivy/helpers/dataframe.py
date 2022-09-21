@@ -89,6 +89,15 @@ class Series:
             result.add(k, str(v) == str(obj))
         return result
 
+    def __ne__(self, obj):
+        if isinstance(obj, Series):
+            return self.data != obj.data
+        result = Series()
+        for k, v in self.data.items():
+            # print(str(k), str(obj))
+            result.add(k, str(v) != str(obj))
+        return result
+
     def __str__(self):
         return " ".join([f"{k}: {v}" for k, v in self.data.items()])
 
@@ -129,6 +138,9 @@ class Series:
     def items(self):
         return self.data.items()
 
+    def values(self):
+        return self.data.values()
+
     def copy(self):
         result = Series()
 
@@ -142,6 +154,18 @@ class Series:
         for k, v in self.items():
             result.add(k, str(v).lower())
         return result
+
+    def to_dict(self):
+        result = {}
+
+        for k, v in self.items():
+            result[k] = v
+        return result
+
+    def from_dict(self, d):
+        for k, v in d.items():
+            self.data[k] = v
+        return self
 
     @property
     def loc(self):

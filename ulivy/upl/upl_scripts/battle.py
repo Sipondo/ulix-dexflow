@@ -20,6 +20,7 @@ class Battle:
         # self.act.game.r_int.fade = True # TODO: ulivy
 
         self.encounter_init = False
+        self.act.game.r_aud.play_music("bgm/trainer.ogg")  # TODO: use flag
 
     def on_tick(self, time=None, frame_time=None):
         if time - self.init_time < 0.5:

@@ -62,12 +62,12 @@ class PokeBoard(CombatBoard):
                     )
 
                 # ability load
-                try:
-                    ability = self.scene.ability_lib[poke_fighter.ability.lower()](
-                        self.scene, (i, j)
-                    )
-                except KeyError:
-                    ability = self.scene.ability_lib["noability"](self.scene, (i, j))
+                # try:
+                #     ability = self.scene.ability_lib[poke_fighter.ability.lower()](
+                #         self.scene, (i, j)
+                #     )
+                # except KeyError:
+                ability = self.scene.ability_lib["noability"](self.scene, (i, j))
                 self.scene.add_effect(ability)
 
             self.teams.append(team_formatted)
@@ -98,25 +98,39 @@ class PokeBoard(CombatBoard):
     def get_action_priority(self, action: Action):
         prio = action.priority
         user_actor = self.get_actor(action.user)
-        user_speed = user_actor.stats[0]
+        user_speed = user_actor.stats[5]
         for speed_mod in [
             x.stat_mod[4]
             for x in self.scene.get_effects_on_target(action.user)
             if x.name == "Statmod"
         ]:
             user_speed *= speed_mod
-        return 10_000_000 * prio + 10 * user_speed + self.random_float()
 
-    def inflict_damage(self, target, damage):
+        return 10_000_000 * prio + 10 + self.random_float()
+
+    def inflict_damage(self, target, damage, lethal=True, user=None):
+        if user is not None:
+            user_actor = self.get_actor(user)
+            if user_actor.current_hp <= 0:
+                return
+
         x, data = self.teams[target[0]][target[1]]
         damage = min(data.current_hp, damage)
         data.current_hp -= damage
         for effect in self.scene.get_effects_on_target(target):
             effect.on_damage(damage)
         if data.current_hp < 1:
-            self.scene.add_effect(FaintEffect(self.scene, target))
+            if lethal:
+                self.scene.add_effect(FaintEffect(self.scene, target))
+            else:
+                data.current_hp = 1
 
     def inflict_status(self, status, user, target):
+        if user is not None:
+            user_actor = self.get_actor(user)
+            if user_actor.current_hp <= 0:
+                return
+
         for effect in self.scene.get_effects_on_target(target):
             if effect.on_status(target):
                 return

@@ -9,9 +9,10 @@ class CameraManager:
     def __init__(self, game):
         self.game = game
         self.turn_clock = True
-        self.shake_value = 0.05
+        self.shake_value = 0.0
         self.shake_frame = 1
         self.shake_counter = 0
+        self.battle_shake = 1.0
 
         self.angle = 30
         self.angle_t = 30
@@ -56,6 +57,9 @@ class CameraManager:
         #         self.pos[1] + frame_time * (self.pos_t[1] - self.pos[1]) * 2,
         #         self.pos[2] + frame_time * (self.pos_t[2] - self.pos[2]) * 2,
         #     )
+
+        self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
+        self.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
 
         self.shake_counter += frame_time
         if self.shake_counter > SHAKE_SPEED:

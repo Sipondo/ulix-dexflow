@@ -40,7 +40,7 @@
                 }
             ],
             "content": {
-                "field_stage": 8725064
+                "field_stage": "123"
             },
             "op_code": 8
         },
@@ -260,8 +260,8 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 211.2499999999999,
-            "pos_y": 12.25,
+            "pos_x": 206.24999999999983,
+            "pos_y": 12.250000000000002,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -295,7 +295,7 @@
                 "field_count": "1",
                 "field_hit_strength": 0.0,
                 "field_hit_enabled": "",
-                "field_sound_path": "SE/gs/explode_impact.wav",
+                "field_sound_path": "",
                 "field_sound_enabled": false,
                 "field_shake": "0.1",
                 "field_shake_enabled": false,
@@ -379,6 +379,56 @@
                 "field_rotvel": ""
             },
             "op_code": 4
+        },
+        {
+            "id": 1936285136256,
+            "title": "Trigger",
+            "pos_x": -157.49999999999994,
+            "pos_y": 119.99999999999997,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.2",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire1.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936314619312,
+            "title": "Trigger",
+            "pos_x": -155.0,
+            "pos_y": 218.74999999999994,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.4",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/fire4.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
         }
     ],
     "edges": [

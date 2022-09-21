@@ -18,5 +18,10 @@ class Poison(BaseEffect):
                 f"{self.scene.board.get_actor(self.target).name} was hurt by poison",
                 particle=self.particle,
             )
-            self.scene.add_effect(DamageEffect(self.scene, self.target, rel_dmg=0.125))
+            dmg = self.scene.game.inventory.get_dot_damage(
+                0.125, self.scene.board.get_actor(self.target), self.target[0]
+            )
+            self.scene.add_effect(
+                DamageEffect(self.scene, self.target, rel_dmg=dmg, lethal=False)
+            )
         return False, False, False

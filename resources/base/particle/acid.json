@@ -62,10 +62,10 @@
             "content": {
                 "field_life": "0.9",
                 "field_life_range": "0.6",
-                "field_size": "1.9",
+                "field_size": "1.4",
                 "field_size_range": "0.7",
                 "field_delay": "0.26",
-                "field_duration": ".6",
+                "field_duration": ".2",
                 "field_count": "120",
                 "field_pos_x": "-0.9",
                 "field_pos_range_x": 0,
@@ -132,7 +132,7 @@
             "id": 2574248078736,
             "title": "Render",
             "pos_x": -239.71875,
-            "pos_y": 32.85937499999997,
+            "pos_y": 34.10937499999997,
             "inputs": [
                 {
                     "id": 2574251264416,
@@ -144,7 +144,7 @@
             ],
             "outputs": [],
             "content": {
-                "field_file": "circle_05",
+                "field_file": "dirt_03",
                 "field_equation": "Add",
                 "field_depth": 0,
                 "field_opacity": "0.7",
@@ -238,8 +238,8 @@
         {
             "id": 2087587075504,
             "title": "Trigger",
-            "pos_x": 211.2499999999999,
-            "pos_y": 12.25,
+            "pos_x": 59.999999999999886,
+            "pos_y": 7.25,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -254,7 +254,7 @@
                 "field_shake_enabled": "",
                 "field_dark_enabled": true,
                 "field_dark_recover": false,
-                "field_dark": 0.5,
+                "field_dark": "0.4",
                 "field_dark_speed": "1.0",
                 "field_dark_speed_enabled": true
             },
@@ -263,8 +263,8 @@
         {
             "id": 1570490938944,
             "title": "Trigger",
-            "pos_x": 236.2499999999999,
-            "pos_y": 135.125,
+            "pos_x": 62.499999999999886,
+            "pos_y": 142.625,
             "inputs": [],
             "outputs": [],
             "content": {
@@ -273,13 +273,13 @@
                 "field_count": "1",
                 "field_hit_strength": 0.0,
                 "field_hit_enabled": "",
-                "field_sound_path": "SE/gs/explode_impact.wav",
+                "field_sound_path": "",
                 "field_sound_enabled": false,
                 "field_shake": "0.1",
                 "field_shake_enabled": false,
                 "field_dark_enabled": true,
                 "field_dark_recover": true,
-                "field_dark": "0.5",
+                "field_dark": "0.4",
                 "field_dark_speed": "1.0",
                 "field_dark_speed_enabled": false,
                 "field_hit": 0.0
@@ -319,7 +319,7 @@
                 "field_vel_range_x": "0.8",
                 "field_vel_y": 0,
                 "field_vel_range_y": "0.8",
-                "field_vel_z": "1.4",
+                "field_vel_z": "0.8",
                 "field_vel_range_z": "2",
                 "field_rot": 0,
                 "field_rot_range": "360",
@@ -337,8 +337,8 @@
         {
             "id": 2646971855056,
             "title": "Stage",
-            "pos_x": -206.25,
-            "pos_y": -385.75,
+            "pos_x": -206.25000000000003,
+            "pos_y": -387.70312500000006,
             "inputs": [],
             "outputs": [
                 {
@@ -422,8 +422,8 @@
         {
             "id": 2647023886976,
             "title": "Render",
-            "pos_x": 86.0,
-            "pos_y": -219.0,
+            "pos_x": 93.5,
+            "pos_y": -237.75,
             "inputs": [
                 {
                     "id": 2647023890240,
@@ -435,7 +435,7 @@
             ],
             "outputs": [],
             "content": {
-                "field_file": "circle_05",
+                "field_file": "dirt_03",
                 "field_equation": "Add",
                 "field_depth": 0,
                 "field_opacity": "0.3",
@@ -450,7 +450,7 @@
             "id": 2754519254544,
             "title": "Geo Set",
             "pos_x": -174.5,
-            "pos_y": -549.75,
+            "pos_y": -547.25,
             "inputs": [
                 {
                     "id": 2754434083712,
@@ -485,7 +485,7 @@
                 "field_POS_ABS_Z": false,
                 "field_VEL_X": "0",
                 "field_VEL_Y": "0",
-                "field_VEL_Z": "-1",
+                "field_VEL_Z": "-2",
                 "field_VEL_SWAY_X": "0",
                 "field_VEL_SWAY_Y": "0",
                 "field_VEL_SWAY_Z": "0",
@@ -503,6 +503,135 @@
                 "field_COL_ABS_Z": false
             },
             "op_code": 1661913081
+        },
+        {
+            "id": 1936339414080,
+            "title": "Render",
+            "pos_x": 158.75,
+            "pos_y": -161.25,
+            "inputs": [
+                {
+                    "id": 1936339411440,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "circle_05",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.3",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1936178362304,
+            "title": "Render",
+            "pos_x": -307.5,
+            "pos_y": 128.75,
+            "inputs": [
+                {
+                    "id": 1936339413120,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 2
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "field_file": "circle_05",
+                "field_equation": "Add",
+                "field_depth": 0,
+                "field_opacity": "0.3",
+                "field_blur_count": 3,
+                "field_blur_delay": 0.1,
+                "field_noise": 1.0,
+                "field_rotvel": ""
+            },
+            "op_code": 4
+        },
+        {
+            "id": 1936178854688,
+            "title": "Trigger",
+            "pos_x": 328.0,
+            "pos_y": 28.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.26",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/water2.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936178442640,
+            "title": "Trigger",
+            "pos_x": 371.0,
+            "pos_y": 108.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.7",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/water1.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
+        },
+        {
+            "id": 1936306946352,
+            "title": "Trigger",
+            "pos_x": 413.0,
+            "pos_y": 201.0,
+            "inputs": [],
+            "outputs": [],
+            "content": {
+                "field_delay": "0.7",
+                "field_duration": 0.9,
+                "field_count": 1,
+                "field_hit": 0.0,
+                "field_hit_enabled": "",
+                "field_sound_path": "se/anim/poison.ogg",
+                "field_sound_enabled": true,
+                "field_shake": 0.5,
+                "field_shake_enabled": "",
+                "field_dark_enabled": "",
+                "field_dark_recover": false,
+                "field_dark": 0.5,
+                "field_dark_speed": 1.0,
+                "field_dark_speed_enabled": false
+            },
+            "op_code": 11
         }
     ],
     "edges": [
@@ -559,6 +688,18 @@
             "edge_type": 2,
             "start": 2754434083712,
             "end": 2646971858272
+        },
+        {
+            "id": 1936178363504,
+            "edge_type": 2,
+            "start": 1936339411440,
+            "end": 2646971857936
+        },
+        {
+            "id": 1936159558480,
+            "edge_type": 2,
+            "start": 1936339413120,
+            "end": 2574247768752
         }
     ]
 }

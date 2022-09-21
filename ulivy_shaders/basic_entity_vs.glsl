@@ -15,6 +15,7 @@ out VS_OUT{
     vec2 texPos;
     vec2 texSize;
     vec2 texFrame;
+    vec4 position;
 }vs_out;
 
 uniform vec2 offset;
@@ -35,4 +36,6 @@ void main()
     y=y+offset.y+camera_position.y*2.;
     
     gl_Position=vec4(x,y,0.,1.);
+    vs_out.position=vec4(x,y,0.,1.);
+
 }

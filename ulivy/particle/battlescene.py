@@ -41,7 +41,6 @@ class BattleScene(FloatLayout):
         self.dark_recover = True
         self.dark_direction = 1
 
-        self.battle_shake = 1.0
         self.camera = self.game.m_cam
         self.camera.reset()
 
@@ -134,12 +133,9 @@ class BattleScene(FloatLayout):
         elif self.dark_recover:
             self.dark = min(self.dark + frame_time / 2.5, 1)
 
-        self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
-
         # self.prog_bg["Brightness"] = self.dark
         # self.render_prog["Contrast"] = 3.0 - 2 * self.dark
         # self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
-        # self.camera.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
         # self.prog_bg["Shake"] = 0  # self.camera.shake
         # self.render_prog["Shake"] = 0  # self.camera.shake
         # self.render_prog_neg["Shake"] = self.camera.shake
@@ -409,6 +405,9 @@ class BattleScene(FloatLayout):
         if battler.texture_file is not None:
             battler.set_face(face)
             # TODO: remove hack
-            a = float(int(time * 8) % battler.ratio)
+            if battler.ratio != 0:
+                a = float(int(time * 8) % battler.ratio)
+            else:
+                a = 0
             battler.canvas["AnimationFrame"] = 1.0 if a < 1.0 else a
             # print(float(int(time * 8) % battler.ratio))

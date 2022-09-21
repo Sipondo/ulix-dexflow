@@ -6,7 +6,7 @@ resource_add_path(KV_PATH)
 
 from kivy.lang import Builder
 
-Builder.load_file("joystickpad.kv")
-Builder.load_file("joystick.kv")
+Builder.load_file("ulivy/manager/joystick/joystickpad.kv")
+Builder.load_file("ulivy/manager/joystick/joystick.kv")
 
 from .joystick import Joystick
