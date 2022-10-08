@@ -13,34 +13,6 @@ if __name__ == "__main__":
     from kivy.config import Config
 
     Config.set("input", "mouse", "mouse,multitouch_on_demand")
-    # from game.renderer.audiorenderer import AudioRenderer
-    # # from game.renderer.qinterfacerenderer import InterfaceRenderer
-
-    # from game.renderer.entityrenderer import EntityRenderer
-    # from game.renderer.worldrenderer import WorldRenderer
-    # from game.renderer.pantool import PanTool
-
-    # from game.manager.gamestatemanager import GameStateManager
-    # from game.manager.resourcemanager import ResourceManager
-    # from game.manager.animationmanager import AnimationManager
-    # from game.manager.collisionmanager import CollisionManager
-
-    # # from game.manager.dbmanager import DbManager
-    # # from game.manager.pbsmanager import PbsManager
-    # from game.manager.hotkeymanager import HotkeyManager
-    # from game.manager.entitymanager import EntityManager
-
-    # # # from game.manager.eventmanager import EventManager
-    # # from game.manager.actionmanager import ActionManager
-
-    # # from game.manager.aimanager import AiManager
-    # # from game.manager.cameramanager import CameraManager
-
-    # # from game.upl.uplmanager import UplManager
-
-    # from game.manager.savemanager import SaveManager
-
-    # # from game.player.inventory import Inventory
 
     import logging
 
@@ -55,6 +27,7 @@ if __name__ == "__main__":
     from ulivy.manager.animationmanager import AnimationManager
     from ulivy.manager.cameramanager import CameraManager
     from ulivy.manager.collisionmanager import CollisionManager
+    from ulivy.manager.combatmanager import CombatManager
     from ulivy.manager.dbmanager import DbManager
     from ulivy.manager.entitymanager import EntityManager
     from ulivy.manager.gamestatemanager import GameStateManager
@@ -154,6 +127,7 @@ if __name__ == "__main__":
 
             self.m_ani = AnimationManager(self)
             self.m_col = CollisionManager(self)
+            self.m_com = CombatManager(self)
             self.m_ent = EntityManager(self)
             self.m_act = ActionManager(self)
             self.m_gst = GameStateManager(self)

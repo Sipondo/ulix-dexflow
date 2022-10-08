@@ -1,4 +1,5 @@
-from ..gamestate.gamestatebattle import GameStateBattle
+# from ..gamestate.gamestatebattle import GameStateBattle
+from ..gamestate.gamestatecombat import GameStateCombat
 from ..gamestate.gamestatecinematic import GameStateCinematic
 
 # from ..gamestate.gamestateintro import GameStateIntro
@@ -92,7 +93,7 @@ class GameStateManager:
         if new_state == "overworld":
             self.current_state = GameStateOverworld(self.game)
         elif new_state == "battle":
-            self.current_state = GameStateBattle(self.game)
+            self.current_state = GameStateCombat(self.game)
         elif new_state == "menubag":
             self.current_state = GameStateMenuBag(self.game)
         elif new_state == "menucareer":

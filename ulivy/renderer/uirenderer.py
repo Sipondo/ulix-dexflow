@@ -2,14 +2,14 @@ from kivy.uix.floatlayout import FloatLayout
 
 UI = "modernui"
 
-from resources.basicui.interface.uioverworld import UIOverworld
 from resources.basicui.interface.uicinematic import UICinematic
+from resources.basicui.interface.uicombat import UICombat
 from resources.basicui.interface.uidebug import UIDebug
-from resources.basicui.interface.uiprompt import UIPrompt
-from resources.basicui.interface.uibattle import UIBattle
-from resources.basicui.interface.uimenumain import UIMenuMain
 from resources.basicui.interface.uimenubag import UIMenuBag
+from resources.basicui.interface.uimenumain import UIMenuMain
 from resources.basicui.interface.uimenustart import UIMenuStart
+from resources.basicui.interface.uioverworld import UIOverworld
+from resources.basicui.interface.uiprompt import UIPrompt
 from resources.basicui.interface.uistatus import UIStatus
 
 
@@ -51,7 +51,7 @@ class UIRenderer(FloatLayout):
         elif new_ui == "prompt":
             self.current_ui = UIPrompt(self.game, gstate)
         elif new_ui == "battle":
-            self.current_ui = UIBattle(self.game, gstate)
+            self.current_ui = UICombat(self.game, gstate)
         elif new_ui == "menumain":
             self.current_ui = UIMenuMain(self.game, gstate, size=self.size)
         elif new_ui == "menubag":
