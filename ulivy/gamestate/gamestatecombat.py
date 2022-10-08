@@ -16,6 +16,15 @@ class GameStateCombat(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
+        if len(self.game.inventory.members) < 1:
+            self.game.inventory.members.append(self.game.inventory.init_random_member())
+
+        self.game.m_com.init_new_stack()
+        self.game.m_com.set_team(0, self.game.inventory.members)
+        self.game.m_com.set_team(1, enemy_team)
+
+        exit()
+
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)
 

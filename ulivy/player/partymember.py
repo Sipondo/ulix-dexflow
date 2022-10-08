@@ -126,6 +126,9 @@ class PartyMember:
 
         self.actions = n
 
+    def to_dict(self):
+        return self.series.to_dict()
+
     @property
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])

@@ -6,7 +6,7 @@ class CombatManager:
         self.game = game
         self.board_pointer = 0
 
-    def init_new_combat(self):
+    def init_new_stack(self):
         self.boards = [CombatBoard()]
 
     def advance(self):
@@ -15,6 +15,13 @@ class CombatManager:
         self.board_pointer += 1
         return True
 
+    def set_team(self, team_id, team):
+        self.boards.append(self.board_head.set_team(team_id, team))
+
     @property
-    def current_board(self):
+    def board_current(self):
         return self.boards[self.board_pointer]
+
+    @property
+    def board_head(self):
+        return self.boards[-1]
