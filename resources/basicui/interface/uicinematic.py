@@ -72,18 +72,10 @@ class UICinematic(BaseUI):
 
     def highlight_selection(self):
         s = self.selection
-        self.ids.ChoiceBackground_1.source = (
-            f'ulivy/interface/modernui/dialogue_choice{"_high" if s==0 else ""}.png'
-        )
-        self.ids.ChoiceBackground_2.source = (
-            f'ulivy/interface/modernui/dialogue_choice{"_high" if s==1 else ""}.png'
-        )
-        self.ids.ChoiceBackground_3.source = (
-            f'ulivy/interface/modernui/dialogue_choice{"_high" if s==2 else ""}.png'
-        )
-        self.ids.ChoiceBackground_4.source = (
-            f'ulivy/interface/modernui/dialogue_choice{"_high" if s==3 else ""}.png'
-        )
+        self.ids.ChoiceBackground_1.source = f'resources/basicui/graphics/interface/dialogue_choice{"_high" if s==0 else ""}.png'
+        self.ids.ChoiceBackground_2.source = f'resources/basicui/graphics/interface/dialogue_choice{"_high" if s==1 else ""}.png'
+        self.ids.ChoiceBackground_3.source = f'resources/basicui/graphics/interface/dialogue_choice{"_high" if s==2 else ""}.png'
+        self.ids.ChoiceBackground_4.source = f'resources/basicui/graphics/interface/dialogue_choice{"_high" if s==3 else ""}.png'
 
     def clean_dialogue(self, dialogue):
         return (

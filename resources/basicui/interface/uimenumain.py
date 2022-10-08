@@ -34,30 +34,12 @@ class UIMenuMain(BaseUI):
 
     def highlight_selection(self):
         s = self.selection
-        self.ids.PokedexMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_pokedex{"_high" if s==0 else ""}.png'
-        )
-        self.ids.PokemonMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_pokemon{"_high" if s==1 else ""}.png'
-        )
-        self.ids.BagMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_bag{"_high" if s==2 else ""}.png'
-        )
-        self.ids.PokegearMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_pokegear{"_high" if s==3 else ""}.png'
-        )
-        self.ids.CardMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_card{"_high" if s==4 else ""}.png'
-        )
-        self.ids.SaveMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_save{"_high" if s==5 else ""}.png'
-        )
-        self.ids.OptionsMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_options{"_high" if s==6 else ""}.png'
-        )
-        self.ids.ExitMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_exit{"_high" if s==7 else ""}.png'
-        )
-        self.ids.ReturnMenuBackground.source = (
-            f'ulivy/interface/modernui/menumain_return{"_high" if s==8 else ""}.png'
-        )
+        self.ids.PokedexMenuBackground.source = f'resources/basicui/graphics/interface/menumain_pokedex{"_high" if s==0 else ""}.png'
+        self.ids.PokemonMenuBackground.source = f'resources/basicui/graphics/interface/menumain_pokemon{"_high" if s==1 else ""}.png'
+        self.ids.BagMenuBackground.source = f'resources/basicui/graphics/interface/menumain_bag{"_high" if s==2 else ""}.png'
+        self.ids.PokegearMenuBackground.source = f'resources/basicui/graphics/interface/menumain_pokegear{"_high" if s==3 else ""}.png'
+        self.ids.CardMenuBackground.source = f'resources/basicui/graphics/interface/menumain_card{"_high" if s==4 else ""}.png'
+        self.ids.SaveMenuBackground.source = f'resources/basicui/graphics/interface/menumain_save{"_high" if s==5 else ""}.png'
+        self.ids.OptionsMenuBackground.source = f'resources/basicui/graphics/interface/menumain_options{"_high" if s==6 else ""}.png'
+        self.ids.ExitMenuBackground.source = f'resources/basicui/graphics/interface/menumain_exit{"_high" if s==7 else ""}.png'
+        self.ids.ReturnMenuBackground.source = f'resources/basicui/graphics/interface/menumain_return{"_high" if s==8 else ""}.png'

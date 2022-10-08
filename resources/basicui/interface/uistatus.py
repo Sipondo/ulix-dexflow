@@ -58,7 +58,7 @@ class UIStatus(BaseUI):
             self.ids.ItemInfo.add_widget(
                 PixelImage(
                     # id=f"Item{i}box",
-                    source=f"ulivy/interface/modernui/itembox_{x.data.quality}.png",
+                    source=f"resources/basicui/graphics/interface/itembox_{x.data.quality}.png",
                     pos_hint={
                         "center_x": 0.1 + 0.12 * (i % 8),
                         "center_y": 0.7 - 0.12 * (i // 8),
@@ -77,7 +77,7 @@ class UIStatus(BaseUI):
             )
             # f"resources/base/graphics/items/{self.rewards[0].identifier.lower()}.png"
         self.itemselectbox = PixelImage(
-            source="ulivy/interface/modernui/itemboxsel.png",
+            source="resources/basicui/graphics/interface/itemboxsel.png",
             pos_hint={
                 "center_x": 0.1,
                 "center_y": 0.7,
@@ -153,9 +153,9 @@ class UIStatus(BaseUI):
     def update_page(self):
 
         self.ids.BackgroundMember.source = (
-            "ulivy/interface/modernui/bg_menucontinue.png"
+            "resources/basicui/graphics/interface/bg_menucontinue.png"
             if self.state in ("ITEM", "ITEMPICK")
-            else "ulivy/interface/modernui/bg_menugame.png"
+            else "resources/basicui/graphics/interface/bg_menugame.png"
         )
 
         self.itemselectbox.pos_hint = {
@@ -209,7 +209,7 @@ class UIStatus(BaseUI):
 
         if self.state == "BATTLER":
             self.ids.BackgroundMember.source = (
-                "ulivy/interface/modernui/bg_menumovebattler.png"
+                "resources/basicui/graphics/interface/bg_menumovebattler.png"
             )
             member = self.game.inventory.members[self.batsel]
 
@@ -224,11 +224,11 @@ class UIStatus(BaseUI):
 
             f = member
             self.ids.Battler_Type1.source = (
-                f"ulivy/interface/modernui/types/{f.type1.lower()}.png"
+                f"resources/basicui/graphics/interface/types/{f.type1.lower()}.png"
             )
             if f.type2:
                 self.ids.Battler_Type2.source = (
-                    f"ulivy/interface/modernui/types/{f.type2.lower()}.png"
+                    f"resources/basicui/graphics/interface/types/{f.type2.lower()}.png"
                 )
             else:
                 self.ids.Battler_Type2.opacity = 0
@@ -246,15 +246,9 @@ class UIStatus(BaseUI):
             self.ids.Move1_Prefix.text = base.prefix
             self.ids.Move1_Name.text = base.name
             self.ids.Move1_Description.text = f"{base.description} {base.suffix}"
-            self.ids.Move1_Type.source = (
-                f"ulivy/interface/modernui/types/{str(base.type).lower()}.png"
-            )
-            self.ids.Move1_Category.source = (
-                f"ulivy/interface/modernui/types/{str(base.damagecat).lower()}.png"
-            )
-            self.ids.Move1_Border.source = (
-                f"ulivy/interface/modernui/moveborder_{str(base.quality)}.png"
-            )
+            self.ids.Move1_Type.source = f"resources/basicui/graphics/interface/types/{str(base.type).lower()}.png"
+            self.ids.Move1_Category.source = f"resources/basicui/graphics/interface/types/{str(base.damagecat).lower()}.png"
+            self.ids.Move1_Border.source = f"resources/basicui/graphics/interface/moveborder_{str(base.quality)}.png"
             self.ids.Move1_PP.text = "-" if int(base.pp) > 40 else str(base.pp)
 
             if len(member.actions) < 2:
@@ -265,15 +259,9 @@ class UIStatus(BaseUI):
             self.ids.Move2_Prefix.text = base.prefix
             self.ids.Move2_Name.text = base.name
             self.ids.Move2_Description.text = f"{base.description} {base.suffix}"
-            self.ids.Move2_Type.source = (
-                f"ulivy/interface/modernui/types/{str(base.type).lower()}.png"
-            )
-            self.ids.Move2_Category.source = (
-                f"ulivy/interface/modernui/types/{str(base.damagecat).lower()}.png"
-            )
-            self.ids.Move2_Border.source = (
-                f"ulivy/interface/modernui/moveborder_{str(base.quality)}.png"
-            )
+            self.ids.Move2_Type.source = f"resources/basicui/graphics/interface/types/{str(base.type).lower()}.png"
+            self.ids.Move2_Category.source = f"resources/basicui/graphics/interface/types/{str(base.damagecat).lower()}.png"
+            self.ids.Move2_Border.source = f"resources/basicui/graphics/interface/moveborder_{str(base.quality)}.png"
             self.ids.Move2_PP.text = "-" if int(base.pp) > 40 else str(base.pp)
 
             if len(member.actions) < 3:
@@ -284,15 +272,9 @@ class UIStatus(BaseUI):
             self.ids.Move3_Prefix.text = base.prefix
             self.ids.Move3_Name.text = base.name
             self.ids.Move3_Description.text = f"{base.description} {base.suffix}"
-            self.ids.Move3_Type.source = (
-                f"ulivy/interface/modernui/types/{str(base.type).lower()}.png"
-            )
-            self.ids.Move3_Category.source = (
-                f"ulivy/interface/modernui/types/{str(base.damagecat).lower()}.png"
-            )
-            self.ids.Move3_Border.source = (
-                f"ulivy/interface/modernui/moveborder_{str(base.quality)}.png"
-            )
+            self.ids.Move3_Type.source = f"resources/basicui/graphics/interface/types/{str(base.type).lower()}.png"
+            self.ids.Move3_Category.source = f"resources/basicui/graphics/interface/types/{str(base.damagecat).lower()}.png"
+            self.ids.Move3_Border.source = f"resources/basicui/graphics/interface/moveborder_{str(base.quality)}.png"
             self.ids.Move3_PP.text = "-" if int(base.pp) > 40 else str(base.pp)
         else:
             self.rec_hp.size = (0, 42)
@@ -308,16 +290,16 @@ class UIStatus(BaseUI):
             self.ids.Move2_Prefix.text = ""
             self.ids.Move2_Name.text = ""
             self.ids.Move2_Description.text = ""
-            # self.ids.Move2_Type.source = "ulivy/interface/modernui/gamebounds.png"
-            # self.ids.Move2_Category.source = "ulivy/interface/modernui/gamebounds.png"
-            # self.ids.Move2_Border.source = "ulivy/interface/modernui/moveborder.png"
+            # self.ids.Move2_Type.source = "resources/basicui/graphics/interface/gamebounds.png"
+            # self.ids.Move2_Category.source = "resources/basicui/graphics/interface/gamebounds.png"
+            # self.ids.Move2_Border.source = "resources/basicui/graphics/interface/moveborder.png"
             self.ids.Move2_PP.text = ""
 
         self.ids.Move3.opacity = 0
         self.ids.Move3_Prefix.text = ""
         self.ids.Move3_Name.text = ""
         self.ids.Move3_Description.text = ""
-        # self.ids.Move3_Type.source = "ulivy/interface/modernui/gamebounds.png"
-        # self.ids.Move3_Category.source = "ulivy/interface/modernui/gamebounds.png"
-        # self.ids.Move3_Border.source = "ulivy/interface/modernui/moveborder.png"
+        # self.ids.Move3_Type.source = "resources/basicui/graphics/interface/gamebounds.png"
+        # self.ids.Move3_Category.source = "resources/basicui/graphics/interface/gamebounds.png"
+        # self.ids.Move3_Border.source = "resources/basicui/graphics/interface/moveborder.png"
         self.ids.Move3_PP.text = ""

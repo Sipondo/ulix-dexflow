@@ -5,7 +5,7 @@
         # Don't worry about any of this stuff. It just makes sure the game screen is 16:9.
         # Got this from the guys over at Kivy.
         id: BackgroundId
-        source: 'ulivy/interface/modernui/gamebounds.png'
+        source: 'resources/basicui/graphics/interface/gamebounds.png'
         allow_stretch: True
         size: self.parent.size
         offset: [self.center_x - (self.norm_image_size[0]/2), self.center_y - (self.norm_image_size[1]/2)]
@@ -28,7 +28,7 @@
                 PixelImage:
                     id: DebugBackground
                     allow_stretch: True
-                    source: 'ulivy/interface/modernui/dialogue_window.png'
+                    source: 'resources/basicui/graphics/interface/dialogue_window.png'
                 
                 Label:
                     id: DebugText

@@ -206,7 +206,7 @@ class UIBattle(BaseUI):
         self.ids.BattleStatusOursHP.size_hint = (float(0.9 * rel_hp), 0.15)
         n = "green" if rel_hp >= 0.5 else ("yellow" if rel_hp >= 0.2 else "red")
         self.ids.BattleStatusOursHP.source = (
-            f"ulivy/interface/modernui/battle/{n}bar.png"
+            f"resources/basicui/graphics/interface/battle/{n}bar.png"
         )
 
         status = (fighter, rel_hp)
@@ -242,7 +242,7 @@ class UIBattle(BaseUI):
         self.ids.BattleStatusTheirsHP.size_hint = (float(0.9 * rel_hp), 0.15)
         n = "green" if rel_hp >= 0.5 else ("yellow" if rel_hp >= 0.2 else "red")
         self.ids.BattleStatusTheirsHP.source = (
-            f"ulivy/interface/modernui/battle/{n}bar.png"
+            f"resources/basicui/graphics/interface/battle/{n}bar.png"
         )
 
         status = (fighter, rel_hp)
@@ -268,10 +268,10 @@ class UIBattle(BaseUI):
             1 if self.gamestate.state == BattleStates.TOPMENU else 0
         )
         s = self.sel_top
-        self.ids.BattleTopAttackCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==0 else ""}.png'
-        # self.ids.BattleTopThrowballCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==1 else ""}.png'
-        self.ids.BattleTopSwitchCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==1 else ""}.png'
-        # self.ids.BattleTopRunCell.source = f'ulivy/interface/modernui/battle/battlecell{"_selected" if s==3 else ""}.png'
+        self.ids.BattleTopAttackCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==0 else ""}.png'
+        # self.ids.BattleTopThrowballCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
+        self.ids.BattleTopSwitchCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
+        # self.ids.BattleTopRunCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==3 else ""}.png'
 
     def highlight_attack(self):
         self.ids.BattleAttack.opacity = (
@@ -279,7 +279,7 @@ class UIBattle(BaseUI):
         )
         s = self.sel_action
 
-        self.ids.BattleAttackDCell.source = f'ulivy/interface/modernui/battle/attackcell{"_selected" if s==3 else ""}.png'
+        self.ids.BattleAttackDCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_selected" if s==3 else ""}.png'
 
         self.ids.BattleAttackA.opacity = 0
         self.ids.BattleAttackB.opacity = 0
@@ -299,13 +299,13 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackAName.text = (
             actionlist[0]["prefix"] + " " + actionlist[0]["name"]
         )[:20]
-        self.ids.BattleAttackAType.source = f'ulivy/interface/modernui/battle/attack_types/attack_{actionlist[0]["type"].lower()}.png'
+        self.ids.BattleAttackAType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[0]["type"].lower()}.png'
         self.ids.BattleAttackACharges.text = (
             str(actionlist[0]["pp"]) if int(actionlist[0]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[0]["type"] in actors[0].types
-        self.ids.BattleAttackACell.source = f'ulivy/interface/modernui/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==0 else ""}.png'
+        self.ids.BattleAttackACell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==0 else ""}.png'
 
         if len(actionlist) < 2:
             return
@@ -314,13 +314,13 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackBName.text = (
             actionlist[1]["prefix"] + " " + actionlist[1]["name"]
         )[:20]
-        self.ids.BattleAttackBType.source = f'ulivy/interface/modernui/battle/attack_types/attack_{actionlist[1]["type"].lower()}.png'
+        self.ids.BattleAttackBType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[1]["type"].lower()}.png'
         self.ids.BattleAttackBCharges.text = (
             str(actionlist[1]["pp"]) if int(actionlist[1]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[1]["type"] in actors[0].types
-        self.ids.BattleAttackBCell.source = f'ulivy/interface/modernui/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==1 else ""}.png'
+        self.ids.BattleAttackBCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==1 else ""}.png'
 
         if len(actionlist) < 3:
             return
@@ -329,31 +329,23 @@ class UIBattle(BaseUI):
         self.ids.BattleAttackCName.text = (
             actionlist[2]["prefix"] + " " + actionlist[2]["name"]
         )[:20]
-        self.ids.BattleAttackCType.source = f'ulivy/interface/modernui/battle/attack_types/attack_{actionlist[2]["type"].lower()}.png'
+        self.ids.BattleAttackCType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[2]["type"].lower()}.png'
         self.ids.BattleAttackCCharges.text = (
             str(actionlist[2]["pp"]) if int(actionlist[2]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[2]["type"] in actors[0].types
-        self.ids.BattleAttackCCell.source = f'ulivy/interface/modernui/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
+        self.ids.BattleAttackCCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
 
     def highlight_swap(self):
         self.ids.BattleSwap.opacity = (
             1 if self.gamestate.state == BattleStates.SWAPMENU else 0
         )
         s = self.sel_swap
-        self.ids.BattleSwapACell.source = (
-            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==0 else ""}.png'
-        )
-        self.ids.BattleSwapBCell.source = (
-            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==1 else ""}.png'
-        )
-        self.ids.BattleSwapCCell.source = (
-            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==2 else ""}.png'
-        )
-        self.ids.BattleSwapDCell.source = (
-            f'ulivy/interface/modernui/battle/ballcell{"_selected" if s==3 else ""}.png'
-        )
+        self.ids.BattleSwapACell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==0 else ""}.png'
+        self.ids.BattleSwapBCell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==1 else ""}.png'
+        self.ids.BattleSwapCCell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==2 else ""}.png'
+        self.ids.BattleSwapDCell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==3 else ""}.png'
 
         self.ids.BattleSwapA.opacity = 0
         self.ids.BattleSwapB.opacity = 0

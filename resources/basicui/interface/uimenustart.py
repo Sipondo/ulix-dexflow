@@ -56,7 +56,7 @@ class UIMenuStart(BaseUI):
         self.add_widget(
             p := PixelImage(
                 # id="Logo",
-                source="ulivy/interface/modernui/newlogo.png",
+                source="resources/basicui/graphics/interface/newlogo.png",
                 allow_stretch=True,
                 size_hint=(1.2, 1.2),
                 pos_hint={"center_x": 0.5},

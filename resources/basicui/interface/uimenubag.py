@@ -52,5 +52,5 @@ class UIMenuBag(BaseUI):
 
     def highlight_page(self):
         self.ids.BagBackground.source = (
-            f"ulivy/interface/modernui/{self.pages[self.page]}"
+            f"resources/basicui/graphics/interface/{self.pages[self.page]}"
         )
