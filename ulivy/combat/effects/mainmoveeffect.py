@@ -98,12 +98,6 @@ class MainMove(BaseEffect):
                 crit_chance = 1
 
             user_mon = self.scene.board.get_actor(self.user)
-            crit_chance = self.scene.game.inventory.get_crit(
-                crit_chance,
-                self.type,
-                user_mon,
-                self.target[0],
-            )
 
             crit = self.scene.board.random_roll(crit_chance)
             # Calculate move dmg/effectiveness etc.
@@ -175,16 +169,7 @@ class MainMove(BaseEffect):
             damage *= 1.5
         damage *= 1 - (self.scene.board.random_float() * 0.15)
         damage = int(damage)
-        damage = self.scene.game.inventory.get_damage(
-            damage,
-            self.type,
-            self.move_cat,
-            move_effectiveness,
-            crit,
-            user_mon,
-            target_mon,
-            self.target[0],
-        )
+
         self.scene.add_effect(
             DamageEffect(self.scene, self.target, abs_dmg=damage, user=self.user)
         )
