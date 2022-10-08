@@ -2,15 +2,15 @@ from kivy.uix.floatlayout import FloatLayout
 
 UI = "modernui"
 
-from ulivy.interface.modernui.uioverworld import UIOverworld
-from ulivy.interface.modernui.uicinematic import UICinematic
-from ulivy.interface.modernui.uidebug import UIDebug
-from ulivy.interface.modernui.uiprompt import UIPrompt
-from ulivy.interface.modernui.uibattle import UIBattle
-from ulivy.interface.modernui.uimenumain import UIMenuMain
-from ulivy.interface.modernui.uimenubag import UIMenuBag
-from ulivy.interface.modernui.uimenustart import UIMenuStart
-from ulivy.interface.modernui.uistatus import UIStatus
+from resources.basicui.interface.uioverworld import UIOverworld
+from resources.basicui.interface.uicinematic import UICinematic
+from resources.basicui.interface.uidebug import UIDebug
+from resources.basicui.interface.uiprompt import UIPrompt
+from resources.basicui.interface.uibattle import UIBattle
+from resources.basicui.interface.uimenumain import UIMenuMain
+from resources.basicui.interface.uimenubag import UIMenuBag
+from resources.basicui.interface.uimenustart import UIMenuStart
+from resources.basicui.interface.uistatus import UIStatus
 
 
 class UIRenderer(FloatLayout):

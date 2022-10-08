@@ -1,12 +1,12 @@
 from ulivy.combat.effects.sendouteffect import SendOutEffect
 from ulivy.combat.effects.switcheffect import SwitchEffect
-from ..baseui import BaseUI
+from ulivy.interface.baseui import BaseUI
 from kivy.lang import Builder
 import enum
 from ulivy.combat.action import ActionType, Action
 from ulivy.gamestate.gamestatebattle import BattleStates
 
-Builder.load_file("ulivy/interface/modernui/uibattle.kv")
+Builder.load_file("resources/basicui/interface/uibattle.kv")
 
 
 class UIBattle(BaseUI):

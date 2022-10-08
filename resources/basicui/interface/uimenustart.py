@@ -1,9 +1,9 @@
 from math import cos, pi, sin
-from ..baseui import BaseUI, PixelImage
+from ulivy.interface.baseui import BaseUI, PixelImage
 from kivy.lang import Builder
 import math
 
-Builder.load_file("ulivy/interface/modernui/uimenustart.kv")
+Builder.load_file("resources/basicui/interface/uimenustart.kv")
 
 OPTIONS = [
     "charizard",

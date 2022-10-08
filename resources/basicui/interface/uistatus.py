@@ -1,10 +1,10 @@
-from ..baseui import BaseUI, PixelImage
+from ulivy.interface.baseui import BaseUI, PixelImage
 from kivy.lang import Builder
 import math
 import numpy as np
 from kivy.graphics import Color, Rectangle
 
-Builder.load_file("ulivy/interface/modernui/uistatus.kv")
+Builder.load_file("resources/basicui/interface/uistatus.kv")
 
 
 class UIStatus(BaseUI):
@@ -78,7 +78,10 @@ class UIStatus(BaseUI):
             # f"resources/base/graphics/items/{self.rewards[0].identifier.lower()}.png"
         self.itemselectbox = PixelImage(
             source="ulivy/interface/modernui/itemboxsel.png",
-            pos_hint={"center_x": 0.1, "center_y": 0.7,},
+            pos_hint={
+                "center_x": 0.1,
+                "center_y": 0.7,
+            },
         )
         self.ids.ItemInfo.add_widget(self.itemselectbox)
 

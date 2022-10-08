@@ -1,7 +1,7 @@
-from ..baseui import BaseUI
+from ulivy.interface.baseui import BaseUI
 from kivy.lang import Builder
 
-Builder.load_file("ulivy/interface/modernui/uimenubag.kv")
+Builder.load_file("resources/basicui/interface/uimenubag.kv")
 
 
 class UIMenuBag(BaseUI):

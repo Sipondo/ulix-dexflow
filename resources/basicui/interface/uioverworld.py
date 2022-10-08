@@ -1,7 +1,7 @@
-from ..baseui import BaseUI
+from ulivy.interface.baseui import BaseUI
 from kivy.lang import Builder
 
-Builder.load_file("ulivy/interface/modernui/uioverworld.kv")
+Builder.load_file("resources/basicui/interface/uioverworld.kv")
 
 
 class UIOverworld(BaseUI):
