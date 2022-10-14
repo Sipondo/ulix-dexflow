@@ -28,26 +28,12 @@ class CombatBoard:
         ] * 6
         self.teams.append(t)
 
-        self.status = []
-        s = [
-            {
-                "hp": 1.0,
-            }
-        ] * 6
-        self.status.append(s)
-        s = [
-            {
-                "hp": 1.0,
-            }
-        ] * 6
-        self.status.append(s)
-
         self.actives = (0, 0)
 
     def copy(self):
         b = CombatBoard()
         b.teams = deepcopy(self.teams)
-        b.status = deepcopy(self.status)
+        b.actives = self.actives
         b.required_input = self.required_input
         b.parent = self
         return b
@@ -74,6 +60,3 @@ class CombatBoard:
 
     def get_active_m(self, team_id):
         return self.teams[team_id][self.actives[team_id]]
-
-    def get_active_s(self, team_id):
-        return self.status[team_id][self.actives[team_id]]
