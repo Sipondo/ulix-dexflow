@@ -4,14 +4,6 @@ from ulivy.particle.battlescene import BattleScene
 import enum
 
 
-class BattleStates(enum.Enum):
-    ACTION = enum.auto()
-    TOPMENU = enum.auto()
-    ACTIONMENU = enum.auto()
-    SWAPMENU = enum.auto()
-    BALLMENU = enum.auto()
-
-
 class GameStateCombat(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
@@ -22,8 +14,6 @@ class GameStateCombat(BaseGameState):
         self.game.m_com.init_new_stack()
         self.game.m_com.set_team(0, self.game.inventory.members)
         self.game.m_com.set_team(1, enemy_team)
-
-        exit()
 
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)

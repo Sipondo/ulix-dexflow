@@ -1,8 +1,18 @@
 from copy import deepcopy
+import enum
+
+
+class Input(enum.Enum):
+    NONE = enum.auto()
+    TURN = enu.auto()
 
 
 class CombatBoard:
     def __init__(self):
+        self.change = "No change description available."
+        self.parent = None
+        self.required_input = None
+
         self.teams = []
         t = [
             {
@@ -18,6 +28,30 @@ class CombatBoard:
         ] * 6
         self.teams.append(t)
 
+        self.status = []
+        s = [
+            {
+                "hp": 1.0,
+            }
+        ] * 6
+        self.status.append(s)
+        s = [
+            {
+                "hp": 1.0,
+            }
+        ] * 6
+        self.status.append(s)
+
+        self.actives = (0, 0)
+
+    def copy(self):
+        b = CombatBoard()
+        b.teams = deepcopy(self.teams)
+        b.status = deepcopy(self.status)
+        b.required_input = self.required_input
+        b.parent = self
+        return b
+
     def set_team(self, team_id, team):
         entry = []
 
@@ -29,10 +63,17 @@ class CombatBoard:
 
         b = self.copy()
         b.teams[team_id] = entry
-        print(b.teams)
+        b.change = f"Team changed: team_id {team_id} swapped from \n{self.teams[team_id]} to \n{entry}"
         return b
 
-    def copy(self):
-        b = CombatBoard()
-        b.teams = deepcopy(self.teams)
+    def set_required_input(self, input):
+        b = self.copy()
+        b.required_input = input
+        b.change = f"Required input changed: {self.required_input} to {input}"
         return b
+
+    def get_active_m(self, team_id):
+        return self.teams[team_id][self.actives[team_id]]
+
+    def get_active_s(self, team_id):
+        return self.status[team_id][self.actives[team_id]]

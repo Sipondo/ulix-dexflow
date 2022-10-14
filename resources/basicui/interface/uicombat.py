@@ -7,6 +7,14 @@ from ulivy.gamestate.gamestatebattle import BattleStates
 Builder.load_file("resources/basicui/interface/uicombat.kv")
 
 
+
+class UIStates(enum.Enum):
+    TOP = enum.auto()
+    MOVE = enum.auto()
+    SWAP = enum.auto()
+    BALL = enum.auto()
+
+
 class UICombat(BaseUI):
     def on_enter(self, **kwargs):
         self.block_input = False
@@ -40,141 +48,18 @@ class UICombat(BaseUI):
             pass
 
         # self.update_status(time, frame_time)
-        # self.update_ui()
+        self.update_ui_new()
         return False
 
     def event_keypress(self, key, modifiers):
-        # print(key, modifiers)
         if self.gamestate.lock == False:
-            if self.gamestate.state == BattleStates.TOPMENU:
-                if key == "down":
-                    self.sel_top = (self.sel_top + 1) % self.sel_max_top
-                    self.game.r_aud.effect("select")
-                elif key == "up":
-                    self.sel_top = (self.sel_top - 1) % self.sel_max_top
-                    self.game.r_aud.effect("select")
-                # elif key == "right":
-                #     self.sel_top = (self.sel_top + 1) % self.sel_max_top
-                #     self.game.r_aud.effect("select")
-                # elif key == "left":
-                #     self.sel_top = (self.sel_top - 1) % self.sel_max_top
-                #     self.game.r_aud.effect("select")
-                elif key == "interact":
-                    self.game.r_aud.effect("select")
-                    if self.sel_top == 0:
-                        self.gamestate.state = BattleStates.ACTIONMENU
-                        # self.selection = self.action_choice
-                    elif self.sel_top == 1:
-                        self.gamestate.state = BattleStates.SWAPMENU
+            if key == "interact":
+                advancing = self.game.m_com.advance()
+        self.update_ui_new()
 
-            elif self.gamestate.state == BattleStates.ACTIONMENU:
-                if key == "down":
-                    self.sel_action = (self.sel_action + 1) % self.sel_max_action
-                    self.game.r_aud.effect("select")
-                elif key == "up":
-                    self.sel_action = (self.sel_action - 1) % self.sel_max_action
-                    self.game.r_aud.effect("select")
-                    print(self.gamestate.lock_state)
-                    print(self.gamestate.pending_boards)
-                elif key == "interact":
-                    self.game.r_aud.effect("select")
-                    pp_amount = int(
-                        self.gamestate.actors[0].actions[self.sel_action]["pp"]
-                    )
-                    if pp_amount > 0:
-                        self.action_choice = self.sel_action
-                        self.gamestate.reg_action(
-                            Action(ActionType.ATTACK, a_index=self.sel_action)
-                        )
-
-            elif self.gamestate.state == BattleStates.SWAPMENU:
-                if key == "down":
-                    self.sel_swap = (self.sel_swap + 1) % self.sel_max_swap
-                    self.game.r_aud.effect("select")
-                elif key == "up":
-                    self.sel_swap = (self.sel_swap - 1) % self.sel_max_swap
-                    self.game.r_aud.effect("select")
-                elif key == "interact":
-                    self.game.r_aud.effect("select")
-                    self.sel_action = 0
-                    if self.gamestate.board.teams[0][self.sel_swap][1].can_fight:
-                        print(
-                            "Lock state?",
-                            self.gamestate.lock_state,
-                            self.gamestate.combat.mgr_agent.agents[
-                                0
-                            ].action_handler.only_legal("SWITCH"),
-                        )
-                        # if self.gamestate.combat.mgr_agent.agents[
-                        #     0
-                        # ].action_handler.only_legal(
-                        #     "SWITCH"
-                        # ):  # TODO: remove this hacky solution (not UI)
-                        if self.gamestate.lock_state == "user_summon":
-                            self.gamestate.init_battle_us(self.sel_swap)
-                            self.summoned_first = True
-                        elif self.gamestate.lock_state == "user_switch":
-                            sendout_act = Action(
-                                ActionType.SENDOUT, a_index=self.sel_swap
-                            )  # SENDOUT
-
-                            if self.gamestate.combat.mgr_agent.agents[
-                                0
-                            ].action_handler.is_legal(sendout_act):
-                                self.gamestate.reg_action(sendout_act)
-                            else:
-                                if self.gamestate.board.get_active(0) != self.sel_swap:
-                                    self.gamestate.reg_action(
-                                        Action(ActionType.SWITCH, a_index=self.sel_swap)
-                                    )
-                                    self.gamestate.reg_opponent_skip()
-                                else:
-                                    self.gamestate.state = BattleStates.TOPMENU
-                                self.gamestate.combat.board.fainted = False
-
-                                # switch_act = Action(
-                                #     ActionType.SWITCH, a_index=self.sel_swap
-                                # )  # SENDOUT
-                                # self.gamestate.combat.add_effect(
-                                #     SwitchEffect(
-                                #         self.gamestate.combat, switch_act,
-                                #     )
-                                # )
-                                # self.gamestate.combat.add_effect(
-                                #     SendOutEffect(self.gamestate.combat, (1, 1),)
-                                # )
-                            # print("PENDING BOARDS:", self.gamestate.pending_boards)
-                            self.gamestate.combat.mgr_agent.reset_legal(
-                                0
-                            )  # TODO: resolve this properly
-                            self.gamestate.lock_state = False
-                        else:
-                            if self.gamestate.board.get_active(0) != self.sel_swap:
-                                self.gamestate.reg_action(
-                                    Action(ActionType.SWITCH, a_index=self.sel_swap)
-                                )
-
-            elif self.gamestate.state == BattleStates.ACTION:
-                if key == "interact":
-                    self.gamestate.advance_board()
-
-            if key == "backspace" or key == "menu":
-                if (
-                    (not self.gamestate.lock_state)
-                    and self.summoned_first
-                    and self.gamestate.state
-                    in (
-                        BattleStates.SWAPMENU,
-                        BattleStates.ACTIONMENU,
-                        BattleStates.BALLMENU,
-                    )
-                ):
-                    self.game.r_aud.effect("cancel")
-                    # if self.gamestate.state == BattleStates.TOPMENU:
-                    #     self.combat.deregister_action()
-                    self.gamestate.state = BattleStates.TOPMENU
-
-        self.update_ui()
+    def update_ui_new(self):
+        self.ids.BattleStatusOursName.text = self.game.m_com.b.get_active_m(0)["name"]
+        self.ids.BattleStatusTheirsName.text = self.game.m_com.b.get_active_m(1)["name"]
 
     def update_ui(self):
         # print(self.gamestate.board.actives)

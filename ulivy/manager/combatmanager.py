@@ -13,10 +13,18 @@ class CombatManager:
         if self.board_pointer == len(self.boards) - 1:
             return False
         self.board_pointer += 1
+        print(f"Advancing: {self.b.change}")
         return True
 
     def set_team(self, team_id, team):
         self.boards.append(self.board_head.set_team(team_id, team))
+
+    def set_required_input(self, input):
+        self.boards.append(self.board_head.set_required_input(input))
+
+    @property
+    def b(self):
+        return self.board_current
 
     @property
     def board_current(self):

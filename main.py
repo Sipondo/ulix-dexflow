@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     import sys
 
-    if "pretty_errors" in sys.modules:
+    if True:  # "pretty_errors" in sys.modules:
         import pretty_errors
 
         pretty_errors.configure(
