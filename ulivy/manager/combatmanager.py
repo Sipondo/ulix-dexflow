@@ -14,6 +14,9 @@ class CombatManager:
             return False
         self.board_pointer += 1
         print(f"Advancing ({self.board_pointer}): {self.b.change}")
+
+        if self.board_pointer == len(self.boards) - 1:
+            return False
         return True
 
     def set_team(self, team_id, team):

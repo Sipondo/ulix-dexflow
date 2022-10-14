@@ -48,11 +48,11 @@ class UICombat(BaseUI):
         return False
 
     def event_keypress(self, key, modifiers):
+        was_advancing = self.advancing
         if key == "interact":
             self.advancing = self.game.m_com.advance()
 
-        print(self.advancing, self.state)
-        if self.advancing:
+        if self.advancing or was_advancing:
             self.update_ui_new()
             return
 
