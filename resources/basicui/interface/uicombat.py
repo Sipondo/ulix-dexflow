@@ -218,8 +218,9 @@ class UICombat(BaseUI):
         if self.state != UIStates.MOVE:
             return
 
-        actors = self.gamestate.actors
-        actionlist = actors[0].actions
+        actor = self.game.m_com.b.get_active_m(0)
+        actionlist = actor["actions"]
+        types = (actor["type1"], actor["type2"])
 
         if len(actionlist) < 1:
             return
@@ -233,7 +234,7 @@ class UICombat(BaseUI):
             str(actionlist[0]["pp"]) if int(actionlist[0]["pp"]) < 41 else "-"
         )
 
-        stab = actionlist[0]["type"] in actors[0].types
+        stab = actionlist[0]["type"] in types
         self.ids.BattleAttackACell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==0 else ""}.png'
 
         if len(actionlist) < 2:
@@ -248,7 +249,7 @@ class UICombat(BaseUI):
             str(actionlist[1]["pp"]) if int(actionlist[1]["pp"]) < 41 else "-"
         )
 
-        stab = actionlist[1]["type"] in actors[0].types
+        stab = actionlist[1]["type"] in types
         self.ids.BattleAttackBCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==1 else ""}.png'
 
         if len(actionlist) < 3:
@@ -263,7 +264,7 @@ class UICombat(BaseUI):
             str(actionlist[2]["pp"]) if int(actionlist[2]["pp"]) < 41 else "-"
         )
 
-        stab = actionlist[2]["type"] in actors[0].types
+        stab = actionlist[2]["type"] in types
         self.ids.BattleAttackCCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
 
     def highlight_swap(self):
@@ -282,15 +283,15 @@ class UICombat(BaseUI):
         if self.state != UIStates.SWAP:
             return
 
-        swaplist = self.game.inventory.fighter_names
+        swaplist = [x["name"] for x in self.game.m_com.b.teams[0]]
 
         if len(swaplist) < 1:
             return
 
-        m = self.gamestate.board.teams[0][0][1]
+        m = self.game.m_com.b.teams[0][0]
         self.ids.BattleSwapA.opacity = 1
         self.ids.BattleSwapAName.text = (
-            f"{swaplist[0]} {int(100 * m.current_hp / m.max_hp)}%"
+            f"{swaplist[0]} {int(100 * m['current_hp'] / m['stats'][0])}%"
         )
 
         if len(swaplist) < 2:

@@ -150,6 +150,7 @@ class PartyMember:
         self.data["stats_reward"] = self.stats_reward
         self.data["stats_IV"] = self.stats_IV
         self.data["stats_EV"] = self.stats_EV
+        self.data["stats"] = self.stats
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
@@ -157,5 +158,5 @@ class PartyMember:
         self.data["learnset"] = self.learnset
         self.data["status"] = self.status
         self.data["ability"] = self.abilities[self.current_ability]
-
+        self.data["actions"] = [x.to_dict() for x in self.actions]
         return self.data
