@@ -41,7 +41,7 @@ class HotkeyManager(Widget):
         self.register_key("interact", "z")
         self.register_key("interact", "space")
 
-        self.register_key("enter", "enter", True)
+        # self.register_key("enter", "enter", True)
 
         # self.register_key("maphack", "h")
         # self.register_key("debug", "t")
@@ -121,10 +121,12 @@ class HotkeyManager(Widget):
 
                     if request not in self.pressed_keys:
                         self.game.m_gst.event_keypress(
-                            request, modifiers,
+                            request,
+                            modifiers,
                         )
                         self.game.r_uin.event_keypress(
-                            request, modifiers,
+                            request,
+                            modifiers,
                         )
                         self.pressed_keys.add(request)
 

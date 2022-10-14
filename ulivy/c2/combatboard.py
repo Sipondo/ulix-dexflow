@@ -4,14 +4,14 @@ import enum
 
 class Input(enum.Enum):
     NONE = enum.auto()
-    TURN = enu.auto()
+    TURN = enum.auto()
 
 
 class CombatBoard:
     def __init__(self):
         self.change = "No change description available."
         self.parent = None
-        self.required_input = None
+        self.required_input = Input.NONE
 
         self.teams = []
         t = [

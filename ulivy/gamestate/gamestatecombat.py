@@ -1,7 +1,7 @@
 from .basegamestate import BaseGameState
 from ulivy.particle.battlescene import BattleScene
 
-import enum
+from ulivy.c2.combatboard import Input
 
 
 class GameStateCombat(BaseGameState):
@@ -14,6 +14,7 @@ class GameStateCombat(BaseGameState):
         self.game.m_com.init_new_stack()
         self.game.m_com.set_team(0, self.game.inventory.members)
         self.game.m_com.set_team(1, enemy_team)
+        self.game.m_com.set_required_input(Input.TURN)
 
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)

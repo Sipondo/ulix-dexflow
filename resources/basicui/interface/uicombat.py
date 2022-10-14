@@ -1,14 +1,15 @@
-from ulivy.interface.baseui import BaseUI
-from kivy.lang import Builder
 import enum
-from ulivy.combat.action import ActionType, Action
-from ulivy.gamestate.gamestatebattle import BattleStates
+
+from kivy.lang import Builder
+
+from ulivy.interface.baseui import BaseUI
+from ulivy.c2.combatboard import Input
 
 Builder.load_file("resources/basicui/interface/uicombat.kv")
 
 
-
 class UIStates(enum.Enum):
+    NONE = enum.auto()
     TOP = enum.auto()
     MOVE = enum.auto()
     SWAP = enum.auto()
@@ -17,7 +18,8 @@ class UIStates(enum.Enum):
 
 class UICombat(BaseUI):
     def on_enter(self, **kwargs):
-        self.block_input = False
+        self.state = UIStates.NONE
+        self.advancing = True
 
         self.sel_top = 0
         self.sel_max_top = 2
@@ -41,34 +43,81 @@ class UICombat(BaseUI):
             time = 0
             frame_time = 0.05
 
-        try:
-            actors = self.gamestate.actors
-            self.sel_max_action = len(actors[0].actions)
-        except AttributeError:
-            pass
-
         # self.update_status(time, frame_time)
         self.update_ui_new()
         return False
 
     def event_keypress(self, key, modifiers):
-        if self.gamestate.lock == False:
-            if key == "interact":
-                advancing = self.game.m_com.advance()
+        if key == "interact":
+            self.advancing = self.game.m_com.advance()
+
+        print(self.advancing, self.state)
+        if self.advancing:
+            self.update_ui_new()
+            return
+
+        if self.state == UIStates.TOP:
+            if key == "down":
+                self.sel_top = (self.sel_top + 1) % self.sel_max_top
+                self.game.r_aud.effect("select")
+            elif key == "up":
+                self.sel_top = (self.sel_top - 1) % self.sel_max_top
+                self.game.r_aud.effect("select")
+            elif key == "interact":
+                self.game.r_aud.effect("select")
+                if self.sel_top == 0:
+                    self.state = UIStates.MOVE
+                    # self.selection = self.action_choice
+                elif self.sel_top == 1:
+                    self.state = UIStates.SWAP
+
+        elif self.state == UIStates.MOVE:
+            if key == "down":
+                self.sel_action = (self.sel_action + 1) % self.sel_max_action
+                self.game.r_aud.effect("select")
+            elif key == "up":
+                self.sel_action = (self.sel_action - 1) % self.sel_max_action
+                self.game.r_aud.effect("select")
+            elif key == "interact":
+                self.game.r_aud.effect("select")
+                # pp_amount = int(
+                #     self.gamestate.actors[0].actions[self.sel_action]["pp"]
+                # )
+                # if pp_amount > 0:
+                #     self.action_choice = self.sel_action
+                #     self.gamestate.reg_action(
+                #         Action(ActionType.ATTACK, a_index=self.sel_action)
+                #     )
+
+        if key == "backspace" or key == "menu":
+            if self.state in (
+                UIStates.SWAP,
+                UIStates.MOVE,
+                UIStates.BALL,
+            ):
+                self.game.r_aud.effect("cancel")
+                self.state = UIStates.TOP
+
         self.update_ui_new()
 
     def update_ui_new(self):
+        if self.game.m_com.b.required_input == Input.NONE:
+            self.state = UIStates.NONE
+        elif self.state == UIStates.NONE:
+            self.state = UIStates.TOP
+
         self.ids.BattleStatusOursName.text = self.game.m_com.b.get_active_m(0)["name"]
         self.ids.BattleStatusTheirsName.text = self.game.m_com.b.get_active_m(1)["name"]
+
+        self.highlight_top()
+        self.highlight_attack()
+        self.highlight_swap()
 
     def update_ui(self):
         # print(self.gamestate.board.actives)
         # print(self.gamestate.actors)
         # for i in range(self.gamestate.combat.teams_n):
         #     print(self.gamestate.board.get_active_actor(i))
-        # self.highlight_top()
-        # self.highlight_attack()
-        # self.highlight_swap()
 
         # self.ids.DialogueText.text = self.narrate
         pass
@@ -148,9 +197,7 @@ class UICombat(BaseUI):
             self.ids.BattleStatusTheirsFreeze.opacity = 1.0 if "Freeze" in se else 0.1
 
     def highlight_top(self):
-        self.ids.BattleTop.opacity = (
-            1 if self.gamestate.state == BattleStates.TOPMENU else 0
-        )
+        self.ids.BattleTop.opacity = 1 if self.state == UIStates.TOP else 0
         s = self.sel_top
         self.ids.BattleTopAttackCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==0 else ""}.png'
         # self.ids.BattleTopThrowballCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
@@ -158,9 +205,7 @@ class UICombat(BaseUI):
         # self.ids.BattleTopRunCell.source = f'resources/basicui/graphics/interface/battle/battlecell{"_selected" if s==3 else ""}.png'
 
     def highlight_attack(self):
-        self.ids.BattleAttack.opacity = (
-            1 if self.gamestate.state == BattleStates.ACTIONMENU else 0
-        )
+        self.ids.BattleAttack.opacity = 1 if self.state == UIStates.MOVE else 0
         s = self.sel_action
 
         self.ids.BattleAttackDCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_selected" if s==3 else ""}.png'
@@ -170,7 +215,7 @@ class UICombat(BaseUI):
         self.ids.BattleAttackC.opacity = 0
         self.ids.BattleAttackD.opacity = 0
 
-        if self.gamestate.state != BattleStates.ACTIONMENU:
+        if self.state != UIStates.MOVE:
             return
 
         actors = self.gamestate.actors
@@ -222,9 +267,7 @@ class UICombat(BaseUI):
         self.ids.BattleAttackCCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
 
     def highlight_swap(self):
-        self.ids.BattleSwap.opacity = (
-            1 if self.gamestate.state == BattleStates.SWAPMENU else 0
-        )
+        self.ids.BattleSwap.opacity = 1 if self.state == UIStates.SWAP else 0
         s = self.sel_swap
         self.ids.BattleSwapACell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==0 else ""}.png'
         self.ids.BattleSwapBCell.source = f'resources/basicui/graphics/interface/battle/ballcell{"_selected" if s==1 else ""}.png'
@@ -236,7 +279,7 @@ class UICombat(BaseUI):
         self.ids.BattleSwapC.opacity = 0
         self.ids.BattleSwapD.opacity = 0
 
-        if self.gamestate.state != BattleStates.SWAPMENU:
+        if self.state != UIStates.SWAP:
             return
 
         swaplist = self.game.inventory.fighter_names
@@ -274,10 +317,10 @@ class UICombat(BaseUI):
 
     @property
     def narrate(self):
-        if self.gamestate.state == BattleStates.ACTION:
+        if self.state == BattleStates.ACTION:
             return self.gamestate.board.narration
 
-        if self.gamestate.state == BattleStates.ACTIONMENU:
+        if self.state == UIStates.MOVE:
             action = self.gamestate.actors[0].actions[self.sel_action]
             return (
                 action.description + " " + action.suffix
@@ -285,15 +328,15 @@ class UICombat(BaseUI):
                 else f"Forget {action['name']}?"
             )
 
-        if self.gamestate.state == BattleStates.SWAPMENU:
+        if self.state == UIStates.SWAP:
             name = self.game.inventory.fighter_names[self.sel_swap]
             return f"Send out {name}."
 
-        if self.gamestate.state == BattleStates.BALLMENU:
+        if self.state == UIStates.BALL:
             # ball = self.game.inventory.get_pocket_items(3)[self.selection]
             return "Throw a ball to catch the Pokémon!"  # ball.description
 
-        if self.gamestate.state == BattleStates.TOPMENU:
+        if self.state == UIStates.TOP:
             strings = [
                 "Attack the enemy!",
                 "Choose a Pokemon!",
