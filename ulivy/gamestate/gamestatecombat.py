@@ -11,6 +11,9 @@ class GameStateCombat(BaseGameState):
         if len(self.game.inventory.members) < 1:
             self.game.inventory.members.append(self.game.inventory.init_random_member())
 
+        if enemy_team is None:
+            enemy_team = [self.game.inventory.init_random_member()]
+
         self.game.m_com.init_new_stack()
         self.game.m_com.set_team(0, self.game.inventory.members)
         self.game.m_com.set_team(1, enemy_team)

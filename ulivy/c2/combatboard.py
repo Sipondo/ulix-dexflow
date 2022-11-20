@@ -1,5 +1,8 @@
-from copy import deepcopy
 import enum
+
+from dataclasses import replace, dataclass
+from .combatteam import CombatTeam
+from .combatfighter import CombatFighter
 
 
 class Input(enum.Enum):
@@ -7,36 +10,19 @@ class Input(enum.Enum):
     TURN = enum.auto()
 
 
+@dataclass(frozen=True)
 class CombatBoard:
-    def __init__(self):
-        self.change = "No change description available."
-        self.parent = None
-        self.required_input = Input.NONE
+    change = "No change description available."
+    parent = None
+    required_input = Input.NONE
+    teams = (CombatTeam(), CombatTeam())
+    actives = (0, 0)
 
-        self.teams = []
-        t = [
-            {
-                "name": "-",
-            }
-        ] * 6
-        self.teams.append(t)
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
 
-        t = [
-            {
-                "name": "-",
-            }
-        ] * 6
-        self.teams.append(t)
-
-        self.actives = (0, 0)
-
-    def copy(self):
-        b = CombatBoard()
-        b.teams = deepcopy(self.teams)
-        b.actives = self.actives
-        b.required_input = self.required_input
-        b.parent = self
-        return b
+    def copy(self, **changes):
+        return replace(self, **changes)
 
     def set_team(self, team_id, team):
         entry = []
@@ -47,16 +33,27 @@ class CombatBoard:
             else:
                 entry.append(t.to_dict())
 
-        b = self.copy()
-        b.teams[team_id] = entry
-        b.change = f"Team changed: team_id {team_id} swapped from \n{self.teams[team_id]} to \n{entry}"
+        new_team = CombatTeam(members=tuple(CombatFighter(**x) for x in entry))
+
+        teams = list(self.teams)
+        teams[team_id] = new_team  # teams[team_id].copy(**changes)
+
+        b = self.copy(
+            teams=tuple(teams),
+            change=f"Team changed: team_id {team_id} changed to {new_team}",
+            # change=f"Team changed: team_id {team_id} swapped from \n{self.teams[team_id]} to \n{entry}",
+        )
+        # b.teams[team_id] = entry  # TODO: fix
         return b
 
     def set_required_input(self, input):
-        b = self.copy()
-        b.required_input = input
-        b.change = f"Required input changed: {self.required_input} to {input}"
-        return b
+        return self.copy(
+            required_input=input,
+            change=f"Required input changed: {self.required_input} to {input}",
+        )
 
     def get_active_m(self, team_id):
-        return self.teams[team_id][self.actives[team_id]]
+        print(self.teams)
+        print(self.teams[0])
+        print(self.teams[1])
+        return self.teams[team_id].members[self.actives[team_id]]
