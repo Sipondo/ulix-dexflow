@@ -90,11 +90,7 @@ class UICombat(BaseUI):
                 #     )
 
         if key == "backspace" or key == "menu":
-            if self.state in (
-                UIStates.SWAP,
-                UIStates.MOVE,
-                UIStates.BALL,
-            ):
+            if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
                 self.game.r_aud.effect("cancel")
                 self.state = UIStates.TOP
 
@@ -106,8 +102,11 @@ class UICombat(BaseUI):
         elif self.state == UIStates.NONE:
             self.state = UIStates.TOP
 
-        self.ids.BattleStatusOursName.text = self.game.m_com.b.get_active_m(0)["name"]
-        self.ids.BattleStatusTheirsName.text = self.game.m_com.b.get_active_m(1)["name"]
+        ours = self.game.m_com.b.get_active_m(0)
+        theirs = self.game.m_com.b.get_active_m(1)
+
+        self.ids.BattleStatusOursName.text = ours.name if ours else ""
+        self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
 
         self.highlight_top()
         self.highlight_attack()
@@ -219,8 +218,8 @@ class UICombat(BaseUI):
             return
 
         actor = self.game.m_com.b.get_active_m(0)
-        actionlist = actor["actions"]
-        types = (actor["type1"], actor["type2"])
+        actionlist = actor.actions
+        types = (actor.type1, actor.type2)
 
         if len(actionlist) < 1:
             return

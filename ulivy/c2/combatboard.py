@@ -1,6 +1,6 @@
 import enum
 
-from dataclasses import replace, dataclass
+from dataclasses import replace, dataclass, fields
 from .combatteam import CombatTeam
 from .combatfighter import CombatFighter
 
@@ -22,6 +22,7 @@ class CombatBoard:
         self.__dict__.update(kwargs)
 
     def copy(self, **changes):
+        changes = {**self.__dict__, **changes}
         return replace(self, **changes)
 
     def set_team(self, team_id, team):
@@ -33,9 +34,9 @@ class CombatBoard:
             else:
                 entry.append(t.to_dict())
 
-        new_team = CombatTeam(members=tuple(CombatFighter(**x) for x in entry))
-
         teams = list(self.teams)
+
+        new_team = CombatTeam(members=tuple(CombatFighter(**x) for x in entry))
         teams[team_id] = new_team  # teams[team_id].copy(**changes)
 
         b = self.copy(
@@ -53,7 +54,6 @@ class CombatBoard:
         )
 
     def get_active_m(self, team_id):
-        print(self.teams)
-        print(self.teams[0])
-        print(self.teams[1])
-        return self.teams[team_id].members[self.actives[team_id]]
+        if self.actives[team_id] < len(self.teams[team_id].members):
+            return self.teams[team_id].members[self.actives[team_id]]
+        return None
