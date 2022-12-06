@@ -5,6 +5,8 @@ from kivy.lang import Builder
 from ulivy.interface.baseui import BaseUI
 from ulivy.c2.combatboard import Input
 
+from ulivy.combat.action import ActionType, Action
+
 Builder.load_file("resources/basicui/interface/uicombat.kv")
 
 
@@ -80,14 +82,11 @@ class UICombat(BaseUI):
                 self.game.r_aud.effect("select")
             elif key == "interact":
                 self.game.r_aud.effect("select")
-                # pp_amount = int(
-                #     self.gamestate.actors[0].actions[self.sel_action]["pp"]
-                # )
-                # if pp_amount > 0:
-                #     self.action_choice = self.sel_action
-                #     self.gamestate.reg_action(
-                #         Action(ActionType.ATTACK, a_index=self.sel_action)
-                #     )
+                ours = self.game.m_com.b.get_active_m(0)
+                pp_amount = int(ours.actions[self.sel_action]["pp"])
+                if pp_amount > 0:
+                    self.action_choice = self.sel_action
+                    self.reg_action(Action(ActionType.ATTACK, a_index=self.sel_action))
 
         if key == "backspace" or key == "menu":
             if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
@@ -95,6 +94,39 @@ class UICombat(BaseUI):
                 self.state = UIStates.TOP
 
         self.update_ui_new()
+
+    def reg_action(self, action):
+        self.selection = 0
+
+        user = (0, self.board.get_active(0))
+        target = (1, self.board.get_active(1))
+        if action.a_type == ActionType.ATTACK:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
+            print("ATTACK ACTION!!!:", action, action.a_data)
+            user = (0, self.board.get_active(0))
+            target = (1, self.board.get_active(1))
+        if action.a_type == ActionType.SWITCH:
+            user = (0, self.board.get_active(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.CATCH:
+            user = (0, self.board.get_active(0))
+            target = (1, self.board.get_active(1))
+        if action.a_type == ActionType.FORGET_MOVE:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
+            user = (0, self.board.get_active(0))
+            target = (0, self.board.get_active(0))
+        if action.a_type == ActionType.SENDOUT:
+            user = (0, self.board.get_active(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.RUN:
+            user = (0, self.board.get_active(0))
+            target = (0, self.board.get_active(0))
+        # if action.a_type == ActionType.NOTHING:
+        #     user = (0, self.board.get_active(0))
+        #     target = (0, self.board.get_active(0))
+        action.user = user
+        action.target = target
+        self.combat.register_action(action)
 
     def update_ui_new(self):
         if self.game.m_com.b.required_input == Input.NONE:
