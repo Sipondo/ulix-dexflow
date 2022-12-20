@@ -2,7 +2,7 @@ from kivy.uix.floatlayout import FloatLayout
 
 UI = "modernui"
 
-from resources.basicui.interface.uicinematic import UICinematic
+from resources.armourui.interface.uicinematic import UICinematic
 from resources.basicui.interface.uicombat import UICombat
 from resources.basicui.interface.uidebug import UIDebug
 from resources.basicui.interface.uimenubag import UIMenuBag

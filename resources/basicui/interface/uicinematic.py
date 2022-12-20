@@ -1,7 +1,7 @@
 from ulivy.interface.baseui import BaseUI
 from kivy.lang import Builder
 
-Builder.load_file("resources/basicui/interface/uicinematic.kv")
+Builder.load_file("resources/armourui/interface/uicinematic.kv")
 
 
 class UICinematic(BaseUI):
@@ -37,8 +37,7 @@ class UICinematic(BaseUI):
             elif key == "interact":
                 if self.gstate.options:
                     print(
-                        "Selected: ",
-                        self.gstate.options[self.selection],
+                        "Selected: ", self.gstate.options[self.selection],
                     )
                     self.game.selection = self.selection
                     self.game.selection_text = self.gstate.options[self.selection]

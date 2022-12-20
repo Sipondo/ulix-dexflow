@@ -24,6 +24,22 @@ class PixelImage(Image):
             child.update(time, frame_time)
 
 
+class AliasImage(Image):
+    offset = ListProperty()
+    magnification = NumericProperty(0)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(texture=self._update_texture_filters)
+
+    def _update_texture_filters(self, image, texture):
+        texture.mag_filter = "linear"
+
+    def update(self, time, frame_time):
+        for child in self.children:
+            child.update(time, frame_time)
+
+
 class NormalImage(Image):
     offset = ListProperty()
     magnification = NumericProperty(0)

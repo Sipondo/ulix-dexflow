@@ -1,0 +1,414 @@
+#:kivy 2.0.0
+
+<UIStatus>
+    # UI START
+
+    PixelImage:
+        id: Background
+        source: 'resources/armourui/graphics/interface/black.png'
+        opacity: 0.7
+
+    FloatLayout:
+        id: Overlay
+        opacity: 0
+
+        PixelImage:
+            id: BackgroundMember
+            source: 'resources/armourui/graphics/interface/bg_menumove.png'
+
+        FloatLayout:
+            id: ItemInfo
+
+        FloatLayout:
+            id: BattlerInfo
+            
+
+
+            PixelImage:
+                id: Card
+                source: 'resources/simple/graphics/cards/pikachu.png'
+                pos_hint: {"center_x": 0.9, "y": 0.06}
+                size_hint: (0.8, 0.8)
+                allow_stretch: True
+
+            FloatLayout:
+                id: MoveSelector
+            
+                FloatLayout:
+                    id: Move1
+                    size: 400, 175
+                    pos_hint: {"center_x": 0.5, "y": -0.3}
+
+                    PixelImage:
+                        id: Move1_Base
+                        source: 'resources/armourui/graphics/interface/moveborderbase.png'
+                        pos_hint: {"center_x": 0.48, "center_y": 0.5}
+
+                    PixelImage:
+                        id: Move1_Border
+                        source: 'resources/armourui/graphics/interface/moveborder.png'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    Label:
+                        id: Move1_Prefix
+                        text: ""
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.65}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+                    Label:
+                        id: Move1_Name
+                        text: "Flamethrower"
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.61}
+                        text_size: self.size
+                        font_size: 24
+                        font_name: "font/tai_normal.ttf"
+
+                    PixelImage:
+                        id: Move1_Type
+                        source: 'resources/armourui/graphics/interface/types/fire.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.597}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    PixelImage:
+                        id: Move1_Category
+                        source: 'resources/armourui/graphics/interface/types/special.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.561}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    Label:
+                        id: Move1_PP
+                        text: "-"
+                        color: (1, 1, 1, 1)
+                        size: 50, 50
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.63, "center_y": 0.585}
+                        text_size: self.size
+                        font_size: 30
+                        font_name: "font/tai_normal.ttf"
+                    
+                    Label:
+                        id: Move1_Description
+                        text: "Deal heavy damage. Deals double damage."
+                        color: (0, 0, 0, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+
+                FloatLayout:
+                    id: Move2
+                    size: 400, 175
+                    pos_hint: {"center_x": 0.5, "y": -0.05}
+
+                    PixelImage:
+                        id: Move2_Border
+                        source: 'resources/armourui/graphics/interface/moveborder.png'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    Label:
+                        id: Move2_Prefix
+                        text: ""
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.65}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+                    Label:
+                        id: Move2_Name
+                        text: "Flamethrower"
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.61}
+                        text_size: self.size
+                        font_size: 24
+                        font_name: "font/tai_normal.ttf"
+
+                    PixelImage:
+                        id: Move2_Type
+                        source: 'resources/armourui/graphics/interface/types/fire.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.597}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    PixelImage:
+                        id: Move2_Category
+                        source: 'resources/armourui/graphics/interface/types/special.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.561}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    Label:
+                        id: Move2_PP
+                        text: "-"
+                        color: (1, 1, 1, 1)
+                        size: 50, 50
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.63, "center_y": 0.585}
+                        text_size: self.size
+                        font_size: 30
+                        font_name: "font/tai_normal.ttf"
+                    
+                    Label:
+                        id: Move2_Description
+                        text: "Deal heavy damage. Deals double damage."
+                        color: (0, 0, 0, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+                FloatLayout:
+                    id: Move3
+                    size: 400, 175
+                    pos_hint: {"center_x": 0.5, "y": 0.2}
+
+                    PixelImage:
+                        id: Move3_Border
+                        source: 'resources/armourui/graphics/interface/moveborder.png'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    Label:
+                        id: Move3_Prefix
+                        text: ""
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.65}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+                    Label:
+                        id: Move3_Name
+                        text: "Flamethrower"
+                        color: (1, 1, 1, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.61}
+                        text_size: self.size
+                        font_size: 24
+                        font_name: "font/tai_normal.ttf"
+
+                    PixelImage:
+                        id: Move3_Type
+                        source: 'resources/armourui/graphics/interface/types/fire.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.597}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    PixelImage:
+                        id: Move3_Category
+                        source: 'resources/armourui/graphics/interface/types/special.png'
+                        pos_hint: {"center_x": 0.56, "center_y": 0.561}
+                        # size_hint: (0.8, 0.8)
+                        # allow_stretch: True
+
+                    Label:
+                        id: Move3_PP
+                        text: "-"
+                        color: (1, 1, 1, 1)
+                        size: 50, 50
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.63, "center_y": 0.585}
+                        text_size: self.size
+                        font_size: 30
+                        font_name: "font/tai_normal.ttf"
+                    
+                    Label:
+                        id: Move3_Description
+                        text: "Deal heavy damage. Deals double damage."
+                        color: (0, 0, 0, 1)
+                        size: 350, 100
+                        size_hint: None, None
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        text_size: self.size
+                        font_size: 18
+                        font_name: "font/tai_normal.ttf"
+
+            FloatLayout:
+                id: Stats
+
+                Label:
+                    id: HpLabel
+                    text: "HP"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 258
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+                Label:
+                    id: AtlLabel
+                    text: "Atk"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 208
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+                Label:
+                    id: DefLabel
+                    text: "Def"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 158
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+                Label:
+                    id: SatkLabel
+                    text: "SpA"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 108
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+                Label:
+                    id: SdefLabel
+                    text: "SpD"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 58
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+                Label:
+                    id: SpdLabel
+                    text: "Spe"
+                    color: (1, 1, 1, 1)
+                    allow_stretch: True
+                    pos: 35, 8
+                    size: (100, 42)
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+
+
+        Label:
+            id: Name
+            text: ""
+            color: (0, 0, 0, 1)
+            allow_stretch: True
+            pos_hint: {'center_x': 0.5, 'center_y': 0.690}
+            size_hint: 0.95, 0.6
+            text_size: self.size
+            font_size: 50
+            font_name: "font/tai_normal.ttf"
+            halign: 'center'
+            valign: 'top'
+
+        Label:
+            id: MenuName
+            text: "Choose Starter"
+            color: (1, 1, 1, 1)
+            allow_stretch: True
+            pos_hint: {'center_x': 0.15, 'center_y': 0.690}
+            size_hint: 0.95, 0.6
+            text_size: self.size
+            font_size: 40
+            font_name: "font/tai_normal.ttf"
+            halign: 'center'
+            valign: 'top'
+
+        PixelImage:
+            id: Battler_Type1
+            source: 'resources/armourui/graphics/interface/types/fire.png'
+            pos_hint: {"center_x": 0.7, "center_y": 0.95}
+
+        PixelImage:
+            id: Battler_Type2
+            source: 'resources/armourui/graphics/interface/types/ice.png'
+            pos_hint: {"center_x": 0.7, "center_y": 0.905}
+
+        PixelImage:
+            id: ArrowLeft
+            opacity: 0.6
+            source: 'resources/armourui/graphics/interface/arrowleft.png'
+            pos_hint: {"center_x": 0.02, "center_y": 0.5}
+            size_hint: (0.1, 0.1)
+            allow_stretch: True
+        
+        PixelImage:
+            id: ArrowRight
+            opacity: 0.6
+            source: 'resources/armourui/graphics/interface/arrowright.png'
+            pos_hint: {"center_x": 0.98, "center_y": 0.5}
+            size_hint: (0.1, 0.1)
+            allow_stretch: True
+
+            # Label:
+            #     id: BaseStats
+            #     text: ""
+            #     color: (1, 1, 1, 1)
+            #     allow_stretch: True
+            #     pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+            #     size_hint: 0.6, 0.6
+            #     text_size: self.size
+            #     font_size: 24 * 1.2
+            #     font_name: "font/tai_normal.ttf"
+            #     halign: 'center'
+            #     valign: 'top'
+            
+        RelativeLayout:
+            id: ConfirmationBox
+
+            PixelImage:
+                id: ConfirmationBackground
+                source: 'resources/armourui/graphics/interface/black.png'
+                opacity: 0.0
+
+
+    # DIALOGUE BOX
+            RelativeLayout:
+                id: DialogueWindow
+                pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+                pos_hint: {'x': 0.18, 'y': 0.01}
+                size_hint: 0.6, 0.2
+
+                PixelImage:
+                    id: DialogueBackground
+                    allow_stretch: True
+                    source: 'resources/armourui/graphics/interface/dialogue_window.png'
+                
+                Label:
+                    id: DialogueText
+                    text: ""
+                    color: (0, 0, 0, 1)
+                    allow_stretch: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.95, 0.6
+                    text_size: self.size
+                    font_size: 24
+                    font_name: "font/tai_normal.ttf"
+                    halign: 'left'
+                    valign: 'top'
