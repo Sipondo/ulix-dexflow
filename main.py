@@ -1,3 +1,21 @@
+import sys
+
+if True:  # "pretty_errors" in sys.modules:
+    import pretty_errors
+
+    pretty_errors.configure(
+        separator_character="*",
+        filename_display=pretty_errors.FILENAME_EXTENDED,
+        line_number_first=True,
+        display_link=True,
+        lines_before=5,
+        lines_after=2,
+        line_color=pretty_errors.RED + "> " + pretty_errors.default_config.line_color,
+        code_color="  " + pretty_errors.default_config.line_color,
+        truncate_code=True,
+        display_locals=True,
+    )
+
 if __name__ == "__main__":
     from pathlib import Path
 
@@ -38,7 +56,8 @@ if __name__ == "__main__":
     from ulivy.manager.oscmanager import OscManager, FPSCounter
     from ulivy.manager.panmanager import PanManager
     from ulivy.manager.resourcemanager import ResourceManager
-    from ulivy.manager.p5 import ParticleManager
+    from ulivy.manager.p6 import ParticleManager
+
     from ulivy.manager.generatormanager import GeneratorManager
     from ulivy.upl.uplmanager import UplManager
 
@@ -65,26 +84,6 @@ if __name__ == "__main__":
     ###
 
     os.system("color")
-
-    import sys
-
-    if True:  # "pretty_errors" in sys.modules:
-        import pretty_errors
-
-        pretty_errors.configure(
-            separator_character="*",
-            filename_display=pretty_errors.FILENAME_EXTENDED,
-            line_number_first=True,
-            display_link=True,
-            lines_before=5,
-            lines_after=2,
-            line_color=pretty_errors.RED
-            + "> "
-            + pretty_errors.default_config.line_color,
-            code_color="  " + pretty_errors.default_config.line_color,
-            truncate_code=True,
-            display_locals=True,
-        )
 
     class PokeGame(Screen):
 
@@ -184,7 +183,7 @@ if __name__ == "__main__":
             if self.m_osc is not None:
                 self.m_osc.update(time, dt)
 
-            self.m_gen.update(time, dt)
+            # self.m_gen.update(time, dt)
             self.r_fad.update(time, dt)
             lock = self.m_gst.update(time, dt)
 

@@ -89,7 +89,11 @@ class UICombat(BaseUI):
                     self.reg_action(Action(ActionType.ATTACK, a_index=self.sel_action))
 
         if key == "backspace" or key == "menu":
-            if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
+            if self.state in (
+                UIStates.SWAP,
+                UIStates.MOVE,
+                UIStates.BALL,
+            ):
                 self.game.r_aud.effect("cancel")
                 self.state = UIStates.TOP
 
@@ -137,8 +141,8 @@ class UICombat(BaseUI):
         ours = self.game.m_com.b.get_active_m(0)
         theirs = self.game.m_com.b.get_active_m(1)
 
-        self.ids.BattleStatusOursName.text = ours.name if ours else ""
-        self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
+        # self.ids.BattleStatusOursName.text = ours.name if ours else ""
+        # self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
 
         self.highlight_top()
         self.highlight_attack()
@@ -154,6 +158,7 @@ class UICombat(BaseUI):
         pass
 
     def update_status(self, time, frame_time):
+        return
         gst = self.gamestate
         fighter = gst.board.get_actor((0, gst.board.get_active(0)))
         rel_hp = gst.board.get_relative_hp((0, gst.board.get_active(0)))
@@ -230,12 +235,13 @@ class UICombat(BaseUI):
     def highlight_top(self):
         self.ids.BattleTop.opacity = 1 if self.state == UIStates.TOP else 0
         s = self.sel_top
-        self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==0 else ""}.png'
+        # self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==0 else ""}.png'
         # self.ids.BattleTopThrowballCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
-        self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
+        # self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
         # self.ids.BattleTopRunCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==3 else ""}.png'
 
     def highlight_attack(self):
+        return
         self.ids.BattleAttack.opacity = 1 if self.state == UIStates.MOVE else 0
         s = self.sel_action
 
@@ -299,6 +305,7 @@ class UICombat(BaseUI):
         self.ids.BattleAttackCCell.source = f'resources/armourui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
 
     def highlight_swap(self):
+        return
         self.ids.BattleSwap.opacity = 1 if self.state == UIStates.SWAP else 0
         s = self.sel_swap
         self.ids.BattleSwapACell.source = f'resources/armourui/graphics/interface/battle/ballcell{"_selected" if s==0 else ""}.png'
