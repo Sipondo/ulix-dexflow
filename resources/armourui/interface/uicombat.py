@@ -24,7 +24,7 @@ class UICombat(BaseUI):
         self.advancing = True
 
         self.sel_top = 0
-        self.sel_max_top = 2
+        self.sel_max_top = 4
         self.sel_action = 0
         self.sel_max_action = 4
         self.sel_swap = 0
@@ -45,7 +45,7 @@ class UICombat(BaseUI):
             time = 0
             frame_time = 0.05
 
-        # self.update_status(time, frame_time)
+        self.update_status(time, frame_time)
         self.update_ui_new()
         return False
 
@@ -141,8 +141,8 @@ class UICombat(BaseUI):
         ours = self.game.m_com.b.get_active_m(0)
         theirs = self.game.m_com.b.get_active_m(1)
 
-        # self.ids.BattleStatusOursName.text = ours.name if ours else ""
-        # self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
+        self.ids.BattleStatusOursName.text = ours.name if ours else ""
+        self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
 
         self.highlight_top()
         self.highlight_attack()
@@ -235,17 +235,16 @@ class UICombat(BaseUI):
     def highlight_top(self):
         self.ids.BattleTop.opacity = 1 if self.state == UIStates.TOP else 0
         s = self.sel_top
-        # self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==0 else ""}.png'
-        # self.ids.BattleTopThrowballCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
-        # self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==1 else ""}.png'
-        # self.ids.BattleTopRunCell.source = f'resources/armourui/graphics/interface/battle/battlecell{"_selected" if s==3 else ""}.png'
+        self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==0 else ""}.png'
+        self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==1 else ""}.png'
+        self.ids.BattleTopItemCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==2 else ""}.png'
+        self.ids.BattleTopRunCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==3 else ""}.png'
 
     def highlight_attack(self):
-        return
         self.ids.BattleAttack.opacity = 1 if self.state == UIStates.MOVE else 0
         s = self.sel_action
 
-        self.ids.BattleAttackDCell.source = f'resources/armourui/graphics/interface/battle/attackcell{"_selected" if s==3 else ""}.png'
+        self.ids.BattleAttackDCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_selected" if s==3 else ""}.png'
 
         self.ids.BattleAttackA.opacity = 0
         self.ids.BattleAttackB.opacity = 0
@@ -266,13 +265,13 @@ class UICombat(BaseUI):
         self.ids.BattleAttackAName.text = (
             actionlist[0]["prefix"] + " " + actionlist[0]["name"]
         )[:20]
-        self.ids.BattleAttackAType.source = f'resources/armourui/graphics/interface/battle/attack_types/attack_{actionlist[0]["type"].lower()}.png'
+        self.ids.BattleAttackAType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[0]["type"].lower()}.png'
         self.ids.BattleAttackACharges.text = (
             str(actionlist[0]["pp"]) if int(actionlist[0]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[0]["type"] in types
-        self.ids.BattleAttackACell.source = f'resources/armourui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==0 else ""}.png'
+        self.ids.BattleAttackACell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==0 else ""}.png'
 
         if len(actionlist) < 2:
             return
@@ -281,13 +280,13 @@ class UICombat(BaseUI):
         self.ids.BattleAttackBName.text = (
             actionlist[1]["prefix"] + " " + actionlist[1]["name"]
         )[:20]
-        self.ids.BattleAttackBType.source = f'resources/armourui/graphics/interface/battle/attack_types/attack_{actionlist[1]["type"].lower()}.png'
+        self.ids.BattleAttackBType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[1]["type"].lower()}.png'
         self.ids.BattleAttackBCharges.text = (
             str(actionlist[1]["pp"]) if int(actionlist[1]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[1]["type"] in types
-        self.ids.BattleAttackBCell.source = f'resources/armourui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==1 else ""}.png'
+        self.ids.BattleAttackBCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==1 else ""}.png'
 
         if len(actionlist) < 3:
             return
@@ -296,13 +295,13 @@ class UICombat(BaseUI):
         self.ids.BattleAttackCName.text = (
             actionlist[2]["prefix"] + " " + actionlist[2]["name"]
         )[:20]
-        self.ids.BattleAttackCType.source = f'resources/armourui/graphics/interface/battle/attack_types/attack_{actionlist[2]["type"].lower()}.png'
+        self.ids.BattleAttackCType.source = f'resources/basicui/graphics/interface/battle/attack_types/attack_{actionlist[2]["type"].lower()}.png'
         self.ids.BattleAttackCCharges.text = (
             str(actionlist[2]["pp"]) if int(actionlist[2]["pp"]) < 41 else "-"
         )
 
         stab = actionlist[2]["type"] in types
-        self.ids.BattleAttackCCell.source = f'resources/armourui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
+        self.ids.BattleAttackCCell.source = f'resources/basicui/graphics/interface/battle/attackcell{"_stab" if stab else ""}{"_selected" if s==2 else ""}.png'
 
     def highlight_swap(self):
         return

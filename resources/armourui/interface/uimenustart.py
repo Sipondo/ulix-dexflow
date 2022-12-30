@@ -40,7 +40,10 @@ class UIMenuStart(BaseUI):
             p = PixelImage(
                 # id=f"Item{i}box",
                 source="resources/base/graphics/items/starpiece.png",
-                pos_hint={"center_x": 0, "center_y": 0,},
+                pos_hint={
+                    "center_x": 0,
+                    "center_y": 0,
+                },
             )
             if OPTIONS[i] in self.winlist:
                 p.opacity = 1.0
@@ -53,10 +56,10 @@ class UIMenuStart(BaseUI):
         self.add_widget(
             p := PixelImage(
                 # id="Logo",
-                source="resources/armourui/graphics/interface/newlogo.png",
+                source="resources/armourui/graphics/interface/splash/dexflow_logo.png",
                 allow_stretch=True,
-                size_hint=(1.2, 1.2),
-                pos_hint={"center_x": 0.5},
+                size_hint=(0.6, 0.6),
+                pos_hint={"center_x": 0.5, "center_y": 0.5},
             )
         )
         self.ids["Logo"] = p
@@ -73,7 +76,11 @@ class UIMenuStart(BaseUI):
                 self.game.m_ent.player.set_position(15, 15)
                 self.game.m_map.set_level(1000)
                 self.game.r_fbo.r_til.set_map_via_manager(
-                    (0, 0,), fade=False,
+                    (
+                        0,
+                        0,
+                    ),
+                    fade=False,
                 )
                 self.game.m_gst.switch_state("overworld", fade=False)
                 return
@@ -98,7 +105,7 @@ class UIMenuStart(BaseUI):
         self.ids.Background.center_x = math.sin(time / 2) * 300
         self.ids.Background.center_y = math.cos(time / 2) * 300
 
-        self.ids.Logo.y = math.sin(time / 1.2) * 30 - 70
+        # self.ids.Logo.y = math.sin(time / 1.2) * 30 - 70
         time += 0.1
         # self.ids.Subtitle.y = math.sin(time / 1.2) * 30 - 30
         # time += 0.1

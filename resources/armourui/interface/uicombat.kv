@@ -49,139 +49,139 @@
                 pos_hint: {'center_y': 0.5, 'center_x': 0.5}
                 size_hint: 1, 1
 
-                # # STATUS
-                # RelativeLayout:
-                #     id: BattleStatus
-                #     pos_hint: {'center_x': 0.5, 'y': 0.7}
-                #     size_hint: 0.9, 0.35
+                # STATUS
+                RelativeLayout:
+                    id: BattleStatus
+                    pos_hint: {'center_x': 0.5, 'y': 0.7}
+                    size_hint: 0.9, 0.35
 
-                #     RelativeLayout:
-                #         id: BattleStatusOurs
-                #         pos_hint: {'center_x': 0.22, 'center_y': 0.5}
-                #         size_hint: 0.5, 1
+                    RelativeLayout:
+                        id: BattleStatusOurs
+                        pos_hint: {'center_x': 0.22, 'center_y': 0.5}
+                        size_hint: 0.5, 1
 
-                #         AliasImage:
-                #             id: BattleStatusOursHPBack
-                #             allow_stretch: True
-                #             keep_ratio: False
-                #             pos_hint: {'x': 0.08, 'center_y': 0.42}
-                #             size_hint: 0.9, 0.15
-                #             source: 'resources/armourui/graphics/interface/battle/greybar.png'
+                        AliasImage:
+                            id: BattleStatusOursHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.42}
+                            size_hint: 0.9, 0.15
+                            source: 'resources/basicui/graphics/interface/battle/greybar.png'
 
-                #         AliasImage:
-                #             id: BattleStatusOursHP
-                #             allow_stretch: True
-                #             keep_ratio: False
-                #             pos_hint: {'x': 0.08, 'center_y': 0.42}
-                #             size_hint: 0.9, 0.15
-                #             source: 'resources/armourui/graphics/interface/battle/greenbar.png'
+                        AliasImage:
+                            id: BattleStatusOursHP
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.08, 'center_y': 0.42}
+                            size_hint: 0.9, 0.15
+                            source: 'resources/basicui/graphics/interface/battle/greenbar.png'
 
-                #         AliasImage:
-                #             id: BattleStatusOursCell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/battlestatus_ours.png'
+                        AliasImage:
+                            id: BattleStatusOursCell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/battlestatus_ours.png'
                         
-                #         Label:
-                #             id: BattleStatusOursName
-                #             text: "Battlerman Ours"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.51, 'center_y': 0.34}
-                #             size_hint: 0.95, 0.65
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleStatusOursName
+                            text: "Battlerman Ours"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.51, 'center_y': 0.34}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
                     
-                #         AliasImage:
-                #             id: BattleStatusOursPoison
-                #             pos_hint: {'x': -0.37, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_poison.png'
+                        AliasImage:
+                            id: BattleStatusOursPoison
+                            pos_hint: {'x': -0.37, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_poison.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusOursBurn
-                #             pos_hint: {'x': -0.29, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_burn.png'
+                        AliasImage:
+                            id: BattleStatusOursBurn
+                            pos_hint: {'x': -0.29, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_burn.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusOursParalysis
-                #             pos_hint: {'x': -0.21, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_paralysis.png'
+                        AliasImage:
+                            id: BattleStatusOursParalysis
+                            pos_hint: {'x': -0.21, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_paralysis.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusOursFreeze
-                #             pos_hint: {'x': -0.13, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_freeze.png'
+                        AliasImage:
+                            id: BattleStatusOursFreeze
+                            pos_hint: {'x': -0.13, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_freeze.png'
 
 
                     
-                #     RelativeLayout:
-                #         id: BattleStatusTheirs
-                #         pos_hint: {'center_x': 0.78, 'center_y': 0.5}
-                #         size_hint: 0.5, 1
+                    RelativeLayout:
+                        id: BattleStatusTheirs
+                        pos_hint: {'center_x': 0.78, 'center_y': 0.5}
+                        size_hint: 0.5, 1
 
 
-                #         AliasImage:
-                #             id: BattleStatusTheirsHPBack
-                #             allow_stretch: True
-                #             keep_ratio: False
-                #             pos_hint: {'x': 0.02, 'center_y': 0.42}
-                #             size_hint: 0.9, 0.15
-                #             source: 'resources/armourui/graphics/interface/battle/greybar.png'
+                        AliasImage:
+                            id: BattleStatusTheirsHPBack
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.02, 'center_y': 0.42}
+                            size_hint: 0.9, 0.15
+                            source: 'resources/basicui/graphics/interface/battle/greybar.png'
 
-                #         AliasImage:
-                #             id: BattleStatusTheirsHP
-                #             allow_stretch: True
-                #             keep_ratio: False
-                #             pos_hint: {'x': 0.02, 'center_y': 0.42}
-                #             size_hint: 0.9, 0.15
-                #             source: 'resources/armourui/graphics/interface/battle/greenbar.png'
+                        AliasImage:
+                            id: BattleStatusTheirsHP
+                            allow_stretch: True
+                            keep_ratio: False
+                            pos_hint: {'x': 0.02, 'center_y': 0.42}
+                            size_hint: 0.9, 0.15
+                            source: 'resources/basicui/graphics/interface/battle/greenbar.png'
 
-                #         AliasImage:
-                #             id: BattleStatusTheirsCell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/battlestatus_theirs.png'
+                        AliasImage:
+                            id: BattleStatusTheirsCell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/battlestatus_theirs.png'
 
-                #         Label:
-                #             id: BattleStatusTheirsName
-                #             text: "Battlerman Theirs"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 1.15, 'center_y': 0.34}
-                #             size_hint: 0.95, 0.65
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleStatusTheirsName
+                            text: "Battlerman Theirs"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 1.15, 'center_y': 0.34}
+                            size_hint: 0.95, 0.65
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
-                #         AliasImage:
-                #             id: BattleStatusTheirsPoison
-                #             pos_hint: {'x': 0.37, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_poison.png'
+                        AliasImage:
+                            id: BattleStatusTheirsPoison
+                            pos_hint: {'x': 0.37, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_poison.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusTheirsBurn
-                #             pos_hint: {'x': 0.29, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_burn.png'
+                        AliasImage:
+                            id: BattleStatusTheirsBurn
+                            pos_hint: {'x': 0.29, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_burn.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusTheirsParalysis
-                #             pos_hint: {'x': 0.21, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_paralysis.png'
+                        AliasImage:
+                            id: BattleStatusTheirsParalysis
+                            pos_hint: {'x': 0.21, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_paralysis.png'
                         
-                #         AliasImage:
-                #             id: BattleStatusTheirsFreeze
-                #             pos_hint: {'x': 0.13, 'center_y': 0.3775}
-                #             source: 'resources/armourui/graphics/interface/types/status_freeze.png'
+                        AliasImage:
+                            id: BattleStatusTheirsFreeze
+                            pos_hint: {'x': 0.13, 'center_y': 0.3775}
+                            source: 'resources/basicui/graphics/interface/types/status_freeze.png'
 
 
                 # TOP MENU
                 RelativeLayout:
                     id: BattleTop
-                    pos_hint: {'x': 0.75, 'y': 0.05}
-                    size_hint: 0.3, 0.3
+                    pos_hint: {'x': 0.75, 'y': 0.01}
+                    size_hint: 0.3, 0.45
 
                     RelativeLayout:
                         id: BattleTopAttack
@@ -344,188 +344,188 @@
                 #             valign: 'top'
 
 
-                # # ATTACK MENU
-                # RelativeLayout:
-                #     id: BattleAttack
-                #     pos_hint: {'center_x': 0.82, 'y': 0.05}
-                #     size_hint: 0.57, 0.3
+                # ATTACK MENU
+                RelativeLayout:
+                    id: BattleAttack
+                    pos_hint: {'center_x': 0.82, 'y': 0.05}
+                    size_hint: 0.57, 0.3
 
-                #     AliasImage:
-                #         id: BattleAttackCell
-                #         allow_stretch: True
-                #         source: 'resources/armourui/graphics/interface/battle/attackwindow.png'
+                    AliasImage:
+                        id: BattleAttackCell
+                        allow_stretch: True
+                        source: 'resources/basicui/graphics/interface/battle/attackwindow.png'
 
-                #     RelativeLayout:
-                #         id: BattleAttackA
-                #         pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-                #         size_hint: 1, 0.213                        
+                    RelativeLayout:
+                        id: BattleAttackA
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                        size_hint: 1, 0.213                        
 
-                #         AliasImage:
-                #             id: BattleAttackAType
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.265, 'center_y': 0.5}
-                #             size_hint: 0.9, 0.9
-                #             source: 'resources/armourui/graphics/interface/battle/attack_types/attack_normal.png'
+                        AliasImage:
+                            id: BattleAttackAType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'resources/basicui/graphics/interface/battle/attack_types/attack_normal.png'
 
-                #         AliasImage:
-                #             id: BattleAttackACell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/attackcell.png'
+                        AliasImage:
+                            id: BattleAttackACell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/attackcell.png'
 
-                #         Label:
-                #             id: BattleAttackAName
-                #             text: "Test Name! Yes!"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.78, 'center_y': 0.52}
-                #             size_hint: 0.95, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackAName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.52}
+                            size_hint: 0.95, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
-                #         Label:
-                #             id: BattleAttackACharges
-                #             text: "40"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.755, 'center_y': 0.5}
-                #             size_hint: 0.1, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackACharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
                         
-                #     RelativeLayout:
-                #         id: BattleAttackB
-                #         pos_hint: {'center_x': 0.5, 'center_y': 0.50}
-                #         size_hint: 1, 0.213
+                    RelativeLayout:
+                        id: BattleAttackB
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.50}
+                        size_hint: 1, 0.213
 
-                #         AliasImage:
-                #             id: BattleAttackBType
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.265, 'center_y': 0.5}
-                #             size_hint: 0.9, 0.9
-                #             source: 'resources/armourui/graphics/interface/battle/attack_types/attack_normal.png'
+                        AliasImage:
+                            id: BattleAttackBType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'resources/basicui/graphics/interface/battle/attack_types/attack_normal.png'
 
-                #         AliasImage:
-                #             id: BattleAttackBCell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/attackcell.png'
+                        AliasImage:
+                            id: BattleAttackBCell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/attackcell.png'
 
-                #         Label:
-                #             id: BattleAttackBName
-                #             text: "Test Name! Yes!"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.78, 'center_y': 0.52}
-                #             size_hint: 0.95, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackBName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.52}
+                            size_hint: 0.95, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
-                #         Label:
-                #             id: BattleAttackBCharges
-                #             text: "40"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.755, 'center_y': 0.5}
-                #             size_hint: 0.1, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
-
-
-                #     RelativeLayout:
-                #         id: BattleAttackC
-                #         pos_hint: {'center_x': 0.5, 'center_y': 0.25}
-                #         size_hint: 1, 0.213
-
-                #         AliasImage:
-                #             id: BattleAttackCType
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.265, 'center_y': 0.5}
-                #             size_hint: 0.9, 0.9
-                #             source: 'resources/armourui/graphics/interface/battle/attack_types/attack_normal.png'
-
-                #         AliasImage:
-                #             id: BattleAttackCCell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/attackcell.png'
-
-                #         Label:
-                #             id: BattleAttackCName
-                #             text: "Test Name! Yes!"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.78, 'center_y': 0.52}
-                #             size_hint: 0.95, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
-
-                #         Label:
-                #             id: BattleAttackCCharges
-                #             text: "40"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.755, 'center_y': 0.5}
-                #             size_hint: 0.1, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackBCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
 
-                #     RelativeLayout:
-                #         id: BattleAttackD
-                #         pos_hint: {'center_x': 0.5, 'center_y': 0.15}
-                #         size_hint: 1, 0.213
+                    RelativeLayout:
+                        id: BattleAttackC
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+                        size_hint: 1, 0.213
 
-                #         AliasImage:
-                #             id: BattleAttackDType
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.265, 'center_y': 0.5}
-                #             size_hint: 0.9, 0.9
-                #             source: 'resources/armourui/graphics/interface/battle/attack_types/attack_normal.png'
+                        AliasImage:
+                            id: BattleAttackCType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'resources/basicui/graphics/interface/battle/attack_types/attack_normal.png'
 
-                #         AliasImage:
-                #             id: BattleAttackDCell
-                #             allow_stretch: True
-                #             source: 'resources/armourui/graphics/interface/battle/attackcell.png'
+                        AliasImage:
+                            id: BattleAttackCCell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/attackcell.png'
 
-                #         Label:
-                #             id: BattleAttackDName
-                #             text: "Test Name! Yes!"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.78, 'center_y': 0.52}
-                #             size_hint: 0.95, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackCName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.52}
+                            size_hint: 0.95, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
 
-                #         Label:
-                #             id: BattleAttackDCharges
-                #             text: "40"
-                #             color: (0, 0, 0, 1)
-                #             allow_stretch: True
-                #             pos_hint: {'center_x': 0.755, 'center_y': 0.5}
-                #             size_hint: 0.1, 0.75
-                #             text_size: self.size
-                #             font_size: self.parent.parent.parent.parent.parent.fsize
-                #             font_name: "font/tai_normal.ttf"
-                #             halign: 'left'
-                #             valign: 'top'
+                        Label:
+                            id: BattleAttackCCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+
+                    RelativeLayout:
+                        id: BattleAttackD
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        size_hint: 1, 0.213
+
+                        AliasImage:
+                            id: BattleAttackDType
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.265, 'center_y': 0.5}
+                            size_hint: 0.9, 0.9
+                            source: 'resources/basicui/graphics/interface/battle/attack_types/attack_normal.png'
+
+                        AliasImage:
+                            id: BattleAttackDCell
+                            allow_stretch: True
+                            source: 'resources/basicui/graphics/interface/battle/attackcell.png'
+
+                        Label:
+                            id: BattleAttackDName
+                            text: "Test Name! Yes!"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.78, 'center_y': 0.52}
+                            size_hint: 0.95, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'
+
+                        Label:
+                            id: BattleAttackDCharges
+                            text: "40"
+                            color: (0, 0, 0, 1)
+                            allow_stretch: True
+                            pos_hint: {'center_x': 0.755, 'center_y': 0.5}
+                            size_hint: 0.1, 0.75
+                            text_size: self.size
+                            font_size: self.parent.parent.parent.parent.parent.fsize
+                            font_name: "font/tai_normal.ttf"
+                            halign: 'left'
+                            valign: 'top'

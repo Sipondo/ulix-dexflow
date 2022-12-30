@@ -7,7 +7,7 @@ from resources.armourui.interface.uicombat import UICombat
 from resources.basicui.interface.uidebug import UIDebug
 from resources.basicui.interface.uimenubag import UIMenuBag
 from resources.basicui.interface.uimenumain import UIMenuMain
-from resources.basicui.interface.uimenustart import UIMenuStart
+from resources.armourui.interface.uimenustart import UIMenuStart
 from resources.basicui.interface.uioverworld import UIOverworld
 from resources.basicui.interface.uiprompt import UIPrompt
 from resources.basicui.interface.uistatus import UIStatus
