@@ -57,3 +57,6 @@ class CombatBoard:
         if self.actives[team_id] < len(self.teams[team_id].members):
             return self.teams[team_id].members[self.actives[team_id]]
         return None
+
+    def register_action(self):
+        pass
