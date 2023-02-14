@@ -89,11 +89,7 @@ class UICombat(BaseUI):
                     self.reg_action(Action(ActionType.ATTACK, a_index=self.sel_action))
 
         if key == "backspace" or key == "menu":
-            if self.state in (
-                UIStates.SWAP,
-                UIStates.MOVE,
-                UIStates.BALL,
-            ):
+            if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
                 self.game.r_aud.effect("cancel")
                 self.state = UIStates.TOP
 
@@ -238,10 +234,10 @@ class UICombat(BaseUI):
     def highlight_top(self):
         self.ids.BattleTop.opacity = 1 if self.state == UIStates.TOP else 0
         s = self.sel_top
-        self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==0 else ""}.png'
-        self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==1 else ""}.png'
-        self.ids.BattleTopItemCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==2 else ""}.png'
-        self.ids.BattleTopRunCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==3 else ""}.png'
+        # self.ids.BattleTopAttackCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==0 else ""}.png'
+        # self.ids.BattleTopSwitchCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==1 else ""}.png'
+        # self.ids.BattleTopItemCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==2 else ""}.png'
+        # self.ids.BattleTopRunCell.source = f'resources/armourui/graphics/interface/battle/action{"_sel" if s==3 else ""}.png'
 
     def highlight_attack(self):
         self.ids.BattleAttack.opacity = 1 if self.state == UIStates.MOVE else 0

@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from ulivy.interface.baseui import BaseUI
 from ulivy.c2.combatboard import Input
 
-from ulivy.combat.action import ActionType, Action
+from ulivy.c2.action import ActionType, Action
 
 Builder.load_file("resources/basicui/interface/uicombat.kv")
 
@@ -126,7 +126,7 @@ class UICombat(BaseUI):
         #     target = (0, self.board.get_active(0))
         action.user = user
         action.target = target
-        self.combat.register_action(action)
+        self.board.register_action(action)
 
     def update_ui_new(self):
         if self.game.m_com.b.required_input == Input.NONE:

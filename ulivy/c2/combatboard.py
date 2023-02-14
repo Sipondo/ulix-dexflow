@@ -4,6 +4,8 @@ from dataclasses import replace, dataclass, fields
 from .combatteam import CombatTeam
 from .combatfighter import CombatFighter
 
+from ulivy.c2.action import ActionType, Action
+
 
 class Input(enum.Enum):
     NONE = enum.auto()
@@ -58,5 +60,7 @@ class CombatBoard:
             return self.teams[team_id].members[self.actives[team_id]]
         return None
 
-    def register_action(self):
+    def register_action(self, action):
+        # if self.required_input
+
         pass
