@@ -3,6 +3,7 @@ import importlib
 from kivy.resources import resource_find
 
 from ulivy.c2.combatboard import CombatBoard
+from ulivy.c2.action import ActionType, Action
 
 
 class CombatManager:
@@ -16,6 +17,8 @@ class CombatManager:
         self.init_abilities()
 
         self.board_pointer = 0
+
+        self.actions = []
 
     def init_move_effects(self):
         with open(resource_find("ulivy/combat/move.txt"), "r") as file:
@@ -77,6 +80,34 @@ class CombatManager:
 
     def set_action(self, action):
         self.boards.append(self.board_head.set_action(action))
+        # TODO TEMP
+
+        self.actions.append(action)
+
+        self.prepare_scene(self.actions)
+
+    def prepare_scene(self, actions):
+        # self.end = False
+        # if self.battle_state == CombatState.BEFORE_START:
+        #     self.round += 1
+        print(actions)
+        if actions is not None:
+            for action in actions:
+                if action.a_type == ActionType.ATTACK:
+                    # TODO remove
+                    # action.a_data["priority"] = 0
+                    # END TODO
+
+                    action.priority = 0
+                    # action.priority = action.a_data.priority
+            # Spawn all action effects
+            # actions.sort(key=lambda x: self.b.get_action_priority(x))
+            actions.sort(key=lambda x: x.priority)
+            for action in actions:
+                move_effect = self.spawn_action_effect(action)
+                if move_effect:
+                    self.action_effects.append((action, move_effect))
+        return self.combat_state_methods[self.battle_state]()
 
     @property
     def b(self):
