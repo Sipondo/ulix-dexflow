@@ -35,6 +35,8 @@ class GameStateCombat(BaseGameState):
         self.lock_state = False
 
     def update(self, time, frame_time):
+        self.scene.update(time, frame_time)
+        self.lock = self.scene.render(time, frame_time)
         return True
 
     def on_exit(self):

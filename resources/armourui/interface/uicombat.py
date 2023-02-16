@@ -98,32 +98,32 @@ class UICombat(BaseUI):
     def reg_action(self, action):
         self.selection = 0
 
-        # user = (0, self.board.get_active(0))
-        # target = (1, self.board.get_active(1))
-        # if action.a_type == ActionType.ATTACK:
-        #     action.a_data = self.board.get_actor(user).actions[action.a_index]
-        #     print("ATTACK ACTION!!!:", action, action.a_data)
-        #     user = (0, self.board.get_active(0))
-        #     target = (1, self.board.get_active(1))
-        # if action.a_type == ActionType.SWITCH:
-        #     user = (0, self.board.get_active(0))
-        #     target = (0, action.a_index)
-        # if action.a_type == ActionType.CATCH:
-        #     user = (0, self.board.get_active(0))
-        #     target = (1, self.board.get_active(1))
-        # if action.a_type == ActionType.FORGET_MOVE:
-        #     action.a_data = self.board.get_actor(user).actions[action.a_index]
+        ours = self.game.m_com.b.get_active_m(0)
+
+        if action.a_type == ActionType.ATTACK:
+            action.a_data = ours.actions[action.a_index]
+            print("ATTACK ACTION!!!:", action, action.a_data)
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (1, self.game.m_com.b.get_active_m(1))
+        if action.a_type == ActionType.SWITCH:
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.CATCH:
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (1, self.game.m_com.b.get_active_m(1))
+        if action.a_type == ActionType.FORGET_MOVE:
+            action.a_data = self.board.get_actor(user).actions[action.a_index]
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (0, self.game.m_com.b.get_active_m(0))
+        if action.a_type == ActionType.SENDOUT:
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (0, action.a_index)
+        if action.a_type == ActionType.RUN:
+            user = (0, self.game.m_com.b.get_active_m(0))
+            target = (0, self.game.m_com.b.get_active_m(0))
+        # if action.a_type == ActionType.NOTHING:
         #     user = (0, self.board.get_active(0))
         #     target = (0, self.board.get_active(0))
-        # if action.a_type == ActionType.SENDOUT:
-        #     user = (0, self.board.get_active(0))
-        #     target = (0, action.a_index)
-        # if action.a_type == ActionType.RUN:
-        #     user = (0, self.board.get_active(0))
-        #     target = (0, self.board.get_active(0))
-        # # if action.a_type == ActionType.NOTHING:
-        # #     user = (0, self.board.get_active(0))
-        # #     target = (0, self.board.get_active(0))
 
         user = (0, 0)
         target = (1, 1)

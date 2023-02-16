@@ -64,7 +64,7 @@ class CombatBoard:
         if self.required_input == Input.TURN:
             return self.copy(
                 required_input=Input.NONE,
-                change=f"Required input changed: {self.required_input} to {input}",
+                change=f"Required input resolved: {self.required_input} to {Input.NONE}",
             )
         else:
             raise Exception(
