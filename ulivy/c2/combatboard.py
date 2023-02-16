@@ -60,7 +60,13 @@ class CombatBoard:
             return self.teams[team_id].members[self.actives[team_id]]
         return None
 
-    def register_action(self, action):
-        # if self.required_input
-
-        pass
+    def set_action(self, action: Action):
+        if self.required_input == Input.TURN:
+            return self.copy(
+                required_input=Input.NONE,
+                change=f"Required input changed: {self.required_input} to {input}",
+            )
+        else:
+            raise Exception(
+                f"Combatboard received unexpected input even though {self.required_input} was expected!"
+            )

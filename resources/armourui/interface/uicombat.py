@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from ulivy.interface.baseui import BaseUI
 from ulivy.c2.combatboard import Input
 
-from ulivy.combat.action import ActionType, Action
+from ulivy.c2.action import ActionType, Action
 
 Builder.load_file("resources/armourui/interface/uicombat.kv")
 
@@ -129,7 +129,8 @@ class UICombat(BaseUI):
         target = (1, 1)
         action.user = user
         action.target = target
-        self.combat.register_action(action)
+        self.game.m_com.set_action(action)
+        self.game.m_com.advance()
 
     def update_ui_new(self):
         if self.game.m_com.b.required_input == Input.NONE:

@@ -25,6 +25,9 @@ class CombatManager:
     def set_required_input(self, input):
         self.boards.append(self.board_head.set_required_input(input))
 
+    def set_action(self, action):
+        self.boards.append(self.board_head.set_action(action))
+
     @property
     def b(self):
         return self.board_current
