@@ -40,7 +40,12 @@ class NormalEntity(BaseEntity):
 
             self.team = []
             for battler in self.battlers:  # TODO: re-enable
-                self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
+                # self.team.append(self.game.m_pbs.get_fighter_by_name(battler))
+                self.team.append(
+                    self.game.inventory.init_member(
+                        self.game.m_pbs.get_fighter_by_name(battler)
+                    )
+                )
 
             js = []
             try:
@@ -51,14 +56,19 @@ class NormalEntity(BaseEntity):
                 if i < len(js):
                     battler_js = js[i]
                     for k, v in battler_js.items():
-                        member[k] = v
+                        # member[k] = v
+                        setattr(member, k, v)
 
                 local_random = random.Random()
                 local_random.seed(charsum(f"{self.entity_uid}{self.name}") % 429496729)
                 try:
-                    member["level"] = member.level
+                    # member["level"] = member.level
+                    member.level = member.level
                 except KeyError:
-                    member["level"] = local_random.randint(
+                    # member["level"] = local_random.randint(
+                    #     int(self.level) - 1, int(self.level) + 1
+                    # )
+                    member.level = local_random.randint(
                         int(self.level) - 1, int(self.level) + 1
                     )
         # shops

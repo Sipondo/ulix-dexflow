@@ -15,35 +15,35 @@ class DamageEffect(BaseEffect):
 
     def before_start(self):
         damage = self.abs_damage + int(
-            self.scene.board.get_actor(self.target).stats[0] * self.rel_damage
+            self.scene.h.get_m(self.target).stats[0] * self.rel_damage
         )
-        self.scene.board.inflict_damage(self.target, damage, self.lethal, self.user)
+        self.scene.inflict_damage(self.target, damage, self.lethal, self.user)
         return True, False, False
 
     def before_action(self):
         damage = self.abs_damage + int(
-            self.scene.board.get_actor(self.target).stats[0] * self.rel_damage
+            self.scene.h.get_m(self.target).stats[0] * self.rel_damage
         )
-        self.scene.board.inflict_damage(self.target, damage, self.lethal, self.user)
+        self.scene.inflict_damage(self.target, damage, self.lethal, self.user)
         return True, False, False
 
     def on_action(self):
         damage = self.abs_damage + int(
-            self.scene.board.get_actor(self.target).stats[0] * self.rel_damage
+            self.scene.h.get_m(self.target).stats[0] * self.rel_damage
         )
-        self.scene.board.inflict_damage(self.target, damage, self.lethal, self.user)
+        self.scene.inflict_damage(self.target, damage, self.lethal, self.user)
         return True, False, False
 
     def after_action(self):
         damage = self.abs_damage + int(
-            self.scene.board.get_actor(self.target).stats[0] * self.rel_damage
+            self.scene.h.get_m(self.target).stats[0] * self.rel_damage
         )
-        self.scene.board.inflict_damage(self.target, damage, self.lethal, self.user)
+        self.scene.inflict_damage(self.target, damage, self.lethal, self.user)
         return True, False, False
 
     def before_end(self):
         damage = self.abs_damage + int(
-            self.scene.board.get_actor(self.target).stats[0] * self.rel_damage
+            self.scene.h.get_m(self.target).stats[0] * self.rel_damage
         )
-        self.scene.board.inflict_damage(self.target, damage, self.lethal, self.user)
+        self.scene.inflict_damage(self.target, damage, self.lethal, self.user)
         return True, False, False

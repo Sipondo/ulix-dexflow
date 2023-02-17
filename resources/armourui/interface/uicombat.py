@@ -6,6 +6,7 @@ from ulivy.interface.baseui import BaseUI
 from ulivy.c2.combatboard import Input
 
 from ulivy.c2.action import ActionType, Action
+from ulivy.helpers.dataframe import Series
 
 Builder.load_file("resources/armourui/interface/uicombat.kv")
 
@@ -89,7 +90,11 @@ class UICombat(BaseUI):
                     self.reg_action(Action(ActionType.ATTACK, a_index=self.sel_action))
 
         if key == "backspace" or key == "menu":
-            if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
+            if self.state in (
+                UIStates.SWAP,
+                UIStates.MOVE,
+                UIStates.BALL,
+            ):
                 self.game.r_aud.effect("cancel")
                 self.state = UIStates.TOP
 
@@ -101,7 +106,7 @@ class UICombat(BaseUI):
         ours = self.game.m_com.b.get_active_m(0)
 
         if action.a_type == ActionType.ATTACK:
-            action.a_data = ours.actions[action.a_index]
+            action.a_data = Series().from_dict(ours.actions[action.a_index])
             print("ATTACK ACTION!!!:", action, action.a_data)
             user = (0, self.game.m_com.b.get_active_m(0))
             target = (1, self.game.m_com.b.get_active_m(1))

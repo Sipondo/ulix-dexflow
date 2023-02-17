@@ -76,7 +76,7 @@ class MainMove(BaseEffect):
             ]:
                 acc /= eva_mod
             acc = 1 if self.abs_acc else acc
-            return self.scene.board.random_roll((self.accuracy / 100) * acc)
+            return self.scene.h.random_roll((self.accuracy / 100) * acc)
         return True
 
     def move_hit(self):
@@ -97,9 +97,9 @@ class MainMove(BaseEffect):
             if crit_total > 2:
                 crit_chance = 1
 
-            user_mon = self.scene.board.get_actor(self.user)
+            user_mon = self.scene.h.get_m(self.user)
 
-            crit = self.scene.board.random_roll(crit_chance)
+            crit = self.scene.h.random_roll(crit_chance)
             # Calculate move dmg/effectiveness etc.
             if crit:
                 self.scene.on_crit_effects(self.target)
@@ -108,8 +108,8 @@ class MainMove(BaseEffect):
 
     def move_damage(self, crit=False):
         # mon stats
-        user_mon = self.scene.board.get_actor(self.user)
-        target_mon = self.scene.board.get_actor(self.target)
+        user_mon = self.scene.h.get_m(self.user)
+        target_mon = self.scene.h.get_m(self.target)
 
         # move type mods
         stab = 1
@@ -154,6 +154,12 @@ class MainMove(BaseEffect):
             if def_mod > 1:
                 def_mod = 1
 
+        print(target_mon)
+        for k, v in target_mon.__dict__.items():
+            print(k, v)
+
+        # print(dir(user_mon))
+        # print("STATS!!!", user_mon.stats)
         # damage
         damage = (0.4 * user_mon.level + 2) * self.power
         damage *= (
@@ -167,7 +173,7 @@ class MainMove(BaseEffect):
             # TODO add crit damage mods
             self.scene.add_effect(GenericEffect(self.scene, "Critical hit!"))
             damage *= 1.5
-        damage *= 1 - (self.scene.board.random_float() * 0.15)
+        damage *= 1 - (self.scene.h.random_float() * 0.15)
         damage = int(damage)
 
         self.scene.add_effect(
@@ -188,11 +194,11 @@ class MainMove(BaseEffect):
         return type_1_eff * type_2_eff
 
     def on_action(self):
-        if self.scene.board.user != self.user:
-            return False, False, False
+        # if self.scene.board.user != self.user:
+        #     return False, False, False
 
-        user_mon = self.scene.board.get_actor(self.user)
-        target_mon = self.scene.board.get_actor(self.target)
+        user_mon = self.scene.h.get_m(self.user)
+        target_mon = self.scene.h.get_m(self.target)
         move_effectiveness = self.get_move_effectiveness(
             self.type, target_mon.type1, target_mon.type2
         )
@@ -206,7 +212,7 @@ class MainMove(BaseEffect):
         #     self.scene.add_effect(
         #         GenericEffect(
         #             self.scene,
-        #             f"{self.scene.board.get_actor(self.user).name} used {self.name}, but has passed out!",
+        #             f"{self.scene.h.get_m(self.user).name} used {self.name}, but has passed out!",
         #         )
         #     )
         #     return True, True, False
@@ -218,7 +224,7 @@ class MainMove(BaseEffect):
                 self.scene.add_effect(
                     GenericEffect(
                         self.scene,
-                        f"{self.scene.board.get_actor(self.user).name} used {self.name}, but missed!",
+                        f"{self.scene.h.get_m(self.user).name} used {self.name}, but missed!",
                     )
                 )
                 return True, True, False
@@ -229,28 +235,37 @@ class MainMove(BaseEffect):
             self.scene.add_effect(
                 GenericEffect(
                     self.scene,
-                    f"{self.scene.board.get_actor(self.user).name} used {self.name}, but is frozen solid!",
+                    f"{self.scene.h.get_m(self.user).name} used {self.name}, but is frozen solid!",
                 )
             )
             return True, True, False
 
         if "Paralysis" in [x.name for x in status_user_effects]:
-            if self.scene.board.random_roll(0.25):
+            if self.scene.h.random_roll(0.25):
                 self.scene.add_effect(
                     GenericEffect(
                         self.scene,
-                        f"{self.scene.board.get_actor(self.user).name} used {self.name}, but is fully paralyzed!",
+                        f"{self.scene.h.get_m(self.user).name} used {self.name}, but is fully paralyzed!",
                     )
                 )
                 return True, True, False
 
-        self.scene.board.no_skip(
-            f"{self.scene.board.get_actor(self.user).name} used {self.name}",
-            particle="summon"
-            if (move_effectiveness == 0 or not self.hit)
-            else self.name,
-            move_data=self.move,
+        # self.scene.board.no_skip(
+        #     f"{self.scene.h.get_m(self.user).name} used {self.name}",
+        #     particle="summon"
+        #     if (move_effectiveness == 0 or not self.hit)
+        #     else self.name,
+        #     move_data=self.move,
+        # )
+
+        self.scene.set_change(
+            f"{self.scene.h.get_m(self.user).name} used {self.name}",
+            # particle="summon"
+            # if (move_effectiveness == 0 or not self.hit)
+            # else self.name,
+            # move_data=self.move,
         )
+
         if self.target_fainted:
             self.scene.add_effect(
                 GenericEffect(self.scene, "But there was no target..")

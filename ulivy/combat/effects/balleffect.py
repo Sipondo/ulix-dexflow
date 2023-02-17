@@ -1,7 +1,8 @@
 from .baseeffect import BaseEffect
 from .genericeffect import GenericEffect
 from .endbattleeffect import EndBattleEffect
-from ..pokefighter import PokeFighter
+
+# from ..pokefighter import PokeFighter
 import math
 
 
@@ -59,7 +60,9 @@ class BallEffect(BaseEffect):
                 self.scene.board.set_can_fight(self.target, False)
                 self.scene.board.no_skip("", particle="pokeball-catch")
                 self.scene.add_effect(
-                    GenericEffect(self.scene, f"You caught {catch_actor.name}!", particle="")
+                    GenericEffect(
+                        self.scene, f"You caught {catch_actor.name}!", particle=""
+                    )
                 )
                 self.scene.add_effect(EndBattleEffect(self.scene))
                 return True, False, False

@@ -12,11 +12,13 @@ class GameStateCombat(BaseGameState):
             self.game.inventory.members.append(self.game.inventory.init_random_member())
 
         if enemy_team is None:
+            print("NO ENEMY TEAM FOUND!! RANDOM")
             enemy_team = [self.game.inventory.init_random_member()]
 
         self.game.m_com.init_new_stack()
         self.game.m_com.set_team(0, self.game.inventory.members)
         self.game.m_com.set_team(1, enemy_team)
+        print("enemy team", enemy_team)
         self.game.m_com.set_required_input(Input.TURN)
 
         self.game.r_fbo.r_box.go_to(0.0, force=True)

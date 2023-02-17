@@ -5,9 +5,8 @@ from ulivy.combat.effects import statuseffect
 
 class Burn(BaseMoveEffect):
     def after_action(self):
-        if self.scene.board.random_roll(self.move.chance):
+        if self.scene.h.random_roll(self.move.chance):
             ApplyStatus(
                 self.scene, statuseffect.BURN, self.move.user, self.move.target
             ).apply()
         return True, False, False
-

@@ -61,7 +61,7 @@ class BattleScene(FloatLayout):
         return self.bmove.t1
 
     def set_fighter_image(self, spriteset, team):
-        print("set_fighter_image", spriteset, team)
+        # print("set_fighter_image", spriteset, team)
         if team == 0:
             self.poke1_set = spriteset
             for b in self.img_battler[0]:
