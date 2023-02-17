@@ -57,7 +57,8 @@ class MainMove(BaseEffect):
                 move_effect = self.scene.effect_lib[func](self.scene, self, args)
             else:
                 move_effect = self.scene.effect_lib[func](self.scene, self)
-            self.scene.effects.append(move_effect)
+            # self.scene.effects.append(move_effect)
+            self.scene.add_effect(move_effect)
 
     def calc_hit(self):
         if not self.perfect_accuracy:

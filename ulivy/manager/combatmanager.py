@@ -48,8 +48,8 @@ class CombatManager:
             ActionType.NOTHING: None,
         }
 
-        self.action_effects = []
-        self.effects = []
+        # self.action_effects = []
+        # self.effects = []
 
         self.battle_state = CombatState.BEFORE_START  # ACTION
         self.combat_state_methods = {
@@ -134,6 +134,17 @@ class CombatManager:
         self.prepare_scene(self.actions)
         # END TODO
 
+    def add_effect(self, effect):
+        self.boards.append(self.h.add_effect(effect))
+
+    def add_action_effect(self, effect):
+        self.boards.append(self.h.add_action_effect(effect))
+
+    def pop_action_effect(self):
+        board, effect = self.h.pop_action_effect()
+        self.boards.append(board)
+        return effect
+
     def prepare_scene(self, actions):
         # # TODO: remove
         # self.effects = []
@@ -159,7 +170,8 @@ class CombatManager:
             for action in actions:
                 move_effect = self.spawn_action_effect(action)
                 if move_effect:
-                    self.action_effects.append((action, move_effect))
+                    # self.action_effects.append((action, move_effect))
+                    self.add_action_effect((action, move_effect))
         return self.combat_state_methods[self.battle_state]()
 
     def remove_action_effects(self, target):
@@ -171,14 +183,15 @@ class CombatManager:
         effect = self.action_type_effects[action.a_type]
         if effect:
             effect = effect(self, action)
-            self.effects.append(effect)
+            # self.effects.append(effect)
+            self.add_effect(effect)
         return effect
 
     def run_start(self) -> typing.List[CombatBoard]:
         print("BEFORE START")
         while effects := [
             x
-            for x in sorted(self.effects, key=lambda x: -x.spd_before_start)
+            for x in sorted(self.h.effects, key=lambda x: -x.spd_before_start)
             if not x.done and not x.skip
         ]:
             self.run_effect(effects[0], effects[0].before_start)
@@ -190,8 +203,11 @@ class CombatManager:
 
     def run_actions(self) -> typing.List[CombatBoard]:
         print("BEFORE ACTIONS")
-        while self.action_effects and not self.end:
-            self.current_action, self.current_action_effect = self.action_effects.pop()
+        while self.h.action_effects and not self.end:
+            (
+                self.current_action,
+                self.current_action_effect,
+            ) = self.pop_action_effect()
             # self.board.action = self.current_action
             # dit is alleen om in de state de huidige 'actor' aan te geven
             # self.board.set_direction(self.current_action_effect)
@@ -203,7 +219,7 @@ class CombatManager:
             # Before action
             while effects := [
                 x
-                for x in sorted(self.effects, key=lambda x: -x.spd_before_action)
+                for x in sorted(self.h.effects, key=lambda x: -x.spd_before_action)
                 if not x.done and not x.skip
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
@@ -222,7 +238,7 @@ class CombatManager:
 
             while effects := [
                 x
-                for x in sorted(self.effects, key=lambda x: -x.spd_on_action)
+                for x in sorted(self.h.effects, key=lambda x: -x.spd_on_action)
                 if not x.done and not x.skip
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
@@ -240,7 +256,7 @@ class CombatManager:
                 continue
             while effects := [
                 x
-                for x in sorted(self.effects, key=lambda x: -x.spd_after_action)
+                for x in sorted(self.h.effects, key=lambda x: -x.spd_after_action)
                 if not x.done and not x.skip
             ]:
                 if issubclass(type(effects[0]), BaseMoveEffect):
@@ -260,7 +276,7 @@ class CombatManager:
         print("BEFORE END")
         while effects := [
             x
-            for x in sorted(self.effects, key=lambda x: -x.spd_before_end)
+            for x in sorted(self.h.effects, key=lambda x: -x.spd_before_end)
             if not x.done and not x.skip
         ]:
             self.run_effect(effects[0], effects[0].before_end)
@@ -273,7 +289,7 @@ class CombatManager:
         print("BEFORE SWITCHES")
         while effects := [
             x
-            for x in sorted(self.effects, key=lambda x: -x.spd_switch_phase)
+            for x in sorted(self.h.effects, key=lambda x: -x.spd_switch_phase)
             if not x.done and not x.skip
         ]:
             self.run_effect(effects[0], effects[0].switch_phase)
@@ -319,27 +335,32 @@ class CombatManager:
         return self.b  # board_history
 
     def reset_effects_done(self):
-        for effect in self.effects:
-            effect.done = False
+        self.boards.append(self.h.reset_effects_done())
+        # for effect in self.effects:
+        #     effect.done = False
 
     def reset_effects_skip(self):
-        for effect in self.effects:
-            effect.skip = False
+        self.boards.append(self.h.reset_effects_skip())
+        # for effect in self.effects:
+        #     effect.skip = False
 
     def get_effects_on_target(self, target, exclusive=False):
         if exclusive:
             # only the target itself
-            return [x for x in self.effects if x.target == target]
+            return [x for x in self.h.effects if x.target == target]
         # target team or target itself
-        return [x for x in self.effects if x.target == target or x.target == target[0]]
+        return [
+            x for x in self.h.effects if x.target == target or x.target == target[0]
+        ]
 
-    def add_effect(self, effect):
-        self.effects.append(effect)
+    # def add_effect(self, effect):
+    #     self.effects.append(effect)
 
     def delete_effect(self, effect):
-        effect.on_delete()
-        self.effects.remove(effect)
-        del effect
+        self.boards.append(self.h.delete_effect(effect))
+        # effect.on_delete()
+        # self.effects.remove(effect)
+        # del effect
 
     @property
     def h(self):

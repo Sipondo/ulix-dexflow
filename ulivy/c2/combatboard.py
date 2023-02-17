@@ -20,6 +20,8 @@ class CombatBoard:
     required_input = Input.NONE
     teams = (CombatTeam(), CombatTeam())
     actives = (0, 0)
+    effects = ()
+    action_effects = ()
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -115,6 +117,63 @@ class CombatBoard:
             raise Exception(
                 f"Combatboard received unexpected input even though {self.required_input} was expected!"
             )
+
+    def add_effect(self, effect):
+        return self.copy(
+            effects=tuple(list(self.effects) + [effect]),
+            change=f"Added effect {effect}.",
+        )
+
+    def delete_effect(self, effect):
+        effect_str = str(effect)
+        effect.on_delete()
+        effects = list(self.effects)
+        effects.remove(effect)
+        del effect
+
+        return self.copy(
+            effects=tuple(effects),
+            change=f"Deleted effect {effect_str}.",
+        )
+
+    def add_action_effect(self, effect):
+        return self.copy(
+            action_effects=tuple(list(self.action_effects) + [effect]),
+            change=f"Added action effect {effect}.",
+        )
+
+    def reset_effects_done(self):
+        # TODO: these effects should be static and need to be copied
+        effects = tuple((x for x in self.effects))
+        for effect in effects:
+            effect.done = False
+
+        return self.copy(
+            effects=effects,
+            change=f"Reset all effects done.",
+        )
+
+    def reset_effects_skip(self):
+        # TODO: these effects should be static and need to be copied
+        effects = tuple((x for x in self.effects))
+        for effect in effects:
+            effect.skip = False
+
+        return self.copy(
+            effects=effects,
+            change=f"Reset all effects skip.",
+        )
+
+    def pop_action_effect(self):
+        action_effects = list(self.action_effects)
+        effect = action_effects.pop()
+        return (
+            self.copy(
+                action_effects=tuple(action_effects),
+                change=f"Popped action effect {effect}.",
+            ),
+            effect,
+        )
 
     def random_int(self, a, b):
         return random.randint(a, b)
