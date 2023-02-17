@@ -199,6 +199,11 @@ class MainMove(BaseEffect):
 
         user_mon = self.scene.h.get_m(self.user)
         target_mon = self.scene.h.get_m(self.target)
+
+        print("\n\nMOVE!!")
+        print("\nours", dir(user_mon))
+        print("\ntheirs", dir(target_mon))
+
         move_effectiveness = self.get_move_effectiveness(
             self.type, target_mon.type1, target_mon.type2
         )

@@ -65,7 +65,9 @@ class CombatBoard:
         prev_hp = x.current_hp
         damage = min(x.current_hp, damage)
 
+        # print("X PRE", x.__dict__)
         x = x.copy(current_hp=x.current_hp - damage)
+        # print("X POST", x.__dict__)
 
         teams = list(self.teams)
         team = list(teams[target[0]].members)

@@ -51,7 +51,7 @@ class CombatManager:
         self.action_effects = []
         self.effects = []
 
-        self.battle_state = CombatState.ACTION
+        self.battle_state = CombatState.BEFORE_START  # ACTION
         self.combat_state_methods = {
             CombatState.BEFORE_START: self.run_start,
             CombatState.ACTION: self.run_actions,
@@ -125,13 +125,21 @@ class CombatManager:
 
     def set_action(self, action):
         self.boards.append(self.h.set_action(action))
+
         # TODO TEMP
+        self.actions = []
 
         self.actions.append(action)
 
         self.prepare_scene(self.actions)
+        # END TODO
 
     def prepare_scene(self, actions):
+        # # TODO: remove
+        # self.effects = []
+        # self.action_effects = []
+        # # end TODO
+
         self.end = False
         # if self.battle_state == CombatState.BEFORE_START:
         #     self.round += 1

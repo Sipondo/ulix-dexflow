@@ -55,6 +55,10 @@ class UICombat(BaseUI):
         if key == "interact":
             self.advancing = self.game.m_com.advance()
 
+            # TODO move
+            if was_advancing and not self.advancing:
+                self.game.m_com.set_required_input(Input.TURN)
+
         if self.advancing or was_advancing:
             self.update_ui_new()
             return

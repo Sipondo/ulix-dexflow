@@ -9,4 +9,5 @@ class CombatTeam:
         self.__dict__.update(kwargs)
 
     def copy(self, **changes):
+        changes = {**self.__dict__, **changes}
         return replace(self, **changes)
