@@ -6,6 +6,7 @@ from kivy.graphics.instructions import Callback
 import ulivy.particle.seer.EffekseerCore as ec
 
 from random import random
+import math
 
 
 class ParticleSystem(FloatLayout):
@@ -35,7 +36,9 @@ class ParticleSystem(FloatLayout):
         print(effects)
 
         # with open("assets/Laser03.efkefc", "rb") as file:
-        with open("resources/seer/assets/LightningStrike.efkefc", "rb") as file:
+        # with open("resources/seer/assets/LightningStrike.efkefc", "rb") as file:
+        with open("resources/seer/assets/Flame.efkefc", "rb") as file:
+            # with open("resources/seer/assets/ForceFieldTornado.efkefc", "rb") as file:
             contents = file.read()
         effects.Load(contents, len(contents), 25.0)
 
@@ -134,27 +137,99 @@ class ParticleSystem(FloatLayout):
             print("handle!", self.handle, 0.01 * t)
             # self.manager.SetEffectPosition(self.handle, 125.0, 300.0, 0.0)
             # self.manager.SetEffectPosition(self.handle, 400.0, 100.0, 0.0)
-            self.manager.SetEffectPosition(
-                self.handle,
-                (0.2 + 0.6 * random()) * 800,
-                (0.2 + 0.6 * random()) * 600,
-                0.0,
-            )
-            # self.manager.SetEffectRotation(self.handle, 360*random(), 360*random(), 360*random())
-            # self.manager.SetEffectRotation(self.handle, 2.0*t, 2.0*t, 2.0*t)
+            # self.manager.SetEffectPosition(
+            #     self.handle,
+            #     (0.2 + 0.6 * random()) * 800,
+            #     (0.2 + 0.6 * random()) * 600,
+            #     0.0,
+            # )
+
+            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, 0.0)
+            # self.manager.SetEffectRotation(
+            #     self.handle, 360 * random(), 360 * random(), 360 * random()
+            # )
+            # self.manager.SetEffectRotation(self.handle, 0.0, 3.14 / 4, 0.0)
+            # self.manager.SetEffectRotation(self.handle, 2.0 * t, 2.0 * t, 2.0 * t)
+            rot = math.pi * 0.5
+            self.manager.SetEffectRotation(self.handle, rot, rot, rot)  # ?
+            # print("ROTATE:", t * 2.0)
             # self.manager.SetEffectRotation(self.handle, 0.2, 0.0, 0.0)
             # self.manager.SetEffectScale(self.handle, random(), random(), random())
-            self.manager.SetEffectScale(self.handle, 1, 1, 1)
+            scale = 0.06
+            self.manager.SetEffectScale(self.handle, scale, scale, scale)
+            # self.manager.SetEffectTransformMatrix(
+            #     self.handle,
+            #     scale,
+            #     0.0,
+            #     0.0,
+            #     0.0,
+            #     0.0,
+            #     scale,
+            #     0.0,
+            #     0.0,
+            #     0.0,
+            #     0.0,
+            #     scale,
+            #     0.0,
+            # )
 
         self.time_since += delta
 
-        if self.time_since > 2.0:
+        if self.time_since > 3.0:  # 2.0:
             self.time_since = 0.0
 
         ClearColor(0, 0, 0, 1)
         ClearBuffers(clear_depth=True)
 
-        self.manager.SetViewProjectionMatrixWithSimpleWindow(8000, 6000)
+        self.manager.SetViewProjectionMatrixWithSimpleWindow(1920, 1080)
+        # self.manager.SetViewProjectionMatrixWithSimpleWindow(800, 600)
+        # self.manager.SetViewProjectionMatrixWithSimpleWindow(320, 180)
+        # self.manager.SetProjectionMatrix(
+        #     *[float(y) for x in self.game.m_cam.proj for y in x]
+        # )
+        # print(self.game.m_cam.mvp)
+        # print([float(y) for x in self.game.m_cam.mvp for y in x])
+        # self.manager.SetProjectionMatrix(
+        #     *[float(y) for x in self.game.m_cam.mvp for y in x]
+        # )
+        # self.manager.SetProjectionMatrix(
+        #     *[
+        #         float(y)
+        #         for x in list(
+        #             map(list, zip(*self.game.m_cam.proj * self.game.m_cam.rotate))
+        #         )
+        #         for y in x
+        #     ]
+        # )
+        self.manager.SetProjectionMatrix(
+            *[float(y) for x in list(map(list, zip(*self.game.m_cam.proj))) for y in x]
+        )
+        # self.manager.SetCameraMatrix(
+        #     *[
+        #         float(y)
+        #         for x in list(
+        #             map(list, zip(*(self.game.m_cam.lookat * self.game.m_cam.rotate)))
+        #         )
+        #         for y in x
+        #     ]
+        # )
+        self.manager.SetCameraMatrix(
+            *[
+                float(y)
+                for x in list(
+                    map(list, zip(*(self.game.m_cam.lookat * self.game.m_cam.rotate)))
+                )
+                for y in x
+            ]
+        )
+        # self.manager.SetCameraMatrix(
+        #     *[
+        #         float(y)
+        #         for x in list(map(list, zip(*(self.game.m_cam.lookat))))
+        #         for y in x
+        #     ]
+        # )
+
         self.manager.Update(delta * 60)
         self.manager.DrawBack()
         self.manager.DrawFront()

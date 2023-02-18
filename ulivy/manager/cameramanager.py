@@ -29,26 +29,27 @@ class CameraManager:
         self.set_lookat()
 
     def render(self, time: float, frame_time: float):
-        # self.angle += frame_time * 30
+        # print(self.proj)
+        self.angle += frame_time * 10
 
         # print(self.angle_t, self.angle, self.turn_clock)
         # # Angle
-        if (self.angle_t - self.angle) > 0:
-            self.turn_clock = True if self.angle_t - self.angle < -180 else False
-        else:
-            self.turn_clock = False if self.angle_t - self.angle > 180 else True
+        # if (self.angle_t - self.angle) > 0:
+        #     self.turn_clock = True if self.angle_t - self.angle < -180 else False
+        # else:
+        #     self.turn_clock = False if self.angle_t - self.angle > 180 else True
 
-        if self.turn_clock:
-            if self.angle - self.angle_t > 0:
-                self.angle -= (
-                    frame_time * max(0.5, self.angle - self.angle_t) / 1.0
-                ) * self.speed
-        else:
-            if self.angle_t - self.angle > 0:
-                self.angle += (
-                    frame_time * max(0.5, self.angle_t - self.angle) / 1.0
-                ) * self.speed
-        self.angle %= 360
+        # if self.turn_clock:
+        #     if self.angle - self.angle_t > 0:
+        #         self.angle -= (
+        #             frame_time * max(0.5, self.angle - self.angle_t) / 1.0
+        #         ) * self.speed
+        # else:
+        #     if self.angle_t - self.angle > 0:
+        #         self.angle += (
+        #             frame_time * max(0.5, self.angle_t - self.angle) / 1.0
+        #         ) * self.speed
+        # self.angle %= 360
 
         # Position
         # if self.pos != self.pos_t:
