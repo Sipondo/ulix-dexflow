@@ -103,14 +103,20 @@ class BattleScene(FloatLayout):
         self.bmove.set_movement(team, position, speed, recover)
 
     def do_particle(self, name, user, target, miss=False, move_data=None):
+        # TODO: remove overwrite
+        self.game.m_par.spawn_system(name, target, miss, move_data)  # name)
+        return
         if name:
             name = name.replace(" ", "-")
             if miss:
                 # TODO Particles miss to left/right
                 pass
             self.game.m_par.spawn_system(
-                self, name, target, miss, move_data=move_data
+                name, target, miss, move_data=move_data
             )  # name)
+            # self.game.m_par.spawn_system(
+            #     self, name, target, miss, move_data=move_data
+            # )  # name)
         else:
             print("Empty particle!")
 

@@ -57,8 +57,9 @@ if __name__ == "__main__":
     from ulivy.manager.panmanager import PanManager
     from ulivy.manager.resourcemanager import ResourceManager
 
-    # from ulivy.manager.p6 import ParticleManager
-    from ulivy.manager.p5 import ParticleManager
+    from ulivy.manager.p6 import ParticleManager
+
+    # from ulivy.manager.p5 import ParticleManager
 
     from ulivy.manager.generatormanager import GeneratorManager
     from ulivy.upl.uplmanager import UplManager

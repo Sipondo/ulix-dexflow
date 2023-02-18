@@ -92,6 +92,10 @@ class CombatManager:
         self.board_pointer += 1
         print(f"Advancing ({self.board_pointer}): {self.b.change}")
 
+        # TODO: remove, temp
+        if "used Ember" in self.b.change:
+            self.game.m_gst.current_state.scene.do_particle(0, 0, 0, 0, 0)
+
         # TEMP
         # if self.board.get_active_actor(i) != self.actors[i]:
         for i in range(2):
