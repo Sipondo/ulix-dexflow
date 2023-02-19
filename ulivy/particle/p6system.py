@@ -38,6 +38,7 @@ class ParticleSystem(FloatLayout):
         # with open("assets/Laser03.efkefc", "rb") as file:
         # with open("resources/seer/assets/LightningStrike.efkefc", "rb") as file:
         with open("resources/seer/assets/Flame.efkefc", "rb") as file:
+            # with open("resources/seer/assets/snowstorm11.efkefc", "rb") as file:
             # with open("resources/seer/assets/ForceFieldTornado.efkefc", "rb") as file:
             contents = file.read()
         effects.Load(contents, len(contents), 25.0)
@@ -144,7 +145,7 @@ class ParticleSystem(FloatLayout):
             #     0.0,
             # )
 
-            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, 0.0)
+            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, t / 6.0)
             # self.manager.SetEffectRotation(
             #     self.handle, 360 * random(), 360 * random(), 360 * random()
             # )
@@ -157,6 +158,7 @@ class ParticleSystem(FloatLayout):
             # self.manager.SetEffectScale(self.handle, random(), random(), random())
             scale = 0.06
             self.manager.SetEffectScale(self.handle, scale, scale, scale)
+
             # self.manager.SetEffectTransformMatrix(
             #     self.handle,
             #     scale,
