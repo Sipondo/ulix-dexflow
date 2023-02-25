@@ -153,6 +153,9 @@ class Smatlas(EventDispatcher):
             Logger.critical("Smatlas: Imaging/PIL are missing")
             raise
 
+        # SIZE OVERWRITE 8192 x 8192
+        size = (8192, 8192)
+
         if isinstance(size, (tuple, list)):
             size_w, size_h = list(map(int, size))
         else:

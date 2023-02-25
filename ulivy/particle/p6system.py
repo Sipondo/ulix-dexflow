@@ -112,6 +112,9 @@ class ParticleSystem(FloatLayout):
         self.prevtime = 0.0
         self.time_since = 0.0
 
+        # TODO: remove, temp dark
+        self.game.m_gst.current_state.scene.set_dark(0, 1.0, False)
+
     def on_tick(self, time, frame_time):
         self.update(time, frame_time)
 
@@ -149,7 +152,7 @@ class ParticleSystem(FloatLayout):
             #     0.0,
             # )
 
-            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, 0.0)  # t / 6.0)
+            self.manager.SetEffectPosition(self.handle, -20.0, 0.0, 0.0)  # t / 6.0)
             # self.manager.SetEffectRotation(
             #     self.handle, 360 * random(), 360 * random(), 360 * random()
             # )
@@ -181,7 +184,7 @@ class ParticleSystem(FloatLayout):
 
         self.time_since += delta
 
-        if self.time_since > 3.0:  # 2.0:
+        if self.time_since > 15.0:  # 2.0:
             self.time_since = 0.0
 
         ClearColor(0, 0, 0, 1)
