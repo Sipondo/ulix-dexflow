@@ -45,7 +45,7 @@ class ParticleSystem(FloatLayout):
             # with open(f"{folder}snowstorm11.efkefc", "rb") as file:
             # with open(f"{folder}ForceFieldTornado.efkefc", "rb") as file:
             contents = file.read()
-        effects.Load(contents, len(contents), 25.0)
+        effects.Load(contents, len(contents), 1.0)
 
         # Textures
         textypes = (
