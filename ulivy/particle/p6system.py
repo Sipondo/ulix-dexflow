@@ -35,11 +35,15 @@ class ParticleSystem(FloatLayout):
         effects = ec.EffekseerEffectCore()
         print(effects)
 
+        folder = "resources/light/assets/"
+
         # with open("assets/Laser03.efkefc", "rb") as file:
-        # with open("resources/seer/assets/LightningStrike.efkefc", "rb") as file:
-        with open("resources/seer/assets/Flame.efkefc", "rb") as file:
-            # with open("resources/seer/assets/snowstorm11.efkefc", "rb") as file:
-            # with open("resources/seer/assets/ForceFieldTornado.efkefc", "rb") as file:
+        # with open(f"{folder}LightningStrike.efkefc", "rb") as file:
+        # with open(f"{folder}Flame.efkefc", "rb") as file:
+        # with open(f"{folder}RampMap.efkefc", "rb") as file:
+        with open(f"{folder}Light.efkefc", "rb") as file:
+            # with open(f"{folder}snowstorm11.efkefc", "rb") as file:
+            # with open(f"{folder}ForceFieldTornado.efkefc", "rb") as file:
             contents = file.read()
         effects.Load(contents, len(contents), 25.0)
 
@@ -57,7 +61,7 @@ class ParticleSystem(FloatLayout):
 
                 print(p)
 
-                with open(f"resources/seer/assets/{p}", "rb") as file:
+                with open(f"{folder}{p}", "rb") as file:
                     contents = file.read()
                 effects.LoadTexture(contents, len(contents), i, textype)
 
@@ -69,7 +73,7 @@ class ParticleSystem(FloatLayout):
 
             print(p)
 
-            with open(f"resources/seer/assets/{p}", "rb") as file:
+            with open(f"{folder}{p}", "rb") as file:
                 contents = file.read()
             effects.LoadModel(contents, len(contents), i)
 
@@ -81,7 +85,7 @@ class ParticleSystem(FloatLayout):
 
             print(p)
 
-            with open(f"resources/seer/assets/{p}", "rb") as file:
+            with open(f"{folder}{p}", "rb") as file:
                 contents = file.read()
             effects.LoadMaterial(contents, len(contents), i)
 
@@ -93,7 +97,7 @@ class ParticleSystem(FloatLayout):
 
             print(p)
 
-            with open(f"resources/seer/assets/{p}", "rb") as file:
+            with open(f"{folder}{p}", "rb") as file:
                 contents = file.read()
             effects.LoadCurve(contents, len(contents), i)
 
@@ -145,7 +149,7 @@ class ParticleSystem(FloatLayout):
             #     0.0,
             # )
 
-            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, t / 6.0)
+            self.manager.SetEffectPosition(self.handle, 20.0, 0.0, 0.0)  # t / 6.0)
             # self.manager.SetEffectRotation(
             #     self.handle, 360 * random(), 360 * random(), 360 * random()
             # )
@@ -156,7 +160,7 @@ class ParticleSystem(FloatLayout):
             # print("ROTATE:", t * 2.0)
             # self.manager.SetEffectRotation(self.handle, 0.2, 0.0, 0.0)
             # self.manager.SetEffectScale(self.handle, random(), random(), random())
-            scale = 0.06
+            scale = 1.0
             self.manager.SetEffectScale(self.handle, scale, scale, scale)
 
             # self.manager.SetEffectTransformMatrix(

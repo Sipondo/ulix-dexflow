@@ -24,5 +24,6 @@ class ParticleManager:
         # for v in self.vbo_objects:
         #     # self.game.m_vis.remove_widget(v)
         #     n.add_widget(v)
-        self.game.m_gst.current_state.scene.environment.add_widget(n)
+        # self.game.m_gst.current_state.scene.environment.add_widget(n)
+        self.game.m_gst.current_state.scene.add_widget(n)
         # self.game.add_widget(n)

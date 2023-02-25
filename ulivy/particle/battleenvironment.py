@@ -92,7 +92,7 @@ class BattleEnvironment(FloatLayout):
         self.alpha_float = BattlerContainer()
 
         self.add_widget(self.battler_float)
-        self.visuals.alpha_offscreen.fbo_add_widget(self.alpha_float)
+        # self.visuals.alpha_offscreen.fbo_add_widget(self.alpha_float)
         self.scene = scene
         self.enemy_first = True
 
@@ -132,16 +132,16 @@ class BattleEnvironment(FloatLayout):
         if enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
             self.battler_float.add_widget(self.scene.img_battler[1][1])
-            self.alpha_float.add_widget(self.scene.img_battler[1][2])
+            # self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
         self.battler_float.add_widget(self.scene.img_battler[0][0])
         self.battler_float.add_widget(self.scene.img_battler[0][1])
-        self.alpha_float.add_widget(self.scene.img_battler[0][2])
+        # self.alpha_float.add_widget(self.scene.img_battler[0][2])
 
         if not enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
             self.battler_float.add_widget(self.scene.img_battler[1][1])
-            self.alpha_float.add_widget(self.scene.img_battler[1][2])
+            # self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
 
 class BattlerContainer(FloatLayout):
@@ -300,44 +300,44 @@ class BattleVisuals(FloatLayout):
 
         self.game = game
 
-        # TODO: depth buffer should be shared by these first 3
-        self.solid_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
-        )
-        self.alpha_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
-        )
-        # self.anti_offscreen = BattleOffscreen(
-        #     self.game, self.game.RENDER_SIZE_PARTICLES
+        # # # TODO: depth buffer should be shared by these first 3
+        # # self.solid_offscreen = BattleOffscreen(
+        # #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
+        # # )
+        # self.alpha_offscreen = BattleOffscreen(
+        #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
+        # )
+        # # self.anti_offscreen = BattleOffscreen(
+        # #     self.game, self.game.RENDER_SIZE_PARTICLES
+        # # )
+
+        # self.final_offscreen = BattleOffscreen(
+        #     self.game, self.game.RENDER_SIZE, self, set_blend_alpha  # set_blend_final
         # )
 
-        self.final_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE, self, set_blend_final
-        )
+        # # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
 
-        # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
+        # # Stack building
 
-        # Stack building
+        # # Background is handled in environment
 
-        # Background is handled in environment
+        # # self.ctx.depth_func = "1"
+        # # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
+        # # self.render_pokemon(time, frame_time, cutout=False)
+        # # self.ctx.depth_func = "<="
 
-        # self.ctx.depth_func = "1"
-        # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
-        # self.render_pokemon(time, frame_time, cutout=False)
-        # self.ctx.depth_func = "<="
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
+        # # self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
-        # self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
+        # self.final_offscreen.fbo_add_widget(self.alpha_offscreen)  # should be mesh
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
-        self.final_offscreen.fbo_add_widget(self.alpha_offscreen)  # should be mesh
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
+        # # self.canvas.add(Callback(set_blend_anti))
+        # # self.final_offscreen.add_widget(self.anti_offscreen) this works differently!!!
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
-        # self.canvas.add(Callback(set_blend_anti))
-        # self.final_offscreen.add_widget(self.anti_offscreen) this works differently!!!
-
-        self.add_widget(self.final_offscreen)
-        # self.canvas.add(Callback(reset_blend))
+        # # self.add_widget(self.final_offscreen)
+        # # self.canvas.add(Callback(reset_blend))
 
     def update(self, time=None, dt=None):
         return
@@ -417,34 +417,42 @@ class BattleOffscreen(FloatLayout):
         # self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
-def set_blend_solid(instruction):
-    glDisable(GL_BLEND)
+# def set_blend_solid(instruction):
+#     # return
+#     glDisable(GL_BLEND)
+#     glEnable(GL_DEPTH_TEST)
+#     glEnable(GL_CULL_FACE)
+#     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+#     glBlendEquation(GL_FUNC_ADD)
+
+
+def set_blend_alpha(instruction):
+    # # return
+    # glEnable(GL_DEPTH_TEST)
+    # glEnable(GL_BLEND)
+    # glEnable(GL_CULL_FACE)
+    # glBlendFunc(GL_ONE, GL_ONE)
+    # glBlendEquation(GL_FUNC_ADD)
+
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
+    glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBlendEquation(GL_FUNC_ADD)
 
 
-def set_blend_alpha(instruction):
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_BLEND)
-    glEnable(GL_CULL_FACE)
-    glBlendFunc(GL_ONE, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
+# def set_blend_anti(instruction):
+#     glDisable(GL_DEPTH_TEST)
+#     glDisable(GL_CULL_FACE)
+#     glEnable(GL_BLEND)
+#     glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+#     glBlendEquation(GL_FUNC_ADD)
 
 
-def set_blend_anti(instruction):
-    glDisable(GL_DEPTH_TEST)
-    glDisable(GL_CULL_FACE)
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
-
-
-def set_blend_final(instruction):
-    reset_blend(None)
-    glBlendFunc(GL_ONE, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
+# def set_blend_final(instruction):
+#     reset_blend(None)
+#     glBlendFunc(GL_ONE, GL_ONE)
+#     glBlendEquation(GL_FUNC_ADD)
 
 
 def set_blend_battler(instruction):

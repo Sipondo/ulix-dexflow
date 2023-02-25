@@ -41,7 +41,7 @@ class BufferRenderer(FloatLayout):
         self.fbo_layout = FloatLayout()
 
         with self.canvas:
-            self.fbo = Fbo(size=self.size)
+            self.fbo = Fbo(size=self.size, with_depthbuffer=True)
             self.ids.GameImage.texture = self.fbo.texture
 
         with self.fbo:
