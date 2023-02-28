@@ -22,6 +22,10 @@ out vec2 uv;
 
 void main(){
     vec3 pos=gs_in[0].position.xyz;
+    if(IsShadow){
+        pos.x+=pos.z*2.;
+        pos.z=0.;
+    }
     vec3 right=(BillboardFace*vec4(0,1,0,1)).xyz*Size;
     vec3 up;
     if(IsShadow){

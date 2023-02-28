@@ -19,6 +19,8 @@ class CameraManager:
         self.angle_t = 30
         self.speed = 3
         self.distance_speed = 3
+        self.height_speed = 3
+        self.focus_speed = 3
 
         self.pos = (0.0, 0.0, 0.0)
         # self.pos_t = (0., 0., 0.)
@@ -28,6 +30,9 @@ class CameraManager:
 
         self.height = 0.0
         self.height_t = 0.0
+
+        self.focus = 0.0
+        self.focus_t = 0.0
 
         self.proj = Matrix44.perspective_projection(
             30.0, 16 / 9, 0.1, 1000.0, dtype="f4"
@@ -57,7 +62,7 @@ class CameraManager:
                 self.angle += (
                     frame_time * max(0.5, self.angle_t - self.angle) / 1.0
                 ) * self.speed
-        self.angle %= 360
+        self.angle %= 720
 
         # Distance
         if self.distance_t > self.distance:
@@ -74,7 +79,7 @@ class CameraManager:
             if self.distance_t > self.distance:
                 self.distance = self.distance_t
 
-        # Distance
+        # Height
         if self.height_t > self.height:
             self.height += (
                 frame_time * max(0.5, abs(self.height_t - self.height)) / 2.0
@@ -88,6 +93,21 @@ class CameraManager:
             ) * self.height_speed
             if self.height_t > self.height:
                 self.height = self.height_t
+
+        # Focus
+        if self.focus_t > self.focus:
+            self.focus += (
+                frame_time * max(0.5, abs(self.focus_t - self.focus)) / 2.0
+            ) * self.focus_speed
+            if self.focus_t < self.focus:
+                self.focus = self.focus_t
+
+        if self.focus_t < self.focus:
+            self.focus -= (
+                frame_time * max(0.5, abs(self.focus_t - self.focus)) / 2.0
+            ) * self.focus_speed
+            if self.focus_t > self.focus:
+                self.focus = self.focus_t
 
         # # Position
         # if self.pos != self.pos_t:
@@ -124,6 +144,30 @@ class CameraManager:
         self.height_t = target
         self.height_speed = speed
 
+    def focus_to(self, target, speed):
+        self.focus_t = target
+        self.focus_speed = speed
+
+    def go_set(self, target):
+        self.angle = target
+        self.angle_t = target
+        self.speed = 3
+
+    def dist_set(self, target):
+        self.distance = target
+        self.distance_t = target
+        self.distance_speed = 3
+
+    def height_set(self, target):
+        self.height = target
+        self.height_t = target
+        self.height_speed = 3
+
+    def focus_set(self, target):
+        self.focus = target
+        self.focus_t = target
+        self.focus_speed = 3
+
     def reset(self):
         self.speed = 3
         self.angle_t = 30
@@ -136,7 +180,7 @@ class CameraManager:
             (
                 0.0,
                 0.0,
-                50 / 25 * 3 + max((150 / self.distance) - 3, 0) + self.height / 2,
+                50 / 25 * 3 + max((150 / self.distance) - 3, 0) + self.height / 2 + self.focus,
             ),
             (0.0, 0.0, 1.0),
             dtype="f4",

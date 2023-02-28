@@ -268,7 +268,12 @@ class BattleBattlerImage(FloatLayout):
             self.theight = tf[2]
             self.ratio = tf[3]
 
-            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
+            if self.vis:
+                self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (
+                    self.summon_size ** 3
+                )
+            else:
+                self.canvas["Size"] = 0.0
             # self.canvas["AnimationLength"] = self.ratio
             self.canvas["HeightShare"] = tf[5]
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)

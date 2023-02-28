@@ -376,8 +376,8 @@ class BattleScene(FloatLayout):
         location = self.location_team0 if i == 0 else self.location_team1
 
         battler.canvas["CameraPosition"] = self.game.m_cam.pos
-        battler.canvas["Cutout"] = 1 if cutout else 0
-        battler.canvas["IsShadow"] = 1 if shadow else 0
+        battler.canvas["Cutout"] = 1.0 if cutout else 0.0
+        battler.canvas["IsShadow"] = 1.0 if shadow else 0.0
         # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
         # TODO: make native
