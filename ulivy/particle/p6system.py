@@ -187,7 +187,7 @@ class ParticleSystem(FloatLayout):
             (
                 -1.0,
                 0.0,
-                math.sin(self.time_since) * 0.05 + min(0.07, self.time_since / 10),
+                math.sin(self.time_since) * 0.04 + min(0.05, self.time_since / 10),
             ),
             None,
             False,
@@ -238,6 +238,8 @@ class ParticleSystem(FloatLayout):
         if self.camera_step == camera_want:
             # self.game.m_cam.go_to(200, 0.5)
             self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
+            self.game.m_gst.current_state.scene.set_shadow_visible(0, False)
+            self.game.m_gst.current_state.scene.set_shadow_visible(1, False)
             self.game.m_cam.go_steady(30)
             self.game.m_cam.dist_to(160, 0.12)
             # self.game.m_cam.dist_to(20, 1.5)
@@ -261,7 +263,8 @@ class ParticleSystem(FloatLayout):
             return
 
         if self.camera_step == camera_want:
-            self.game.m_cam.go_to(170, 0.2)
+            # self.game.m_cam.go_to(170, 0.2)
+            self.game.m_cam.go_to(180, 0.3)
             self.game.m_cam.dist_to(50, 6)
             self.game.m_cam.height_to(15, 3)
             self.camera_step += 1

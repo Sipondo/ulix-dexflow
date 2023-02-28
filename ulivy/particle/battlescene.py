@@ -85,6 +85,14 @@ class BattleScene(FloatLayout):
             for b in self.img_battler[1]:
                 b.set_visible(visible)
 
+    def set_shadow_visible(self, team, visible):
+        if team == 0:
+            b = self.img_battler[0][0]
+            b.set_visible(visible)
+        else:
+            b = self.img_battler[1][0]
+            b.set_visible(visible)
+
     def get_loc_fighter(self, team, base):
         if team == 1:
             l = self.location_team1

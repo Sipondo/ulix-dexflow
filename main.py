@@ -166,7 +166,7 @@ if __name__ == "__main__":
             else:
                 self.m_osc = None
 
-            self.add_widget(FPSCounter())
+            # self.add_widget(FPSCounter())
 
             self.maphack = False
 
