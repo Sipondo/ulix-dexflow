@@ -17,6 +17,7 @@ class CameraManager:
 
         self.angle = 30
         self.angle_t = 30
+        self.angle_steady = 0
         self.speed = 3
         self.distance_speed = 3
         self.height_speed = 3
@@ -47,22 +48,26 @@ class CameraManager:
         # print(self.distance_t, self.distance, self.distance_speed)
         # print(self.battle_shake, self.shake_value, frame_time)
         # Angle
-        if (self.angle_t - self.angle) > 0:
-            self.turn_clock = True if self.angle_t - self.angle < -180 else False
+        if self.angle_steady:
+            self.angle += self.angle_steady
+            self.angle %= 360
         else:
-            self.turn_clock = False if self.angle_t - self.angle > 180 else True
+            if (self.angle_t - self.angle) > 0:
+                self.turn_clock = True if self.angle_t - self.angle < -180 else False
+            else:
+                self.turn_clock = False if self.angle_t - self.angle > 180 else True
 
-        if self.turn_clock:
-            if self.angle - self.angle_t > 0:
-                self.angle -= (
-                    frame_time * max(0.5, self.angle - self.angle_t) / 1.0
-                ) * self.speed
-        else:
-            if self.angle_t - self.angle > 0:
-                self.angle += (
-                    frame_time * max(0.5, self.angle_t - self.angle) / 1.0
-                ) * self.speed
-        self.angle %= 720
+            if self.turn_clock:
+                if self.angle - self.angle_t > 0:
+                    self.angle -= (
+                        frame_time * max(0.5, self.angle - self.angle_t) / 1.0
+                    ) * self.speed
+            else:
+                if self.angle_t - self.angle > 0:
+                    self.angle += (
+                        frame_time * max(0.5, self.angle_t - self.angle) / 1.0
+                    ) * self.speed
+            self.angle %= 720
 
         # Distance
         if self.distance_t > self.distance:
@@ -133,8 +138,12 @@ class CameraManager:
         self.rotation_value = ((self.z_rotation / math.pi) % 2) * 2
 
     def go_to(self, target, speed):
+        self.angle_steady = 0
         self.angle_t = target
         self.speed = speed
+
+    def go_steady(self, speed):
+        self.angle_steady = speed / 60
 
     def dist_to(self, target, speed):
         self.distance_t = target
@@ -149,6 +158,7 @@ class CameraManager:
         self.focus_speed = speed
 
     def go_set(self, target):
+        self.angle_steady = 0
         self.angle = target
         self.angle_t = target
         self.speed = 3
@@ -180,7 +190,10 @@ class CameraManager:
             (
                 0.0,
                 0.0,
-                50 / 25 * 3 + max((150 / self.distance) - 3, 0) + self.height / 2 + self.focus,
+                50 / 25 * 3
+                + max((150 / self.distance) - 3, 0)
+                + self.height / 2
+                + self.focus,
             ),
             (0.0, 0.0, 1.0),
             dtype="f4",
