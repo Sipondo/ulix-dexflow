@@ -94,11 +94,7 @@ class UICombat(BaseUI):
                     self.reg_action(Action(ActionType.ATTACK, a_index=self.sel_action))
 
         if key == "backspace" or key == "menu":
-            if self.state in (
-                UIStates.SWAP,
-                UIStates.MOVE,
-                UIStates.BALL,
-            ):
+            if self.state in (UIStates.SWAP, UIStates.MOVE, UIStates.BALL,):
                 self.game.r_aud.effect("cancel")
                 self.state = UIStates.TOP
 
@@ -153,9 +149,11 @@ class UICombat(BaseUI):
         self.ids.BattleStatusOursName.text = ours.name if ours else ""
         self.ids.BattleStatusTheirsName.text = theirs.name if theirs else ""
 
-        self.highlight_top()
-        self.highlight_attack()
-        self.highlight_swap()
+        self.ids.DialogueWindow.opacity = 0.0
+        self.ids.PromptWindow.opacity = 0.0
+        # self.highlight_top()
+        # self.highlight_attack()
+        # self.highlight_swap()
 
     def update_ui(self):
         # print(self.gamestate.board.actives)

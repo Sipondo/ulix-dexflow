@@ -220,6 +220,7 @@ class BattleBattlerImage(FloatLayout):
         self.summon_size = 0.0
         self.summon_size_to = 1.0
         self.theight = 0.0
+        self.vis = True
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(BattleBattlerImage, self).__init__(**kwargs)
@@ -241,6 +242,9 @@ class BattleBattlerImage(FloatLayout):
         self.canvas.add(Callback(reset_blend))
 
         self.canvas["Texture"] = 4
+
+    def set_visible(self, vis):
+        self.vis = vis
 
     def set_texture(self, texture_file):
         self.texture_file = texture_file
@@ -290,7 +294,10 @@ class BattleBattlerImage(FloatLayout):
             if self.summon_size >= self.summon_size_to:
                 self.summon_size = self.summon_size_to
 
-        self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
+        if self.vis:
+            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
+        else:
+            self.canvas["Size"] = 0.0
         self.redraw()
 
 

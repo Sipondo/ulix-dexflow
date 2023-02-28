@@ -115,6 +115,12 @@ class ParticleSystem(FloatLayout):
         # TODO: remove, temp dark
         self.game.m_gst.current_state.scene.set_dark(0, 1.0, False)
 
+        self.sound = r"C:\dev\projects\pokejets\simple_ulix\resources\light\assets\light_sound.mp3"
+        self.sound_preload = self.game.r_aud.get_effect_preload(self.sound)
+        self.sound_preload.play()
+
+        self.camera_step = 0
+
     def on_tick(self, time, frame_time):
         self.update(time, frame_time)
 
@@ -123,105 +129,40 @@ class ParticleSystem(FloatLayout):
         self.frame_time = frame_time
 
     def draw_seer(self, instr):
-        # print("Draw!")
+
         t = self.time
-        # self.canvas["time"] = t
 
         delta = self.frame_time
 
-        # print(delta)
-
-        # self.canvas["resolution"] = list(map(float, self.size))
-        # This is needed for the default vertex shader.
-        # win_rc = Window.render_context
-        # self.canvas["projection_mat"] = win_rc["projection_mat"]
-        # self.canvas["modelview_mat"] = win_rc["modelview_mat"]
-        # self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
-
-        # if random() > 0.9:
-        # if random() > 0.9:
         if self.time_since == 0.0:
             self.handle = self.manager.Play(self.effects)
             print("handle!", self.handle, 0.01 * t)
-            # self.manager.SetEffectPosition(self.handle, 125.0, 300.0, 0.0)
-            # self.manager.SetEffectPosition(self.handle, 400.0, 100.0, 0.0)
-            # self.manager.SetEffectPosition(
-            #     self.handle,
-            #     (0.2 + 0.6 * random()) * 800,
-            #     (0.2 + 0.6 * random()) * 600,
-            #     0.0,
-            # )
 
             self.manager.SetEffectPosition(self.handle, -20.0, 0.0, 0.0)  # t / 6.0)
-            # self.manager.SetEffectRotation(
-            #     self.handle, 360 * random(), 360 * random(), 360 * random()
-            # )
-            # self.manager.SetEffectRotation(self.handle, 0.0, 3.14 / 4, 0.0)
-            # self.manager.SetEffectRotation(self.handle, 2.0 * t, 2.0 * t, 2.0 * t)
+
             rot = math.pi * 0.5
             self.manager.SetEffectRotation(self.handle, rot, rot, rot)  # ?
-            # print("ROTATE:", t * 2.0)
-            # self.manager.SetEffectRotation(self.handle, 0.2, 0.0, 0.0)
-            # self.manager.SetEffectScale(self.handle, random(), random(), random())
+
             scale = 1.0
             self.manager.SetEffectScale(self.handle, scale, scale, scale)
 
-            # self.manager.SetEffectTransformMatrix(
-            #     self.handle,
-            #     scale,
-            #     0.0,
-            #     0.0,
-            #     0.0,
-            #     0.0,
-            #     scale,
-            #     0.0,
-            #     0.0,
-            #     0.0,
-            #     0.0,
-            #     scale,
-            #     0.0,
-            # )
-
         self.time_since += delta
 
-        if self.time_since > 15.0:  # 2.0:
+        self.do_camera()
+
+        if self.time_since > 45.0:  # 2.0:
             self.time_since = 0.0
+            self.camera_step = 0
 
         ClearColor(0, 0, 0, 1)
         ClearBuffers(clear_depth=True)
 
         self.manager.SetViewProjectionMatrixWithSimpleWindow(1920, 1080)
-        # self.manager.SetViewProjectionMatrixWithSimpleWindow(800, 600)
-        # self.manager.SetViewProjectionMatrixWithSimpleWindow(320, 180)
-        # self.manager.SetProjectionMatrix(
-        #     *[float(y) for x in self.game.m_cam.proj for y in x]
-        # )
-        # print(self.game.m_cam.mvp)
-        # print([float(y) for x in self.game.m_cam.mvp for y in x])
-        # self.manager.SetProjectionMatrix(
-        #     *[float(y) for x in self.game.m_cam.mvp for y in x]
-        # )
-        # self.manager.SetProjectionMatrix(
-        #     *[
-        #         float(y)
-        #         for x in list(
-        #             map(list, zip(*self.game.m_cam.proj * self.game.m_cam.rotate))
-        #         )
-        #         for y in x
-        #     ]
-        # )
+
         self.manager.SetProjectionMatrix(
             *[float(y) for x in list(map(list, zip(*self.game.m_cam.proj))) for y in x]
         )
-        # self.manager.SetCameraMatrix(
-        #     *[
-        #         float(y)
-        #         for x in list(
-        #             map(list, zip(*(self.game.m_cam.lookat * self.game.m_cam.rotate)))
-        #         )
-        #         for y in x
-        #     ]
-        # )
+
         self.manager.SetCameraMatrix(
             *[
                 float(y)
@@ -231,14 +172,116 @@ class ParticleSystem(FloatLayout):
                 for y in x
             ]
         )
-        # self.manager.SetCameraMatrix(
-        #     *[
-        #         float(y)
-        #         for x in list(map(list, zip(*(self.game.m_cam.lookat))))
-        #         for y in x
-        #     ]
-        # )
 
         self.manager.Update(delta * 60)
         self.manager.DrawBack()
         self.manager.DrawFront()
+
+    def do_camera(self):
+
+        camera_want = 0
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.go_to(80, 2)
+            self.camera_step += 1
+            self.game.m_cam.battle_shake = 0.9
+            self.game.m_cam.shake_dampen = False
+            return
+
+        camera_want += 1
+        if self.time_since < 3:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.go_to(170, 0.4)
+            self.game.m_cam.dist_to(20, 0.3)
+            self.game.m_cam.battle_shake = 0.9
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 9.5:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.go_to(200, 0.5)
+            # self.game.m_cam.dist_to(20, 1.5)
+            # self.game.m_cam.battle_shake = 0.9
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 14:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.go_to(150, 0.15)
+            self.game.m_cam.dist_to(25, 1.5)
+            # self.game.m_cam.battle_shake = 0.9
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 20.5:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.go_to(170, 0.2)
+            self.game.m_cam.dist_to(50, 6)
+            self.game.m_cam.height_to(15, 3)
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 22:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
+            # self.game.m_cam.go_to(170, 2)
+            self.game.m_cam.dist_to(100, 6)
+            self.game.m_cam.height_to(40, 3)
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 24.5:
+            return
+
+        if self.camera_step == camera_want:
+            # self.game.m_cam.go_to(170, 2)
+            self.game.m_cam.dist_to(500, 2)
+            self.game.m_cam.height_to(50, 3)
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 24.7:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 26.0:
+            return
+
+        if self.camera_step == camera_want:
+            # self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
+            self.game.m_gst.current_state.scene.set_fighter_visible(1, True)
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 26.5:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.m_cam.battle_shake = 1.0
+            self.game.m_cam.go_to(170, 2)
+            self.game.m_cam.dist_to(80, 1000)
+            self.game.m_cam.height_to(0, 1000)
+            self.camera_step += 1
+            return
