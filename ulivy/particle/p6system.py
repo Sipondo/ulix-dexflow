@@ -207,9 +207,27 @@ class ParticleSystem(FloatLayout):
             return
 
         if self.camera_step == camera_want:
-            self.game.m_cam.go_to(170, 0.4)
+            self.game.m_cam.go_to(170, 1.0)
             self.game.m_cam.dist_to(20, 0.3)
             self.game.m_cam.battle_shake = 0.9
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 6.0:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.r_uin.current_ui.light_to = 1.0
+            self.camera_step += 1
+            return
+
+        camera_want += 1
+        if self.time_since < 8.8:
+            return
+
+        if self.camera_step == camera_want:
+            self.game.r_uin.current_ui.light_to = 0.0
             self.camera_step += 1
             return
 
@@ -266,7 +284,7 @@ class ParticleSystem(FloatLayout):
             return
 
         if self.camera_step == camera_want:
-            # self.game.m_cam.go_to(170, 2)
+            # self.game.m_cam.go_to(250, 15)
             self.game.m_cam.dist_to(500, 2)
             self.game.m_cam.height_to(50, 3)
             self.camera_step += 1

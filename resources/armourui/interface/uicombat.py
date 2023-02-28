@@ -39,6 +39,10 @@ class UICombat(BaseUI):
         self.status_ours = (0, 0)
         self.status_theirs = (0, 0)
 
+        # light that burns the sky
+        self.light = 0.0
+        self.light_to = 0.0
+
         self.update_ui()
 
     def update(self, time=None, frame_time=None):
@@ -151,9 +155,18 @@ class UICombat(BaseUI):
 
         self.ids.DialogueWindow.opacity = 0.0
         self.ids.PromptWindow.opacity = 0.0
+
+        self.update_light()
         # self.highlight_top()
         # self.highlight_attack()
         # self.highlight_swap()
+
+    def update_light(self):
+        if self.light < self.light_to:
+            self.light += 0.1
+        if self.light > self.light_to:
+            self.light -= 0.1
+        self.ids.LightSplash.opacity = self.light
 
     def update_ui(self):
         # print(self.gamestate.board.actives)
