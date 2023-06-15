@@ -128,233 +128,233 @@ class ParticleSystem(FloatLayout):
         self.time = time
         self.frame_time = frame_time
 
-    def draw_seer(self, instr):
+    # def draw_seer(self, instr):
 
-        t = self.time
+    #     t = self.time
 
-        delta = self.frame_time
+    #     delta = self.frame_time
 
-        if self.time_since == 0.0:
-            self.handle = self.manager.Play(self.effects)
-            print("handle!", self.handle, 0.01 * t)
+    #     if self.time_since == 0.0:
+    #         self.handle = self.manager.Play(self.effects)
+    #         print("handle!", self.handle, 0.01 * t)
 
-            self.manager.SetEffectPosition(self.handle, -20.0, 0.0, 0.0)  # t / 6.0)
+    #         self.manager.SetEffectPosition(self.handle, -20.0, 0.0, 0.0)  # t / 6.0)
 
-            rot = math.pi * 0.5
-            self.manager.SetEffectRotation(self.handle, rot, rot, rot)  # ?
+    #         rot = math.pi * 0.5
+    #         self.manager.SetEffectRotation(self.handle, rot, rot, rot)  # ?
 
-            scale = 1.0
-            self.manager.SetEffectScale(self.handle, scale, scale, scale)
+    #         scale = 1.0
+    #         self.manager.SetEffectScale(self.handle, scale, scale, scale)
 
-        self.time_since += delta
+    #     self.time_since += delta
 
-        self.do_light_move(self.time)
+    #     # self.do_light_move(self.time)
 
-        if self.time_since > 45.0:  # 2.0:
-            self.time_since = 0.0
-            self.camera_step = 0
+    #     if self.time_since > 45.0:  # 2.0:
+    #         self.time_since = 0.0
+    #         self.camera_step = 0
 
-        ClearColor(0, 0, 0, 1)
-        ClearBuffers(clear_depth=True)
+    #     ClearColor(0, 0, 0, 1)
+    #     ClearBuffers(clear_depth=True)
 
-        self.manager.SetViewProjectionMatrixWithSimpleWindow(1920, 1080)
+    #     self.manager.SetViewProjectionMatrixWithSimpleWindow(1920, 1080)
 
-        self.manager.SetProjectionMatrix(
-            *[float(y) for x in list(map(list, zip(*self.game.m_cam.proj))) for y in x]
-        )
+    #     self.manager.SetProjectionMatrix(
+    #         *[float(y) for x in list(map(list, zip(*self.game.m_cam.proj))) for y in x]
+    #     )
 
-        self.manager.SetCameraMatrix(
-            *[
-                float(y)
-                for x in list(
-                    map(list, zip(*(self.game.m_cam.lookat * self.game.m_cam.rotate)))
-                )
-                for y in x
-            ]
-        )
+    #     self.manager.SetCameraMatrix(
+    #         *[
+    #             float(y)
+    #             for x in list(
+    #                 map(list, zip(*(self.game.m_cam.lookat * self.game.m_cam.rotate)))
+    #             )
+    #             for y in x
+    #         ]
+    #     )
 
-        self.manager.Update(delta * 60)
-        self.manager.DrawBack()
-        self.manager.DrawFront()
+    #     self.manager.Update(delta * 60)
+    #     self.manager.DrawBack()
+    #     self.manager.DrawFront()
 
-    def do_light_move(self, time):
+    # def do_light_move(self, time):
 
-        # self.game.m_gst.current_state.scene.set_movement(
-        #     0, (20.0, 0.0, math.sin(time)), None, False
-        # )
-        self.game.m_gst.current_state.scene.set_movement(
-            0,
-            (
-                -1.0,
-                0.0,
-                math.sin(self.time_since) * 0.04 + min(0.05, self.time_since / 10),
-            ),
-            None,
-            False,
-        )
+    #     # self.game.m_gst.current_state.scene.set_movement(
+    #     #     0, (20.0, 0.0, math.sin(time)), None, False
+    #     # )
+    #     self.game.m_gst.current_state.scene.set_movement(
+    #         0,
+    #         (
+    #             -1.0,
+    #             0.0,
+    #             math.sin(self.time_since) * 0.04 + min(0.05, self.time_since / 10),
+    #         ),
+    #         None,
+    #         False,
+    #     )
 
-        camera_want = 0
+    #     camera_want = 0
 
-        if self.camera_step == camera_want:
-            self.game.m_cam.go_to(95, 2)
-            self.camera_step += 1
-            self.game.m_cam.battle_shake = 0.9
-            self.game.m_cam.shake_dampen = False
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_cam.go_to(95, 2)
+    #         self.camera_step += 1
+    #         self.game.m_cam.battle_shake = 0.9
+    #         self.game.m_cam.shake_dampen = False
+    #         return
 
-        camera_want += 1
-        if self.time_since < 3:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 3:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_cam.go_to(170, 1.0)
-            self.game.m_cam.dist_to(20, 0.3)
-            self.game.m_cam.battle_shake = 0.9
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_cam.go_to(170, 1.0)
+    #         self.game.m_cam.dist_to(20, 0.3)
+    #         self.game.m_cam.battle_shake = 0.9
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 6.0:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 6.0:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.r_uin.current_ui.light_to = 1.0
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.r_uin.current_ui.light_to = 1.0
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 8.8:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 8.8:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.r_uin.current_ui.light_to = 0.0
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.r_uin.current_ui.light_to = 0.0
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 9.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 9.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            # self.game.m_cam.go_to(200, 0.5)
-            self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
-            self.game.m_gst.current_state.scene.set_shadow_visible(0, False)
-            self.game.m_gst.current_state.scene.set_shadow_visible(1, False)
-            self.game.m_cam.go_steady(30)
-            self.game.m_cam.dist_to(160, 0.12)
-            # self.game.m_cam.dist_to(20, 1.5)
-            # self.game.m_cam.battle_shake = 0.9
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         # self.game.m_cam.go_to(200, 0.5)
+    #         self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
+    #         self.game.m_gst.current_state.scene.set_shadow_visible(0, False)
+    #         self.game.m_gst.current_state.scene.set_shadow_visible(1, False)
+    #         self.game.m_cam.go_steady(30)
+    #         self.game.m_cam.dist_to(160, 0.12)
+    #         # self.game.m_cam.dist_to(20, 1.5)
+    #         # self.game.m_cam.battle_shake = 0.9
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 14:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 14:
+    #         return
 
-        if self.camera_step == camera_want:
-            # self.game.m_cam.go_to(150, 0.15)
-            # self.game.m_cam.dist_to(25, 1.5)
-            # self.game.m_cam.battle_shake = 0.9
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         # self.game.m_cam.go_to(150, 0.15)
+    #         # self.game.m_cam.dist_to(25, 1.5)
+    #         # self.game.m_cam.battle_shake = 0.9
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 20.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 20.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            # self.game.m_cam.go_to(170, 0.2)
-            self.game.m_cam.go_to(180, 0.3)
-            self.game.m_cam.dist_to(50, 6)
-            self.game.m_cam.height_to(15, 3)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         # self.game.m_cam.go_to(170, 0.2)
+    #         self.game.m_cam.go_to(180, 0.3)
+    #         self.game.m_cam.dist_to(50, 6)
+    #         self.game.m_cam.height_to(15, 3)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 22:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 22:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
-            # self.game.m_cam.go_to(170, 2)
-            self.game.m_cam.dist_to(100, 6)
-            self.game.m_cam.height_to(40, 3)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_gst.current_state.scene.set_fighter_visible(1, False)
+    #         # self.game.m_cam.go_to(170, 2)
+    #         self.game.m_cam.dist_to(100, 6)
+    #         self.game.m_cam.height_to(40, 3)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 24.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 24.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            # self.game.m_cam.go_to(250, 15)
-            self.game.m_cam.dist_to(500, 2)
-            self.game.m_cam.height_to(50, 3)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         # self.game.m_cam.go_to(250, 15)
+    #         self.game.m_cam.dist_to(500, 2)
+    #         self.game.m_cam.height_to(50, 3)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 24.7:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 24.7:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 26.0:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 26.0:
+    #         return
 
-        if self.camera_step == camera_want:
-            # self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
-            self.game.m_gst.current_state.scene.set_fighter_visible(1, True)
-            self.game.m_cam.go_set(300)
-            self.game.m_cam.go_to(190, 1)
-            # self.game.m_cam.go_to(70, 1)
-            # self.game.m_cam.go_to(200, 1)
-            self.game.m_cam.dist_set(50)
-            # self.game.m_cam.dist_set(200)
-            self.game.m_cam.dist_to(150, 0.5)
-            self.game.m_cam.height_set(0)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         # self.game.m_gst.current_state.scene.set_fighter_visible(0, False)
+    #         self.game.m_gst.current_state.scene.set_fighter_visible(1, True)
+    #         self.game.m_cam.go_set(300)
+    #         self.game.m_cam.go_to(190, 1)
+    #         # self.game.m_cam.go_to(70, 1)
+    #         # self.game.m_cam.go_to(200, 1)
+    #         self.game.m_cam.dist_set(50)
+    #         # self.game.m_cam.dist_set(200)
+    #         self.game.m_cam.dist_to(150, 0.5)
+    #         self.game.m_cam.height_set(0)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 26.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 26.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_cam.battle_shake = 1.0
-            # self.game.m_cam.go_to(170, 2)
-            # self.game.m_cam.dist_to(80, 1000)
-            # self.game.m_cam.height_to(0, 1000)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_cam.battle_shake = 1.0
+    #         # self.game.m_cam.go_to(170, 2)
+    #         # self.game.m_cam.dist_to(80, 1000)
+    #         # self.game.m_cam.height_to(0, 1000)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 27.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 27.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_cam.battle_shake = 0.7
-            # self.game.m_cam.go_to(170, 2)
-            # self.game.m_cam.dist_to(80, 1000)
-            # self.game.m_cam.height_to(0, 1000)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_cam.battle_shake = 0.7
+    #         # self.game.m_cam.go_to(170, 2)
+    #         # self.game.m_cam.dist_to(80, 1000)
+    #         # self.game.m_cam.height_to(0, 1000)
+    #         self.camera_step += 1
+    #         return
 
-        camera_want += 1
-        if self.time_since < 28.5:
-            return
+    #     camera_want += 1
+    #     if self.time_since < 28.5:
+    #         return
 
-        if self.camera_step == camera_want:
-            self.game.m_cam.battle_shake = 0.5
-            # self.game.m_cam.battle_shake = 1.0
-            # self.game.m_cam.go_to(170, 2)
-            # self.game.m_cam.dist_to(80, 1000)
-            # self.game.m_cam.height_to(0, 1.5)
-            self.game.m_cam.focus_to(300, 1.5)
-            self.game.m_cam.dist_to(800, 2.5)
-            self.camera_step += 1
-            return
+    #     if self.camera_step == camera_want:
+    #         self.game.m_cam.battle_shake = 0.5
+    #         # self.game.m_cam.battle_shake = 1.0
+    #         # self.game.m_cam.go_to(170, 2)
+    #         # self.game.m_cam.dist_to(80, 1000)
+    #         # self.game.m_cam.height_to(0, 1.5)
+    #         self.game.m_cam.focus_to(300, 1.5)
+    #         self.game.m_cam.dist_to(800, 2.5)
+    #         self.camera_step += 1
+    #         return
