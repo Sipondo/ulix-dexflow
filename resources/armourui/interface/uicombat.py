@@ -3,9 +3,9 @@ import enum
 from kivy.lang import Builder
 
 from ulivy.interface.baseui import BaseUI
-from ulivy.c2.combatboard import Input
+# from ulivy.c2.combatboard import Input
 
-from ulivy.c2.action import ActionType, Action
+# from ulivy.c2.action import ActionType, Action
 from ulivy.helpers.dataframe import Series
 
 Builder.load_file("resources/armourui/interface/uicombat.kv")

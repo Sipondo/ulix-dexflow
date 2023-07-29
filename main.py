@@ -45,7 +45,6 @@ if __name__ == "__main__":
     from ulivy.manager.animationmanager import AnimationManager
     from ulivy.manager.cameramanager import CameraManager
     from ulivy.manager.collisionmanager import CollisionManager
-    from ulivy.manager.combatmanager import CombatManager
     from ulivy.manager.dbmanager import DbManager
     from ulivy.manager.entitymanager import EntityManager
     from ulivy.manager.gamestatemanager import GameStateManager
@@ -129,7 +128,6 @@ if __name__ == "__main__":
 
             self.m_ani = AnimationManager(self)
             self.m_col = CollisionManager(self)
-            self.m_com = CombatManager(self)
             self.m_ent = EntityManager(self)
             self.m_act = ActionManager(self)
             self.m_gst = GameStateManager(self)
