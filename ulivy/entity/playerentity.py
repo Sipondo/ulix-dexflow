@@ -42,13 +42,13 @@ class PlayerEntity(BaseEntity):
         # self.game.m_sav.save("player_height", self.height)
 
     def on_step(self, time, frame_time):
-        # Always encounter
-        # if True:  # self.game.m_col.get_tile_flags(self.game_position)["Encounter"]:
-        self.game.grace += 1
-        if self.game.grace > 0:
-            if np.random.rand() < self.game.m_map.encounter_rate * self.game.grace:
-                self.game.grace = -22
-                self.game.m_act.create_prefab_action("on_encounter", self.game)
+        # Comment the next line if always encounter
+        if self.game.m_col.get_tile_flags(self.game_position)["Encounter"]:
+            self.game.grace += 1
+            if self.game.grace > 0:
+                if np.random.rand() < self.game.m_map.encounter_rate * self.game.grace:
+                    self.game.grace = -22
+                    self.game.m_act.create_prefab_action("on_encounter", self.game)
 
     def direction_to_tuple(self, direction):
         if direction == "up":
