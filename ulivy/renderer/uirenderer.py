@@ -1,15 +1,18 @@
 from kivy.uix.floatlayout import FloatLayout
+import ulivy.interface.baseui
 
 UI = "modernui"
 
 class UIRenderer(FloatLayout):
     def __init__(self, game, **kwargs):
         self.game = game
-        self.current_ui = None
+        self.ui_stack = []
         super(UIRenderer, self).__init__(**kwargs)
         self.size_hint_x = None
         self.size_hint_y = None
         self.size = self.game.RENDER_SIZE
+
+        self.ui_dictionary = {}
 
     def update(self, time, frame_time):
         self.size = self.game.RENDER_SIZE
@@ -24,34 +27,50 @@ class UIRenderer(FloatLayout):
         if self.current_ui:
             return self.current_ui.event_unicode(char)
 
-    def switch_ui(self, new_ui, gstate, **kwargs):
-        if self.current_ui is not None:
-            self.current_ui.on_exit()
-            self.remove_widget(self.current_ui)
-            del self.current_ui
-            self.current_ui = None
+    def switch_ui(self, new_ui, gstate, replace=False, **kwargs):
+        if replace:
+            for ui in self.ui_stack[::-1]:
+                if ui.on_exit():
+                    self.remove_widget(ui)
+                    del ui
+
+            self.ui_stack = []
+
+        self.ui_stack.append(self.ui_dictionary[new_ui](self.game, gstate))
 
         # if new_ui == "overworld":
-        #     self.current_ui = UIOverworld(self.game, gstate, size=self.size)
+        #     self.ui_stack = UIOverworld(self.game, gstate, size=self.size)
         # elif new_ui == "cinematic":
-        #     self.current_ui = UICinematic(self.game, gstate, size=self.size)
+        #     self.ui_stack = UICinematic(self.game, gstate, size=self.size)
         # elif new_ui == "debug":
-        #     self.current_ui = UIDebug(self.game, gstate)
+        #     self.ui_stack = UIDebug(self.game, gstate)
         # elif new_ui == "prompt":
-        #     self.current_ui = UIPrompt(self.game, gstate)
+        #     self.ui_stack = UIPrompt(self.game, gstate)
         # elif new_ui == "battle":
-        #     self.current_ui = UICombat(self.game, gstate)
+        #     self.ui_stack = UICombat(self.game, gstate)
         # elif new_ui == "menumain":
-        #     self.current_ui = UIMenuMain(self.game, gstate, size=self.size)
+        #     self.ui_stack = UIMenuMain(self.game, gstate, size=self.size)
         # elif new_ui == "menubag":
-        #     self.current_ui = UIMenuBag(self.game, gstate)
+        #     self.ui_stack = UIMenuBag(self.game, gstate)
         # elif new_ui == "menustart":
-        #     self.current_ui = UIMenuStart(self.game, gstate)
+        #     self.ui_stack = UIMenuStart(self.game, gstate)
         # elif new_ui == "status":
-        #     self.current_ui = UIStatus(self.game, gstate)
+        #     self.ui_stack = UIStatus(self.game, gstate)
         # else:
         #     return
 
         self.current_ui.on_enter(**kwargs)
         self.add_widget(self.current_ui)
         self.current_ui.update()
+
+    def close_ui(self, ui):
+        if ui.on_exit():
+            self.remove_widget(ui)
+            self.ui_stack.remove(ui)
+            del ui
+
+    @property
+    def current_ui(self):
+        if self.ui_stack:
+            return self.ui_stack[-1]
+        return None

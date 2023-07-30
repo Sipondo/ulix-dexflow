@@ -73,7 +73,7 @@ class BaseUI(FloatLayout):
         pass
 
     def on_exit(self):
-        pass
+        return True
 
     def event_keypress(self, key, modifiers):
         return

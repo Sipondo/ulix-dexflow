@@ -54,6 +54,7 @@ if __name__ == "__main__":
     from ulivy.manager.savemanager import SaveManager
     from ulivy.manager.oscmanager import OscManager, FPSCounter
     from ulivy.manager.panmanager import PanManager
+    from ulivy.manager.pluginmanager import PluginManager
     from ulivy.manager.resourcemanager import ResourceManager
 
     from ulivy.manager.p6 import ParticleManager
@@ -102,6 +103,8 @@ if __name__ == "__main__":
             super(PokeGame, self).__init__(**kwargs)
             # Window.size = (1280, 720)
             self.app = app
+            self.m_plu = PluginManager(self)
+            self.m_plu.pre_load()
             ############## TODO: this should go to some resource manager
 
             from ulivy.util.fatlas import Fatlas
@@ -171,7 +174,8 @@ if __name__ == "__main__":
             # for _ in range(30):
             #     self.inventory.add_item(self.m_pbs.get_random_item().identifier, 1)
 
-            self.m_gst.switch_state("menustart", fade=True)
+            self.m_plu.post_load()
+            self.m_gst.switch_state("overworld", fade=True)
             # self.m_map.set_level(self.m_map.current_level_id)
             self.time = 0
             Clock.schedule_interval(self.update, 0)
