@@ -26,6 +26,9 @@ class UIRenderer(FloatLayout):
     def event_unicode(self, char):
         if self.current_ui:
             return self.current_ui.event_unicode(char)
+        
+    def register_ui(self, name, ui):
+        self.ui_dictionary[name] = ui
 
     def switch_ui(self, new_ui, gstate, replace=False, **kwargs):
         if replace:
@@ -36,28 +39,10 @@ class UIRenderer(FloatLayout):
 
             self.ui_stack = []
 
-        self.ui_stack.append(self.ui_dictionary[new_ui](self.game, gstate))
-
-        # if new_ui == "overworld":
-        #     self.ui_stack = UIOverworld(self.game, gstate, size=self.size)
-        # elif new_ui == "cinematic":
-        #     self.ui_stack = UICinematic(self.game, gstate, size=self.size)
-        # elif new_ui == "debug":
-        #     self.ui_stack = UIDebug(self.game, gstate)
-        # elif new_ui == "prompt":
-        #     self.ui_stack = UIPrompt(self.game, gstate)
-        # elif new_ui == "battle":
-        #     self.ui_stack = UICombat(self.game, gstate)
-        # elif new_ui == "menumain":
-        #     self.ui_stack = UIMenuMain(self.game, gstate, size=self.size)
-        # elif new_ui == "menubag":
-        #     self.ui_stack = UIMenuBag(self.game, gstate)
-        # elif new_ui == "menustart":
-        #     self.ui_stack = UIMenuStart(self.game, gstate)
-        # elif new_ui == "status":
-        #     self.ui_stack = UIStatus(self.game, gstate)
-        # else:
-        #     return
+        try:
+            self.ui_stack.append(self.ui_dictionary[new_ui](self.game))
+        except KeyError:
+            raise KeyError(f"UI '{new_ui}' was requested but has not been registered.")
 
         self.current_ui.on_enter(**kwargs)
         self.add_widget(self.current_ui)

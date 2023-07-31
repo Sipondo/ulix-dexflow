@@ -44,7 +44,7 @@ class SaveManager:
 
     def reset_store(self):
         self.store = {
-            "player_pos": (3, 5),
+            "player_pos": (15, 12),
             "current_level_id": 1000,
             "current_hospital": "L1",
             "progression": 8,

@@ -58,9 +58,8 @@ class NormalImage(Image):
 
 
 class BaseUI(FloatLayout):
-    def __init__(self, game, gstate, **kwargs):
+    def __init__(self, game, **kwargs):
         self.game = game
-        self.gstate = gstate
         self.block_input = False
         super().__init__(**kwargs)
 

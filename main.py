@@ -176,7 +176,7 @@ if __name__ == "__main__":
 
             self.m_plu.post_load()
             self.m_gst.switch_state("overworld", fade=True)
-            # self.m_map.set_level(self.m_map.current_level_id)
+            self.m_map.set_level(self.m_map.current_level_id)
             self.time = 0
             Clock.schedule_interval(self.update, 0)
 
