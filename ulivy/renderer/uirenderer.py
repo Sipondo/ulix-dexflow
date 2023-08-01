@@ -16,7 +16,7 @@ class UIRenderer(FloatLayout):
 
     def update(self, time, frame_time):
         self.size = self.game.RENDER_SIZE
-        if self.current_ui:
+        if self.current_ui: 
             return self.current_ui.update(time, frame_time)
 
     def event_keypress(self, request, modifiers):
@@ -30,7 +30,7 @@ class UIRenderer(FloatLayout):
     def register_ui(self, name, ui):
         self.ui_dictionary[name] = ui
 
-    def switch_ui(self, new_ui, gstate, replace=False, **kwargs):
+    def switch_ui(self, new_ui, replace=False, **kwargs):
         if replace:
             for ui in self.ui_stack[::-1]:
                 if ui.on_exit():

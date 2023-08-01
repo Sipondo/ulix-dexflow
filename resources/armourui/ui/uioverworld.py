@@ -44,7 +44,7 @@ class UIOverworld(BaseUI):
         if key == "interact":
             self.game.m_act.check_interact()
         if key == "backspace":
-            self.game.m_gst.switch_state("status")
+            self.game.r_uin.switch_ui("mainmenu")
         if key == "zoom_in":
             self.game.pan_tool.zoom_in()
         if key == "zoom_out":

@@ -1,0 +1,26 @@
+#:kivy 2.0.0
+
+<UIMainMenu>
+    RelativeLayout:
+        id: AreaWindow
+        pos_hint: {'x': 0.1, 'y': 0.8}
+        size_hint: 0.2, 0.12
+        opacity: 0
+
+        PixelImage:
+            id: AreaBackground
+            allow_stretch: True
+            source: 'resources/armourui/graphics/interface/dialogue_choice.png'
+        
+        Label:
+            id: AreaText
+            text: ""
+            color: (0, 0, 0, 1)
+            allow_stretch: True
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: 0.95, 0.6
+            text_size: self.size
+            font_size: 24
+            font_name: "font/tai_normal.ttf"
+            halign: 'left'
+            valign: 'top'
