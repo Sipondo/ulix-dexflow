@@ -63,8 +63,6 @@ class BaseUI(FloatLayout):
         self.block_input = False
         super().__init__(**kwargs)
 
-        print("BASEUI", self.pos, self.size)
-
     def on_enter(self, **kwargs):
         pass
 
