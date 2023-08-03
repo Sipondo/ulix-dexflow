@@ -9,6 +9,7 @@ class UIOverworld(BaseUI):
         self.show_area = 3
 
     def update(self, time=None, frame_time=None):
+        self.time = time
         if time is None:
             time = 0
             frame_time = 0.05
@@ -32,6 +33,11 @@ class UIOverworld(BaseUI):
             else:
                 self.ids.AreaWindow.opacity = 1
 
+        direction = self.check_direction()
+        if direction and not self.game.m_gst.current_state.lock:
+            self.game.m_ent.player.start_move(direction, self.time)
+        self.game.m_pan.set_pan(self.game.m_ent.player.get_pos())
+
         return False
 
     def event_keypress(self, key, modifiers):
@@ -54,3 +60,16 @@ class UIOverworld(BaseUI):
 
     def event_unicode(self, char):
         pass
+
+    def check_direction(self):
+        #
+        # TODO: move to own function
+        if (
+            not self.game.m_map.allow_cycle
+            and self.game.m_ent.player.movement_type == 2
+        ):
+            self.game.m_ent.player.set_movement_type(1)
+        for v in self.game.m_key.pressed_keys:
+            if v in ("up", "down", "left", "right"):
+                return v
+        return None

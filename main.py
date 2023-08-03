@@ -17,10 +17,9 @@ if True:  # "pretty_errors" in sys.modules:
     )
 
 if __name__ == "__main__":
-    from pathlib import Path
-
-    import os
     import multiprocessing
+    import os
+    from pathlib import Path
 
     multiprocessing.freeze_support()
 
@@ -34,12 +33,15 @@ if __name__ == "__main__":
 
     import logging
 
-    # ULIVY
-
-    from kivy.clock import Clock
     from kivy.app import App
+    # ULIVY
+    from kivy.clock import Clock
     from kivy.core.window import Window
+    from kivy.lang import Builder
+    from kivy.uix.floatlayout import FloatLayout
     from kivy.uix.screenmanager import Screen
+    # from ulivy.util.compile_world import compile_world
+    from kivy.utils import platform
 
     from ulivy.manager.actionmanager import ActionManager
     from ulivy.manager.animationmanager import AnimationManager
@@ -48,39 +50,27 @@ if __name__ == "__main__":
     from ulivy.manager.dbmanager import DbManager
     from ulivy.manager.entitymanager import EntityManager
     from ulivy.manager.gamestatemanager import GameStateManager
+    # from ulivy.manager.p5 import ParticleManager
+    from ulivy.manager.generatormanager import GeneratorManager
     from ulivy.manager.hotkeymanager import HotkeyManager
-    from ulivy.manager.pbsmanager import PbsManager
     from ulivy.manager.mapmanager import MapManager
-    from ulivy.manager.savemanager import SaveManager
-    from ulivy.manager.oscmanager import OscManager, FPSCounter
+    from ulivy.manager.oscmanager import FPSCounter, OscManager
+    from ulivy.manager.p6 import ParticleManager
     from ulivy.manager.panmanager import PanManager
+    from ulivy.manager.pbsmanager import PbsManager
     from ulivy.manager.pluginmanager import PluginManager
     from ulivy.manager.resourcemanager import ResourceManager
-
-    from ulivy.manager.p6 import ParticleManager
-
-    # from ulivy.manager.p5 import ParticleManager
-
-    from ulivy.manager.generatormanager import GeneratorManager
+    from ulivy.manager.savemanager import SaveManager
+    from ulivy.player.inventory import Inventory
+    from ulivy.renderer.audiorenderer import AudioRenderer
+    from ulivy.renderer.bufferrenderer import (BufferRenderer,
+                                               InterfaceBufferRenderer)
+    from ulivy.renderer.faderenderer import FadeRenderer
+    from ulivy.renderer.uirenderer import UIRenderer
     from ulivy.upl.uplmanager import UplManager
 
-    from ulivy.renderer.audiorenderer import AudioRenderer
-    from ulivy.renderer.bufferrenderer import BufferRenderer, InterfaceBufferRenderer
-    from ulivy.renderer.faderenderer import FadeRenderer
-
-    from ulivy.renderer.uirenderer import UIRenderer
-
-    from ulivy.player.inventory import Inventory
-
-    # from ulivy.util.compile_world import compile_world
-
-    from kivy.utils import platform
-    from kivy.lang import Builder
-
-    from kivy.uix.floatlayout import FloatLayout
-
     if platform == "android":
-        from android.permissions import request_permissions, Permission
+        from android.permissions import Permission, request_permissions
 
     Builder.load_file("ulivy/manager/oscmanager.kv")
 
@@ -206,8 +196,9 @@ if __name__ == "__main__":
             self.m_sav.render(time, dt)
 
         def get_application_config(self, defaultpath="./%(appname)s.sav"):
+            from os.path import expanduser, sep
+
             from kivy.utils import platform
-            from os.path import sep, expanduser
 
             if platform == "android":
                 # defaultpath = "/sdcard/emulated/0/.%(appname)s.sav"
@@ -224,7 +215,9 @@ if __name__ == "__main__":
         def build(self):
             if platform == "android":
                 request_permissions([Permission.WRITE_EXTERNAL_STORAGE])
-            return PokeGame(self)
+            self.game = PokeGame(self)
+            return self.game
 
     # compile_world("world")
-    UlivyApp().run()
+    app = UlivyApp()
+    app.run()

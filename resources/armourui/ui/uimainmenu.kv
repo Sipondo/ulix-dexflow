@@ -3,14 +3,14 @@
 <UIMainMenu>
     RelativeLayout:
         id: AreaWindow
-        pos_hint: {'x': 0.1, 'y': 0.8}
-        size_hint: 0.2, 0.12
-        opacity: 0
+        # pos_hint: {'x': 0.1, 'y': 0.8}
+        # size_hint: 0.2, 0.12
+        opacity: 1
 
-        PixelImage:
+        AliasImage:
             id: AreaBackground
             allow_stretch: True
-            source: 'resources/armourui/graphics/interface/dialogue_choice.png'
+            source: 'resources/armourui/graphics/interface/main_menu/background.png'
         
         Label:
             id: AreaText
@@ -24,3 +24,111 @@
             font_name: "font/tai_normal.ttf"
             halign: 'left'
             valign: 'top'
+
+        AliasImage:
+            id: InfoPanel
+            pos_hint: {'center_x': 0.5, 'center_y': 0.02}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/main_menu/info_panel.png'
+
+        AliasImage:
+            id: ThoughtBox
+            size_hint: 0.56, 0.145
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/main_menu/thought_box.png'
+
+
+        RelativeLayout:
+            id: Options
+
+            AliasImage:
+                id: OptionDex
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.13, 'center_y': 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/dex.png'
+
+            AliasImage:
+                id: OptionMon
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.325, 'center_y': 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/mon.png'
+
+            AliasImage:
+                id: OptionBag
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/bag.png'
+
+            AliasImage:
+                id: OptionCard
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.685, 'center_y': 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/card.png'
+
+            AliasImage:
+                id: OptionSave
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.87, 'center_y': 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/save.png'
+
+            AliasImage:
+                id: OptionMap
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.13, 'center_y': 0.425}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/map.png'
+
+            AliasImage:
+                id: OptionCamp
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.325, 'center_y': 0.425}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/camp.png'
+
+            AliasImage:
+                id: OptionGift
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.5, 'center_y': 0.425}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/gift.png'
+
+            AliasImage:
+                id: OptionVs
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.685, 'center_y': 0.425}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/vs.png'
+
+            AliasImage:
+                id: OptionOptions
+                size_hint: 0.115, 0.205
+                pos_hint: {'center_x': 0.87, 'center_y': 0.425}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/main_menu/options.png'
+
+
+        AliasImage:
+            id: Arrow
+            size_hint: 0.025, 0.065
+            pos_hint: {'center_x': 0.075, 'center_y': 0.75}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/main_menu/arrow.png'
