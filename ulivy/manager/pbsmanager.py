@@ -53,7 +53,8 @@ class PbsManager:
         )
         self.moves.map_attr("priority", lambda x: int(x))
         move_functions = read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
+            index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
@@ -95,7 +96,8 @@ class PbsManager:
         )
 
         self.type_effectiveness = read_csv(
-            self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0,
+            self.game.m_res.get_pbs_loc("type_effectiveness.csv"),
+            index_col=0,
         )
 
         for v in self.moves.data.values():
@@ -144,19 +146,12 @@ class PbsManager:
         return read_csv(pth, index_col=0)
 
     def get_random_fighter(self):
-        # TODO: revert
-        return self.fighters.loc[800]
-        # return self.fighters.loc[3]
-        return self.fighters.sample().copy()
+        return self.fighters.iloc[:400].sample().copy()
 
     def get_fighter(self, id):
-        # TODO: revert
-        return self.fighters.loc[800]
-        return self.fighters.loc[id]
+        return self.fighters.iloc[:400].loc[id]
 
     def get_fighter_by_name(self, name):
-        # TODO: revert
-        return self.fighters.loc[676]
         return (
             self.fighters[self.fighters["name"].lower() == name.lower()].iloc[0].copy()
         )

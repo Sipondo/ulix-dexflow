@@ -17,7 +17,10 @@ class PixelImage(Image):
         self.bind(texture=self._update_texture_filters)
 
     def _update_texture_filters(self, image, texture):
-        texture.mag_filter = "nearest"
+        try:
+            texture.mag_filter = "nearest"
+        except AttributeError:
+            pass
 
     def update(self, time, frame_time):
         for child in self.children:

@@ -77,7 +77,7 @@ class ResourceManager:
         self.raw_types = TYPES
 
         self.battler_atlas = Smatlas(
-            "resources/essentials/graphics/pokemon_anim/battleratlas.atlas"
+            "resources/essentials/graphics/mon_anim/battleratlas.atlas"
         )
 
     def get_pbs_loc(self, name, compressed=False):

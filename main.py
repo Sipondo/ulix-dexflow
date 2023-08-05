@@ -34,12 +34,14 @@ if __name__ == "__main__":
     import logging
 
     from kivy.app import App
+
     # ULIVY
     from kivy.clock import Clock
     from kivy.core.window import Window
     from kivy.lang import Builder
     from kivy.uix.floatlayout import FloatLayout
     from kivy.uix.screenmanager import Screen
+
     # from ulivy.util.compile_world import compile_world
     from kivy.utils import platform
 
@@ -50,6 +52,7 @@ if __name__ == "__main__":
     from ulivy.manager.dbmanager import DbManager
     from ulivy.manager.entitymanager import EntityManager
     from ulivy.manager.gamestatemanager import GameStateManager
+
     # from ulivy.manager.p5 import ParticleManager
     from ulivy.manager.generatormanager import GeneratorManager
     from ulivy.manager.hotkeymanager import HotkeyManager
@@ -63,8 +66,7 @@ if __name__ == "__main__":
     from ulivy.manager.savemanager import SaveManager
     from ulivy.player.inventory import Inventory
     from ulivy.renderer.audiorenderer import AudioRenderer
-    from ulivy.renderer.bufferrenderer import (BufferRenderer,
-                                               InterfaceBufferRenderer)
+    from ulivy.renderer.bufferrenderer import BufferRenderer, InterfaceBufferRenderer
     from ulivy.renderer.faderenderer import FadeRenderer
     from ulivy.renderer.uirenderer import UIRenderer
     from ulivy.upl.uplmanager import UplManager
@@ -79,7 +81,6 @@ if __name__ == "__main__":
     os.system("color")
 
     class PokeGame(Screen):
-
         # RENDER_SIZE = (160, 90)
         # RENDER_SIZE = (640, 360)
         # RENDER_SIZE = (1280, 720)
@@ -163,6 +164,12 @@ if __name__ == "__main__":
 
             # for _ in range(30):
             #     self.inventory.add_item(self.m_pbs.get_random_item().identifier, 1)
+
+            # TODO: temp
+            for _ in range(6):
+                self.inventory.add_member(self.inventory.init_random_member())
+
+            print(self.inventory.fighter_names)
 
             self.m_plu.post_load()
             self.m_gst.switch_state("overworld", fade=True)

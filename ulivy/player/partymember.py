@@ -13,7 +13,7 @@ class PartyMember:
         self.type1 = data.type1
         self.type2 = data.type2
         self.level = int(l)
-        self.gender = random.choice(["Male", "Female", "Genderless"])
+        self.gender = random.choice(["male", "female"])  # , "Genderless"])
         # self.flavor = data.pokedex
 
         for k, v in data.items():
@@ -22,7 +22,16 @@ class PartyMember:
         if hasattr(self, "actions"):
             self.actions = [int(i) for i in self.actions]
 
-        self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
+        self.icon = (
+            f"resources/essentials/graphics/icons/{self.internalname}_0.png",
+            f"resources/essentials/graphics/icons/{self.internalname}_1.png",
+        )
+
+        self.image_static = (
+            f"resources/essentials/graphics/mon_static/back/{self.internalname}.png",
+            f"resources/essentials/graphics/mon_static/front/{self.internalname}.png",
+        )
+
         # self.sprite = f"sprite/{self.data.id}"
         # print("SELF SPRITE:", self.sprite)
 
@@ -39,7 +48,8 @@ class PartyMember:
         for k, v in data.items():
             setattr(self, k, v)
 
-        self.current_hp = self.stats[0]
+        # TODO: temp
+        self.current_hp = int(self.hp * (0.1 + 0.9 * np.random.rand()))
         self.status = None
 
         self.abilities = [a for a in self.data.abilities.split(",")]
@@ -128,6 +138,10 @@ class PartyMember:
 
     def to_dict(self):
         return self.series.to_dict()
+
+    @property
+    def hp(self):
+        return self.stats[0]
 
     @property
     def stats(self):
