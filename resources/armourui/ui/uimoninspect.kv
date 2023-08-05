@@ -1,0 +1,100 @@
+#:kivy 2.0.0
+
+<UIMonInspect>
+    RelativeLayout:
+        id: Window
+        opacity: 1
+
+
+        AliasImage:
+            id: Background
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/mon/background.png'
+
+        PixelImage:
+            id: Splash
+            pos_hint: {'center_x': 0.7, 'center_y': 0.38}
+            size_hint: 1.0, 1.0
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/essentials/graphics/mon_static/front/000.png'
+            
+        AliasImage:
+            id: Overlay
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'center_x': 0.242, 'center_y': 0.5}
+            source: 'resources/armourui/graphics/interface/mon/overlay_inspect.png'
+
+        RelativeLayout:
+            id: Top
+
+            AliasImage:
+                id: TopBar
+                allow_stretch: True
+                keep_ratio: True
+                pos_hint: {'x': 0.498, 'y': 0.874}
+                size_hint: 0.502, 0.077
+                source: 'resources/armourui/graphics/interface/mon/top_inspect.png'
+
+            AliasImage:
+                id: RedUp
+                allow_stretch: True
+                keep_ratio: True
+                pos_hint: {'center_x': 0.535, 'center_y': 0.975}
+                size_hint: 0.03, 0.03
+                source: 'resources/armourui/graphics/interface/mon/red_up.png'
+
+            AliasImage:
+                id: RedUp
+                allow_stretch: True
+                keep_ratio: True
+                pos_hint: {'center_x': 0.535, 'center_y': 0.85}
+                size_hint: 0.03, 0.03
+                source: 'resources/armourui/graphics/interface/mon/red_down.png'
+
+            AliasImage:
+                id: BallColour
+                pos_hint: {'center_x': 0.535, 'center_y': 0.912}
+                size_hint: 0.05, 0.05
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/mon/ball_colour.png'      
+
+            Label:
+                id: Name
+                pos_hint: {'center_x': 0.875, 'center_y': 1.055}
+                size_hint: 0.6, 0.35
+                text: "Crabominable 999"
+                text_size: self.size    
+                font_size: 48
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (1, 1, 1, 1)
+                markup: True
+
+            Label:
+                id: Level
+                pos_hint: {'center_x': 1.0, 'center_y': 1.055}
+                size_hint: 0.3, 0.35
+                text: "Lv. 999"
+                text_size: self.size    
+                font_size: 48
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (1, 1, 1, 1)
+                markup: True
+            
+            AliasImage:
+                id: Gender
+                pos_hint: {'center_x': 0.976, 'center_y': 0.912}
+                size_hint: 0.05, 0.05
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/mon/female.png'      
+
+        AliasImage:
+            id: InfoPanel
+            pos_hint: {'center_x': 0.5, 'center_y': 0.02}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/mon/info_panel.png'

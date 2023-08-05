@@ -102,6 +102,8 @@ class UIMonView(BaseUI):
     def event_keypress(self, key, modifiers):
         if key == "backspace":
             self.game.r_uin.close_ui(self)
+        elif key == "interact":
+            self.game.r_uin.switch_ui("moninspect")
         elif key == "up":
             self.selection = (self.selection - 1) % self.max_selection
         elif key == "down":

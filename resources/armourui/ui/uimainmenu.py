@@ -57,6 +57,8 @@ class UIMainMenu(BaseUI):
     def event_keypress(self, key, modifiers):
         if key == "backspace":
             self.game.r_uin.close_ui(self)
+        elif key == "interact":
+            self.select_option()
         elif key == "down":
             self.selection = (self.selection - (len(self.options) // 2)) % len(
                 self.options
@@ -69,8 +71,6 @@ class UIMainMenu(BaseUI):
             self.selection = (self.selection - 1) % len(self.options)
         elif key == "right":
             self.selection = (self.selection + 1) % len(self.options)
-        elif key == "interact":
-            self.select_option()
         # if key == "alt":
         #     self.game.m_ent.player.set_movement_type(0)
         # elif key == "shift":
