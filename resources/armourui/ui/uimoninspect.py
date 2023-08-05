@@ -11,9 +11,10 @@ class UIMonInspect(BaseUI):
         self.block_input = False
         self.show_area = 3
 
-        self.selection = 0
+        self.options = ("overview", "stats", "moves", "trivia", "ribbons")
 
-        self.icon_frame = 0
+        self.selection_mon = 0
+        self.selection_option = 0
 
     def update(self, time=None, frame_time=None):
         if time is None:
@@ -22,10 +23,11 @@ class UIMonInspect(BaseUI):
         self.icon_frame = int(time * 4 % 2)
 
         self.update_selected_mon()
+        self.highlight_options()
         return False
 
     def update_selected_mon(self):
-        mon = self.game.inventory.members[self.selection]
+        mon = self.game.inventory.members[self.selection_mon]
 
         self.ids.Splash.source = mon.image_static[1]
         self.ids.Name.text = mon.name
@@ -34,17 +36,34 @@ class UIMonInspect(BaseUI):
             f"resources/armourui/graphics/interface/mon/{mon.gender}.png"
         )
 
+    def highlight_options(self):
+        """Highlight menu options.
+        We significantly reduce boilerplate by making the filenames
+        and elementnames correspond to the options list.
+        This allows us to get the element attribute in a for loop.
+        """
+        for option in self.options:
+            element = getattr(self.ids, f"Option{option.capitalize()}")
+            if option == self.options[self.selection_option]:
+                element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}_sel.png"
+            else:
+                element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}.png"
+
     def event_keypress(self, key, modifiers):
         if key == "backspace":
             self.game.r_uin.close_ui(self)
         elif key == "up":
-            self.selection = (self.selection - 1) % self.max_selection
+            self.selection_mon = (self.selection_mon - 1) % self.max_selection_mon
         elif key == "down":
-            self.selection = (self.selection + 1) % self.max_selection
+            self.selection_mon = (self.selection_mon + 1) % self.max_selection_mon
+        elif key == "left":
+            self.selection_option = (self.selection_option - 1) % len(self.options)
+        elif key == "right":
+            self.selection_option = (self.selection_option + 1) % len(self.options)
 
     def event_unicode(self, char):
         pass
 
     @property
-    def max_selection(self):
+    def max_selection_mon(self):
         return len(self.game.inventory.members)
