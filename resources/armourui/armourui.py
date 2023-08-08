@@ -5,6 +5,7 @@ from resources.armourui.ui.uioverworld import UIOverworld
 from resources.armourui.ui.uimainmenu import UIMainMenu
 from resources.armourui.ui.uimonview import UIMonView
 from resources.armourui.ui.uimoninspect import UIMonInspect
+from resources.armourui.ui.paneloverview import PanelOverview
 
 
 class Armourui(Plugin):
