@@ -3,6 +3,8 @@ from ulivy.interface.baseui import BaseUI
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
+from resources.armourui.ui.paneloverview import PanelOverview
+
 Builder.load_file("resources/armourui/ui/uimoninspect.kv")
 
 
@@ -15,6 +17,9 @@ class UIMonInspect(BaseUI):
 
         self.selection_mon = 0
         self.selection_option = 0
+
+        self.pane_name = None
+        self.pane = None
 
     def update(self, time=None, frame_time=None):
         if time is None:
@@ -46,6 +51,19 @@ class UIMonInspect(BaseUI):
             element = getattr(self.ids, f"Option{option.capitalize()}")
             if option == self.options[self.selection_option]:
                 element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}_sel.png"
+
+                if self.pane_name != option:
+                    self.pane_name = option
+
+                    if self.pane is not None:
+                        self.ids.Window.remove_widget(self.pane)
+                        del self.pane
+
+                    if option == "overview":
+                        self.pane = PanelOverview()
+                        self.ids.Window.add_widget(self.pane)
+                    else:
+                        self.pane = None
             else:
                 element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}.png"
 
