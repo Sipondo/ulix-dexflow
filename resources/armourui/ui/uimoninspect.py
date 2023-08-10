@@ -4,6 +4,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
 from resources.armourui.ui.paneloverview import PanelOverview
+from resources.armourui.ui.panelstats import PanelStats
 
 Builder.load_file("resources/armourui/ui/uimoninspect.kv")
 
@@ -61,6 +62,9 @@ class UIMonInspect(BaseUI):
 
                     if option == "overview":
                         self.pane = PanelOverview()
+                        self.ids.Window.add_widget(self.pane)
+                    elif option == "stats":
+                        self.pane = PanelStats()
                         self.ids.Window.add_widget(self.pane)
                     else:
                         self.pane = None

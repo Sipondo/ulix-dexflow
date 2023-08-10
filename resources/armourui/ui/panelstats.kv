@@ -1,0 +1,30 @@
+#:kivy 2.0.0
+
+<PanelStats>
+    RelativeLayout:
+        id: Window
+        opacity: 1
+
+        AliasImage:
+            id: BoxA
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.6}
+            
+            source: 'resources/armourui/graphics/interface/mon/inspect/stats/box_a.png'
+
+        AliasImage:
+            id: BoxB
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.325}
+            
+            source: 'resources/armourui/graphics/interface/mon/inspect/stats/box_b.png'
+
+        AliasImage:
+            id: BoxC
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.175}
+            
+            source: 'resources/armourui/graphics/interface/mon/inspect/stats/box_c.png'

@@ -15,10 +15,16 @@ class PixelImage(Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.bind(texture=self._update_texture_filters)
+        self.resized = False
 
     def _update_texture_filters(self, image, texture):
         try:
             texture.mag_filter = "nearest"
+            if not self.resized:
+                self.size_hint = (
+                    self.texture_size[0] / 1920.0 * self.parent.size_hint[0],
+                    self.texture_size[1] / 1080.0 * self.parent.size_hint[1],
+                )
         except AttributeError:
             pass
 
@@ -34,9 +40,19 @@ class AliasImage(Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.bind(texture=self._update_texture_filters)
+        self.resized = False
 
     def _update_texture_filters(self, image, texture):
+        # try:
+        # print(self.parent.id)
         texture.mag_filter = "linear"
+        if not self.resized:
+            self.size_hint = (
+                self.texture_size[0] / 1920.0 * self.parent.size_hint[0],
+                self.texture_size[1] / 1080.0 * self.parent.size_hint[1],
+            )
+        # except AttributeError:
+        # pass
 
     def update(self, time, frame_time):
         for child in self.children:
