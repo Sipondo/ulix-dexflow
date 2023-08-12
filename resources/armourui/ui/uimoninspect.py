@@ -22,8 +22,8 @@ class UIMonInspect(BaseUI):
         self.selection_mon = 0
         self.selection_option = 0
 
-        self.pane_name = None
-        self.pane = None
+        self.panel_name = None
+        self.panel = None
 
     def update(self, time=None, frame_time=None):
         if time is None:
@@ -33,6 +33,8 @@ class UIMonInspect(BaseUI):
 
         self.update_selected_mon()
         self.highlight_options()
+
+        self.panel.update(time, frame_time)
         return False
 
     def update_selected_mon(self):
@@ -56,25 +58,25 @@ class UIMonInspect(BaseUI):
             if option == self.options[self.selection_option]:
                 element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}_sel.png"
 
-                if self.pane_name != option:
-                    self.pane_name = option
+                if self.panel_name != option:
+                    self.panel_name = option
 
-                    if self.pane is not None:
-                        self.ids.Window.remove_widget(self.pane)
-                        del self.pane
+                    if self.panel is not None:
+                        self.ids.Window.remove_widget(self.panel)
+                        del self.panel
 
                     if option == "overview":
-                        self.pane = PanelOverview()
+                        self.panel = PanelOverview()
                     elif option == "stats":
-                        self.pane = PanelStats()
+                        self.panel = PanelStats()
                     elif option == "moves":
-                        self.pane = PanelMoves()
+                        self.panel = PanelMoves()
                     elif option == "trivia":
-                        self.pane = PanelTrivia()
+                        self.panel = PanelTrivia()
                     elif option == "ribbons":
-                        self.pane = PanelRibbons()
+                        self.panel = PanelRibbons()
 
-                    self.ids.Window.add_widget(self.pane)
+                    self.ids.Window.add_widget(self.panel)
             else:
                 element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}.png"
 

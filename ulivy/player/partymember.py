@@ -13,6 +13,10 @@ class PartyMember:
         self.type1 = data.type1
         self.type2 = data.type2
         self.level = int(l)
+
+        self.trainer = "TODOTrainer"  # TODO
+        self.trainerid = "123456767890"  # TODO
+
         self.gender = random.choice(["male", "female"])  # , "Genderless"])
         # self.flavor = data.pokedex
 
