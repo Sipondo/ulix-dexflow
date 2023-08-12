@@ -230,7 +230,13 @@ class BattleBattlerImage(FloatLayout):
         self.float_x = 0
         self.float_y = 0
 
-        self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
+        self.mesh = Mesh(
+            vertices=[],
+            indices=[],
+            fmt=[
+                (b"in_pos", 3, "float"),
+            ],
+        )
 
         self.tex1 = self.game.m_res.battler_atlas.original_textures[0]
         self.tex1.mag_filter = "nearest"
@@ -270,7 +276,7 @@ class BattleBattlerImage(FloatLayout):
 
             if self.vis:
                 self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (
-                    self.summon_size ** 3
+                    self.summon_size**3
                 )
             else:
                 self.canvas["Size"] = 0.0
@@ -300,7 +306,7 @@ class BattleBattlerImage(FloatLayout):
                 self.summon_size = self.summon_size_to
 
         if self.vis:
-            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
+            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size**3)
         else:
             self.canvas["Size"] = 0.0
         self.redraw()

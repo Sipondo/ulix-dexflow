@@ -1,0 +1,126 @@
+#:kivy 2.0.0
+
+<TypeMarker>
+    RelativeLayout:
+        id: Window
+        
+        AliasImage:
+            id: Type
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/general/typemarker/normal.png'    
+
+        Label:
+            id: Name
+            pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+            size_hint: 0.6, 0.95
+            text: "NORMAL"
+            text_size: self.size
+            font_size: 28
+            font_name: "resources/armourui/font/poppins_medium.ttf"
+            color: (1, 1, 1, 1)
+            markup: True
+
+<MoveCell>
+    RelativeLayout:
+        id: Window
+        
+        AliasImage:
+            id: Background
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/move_cell.png'      
+        
+        # AliasImage:
+        #     id: Type
+        #     pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+        #     allow_stretch: True
+        #     keep_ratio: True
+        #     source: 'resources/armourui/graphics/interface/general/typemarker/normal.png'    
+
+        TypeMarker:
+            id: Type
+            pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+            size_hint: 0.237, 0.491
+
+        Label:
+            id: Name
+            pos_hint: {'center_x': 0.35, 'center_y': 0.6}
+            size_hint: 0.6, 0.8
+            text: "Super Move Tackle"
+            text_size: self.size
+            font_size: 36
+            font_name: "resources/armourui/font/poppins_medium.ttf"
+            color: (0, 0, 0, 1)
+            markup: True
+            
+
+<PanelMoves>
+    RelativeLayout:
+        id: Window
+        opacity: 1
+
+        MoveCell:
+            id: Move1
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: 0.447, 0.083
+            pos_hint: {'center_x': 0.25, 'center_y': 0.79}
+        
+        MoveCell:
+            id: Move2
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: 0.447, 0.083
+            pos_hint: {'center_x': 0.25, 'center_y': 0.69}
+        
+        MoveCell:
+            id: Move3
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: 0.447, 0.083
+            pos_hint: {'center_x': 0.25, 'center_y': 0.59}
+        
+        MoveCell:
+            id: Move4
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: 0.447, 0.083
+            pos_hint: {'center_x': 0.25, 'center_y': 0.49}
+
+        AliasImage:
+            id: BoxA1
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.385}
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/box_a.png'
+
+        AliasImage:
+            id: BoxA2
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.315}
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/box_a.png'
+
+        AliasImage:
+            id: BoxA3
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.245}
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/box_a.png'
+
+        AliasImage:
+            id: BoxB
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.125}
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/box_b.png'
+
+        AliasImage:
+            id: StatBox
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'center_x': 0.825, 'center_y': 0.55}
+            source: 'resources/armourui/graphics/interface/mon/inspect/moves/statbox.png'

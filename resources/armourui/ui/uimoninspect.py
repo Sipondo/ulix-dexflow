@@ -5,6 +5,9 @@ from kivy.lang import Builder
 
 from resources.armourui.ui.paneloverview import PanelOverview
 from resources.armourui.ui.panelstats import PanelStats
+from resources.armourui.ui.panelmoves import PanelMoves
+from resources.armourui.ui.paneltrivia import PanelTrivia
+from resources.armourui.ui.panelribbons import PanelRibbons
 
 Builder.load_file("resources/armourui/ui/uimoninspect.kv")
 
@@ -62,12 +65,16 @@ class UIMonInspect(BaseUI):
 
                     if option == "overview":
                         self.pane = PanelOverview()
-                        self.ids.Window.add_widget(self.pane)
                     elif option == "stats":
                         self.pane = PanelStats()
-                        self.ids.Window.add_widget(self.pane)
-                    else:
-                        self.pane = None
+                    elif option == "moves":
+                        self.pane = PanelMoves()
+                    elif option == "trivia":
+                        self.pane = PanelTrivia()
+                    elif option == "ribbons":
+                        self.pane = PanelRibbons()
+
+                    self.ids.Window.add_widget(self.pane)
             else:
                 element.source = f"resources/armourui/graphics/interface/mon/inspect/option_{option}.png"
 

@@ -7,6 +7,8 @@ from kivy.properties import (
     ListProperty,
 )
 
+from kivy.graphics.instructions import Callback
+
 
 class PixelImage(Image):
     offset = ListProperty()
@@ -16,15 +18,32 @@ class PixelImage(Image):
         super().__init__(**kwargs)
         self.bind(texture=self._update_texture_filters)
         self.resized = False
+        self.canvas.before.add(Callback(self.set_size))
+        self.opacity = 0.0
+
+    def set_size(self, instruction):
+        self.opacity = 1.0
+        if not self.resized:
+            self.size_hint = (
+                self.texture_size[0] / self.parent.size[0],
+                self.texture_size[1] / self.parent.size[1],
+            )
+
+    # def set_size(self, instruction):
+    #     try:
+    #         size = self.parent.size
+    #     except AttributeError:
+    #         size = (1920.0, 1080.0)
+
+    #     if not self.resized:
+    #         self.size_hint = (
+    #             self.texture_size[0] / size[0],
+    #             self.texture_size[1] / size[1],
+    #         )
 
     def _update_texture_filters(self, image, texture):
         try:
             texture.mag_filter = "nearest"
-            if not self.resized:
-                self.size_hint = (
-                    self.texture_size[0] / 1920.0 * self.parent.size_hint[0],
-                    self.texture_size[1] / 1080.0 * self.parent.size_hint[1],
-                )
         except AttributeError:
             pass
 
@@ -41,18 +60,22 @@ class AliasImage(Image):
         super().__init__(**kwargs)
         self.bind(texture=self._update_texture_filters)
         self.resized = False
+        self.canvas.before.add(Callback(self.set_size))
+        self.opacity = 0.0
 
-    def _update_texture_filters(self, image, texture):
-        # try:
-        # print(self.parent.id)
-        texture.mag_filter = "linear"
+    def set_size(self, instruction):
+        self.opacity = 1.0
         if not self.resized:
             self.size_hint = (
-                self.texture_size[0] / 1920.0 * self.parent.size_hint[0],
-                self.texture_size[1] / 1080.0 * self.parent.size_hint[1],
+                self.texture_size[0] / self.parent.size[0],
+                self.texture_size[1] / self.parent.size[1],
             )
-        # except AttributeError:
-        # pass
+
+    def _update_texture_filters(self, image, texture):
+        try:
+            texture.mag_filter = "nearest"
+        except AttributeError:
+            pass
 
     def update(self, time, frame_time):
         for child in self.children:
