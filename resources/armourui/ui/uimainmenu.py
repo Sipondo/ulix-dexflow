@@ -53,6 +53,10 @@ class UIMainMenu(BaseUI):
     def select_option(self):
         if self.options[self.selection] == "mon":
             self.game.r_uin.switch_ui("monview")
+        if self.options[self.selection] == "save":
+            self.game.r_uin.switch_ui("save")
+        if self.options[self.selection] == "vs":
+            self.game.r_uin.switch_ui("vsmain")
 
     def event_keypress(self, key, modifiers):
         if key == "backspace":

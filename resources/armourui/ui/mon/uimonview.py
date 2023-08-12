@@ -3,7 +3,7 @@ from ulivy.interface.baseui import BaseUI
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
-Builder.load_file("resources/armourui/ui/uimonview.kv")
+Builder.load_file("resources/armourui/ui/mon/uimonview.kv")
 
 WHITE = (1, 1, 1, 1)
 BLACK = (0, 0, 0, 1)

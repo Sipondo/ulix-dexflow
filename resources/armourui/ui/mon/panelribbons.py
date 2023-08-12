@@ -1,10 +1,10 @@
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
-Builder.load_file("resources/armourui/ui/panelstats.kv")
+Builder.load_file("resources/armourui/ui/mon/panelribbons.kv")
 
 
-class PanelStats(RelativeLayout):
+class PanelRibbons(RelativeLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 

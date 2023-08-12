@@ -3,13 +3,13 @@ from ulivy.interface.baseui import BaseUI
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
-from resources.armourui.ui.paneloverview import PanelOverview
-from resources.armourui.ui.panelstats import PanelStats
-from resources.armourui.ui.panelmoves import PanelMoves
-from resources.armourui.ui.paneltrivia import PanelTrivia
-from resources.armourui.ui.panelribbons import PanelRibbons
+from resources.armourui.ui.mon.paneloverview import PanelOverview
+from resources.armourui.ui.mon.panelstats import PanelStats
+from resources.armourui.ui.mon.panelmoves import PanelMoves
+from resources.armourui.ui.mon.panelribbons import PanelRibbons
+from resources.armourui.ui.mon.paneltrivia import PanelTrivia
 
-Builder.load_file("resources/armourui/ui/uimoninspect.kv")
+Builder.load_file("resources/armourui/ui/mon/uimoninspect.kv")
 
 
 class UIMonInspect(BaseUI):

@@ -1,7 +1,7 @@
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 
-Builder.load_file("resources/armourui/ui/panelmoves.kv")
+Builder.load_file("resources/armourui/ui/mon/panelmoves.kv")
 
 
 class TypeMarker(RelativeLayout):

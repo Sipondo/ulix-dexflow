@@ -1,0 +1,42 @@
+#:kivy 2.0.0
+
+<UISave>
+    RelativeLayout:
+        id: Window
+        # pos_hint: {'x': 0.1, 'y': 0.8}
+        # size_hint: 0.2, 0.12
+        opacity: 1
+
+        AliasImage:
+            id: Background
+            allow_stretch: True
+            source: 'resources/armourui/graphics/interface/save/background.png'
+            
+        AliasImage:
+            id: InfoPanel
+            pos_hint: {'center_x': 0.5, 'center_y': 0.02}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/vs/info_panel.png'
+
+
+        RelativeLayout:
+            id: Savedata
+
+            Label:
+                id: Name
+                pos_hint: {'center_x': 0.8, 'center_y': 0.4}
+                size_hint: 0.2, 0.35
+                text: "Character name"
+                text_size: self.size
+                font_size: 36
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+
+            AliasImage:
+                id: OptionLinkbattle
+                pos_hint: {'x': 0.03, 'center_y': 0.7}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/vs/main/linkbattle.png'
