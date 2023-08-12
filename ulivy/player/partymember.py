@@ -69,14 +69,12 @@ class PartyMember:
             self.learnset = [tuple(l[i : i + 2]) for i in range(0, len(l), 2)]
 
         if not hasattr(self, "actions"):
-            # l = [(x, y) for x, y in reversed(self.learnset) if int(x) <= self.level]
-            # k = [y for x, y in l]
-            # l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
-            # self.actions = [int(self.game.m_pbs.get_move_by_name(y).id) for x, y in l][
-            #     :4
-            # ]
+            l = [(x, y) for x, y in reversed(self.learnset) if int(x) <= self.level]
+            k = [y for x, y in l]
+            l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
+            self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
             # TODO: replace
-            self.actions = [self.game.m_pbs.get_move(201)]
+            # self.actions = [self.game.m_pbs.get_move(201)]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
