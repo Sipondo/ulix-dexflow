@@ -64,6 +64,7 @@ if __name__ == "__main__":
     from ulivy.manager.pluginmanager import PluginManager
     from ulivy.manager.resourcemanager import ResourceManager
     from ulivy.manager.savemanager import SaveManager
+    from ulivy.manager.threadingmanager import ThreadingManager
     from ulivy.player.inventory import Inventory
     from ulivy.renderer.audiorenderer import AudioRenderer
     from ulivy.renderer.bufferrenderer import BufferRenderer, InterfaceBufferRenderer
@@ -129,6 +130,7 @@ if __name__ == "__main__":
             self.m_pbs = PbsManager(self)
             self.m_upl = UplManager(self)
             self.m_dat = DbManager(self)
+            self.m_thr = ThreadingManager(self)
 
             self.m_vis = FloatLayout()
             with self.m_vis.canvas:
