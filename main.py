@@ -188,6 +188,7 @@ if __name__ == "__main__":
                 self.m_osc.update(time, dt)
 
             # self.m_gen.update(time, dt)
+            self.m_thr.update(time, dt)
             self.r_fad.update(time, dt)
             lock = self.m_gst.update(time, dt)
 
