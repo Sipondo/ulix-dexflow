@@ -35,77 +35,72 @@
 
 
         RelativeLayout:
+            id: OurStatus
+
+            AliasImage:
+                id: OurMonFirst
+                pos_hint: {'center_x': 0.125, 'y': 0.04}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/our_mon_first.png'
+
+            AliasImage:
+                id: OurMonSecond
+                pos_hint: {'center_x': 0.38, 'y': 0.04}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/our_mon_second.png'
+        
+        RelativeLayout:
+            id: TheirStatus
+
+            AliasImage:
+                id: TheirMonFirst
+                pos_hint: {'center_x': 0.875, 'center_y': 0.92}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/their_mon_first.png'
+
+            AliasImage:
+                id: TheirMonSecond
+                pos_hint: {'center_x': 0.62, 'center_y': 0.92}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/their_mon_second.png'
+
+        RelativeLayout:
             id: Options
 
             AliasImage:
-                id: OptionDex
-                pos_hint: {'center_x': 0.13, 'center_y': 0.75}
+                id: OptionFight
+                pos_hint: {'center_x': 0.9, 'center_y': 0.36}
                 allow_stretch: True
                 keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/dex.png'
+                source: 'resources/armourui/graphics/interface/battle/option_fight.png'
 
             AliasImage:
                 id: OptionMon
-                pos_hint: {'center_x': 0.325, 'center_y': 0.75}
+                pos_hint: {'center_x': 0.9, 'center_y': 0.26}
                 allow_stretch: True
                 keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/mon.png'
+                source: 'resources/armourui/graphics/interface/battle/option_mon.png'
 
             AliasImage:
                 id: OptionBag
-                pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                pos_hint: {'center_x': 0.9, 'center_y': 0.16}
                 allow_stretch: True
                 keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/bag.png'
+                source: 'resources/armourui/graphics/interface/battle/option_bag.png'
 
             AliasImage:
-                id: OptionCard
-                pos_hint: {'center_x': 0.685, 'center_y': 0.75}
+                id: OptionRun
+                pos_hint: {'center_x': 0.9, 'center_y': 0.06}
                 allow_stretch: True
                 keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/card.png'
+                source: 'resources/armourui/graphics/interface/battle/option_run.png'
 
-            AliasImage:
-                id: OptionSave
-                pos_hint: {'center_x': 0.87, 'center_y': 0.75}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/save.png'
 
-            AliasImage:
-                id: OptionMap
-                pos_hint: {'center_x': 0.13, 'center_y': 0.425}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/map.png'
 
-            AliasImage:
-                id: OptionCamp
-                pos_hint: {'center_x': 0.325, 'center_y': 0.425}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/camp.png'
-
-            AliasImage:
-                id: OptionGift
-                pos_hint: {'center_x': 0.5, 'center_y': 0.425}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/gift.png'
-
-            AliasImage:
-                id: OptionVs
-                pos_hint: {'center_x': 0.685, 'center_y': 0.425}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/vs.png'
-
-            AliasImage:
-                id: OptionOptions
-                pos_hint: {'center_x': 0.87, 'center_y': 0.425}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/main_menu/options.png'
 
 
         AliasImage:
@@ -113,4 +108,4 @@
             pos_hint: {'center_x': 0.075, 'center_y': 0.75}
             allow_stretch: True
             keep_ratio: True
-            source: 'resources/armourui/graphics/interface/general/arrow.png'
+            source: 'resources/armourui/graphics/interface/battle/option_arrow.png'

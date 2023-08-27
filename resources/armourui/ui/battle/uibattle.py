@@ -11,16 +11,10 @@ class UIBattle(BaseUI):
         self.show_area = 3
 
         self.options = [
-            "dex",
+            "fight",
             "mon",
             "bag",
-            "card",
-            "save",
-            "map",
-            "camp",
-            "gift",
-            "vs",
-            "options",
+            "run",
         ]
         self.selection = 0
 
@@ -38,16 +32,14 @@ class UIBattle(BaseUI):
         for option in self.options:
             element = getattr(self.ids, f"Option{option.capitalize()}")
             if option == self.options[self.selection]:
-                element.source = (
-                    f"resources/armourui/graphics/interface/main_menu/{option}_sel.png"
-                )
+                element.source = f"resources/armourui/graphics/interface/battle/option_{option}_sel.png"
                 self.ids.Arrow.pos_hint = {
-                    "center_x": element.pos_hint["center_x"] - 0.055,
+                    "center_x": element.pos_hint["center_x"] - 0.09,
                     "center_y": element.pos_hint["center_y"],
                 }
             else:
                 element.source = (
-                    f"resources/armourui/graphics/interface/main_menu/{option}.png"
+                    f"resources/armourui/graphics/interface/battle/option_{option}.png"
                 )
 
     def select_option(self):
@@ -64,17 +56,9 @@ class UIBattle(BaseUI):
         elif key == "interact":
             self.select_option()
         elif key == "down":
-            self.selection = (self.selection - (len(self.options) // 2)) % len(
-                self.options
-            )
-        elif key == "up":
-            self.selection = (self.selection + (len(self.options) // 2)) % len(
-                self.options
-            )
-        elif key == "left":
-            self.selection = (self.selection - 1) % len(self.options)
-        elif key == "right":
             self.selection = (self.selection + 1) % len(self.options)
+        elif key == "up":
+            self.selection = (self.selection - 1) % len(self.options)
 
     def event_unicode(self, char):
         pass
