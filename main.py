@@ -56,6 +56,7 @@ if __name__ == "__main__":
     # from ulivy.manager.p5 import ParticleManager
     from ulivy.manager.generatormanager import GeneratorManager
     from ulivy.manager.hotkeymanager import HotkeyManager
+    from ulivy.manager.battlemanager import BattleManager
     from ulivy.manager.mapmanager import MapManager
     from ulivy.manager.oscmanager import FPSCounter, OscManager
     from ulivy.manager.p6 import ParticleManager
@@ -131,6 +132,7 @@ if __name__ == "__main__":
             self.m_upl = UplManager(self)
             self.m_dat = DbManager(self)
             self.m_thr = ThreadingManager(self)
+            self.m_bat = BattleManager(self)
 
             self.m_vis = FloatLayout()
             with self.m_vis.canvas:
