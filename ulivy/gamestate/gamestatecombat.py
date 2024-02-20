@@ -6,7 +6,9 @@ class GameStateCombat(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
-        
+
+        self.game.inventory.export_team()  # TODO: move
+
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)
 

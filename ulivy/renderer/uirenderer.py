@@ -3,6 +3,7 @@ import ulivy.interface.baseui
 
 UI = "modernui"
 
+
 class UIRenderer(FloatLayout):
     def __init__(self, game, **kwargs):
         self.game = game
@@ -16,7 +17,7 @@ class UIRenderer(FloatLayout):
 
     def update(self, time, frame_time):
         self.size = self.game.RENDER_SIZE
-        if self.current_ui: 
+        if self.current_ui:
             return self.current_ui.update(time, frame_time)
 
     def event_keypress(self, request, modifiers):
@@ -26,12 +27,12 @@ class UIRenderer(FloatLayout):
     def event_unicode(self, char):
         if self.current_ui:
             return self.current_ui.event_unicode(char)
-        
+
     def register_ui(self, name, ui):
         self.ui_dictionary[name] = ui
 
     def switch_ui(self, new_ui, replace=False, **kwargs):
-        if replace:
+        if True:  # replace: # TODO: fix
             for ui in self.ui_stack[::-1]:
                 if ui.on_exit():
                     self.remove_widget(ui)

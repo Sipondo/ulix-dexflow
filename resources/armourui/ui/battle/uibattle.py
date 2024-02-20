@@ -2,6 +2,8 @@ from kivy.lang import Builder
 
 from ulivy.interface.baseui import BaseUI
 
+from resources.armourui.ui.battle.battlepanelmoves import BattlePanelMoves
+
 Builder.load_file("resources/armourui/ui/battle/uibattle.kv")
 
 
@@ -18,10 +20,24 @@ class UIBattle(BaseUI):
         ]
         self.selection = 0
 
+        self.panel = None
+
     def update(self, time=None, frame_time=None):
         self.ids.Window.opacity = 1
         self.highlight_options()
+        self.update_hud()
+
+        if self.panel is not None:
+            self.panel.update(time, frame_time)
         return False
+
+    def update_hud(self):
+        """Update HUD
+        Update all HUD elements so that they correspond to the current battlestate"""
+        bat = self.game.m_bat
+
+        self.ids.OurMonFirstText.text = bat.state.name_1
+        self.ids.TheirMonFirstText.text = bat.state.name_2
 
     def highlight_options(self):
         """Highlight menu options.
@@ -43,16 +59,23 @@ class UIBattle(BaseUI):
                 )
 
     def select_option(self):
-        if self.options[self.selection] == "mon":
+        if self.options[self.selection] == "fight":
+            self.panel = BattlePanelMoves()
+            self.ids.Window.add_widget(self.panel)
+        elif self.options[self.selection] == "mon":
             self.game.r_uin.switch_ui("monview")
-        if self.options[self.selection] == "save":
+        elif self.options[self.selection] == "save":
             self.game.r_uin.switch_ui("save")
-        if self.options[self.selection] == "vs":
+        elif self.options[self.selection] == "vs":
             self.game.r_uin.switch_ui("vsmain")
 
     def event_keypress(self, key, modifiers):
+        if self.panel is not None:
+            self.panel.event_keypress(key, modifiers)
+            return
+
         if key == "backspace":
-            self.game.r_uin.close_ui(self)
+            pass
         elif key == "interact":
             self.select_option()
         elif key == "down":

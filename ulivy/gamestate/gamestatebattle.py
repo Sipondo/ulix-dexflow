@@ -27,6 +27,7 @@ class GameStateBattle(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
+
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)
         if particle_test:
@@ -302,4 +303,3 @@ class GameStateBattle(BaseGameState):
             self.game.m_gst.switch_state("end", fade=True)
         else:
             self.game.m_gst.switch_state("overworld", fade=True)
-

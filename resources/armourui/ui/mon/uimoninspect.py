@@ -34,7 +34,8 @@ class UIMonInspect(BaseUI):
         self.update_selected_mon()
         self.highlight_options()
 
-        self.panel.update(time, frame_time)
+        if self.panel is not None:
+            self.panel.update(time, frame_time)
         return False
 
     def update_selected_mon(self):

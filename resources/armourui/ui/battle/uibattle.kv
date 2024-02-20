@@ -37,36 +37,98 @@
         RelativeLayout:
             id: OurStatus
 
-            AliasImage:
+            RelativeLayout:
                 id: OurMonFirst
-                pos_hint: {'center_x': 0.125, 'y': 0.04}
+                pos_hint: {'center_x': 0.125, 'y': -0.46}
                 allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/battle/our_mon_first.png'
 
-            AliasImage:
-                id: OurMonSecond
-                pos_hint: {'center_x': 0.38, 'y': 0.04}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/battle/our_mon_second.png'
+                AliasImage:
+                    id: OurMonFirstBack
+                    pos_hint: {'center_x': 0.5, 'y': 0.5}
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: 'resources/armourui/graphics/interface/battle/our_mon_first.png'
+
+                Label:
+                    id: OurMonFirstText
+                    pos_hint: {'center_x': 0.5, 'y': 0.5}
+                    size_hint: 0.1, 0.1
+                    text: "Bulbasaur"
+                    text_size: self.size
+                    font_size: 36
+                    font_name: "resources/armourui/font/poppins_medium.ttf"
+                    halign: 'left'
+                    color: (0, 0, 0, 1)
+                    valign: 'top'
+                    markup: True
+
+            # AliasImage:
+            #     id: OurMonSecond
+            #     pos_hint: {'center_x': 0.38, 'y': 0.04}
+            #     allow_stretch: True
+            #     keep_ratio: True
+            #     source: 'resources/armourui/graphics/interface/battle/our_mon_second.png'
+            
+            # Label:
+            #     id: OurMonSecondText
+            #     pos_hint: {'center_x': 0.38, 'y': 0.04}
+            #     size_hint: 0.1, 0.1
+            #     text: "Charizard"
+            #     text_size: self.size
+            #     font_size: 36
+            #     font_name: "resources/armourui/font/poppins_medium.ttf"
+            #     halign: 'left'
+            #     color: (0, 0, 0, 1)
+            #     valign: 'top'
+            #     markup: True
         
         RelativeLayout:
             id: TheirStatus
 
-            AliasImage:
+            RelativeLayout:
                 id: TheirMonFirst
-                pos_hint: {'center_x': 0.875, 'center_y': 0.92}
+                pos_hint: {'center_x': 0.875, 'y': 0.42}
                 allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/battle/their_mon_first.png'
 
-            AliasImage:
-                id: TheirMonSecond
-                pos_hint: {'center_x': 0.62, 'center_y': 0.92}
-                allow_stretch: True
-                keep_ratio: True
-                source: 'resources/armourui/graphics/interface/battle/their_mon_second.png'
+                AliasImage:
+                    id: TheirMonFirstBack
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: 'resources/armourui/graphics/interface/battle/their_mon_first.png'
+                
+                Label:
+                    id: TheirMonFirstText
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.1, 0.1
+                    text: "Venusaur"
+                    text_size: self.size
+                    font_size: 36
+                    font_name: "resources/armourui/font/poppins_medium.ttf"
+                    halign: 'left'
+                    color: (0, 0, 0, 1)
+                    valign: 'top'
+                    markup: True
+
+            # AliasImage:
+            #     id: TheirMonSecond
+            #     pos_hint: {'center_x': 0.62, 'center_y': 0.92}
+            #     allow_stretch: True
+            #     keep_ratio: True
+            #     source: 'resources/armourui/graphics/interface/battle/their_mon_second.png'
+            
+            # Label:
+            #     id: TheirMonSecondText
+            #     pos_hint: {'center_x': 0.62, 'center_y': 0.92}
+            #     size_hint: 0.1, 0.1
+            #     text: "VenuaSDsaur"
+            #     text_size: self.size
+            #     font_size: 36
+            #     font_name: "resources/armourui/font/poppins_medium.ttf"
+            #     halign: 'left'
+            #     color: (0, 0, 0, 1)
+            #     valign: 'top'
+            #     markup: True
 
         RelativeLayout:
             id: Options
@@ -98,9 +160,6 @@
                 allow_stretch: True
                 keep_ratio: True
                 source: 'resources/armourui/graphics/interface/battle/option_run.png'
-
-
-
 
 
         AliasImage:

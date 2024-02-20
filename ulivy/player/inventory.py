@@ -78,6 +78,20 @@ class Inventory:
     def sort_items(self):
         self.items.sort(key=lambda x: x.name)
 
+    def export_team(self):  # TODO: move somewhere else / make permanent
+        output = ""
+        for member in self.members:
+            output += f"{member.internalname}\n"
+            output += f"Level: {member.level}\n"
+            for action in member.actions:
+                output += f"- {action.name}\n"
+            output += "\n"
+
+        print("TEAM EXPORT", output)
+
+        with open("resources/showup/teams/teams/gen8/ou/ours", "w") as outfile:
+            outfile.write(output)
+
     @property
     def fighter_names(self):
         return [x.name for x in self.members]
