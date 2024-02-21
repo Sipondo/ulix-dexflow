@@ -29,8 +29,8 @@ with open(resource_find("ulivy_shaders/basic_tile_vs.glsl")) as file:
 with open(resource_find("ulivy_shaders/basic_entity_fs.glsl")) as file:
     enti_shader_fs = file.read()
 
-with open(resource_find("ulivy_shaders/basic_entity_gs.glsl")) as file:
-    enti_shader_gs = file.read()
+# with open(resource_find("ulivy_shaders/basic_entity_gs.glsl")) as file:
+#     enti_shader_gs = file.read()
 
 with open(resource_find("ulivy_shaders/basic_entity_vs.glsl")) as file:
     enti_shader_vs = file.read()
@@ -41,6 +41,11 @@ with open(resource_find("ulivy_shaders/basic_entity_vs.glsl")) as file:
 class EntityLayerWidget(FloatLayout):
     def __init__(self, game, h, entity_h, offset, **kwargs):
         self.game = game
+
+        # TODO: these 3 lines are temp
+        super(EntityLayerWidget, self).__init__(**kwargs)
+        self.h = 0
+        return
         self.canvas = RenderContext(
             fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
         )
@@ -59,7 +64,8 @@ class EntityLayerWidget(FloatLayout):
 
         with self.canvas:
             BindTexture(
-                texture=self.game.atlas.original_textures[0], index=11,
+                texture=self.game.atlas.original_textures[0],
+                index=11,
             )
             Callback(self.redraw)
             self.mesh = Mesh(
@@ -77,10 +83,12 @@ class EntityLayerWidget(FloatLayout):
         self.canvas["texture0"] = 11
 
     def update(self, time, dt):
+        return
         self.canvas["offset"] = (self.offset[0] + np.sin(dt), self.offset[1])
         self.redraw(None)
 
     def redraw(self, instruction):
+        return
         self.canvas["texture0"] = 11
         self.game_position = (
             self.size[0] / Window.size[0],
@@ -273,7 +281,13 @@ class TileRenderer(FloatLayout):
         offset = tuple(offset)
 
         if conns := self.m_map.current_connected_tilesets:
-            for (size, tiles, portal_pos, target_pos, direction,) in conns:
+            for (
+                size,
+                tiles,
+                portal_pos,
+                target_pos,
+                direction,
+            ) in conns:
 
                 if direction == "E":
                     direction = (1, 0)
@@ -341,7 +355,10 @@ class TileRenderer(FloatLayout):
                 new[: tile.shape[0], : tile.shape[1], :] = tile
 
                 temp_map = np.pad(
-                    new, [(0, 0), (0, 0), (0, 2)], mode="constant", constant_values=0,
+                    new,
+                    [(0, 0), (0, 0), (0, 2)],
+                    mode="constant",
+                    constant_values=0,
                 ).astype(np.ubyte)
 
                 level = level.split("/")[-1]

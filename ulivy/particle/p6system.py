@@ -3,7 +3,7 @@ from kivy.graphics.gl_instructions import ClearColor, ClearBuffers
 from kivy.graphics.instructions import Callback
 
 
-import ulivy.particle.seer.EffekseerCore as ec
+# import ulivy.particle.seer.EffekseerCore as ec # TODO: re-enable
 
 from random import random
 import math
@@ -14,6 +14,7 @@ class ParticleSystem(FloatLayout):
         self.game = game
 
         super(ParticleSystem, self).__init__(**kwargs)
+        return
 
         self.particles = 0
         self.fname = fname
