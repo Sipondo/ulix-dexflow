@@ -51,8 +51,8 @@ with open(resource_find("ulivy_shaders/battle_parallax_vs.glsl")) as file:
 with open(resource_find("ulivy_shaders/battle_battler_fs.glsl")) as file:
     battler_shader_fs = file.read()
 
-with open(resource_find("ulivy_shaders/battle_battler_gs.glsl")) as file:
-    battler_shader_gs = file.read()
+# with open(resource_find("ulivy_shaders/battle_battler_gs.glsl")) as file:
+# battler_shader_gs = file.read()
 
 with open(resource_find("ulivy_shaders/battle_battler_vs.glsl")) as file:
     battler_shader_vs = file.read()
@@ -210,9 +210,10 @@ class BattleBattlerImage(FloatLayout):
     def __init__(self, game, scene, **kwargs):
         self.game = game
         self.scene = scene
-        self.canvas = RenderContext(
-            fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
-        )
+        # self.canvas = RenderContext(
+        #     fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
+        # )
+        self.canvas = RenderContext(fs=battler_shader_fs, vs=battler_shader_vs)
 
         self.texture_file = None
         self.face = 0
