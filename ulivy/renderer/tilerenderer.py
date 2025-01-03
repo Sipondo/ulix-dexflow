@@ -45,10 +45,8 @@ class EntityLayerWidget(FloatLayout):
         # TODO: these 3 lines are temp
         super(EntityLayerWidget, self).__init__(**kwargs)
         self.h = 0
-        return
-        self.canvas = RenderContext(
-            fs=enti_shader_fs, gs=enti_shader_gs, vs=enti_shader_vs
-        )
+
+        self.canvas = RenderContext(fs=enti_shader_fs, vs=enti_shader_vs)
 
         self.h = h
         self.entity_h = entity_h
@@ -74,6 +72,7 @@ class EntityLayerWidget(FloatLayout):
                 fmt=[
                     (b"aPos", 2, "float"),
                     (b"aSize", 2, "float"),
+                    (b"aUv", 2, "float"),
                     (b"aTexPos", 2, "float"),  # TODO: should be int
                     (b"aTexSize", 2, "float"),
                     (b"aTexFrame", 2, "float"),
@@ -83,12 +82,10 @@ class EntityLayerWidget(FloatLayout):
         self.canvas["texture0"] = 11
 
     def update(self, time, dt):
-        return
         self.canvas["offset"] = (self.offset[0] + np.sin(dt), self.offset[1])
         self.redraw(None)
 
     def redraw(self, instruction):
-        return
         self.canvas["texture0"] = 11
         self.game_position = (
             self.size[0] / Window.size[0],
@@ -100,7 +97,7 @@ class EntityLayerWidget(FloatLayout):
         self.mesh.vertices = vertices
         self.mesh.indices = indices
 
-        # print(self.mesh.vertices, self.entity_h)
+        print(self.mesh.vertices, self.mesh.indices, "\n\n")
 
         self.camera_position = (
             self.game.m_pan.total_x / 21,
@@ -117,6 +114,7 @@ class EntityLayerWidget(FloatLayout):
         self.canvas["camera_position"] = self.camera_position
         self.canvas["game_position"] = self.game_position
         self.canvas["offset"] = self.offset
+        # print("redraw")
 
 
 class TileLayerWidget(FloatLayout):

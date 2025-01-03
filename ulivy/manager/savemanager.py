@@ -107,7 +107,8 @@ class SaveManager:
                 int(self.store["current_offset"][1]),
             )
             self.game.r_fbo.r_til.set_map_via_manager(
-                o, fade=False,
+                o,
+                fade=False,
             )
 
             x, y = self.store["player_pos"]
@@ -306,6 +307,7 @@ class SaveManager:
         self.game.inventory.members = []
 
     def write_to_file(self, fname="save1.usave"):
+        return
         if True:  # self.game.m_map.allow_save:
             print("\n\n\nWRITING!!!!!!!!!")
             self.get_lazy_data()
