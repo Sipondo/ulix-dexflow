@@ -127,19 +127,21 @@ class EntityManager:
             # y *= 16
             # vertices.append([x, y, entity.height, text_id, cf])
             for uv, pv in (
-                ((0, 1), (-1, -1)),
-                ((1, 1), (1, -1)),
-                ((0, 0), (-1, 1)),
-                ((1, 0), (1, 1)),
+                ((0, 0), (-1, -1)),
+                ((1, 0), (1, -1)),
+                ((0, 1), (-1, 1)),
+                ((1, 0), (1, -1)),
+                ((0, 1), (-1, 1)),
+                ((1, 1), (1, 1)),
             ):
                 vertices.extend(
                     [
-                        x + pv[0],
-                        y + pv[1],
+                        x
+                        + pv[0] * float(text_id[2]) / 32 / 4 / 2
+                        + 0.5,  # TODO: make dynamic, 0.5 is offset error
+                        y + pv[1] * float(text_id[3]) / 32 / 4 / 2,
                         uv[0],
                         uv[1],
-                        float(text_id[2]) / 32 / 4,  # TODO: make dynamic
-                        float(text_id[3]) / 32 / 4,  # TODO: make dynamic
                         float(text_id[0]),
                         float(text_id[1]),
                         float(text_id[2]),
@@ -150,7 +152,7 @@ class EntityManager:
                 )
                 indices.append(len(indices))
 
-            break  # temp, only draw 1
+            # break  # temp, only draw 1
 
         return list(map(float, vertices)), indices
 

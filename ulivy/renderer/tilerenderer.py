@@ -71,12 +71,12 @@ class EntityLayerWidget(FloatLayout):
                 indices=[],
                 fmt=[
                     (b"aPos", 2, "float"),
-                    (b"aSize", 2, "float"),
                     (b"aUv", 2, "float"),
                     (b"aTexPos", 2, "float"),  # TODO: should be int
                     (b"aTexSize", 2, "float"),
                     (b"aTexFrame", 2, "float"),
                 ],
+                mode="triangles",
             )
 
         self.canvas["texture0"] = 11
@@ -97,7 +97,7 @@ class EntityLayerWidget(FloatLayout):
         self.mesh.vertices = vertices
         self.mesh.indices = indices
 
-        print(self.mesh.vertices, self.mesh.indices, "\n\n")
+        # print(self.mesh.vertices, self.mesh.indices, "\n\n")
 
         self.camera_position = (
             self.game.m_pan.total_x / 21,

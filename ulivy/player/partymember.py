@@ -91,7 +91,7 @@ class PartyMember:
             (self.stats_base / np.sum(self.stats_base) * 600).round().astype(int)
         )
 
-        print("--------BASE STATS!!", self.name, self.stats_base)
+        # print("--------BASE STATS!!", self.name, self.stats_base)
 
         # Reward EVs
         self.stats_reward = np.asarray(data.effortpoints.split(","), dtype=int)
