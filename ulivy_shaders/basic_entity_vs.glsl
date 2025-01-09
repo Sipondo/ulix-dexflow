@@ -4,11 +4,11 @@
 precision highp float;
 #endif
 
-layout(location=0)in vec2 aPos;
-layout(location=1)in vec2 aUv;
-layout(location=2)in vec2 aTexPos;
-layout(location=3)in vec2 aTexSize;
-layout(location=4)in vec2 aTexFrame;
+layout(location=0) in vec2 aPos;
+layout(location=1) in vec2 aUv;
+layout(location=2) in vec2 aTexPos;
+layout(location=3) in vec2 aTexSize;
+layout(location=4) in vec2 aTexFrame;
 
 out vec2 uv;
 out vec2 fTexPos;
@@ -22,21 +22,16 @@ uniform vec2 game_position;
 
 void main()
 {
+    uv = aUv;
+    fTexPos = aTexPos;
+    fTexSize = aTexSize;
+    fTexFrame = aTexFrame;
     
-    uv=aUv;
-    fTexPos=aTexPos;
-    fTexSize=aTexSize;
-    fTexFrame=aTexFrame;
+    float x = 2.0 * aPos.x * viewport.x - 1.0;
+    float y = 1.0 - 2.0 * aPos.y * viewport.y;
     
-    float x=2.*aPos.x*viewport.x-1.;
-    float y=1.-2.*aPos.y*viewport.y;
+    x = x + offset.x - camera_position.x * 2.0;
+    y = y + offset.y + camera_position.y * 2.0;
     
-    x=x+offset.x-camera_position.x*2.;
-    y=y+offset.y+camera_position.y*2.;
-    
-    // gl_Position=vec4(x,y,0.,1.);//*game_position;
-    gl_Position=vec4(x*game_position.x,y*game_position.y,0.,1.);
-    // gl_Position=vec4(aPos.x,-aPos.y,0.,1.);
-    // vs_out.position=vec4(x,y,0.,1.);
-    
+    gl_Position = vec4(x * game_position.x, y * game_position.y, 0.0, 1.0);
 }

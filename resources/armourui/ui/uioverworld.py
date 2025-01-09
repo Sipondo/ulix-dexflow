@@ -3,6 +3,7 @@ from kivy.lang import Builder
 
 Builder.load_file("resources/armourui/ui/uioverworld.kv")
 
+
 class UIOverworld(BaseUI):
     def on_enter(self, **kwargs):
         self.block_input = False
@@ -52,9 +53,9 @@ class UIOverworld(BaseUI):
         if key == "backspace":
             self.game.r_uin.switch_ui("mainmenu")
         if key == "zoom_in":
-            self.game.pan_tool.zoom_in()
+            self.game.m_pan.zoom_in()
         if key == "zoom_out":
-            self.game.pan_tool.zoom_out()
+            self.game.m_pan.zoom_out()
         if key == "debug":
             self.game.m_gst.switch_state("debug")
 

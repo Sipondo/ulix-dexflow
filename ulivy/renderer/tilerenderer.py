@@ -44,27 +44,15 @@ class EntityLayerWidget(FloatLayout):
 
         # TODO: these 3 lines are temp
         super(EntityLayerWidget, self).__init__(**kwargs)
-        self.h = 0
 
         self.canvas = RenderContext(fs=enti_shader_fs, vs=enti_shader_vs)
-
         self.h = h
         self.entity_h = entity_h
         self.offset = (float(offset[0]) / 21, float(offset[1]) / 12)
-        # call the constructor of parent
-        # if they are any graphics object, they will be added on our new canvas
-        super(EntityLayerWidget, self).__init__(**kwargs)
-
         self.camera_position = 0
 
-        self.float_x = 0
-        self.float_y = 0
-
         with self.canvas:
-            BindTexture(
-                texture=self.game.atlas.original_textures[0],
-                index=11,
-            )
+            BindTexture(texture=self.game.atlas.original_textures[0], index=11)
             Callback(self.redraw)
             self.mesh = Mesh(
                 vertices=[],
@@ -72,7 +60,7 @@ class EntityLayerWidget(FloatLayout):
                 fmt=[
                     (b"aPos", 2, "float"),
                     (b"aUv", 2, "float"),
-                    (b"aTexPos", 2, "float"),  # TODO: should be int
+                    (b"aTexPos", 2, "float"),
                     (b"aTexSize", 2, "float"),
                     (b"aTexFrame", 2, "float"),
                 ],
@@ -93,24 +81,26 @@ class EntityLayerWidget(FloatLayout):
         )
 
         vertices, indices = self.game.m_ent.vertices(entity_h=self.entity_h)
-
         self.mesh.vertices = vertices
         self.mesh.indices = indices
 
         # print(self.mesh.vertices, self.mesh.indices, "\n\n")
 
-        self.camera_position = (
-            self.game.m_pan.total_x / 21,
-            self.game.m_pan.total_y / 12,
+        viewport = (
+            float(21) * self.game.m_pan.zoom_value,
+            float(12) * self.game.m_pan.zoom_value,
         )
 
-        viewport = (float(21), float(12))
+        self.camera_position = (
+            self.game.m_pan.total_x / viewport[0],
+            self.game.m_pan.total_y / viewport[1],
+        )
 
-        # Invert for modulo
-        viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
-
+        viewport = (
+            float(1 / viewport[0]),
+            float(1 / viewport[1]),
+        )
         self.canvas["viewport"] = viewport
-
         self.canvas["camera_position"] = self.camera_position
         self.canvas["game_position"] = self.game_position
         self.canvas["offset"] = self.offset
@@ -166,15 +156,23 @@ class TileLayerWidget(FloatLayout):
         # self.rec1.pos = (0, 0)  # self.pos
         # self.rec1.size = (1280, 720)  # self.size
 
-        self.camera_position = (
-            self.game.m_pan.total_x / 21,
-            self.game.m_pan.total_y / 12,
+        viewport = (
+            float(21) * self.game.m_pan.zoom_value,
+            float(12) * self.game.m_pan.zoom_value,
         )
 
-        viewport = (float(21), float(12))
+        self.camera_position = (
+            self.game.m_pan.total_x / viewport[0],
+            self.game.m_pan.total_y / viewport[1],
+        )
+
+        viewport = (
+            float(1 / viewport[0]),
+            float(1 / viewport[1]),
+        )
 
         # Invert for modulo
-        viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
+        # viewport = (float(1 / viewport[0]), float(1 / viewport[1]))
 
         self.canvas["viewport"] = viewport
 
