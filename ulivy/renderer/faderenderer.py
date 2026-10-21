@@ -14,6 +14,7 @@ class FadeRenderer(FloatLayout):
         self.alpha = 1.0
         self.alpha_to = 1.0
 
+        self.blocking = True
         self.update_canvas()
 
     def update_canvas(self):
@@ -41,10 +42,13 @@ class FadeRenderer(FloatLayout):
                 self.alpha = self.alpha_to
             update_canvas = True
 
+        self.redraw()
+
         if update_canvas:
             self.update_canvas()
+            return
 
-        self.redraw()
+        self.blocking = True
 
     def fade_done(self):
         return self.alpha == self.alpha_to

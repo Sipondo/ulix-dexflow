@@ -8,15 +8,33 @@ uniform float Brightness;
 uniform bool Cutout;
 uniform sampler2D Texture;
 uniform float AnimationFrame;
-uniform float AnimationLength;
+// uniform float AnimationLength;
 uniform float Mirror;
 uniform bool IsShadow;
+
+uniform float Xoff;
+uniform float Yoff;
+uniform float Totsize;
+uniform float AnimationWidth;
+uniform float FrameSize;
 
 in vec2 uv;
 out vec4 frag_color;
 
 void main(){
-    vec2 subframe=vec2((Mirror*uv.x+AnimationFrame)/AnimationLength,uv.y);
+    // vec2 subframe=vec2((Mirror*uv.x+AnimationFrame)/AnimationLength,uv.y);
+    
+    // vec2 offset=vec2(Xoff/Totsize,Yoff/Totsize);
+    float div=float(int(AnimationFrame)/int(AnimationWidth));
+    vec2 index=vec2(AnimationFrame-AnimationWidth*div,div);
+    
+    vec2 uvmap=vec2(Mirror*uv.x,uv.y);
+    
+    if(Mirror<0.){
+        uvmap.x=uvmap.x+1.;
+    }
+    vec2 subframe=(vec2(Xoff,Yoff)+(uvmap+index)*FrameSize)/Totsize;
+    
     vec4 col=texture(Texture,subframe);
     // frag_color=texture(Texture,uv);
     // frag_color=texture(Texture,subframe);

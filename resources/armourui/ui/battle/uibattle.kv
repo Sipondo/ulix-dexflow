@@ -1,0 +1,170 @@
+#:kivy 2.0.0
+
+<UIBattle>
+    RelativeLayout:
+        id: Window
+        # pos_hint: {'x': 0.1, 'y': 0.8}
+        # size_hint: 0.2, 0.12
+        opacity: 1
+
+        # AliasImage:
+        #     id: Background
+        #     allow_stretch: True
+        #     source: 'resources/armourui/graphics/interface/main_menu/background.png'
+
+        # AliasImage:
+        #     id: InfoPanel
+        #     pos_hint: {'center_x': 0.5, 'center_y': 0.02}
+        #     allow_stretch: True
+        #     keep_ratio: True
+        #     source: 'resources/armourui/graphics/interface/main_menu/info_panel.png'
+
+        # AliasImage:
+        #     id: ThoughtBox
+        #     pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+        #     allow_stretch: True
+        #     keep_ratio: True
+        #     source: 'resources/armourui/graphics/interface/main_menu/thought_box.png'
+        
+        # AliasImage:
+        #     id: NameBox
+        #     pos_hint: {'center_x': 0.65, 'center_y': 0.24}
+        #     allow_stretch: True
+        #     keep_ratio: True
+        #     source: 'resources/armourui/graphics/interface/main_menu/name_box.png'
+
+
+        RelativeLayout:
+            id: OurStatus
+
+            RelativeLayout:
+                id: OurMonFirst
+                pos_hint: {'center_x': 0.125, 'y': -0.46}
+                allow_stretch: True
+
+                AliasImage:
+                    id: OurMonFirstBack
+                    pos_hint: {'center_x': 0.5, 'y': 0.5}
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: 'resources/armourui/graphics/interface/battle/our_mon_first.png'
+
+                Label:
+                    id: OurMonFirstText
+                    pos_hint: {'center_x': 0.5, 'y': 0.5}
+                    size_hint: 0.1, 0.1
+                    text: "Bulbasaur"
+                    text_size: self.size
+                    font_size: 36
+                    font_name: "resources/armourui/font/poppins_medium.ttf"
+                    halign: 'left'
+                    color: (0, 0, 0, 1)
+                    valign: 'top'
+                    markup: True
+
+            # AliasImage:
+            #     id: OurMonSecond
+            #     pos_hint: {'center_x': 0.38, 'y': 0.04}
+            #     allow_stretch: True
+            #     keep_ratio: True
+            #     source: 'resources/armourui/graphics/interface/battle/our_mon_second.png'
+            
+            # Label:
+            #     id: OurMonSecondText
+            #     pos_hint: {'center_x': 0.38, 'y': 0.04}
+            #     size_hint: 0.1, 0.1
+            #     text: "Charizard"
+            #     text_size: self.size
+            #     font_size: 36
+            #     font_name: "resources/armourui/font/poppins_medium.ttf"
+            #     halign: 'left'
+            #     color: (0, 0, 0, 1)
+            #     valign: 'top'
+            #     markup: True
+        
+        RelativeLayout:
+            id: TheirStatus
+
+            RelativeLayout:
+                id: TheirMonFirst
+                pos_hint: {'center_x': 0.875, 'y': 0.42}
+                allow_stretch: True
+
+                AliasImage:
+                    id: TheirMonFirstBack
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: 'resources/armourui/graphics/interface/battle/their_mon_first.png'
+                
+                Label:
+                    id: TheirMonFirstText
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint: 0.1, 0.1
+                    text: "Venusaur"
+                    text_size: self.size
+                    font_size: 36
+                    font_name: "resources/armourui/font/poppins_medium.ttf"
+                    halign: 'left'
+                    color: (0, 0, 0, 1)
+                    valign: 'top'
+                    markup: True
+
+            # AliasImage:
+            #     id: TheirMonSecond
+            #     pos_hint: {'center_x': 0.62, 'center_y': 0.92}
+            #     allow_stretch: True
+            #     keep_ratio: True
+            #     source: 'resources/armourui/graphics/interface/battle/their_mon_second.png'
+            
+            # Label:
+            #     id: TheirMonSecondText
+            #     pos_hint: {'center_x': 0.62, 'center_y': 0.92}
+            #     size_hint: 0.1, 0.1
+            #     text: "VenuaSDsaur"
+            #     text_size: self.size
+            #     font_size: 36
+            #     font_name: "resources/armourui/font/poppins_medium.ttf"
+            #     halign: 'left'
+            #     color: (0, 0, 0, 1)
+            #     valign: 'top'
+            #     markup: True
+
+        RelativeLayout:
+            id: Options
+
+            AliasImage:
+                id: OptionFight
+                pos_hint: {'center_x': 0.9, 'center_y': 0.36}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/option_fight.png'
+
+            AliasImage:
+                id: OptionMon
+                pos_hint: {'center_x': 0.9, 'center_y': 0.26}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/option_mon.png'
+
+            AliasImage:
+                id: OptionBag
+                pos_hint: {'center_x': 0.9, 'center_y': 0.16}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/option_bag.png'
+
+            AliasImage:
+                id: OptionRun
+                pos_hint: {'center_x': 0.9, 'center_y': 0.06}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/battle/option_run.png'
+
+
+        AliasImage:
+            id: Arrow
+            pos_hint: {'center_x': 0.075, 'center_y': 0.75}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/battle/option_arrow.png'

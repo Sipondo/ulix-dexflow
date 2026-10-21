@@ -13,7 +13,11 @@ class PartyMember:
         self.type1 = data.type1
         self.type2 = data.type2
         self.level = int(l)
-        self.gender = random.choice(["Male", "Female", "Genderless"])
+
+        self.trainer = "TODOTrainer"  # TODO
+        self.trainerid = "123456767890"  # TODO
+
+        self.gender = random.choice(["male", "female"])  # , "Genderless"])
         # self.flavor = data.pokedex
 
         for k, v in data.items():
@@ -22,9 +26,18 @@ class PartyMember:
         if hasattr(self, "actions"):
             self.actions = [int(i) for i in self.actions]
 
-        self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
-        self.sprite = f"sprite/{self.data.id}"
-        print("SELF SPRITE:", self.sprite)
+        self.icon = (
+            f"resources/essentials/graphics/icons/{self.internalname}_0.png",
+            f"resources/essentials/graphics/icons/{self.internalname}_1.png",
+        )
+
+        self.image_static = (
+            f"resources/essentials/graphics/mon_static/back/{self.internalname}.png",
+            f"resources/essentials/graphics/mon_static/front/{self.internalname}.png",
+        )
+
+        # self.sprite = f"sprite/{self.data.id}"
+        # print("SELF SPRITE:", self.sprite)
 
         self.current_xp = 0
         self.level_xp = 5
@@ -39,7 +52,8 @@ class PartyMember:
         for k, v in data.items():
             setattr(self, k, v)
 
-        self.current_hp = self.stats[0]
+        # TODO: temp
+        self.current_hp = int(self.hp * (0.1 + 0.9 * np.random.rand()))
         self.status = None
 
         self.abilities = [a for a in self.data.abilities.split(",")]
@@ -58,15 +72,26 @@ class PartyMember:
             l = [(x, y) for x, y in reversed(self.learnset) if int(x) <= self.level]
             k = [y for x, y in l]
             l = [l[i] for i in range(len(l)) if l[i] not in k[:i]]
-            self.actions = [int(self.game.m_pbs.get_move_by_name(y).id) for x, y in l][
-                :4
-            ]
+            self.actions = [self.game.m_pbs.get_move_by_name(y) for x, y in l][:4]
+            # TODO: replace
+            # self.actions = [self.game.m_pbs.get_move(201)]
 
     def init_stats(self, data, ivs=None):
         # HP - ATK - DEF - SPATK - SPDEF - SPEED
         self.naturemod = [1, 1, 1, 1, 1, 1]
 
         self.stats_base = np.asarray(data.basestats.split(","), dtype=int)
+        self.stats_base[3], self.stats_base[4], self.stats_base[5] = (
+            self.stats_base[4],
+            self.stats_base[5],
+            self.stats_base[3],
+        )  # fix stats
+
+        self.stats_base = (
+            (self.stats_base / np.sum(self.stats_base) * 600).round().astype(int)
+        )
+
+        # print("--------BASE STATS!!", self.name, self.stats_base)
 
         # Reward EVs
         self.stats_reward = np.asarray(data.effortpoints.split(","), dtype=int)
@@ -86,7 +111,7 @@ class PartyMember:
         self.type1 = self.data.type1
         self.type2 = self.data.type2
         self.icon = (f"icon/{self.internalname}_0", f"icon/{self.internalname}_1")
-        self.sprite = f"sprite/{self.data.name}"
+        # self.sprite = f"sprite/{self.data.name}"
 
     def set_new_level_xp(self):
         self.level_xp = int(
@@ -103,20 +128,35 @@ class PartyMember:
         self.current_xp = data.current_xp
         self.level_xp = data.level_xp
         self.current_hp = data.current_hp
-        self.actions = [int(i) for i in data.actions]
-        self.status = data.status
+        # self.actions = [int(i) for i in data.actions]
+        # self.status = data.status
+
+        n = []
+        for act in self.actions:
+            if int(act["pp"]) > 0:
+                n.append(act)
+
+        self.actions = n
+
+    def to_dict(self):
+        return self.series.to_dict()
+
+    @property
+    def hp(self):
+        return self.stats[0]
 
     @property
     def stats(self):
         hp_mod = np.asarray([self.level + 10, 5, 5, 5, 5, 5])
         return (
-            self.naturemod
-            * (
-                (2 * self.stats_base + self.stats_IV + self.stats_EV // 4)
+            (
+                (2 * self.stats_base)  # + self.stats_IV + self.stats_EV // 4)
                 * (self.level / 100)
                 + hp_mod
             )
-        ).astype(int)
+            .round()
+            .astype(int)
+        )
 
     @property
     def series(self):
@@ -126,12 +166,13 @@ class PartyMember:
         self.data["stats_reward"] = self.stats_reward
         self.data["stats_IV"] = self.stats_IV
         self.data["stats_EV"] = self.stats_EV
+        self.data["stats"] = self.stats
         self.data["current_hp"] = self.current_hp
         self.data["current_xp"] = self.current_xp
         self.data["level_xp"] = self.level_xp
-        self.data["actions"] = self.actions
+        self.data["actions"] = []  # self.actions
         self.data["learnset"] = self.learnset
         self.data["status"] = self.status
         self.data["ability"] = self.abilities[self.current_ability]
-
+        self.data["actions"] = [x.to_dict() for x in self.actions]
         return self.data

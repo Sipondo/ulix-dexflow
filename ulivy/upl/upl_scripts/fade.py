@@ -16,7 +16,8 @@ class Fade:
         self.act = act
         self.src = src
         self.user = user
-        self.act.game.r_int.fade = True
+        self.act.game.r_fad.go_to(1.0)
+        self.act.game.r_fad.blocking = False
 
     def on_tick(self, time=None, frame_time=None):
         return True

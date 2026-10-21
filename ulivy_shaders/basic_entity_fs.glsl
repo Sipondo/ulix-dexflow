@@ -7,7 +7,6 @@ precision highp float;
 uniform sampler2D texture0;
 
 in vec2 uv;
-in vec2 fSize;
 in vec2 fTexPos;
 in vec2 fTexSize;
 in vec2 fTexFrame;

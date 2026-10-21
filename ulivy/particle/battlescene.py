@@ -41,7 +41,6 @@ class BattleScene(FloatLayout):
         self.dark_recover = True
         self.dark_direction = 1
 
-        self.battle_shake = 1.0
         self.camera = self.game.m_cam
         self.camera.reset()
 
@@ -62,7 +61,7 @@ class BattleScene(FloatLayout):
         return self.bmove.t1
 
     def set_fighter_image(self, spriteset, team):
-        print("set_fighter_image", spriteset, team)
+        # print("set_fighter_image", spriteset, team)
         if team == 0:
             self.poke1_set = spriteset
             for b in self.img_battler[0]:
@@ -77,6 +76,22 @@ class BattleScene(FloatLayout):
             # self.poke2_set = self.game.m_res.prepare_battle_animset(
             #     f"{str(id).zfill(3)}"
             # )
+
+    def set_fighter_visible(self, team, visible):
+        if team == 0:
+            for b in self.img_battler[0]:
+                b.set_visible(visible)
+        else:
+            for b in self.img_battler[1]:
+                b.set_visible(visible)
+
+    def set_shadow_visible(self, team, visible):
+        if team == 0:
+            b = self.img_battler[0][0]
+            b.set_visible(visible)
+        else:
+            b = self.img_battler[1][0]
+            b.set_visible(visible)
 
     def get_loc_fighter(self, team, base):
         if team == 1:
@@ -104,14 +119,20 @@ class BattleScene(FloatLayout):
         self.bmove.set_movement(team, position, speed, recover)
 
     def do_particle(self, name, user, target, miss=False, move_data=None):
+        # TODO: remove overwrite
+        self.game.m_par.spawn_system(name, target, miss, move_data)  # name)
+        return
         if name:
             name = name.replace(" ", "-")
             if miss:
                 # TODO Particles miss to left/right
                 pass
             self.game.m_par.spawn_system(
-                self, name, target, miss, move_data=move_data
+                name, target, miss, move_data=move_data
             )  # name)
+            # self.game.m_par.spawn_system(
+            #     self, name, target, miss, move_data=move_data
+            # )  # name)
         else:
             print("Empty particle!")
 
@@ -134,12 +155,9 @@ class BattleScene(FloatLayout):
         elif self.dark_recover:
             self.dark = min(self.dark + frame_time / 2.5, 1)
 
-        self.battle_shake = min(self.battle_shake + frame_time / 2, 1)
-
         # self.prog_bg["Brightness"] = self.dark
         # self.render_prog["Contrast"] = 3.0 - 2 * self.dark
         # self.render_prog_neg["Contrast"] = 3.0 - 2 * self.dark
-        # self.camera.shake_value = ((1.0 - self.battle_shake) / 2) ** 3.0
         # self.prog_bg["Shake"] = 0  # self.camera.shake
         # self.render_prog["Shake"] = 0  # self.camera.shake
         # self.render_prog_neg["Shake"] = self.camera.shake
@@ -366,8 +384,8 @@ class BattleScene(FloatLayout):
         location = self.location_team0 if i == 0 else self.location_team1
 
         battler.canvas["CameraPosition"] = self.game.m_cam.pos
-        battler.canvas["Cutout"] = 1 if cutout else 0
-        battler.canvas["IsShadow"] = 1 if shadow else 0
+        battler.canvas["Cutout"] = 1.0 if cutout else 0.0
+        battler.canvas["IsShadow"] = 1.0 if shadow else 0.0
         # self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE | moderngl.BLEND)
 
         # TODO: make native
@@ -409,6 +427,9 @@ class BattleScene(FloatLayout):
         if battler.texture_file is not None:
             battler.set_face(face)
             # TODO: remove hack
-            a = float(int(time * 8) % battler.ratio)
+            if battler.ratio != 0:
+                a = float(int(time * 8) % battler.ratio)
+            else:
+                a = 0
             battler.canvas["AnimationFrame"] = 1.0 if a < 1.0 else a
             # print(float(int(time * 8) % battler.ratio))

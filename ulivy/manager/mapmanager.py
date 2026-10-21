@@ -22,7 +22,7 @@ class MapManager:
         print("ID:", self.current_level_id)
         self.allow_save = False
         self.allow_cycle = True
-        self.environment = "forest"
+        self.environment = "snow"
         self.hospital = self.game.m_sav.load("current_hospital") or "L1"
 
     def get_world_data(self):
@@ -30,6 +30,15 @@ class MapManager:
         pth = Path("world.ldtkc")
         with open(pth, "rb") as file:
             return np.load(BytesIO(file.read()), allow_pickle=True)
+
+    def get_all_levels(self):
+        return self.levels
+
+    def get_level(self, level_id):
+        return self.levels[level_id]
+
+    def overwrite_level(self, level_id, contents):
+        self.levels[level_id] = contents
 
     def load_world_data(self):
         # print(self.game.m_res.get_world_data().files)
@@ -66,6 +75,8 @@ class MapManager:
         return int(id_e[0] * 1000 + (len(id_e) > 1 and id_e[1] or 0))
 
     def set_level(self, id):
+        print("SET LEVEL!!!", id)
+        self.game.grace = 0
         self.current_level_id = id
         self.game.m_sav.go_to_new_level()
         self.game.m_sav.save("current_level_id", id)
@@ -78,7 +89,7 @@ class MapManager:
         )
 
         self.encounters = fields["encounters"]
-        self.encounter_rate = fields["encounter_rate"]
+        self.encounter_rate = fields["encounter_rate"] * 0.11
         self.encounter_level_min = fields["encounter_level_min"]
         self.encounter_level_max = fields["encounter_level_max"]
 
@@ -89,9 +100,12 @@ class MapManager:
 
         self.allow_save = fields["allow_save"]
         self.allow_cycle = fields["allow_cycle"]
-        self.environment = fields["environment"]
+        self.environment = "grass"  # TODO: revert fields["environment"]
+        self.areaname = fields["areaname"]
+
         if fields["hospital"]:
             self.hospital = fields["hospital"]
+
         self.game.m_sav.save("current_hospital", self.hospital)
 
     def get_encounter_level(self):

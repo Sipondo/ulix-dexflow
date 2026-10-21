@@ -1,4 +1,5 @@
-from ..gamestate.gamestatebattle import GameStateBattle
+# from ..gamestate.gamestatebattle import GameStateBattle
+from ..gamestate.gamestatecombat import GameStateCombat
 from ..gamestate.gamestatecinematic import GameStateCinematic
 
 # from ..gamestate.gamestateintro import GameStateIntro
@@ -18,6 +19,14 @@ from ..gamestate.gamestateprompt import GameStatePrompt
 # from ..gamestate.gamestateevolve import GameStateEvolve
 # from ..gamestate.gamestateshop import GameStateShop
 from ..gamestate.gamestatedebug import GameStateDebug
+
+from ..gamestate.gamestatemenustart import GameStateMenuStart
+from ..gamestate.gamestatemenugame import GameStateMenuGame
+from ..gamestate.gamestaterewardmove import GameStateRewardMove
+from ..gamestate.gamestaterewarditem import GameStateRewardItem
+from ..gamestate.gamestaterewardbattler import GameStateRewardBattler
+from ..gamestate.gamestatestatus import GameStateStatus
+from ..gamestate.gamestateend import GameStateEnd
 
 
 class GameStateManager:
@@ -44,6 +53,7 @@ class GameStateManager:
                 )
                 self.switching_to = None
                 self.switching_kwargs = []
+
             return
         if self.current_state:
             return self.current_state.update(time, frame_time)
@@ -83,7 +93,7 @@ class GameStateManager:
         if new_state == "overworld":
             self.current_state = GameStateOverworld(self.game)
         elif new_state == "battle":
-            self.current_state = GameStateBattle(self.game)
+            self.current_state = GameStateCombat(self.game)
         elif new_state == "menubag":
             self.current_state = GameStateMenuBag(self.game)
         elif new_state == "menucareer":
@@ -110,8 +120,22 @@ class GameStateManager:
             self.current_state = GameStateShop(self.game)
         elif new_state == "debug":
             self.current_state = GameStateDebug(self.game)
+        elif new_state == "menustart":
+            self.current_state = GameStateMenuStart(self.game)
+        elif new_state == "menugame":
+            self.current_state = GameStateMenuGame(self.game)
+        elif new_state == "rewardmove":
+            self.current_state = GameStateRewardMove(self.game)
+        elif new_state == "rewarditem":
+            self.current_state = GameStateRewardItem(self.game)
+        elif new_state == "rewardbattler":
+            self.current_state = GameStateRewardBattler(self.game)
+        elif new_state == "status":
+            self.current_state = GameStateStatus(self.game)
+        elif new_state == "end":
+            self.current_state = GameStateEnd(self.game)
 
         print(f"GAMESTATE SWITCHED: {new_state}, {kwargs}")
         self.current_state.on_enter(**kwargs)
 
-        self.game.r_uin.switch_ui(new_state, self.current_state)
+        self.game.r_uin.switch_ui(new_state)

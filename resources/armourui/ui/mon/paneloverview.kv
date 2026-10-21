@@ -1,0 +1,239 @@
+#:kivy 2.0.0
+
+<PanelOverview>
+    RelativeLayout:
+        id: Window
+        opacity: 1
+
+        AliasImage:
+            id: BoxA
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.765}
+            source: 'resources/armourui/graphics/interface/mon/inspect/overview/box_a.png'
+
+        AliasImage:
+            id: BoxB
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.55}
+            source: 'resources/armourui/graphics/interface/mon/inspect/overview/box_b.png'
+
+        AliasImage:
+            id: BoxC
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.43}
+            source: 'resources/armourui/graphics/interface/mon/inspect/overview/box_c.png'
+
+        AliasImage:
+            id: BoxD
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {'x': 0.0, 'center_y': 0.26}
+            source: 'resources/armourui/graphics/interface/mon/inspect/overview/box_d.png'
+
+        RelativeLayout:
+            id: BoxAContent
+
+            Label:
+                id: NameTitle
+                pos_hint: {'x': 0, 'center_y': 0.855}
+                size_hint: 0.22, 0.1
+                text: "Name"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Name
+                pos_hint: {'x': 0.2325, 'center_y': 0.855}
+                size_hint: 0.22, 0.1
+                text: "Crabominable 999"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+
+            Label:
+                id: TypeTitle
+                pos_hint: {'x': 0, 'center_y': 0.795}
+                size_hint: 0.22, 0.1
+                text: "Type"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Type
+                pos_hint: {'x': 0.2325, 'center_y': 0.795}
+                size_hint: 0.22, 0.1
+                text: "Grass"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: TrainerTitle
+                pos_hint: {'x': 0, 'center_y': 0.735}
+                size_hint: 0.22, 0.1
+                text: "Original Trainer"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Trainer
+                pos_hint: {'x': 0.2325, 'center_y': 0.735}
+                size_hint: 0.22, 0.1
+                text: "Testperson"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: IdTitle
+                pos_hint: {'x': 0, 'center_y': 0.675}
+                size_hint: 0.22, 0.1
+                text: "ID No."
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Id
+                pos_hint: {'x': 0.2325, 'center_y': 0.675}
+                size_hint: 0.22, 0.1
+                text: "827364298374"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+        RelativeLayout:
+            id: BoxBContent
+
+            Label:
+                id: ExpTitle
+                pos_hint: {'x': 0, 'center_y': 0.58}
+                size_hint: 0.22, 0.1
+                text: "Current no. of Exp. Points"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Exp
+                pos_hint: {'x': 0.2325, 'center_y': 0.58}
+                size_hint: 0.22, 0.1
+                text: "876,123"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+            
+            Label:
+                id: NextTitle
+                pos_hint: {'x': 0, 'center_y': 0.52}
+                size_hint: 0.22, 0.1
+                text: "Points needed to level up"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Next
+                pos_hint: {'x': 0.2325, 'center_y': 0.52}
+                size_hint: 0.22, 0.1
+                text: "500"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+        RelativeLayout:
+            id: BoxDContent
+
+            Label:
+                id: ItemTitle
+                pos_hint: {'x': 0, 'center_y': 0.34}
+                size_hint: 0.22, 0.1
+                text: "Held Item"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+
+            Label:
+                id: Item
+                pos_hint: {'x': 0.2325, 'center_y': 0.34}
+                size_hint: 0.22, 0.1
+                text: "Miracle Seed"
+                text_size: self.size    
+                font_size: 32
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'center'
+                valign: 'middle'
+            
+            Label:
+                id: ItemDescription
+                pos_hint: {'x': 0.06, 'center_y': 0.23}
+                size_hint: 0.4, 0.4
+                text: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum "
+                text_size: self.size    
+                font_size: 26
+                font_name: "resources/armourui/font/poppins_medium.ttf"
+                color: (0, 0, 0, 1)
+                markup: True
+                halign: 'left'
+                valign: 'middle'

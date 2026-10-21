@@ -27,6 +27,7 @@ class GameStateBattle(BaseGameState):
     def on_enter(
         self, battle_type="trainer", enemy_team=None, agents=None, particle_test=False
     ):
+
         self.game.r_fbo.r_box.go_to(0.0, force=True)
         print("STARTING A FIGHT AGAINST:", enemy_team)
         if particle_test:
@@ -43,7 +44,7 @@ class GameStateBattle(BaseGameState):
         # Combat setup
         self.combat = CombatScene(
             self.game,
-            ([x.series for x in self.game.inventory.members], enemy_team or [2, 1]),
+            (self.game.inventory.members, enemy_team or [2, 1]),
             battle_type=battle_type,
         )
 
@@ -69,7 +70,7 @@ class GameStateBattle(BaseGameState):
 
         self.to_end = False
 
-        self.time_lock = 0.5
+        self.time_lock = 0.2
         self.time_press = None
 
         _agents = []
@@ -79,10 +80,17 @@ class GameStateBattle(BaseGameState):
             _agents.append(self.init_agent("user", 0))
             _agents.append(self.init_agent("random", 1))
 
+        self.choosing_first_battler = True
         self.init_battle(_agents)
 
     def init_battle(self, agents):
         actions = self.combat.init_battle(agents)
+        self.pending_boards = self.combat.prepare_scene(actions)
+        self.state = BattleStates.ACTION
+        self.advance_board()
+
+    def init_battle_us(self, id):
+        actions = self.combat.init_battle_us(id)
         self.pending_boards = self.combat.prepare_scene(actions)
         self.state = BattleStates.ACTION
         self.advance_board()
@@ -95,7 +103,8 @@ class GameStateBattle(BaseGameState):
 
     def update(self, time, frame_time):
         if self.time_lock > 0:
-            self.time_lock = max(0, self.time_lock - frame_time)
+            if self.lock == False:
+                self.time_lock = max(0, self.time_lock - frame_time)
 
             if self.time_lock == 0 and self.time_press is not None:
                 print("PRESSING", self.time_press)
@@ -103,7 +112,8 @@ class GameStateBattle(BaseGameState):
                 self.time_press = None
         else:
             if self.to_end:
-                self.end_battle()
+                if self.lock == False:
+                    self.end_battle()
                 return
 
         actions = []
@@ -149,7 +159,6 @@ class GameStateBattle(BaseGameState):
         return True
 
     def on_exit(self):
-        self.game.r_fbo.enable_overworld()
         self.game.r_fbo.fbo_remove_widget(self.scene)
         del self.scene
 
@@ -166,6 +175,7 @@ class GameStateBattle(BaseGameState):
         target = (1, self.board.get_active(1))
         if action.a_type == ActionType.ATTACK:
             action.a_data = self.board.get_actor(user).actions[action.a_index]
+            print("ATTACK ACTION!!!:", action, action.a_data)
             user = (0, self.board.get_active(0))
             target = (1, self.board.get_active(1))
         if action.a_type == ActionType.SWITCH:
@@ -194,11 +204,19 @@ class GameStateBattle(BaseGameState):
     def advance_board(self):
         self.lock_state = False
         if self.board.battle_end:
+            # self.game.r_aud.play_music("bgm/BW_999_Battle_Victory.ogg")
             self.to_end = True
             # self.game.r_int.fade = True
-            self.time_lock = 0.5
+            self.time_lock = 0.1
             return
         if not self.pending_boards:
+            print("LOL")
+            if self.choosing_first_battler:
+                self.state = BattleStates.SWAPMENU
+                self.lock_state = "user_summon"
+                self.choosing_first_battler = False
+                return
+
             if self.combat.board.new_move:
                 self.state = BattleStates.ACTIONMENU
                 self.lock_state = "user_forget_move"
@@ -209,7 +227,6 @@ class GameStateBattle(BaseGameState):
                 self.state = BattleStates.SWAPMENU
                 self.lock_state = "user_switch"  # TODO: rewrite hacky solution
             else:
-                pass
                 self.state = BattleStates.TOPMENU
             self.game.m_cam.reset()
             print(
@@ -242,24 +259,29 @@ class GameStateBattle(BaseGameState):
         self.game.m_par.fast_forward = False
 
         if self.particle_test:
-            try:
+            pass
+            # try:
+            #     self.scene.do_particle(
+            #         self.particle_test,
+            #         self.board.user,
+            #         self.board.target,
+            #         miss=self.board.particle_miss,
+            #     )
+            # except Exception as e:
+            #     traceback.print_exc()
+            #     self.particle_test_cooldown = 5.0
+        else:
+            if (
+                self.board.user is None
+                or self.board.get_actor(self.board.user).current_hp > 0
+            ):
                 self.scene.do_particle(
-                    self.particle_test,
+                    self.board.particle,
                     self.board.user,
                     self.board.target,
                     miss=self.board.particle_miss,
+                    move_data=self.board.move_data,
                 )
-            except Exception as e:
-                traceback.print_exc()
-                self.particle_test_cooldown = 5.0
-        else:
-            self.scene.do_particle(
-                self.board.particle,
-                self.board.user,
-                self.board.target,
-                miss=self.board.particle_miss,
-                move_data=self.board.move_data,
-            )
         self.end_time = ti.time()
 
     def synchronize(self):
@@ -273,19 +295,11 @@ class GameStateBattle(BaseGameState):
         self.synchronize()
         self.game.battle_result = 0 if self.board.has_fighter(0) else 1
         # self.game.r_int.fade = False
+        self.game.inventory.check_death()
         if self.game.battle_result == 1:
-            for member in self.game.inventory.members:
-                member.current_hp = member.stats[0]
-                member.status = None
-            self.game.m_act.flush()
-            self.game.m_map.set_level(
-                self.game.m_map.convert_mapstring_to_key(self.game.m_map.hospital)
-            )
-            self.game.m_ent.player.game_position = (7, 6)
-            # self.game.r_wld.offset = (0.5, 13 / 16)
-            # self.game.m_col.offset = (0.5, 13 / 16)
-            self.game.r_fbo.r_til.set_map_via_manager(
-                (0, 0,), fade=False,
-            )
-        self.game.m_gst.switch_state("overworld", fade=True)
-
+            # for member in self.game.inventory.members:
+            #     member.current_hp = member.stats[0]
+            #     member.status = None
+            self.game.m_gst.switch_state("end", fade=True)
+        else:
+            self.game.m_gst.switch_state("overworld", fade=True)

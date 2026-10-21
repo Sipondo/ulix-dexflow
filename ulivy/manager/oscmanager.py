@@ -17,17 +17,16 @@ class OscManager(FloatLayout):
         self.val_x = 0
         self.val_y = 0
 
-        self.left = False
-        self.right = False
-        self.up = False
-        self.down = False
+        self.left = 0
+        self.right = 0
+        self.up = 0
+        self.down = 0
 
         self.buttons = {
-            "interact": False,
-            "backspace": False,
-            "walk": False,
-            "run": False,
-            "bike": False,
+            "interact": 0,
+            "backspace": 0,
+            "walk": 0,
+            "run": 0,
         }
 
     def _bind_joysticks(self):
@@ -55,19 +54,54 @@ class OscManager(FloatLayout):
             self.event_button(instance, pad, "walk")
         elif instance.parent == self.ids.run:
             self.event_button(instance, pad, "run")
-        elif instance.parent == self.ids.bike:
-            self.event_button(instance, pad, "bike")
+        # elif instance.parent == self.ids.bike:
+        #     self.event_button(instance, pad, "bike")
+
+    def update(self, time, frame_time):
+        for k, v in self.buttons.items():
+            if v < 0:
+                v += frame_time
+                if v >= 0:
+                    self.game.m_key.key_event(k, "up", [])
+                    v = 0
+                self.buttons[k] = v
+
+        if self.left < 0:
+            self.left += frame_time
+            if self.left >= 0:
+                self.game.m_key.key_event("left", "up", [])
+                self.left = 0
+
+        if self.right < 0:
+            self.right += frame_time
+            if self.right >= 0:
+                self.game.m_key.key_event("right", "up", [])
+                self.right = 0
+
+        if self.up < 0:
+            self.up += frame_time
+            if self.up >= 0:
+                self.game.m_key.key_event("up", "up", [])
+                self.up = 0
+
+        if self.down < 0:
+            self.down += frame_time
+            if self.down >= 0:
+                self.game.m_key.key_event("down", "up", [])
+                self.down = 0
 
     def event_button(self, instance, pad, key):
         x, y = pad
+        # print(pad)
 
         if x == 0 and y == 0 and self.buttons[key]:
-            self.buttons[key] = False
-            self.game.m_key.key_event(key, "up", [])
+            # print("up")
+            self.buttons[key] = -0.1
             return
 
-        if (x != 0 or y != 0) and not self.buttons[key]:
-            self.buttons[key] = True
+        if (x != 0 and y != 0) and not self.buttons[key]:
+            # print("down")
+            self.buttons[key] = 0.1
             self.game.m_key.key_event(key, "down", [])
             return
 
@@ -89,36 +123,36 @@ class OscManager(FloatLayout):
             x = 0
 
         if x < -DEADZONE and not self.left:
-            self.left = True
+            self.left = 0.05
             self.game.m_key.key_event("left", "down", [])
 
-        if x > DEADZONE and not self.right:
-            self.right = True
+        elif x > DEADZONE and not self.right:
+            self.right = 0.05
             self.game.m_key.key_event("right", "down", [])
 
+        elif x >= -DEADZONE and self.left:
+            self.left = -0.05
+            # self.game.m_key.key_event("left", "up", [])
+
+        elif x <= DEADZONE and self.right:
+            self.right = -0.05
+            # self.game.m_key.key_event("right", "up", [])
+
         if y < -DEADZONE and not self.up:
-            self.up = True
+            self.up = 0.05
             self.game.m_key.key_event("up", "down", [])
 
-        if y > DEADZONE and not self.down:
-            self.down = True
+        elif y > DEADZONE and not self.down:
+            self.down = 0.05
             self.game.m_key.key_event("down", "down", [])
 
-        if x >= -DEADZONE and self.left:
-            self.left = False
-            self.game.m_key.key_event("left", "up", [])
+        elif y >= -DEADZONE and self.up:
+            self.up = -0.05
+            # self.game.m_key.key_event("up", "up", [])
 
-        if x <= DEADZONE and self.right:
-            self.right = False
-            self.game.m_key.key_event("right", "up", [])
-
-        if y >= -DEADZONE and self.up:
-            self.up = False
-            self.game.m_key.key_event("up", "up", [])
-
-        if y <= DEADZONE and self.down:
-            self.down = False
-            self.game.m_key.key_event("down", "up", [])
+        elif y <= DEADZONE and self.down:
+            self.down = -0.05
+            # self.game.m_key.key_event("down", "up", [])
 
 
 class FPSCounter(AnchorLayout):

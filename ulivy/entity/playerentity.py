@@ -1,6 +1,6 @@
 from .baseentity import BaseEntity
 from ulivy.animation.moveanimation.playermoveanimation import PlayerMoveAnimation
-import random
+import numpy as np
 
 
 class PlayerEntity(BaseEntity):
@@ -23,6 +23,8 @@ class PlayerEntity(BaseEntity):
         self.name = self.game.m_sav.load("player_name") or "Player"
         self.gender = self.game.m_sav.load("player_gender") or "male"
 
+        self.splash = "../resources/simple/graphics/trainers/mc"
+
     def start_move(self, direction_str, time):
         direction = self.direction_to_tuple(direction_str)
         if not self.moving:
@@ -36,12 +38,17 @@ class PlayerEntity(BaseEntity):
 
     def after_move(self, time, frame_time):
         self.moving = False
-        self.game.m_sav.save("player_pos", self.game_position)
-        self.game.m_sav.save("player_height", self.height)
+        # self.game.m_sav.save("player_pos", self.game_position)
+        # self.game.m_sav.save("player_height", self.height)
 
     def on_step(self, time, frame_time):
+        # Comment the next line if always encounter
         if self.game.m_col.get_tile_flags(self.game_position)["Encounter"]:
-            self.game.m_act.create_prefab_action("on_encounter", self.game)
+            self.game.grace += 1
+            if self.game.grace > 0:
+                if np.random.rand() < self.game.m_map.encounter_rate * self.game.grace:
+                    self.game.grace = -22
+                    self.game.m_act.create_prefab_action("on_encounter", self.game)
 
     def direction_to_tuple(self, direction):
         if direction == "up":

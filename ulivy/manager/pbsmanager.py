@@ -1,5 +1,7 @@
 from ulivy.helpers.dataframe import read_csv, Series, DataFrame
 import re
+import numpy as np
+from random import shuffle
 
 
 class PbsManager:
@@ -51,15 +53,17 @@ class PbsManager:
         )
         self.moves.map_attr("priority", lambda x: int(x))
         move_functions = read_csv(
-            self.game.m_res.get_pbs_loc("move_functions_map.csv"), index_col=0,
+            self.game.m_res.get_pbs_loc("move_functions_map.csv"),
+            index_col=0,
         )["function"]
         move_functions = move_functions.apply(lambda x: re.sub("[\[\]]", "", x))
         move_functions = move_functions.apply(lambda x: x.split(","))
         self.moves.map_attr(
             "function",
-            lambda x: move_functions[x] if x in move_functions else ["noeffect"],
+            lambda x: move_functions[str(x).strip()]
+            if str(x).strip() in move_functions.data.keys()
+            else ["noeffect"],
         )
-        # self.moves.map_attr("power", lambda x: int(x))
 
         self.abilities = read_csv(
             self.game.m_res.get_pbs_loc("abilities.csv"), index_col=0
@@ -92,13 +96,21 @@ class PbsManager:
         )
 
         self.type_effectiveness = read_csv(
-            self.game.m_res.get_pbs_loc("type_effectiveness.csv"), index_col=0,
+            self.game.m_res.get_pbs_loc("type_effectiveness.csv"),
+            index_col=0,
         )
 
+        for v in self.moves.data.values():
+            v["prefix"] = ""
+            v["suffix"] = ""
+
     def get_random_item(self):
-        return self.items.sample().loc[0]
+        return self.items.sample().copy()
 
     def get_item(self, id):
+        return self.items.loc[id].copy()
+
+    def get_item_by_name(self, id):
         s = self.items[self.items["identifier"] == id.upper()].iloc[0].copy()
         return s
 
@@ -134,10 +146,10 @@ class PbsManager:
         return read_csv(pth, index_col=0)
 
     def get_random_fighter(self):
-        return self.fighters.iloc[1:600].sample()
+        return self.fighters.iloc[:400].sample().copy()
 
     def get_fighter(self, id):
-        return self.fighters.loc[id]
+        return self.fighters.iloc[:400].loc[id]
 
     def get_fighter_by_name(self, name):
         return (
@@ -146,21 +158,21 @@ class PbsManager:
 
     def get_move(self, id):
         # id = 201  # TODO: temp only tackle
-        id = 201  # 201  # 399  # TODO: temp only tackle #xcissor 8
+        # id = 1  # 201  # 399  # TODO: temp only tackle #xcissor 8
         # 142, 188, 663, acid:530
-        return self.moves.loc[id]
+        return self.moves.loc[id].copy()
 
     def get_move_by_name(self, name):
-        name = "tackle"  # TODO: temp only tackle
+        # name = "megahorn"  # # bite"  # TODO: temp only tackle
         name_s = name.replace(" ", "").upper()
         # print(self.moves)
         s = self.moves["identifier"]
         t = s == name_s
         # print(t)
-        return self.moves[t].iloc[0]
+        return self.moves[t].iloc[0].copy()
 
     def get_random_move(self):
-        return self.moves.sample().loc[0]
+        return self.moves.sample().loc[0].copy
 
     def get_ability(self, ability_name):
         return self.abilities.loc[ability_name]
@@ -178,3 +190,7 @@ class PbsManager:
         atk_type = atk_type.capitalize()
         def_type = def_type.capitalize()
         return self.type_effectiveness[def_type].loc[atk_type]
+
+    def get_moves_with_type(self, type):
+        a = self.moves["type"] == type.upper()
+        return self.moves[a]

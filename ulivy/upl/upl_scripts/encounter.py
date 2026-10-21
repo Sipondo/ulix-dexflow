@@ -39,6 +39,7 @@ class Encounter:
 
         self.fighter.level = self.act.game.m_map.get_encounter_level()
         # self.act.game.r_int.fade = True # TODO: ulivy
+        self.act.game.r_aud.play_music("bgm/wild.ogg")  # TODO: use flag
 
         self.encounter_init = False
 

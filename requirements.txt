@@ -4,3 +4,8 @@ cython
 lark
 termcolor
 pretty_errors
+kivy
+pyrr
+environs
+python-dateutil
+websockets

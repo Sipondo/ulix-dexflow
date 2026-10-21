@@ -1,0 +1,45 @@
+#:kivy 2.0.0
+
+<UIVsMain>
+    RelativeLayout:
+        id: Window
+        # pos_hint: {'x': 0.1, 'y': 0.8}
+        # size_hint: 0.2, 0.12
+        opacity: 1
+
+        AliasImage:
+            id: Background
+            allow_stretch: True
+            source: 'resources/armourui/graphics/interface/vs/background.png'
+
+        AliasImage:
+            id: InfoPanel
+            pos_hint: {'center_x': 0.5, 'center_y': 0.02}
+            allow_stretch: True
+            keep_ratio: True
+            source: 'resources/armourui/graphics/interface/vs/info_panel.png'
+
+        RelativeLayout:
+            id: Options
+
+            AliasImage:
+                id: OptionLinkbattle
+                pos_hint: {'x': 0.03, 'center_y': 0.7}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/vs/main/linkbattle.png'
+
+            AliasImage:
+                id: OptionLinktrade
+                pos_hint: {'x': 0.03, 'center_y': 0.5}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/vs/main/linktrade.png'
+
+
+            AliasImage:
+                id: OptionSurprisetrade
+                pos_hint: {'x': 0.03, 'center_y': 0.3}
+                allow_stretch: True
+                keep_ratio: True
+                source: 'resources/armourui/graphics/interface/vs/main/surprisetrade.png'

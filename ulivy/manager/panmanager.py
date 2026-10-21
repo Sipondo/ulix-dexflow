@@ -4,40 +4,40 @@ class PanManager:
         self.total_x = 0.0
         self.total_y = 0.0
 
-        # self.zoom = 800.0
-        # self.zoom_level = 4
-        # self.zoom_options = [12000, 7000, 4600, 3000, 2000, 1200, 800, 100]
+        self.zoom = 2000.0
+        self.zoom_level = 4
+        self.zoom_options = [12000, 7000, 4600, 3000, 2000, 1200, 800, 100]
 
         # self.size = size
 
     def set_pan(self, pos):
-        self.total_x = pos[0] - (21 / 2) + 0.5
-        self.total_y = pos[1] - (12 / 2) + 0.5
+        self.total_x = pos[0] - (21 / 2 * self.zoom_value) + 0.5
+        self.total_y = pos[1] - (12 / 2 * self.zoom_value) + 0.5
 
-    # def on_tick(self, time, frame_time):
-    #     target = self.zoom_options[self.zoom_level]
-    #     speed = target - self.zoom
+    def update(self, time, frame_time):
+        target = self.zoom_options[self.zoom_level]
+        speed = target - self.zoom
 
-    #     # print(self.zoom, target, speed)
+        # print(self.zoom, target, speed)
 
-    #     if abs(speed) < 2:
-    #         self.zoom = target
-    #         return
+        if abs(speed) < 2:
+            self.zoom = target
+            return
 
-    #     if abs(speed) < 10:
-    #         if speed < 0:
-    #             speed = -10
-    #         else:
-    #             speed = 10
-    #     self.zoom += speed * frame_time * 4
+        if abs(speed) < 10:
+            if speed < 0:
+                speed = -10
+            else:
+                speed = 10
+        self.zoom += speed * frame_time * 4
 
-    # def zoom_in(self):
-    #     # self.zoom = max(500, self.zoom - 200)
-    #     self.zoom_level = min(len(self.zoom_options) - 1, self.zoom_level + 1)
+    def zoom_in(self):
+        # self.zoom = max(500, self.zoom - 200)
+        self.zoom_level = min(len(self.zoom_options) - 1, self.zoom_level + 1)
 
-    # def zoom_out(self):
-    #     # self.zoom = min(4000, self.zoom + 200)
-    #     self.zoom_level = max(0, self.zoom_level - 1)
+    def zoom_out(self):
+        # self.zoom = min(4000, self.zoom + 200)
+        self.zoom_level = max(0, self.zoom_level - 1)
 
     # def zoom_encounter(self):
     #     # self.zoom = min(4000, self.zoom + 200)
@@ -60,6 +60,6 @@ class PanManager:
     #     # print(panv)
     #     return panv
 
-    # @property
-    # def zoom_value(self):
-    #     return 100 / self.zoom, 100 / self.zoom
+    @property
+    def zoom_value(self):
+        return 2000 / self.zoom

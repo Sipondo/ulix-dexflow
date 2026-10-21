@@ -51,8 +51,8 @@ with open(resource_find("ulivy_shaders/battle_parallax_vs.glsl")) as file:
 with open(resource_find("ulivy_shaders/battle_battler_fs.glsl")) as file:
     battler_shader_fs = file.read()
 
-with open(resource_find("ulivy_shaders/battle_battler_gs.glsl")) as file:
-    battler_shader_gs = file.read()
+# with open(resource_find("ulivy_shaders/battle_battler_gs.glsl")) as file:
+# battler_shader_gs = file.read()
 
 with open(resource_find("ulivy_shaders/battle_battler_vs.glsl")) as file:
     battler_shader_vs = file.read()
@@ -70,11 +70,17 @@ class BattleEnvironment(FloatLayout):
         resource_add_path(pth)
 
         print("BATTLEENV", self.pos, self.size)
-        for i in range(4, -1, -1):
-
+        for i in range(3, -1, -1):
             self.add_widget(
                 BattleEnvironmentImage(
-                    texture_file=Image(resource_find(f"forest_{i}.png")),
+                    # texture_file=Image(resource_find(f"forest_{i}.png")),
+                    # texture_file=Image(resource_find(f"fire_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"swamp_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"snow_bg_{i}.png")),
+                    # texture_file=Image(resource_find(f"grass_bg_{i}.png")),
+                    texture_file=Image(
+                        resource_find(f"{self.game.m_map.environment}_bg_{i}.png")
+                    ),
                     size_hint=(1, 1),
                     pos_hint={"center_y": 0.5, "center_x": 0.5},
                 )
@@ -86,22 +92,22 @@ class BattleEnvironment(FloatLayout):
         self.alpha_float = BattlerContainer()
 
         self.add_widget(self.battler_float)
-        self.visuals.alpha_offscreen.fbo_add_widget(self.alpha_float)
+        # self.visuals.alpha_offscreen.fbo_add_widget(self.alpha_float)
         self.scene = scene
         self.enemy_first = True
 
         scene.img_battler.append(
             (
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
             )
         )
         scene.img_battler.append(
             (
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
-                BattleBattlerImage(scene, self.game),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
+                BattleBattlerImage(self.game, scene),
             )
         )
         self.set_battlers()
@@ -126,16 +132,16 @@ class BattleEnvironment(FloatLayout):
         if enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
             self.battler_float.add_widget(self.scene.img_battler[1][1])
-            self.alpha_float.add_widget(self.scene.img_battler[1][2])
+            # self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
         self.battler_float.add_widget(self.scene.img_battler[0][0])
         self.battler_float.add_widget(self.scene.img_battler[0][1])
-        self.alpha_float.add_widget(self.scene.img_battler[0][2])
+        # self.alpha_float.add_widget(self.scene.img_battler[0][2])
 
         if not enemy_first:
             self.battler_float.add_widget(self.scene.img_battler[1][0])
             self.battler_float.add_widget(self.scene.img_battler[1][1])
-            self.alpha_float.add_widget(self.scene.img_battler[1][2])
+            # self.alpha_float.add_widget(self.scene.img_battler[1][2])
 
 
 class BattlerContainer(FloatLayout):
@@ -182,10 +188,14 @@ class BattleEnvironmentImage(FloatLayout):
         speed = self.tex1.width / self.tex1.height / 16 * 9
 
         self.canvas["texture0"] = 1
-        self.canvas["offset"] = self.game.m_cam.parallax_rotation * speed
+
+        o = 1.2 + self.game.m_cam.parallax_rotation * speed
+        # o = float(int(o * 680) / 680)
+        self.canvas["offset"] = o
         self.canvas["speed"] = speed
         self.canvas["brightness"] = float(self.scene.dark)
         self.canvas["shake"] = self.game.m_cam.shake
+
         # This is needed for the default vertex shader.
         win_rc = Window.render_context
         self.canvas["projection_mat"] = win_rc["projection_mat"]
@@ -200,9 +210,10 @@ class BattleBattlerImage(FloatLayout):
     def __init__(self, game, scene, **kwargs):
         self.game = game
         self.scene = scene
-        self.canvas = RenderContext(
-            fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
-        )
+        # self.canvas = RenderContext(
+        #     fs=battler_shader_fs, gs=battler_shader_gs, vs=battler_shader_vs
+        # )
+        self.canvas = RenderContext(fs=battler_shader_fs, vs=battler_shader_vs)
 
         self.texture_file = None
         self.face = 0
@@ -210,6 +221,7 @@ class BattleBattlerImage(FloatLayout):
         self.summon_size = 0.0
         self.summon_size_to = 1.0
         self.theight = 0.0
+        self.vis = True
         # call the constructor of parent
         # if they are any graphics object, they will be added on our new canvas
         super(BattleBattlerImage, self).__init__(**kwargs)
@@ -219,9 +231,27 @@ class BattleBattlerImage(FloatLayout):
         self.float_x = 0
         self.float_y = 0
 
-        self.mesh = Mesh(vertices=[], indices=[], fmt=[(b"in_pos", 3, "float"),],)
+        self.mesh = Mesh(
+            vertices=[],
+            indices=[],
+            fmt=[
+                (b"in_pos", 3, "float"),
+            ],
+        )
+
+        self.tex1 = self.game.m_res.battler_atlas.original_textures[0]
+        self.tex1.mag_filter = "nearest"
+
+        self.canvas.clear()
+        self.canvas.add(Callback(set_blend_battler))
+        self.canvas.add(BindTexture(texture=self.tex1, index=4))
+        self.canvas.add(self.mesh)
+        self.canvas.add(Callback(reset_blend))
 
         self.canvas["Texture"] = 4
+
+    def set_visible(self, vis):
+        self.vis = vis
 
     def set_texture(self, texture_file):
         self.texture_file = texture_file
@@ -240,23 +270,27 @@ class BattleBattlerImage(FloatLayout):
     def bind_texture(self):
         if self.texture_file is not None:
             back = 0 if self.face % 3 else 1
-            self.theight = self.texture_file[back][0].height
-            self.ratio = (
-                self.texture_file[back][0].width / self.texture_file[back][0].height
-            )
-            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
-            self.canvas["AnimationLength"] = self.ratio
-            self.canvas["HeightShare"] = self.texture_file[back][1]
+            tf = self.texture_file[back]
+
+            self.theight = tf[2]
+            self.ratio = tf[3]
+
+            if self.vis:
+                self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (
+                    self.summon_size**3
+                )
+            else:
+                self.canvas["Size"] = 0.0
+            # self.canvas["AnimationLength"] = self.ratio
+            self.canvas["HeightShare"] = tf[5]
             self.canvas["Mirror"] = float(-1 if self.face % 2 else 1)
 
-            self.tex1 = self.texture_file[back][0].texture
-            self.tex1.mag_filter = "nearest"
+            self.canvas["Xoff"] = float(tf[0])
+            self.canvas["Yoff"] = float(tf[1])
+            self.canvas["AnimationWidth"] = float(tf[4])
 
-            self.canvas.clear()
-            self.canvas.add(Callback(set_blend_battler))
-            self.canvas.add(BindTexture(texture=self.tex1, index=4))
-            self.canvas.add(self.mesh)
-            self.canvas.add(Callback(reset_blend))
+            self.canvas["FrameSize"] = float(self.theight)
+            self.canvas["Totsize"] = float(8192)
 
     def redraw(self):
         self.canvas["Texture"] = 4
@@ -272,7 +306,10 @@ class BattleBattlerImage(FloatLayout):
             if self.summon_size >= self.summon_size_to:
                 self.summon_size = self.summon_size_to
 
-        self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size ** 3)
+        if self.vis:
+            self.canvas["Size"] = ((self.theight / 4) ** 0.5) * (self.summon_size**3)
+        else:
+            self.canvas["Size"] = 0.0
         self.redraw()
 
 
@@ -282,44 +319,44 @@ class BattleVisuals(FloatLayout):
 
         self.game = game
 
-        # TODO: depth buffer should be shared by these first 3
-        # self.solid_offscreen = BattleOffscreen(
-        #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
+        # # # TODO: depth buffer should be shared by these first 3
+        # # self.solid_offscreen = BattleOffscreen(
+        # #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_solid
+        # # )
+        # self.alpha_offscreen = BattleOffscreen(
+        #     self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
         # )
-        self.alpha_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE_PARTICLES, self, set_blend_alpha
-        )
-        # self.anti_offscreen = BattleOffscreen(
-        #     self.game, self.game.RENDER_SIZE_PARTICLES
+        # # self.anti_offscreen = BattleOffscreen(
+        # #     self.game, self.game.RENDER_SIZE_PARTICLES
+        # # )
+
+        # self.final_offscreen = BattleOffscreen(
+        #     self.game, self.game.RENDER_SIZE, self, set_blend_alpha  # set_blend_final
         # )
 
-        self.final_offscreen = BattleOffscreen(
-            self.game, self.game.RENDER_SIZE, self, set_blend_final
-        )
+        # # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
 
-        # self.final_offscreen.fbo_add_widget(self.anti_offscreen) This one has to be rendered via the negative_blend program
+        # # Stack building
 
-        # Stack building
+        # # Background is handled in environment
 
-        # Background is handled in environment
+        # # self.ctx.depth_func = "1"
+        # # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
+        # # self.render_pokemon(time, frame_time, cutout=False)
+        # # self.ctx.depth_func = "<="
 
-        # self.ctx.depth_func = "1"
-        # self.render_pokemon(time, frame_time, cutout=False, shadow=True)
-        # self.render_pokemon(time, frame_time, cutout=False)
-        # self.ctx.depth_func = "<="
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
+        # # self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_solid))
-        # self.final_offscreen.fbo_add_widget(self.solid_offscreen)  # should be mesh
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
+        # self.final_offscreen.fbo_add_widget(self.alpha_offscreen)  # should be mesh
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(set_blend_alpha))
-        self.final_offscreen.fbo_add_widget(self.alpha_offscreen)  # should be mesh
+        # # self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
+        # # self.canvas.add(Callback(set_blend_anti))
+        # # self.final_offscreen.add_widget(self.anti_offscreen) this works differently!!!
 
-        # self.final_offscreen.fbo_layout.canvas.add(Callback(reset_blend))
-        # self.canvas.add(Callback(set_blend_anti))
-        # self.final_offscreen.add_widget(self.anti_offscreen) this works differently!!!
-
-        self.add_widget(self.final_offscreen)
-        # self.canvas.add(Callback(reset_blend))
+        # # self.add_widget(self.final_offscreen)
+        # # self.canvas.add(Callback(reset_blend))
 
     def update(self, time=None, dt=None):
         return
@@ -354,10 +391,10 @@ class BattleOffscreen(FloatLayout):
         #     Callback(blend)
         with self.canvas:
             self.fbo = Fbo(size=self.size, with_depthbuffer=True)
-            Callback(blend)
             # create the fbo
             Callback(self.redraw)
             BindTexture(texture=self.fbo.texture, index=1)
+            Callback(blend)
             self.rec1 = Rectangle(size=(self.size), pos=self.pos)
             Callback(reset_blend)
 
@@ -399,34 +436,42 @@ class BattleOffscreen(FloatLayout):
         # self.canvas["frag_modelview_mat"] = win_rc["frag_modelview_mat"]
 
 
-def set_blend_solid(instruction):
-    glDisable(GL_BLEND)
+# def set_blend_solid(instruction):
+#     # return
+#     glDisable(GL_BLEND)
+#     glEnable(GL_DEPTH_TEST)
+#     glEnable(GL_CULL_FACE)
+#     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+#     glBlendEquation(GL_FUNC_ADD)
+
+
+def set_blend_alpha(instruction):
+    # # return
+    # glEnable(GL_DEPTH_TEST)
+    # glEnable(GL_BLEND)
+    # glEnable(GL_CULL_FACE)
+    # glBlendFunc(GL_ONE, GL_ONE)
+    # glBlendEquation(GL_FUNC_ADD)
+
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
+    glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBlendEquation(GL_FUNC_ADD)
 
 
-def set_blend_alpha(instruction):
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_BLEND)
-    glEnable(GL_CULL_FACE)
-    glBlendFunc(GL_ONE, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
+# def set_blend_anti(instruction):
+#     glDisable(GL_DEPTH_TEST)
+#     glDisable(GL_CULL_FACE)
+#     glEnable(GL_BLEND)
+#     glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+#     glBlendEquation(GL_FUNC_ADD)
 
 
-def set_blend_anti(instruction):
-    glDisable(GL_DEPTH_TEST)
-    glDisable(GL_CULL_FACE)
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
-
-
-def set_blend_final(instruction):
-    reset_blend(None)
-    glBlendFunc(GL_ONE, GL_ONE)
-    glBlendEquation(GL_FUNC_ADD)
+# def set_blend_final(instruction):
+#     reset_blend(None)
+#     glBlendFunc(GL_ONE, GL_ONE)
+#     glBlendEquation(GL_FUNC_ADD)
 
 
 def set_blend_battler(instruction):
