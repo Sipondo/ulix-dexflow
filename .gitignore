@@ -25,3 +25,12 @@ bin
 uitest
 data
 backup
+backups
+!resources/base/data
+*.sav
+*.lnk
+dist
+*.psd
+# Fonts are only public with a redistributable license.
+font/*
+!font/tai_*.ttf
