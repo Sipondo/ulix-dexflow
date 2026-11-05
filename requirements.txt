@@ -1,11 +1,8 @@
 numpy
 Pillow
-cython
 lark
 termcolor
-pretty_errors
-kivy
 pyrr
-environs
-python-dateutil
-websockets
+zengl
+pysdl2-dll
+fonttools

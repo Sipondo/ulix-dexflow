@@ -34,3 +34,4 @@ dist
 # Fonts are only public with a redistributable license.
 font/*
 !font/tai_*.ttf
+lark/

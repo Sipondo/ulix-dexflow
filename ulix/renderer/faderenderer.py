@@ -1,0 +1,49 @@
+
+class FadeRenderer():
+    def __init__(self, game):
+        self.game = game
+
+        self.alpha = 1.0
+        self.alpha_to = 1.0
+
+        self.blocking = True
+        # self.update_canvas()
+
+    def update_canvas(self):
+        self.canvas.clear()
+        with self.canvas:
+            Color(0, 0, 0, self.alpha)
+            self.rec1 = Rectangle(size=self.size, pos=self.pos)
+
+    def redraw(self, *args):
+        self.rec1.pos = self.pos
+        self.rec1.size = self.size
+
+    def update(self, time=None, dt=None):
+        self.size = self.game.RENDER_SIZE
+        update_canvas = False
+        if self.alpha > self.alpha_to:
+            self.alpha -= dt * 2.6
+            if self.alpha <= self.alpha_to:
+                self.alpha = self.alpha_to
+            update_canvas = True
+
+        if self.alpha < self.alpha_to:
+            self.alpha += dt * 2.6
+            if self.alpha >= self.alpha_to:
+                self.alpha = self.alpha_to
+            update_canvas = True
+
+        self.redraw()
+
+        if update_canvas:
+            self.update_canvas()
+            return
+
+        self.blocking = True
+
+    def fade_done(self):
+        return self.alpha == self.alpha_to
+
+    def go_to(self, alpha):
+        self.alpha_to = alpha
