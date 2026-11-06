@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ulix Dexflow</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="theme-color" content="#0f0f14">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Ulix Dexflow">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      background: #0f0f14;
+      overflow: hidden;
+    }
+
+    #canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      touch-action: none;
+      outline: none;
+    }
+
+    #status {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #aaa;
+      font: 14px system-ui, sans-serif;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" tabindex="0"></canvas>
+  <div id="status">Loading Python…</div>
+  <script src="https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js" crossorigin="anonymous"></script>
+  <script>
+    (async () => {
+      const status = document.getElementById('status');
+      const setStatus = (msg) => { status.textContent = msg; };
+
+      try {
+        setStatus('Initializing Python runtime…');
+        const pyodide = await loadPyodide({
+          messageCallback: (msg) => setStatus(`[Pyodide] ${msg}`),
+        });
+
+        setStatus('Loading packages…');
+        await pyodide.loadPackage(['zengl', 'pillow', 'numpy', 'fonttools'], {
+          messageCallback: (msg) => setStatus(`Loading packages: ${msg}`),
+        });
+
+        setStatus('Downloading game bundle…');
+        const response = await fetch('app.zip');
+        if (!response.ok) throw new Error(`Failed to fetch app.zip: ${response.statusText}`);
+
+        const contentLength = response.headers.get('content-length');
+        let appBuffer;
+
+        if (contentLength && response.body) {
+          const total = parseInt(contentLength, 10);
+          let loaded = 0;
+          const reader = response.body.getReader();
+          const chunks = [];
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            loaded += value.length;
+            const pct = Math.round((loaded / total) * 100);
+            const mb = (loaded / (1024 * 1024)).toFixed(1);
+            const totalMb = (total / (1024 * 1024)).toFixed(1);
+            setStatus(`Downloading game: ${mb} / ${totalMb} MB (${pct}%)`);
+          }
+
+          const combined = new Uint8Array(loaded);
+          let offset = 0;
+          for (const chunk of chunks) {
+            combined.set(chunk, offset);
+            offset += chunk.length;
+          }
+          appBuffer = combined.buffer;
+        } else {
+          appBuffer = await response.arrayBuffer();
+        }
+
+        setStatus('Unpacking game assets…');
+        pyodide.unpackArchive(appBuffer, 'zip');
+
+        setStatus('Starting engine…');
+        pyodide.runPython('import main; main.main()');
+        status.remove();
+      } catch (err) {
+        status.textContent = String(err);
+        throw err;
+      }
+    })();
+
+    window.addEventListener('load', async () => {
+      if (!('serviceWorker' in navigator)) return;
+      if (window.ENGINE_DEV) {
+        for (const registration of await navigator.serviceWorker.getRegistrations()) await registration.unregister();
+        return;
+      }
+      // https or http://localhost
+      navigator.serviceWorker.register('sw.js').catch((err) => console.warn('service worker:', err));
+    });
+  </script>
+</body>
+
+</html>
